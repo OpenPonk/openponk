@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"elements" ],
+	"name" : "DCDiagram",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

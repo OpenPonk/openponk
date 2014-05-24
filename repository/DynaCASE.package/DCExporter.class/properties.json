@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-export",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCExporter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-UML-model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"min",
+		"max" ],
+	"name" : "DCUmlMultiplicity",
+	"pools" : [
+		 ],
+	"super" : "DCNamedElement",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-UML-export",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCUmlDummyExporter",
+	"pools" : [
+		 ],
+	"super" : "DCExporter",
+	"type" : "normal" }

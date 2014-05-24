@@ -1,0 +1,17 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"formatVisibility:" : "PeterUhnak 5/24/2014 13:17",
+		"fromDiagram:toFile:" : "PeterUhnak 5/24/2014 14:32",
+		"writeAttribute:to:" : "PeterUhnak 5/24/2014 14:38",
+		"writeAttributes:to:" : "PeterUhnak 5/24/2014 14:33",
+		"writeClass:to:" : "PeterUhnak 5/24/2014 13:22",
+		"writeLineTo:" : "PeterUhnak 5/24/2014 12:20",
+		"writeMultiplicity:to:" : "PeterUhnak 5/24/2014 13:21",
+		"writeName:withFeatures:to:" : "PeterUhnak 5/24/2014 13:18",
+		"writeOperation:to:" : "PeterUhnak 5/24/2014 13:02",
+		"writeOperations:to:" : "PeterUhnak 5/24/2014 12:57",
+		"writeParameter:to:" : "PeterUhnak 5/24/2014 14:38",
+		"writeParameters:to:" : "PeterUhnak 5/24/2014 12:48",
+		"writeStereotype:to:" : "PeterUhnak 5/24/2014 13:07" } }

@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-UML-model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCUmlComposition",
+	"pools" : [
+		 ],
+	"super" : "DCUmlAssociation",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"object",
+		"container" ],
+	"name" : "DCContainerAnnouncement",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

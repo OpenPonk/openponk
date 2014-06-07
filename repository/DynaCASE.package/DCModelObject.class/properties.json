@@ -6,9 +6,9 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"elements" ],
-	"name" : "DCDiagram",
+		 ],
+	"name" : "DCModelObject",
 	"pools" : [
 		 ],
-	"super" : "DCModelObject",
+	"super" : "Object",
 	"type" : "normal" }

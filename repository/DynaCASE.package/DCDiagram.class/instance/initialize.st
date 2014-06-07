@@ -1,5 +1,4 @@
 initialization
 initialize
 	super initialize.
-	elements := Bag new.
-	^self
+	elements := Bag new

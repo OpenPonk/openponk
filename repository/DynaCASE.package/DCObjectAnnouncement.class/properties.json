@@ -1,14 +1,14 @@
 {
-	"category" : "DynaCASE-model",
+	"category" : "DynaCASE-announcements",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"elements" ],
-	"name" : "DCDiagram",
+		"object" ],
+	"name" : "DCObjectAnnouncement",
 	"pools" : [
 		 ],
-	"super" : "DCModelObject",
+	"super" : "Announcement",
 	"type" : "normal" }

@@ -1,0 +1,16 @@
+{
+	"category" : "DynaCASE-controller",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"model",
+		"layout",
+		"visual" ],
+	"name" : "DCTrio",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

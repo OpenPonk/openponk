@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-layout",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCLayoutRectangle",
+	"pools" : [
+		 ],
+	"super" : "DCLayoutObject",
+	"type" : "normal" }

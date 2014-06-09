@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-layout",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"points" ],
+	"name" : "DCLayoutLine",
+	"pools" : [
+		 ],
+	"super" : "DCLayoutObject",
+	"type" : "normal" }

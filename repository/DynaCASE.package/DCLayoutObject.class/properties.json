@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-layout",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"boundingBox" ],
+	"name" : "DCLayoutObject",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

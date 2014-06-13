@@ -9,7 +9,7 @@
 		"model",
 		"layout",
 		"visual" ],
-	"name" : "DCTrio",
+	"name" : "DCTriad",
 	"pools" : [
 		 ],
 	"super" : "Object",

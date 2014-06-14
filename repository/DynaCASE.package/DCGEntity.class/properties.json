@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-Practicing",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"presclass",
+		"position" ],
+	"name" : "DCGEntity",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

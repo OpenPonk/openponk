@@ -1,0 +1,16 @@
+{
+	"category" : "DynaCASE-Practicing",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"view",
+		"button1",
+		"button2" ],
+	"name" : "DCPWindow",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Practicing",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCPClass",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

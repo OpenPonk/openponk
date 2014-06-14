@@ -1,0 +1,17 @@
+{
+	"category" : "DynaCASE-Practicing",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"surface",
+		"backcolor",
+		"content",
+		"lastPoint" ],
+	"name" : "DCPDrawing",
+	"pools" : [
+		 ],
+	"super" : "Morph",
+	"type" : "normal" }

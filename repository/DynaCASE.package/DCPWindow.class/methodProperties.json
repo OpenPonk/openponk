@@ -1,0 +1,12 @@
+{
+	"class" : {
+		"create" : "bliznjan 4/16/2014 19:18",
+		"defaultSpec" : "bliznjan 4/16/2014 18:56" },
+	"instance" : {
+		"button1" : "bliznjan 4/12/2014 13:21",
+		"button2" : "bliznjan 4/12/2014 13:21",
+		"initialExtent" : "bliznjan 4/16/2014 18:35",
+		"initializePresenter" : "bliznjan 4/17/2014 01:03",
+		"initializeWidgets" : "bliznjan 4/16/2014 21:19",
+		"title" : "bliznjan 4/13/2014 23:21",
+		"viewMorph" : "bliznjan 4/16/2014 18:29" } }

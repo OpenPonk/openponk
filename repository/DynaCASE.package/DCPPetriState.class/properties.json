@@ -1,0 +1,16 @@
+{
+	"category" : "DynaCASE-Practicing",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"width",
+		"heigth",
+		"name" ],
+	"name" : "DCPPetriState",
+	"pools" : [
+		 ],
+	"super" : "DCPClass",
+	"type" : "normal" }

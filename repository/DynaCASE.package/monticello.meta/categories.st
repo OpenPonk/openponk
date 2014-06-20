@@ -5,3 +5,4 @@ SystemOrganization addCategory: 'DynaCASE-controller'!
 SystemOrganization addCategory: 'DynaCASE-export'!
 SystemOrganization addCategory: 'DynaCASE-layout'!
 SystemOrganization addCategory: 'DynaCASE-model'!
+SystemOrganization addCategory: 'DynaCASE-visual'!

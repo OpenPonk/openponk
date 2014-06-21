@@ -6,9 +6,10 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		 ],
-	"name" : "DCVisualObject",
+		"radiusX",
+		"radiusY" ],
+	"name" : "DCVisualEllipse",
 	"pools" : [
 		 ],
-	"super" : "Object",
+	"super" : "DCVisualShape",
 	"type" : "normal" }

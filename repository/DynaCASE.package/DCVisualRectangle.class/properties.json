@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-visual",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"borderRadius" ],
+	"name" : "DCVisualRectangle",
+	"pools" : [
+		 ],
+	"super" : "DCVisualShape",
+	"type" : "normal" }

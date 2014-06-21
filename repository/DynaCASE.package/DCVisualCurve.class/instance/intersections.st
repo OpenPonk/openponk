@@ -1,0 +1,3 @@
+geometry
+intersections
+	^ self subclassResponsibility

@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-visual",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCVisualContainer",
+	"pools" : [
+		 ],
+	"super" : "DCVisualNode",
+	"type" : "normal" }

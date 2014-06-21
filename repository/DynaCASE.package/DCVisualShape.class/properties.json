@@ -1,0 +1,16 @@
+{
+	"category" : "DynaCASE-visual",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"fillColor",
+		"strokeColor",
+		"strokeWidth" ],
+	"name" : "DCVisualShape",
+	"pools" : [
+		 ],
+	"super" : "DCVisualGeometry",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+defaults
+defaultStrokeWidth
+	^ 2

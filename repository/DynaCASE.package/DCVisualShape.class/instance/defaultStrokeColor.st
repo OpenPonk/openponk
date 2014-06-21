@@ -1,0 +1,3 @@
+defaults
+defaultStrokeColor
+	^ Color black

@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-visual",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"p1",
+		"p2" ],
+	"name" : "DCVisualLine",
+	"pools" : [
+		 ],
+	"super" : "DCVisualCurve",
+	"type" : "normal" }

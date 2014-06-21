@@ -1,0 +1,16 @@
+{
+	"category" : "DynaCASE-visual",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"text",
+		"textColor",
+		"font" ],
+	"name" : "DCVisualText",
+	"pools" : [
+		 ],
+	"super" : "DCVisualNode",
+	"type" : "normal" }

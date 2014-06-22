@@ -1,3 +1,3 @@
 path commands
 moveTo: aPoint
-	^ self shouldBeImplemented
+	self position: aPoint

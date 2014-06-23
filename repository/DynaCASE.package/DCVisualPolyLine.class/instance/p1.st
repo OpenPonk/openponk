@@ -1,3 +1,3 @@
 accessing
 p1
-	self points first
+	self pointHandles first center.

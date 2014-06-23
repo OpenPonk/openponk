@@ -8,13 +8,14 @@ drawOn: aCanvas
 				absolute;
 				moveTo: self position;
 				relative.
-			lastPt := points first.
+			lastPt := pointHandles first center- self position.
 			builder moveTo: lastPt.
-			points
+			pointHandles
 				do: [ :pt | 
-					newPt := pt - lastPt.
-					lastPt := pt.
+					newPt := pt center - lastPt - self position.
+					lastPt := pt center- self position.
 					builder lineTo: newPt ] ].
 	stroke := aCanvas setStrokePaint: self strokeColor.
 	stroke width: self strokeWidth.
-	aCanvas drawShape: path
+	aCanvas drawShape: path.
+	self drawSubnodesOn: aCanvas

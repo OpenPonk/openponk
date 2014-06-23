@@ -1,3 +1,3 @@
 accessing
 p2
-	self points last
+	self pointHandles last center.

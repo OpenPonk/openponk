@@ -12,5 +12,5 @@ p1: aPoint1 p2: aPoint2
 	self height: (aPoint1 y - aPoint2 y) abs.
 	self addNode: p1Handle.
 	self addNode: p2Handle.
-	self session announce: (DCVisualNodeAdded node: p1Handle).
-	self session announce: (DCVisualNodeAdded node: p2Handle)
+"	self session announce: (DCVisualNodeAdded node: p1Handle).
+	self session announce: (DCVisualNodeAdded node: p2Handle)"

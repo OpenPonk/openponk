@@ -6,9 +6,9 @@ drawOn: aCanvas
 		createPath: [ :builder | 
 			builder
 				absolute;
-				moveTo: self position;
-				relative;
-				lineTo: self p2 - self p1 ].
+				moveTo: self p1;
+				lineTo: self p2 ].
 	stroke := aCanvas setStrokePaint: self strokeColor.
 	stroke width: self strokeWidth.
-	aCanvas drawShape: path
+	aCanvas drawShape: path.
+	self drawSubnodesOn: aCanvas

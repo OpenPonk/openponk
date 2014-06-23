@@ -6,11 +6,9 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"container",
-		"selected",
-		"subnodes" ],
-	"name" : "DCVisualNode",
+		 ],
+	"name" : "DCVisualNullContainer",
 	"pools" : [
 		 ],
-	"super" : "Morph",
+	"super" : "DCVisualNode",
 	"type" : "normal" }

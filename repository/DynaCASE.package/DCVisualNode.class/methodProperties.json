@@ -2,9 +2,15 @@
 	"class" : {
 		 },
 	"instance" : {
+		"addNode:" : "PeterUhnak 6/23/2014 07:59",
+		"container" : "PeterUhnak 6/23/2014 07:46",
+		"container:" : "PeterUhnak 6/23/2014 07:46",
 		"drawOn:" : "PeterUhnak 6/22/2014 01:03",
-		"moveBy:" : "PeterUhnak 6/21/2014 22:30",
-		"moveTo:" : "PeterUhnak 6/22/2014 00:52",
+		"drawSubnodesOn:" : "PeterUhnak 6/23/2014 07:58",
+		"moveBy:" : "PeterUhnak 6/23/2014 07:58",
 		"selected" : "PeterUhnak 6/22/2014 00:57",
 		"selected:" : "PeterUhnak 6/22/2014 00:57",
+		"session" : "PeterUhnak 6/23/2014 07:10",
+		"subnodeMoved:" : "PeterUhnak 6/23/2014 07:58",
+		"subnodes" : "PeterUhnak 6/23/2014 07:58",
 		"type" : "PeterUhnak 6/21/2014 19:28" } }

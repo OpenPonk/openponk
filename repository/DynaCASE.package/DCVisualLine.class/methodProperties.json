@@ -2,8 +2,11 @@
 	"class" : {
 		 },
 	"instance" : {
-		"drawOn:" : "PeterUhnak 6/21/2014 22:35",
-		"p1" : "PeterUhnak 6/21/2014 22:30",
-		"p1:p2:" : "PeterUhnak 6/21/2014 22:34",
-		"p2" : "PeterUhnak 6/21/2014 22:30",
+		"drawOn:" : "PeterUhnak 6/23/2014 08:00",
+		"moveBy:" : "PeterUhnak 6/23/2014 08:03",
+		"p1" : "PeterUhnak 6/23/2014 07:27",
+		"p1:p2:" : "PeterUhnak 6/23/2014 08:10",
+		"p2" : "PeterUhnak 6/23/2014 07:27",
+		"resetBounds" : "PeterUhnak 6/23/2014 08:08",
+		"subnodeMoved:" : "PeterUhnak 6/23/2014 07:58",
 		"type" : "PeterUhnak 6/22/2014 09:08" } }

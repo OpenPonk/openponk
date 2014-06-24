@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-SM-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCSmFinalState",
+	"pools" : [
+		 ],
+	"super" : "DCSmState",
+	"type" : "normal" }

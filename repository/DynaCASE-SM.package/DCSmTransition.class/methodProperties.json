@@ -1,0 +1,20 @@
+{
+	"class" : {
+		"from:to:" : "PeterUhnak 6/7/2014 00:13" },
+	"instance" : {
+		"container" : "PeterUhnak 6/4/2014 00:19",
+		"container:" : "PeterUhnak 6/4/2014 00:19",
+		"containingStateMachine" : "PeterUhnak 6/4/2014 00:04",
+		"effect" : "PeterUhnak 6/4/2014 00:19",
+		"effect:" : "PeterUhnak 6/4/2014 00:19",
+		"guard" : "PeterUhnak 6/4/2014 00:19",
+		"guard:" : "PeterUhnak 6/4/2014 00:19",
+		"initialize" : "PeterUhnak 6/4/2014 00:03",
+		"kind" : "PeterUhnak 6/4/2014 00:19",
+		"kind:" : "PeterUhnak 6/4/2014 00:19",
+		"source" : "PeterUhnak 6/4/2014 00:19",
+		"source:" : "PeterUhnak 6/4/2014 00:19",
+		"target" : "PeterUhnak 6/4/2014 00:19",
+		"target:" : "PeterUhnak 6/4/2014 00:19",
+		"trigger" : "PeterUhnak 6/4/2014 00:19",
+		"trigger:" : "PeterUhnak 6/4/2014 00:19" } }

@@ -1,0 +1,16 @@
+{
+	"category" : "DynaCASE-SM-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"kind",
+		"state",
+		"stateMachine" ],
+	"name" : "DCSmPseudostate",
+	"pools" : [
+		 ],
+	"super" : "DCSmVertex",
+	"type" : "normal" }

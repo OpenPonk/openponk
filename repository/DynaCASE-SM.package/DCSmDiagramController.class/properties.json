@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-SM-Controllers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"diagram" ],
+	"name" : "DCSmDiagramController",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

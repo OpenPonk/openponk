@@ -1,0 +1,3 @@
+private
+arrow
+	outputStream nextPutAll: ' -> '

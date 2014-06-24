@@ -1,0 +1,16 @@
+{
+	"category" : "DynaCASE-SM-Visual",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"endPoint",
+		"neighbourPoint",
+		"caption" ],
+	"name" : "DCSmVisualTransition",
+	"pools" : [
+		 ],
+	"super" : "DCVisualPolyLine",
+	"type" : "normal" }

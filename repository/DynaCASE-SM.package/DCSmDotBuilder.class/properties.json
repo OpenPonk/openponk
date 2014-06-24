@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-SM-Export",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"outputStream" ],
+	"name" : "DCSmDotBuilder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,20 @@
+{
+	"category" : "DynaCASE-SM-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"kind",
+		"container",
+		"effect",
+		"guard",
+		"source",
+		"target",
+		"trigger" ],
+	"name" : "DCSmTransition",
+	"pools" : [
+		 ],
+	"super" : "DCNamespace",
+	"type" : "normal" }

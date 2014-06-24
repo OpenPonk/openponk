@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-SM-Layout",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCSmLayoutState",
+	"pools" : [
+		 ],
+	"super" : "DCLayoutRectangle",
+	"type" : "normal" }

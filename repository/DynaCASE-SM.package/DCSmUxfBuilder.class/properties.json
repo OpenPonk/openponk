@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-SM-Export",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"writer",
+		"umletConverter" ],
+	"name" : "DCSmUxfBuilder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

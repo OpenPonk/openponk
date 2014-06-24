@@ -1,0 +1,12 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"addRegion:" : "PeterUhnak 6/6/2014 23:54",
+		"initialize" : "PeterUhnak 6/6/2014 23:30",
+		"is:ancestorOf:" : "PeterUhnak 6/4/2014 00:00",
+		"leastCommonRegionOf:and:" : "PeterUhnak 6/4/2014 00:01",
+		"leastCommonStateOf:and:" : "PeterUhnak 6/4/2014 00:02",
+		"region" : "PeterUhnak 6/7/2014 00:37",
+		"removeRegion:" : "PeterUhnak 6/6/2014 23:54",
+		"submachineState" : "PeterUhnak 6/7/2014 00:37" } }

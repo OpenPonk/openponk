@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-SM-Export",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCSmUxfDirector",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

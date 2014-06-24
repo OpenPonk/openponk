@@ -1,0 +1,14 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"buildHeader" : "PeterUhnak 6/13/2014 20:27",
+		"buildTransition:" : "PeterUhnak 6/13/2014 20:53",
+		"buildVertex:" : "PeterUhnak 6/13/2014 20:53",
+		"defaultWriter" : "PeterUhnak 6/13/2014 20:20",
+		"reset" : "PeterUhnak 6/13/2014 20:21",
+		"transitionElementType" : "PeterUhnak 6/13/2014 20:53",
+		"umletConverter" : "PeterUhnak 6/13/2014 20:45",
+		"vertexElementType:" : "PeterUhnak 6/13/2014 20:53",
+		"writeVertexCoordinates:" : "PeterUhnak 6/13/2014 20:43",
+		"writer" : "PeterUhnak 6/13/2014 20:20" } }

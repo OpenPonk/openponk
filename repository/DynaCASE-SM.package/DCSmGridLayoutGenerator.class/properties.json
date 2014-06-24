@@ -1,0 +1,17 @@
+{
+	"category" : "DynaCASE-SM-Layout",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"model",
+		"layout",
+		"width",
+		"cellSize" ],
+	"name" : "DCSmGridLayoutGenerator",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

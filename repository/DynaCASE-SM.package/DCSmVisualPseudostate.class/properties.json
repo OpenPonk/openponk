@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-SM-Visual",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"name" ],
+	"name" : "DCSmVisualPseudostate",
+	"pools" : [
+		 ],
+	"super" : "DCVisualContainer",
+	"type" : "normal" }

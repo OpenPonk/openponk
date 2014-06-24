@@ -1,0 +1,3 @@
+defaults
+external
+	^#external

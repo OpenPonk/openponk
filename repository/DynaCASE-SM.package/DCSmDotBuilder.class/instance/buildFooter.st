@@ -1,0 +1,3 @@
+building
+buildFooter
+	self string: '}'

@@ -1,0 +1,3 @@
+defaults
+shallowHistory
+	^#shallowHistory

@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-SM-Export",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCSmToUmletConverter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

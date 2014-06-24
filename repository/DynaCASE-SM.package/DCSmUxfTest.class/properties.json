@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-SM-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCSmUxfTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

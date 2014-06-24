@@ -1,0 +1,3 @@
+accessing
+containingStateMachine
+	^ container containingStateMachine

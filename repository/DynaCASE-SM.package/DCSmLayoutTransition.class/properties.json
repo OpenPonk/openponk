@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-SM-Layout",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCSmLayoutTransition",
+	"pools" : [
+		 ],
+	"super" : "DCLayoutLine",
+	"type" : "normal" }

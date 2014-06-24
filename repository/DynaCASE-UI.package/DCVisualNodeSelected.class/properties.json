@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-UI-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCVisualNodeSelected",
+	"pools" : [
+		 ],
+	"super" : "DCVisualNodeAnnouncement",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-UI-Palettes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"initialButton",
+		"forkButton" ],
+	"name" : "DCSmPseudostatePaletteGroup",
+	"pools" : [
+		 ],
+	"super" : "DCPaletteGroup",
+	"type" : "normal" }

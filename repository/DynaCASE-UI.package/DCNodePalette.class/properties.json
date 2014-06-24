@@ -1,0 +1,16 @@
+{
+	"category" : "DynaCASE-UI-Palettes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"curveGroup",
+		"shapeGroup",
+		"nodeGroup" ],
+	"name" : "DCNodePalette",
+	"pools" : [
+		 ],
+	"super" : "DCPalette",
+	"type" : "normal" }

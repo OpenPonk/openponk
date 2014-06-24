@@ -1,0 +1,17 @@
+{
+	"category" : "DynaCASE-UI-Windows",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"surface",
+		"content",
+		"draggedNode",
+		"selectedNode" ],
+	"name" : "DCCanvasMorph",
+	"pools" : [
+		 ],
+	"super" : "Morph",
+	"type" : "normal" }

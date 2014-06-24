@@ -1,0 +1,16 @@
+{
+	"category" : "DynaCASE-UI-Palettes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"pseudostatesGroup",
+		"statesGroup",
+		"transitionsGroup" ],
+	"name" : "DCSmPalette",
+	"pools" : [
+		 ],
+	"super" : "DCPalette",
+	"type" : "normal" }

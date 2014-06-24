@@ -1,0 +1,12 @@
+{
+	"class" : {
+		"defaultSpec" : "PeterUhnak 6/23/2014 19:17" },
+	"instance" : {
+		"canvasMorph" : "PeterUhnak 6/23/2014 18:58",
+		"defaultPaletteModel" : "PeterUhnak 6/23/2014 19:06",
+		"formModel" : "PeterUhnak 6/23/2014 19:02",
+		"initializePresenter" : "PeterUhnak 6/23/2014 19:03",
+		"initializeWidgets" : "PeterUhnak 6/23/2014 19:14",
+		"paletteModel" : "PeterUhnak 6/23/2014 19:02",
+		"session" : "PeterUhnak 6/23/2014 18:58",
+		"statusText" : "PeterUhnak 6/23/2014 18:58" } }

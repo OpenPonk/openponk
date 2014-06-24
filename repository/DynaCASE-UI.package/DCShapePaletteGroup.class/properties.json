@@ -1,0 +1,17 @@
+{
+	"category" : "DynaCASE-UI-Palettes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"ellipseButton",
+		"circleButton",
+		"rectangleButton",
+		"polygonButton" ],
+	"name" : "DCShapePaletteGroup",
+	"pools" : [
+		 ],
+	"super" : "DCPaletteGroup",
+	"type" : "normal" }

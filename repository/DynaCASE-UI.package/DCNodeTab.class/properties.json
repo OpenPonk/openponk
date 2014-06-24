@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-UI-Tabs",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCNodeTab",
+	"pools" : [
+		 ],
+	"super" : "DCTabModel",
+	"type" : "normal" }

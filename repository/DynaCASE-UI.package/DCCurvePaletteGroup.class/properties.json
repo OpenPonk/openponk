@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-UI-Palettes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"lineButton",
+		"polyLineButton" ],
+	"name" : "DCCurvePaletteGroup",
+	"pools" : [
+		 ],
+	"super" : "DCPaletteGroup",
+	"type" : "normal" }

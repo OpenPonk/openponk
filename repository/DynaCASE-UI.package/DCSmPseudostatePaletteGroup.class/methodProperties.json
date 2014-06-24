@@ -1,0 +1,8 @@
+{
+	"class" : {
+		"defaultSpec" : "PeterUhnak 6/20/2014 17:18" },
+	"instance" : {
+		"forkButton" : "PeterUhnak 6/20/2014 16:50",
+		"initialButton" : "PeterUhnak 6/20/2014 16:50",
+		"initializePresenter" : "lariover 6/23/2014 23:20",
+		"initializeWidgets" : "PeterUhnak 6/20/2014 17:03" } }

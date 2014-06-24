@@ -1,0 +1,8 @@
+{
+	"class" : {
+		"defaultSpec" : "PeterUhnak 6/21/2014 19:50" },
+	"instance" : {
+		"initializePresenter" : "lariover 6/22/2014 12:55",
+		"initializeWidgets" : "PeterUhnak 6/21/2014 19:56",
+		"lineButton" : "PeterUhnak 6/21/2014 19:55",
+		"polyLineButton" : "PeterUhnak 6/21/2014 19:55" } }

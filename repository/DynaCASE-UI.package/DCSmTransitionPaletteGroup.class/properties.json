@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-UI-Palettes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"transitionButton" ],
+	"name" : "DCSmTransitionPaletteGroup",
+	"pools" : [
+		 ],
+	"super" : "DCPaletteGroup",
+	"type" : "normal" }

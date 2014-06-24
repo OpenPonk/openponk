@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-UI-Palettes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"stateButton",
+		"finalStateButton" ],
+	"name" : "DCSmStatePaletteGroup",
+	"pools" : [
+		 ],
+	"super" : "DCPaletteGroup",
+	"type" : "normal" }

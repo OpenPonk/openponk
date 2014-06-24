@@ -1,12 +1,12 @@
 {
-	"category" : "DynaCASE-model",
+	"category" : "DynaCASE-Model",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		 ],
+		"announcer" ],
 	"name" : "DCModelObject",
 	"pools" : [
 		 ],

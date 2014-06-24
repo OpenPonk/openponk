@@ -1,14 +1,16 @@
 {
-	"category" : "DynaCASE-Visual",
+	"category" : "DynaCASE-Controllers",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"borderRadius" ],
-	"name" : "DCVisualRectangle",
+		"model",
+		"view",
+		"layout" ],
+	"name" : "DCController",
 	"pools" : [
 		 ],
-	"super" : "DCVisualShape",
+	"super" : "Object",
 	"type" : "normal" }

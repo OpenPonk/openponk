@@ -1,8 +1,9 @@
 SystemOrganization addCategory: #DynaCASE!
+SystemOrganization addCategory: 'DynaCASE-Announcements'!
+SystemOrganization addCategory: 'DynaCASE-Controllers'!
+SystemOrganization addCategory: 'DynaCASE-Export'!
+SystemOrganization addCategory: 'DynaCASE-Layout'!
+SystemOrganization addCategory: 'DynaCASE-Model'!
 SystemOrganization addCategory: 'DynaCASE-Practicing'!
-SystemOrganization addCategory: 'DynaCASE-announcements'!
-SystemOrganization addCategory: 'DynaCASE-controller'!
-SystemOrganization addCategory: 'DynaCASE-export'!
-SystemOrganization addCategory: 'DynaCASE-layout'!
-SystemOrganization addCategory: 'DynaCASE-model'!
-SystemOrganization addCategory: 'DynaCASE-visual'!
+SystemOrganization addCategory: 'DynaCASE-Visual'!
+SystemOrganization addCategory: 'DynaCASE-deprecated-controller'!

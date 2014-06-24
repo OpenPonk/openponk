@@ -1,14 +1,14 @@
 {
-	"category" : "DynaCASE-Visual",
+	"category" : "DynaCASE-Announcements",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"borderRadius" ],
-	"name" : "DCVisualRectangle",
+		 ],
+	"name" : "DCModelChanged",
 	"pools" : [
 		 ],
-	"super" : "DCVisualShape",
+	"super" : "DCModelAnnouncement",
 	"type" : "normal" }

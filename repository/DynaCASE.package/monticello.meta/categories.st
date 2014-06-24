@@ -6,4 +6,5 @@ SystemOrganization addCategory: 'DynaCASE-Layout'!
 SystemOrganization addCategory: 'DynaCASE-Model'!
 SystemOrganization addCategory: 'DynaCASE-Practicing'!
 SystemOrganization addCategory: 'DynaCASE-Visual'!
+SystemOrganization addCategory: 'DynaCASE-announcements'!
 SystemOrganization addCategory: 'DynaCASE-deprecated-controller'!

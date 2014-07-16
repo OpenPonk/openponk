@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2-SM",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCRoassalSmSimpleState",
+	"pools" : [
+		 ],
+	"super" : "RTBox",
+	"type" : "normal" }

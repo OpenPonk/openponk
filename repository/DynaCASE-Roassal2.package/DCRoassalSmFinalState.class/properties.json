@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2-SM",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCRoassalSmFinalState",
+	"pools" : [
+		 ],
+	"super" : "RTEllipse",
+	"type" : "normal" }

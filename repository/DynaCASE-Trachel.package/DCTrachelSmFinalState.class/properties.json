@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Trachel-SM",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCTrachelSmFinalState",
+	"pools" : [
+		 ],
+	"super" : "TRAbstractBoxShape",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Trachel-SM",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCTrachelSmInitialState",
+	"pools" : [
+		 ],
+	"super" : "TREllipseShape",
+	"type" : "normal" }

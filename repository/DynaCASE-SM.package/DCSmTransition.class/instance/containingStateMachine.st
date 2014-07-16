@@ -1,3 +1,0 @@
-accessing
-containingStateMachine
-	^ container containingStateMachine

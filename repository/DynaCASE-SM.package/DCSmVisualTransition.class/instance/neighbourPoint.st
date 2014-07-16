@@ -1,3 +1,0 @@
-accessing
-neighbourPoint
-^(neighbourPoint center).

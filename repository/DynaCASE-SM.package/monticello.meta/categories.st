@@ -4,4 +4,3 @@ SystemOrganization addCategory: 'DynaCASE-SM-Export'!
 SystemOrganization addCategory: 'DynaCASE-SM-Layout'!
 SystemOrganization addCategory: 'DynaCASE-SM-Model'!
 SystemOrganization addCategory: 'DynaCASE-SM-Tests'!
-SystemOrganization addCategory: 'DynaCASE-SM-Visual'!

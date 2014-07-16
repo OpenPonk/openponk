@@ -1,3 +1,0 @@
-testing
-isSubmachineState
-	^ submachine isNotNil

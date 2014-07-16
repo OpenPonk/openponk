@@ -1,3 +1,0 @@
-accessing
-containingStateMachine
-	^ self shouldBeImplemented

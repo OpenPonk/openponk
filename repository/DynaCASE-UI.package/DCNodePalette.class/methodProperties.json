@@ -1,9 +1,0 @@
-{
-	"class" : {
-		"defaultSpec" : "PeterUhnak 6/21/2014 20:49" },
-	"instance" : {
-		"curveGroup" : "PeterUhnak 6/21/2014 19:49",
-		"initializeWidgets" : "PeterUhnak 6/21/2014 20:01",
-		"nodeGroup" : "PeterUhnak 6/21/2014 20:01",
-		"onAction:" : "PeterUhnak 6/21/2014 20:01",
-		"shapeGroup" : "PeterUhnak 6/21/2014 19:49" } }

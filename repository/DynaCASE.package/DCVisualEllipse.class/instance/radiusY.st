@@ -1,3 +1,0 @@
-accessing
-radiusY
-	^ radiusY

@@ -1,3 +1,0 @@
-accessing
-session
-	^ DCSession instance

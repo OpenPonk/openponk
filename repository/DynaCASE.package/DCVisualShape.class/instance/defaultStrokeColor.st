@@ -1,3 +1,0 @@
-defaults
-defaultStrokeColor
-	^ Color black

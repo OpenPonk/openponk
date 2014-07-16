@@ -1,3 +1,0 @@
-defaults
-defaultFillColor
-	^ Color veryVeryLightGray

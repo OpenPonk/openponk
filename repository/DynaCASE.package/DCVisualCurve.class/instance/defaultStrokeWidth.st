@@ -1,3 +1,0 @@
-defaults
-defaultStrokeWidth
-	^ 2

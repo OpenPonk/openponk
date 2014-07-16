@@ -1,3 +1,0 @@
-path commands
-moveBy: aVector
-	

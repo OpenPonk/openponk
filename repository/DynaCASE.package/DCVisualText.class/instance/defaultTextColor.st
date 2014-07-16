@@ -1,3 +1,0 @@
-defaults
-defaultTextColor
-	^ Color black

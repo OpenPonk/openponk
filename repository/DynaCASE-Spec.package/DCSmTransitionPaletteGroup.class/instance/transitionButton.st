@@ -1,0 +1,3 @@
+initialization
+transitionButton
+	^ transitionButton

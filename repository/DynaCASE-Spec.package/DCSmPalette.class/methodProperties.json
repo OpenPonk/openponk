@@ -1,0 +1,9 @@
+{
+	"class" : {
+		"defaultSpec" : "PeterUhnak 6/20/2014 09:56" },
+	"instance" : {
+		"initializeWidgets" : "PeterUhnak 6/20/2014 16:55",
+		"onAction:" : "lariover 6/23/2014 17:46",
+		"pseudostatesGroup" : "PeterUhnak 6/20/2014 09:54",
+		"statesGroup" : "PeterUhnak 6/20/2014 09:54",
+		"transitionsGroup" : "PeterUhnak 6/20/2014 09:54" } }

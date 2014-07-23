@@ -9,8 +9,7 @@
 		"action",
 		"icon",
 		"name",
-		"button",
-		"elementFactory" ],
+		"button" ],
 	"name" : "DCPaletteItemModel",
 	"pools" : [
 		 ],

@@ -1,0 +1,17 @@
+{
+	"class" : {
+		"DevelopmentSupport" : "PeterUhnak 7/26/2014 15:05",
+		"baseConfigurationClassIfAbsent:" : "PeterUhnak 7/26/2014 15:05",
+		"ensureMetacello" : "PeterUhnak 7/26/2014 15:05",
+		"ensureMetacelloBaseConfiguration" : "PeterUhnak 7/26/2014 15:05",
+		"isMetacelloConfig" : "PeterUhnak 7/26/2014 15:05",
+		"load" : "PeterUhnak 7/26/2014 15:05",
+		"loadBleedingEdge" : "PeterUhnak 7/26/2014 15:05",
+		"loadDevelopment" : "PeterUhnak 7/26/2014 15:05",
+		"project" : "PeterUhnak 7/26/2014 15:05",
+		"validate" : "PeterUhnak 7/26/2014 15:05" },
+	"instance" : {
+		"baseline01:" : "PeterUhnak 7/26/2014 15:08",
+		"customProjectAttributes" : "PeterUhnak 7/26/2014 15:05",
+		"development:" : "PeterUhnak 7/26/2014 15:05",
+		"project" : "PeterUhnak 7/26/2014 15:05" } }

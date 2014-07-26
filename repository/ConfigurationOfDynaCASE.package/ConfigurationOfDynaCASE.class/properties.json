@@ -1,0 +1,14 @@
+{
+	"category" : "ConfigurationOfDynaCASE",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LastVersionLoad" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"project" ],
+	"name" : "ConfigurationOfDynaCASE",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

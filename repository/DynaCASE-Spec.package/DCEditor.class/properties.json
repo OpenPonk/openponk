@@ -7,10 +7,12 @@
 	"commentStamp" : "",
 	"instvars" : [
 		"roassalModel",
+		"roassalView",
 		"paletteModel",
 		"formModel",
 		"statusModel",
-		"onAddElement" ],
+		"onAddElement",
+		"selectedItem" ],
 	"name" : "DCEditor",
 	"pools" : [
 		 ],

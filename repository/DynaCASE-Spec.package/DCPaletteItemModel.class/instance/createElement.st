@@ -1,0 +1,3 @@
+protocol
+createElement
+	^ elementFactory value

@@ -1,6 +1,8 @@
 as yet unclassified
-viewClicked: anEvent
-	| element |
+reloadView
+	diagramController view: roassalView.
+	diagramController rebuild	"
+	diagramController controllers do: [ :each | roassalView add: each createView ].
 	selectedItem
 		ifNotNil: [ 
 			element := selectedItem createElement.
@@ -12,4 +14,4 @@ viewClicked: anEvent
 				on: TRMouseLeftClick
 				do: [ :event | self elementClicked: event ].
 			roassalView add: element.
-			roassalView signalUpdate ]
+			roassalView signalUpdate ]"

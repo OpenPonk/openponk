@@ -1,10 +1,10 @@
 initialization
 initializeWidgets
-	statusModel := self newText.
+"	statusModel := self newText."
 	roassalModel := self instantiate: RoassalModel.
-	formModel := self instantiate: DCForm.
+"	formModel := self instantiate: DCForm."
 	paletteModel := self instantiate: DCPaletteModel.
-	self selectSmPalette.
+	"self selectFsmPalette."
 	(self focusOrder)
 		add: roassalModel;
 		add: paletteModel;

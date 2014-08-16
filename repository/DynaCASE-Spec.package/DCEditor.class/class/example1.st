@@ -12,9 +12,9 @@ example1
 		add: second;
 		add: final.
 	t1 := DCFsmTransition from: initial to: first.
-	t2 := DCFsmTransition from: first to: second.
-	t3 := DCFsmTransition from: second to: first.
-	t4 := DCFsmTransition from: second to: final.
+	(t2 := DCFsmTransition from: first to: second) name: 'a'.
+	(t3 := DCFsmTransition from: second to: first) name: 'b'.
+	(t4 := DCFsmTransition from: second to: final) name: 'a'.
 	fsm
 		add: t1;
 		add: t2;

@@ -12,6 +12,5 @@ viewClicked: anEvent
 					controller view
 						on: TRMouseLeftClick
 						do: [ :event | self viewElementClicked: event ].
-					selectedItem := nil.
-					self statusModel text: ''.
-					 ] ]
+					self cancelSelection.
+					self statusModel text: '' ] ]

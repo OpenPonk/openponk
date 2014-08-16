@@ -35,6 +35,5 @@ selectFsmPalette
 									item
 										name: 'Cancel selection';
 										action: [ 
-													selectedItem := nil.
-													selectedElement := nil.
+													self cancelSelection.
 													self statusModel text: '' ] ] ]

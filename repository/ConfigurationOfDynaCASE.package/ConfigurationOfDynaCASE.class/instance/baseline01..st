@@ -12,6 +12,7 @@ baseline01: spec
 					repository: 'http://smalltalkhub.com/mc/ObjectProfile/Roassal2/main/' ].
 		spec 
 			package: 'DynaCASE';
+			package: 'DynaCASE-FSM';
 			package: 'DynaCASE-Roassal2';
 			package: 'DynaCASE-SM';
 			package: 'DynaCASE-Spec';

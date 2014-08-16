@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-FSM-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"source",
+		"target" ],
+	"name" : "DCFsmTransition",
+	"pools" : [
+		 ],
+	"super" : "DCNamedElement",
+	"type" : "normal" }

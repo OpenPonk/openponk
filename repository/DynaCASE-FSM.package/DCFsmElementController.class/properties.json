@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-FSM-Controller",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"viewBlock" ],
+	"name" : "DCFsmElementController",
+	"pools" : [
+		 ],
+	"super" : "DCController",
+	"type" : "normal" }

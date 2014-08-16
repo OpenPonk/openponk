@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-FSM-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCFsmFinalState",
+	"pools" : [
+		 ],
+	"super" : "DCFsmState",
+	"type" : "normal" }

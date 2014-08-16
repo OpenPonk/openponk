@@ -1,0 +1,11 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"addModelElement:" : "PeterUhnak 8/16/2014 08:06",
+		"controllers" : "PeterUhnak 8/15/2014 23:02",
+		"createController:" : "PeterUhnak 8/16/2014 08:07",
+		"findControllerByModel:" : "PeterUhnak 8/15/2014 22:45",
+		"initialize" : "PeterUhnak 8/16/2014 08:06",
+		"model:" : "PeterUhnak 8/11/2014 07:33",
+		"rebuild" : "PeterUhnak 8/15/2014 22:59" } }

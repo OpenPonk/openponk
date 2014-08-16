@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-FSM-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCFsmControllersTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

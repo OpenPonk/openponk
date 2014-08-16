@@ -1,0 +1,16 @@
+{
+	"category" : "DynaCASE-FSM-Controller",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"controllerFactory",
+		"controllers",
+		"modelToControllerMapping" ],
+	"name" : "DCFsmController",
+	"pools" : [
+		 ],
+	"super" : "DCController",
+	"type" : "normal" }

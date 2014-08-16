@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-FSM-Controller",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCFsmFinalStateController",
+	"pools" : [
+		 ],
+	"super" : "DCFsmStateController",
+	"type" : "normal" }

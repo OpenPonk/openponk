@@ -1,3 +1,3 @@
 accessing
 name
-	^ name value
+	^ self nameHolder value

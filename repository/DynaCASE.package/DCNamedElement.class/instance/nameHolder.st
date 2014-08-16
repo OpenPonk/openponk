@@ -1,3 +1,3 @@
 accessing
 nameHolder
-	^ name ifNil: [ name := NewValueHolder new ]
+	^ name ifNil: [ name := NewValueHolder value: '' ]

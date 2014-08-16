@@ -2,8 +2,8 @@
 	"class" : {
 		 },
 	"instance" : {
-		"addElement:" : "PeterUhnak 5/23/2014 10:14",
+		"add:" : "PeterUhnak 8/16/2014 10:00",
 		"elements" : "PeterUhnak 5/24/2014 13:05",
-		"hasElement:" : "PeterUhnak 5/23/2014 10:14",
+		"has:" : "PeterUhnak 8/16/2014 10:01",
 		"initialize" : "PeterUhnak 6/6/2014 23:30",
-		"removeElement:" : "PeterUhnak 5/23/2014 10:15" } }
+		"remove:" : "PeterUhnak 8/16/2014 10:01" } }

@@ -1,3 +1,3 @@
 testing
-hasElement: anElement
+has: anElement
 	^ elements contains:  anElement 

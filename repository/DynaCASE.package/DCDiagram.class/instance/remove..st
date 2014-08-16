@@ -1,3 +1,3 @@
 accessing
-removeElement: anElement
+remove: anElement
 	elements remove: anElement 

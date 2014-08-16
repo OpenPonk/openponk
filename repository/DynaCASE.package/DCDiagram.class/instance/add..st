@@ -1,5 +1,5 @@
 adding
-addElement: anElement
+add: anElement
 	elements add: anElement 
 
 	

@@ -1,4 +1,4 @@
 SystemOrganization addCategory: #'DynaCASE-FSM'!
-SystemOrganization addCategory: 'DynaCASE-FSM-Controller'!
-SystemOrganization addCategory: 'DynaCASE-FSM-Model'!
+SystemOrganization addCategory: 'DynaCASE-FSM-Controllers'!
+SystemOrganization addCategory: 'DynaCASE-FSM-Models'!
 SystemOrganization addCategory: 'DynaCASE-FSM-Tests'!

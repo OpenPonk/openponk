@@ -1,4 +1,8 @@
 accessing
 model: aFsmModel
 	model := aFsmModel.
-	aFsmModel elements do: [ :each | self addModelElement: each ]
+	model
+		when: DCElementAdded
+		do: [ :event | 
+			self addModelElement: event element.
+			self updateView ]

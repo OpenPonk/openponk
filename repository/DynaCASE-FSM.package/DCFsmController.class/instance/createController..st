@@ -1,4 +1,4 @@
-accessing
+private
 createController: aModel
 	| controller |
 	controller := (modelToControllerMapping at: aModel class) new.

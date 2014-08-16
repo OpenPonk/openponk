@@ -2,6 +2,7 @@
 	"class" : {
 		 },
 	"instance" : {
-		"createView" : "PeterUhnak 8/15/2014 22:46",
-		"initialize" : "PeterUhnak 8/11/2014 09:07",
+		"createView" : "PeterUhnak 8/16/2014 10:22",
+		"defaultViewBlock" : "PeterUhnak 8/16/2014 10:27",
+		"initialize" : "PeterUhnak 8/16/2014 10:10",
 		"view" : "PeterUhnak 8/15/2014 22:48" } }

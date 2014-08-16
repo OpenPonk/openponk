@@ -1,3 +1,3 @@
-as yet unclassified
+accessing
 view
 	^ view ifNil: [ view := self createView ]

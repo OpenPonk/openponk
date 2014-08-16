@@ -1,13 +1,13 @@
 initialization
 defaultViewBlock
-	^ [ :fromVertex :toVertex :rtView | 
-	| label labelled |
-	view := RTLine edgeFrom: fromVertex to: toVertex.
-	view model: self model name.
+	^ [ :fromVertex :toVertex | 
+	| label |
+	view := DCRTMultiLine edgeFrom: fromVertex to: toVertex.
 	view shape color: Color black.
-	labelled := RTLabelled new.
-	labelled view: rtView.
-	labelled initializeElement: view.
+	view shape attachPoint: RTShorterDistanceWithOffsetAttachPoint instance.
+	label := DCRTEdgeLabel new.
+	label text: self model name.
+	view + label.
 	self model nameHolder
 		whenChangedDo: [ :newValue | 
 			label text: newValue.

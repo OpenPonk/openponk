@@ -13,8 +13,9 @@
 		"paletteModel",
 		"formModel",
 		"statusModel",
-		"onAddElement",
-		"selectedItem" ],
+		"selectedItem",
+		"selectedItemType",
+		"selectedElement" ],
 	"name" : "DCEditor",
 	"pools" : [
 		 ],

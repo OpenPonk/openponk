@@ -1,15 +1,15 @@
 as yet unclassified
 viewClicked: anEvent
-	| element |
-	selectedItem
-		ifNotNil: [ 
-			element := selectedItem createElement.
-			selectedItem button state: false.
-			selectedItem := nil.
-			element translateTo: anEvent position.
-			element @ RTDraggable.
-			element
-				on: TRMouseLeftClick
-				do: [ :event | self elementClicked: event ].
-			roassalView add: element.
-			roassalView signalUpdate ]
+	selectedItemType = #vertex
+		ifTrue: [ 
+			selectedItem
+				ifNotNil: [ 
+					| element controller |
+					element := selectedItem new.
+					diagram add: element.
+					controller := diagramController findControllerByModel: element.
+					controller view translateTo: anEvent position.
+					controller view
+						on: TRMouseLeftClick
+						do: [ :event | self viewElementClicked: event ].
+					selectedItem := nil ] ]

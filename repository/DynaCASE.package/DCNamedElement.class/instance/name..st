@@ -1,4 +1,3 @@
 accessing
 name: aString
-	name := aString.
-	self announceChanged
+	self nameHolder value: aString

@@ -1,3 +1,3 @@
 accessing
 model: aModel
-	self subclassResponsibility
+	model := aModel

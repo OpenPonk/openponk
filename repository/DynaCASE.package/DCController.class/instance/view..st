@@ -1,3 +1,3 @@
 accessing
 view: aView
-	self subclassResponsibility
+	view := aView

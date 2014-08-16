@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"position" ],
+	"name" : "DCRTEdgeLabel",
+	"pools" : [
+		 ],
+	"super" : "RTLabel",
+	"type" : "normal" }

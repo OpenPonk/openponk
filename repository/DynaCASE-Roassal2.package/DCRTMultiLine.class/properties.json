@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"head" ],
+	"name" : "DCRTMultiLine",
+	"pools" : [
+		 ],
+	"super" : "RTMultiLine",
+	"type" : "normal" }

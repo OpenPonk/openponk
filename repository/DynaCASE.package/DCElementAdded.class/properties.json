@@ -1,14 +1,14 @@
 {
-	"category" : "DynaCASE-announcements",
+	"category" : "DynaCASE-Announcements",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		"instance" ],
+		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"announcer" ],
-	"name" : "DCSession",
+		 ],
+	"name" : "DCElementAdded",
 	"pools" : [
 		 ],
-	"super" : "Object",
+	"super" : "DCModelElementEvent",
 	"type" : "normal" }

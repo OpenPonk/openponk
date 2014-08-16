@@ -1,3 +1,4 @@
 accessing
 announcer
-	^ announcer ifNil: [ announcer := Announcer new ]
+	announcer ifNil: [ self announcer: Announcer new ].
+	^ announcer

@@ -6,9 +6,9 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"object" ],
-	"name" : "DCObjectAnnouncement",
+		 ],
+	"name" : "DCElementRemoved",
 	"pools" : [
 		 ],
-	"super" : "Announcement",
+	"super" : "DCModelElementEvent",
 	"type" : "normal" }

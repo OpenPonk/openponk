@@ -2,6 +2,7 @@
 	"class" : {
 		 },
 	"instance" : {
-		"announce:" : "PeterUhnak 6/24/2014 09:04",
-		"announceChanged" : "lariover 6/24/2014 14:09",
-		"announcer" : "PeterUhnak 6/24/2014 09:02" } }
+		"announce:" : "PeterUhnak 8/16/2014 23:03",
+		"announcer" : "PeterUhnak 8/16/2014 23:02",
+		"announcer:" : "PeterUhnak 8/16/2014 23:02",
+		"when:do:" : "PeterUhnak 8/16/2014 23:01" } }

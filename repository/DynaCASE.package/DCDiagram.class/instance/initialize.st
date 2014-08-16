@@ -1,4 +1,4 @@
 initialization
 initialize
 	super initialize.
-	elements := Bag new
+	elements := OrderedCollection new

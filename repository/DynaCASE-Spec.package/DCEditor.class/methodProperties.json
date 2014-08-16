@@ -1,24 +1,25 @@
 {
 	"class" : {
-		"defaultSpec" : "PeterUhnak 8/15/2014 22:13",
+		"defaultSpec" : "PeterUhnak 8/16/2014 23:48",
 		"example1" : "PeterUhnak 8/16/2014 10:36",
 		"open" : "PeterUhnak 7/26/2014 15:25" },
 	"instance" : {
 		"formModel" : "PeterUhnak 7/11/2014 21:49",
 		"initialExtent" : "PeterUhnak 7/16/2014 07:47",
 		"initializePresenter" : "PeterUhnak 8/11/2014 11:31",
-		"initializeWidgets" : "PeterUhnak 8/16/2014 22:42",
+		"initializeWidgets" : "PeterUhnak 8/16/2014 23:47",
 		"open" : "PeterUhnak 7/23/2014 22:32",
 		"openDiagram:" : "PeterUhnak 8/16/2014 22:13",
 		"openWithSpec" : "PeterUhnak 7/23/2014 22:32",
 		"paletteModel" : "PeterUhnak 7/11/2014 21:49",
 		"reloadView" : "PeterUhnak 8/16/2014 23:31",
 		"roassalModel" : "PeterUhnak 7/11/2014 21:47",
-		"selectFsmPalette" : "PeterUhnak 8/16/2014 22:57",
+		"selectFsmPalette" : "PeterUhnak 8/16/2014 23:52",
 		"selectItem:" : "PeterUhnak 8/16/2014 22:43",
-		"selectTransitionItem:" : "PeterUhnak 8/16/2014 22:43",
-		"selectVertexItem:" : "PeterUhnak 8/16/2014 22:43",
+		"selectTransitionItem:" : "PeterUhnak 8/16/2014 23:50",
+		"selectVertexItem:" : "PeterUhnak 8/16/2014 23:49",
 		"statusModel" : "PeterUhnak 7/16/2014 07:43",
+		"textEditorModel" : "PeterUhnak 8/16/2014 23:47",
 		"title" : "PeterUhnak 7/16/2014 07:43",
-		"viewClicked:" : "PeterUhnak 8/16/2014 23:28",
-		"viewElementClicked:" : "PeterUhnak 8/16/2014 23:39" } }
+		"viewClicked:" : "PeterUhnak 8/16/2014 23:50",
+		"viewElementClicked:" : "PeterUhnak 8/16/2014 23:50" } }

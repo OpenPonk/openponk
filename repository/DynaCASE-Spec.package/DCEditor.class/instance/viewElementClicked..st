@@ -13,4 +13,5 @@ viewElementClicked: anEvent
 							element := selectedItem from: fromElement to: toElement.
 							diagram add: element.
 							selectedElement := nil.
-							selectedItem := nil ] ] ]
+							selectedItem := nil.
+							self statusModel text: '' ] ] ]

@@ -15,7 +15,8 @@
 		"statusModel",
 		"selectedItem",
 		"selectedItemType",
-		"selectedElement" ],
+		"selectedElement",
+		"textEditorModel" ],
 	"name" : "DCEditor",
 	"pools" : [
 		 ],

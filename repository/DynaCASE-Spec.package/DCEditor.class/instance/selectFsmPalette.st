@@ -27,4 +27,14 @@ selectFsmPalette
 						addItem: [ :item | 
 									item
 										name: 'Transition';
-										action: [ self selectTransitionItem: DCFsmTransition ] ] ]
+										action: [ self selectTransitionItem: DCFsmTransition ] ] ];
+		addGroup: [ :group | 
+					group
+						name: 'Actions';
+						addItem: [ :item | 
+									item
+										name: 'Cancel selection';
+										action: [ 
+													selectedItem := nil.
+													selectedElement := nil.
+													self statusModel text: '' ] ] ]

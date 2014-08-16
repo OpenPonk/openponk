@@ -1,3 +1,0 @@
-protocol
-createElement
-	^ elementFactory value

@@ -1,4 +1,5 @@
 SystemOrganization addCategory: #'DynaCASE-UML'!
-SystemOrganization addCategory: 'DynaCASE-UML-export'!
-SystemOrganization addCategory: 'DynaCASE-UML-model'!
-SystemOrganization addCategory: 'DynaCASE-UML-tests'!
+SystemOrganization addCategory: 'DynaCASE-UML-Convertors'!
+SystemOrganization addCategory: 'DynaCASE-UML-Exports'!
+SystemOrganization addCategory: 'DynaCASE-UML-Models'!
+SystemOrganization addCategory: 'DynaCASE-UML-Tests'!

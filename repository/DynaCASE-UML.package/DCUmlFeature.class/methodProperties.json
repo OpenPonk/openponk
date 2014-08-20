@@ -1,11 +1,14 @@
 {
 	"class" : {
-		 },
+		"private" : "PeterUhnak 8/20/2014 18:58",
+		"protected" : "PeterUhnak 8/20/2014 18:58",
+		"public" : "PeterUhnak 8/20/2014 18:57" },
 	"instance" : {
+		"initialize" : "PeterUhnak 8/20/2014 18:57",
 		"isAbstract" : "PeterUhnak 5/24/2014 10:09",
 		"isAbstract:" : "PeterUhnak 5/24/2014 10:09",
 		"isClassSide" : "PeterUhnak 5/24/2014 10:09",
-		"isClassSide:" : "PeterUhnak 5/24/2014 10:09",
+		"isClassSide:" : "PeterUhnak 8/20/2014 18:43",
 		"stereotype" : "PeterUhnak 5/24/2014 10:09",
 		"stereotype:" : "PeterUhnak 5/24/2014 10:09",
 		"visibility" : "PeterUhnak 5/24/2014 10:09",

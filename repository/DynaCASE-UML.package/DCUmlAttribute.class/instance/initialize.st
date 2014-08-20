@@ -1,4 +1,4 @@
-accessing
+initialization
 initialize
 	super initialize.
-	multiplicity := (DCUmlMultiplicity new) min: '1'; max: '1'.
+	multiplicity := DCUmlMultiplicity one

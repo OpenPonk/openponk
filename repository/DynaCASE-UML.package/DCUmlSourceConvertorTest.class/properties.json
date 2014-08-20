@@ -1,15 +1,14 @@
 {
-	"category" : "DynaCASE-UML-Models",
+	"category" : "DynaCASE-UML-Tests",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"defaultValue",
-		"type" ],
-	"name" : "DCUmlParameter",
+		 ],
+	"name" : "DCUmlSourceConvertorTest",
 	"pools" : [
 		 ],
-	"super" : "DCNamedElement",
+	"super" : "TestCase",
 	"type" : "normal" }

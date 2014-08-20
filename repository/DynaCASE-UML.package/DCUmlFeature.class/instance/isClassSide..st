@@ -1,3 +1,3 @@
 accessing
-isClassSide: anObject
-	isClassSide := anObject
+isClassSide: aBoolean
+	isClassSide := aBoolean

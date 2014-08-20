@@ -1,15 +1,15 @@
 {
-	"category" : "DynaCASE-UML-Models",
+	"category" : "DynaCASE-UML-Tests",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"defaultValue",
-		"type" ],
-	"name" : "DCUmlParameter",
+		"firstInstance",
+		"secondInstance" ],
+	"name" : "DCUmlSCDummy",
 	"pools" : [
 		 ],
-	"super" : "DCNamedElement",
+	"super" : "TestCase",
 	"type" : "normal" }

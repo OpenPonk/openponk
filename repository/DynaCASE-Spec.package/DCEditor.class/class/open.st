@@ -1,3 +1,7 @@
 instance creation
 open
-	self new open
+	| fsm |
+	fsm := DCFsm new.
+	self new
+		open;
+		openDiagram: fsm

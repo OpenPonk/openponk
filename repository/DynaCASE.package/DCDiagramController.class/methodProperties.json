@@ -1,0 +1,14 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"addModelElement:" : "PeterUhnak 8/29/2014 23:17",
+		"controllers" : "PeterUhnak 8/29/2014 23:17",
+		"createController:" : "PeterUhnak 8/29/2014 23:17",
+		"findControllerByModel:" : "PeterUhnak 8/29/2014 23:17",
+		"findControllerByView:" : "PeterUhnak 8/29/2014 23:17",
+		"initialize" : "PeterUhnak 8/29/2014 23:19",
+		"initializePalette:editor:" : "PeterUhnak 8/29/2014 23:17",
+		"model:" : "PeterUhnak 8/29/2014 23:22",
+		"rebuild" : "PeterUhnak 8/29/2014 23:17",
+		"updateView" : "PeterUhnak 8/29/2014 23:17" } }

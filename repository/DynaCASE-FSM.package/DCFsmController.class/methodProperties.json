@@ -2,14 +2,6 @@
 	"class" : {
 		 },
 	"instance" : {
-		"addModelElement:" : "PeterUhnak 8/16/2014 23:21",
-		"controllers" : "PeterUhnak 8/15/2014 23:02",
-		"createController:" : "PeterUhnak 8/16/2014 08:07",
-		"findControllerByModel:" : "PeterUhnak 8/15/2014 22:45",
-		"findControllerByView:" : "PeterUhnak 8/16/2014 23:36",
-		"initialize" : "PeterUhnak 8/16/2014 08:06",
-		"initializePalette:" : "PeterUhnak 8/16/2014 22:11",
-		"menuPalette" : "PeterUhnak 8/16/2014 22:09",
-		"model:" : "PeterUhnak 8/16/2014 23:29",
-		"rebuild" : "PeterUhnak 8/16/2014 23:22",
-		"updateView" : "PeterUhnak 8/16/2014 23:21" } }
+		"initialize" : "PeterUhnak 8/29/2014 23:19",
+		"initializePalette:editor:" : "PeterUhnak 8/29/2014 23:22",
+		"rebuild" : "PeterUhnak 8/16/2014 23:22" } }

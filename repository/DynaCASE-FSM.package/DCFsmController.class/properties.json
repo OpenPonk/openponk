@@ -6,11 +6,9 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"controllerFactory",
-		"controllers",
-		"modelToControllerMapping" ],
+		 ],
 	"name" : "DCFsmController",
 	"pools" : [
 		 ],
-	"super" : "DCController",
+	"super" : "DCDiagramController",
 	"type" : "normal" }

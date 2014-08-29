@@ -1,7 +1,6 @@
 initialization
 initialize
 	super initialize.
-	modelToControllerMapping := Dictionary new.
 	modelToControllerMapping
 		at: DCFsmInitialState put: DCFsmInitialStateController;
 		at: DCFsmState put: DCFsmStateController;

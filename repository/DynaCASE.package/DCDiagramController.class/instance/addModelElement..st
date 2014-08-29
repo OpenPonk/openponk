@@ -1,4 +1,4 @@
-as yet unclassified
+adding
 addModelElement: aModelElement
 	| controller viewElement |
 	controller := self createController: aModelElement.

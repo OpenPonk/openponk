@@ -1,0 +1,16 @@
+{
+	"category" : "DynaCASE-UML-Controllers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"controllerFactory",
+		"controllers",
+		"modelToControllerMapping" ],
+	"name" : "DCUmlController",
+	"pools" : [
+		 ],
+	"super" : "DCController",
+	"type" : "normal" }

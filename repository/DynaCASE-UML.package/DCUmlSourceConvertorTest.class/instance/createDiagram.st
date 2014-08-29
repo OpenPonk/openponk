@@ -6,7 +6,7 @@ createDiagram
 	class
 		addAttribute:
 				(DCUmlAttribute new
-						name: 'firstInstnace';
+						name: 'firstInstance';
 						type: 'mixed';
 						features: (DCUmlFeature new visibility: DCUmlFeature private);
 						yourself);

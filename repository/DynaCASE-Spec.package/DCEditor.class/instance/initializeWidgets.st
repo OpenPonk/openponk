@@ -6,7 +6,6 @@ initializeWidgets
 	roassalModel := self instantiate: RoassalModel.
 	paletteModel := self instantiate: DCPaletteModel.
 	self cancelSelection.
-"	self selectFsmPalette."
 	self focusOrder
 		add: roassalModel;
 		add: paletteModel;

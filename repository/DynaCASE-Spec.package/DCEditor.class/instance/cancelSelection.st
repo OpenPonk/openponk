@@ -3,4 +3,4 @@ cancelSelection
 	selectedElement := nil.
 	selectedItem := nil.
 	selectedItemType := #form.
-	self formModel element: nil
+	self formModel controller: nil

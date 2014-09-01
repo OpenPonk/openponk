@@ -7,8 +7,9 @@
 	"commentStamp" : "",
 	"instvars" : [
 		"nameField",
+		"textField",
 		"node",
-		"element" ],
+		"controller" ],
 	"name" : "DCForm",
 	"pools" : [
 		 ],

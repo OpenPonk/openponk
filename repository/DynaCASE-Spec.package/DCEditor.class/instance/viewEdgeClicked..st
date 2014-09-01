@@ -4,4 +4,4 @@ viewEdgeClicked: anEvent
 		ifTrue: [ 
 			| controller |
 			controller := diagramController findControllerByView: anEvent element.
-			self formModel element: controller model ]
+			self formModel controller: controller ]

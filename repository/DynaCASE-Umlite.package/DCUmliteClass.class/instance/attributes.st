@@ -1,0 +1,3 @@
+accessing
+attributes
+	^ attributesHolder value

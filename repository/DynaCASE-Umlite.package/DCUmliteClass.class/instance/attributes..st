@@ -1,0 +1,3 @@
+accessing
+attributes: aStringCollection
+	attributesHolder value: aStringCollection

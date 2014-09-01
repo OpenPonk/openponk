@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Umlite-Controllers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"viewBlock" ],
+	"name" : "DCUmliteElementController",
+	"pools" : [
+		 ],
+	"super" : "DCController",
+	"type" : "normal" }

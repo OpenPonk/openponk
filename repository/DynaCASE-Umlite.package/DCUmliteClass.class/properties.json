@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Umlite-Models",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"attributesHolder" ],
+	"name" : "DCUmliteClass",
+	"pools" : [
+		 ],
+	"super" : "DCNamedElement",
+	"type" : "normal" }

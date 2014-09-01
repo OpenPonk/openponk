@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Umlite-Controllers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCUmliteAssociationController",
+	"pools" : [
+		 ],
+	"super" : "DCUmliteElementController",
+	"type" : "normal" }

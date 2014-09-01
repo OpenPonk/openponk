@@ -2,7 +2,7 @@
 	"class" : {
 		 },
 	"instance" : {
-		"addModelElement:" : "PeterUhnak 8/29/2014 23:17",
+		"addModelElement:" : "PeterUhnak 9/1/2014 19:59",
 		"controllers" : "PeterUhnak 8/29/2014 23:17",
 		"createController:" : "PeterUhnak 8/29/2014 23:17",
 		"findControllerByModel:" : "PeterUhnak 8/29/2014 23:17",
@@ -10,5 +10,5 @@
 		"initialize" : "PeterUhnak 8/29/2014 23:19",
 		"initializePalette:editor:" : "PeterUhnak 8/29/2014 23:17",
 		"model:" : "PeterUhnak 8/29/2014 23:22",
-		"rebuild" : "PeterUhnak 8/29/2014 23:17",
+		"rebuild" : "PeterUhnak 9/1/2014 19:53",
 		"updateView" : "PeterUhnak 8/29/2014 23:17" } }

@@ -1,0 +1,23 @@
+{
+	"category" : "DynaCASE-Roassal2",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"parent",
+		"elements",
+		"textHolders",
+		"nest",
+		"background",
+		"translator",
+		"callbacks",
+		"groups",
+		"draggableBackground",
+		"backgroundWidth" ],
+	"name" : "DCDynamicTextBuilder",
+	"pools" : [
+		 ],
+	"super" : "RTBuilder",
+	"type" : "normal" }

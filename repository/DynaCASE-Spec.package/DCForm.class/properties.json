@@ -9,7 +9,9 @@
 		"nameField",
 		"textField",
 		"node",
-		"controller" ],
+		"controller",
+		"whenNameFieldChanged",
+		"whenTextFieldChanged" ],
 	"name" : "DCForm",
 	"pools" : [
 		 ],

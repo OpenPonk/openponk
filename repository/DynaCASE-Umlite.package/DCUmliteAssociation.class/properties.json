@@ -1,5 +1,5 @@
 {
-	"category" : "DynaCASE-Umlite-Controllers",
+	"category" : "DynaCASE-Umlite-Models",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
@@ -8,8 +8,8 @@
 	"instvars" : [
 		"source",
 		"target" ],
-	"name" : "DCUmliteAssociationController",
+	"name" : "DCUmliteAssociation",
 	"pools" : [
 		 ],
-	"super" : "DCUmliteElementController",
+	"super" : "DCNamedElement",
 	"type" : "normal" }

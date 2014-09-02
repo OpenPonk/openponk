@@ -14,7 +14,7 @@ initializePalette: aPalette editor: anEditor
 						addItem: [ :item | 
 									item
 										name: 'Transition';
-										action: [ self shouldBeImplemented ] ] ];
+										action: [ anEditor selectTransitionItem: DCUmliteAssociation ] ] ];
 		addGroup: [ :group | 
 					group
 						name: 'Actions';

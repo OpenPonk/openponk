@@ -4,6 +4,7 @@ update
 	corner := background trachelShape encompassingRectangle origin.
 	elements
 		do: [ :e | 
+			e update.
 			translator translateTopLeftOf: e to: corner.
 			corner := corner + (0 @ e height) ].
 	encompassingRectangle := elements anyOne encompassingRectangle.

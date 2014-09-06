@@ -13,10 +13,8 @@ addLine: aTextOrValueHolder
 		whenChangedDo: [ :newValue | 
 			label text: newValue.
 			parent
-				ifNil: [ 
-					self update.
-					self update ]
-				ifNotNil: [
+				ifNil: [ self update ]
+				ifNotNil: [ 
 					parent preUpdate.
 					parent update.
 					parent update ] ].

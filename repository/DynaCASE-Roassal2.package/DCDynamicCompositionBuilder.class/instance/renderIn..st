@@ -11,5 +11,4 @@ renderIn: aView
 			g renderIn: view.
 			cb := TRTranslationCallback block: [ :shape :step | g background translateBy: step ].
 			background trachelShape addCallback: cb ].
-	self update.
 	self update

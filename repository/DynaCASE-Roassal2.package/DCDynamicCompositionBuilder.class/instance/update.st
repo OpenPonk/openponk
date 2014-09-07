@@ -1,6 +1,12 @@
 as yet unclassified
 update
-	| corner encompassingRectangle off elements |
+	| corner encompassingRectangle off elements maxWidth |
+	maxWidth := groups anyOne width.
+	groups do: [ :g | maxWidth := maxWidth max: g width ].
+	groups
+		do: [ :g | 
+			g width: maxWidth.
+			g update ].
 	elements := groups collect: [ :g | g background ].
 	corner := background trachelShape encompassingRectangle origin.
 	elements

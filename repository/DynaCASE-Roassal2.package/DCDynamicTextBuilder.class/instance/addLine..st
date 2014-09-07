@@ -12,10 +12,6 @@ addLine: aTextOrValueHolder
 	lineTextHolder
 		whenChangedDo: [ :newValue | 
 			label text: newValue.
-			parent
-				ifNil: [ self update ]
-				ifNotNil: [ 
-					parent preUpdate.
-					parent update.
-					parent update ] ].
+			element update.
+			parent ifNil: [ self update ] ifNotNil: [ parent update ] ].
 	view ifNotNil: [ self elementAdded: element ]

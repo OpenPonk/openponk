@@ -11,7 +11,10 @@ example3
 		name: 'SecondClass';
 		attributes: '-attrX' lines asOrderedCollection;
 		yourself.
-	a1 := DCUmliteAssociation from: firstClass to: secondClass.
+	(a1 := DCUmliteAssociation from: firstClass to: secondClass)
+		name: 'association';
+		sourceName: '+firstClass[1]';
+		targetName: '+secondClass[1..*]'.
 	diagram
 		add: firstClass;
 		add: secondClass;

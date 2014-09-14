@@ -7,4 +7,4 @@ removeLine: index
 	cb := callbacks removeAt: index.
 	background trachelShape removeCallback: cb ifAbsent: [  ].
 	view removeElement: el.
-	self update
+	parent ifNil: [ self update ] ifNotNil: [ parent update ]

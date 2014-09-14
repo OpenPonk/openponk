@@ -1,6 +1,6 @@
 as yet unclassified
 width
 	| width |
-	width := elements anyOne width.
+	width := 50.
 	elements do: [ :e | width := width max: e width ].
 	^ width

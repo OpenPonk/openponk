@@ -1,7 +1,7 @@
 hooks
 elementAdded: anElement
 	| cb |
-	self update.
+	parent ifNil: [ self update ] ifNotNil: [ parent update ].
 	cb := TRTranslationCallback block: [ :shape :step | anElement translateBy: step ].
 	callbacks add: cb.
 	background trachelShape addCallback: cb.

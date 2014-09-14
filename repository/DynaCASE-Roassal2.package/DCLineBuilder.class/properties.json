@@ -4,12 +4,15 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "PeterUhnak 9/8/2014 22:08",
 	"instvars" : [
-		"background",
-		"groups",
-		"translator" ],
-	"name" : "DCDynamicCompositionBuilder",
+		"edge",
+		"sourceName",
+		"targetName",
+		"lineName",
+		"sourceSubname",
+		"targetSubname" ],
+	"name" : "DCLineBuilder",
 	"pools" : [
 		 ],
 	"super" : "RTBuilder",

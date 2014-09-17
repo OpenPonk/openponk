@@ -2,13 +2,17 @@ as yet unclassified
 reloadView
 	diagramController view: roassalView.
 	diagramController rebuild.
-	roassalView elements
-		do: [ :each | 
-			each
-				on: TRMouseLeftClick
-				do: [ :event | self viewElementClicked: event ] ].
-	roassalView edges
-		do: [ :each | 
-			each
-				on: TRMouseLeftClick
-				do: [ :event | self viewEdgeClicked: event ] ]
+	diagramController controllers
+		do: [ :ctrl | 
+			| element |
+			element := ctrl view.
+			(element isKindOf: RTElement)
+				ifTrue: [ 
+					element
+						on: TRMouseLeftClick
+						do: [ :event | self viewElementClicked: event ] ].
+			(element isKindOf: RTEdge)
+				ifTrue: [ 
+					element
+						on: TRMouseLeftClick
+						do: [ :event | self viewEdgeClicked: event ] ] ]

@@ -5,6 +5,12 @@ viewElementClicked: anEvent
 			| controller |
 			controller := diagramController findControllerByView: anEvent element.
 			self formModel controller: controller ].
+	selectedItemType = #delete
+		ifTrue: [ 
+			| controller |
+			controller := diagramController findControllerByView: anEvent element.
+			diagram remove: controller model.
+			self cancelSelection ].
 	selectedItemType = #transition
 		ifTrue: [ 
 			selectedItem

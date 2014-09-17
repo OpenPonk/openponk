@@ -21,12 +21,12 @@ defaultViewBlock
 		addShape: label;
 		addShape: sourceLabel;
 		addShape: targetLabel.
-	callback := TRRemoveCallback new
+	callback := TRRemoveCallback
 		block: [ :shape | 
 			label remove.
 			sourceLabel remove.
 			targetLabel remove ].
-	view trachelShape addCallback: callback.
+	view trachelShape shapes first addCallback: callback.
 	TRConstraint
 		stick: label
 		between: view from trachelShape

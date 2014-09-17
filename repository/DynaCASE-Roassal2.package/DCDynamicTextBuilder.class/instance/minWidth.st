@@ -1,3 +1,3 @@
-as yet unclassified
+layout
 minWidth
 	^ backgroundWidth ifNil: [ ^ 50 ]

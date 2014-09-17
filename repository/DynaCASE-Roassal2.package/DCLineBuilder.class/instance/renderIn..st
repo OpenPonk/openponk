@@ -1,4 +1,4 @@
-as yet unclassified
+hooks
 renderIn: aView
 	| lineLabel callback |
 	super renderIn: aView.

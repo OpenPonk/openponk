@@ -1,4 +1,4 @@
-as yet unclassified
+updating
 update
 	| corner encompassingRectangle off elements maxWidth |
 	maxWidth := groups anyOne width.

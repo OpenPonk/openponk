@@ -1,3 +1,3 @@
-as yet unclassified
+accessing
 width: aNumber
 	backgroundWidth := aNumber

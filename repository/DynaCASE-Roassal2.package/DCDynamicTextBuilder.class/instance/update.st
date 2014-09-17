@@ -1,4 +1,4 @@
-as yet unclassified
+updating
 update
 	| corner encompassingRectangle off origin box |
 	corner := background trachelShape encompassingRectangle origin.

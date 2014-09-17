@@ -8,7 +8,8 @@
 		"findControllerByModel:" : "PeterUhnak 8/29/2014 23:17",
 		"findControllerByView:" : "PeterUhnak 8/29/2014 23:17",
 		"initialize" : "PeterUhnak 8/29/2014 23:19",
-		"initializePalette:editor:" : "PeterUhnak 8/29/2014 23:17",
-		"model:" : "PeterUhnak 8/29/2014 23:22",
-		"rebuild" : "PeterUhnak 9/1/2014 19:53",
+		"initializePalette:editor:" : "PeterUhnak 9/17/2014 20:13",
+		"model:" : "PeterUhnak 9/17/2014 20:08",
+		"rebuild" : "PeterUhnak 9/17/2014 23:40",
+		"removeModelElement:" : "PeterUhnak 9/18/2014 00:25",
 		"updateView" : "PeterUhnak 8/29/2014 23:17" } }

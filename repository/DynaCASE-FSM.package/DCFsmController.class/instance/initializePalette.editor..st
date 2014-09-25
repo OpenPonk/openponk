@@ -32,6 +32,8 @@ initializePalette: aPalette editor: anEditor
 						addItem: [ :item | 
 									item
 										name: 'Cancel selection';
-										action: [ 
-													anEditor cancelSelection.
-													anEditor statusModel text: '' ] ] ]
+										action: [ anEditor cancelSelection ] ];
+						addItem: [ :item | 
+									item
+										name: 'Delete';
+										action: [ anEditor selectDelete ] ] ]

@@ -1,4 +1,4 @@
-as yet unclassified
+userinterface
 rebuild
 	controllers := nil.
 	self view cleanAll.

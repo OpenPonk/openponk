@@ -1,6 +1,6 @@
 instance creation
 example1
-	| editor fsm initial first second final t1 t2 t3 t4 |
+	| fsm initial first second final t1 t2 t3 t4 |
 	fsm := DCFsm new.
 	initial := DCFsmInitialState new.
 	first := DCFsmState new name: '1'.
@@ -20,6 +20,4 @@ example1
 		add: t2;
 		add: t3;
 		add: t4.
-	editor := self new.
-	editor open.
-	editor openDiagram: fsm
+	^ self openOn: fsm

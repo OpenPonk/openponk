@@ -1,9 +1,7 @@
 tests
 testCreateView
-	| controller viewBlock view |
-	controller := DCFsmInitialStateController new.
-	viewBlock := controller createView.
-	self assert: (viewBlock isMemberOf: BlockClosure).
-	self assert: viewBlock numArgs = 0.
-	view := viewBlock value.
-	self assert: (view isKindOf: RTElement).
+	| model controller view |
+	model := DCFsmInitialState new.
+	(controller := DCFsmInitialStateController new) model: model.
+	view := controller view.
+	self assert: (view isKindOf: RTElement)

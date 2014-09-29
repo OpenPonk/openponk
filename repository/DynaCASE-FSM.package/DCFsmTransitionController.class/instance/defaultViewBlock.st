@@ -2,7 +2,7 @@ initialization
 defaultViewBlock
 	^ [ :fromVertex :toVertex | 
 	| label callback |
-	view := RTArrow edgeFrom: fromVertex to: toVertex.
+	view := RTArrowwedLine edgeFrom: fromVertex to: toVertex.
 "	view := DCRTMultiLine edgeFrom: fromVertex to: toVertex."
 	view shape color: Color black.
 	view shape attachPoint: RTShorterDistanceWithOffsetAttachPoint instance.
@@ -12,7 +12,7 @@ defaultViewBlock
 		yourself.
 	self parent view canvas addShape: label.
 	callback := TRRemoveCallback block: [ :shape | label remove ].
-	view trachelShape shape1 addCallback: callback.
+	view trachelShape shapes first addCallback: callback.
 	TRConstraint
 		stick: label
 		between: view from trachelShape

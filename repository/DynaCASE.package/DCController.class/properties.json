@@ -8,7 +8,6 @@
 	"instvars" : [
 		"model",
 		"view",
-		"layout",
 		"parent" ],
 	"name" : "DCController",
 	"pools" : [

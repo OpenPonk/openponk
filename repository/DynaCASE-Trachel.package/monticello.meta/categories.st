@@ -1,2 +1,2 @@
 SystemOrganization addCategory: #'DynaCASE-Trachel'!
-SystemOrganization addCategory: 'DynaCASE-Trachel-SM'!
+SystemOrganization addCategory: 'DynaCASE-Trachel-Shapes'!

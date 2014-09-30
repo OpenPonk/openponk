@@ -14,8 +14,6 @@ baseline01: spec
 			package: 'DynaCASE';
 			package: 'DynaCASE-FSM';
 			package: 'DynaCASE-Roassal2';
-			package: 'DynaCASE-SM';
 			package: 'DynaCASE-Spec';
 			package: 'DynaCASE-Trachel';
-			package: 'DynaCASE-UML';
 			package: 'DynaCASE-Umlite'. ].

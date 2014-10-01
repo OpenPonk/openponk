@@ -1,0 +1,13 @@
+{
+	"class" : {
+		"defaultSpec" : "PeterUhnak 7/20/2014 14:36" },
+	"instance" : {
+		"addItem:" : "PeterUhnak 7/23/2014 22:15",
+		"addPaletteItem:" : "PeterUhnak 7/23/2014 20:14",
+		"createWidgets" : "PeterUhnak 7/23/2014 21:43",
+		"dynamicLayout" : "PeterUhnak 7/23/2014 21:59",
+		"height" : "PeterUhnak 7/23/2014 22:11",
+		"initialize" : "PeterUhnak 7/23/2014 21:43",
+		"name" : "PeterUhnak 7/23/2014 21:43",
+		"name:" : "PeterUhnak 7/23/2014 21:43",
+		"rebuildWidget" : "PeterUhnak 7/23/2014 22:07" } }

@@ -6,10 +6,17 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
+		"diagramController",
+		"diagram",
 		"roassalModel",
+		"roassalView",
 		"paletteModel",
 		"formModel",
-		"statusModel" ],
+		"statusModel",
+		"selectedItem",
+		"selectedItemType",
+		"selectedElement",
+		"textEditorModel" ],
 	"name" : "DCEditor",
 	"pools" : [
 		 ],

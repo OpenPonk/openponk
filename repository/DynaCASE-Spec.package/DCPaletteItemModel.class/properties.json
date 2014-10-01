@@ -1,0 +1,18 @@
+{
+	"category" : "DynaCASE-Spec-Palettes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"action",
+		"icon",
+		"name",
+		"button",
+		"elementFactory" ],
+	"name" : "DCPaletteItemModel",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

@@ -1,3 +1,0 @@
-accessing
-pseudostatesGroup
-	^ pseudostatesGroup

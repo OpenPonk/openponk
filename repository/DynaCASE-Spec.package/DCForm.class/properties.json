@@ -1,0 +1,19 @@
+{
+	"category" : "DynaCASE-Spec-Windows",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"nameField",
+		"textField",
+		"node",
+		"controller",
+		"whenNameFieldChanged",
+		"whenTextFieldChanged" ],
+	"name" : "DCForm",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

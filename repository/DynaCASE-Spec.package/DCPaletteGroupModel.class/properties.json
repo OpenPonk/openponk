@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-Spec-Palettes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"items",
+		"name" ],
+	"name" : "DCPaletteGroupModel",
+	"pools" : [
+		 ],
+	"super" : "DynamicComposableModel",
+	"type" : "normal" }

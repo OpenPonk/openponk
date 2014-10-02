@@ -2,7 +2,7 @@ initialization
 defaultViewBlock
 	^ [ :fromVertex :toVertex | 
 	| label callback sourceLabel targetLabel |
-	view := DCRTMultiLine edgeFrom: fromVertex to: toVertex.
+	view := RTMultiLine edgeFrom: fromVertex to: toVertex.
 	view shape color: Color black.
 	view shape attachPoint: RTShorterDistanceWithOffsetAttachPoint instance.
 	label := TRLabelShape new
@@ -25,23 +25,23 @@ defaultViewBlock
 		block: [ :shape | 
 			label remove.
 			sourceLabel remove.
-			targetLabel remove ].
+			targetLabel remove.].
 	view trachelShape shapes first addCallback: callback.
-	TRConstraint
+	DCTRConstraint
 		stick: label
-		between: view from trachelShape
-		and: view to trachelShape
-		offset: 0.5.
-	TRConstraint
+		betweenPointsOf: view
+		balance: 0.5
+		aboveBy: 12.
+	DCTRConstraint
 		stick: sourceLabel
-		between: view from trachelShape
-		and: view to trachelShape
-		offset: 0.2.
-	TRConstraint
+		betweenPointsOf: view
+		balance: 0.2
+		aboveBy: -12.
+	DCTRConstraint
 		stick: targetLabel
-		between: view from trachelShape
-		and: view to trachelShape
-		offset: 0.8.
+		betweenPointsOf: view
+		balance: 0.8
+		aboveBy: -12.
 	self model nameHolder
 		whenChangedDo: [ :newValue | 
 			label text: newValue.
@@ -57,4 +57,5 @@ defaultViewBlock
 			targetLabel text: newValue.
 			view update.
 			view view signalUpdate ].
-	view ]
+	view.
+	].

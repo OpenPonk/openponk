@@ -1,7 +1,7 @@
 {
 	"category" : "DynaCASE-FSM-Models",
 	"classinstvars" : [
-		 ],
+		"lineType" ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "",

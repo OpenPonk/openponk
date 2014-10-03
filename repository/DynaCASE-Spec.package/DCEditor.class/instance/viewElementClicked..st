@@ -14,18 +14,24 @@ viewElementClicked: anEvent
 	selectedItemType = #transition
 		ifTrue: [ 
 			selectedItem
-				ifNotNil: [ 
+				ifNotNil: [
 					selectedElement
-						ifNil: [ selectedElement := anEvent element ]
-						ifNotNil: [ 
+						ifNil: [
+							selectedElement := anEvent element.
+							interactiveLine := (DCInteractiveLine lineType: selectedItem lineType from: selectedElement on: diagramController) attachToMouse: anEvent element position.
+							]
+						ifNotNil: [
 							| element fromElement toElement controller |
 							fromElement := (diagramController findControllerByView: selectedElement) model.
 							toElement := (diagramController findControllerByView: anEvent element) model.
 							element := selectedItem from: fromElement to: toElement.
 							diagram add: element.
+							diagramController updateView.
 							controller := diagramController findControllerByModel: element.
 							controller view
 								on: TRMouseLeftClick
 								do: [ :event | self viewEdgeClicked: event ].
 							self cancelSelection.
-							self statusModel text: '' ] ] ]
+							self statusModel text: ''.
+							interactiveLine cancel.
+							]]]

@@ -9,10 +9,10 @@
 		"openUml" : "PeterUhnak 8/28/2014 21:41",
 		"umlite" : "PeterUhnak 8/29/2014 22:30" },
 	"instance" : {
-		"cancelSelection" : "PeterUhnak 9/17/2014 21:34",
+		"cancelSelection" : "bliznjan 10/3/2014 19:05",
 		"formModel" : "PeterUhnak 7/11/2014 21:49",
 		"initialExtent" : "PeterUhnak 7/16/2014 07:47",
-		"initializePresenter" : "bliznjan 10/3/2014 00:55",
+		"initializePresenter" : "bliznjan 10/3/2014 22:04",
 		"initializeWidgets" : "PeterUhnak 8/29/2014 23:20",
 		"open" : "PeterUhnak 7/23/2014 22:32",
 		"openDiagram:" : "PeterUhnak 9/1/2014 19:38",
@@ -29,4 +29,4 @@
 		"title" : "PeterUhnak 7/16/2014 07:43",
 		"viewClicked:" : "PeterUhnak 9/17/2014 23:20",
 		"viewEdgeClicked:" : "PeterUhnak 9/17/2014 23:37",
-		"viewElementClicked:" : "PeterUhnak 9/17/2014 23:36" } }
+		"viewElementClicked:" : "bliznjan 10/3/2014 22:09" } }

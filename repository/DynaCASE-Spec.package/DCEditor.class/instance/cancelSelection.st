@@ -4,4 +4,5 @@ cancelSelection
 	selectedItem := nil.
 	selectedItemType := #form.
 	self statusModel text: ''.
-	self formModel controller: nil
+	self formModel controller: nil.
+	interactiveLine ifNotNil: [interactiveLine cancel].

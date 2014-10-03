@@ -16,7 +16,9 @@
 		"selectedItem",
 		"selectedItemType",
 		"selectedElement",
-		"textEditorModel" ],
+		"textEditorModel",
+		"anEventposition",
+		"interactiveLine" ],
 	"name" : "DCEditor",
 	"pools" : [
 		 ],

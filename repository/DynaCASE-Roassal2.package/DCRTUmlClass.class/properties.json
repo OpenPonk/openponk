@@ -4,11 +4,13 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "PeterUhnak 10/3/2014 22:06",
 	"instvars" : [
-		"head" ],
-	"name" : "DCRTMultiLineArrowed",
+		"stereotype",
+		"name",
+		"content" ],
+	"name" : "DCRTUmlClass",
 	"pools" : [
 		 ],
-	"super" : "RTMultiLine",
+	"super" : "RTShape",
 	"type" : "normal" }

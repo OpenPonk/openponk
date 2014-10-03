@@ -1,6 +1,6 @@
 public
 trachelShapeFor: anEdge
-	| shape multiShape col fromPoint toPoint path  |
+	| shape multiShape col fromPoint toPoint path headTrachelShape |
 	col := self colorFor: anEdge.
 	fromPoint := attachPoint startingPointOf: anEdge.
 	toPoint := attachPoint endingPointOf: anEdge.
@@ -14,6 +14,8 @@ trachelShapeFor: anEdge
 		multiShape addShape: shape ].
 	head
 		ifNotNil: [ 
-			multiShape addShape: (head trachelShapeFor: anEdge)
-			].
+			head attachPoint: attachPoint.
+			head color: col.
+			headTrachelShape := head trachelShapeFor: anEdge.
+			multiShape addShape: headTrachelShape ].
 	^ multiShape

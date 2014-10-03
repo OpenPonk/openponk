@@ -1,0 +1,3 @@
+rendering
+contentFor: anElement
+	^ content

@@ -1,1 +1,0 @@
-I will be replaced with better implementation, no need to document me.

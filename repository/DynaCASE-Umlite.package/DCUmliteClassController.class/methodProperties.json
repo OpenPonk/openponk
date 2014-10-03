@@ -2,5 +2,7 @@
 	"class" : {
 		 },
 	"instance" : {
+		"attachInteractiveLine:" : "bliznjan 10/3/2014 21:36",
 		"initialize" : "PeterUhnak 9/7/2014 11:47",
-		"populateForm:" : "PeterUhnak 9/2/2014 08:32" } }
+		"populateForm:" : "PeterUhnak 9/2/2014 08:32",
+		"reloadViewPosition" : "bliznjan 10/3/2014 21:58" } }

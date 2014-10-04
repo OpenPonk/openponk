@@ -1,0 +1,7 @@
+{
+	"class" : {
+		"defaultSpec" : "PeterUhnak 10/4/2014 20:24" },
+	"instance" : {
+		"addTextInput:value:onChange:" : "PeterUhnak 10/4/2014 20:27",
+		"dynamicLayout" : "PeterUhnak 10/4/2014 20:24",
+		"initialize" : "PeterUhnak 10/4/2014 20:28" } }

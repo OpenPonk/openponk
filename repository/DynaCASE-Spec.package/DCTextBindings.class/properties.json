@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-Spec-Windows",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"view",
+		"diagram" ],
+	"name" : "DCTextBindings",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

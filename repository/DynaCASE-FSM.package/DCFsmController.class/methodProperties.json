@@ -3,6 +3,6 @@
 		 },
 	"instance" : {
 		"initialize" : "PeterUhnak 8/29/2014 23:19",
-		"initializePalette:editor:" : "PeterUhnak 9/24/2014 18:05",
+		"initializePalette:editor:" : "PeterUhnak 10/4/2014 15:27",
 		"rebuild" : "PeterUhnak 8/16/2014 23:22",
 		"removeModelElement:" : "PeterUhnak 9/24/2014 18:23" } }

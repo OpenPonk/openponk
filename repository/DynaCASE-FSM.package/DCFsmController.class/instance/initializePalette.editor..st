@@ -7,25 +7,25 @@ initializePalette: aPalette editor: anEditor
 						addItem: [ :item | 
 									item
 										name: 'Initial';
-										action: [ anEditor selectVertexItem: DCFsmInitialState ] ] ];
+										action: [ anEditor selectElementItem: DCFsmInitialState ] ] ];
 		addGroup: [ :group | 
 					group
 						name: 'States';
 						addItem: [ :item | 
 									item
 										name: 'State';
-										action: [ anEditor selectVertexItem: DCFsmState ] ];
+										action: [ anEditor selectElementItem: DCFsmState ] ];
 						addItem: [ :item | 
 									item
 										name: 'Final state';
-										action: [ anEditor selectVertexItem: DCFsmFinalState ] ] ];
+										action: [ anEditor selectElementItem: DCFsmFinalState ] ] ];
 		addGroup: [ :group | 
 					group
 						name: 'Transitions';
 						addItem: [ :item | 
 									item
 										name: 'Transition';
-										action: [ anEditor selectTransitionItem: DCFsmTransition ] ] ];
+										action: [ anEditor selectEdgeItem: DCFsmTransition ] ] ];
 		addGroup: [ :group | 
 					group
 						name: 'Actions';

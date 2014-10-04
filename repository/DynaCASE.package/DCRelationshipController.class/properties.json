@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-Controllers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"source",
+		"target" ],
+	"name" : "DCRelationshipController",
+	"pools" : [
+		 ],
+	"super" : "DCElementController",
+	"type" : "normal" }

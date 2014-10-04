@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Controllers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCElementController",
+	"pools" : [
+		 ],
+	"super" : "DCController",
+	"type" : "normal" }

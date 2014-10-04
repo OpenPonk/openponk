@@ -7,14 +7,14 @@ initializePalette: aPalette editor: anEditor
 						addItem: [ :item | 
 									item
 										name: 'Class';
-										action: [ anEditor selectVertexItem: DCUmliteClass ] ] ];
+										action: [ anEditor selectElementItem: DCUmliteClass ] ] ];
 		addGroup: [ :group | 
 					group
 						name: 'Transitions';
 						addItem: [ :item | 
 									item
 										name: 'Transition';
-										action: [ anEditor selectTransitionItem: DCUmliteAssociation ] ] ];
+										action: [ anEditor selectEdgeItem: DCUmliteAssociation ] ] ];
 		addGroup: [ :group | 
 					group
 						name: 'Actions';

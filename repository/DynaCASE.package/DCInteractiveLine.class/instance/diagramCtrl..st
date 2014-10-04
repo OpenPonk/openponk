@@ -1,4 +1,3 @@
-as yet unclassified
+accessing
 diagramCtrl: aDiagramController
-	diagramController ifNil: [ diagramController := aDiagramController].
-	
+	diagramController ifNil: [ diagramController := aDiagramController ]

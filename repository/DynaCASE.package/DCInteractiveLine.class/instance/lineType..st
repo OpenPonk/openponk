@@ -1,3 +1,3 @@
 accessing
 lineType: aLine
-	lineType := aLine.
+	lineType := aLine

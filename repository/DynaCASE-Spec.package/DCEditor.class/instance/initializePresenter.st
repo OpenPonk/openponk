@@ -1,8 +1,10 @@
 initialization
 initializePresenter
+	textEditorModel doItReceiver: (DCTextEditorBindings new).
 	roassalModel
 		script: [ :view :canvas | 
 			roassalView := view.
+			textEditorModel doItReceiver view: view.
 			view
 				on: TRMouseLeftClick
 				do: [ :event | self viewClicked: event ].

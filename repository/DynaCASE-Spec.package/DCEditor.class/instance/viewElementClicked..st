@@ -19,19 +19,18 @@ viewElementClicked: anElement
 						ifNil: [ 
 							selectedElement := anElement.
 							interactiveLine := (DCInteractiveLine lineType: selectedItem lineType from: selectedElement on: diagramController)
-								attachTo: selectedElement.
-							self statusModel text: 'Click on the second of two elements to connect them.' ]
+								attachToMouse: anElement position ]
 						ifNotNil: [ 
-							| relation fromElement toElement relationController |
+							| element fromElement toElement controller |
 							fromElement := (diagramController findControllerByView: selectedElement) model.
 							toElement := (diagramController findControllerByView: anElement) model.
-							relation := selectedItem from: fromElement to: toElement.
-							diagram add: relation.
+							element := selectedItem from: fromElement to: toElement.
+							diagram add: element.
 							diagramController updateView.
-							relationController := diagramController findControllerByModel: relation.
-							relationController view
+							controller := diagramController findControllerByModel: element.
+							controller view
 								on: TRMouseLeftClick
-								do: [ :event | self viewEdgeClicked: relationController view	"event element" ].
+								do: [ :event | self viewEdgeClicked: controller view	"event element" ].
 							self cancelSelection.
 							self statusModel text: ''.
 							interactiveLine cancel ] ] ]

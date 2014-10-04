@@ -10,9 +10,11 @@ reloadView
 				ifTrue: [ 
 					element
 						on: TRMouseLeftClick
-						do: [ :event | self viewElementClicked: event ] ].
+						do: [ :event | self viewElementClicked: event element ] ].
 			(element isKindOf: RTEdge)
 				ifTrue: [ 
 					element
 						on: TRMouseLeftClick
-						do: [ :event | self viewEdgeClicked: event ] ] ]
+						do: [ :event | 
+							"TODO: pass 'event element' once fixed in roassal"
+							self viewEdgeClicked: element ] ] ]

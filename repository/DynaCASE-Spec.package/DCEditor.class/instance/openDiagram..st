@@ -1,8 +1,7 @@
 instance creation
 openDiagram: aDiagram
 	diagram := aDiagram.
-	(diagram isKindOf: DCUmlClassDiagram)
-		ifTrue: [ diagramController := DCUmlController new ].
+	"todo: this shouldn't be hardcoded"
 	(diagram isKindOf: DCFsm)
 		ifTrue: [ diagramController := DCFsmController new ].
 	(diagram isKindOf: DCUmliteDiagram)

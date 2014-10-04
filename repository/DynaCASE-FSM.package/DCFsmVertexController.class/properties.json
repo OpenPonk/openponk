@@ -10,5 +10,5 @@
 	"name" : "DCFsmVertexController",
 	"pools" : [
 		 ],
-	"super" : "DCFsmElementController",
+	"super" : "DCElementController",
 	"type" : "normal" }

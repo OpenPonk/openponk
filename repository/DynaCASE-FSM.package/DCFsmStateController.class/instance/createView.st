@@ -1,8 +1,7 @@
 initialization
-defaultViewBlock
-	^ [ 
-	| label shape |
-	view := RTElement new.
+createView
+	| element label shape |
+	element := RTElement new.
 	shape := RTEllipse new
 		size: 50;
 		color: Color white;
@@ -10,11 +9,12 @@ defaultViewBlock
 	label := RTLabel new
 		height: 10;
 		text: self model name.
-	view + shape.
-	view + label.
+	element + shape.
+	element + label.
+	element @ RTDraggable.
 	self model nameHolder
 		whenChangedDo: [ :newValue | 
 			label text: newValue.
-			view update.
-			view view signalUpdate ].
-	view ]
+			element update.
+			element view signalUpdate ].
+	^ element

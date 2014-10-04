@@ -10,5 +10,5 @@
 	"name" : "DCFsmTransitionController",
 	"pools" : [
 		 ],
-	"super" : "DCFsmElementController",
+	"super" : "DCRelationshipController",
 	"type" : "normal" }

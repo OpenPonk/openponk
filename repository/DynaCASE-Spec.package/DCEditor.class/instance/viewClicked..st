@@ -1,6 +1,6 @@
 as yet unclassified
 viewClicked: anEvent
-	selectedItemType = #vertex
+	selectedItemType = #element
 		ifTrue: [ 
 			selectedItem
 				ifNotNil: [ 

@@ -11,7 +11,7 @@ viewElementClicked: anElement
 			controller := diagramController findControllerByView: anElement.
 			diagram remove: controller model.
 			self cancelSelection ].
-	selectedItemType = #transition
+	selectedItemType = #edge
 		ifTrue: [ 
 			selectedItem
 				ifNotNil: [ 

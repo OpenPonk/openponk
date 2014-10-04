@@ -1,7 +1,7 @@
 {
 	"class" : {
 		"defaultSpec" : "PeterUhnak 8/16/2014 23:56",
-		"example1" : "PeterUhnak 9/25/2014 05:41",
+		"example1" : "PeterUhnak 10/4/2014 14:11",
 		"example2" : "PeterUhnak 8/28/2014 22:13",
 		"example3" : "PeterUhnak 9/14/2014 11:35",
 		"openFsm" : "PeterUhnak 8/28/2014 21:41",
@@ -21,12 +21,12 @@
 		"reloadView" : "PeterUhnak 10/4/2014 13:55",
 		"roassalModel" : "PeterUhnak 7/11/2014 21:47",
 		"selectDelete" : "PeterUhnak 9/17/2014 19:59",
+		"selectEdgeItem:" : "PeterUhnak 10/4/2014 15:26",
+		"selectElementItem:" : "PeterUhnak 10/4/2014 15:27",
 		"selectItem:" : "PeterUhnak 9/17/2014 21:35",
-		"selectTransitionItem:" : "PeterUhnak 8/16/2014 23:50",
-		"selectVertexItem:" : "PeterUhnak 8/16/2014 23:49",
 		"statusModel" : "PeterUhnak 7/16/2014 07:43",
 		"textEditorModel" : "PeterUhnak 8/16/2014 23:47",
 		"title" : "PeterUhnak 7/16/2014 07:43",
-		"viewClicked:" : "PeterUhnak 10/4/2014 13:59",
+		"viewClicked:" : "PeterUhnak 10/4/2014 15:26",
 		"viewEdgeClicked:" : "PeterUhnak 10/4/2014 13:55",
-		"viewElementClicked:" : "PeterUhnak 10/4/2014 13:59" } }
+		"viewElementClicked:" : "PeterUhnak 10/4/2014 15:26" } }

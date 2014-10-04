@@ -1,7 +1,5 @@
 as yet unclassified
-initialize
-	super initialize.
-	viewBlock := [ 
+createView
 	| nameBuilder attrsBuilder composite |
 	composite := DCDynamicCompositionBuilder new.
 	nameBuilder := DCDynamicTextBuilder new.
@@ -24,4 +22,4 @@ initialize
 						ifTrue: [ attrsBuilder addLine: val ]
 						ifFalse: [ (attrsBuilder textHolders at: i) value: val ] ].
 			(1 to: linesCount - newCollection size) do: [ :i | attrsBuilder removeLastLine ] ].
-	composite background ]
+	^ composite background

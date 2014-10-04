@@ -6,10 +6,9 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"source",
-		"target" ],
+		 ],
 	"name" : "DCUmliteAssociationController",
 	"pools" : [
 		 ],
-	"super" : "DCUmliteElementController",
+	"super" : "DCRelationshipController",
 	"type" : "normal" }

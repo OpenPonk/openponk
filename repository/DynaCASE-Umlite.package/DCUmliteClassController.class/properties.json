@@ -10,5 +10,5 @@
 	"name" : "DCUmliteClassController",
 	"pools" : [
 		 ],
-	"super" : "DCUmliteElementController",
+	"super" : "DCElementController",
 	"type" : "normal" }

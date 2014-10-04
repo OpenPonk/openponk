@@ -1,3 +1,3 @@
 as yet unclassified
 lineType
-	^ lineType ifNil: [lineType := DCRTMultiLineArrowed].
+	^ lineType ifNil: [lineType := DCRTMultiLineHeaded].

@@ -17,7 +17,7 @@
 		"selectedItemType",
 		"selectedElement",
 		"textEditorModel",
-		"workspaceModel",
+		"anEventposition",
 		"interactiveLine" ],
 	"name" : "DCEditor",
 	"pools" : [

@@ -11,6 +11,6 @@ viewClicked: anEvent
 					controller view translateTo: anEvent position.
 					controller view
 						on: TRMouseLeftClick
-						do: [ :event | self viewElementClicked: event ].
+						do: [ :event | self viewElementClicked: event element ].
 					self cancelSelection.
 					self statusModel text: '' ] ]

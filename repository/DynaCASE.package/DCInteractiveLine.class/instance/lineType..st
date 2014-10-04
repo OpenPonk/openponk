@@ -1,3 +1,3 @@
-as yet unclassified
+accessing
 lineType: aLine
 	lineType := aLine.

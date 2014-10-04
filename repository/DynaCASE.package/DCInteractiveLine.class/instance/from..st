@@ -1,3 +1,3 @@
-as yet unclassified
+accessing
 from: anElement
 	source ifNil: [source := anElement].

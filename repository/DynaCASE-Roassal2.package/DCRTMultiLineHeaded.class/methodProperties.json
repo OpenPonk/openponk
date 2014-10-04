@@ -1,0 +1,11 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"attachPoint:" : "bliznjan 10/2/2014 22:11",
+		"color:" : "bliznjan 10/4/2014 20:10",
+		"head" : "bliznjan 10/2/2014 22:11",
+		"head:" : "bliznjan 10/2/2014 22:11",
+		"initialize" : "bliznjan 10/4/2014 20:10",
+		"trachelShapeFor:" : "bliznjan 10/4/2014 20:10",
+		"updateFor:trachelShape:" : "bliznjan 10/4/2014 20:10" } }

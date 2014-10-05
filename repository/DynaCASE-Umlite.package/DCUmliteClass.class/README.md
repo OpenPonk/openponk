@@ -1,4 +1,4 @@
-A DCUmliteClass represents class element.
+A DCUmliteClass represents class. It also handles the removal of all associations that are connected to the instance.
 
 Instance Variables
 	attributesHolder:		<Object>

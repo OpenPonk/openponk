@@ -2,5 +2,4 @@ userinterface
 rebuild
 	controllers := nil.
 	self view cleanAll.
-	model elements do: [ :each | self addModelElement: each ].
-	self controllers collect: [  ] self updateView
+	model elements do: [ :each | self addModelElement: each ]

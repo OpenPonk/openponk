@@ -13,7 +13,7 @@ createEdgeFrom: fromElement to: toElement
 	edge trachelShape shapes first addCallback: callback.
 	DCTRConstraint
 		stick: label
-		betweenEndpointsOf: edge
+		alongEdge: edge
 		balance: 0.8
 		aboveBy: 12.
 	self model nameHolder

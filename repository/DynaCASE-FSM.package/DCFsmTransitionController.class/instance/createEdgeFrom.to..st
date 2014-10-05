@@ -1,8 +1,8 @@
 as yet unclassified
 createEdgeFrom: fromElement to: toElement
 	| label callback edge |
-	edge := DCRTMultiLineHeaded edgeFrom: fromElement to: toElement.
-	edge shape color: Color black.
+	edge := DCFsmTransition lineInfo lineType edgeFrom: fromElement to: toElement.
+	DCFsmTransition lineInfo modifyLine: edge.
 	edge shape attachPoint: RTShorterDistanceWithOffsetAttachPoint instance.
 	label := TRLabelShape new
 		color: Color black;
@@ -13,7 +13,7 @@ createEdgeFrom: fromElement to: toElement
 	edge trachelShape shapes first addCallback: callback.
 	DCTRConstraint
 		stick: label
-		betweenPointsOf: edge
+		betweenEndpointsOf: edge
 		balance: 0.8
 		aboveBy: 12.
 	self model nameHolder

@@ -1,7 +1,7 @@
 as yet unclassified
 createEdgeFrom: fromElement to: toElement
 	| label callback edge |
-	edge := DCRTMultiLineHeaded edgeFrom: fromElement to: toElement.
+	edge := DCRTMultiLineArrowed edgeFrom: fromElement to: toElement.
 	edge shape color: Color black.
 	edge shape attachPoint: RTShorterDistanceWithOffsetAttachPoint instance.
 	label := TRLabelShape new
@@ -14,7 +14,7 @@ createEdgeFrom: fromElement to: toElement
 	DCTRConstraint
 		stick: label
 		betweenPointsOf: edge
-		balance: 0.5
+		balance: 0.8
 		aboveBy: 12.
 	self model nameHolder
 		whenChangedDo: [ :newValue | 

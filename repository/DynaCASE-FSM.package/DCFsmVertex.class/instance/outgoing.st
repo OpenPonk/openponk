@@ -1,3 +1,3 @@
-as yet unclassified
+accessing
 outgoing
-	^ DCFsmTransition allInstances select: [ :each | each source = self ]
+	^ (owner elements select: [ :each | each class = DCFsmTransition ]) select: [ :each | each source = self ]

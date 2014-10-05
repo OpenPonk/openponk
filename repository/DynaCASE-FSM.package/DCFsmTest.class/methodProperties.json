@@ -2,5 +2,7 @@
 	"class" : {
 		 },
 	"instance" : {
-		"createDiagram" : "PeterUhnak 9/29/2014 22:09",
-		"testCreateDiagram" : "PeterUhnak 8/10/2014 22:27" } }
+		"testAdd" : "PeterUhnak 10/5/2014 01:40",
+		"testRemoveState" : "PeterUhnak 10/5/2014 01:45",
+		"testRemoveTransition" : "PeterUhnak 10/5/2014 01:45",
+		"testTransitions" : "PeterUhnak 10/5/2014 01:42" } }

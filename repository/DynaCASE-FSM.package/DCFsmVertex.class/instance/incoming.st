@@ -1,3 +1,3 @@
-as yet unclassified
+accessing
 incoming
-	^ DCFsmTransition allInstances select: [ :each | each target = self ]
+	^ (owner elements select: [ :each | each class = DCFsmTransition ]) select: [ :each | each target = self ]

@@ -1,4 +1,4 @@
-A DCNamedElement is the parent class for all elements.
+A DCNamedElement represents all possible elements of diagram (such as classes, states, associations). 
 
 Instance Variables
 	name:		<Object>

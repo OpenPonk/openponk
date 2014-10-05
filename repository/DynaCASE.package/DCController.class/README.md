@@ -1,4 +1,4 @@
-A DCController is is the parent class to all controller classes.
+A DCController is the parent class to all controller classes.
 
 Instance Variables
 	model:		<Object>

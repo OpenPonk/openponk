@@ -1,5 +1,4 @@
-A DCModelObject is the parent class to all diagram and element classes.
-
+A DCModelObject represent the model (semantics).
 Instance Variables
 	announcer:		<Object>
 

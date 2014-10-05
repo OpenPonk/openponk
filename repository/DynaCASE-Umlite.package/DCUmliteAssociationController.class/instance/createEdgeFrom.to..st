@@ -1,8 +1,8 @@
 initialization
 createEdgeFrom: fromElement to: toElement
 	| edge label callback sourceLabel targetLabel |
-	edge := RTMultiLine edgeFrom: fromElement to: toElement.
-	edge shape color: Color black.
+	edge := DCUmliteAssociation lineInfo lineType edgeFrom: fromElement to: toElement.
+	DCUmliteAssociation lineInfo modifyLine: edge.
 	edge shape attachPoint: RTShorterDistanceWithOffsetAttachPoint instance.
 	label := TRLabelShape new
 		color: Color black;
@@ -28,17 +28,17 @@ createEdgeFrom: fromElement to: toElement
 	edge trachelShape shapes first addCallback: callback.
 	DCTRConstraint
 		stick: label
-		betweenPointsOf: edge
+		alongEdge: edge
 		balance: 0.5
 		aboveBy: 12.
 	DCTRConstraint
 		stick: sourceLabel
-		betweenPointsOf: edge
+		alongEdge: edge
 		balance: 0.2
 		aboveBy: -12.
 	DCTRConstraint
 		stick: targetLabel
-		betweenPointsOf: edge
+		alongEdge: edge
 		balance: 0.8
 		aboveBy: -12.
 	self model nameHolder

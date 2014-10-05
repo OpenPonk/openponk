@@ -1,0 +1,15 @@
+{
+	"class" : {
+		"defaultSpec" : "PeterUhnak 10/4/2014 20:24" },
+	"instance" : {
+		"addLabel:value:" : "PeterUhnak 10/5/2014 00:48",
+		"addTextArea:label:value:onChange:" : "PeterUhnak 10/5/2014 00:49",
+		"addTextInput:label:value:onChange:" : "PeterUhnak 10/5/2014 00:48",
+		"createWidgets" : "PeterUhnak 10/4/2014 23:43",
+		"defaultHeights" : "PeterUhnak 10/5/2014 01:03",
+		"dynamicLayout" : "PeterUhnak 10/5/2014 01:04",
+		"editController:" : "PeterUhnak 10/4/2014 23:57",
+		"heightFor:" : "PeterUhnak 10/5/2014 01:04",
+		"initialize" : "PeterUhnak 10/5/2014 00:04",
+		"rebuildWidget" : "PeterUhnak 10/4/2014 23:46",
+		"reset" : "PeterUhnak 10/4/2014 23:55" } }

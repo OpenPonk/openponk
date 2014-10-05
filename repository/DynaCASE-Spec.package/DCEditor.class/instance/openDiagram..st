@@ -1,6 +1,7 @@
 instance creation
 openDiagram: aDiagram
 	diagram := aDiagram.
+	textEditorModel doItReceiver diagram: diagram.
 	"todo: this shouldn't be hardcoded"
 	(diagram isKindOf: DCFsm)
 		ifTrue: [ diagramController := DCFsmController new ].

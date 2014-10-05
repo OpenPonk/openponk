@@ -2,7 +2,7 @@ initialization
 initializeWidgets
 	textEditorModel := self newText.
 	statusModel := self newLabel.
-	formModel := self instantiate: DCForm.
+	formModel := self instantiate: DCDynamicForm.
 	roassalModel := self instantiate: RoassalModel.
 	paletteModel := self instantiate: DCPaletteModel.
 	self cancelSelection.

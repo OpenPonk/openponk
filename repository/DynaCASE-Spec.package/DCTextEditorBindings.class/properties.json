@@ -1,14 +1,15 @@
 {
-	"category" : "DynaCASE-Spec-Palettes",
+	"category" : "DynaCASE-Spec-Windows",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"groups" ],
-	"name" : "DCPaletteModel",
+		"view",
+		"diagram" ],
+	"name" : "DCTextEditorBindings",
 	"pools" : [
 		 ],
-	"super" : "DynamicComposableModel",
+	"super" : "Object",
 	"type" : "normal" }

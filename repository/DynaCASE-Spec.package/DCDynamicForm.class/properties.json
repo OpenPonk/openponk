@@ -1,13 +1,15 @@
 {
-	"category" : "DynaCASE-Spec-Palettes",
+	"category" : "DynaCASE-Spec-Windows",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"groups" ],
-	"name" : "DCPaletteModel",
+		"components",
+		"controller",
+		"heights" ],
+	"name" : "DCDynamicForm",
 	"pools" : [
 		 ],
 	"super" : "DynamicComposableModel",

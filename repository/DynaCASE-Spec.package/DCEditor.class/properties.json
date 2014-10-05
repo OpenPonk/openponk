@@ -4,7 +4,7 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "lariover 10/4/2014 13:59",
+	"commentStamp" : "",
 	"instvars" : [
 		"diagramController",
 		"diagram",
@@ -17,7 +17,7 @@
 		"selectedItemType",
 		"selectedElement",
 		"textEditorModel",
-		"anEventposition",
+		"workspaceModel",
 		"interactiveLine" ],
 	"name" : "DCEditor",
 	"pools" : [

@@ -1,11 +1,10 @@
 as yet unclassified
 viewEdgeClicked: anElement
-	Transcript crShow: 'viewEdgeClicked'.
 	selectedItemType = #form
 		ifTrue: [ 
 			| controller |
 			controller := diagramController findControllerByView: anElement.
-			self formModel controller: controller ].
+			self formModel editController: controller ].
 	selectedItemType = #delete
 		ifTrue: [ 
 			| controller |

@@ -1,0 +1,1 @@
+A DCTRConstraint is a variation of Trachel TRContraint, extended by possibility of moving and sticking label below or above a point between endpoints of a line (not objects it is attached to).

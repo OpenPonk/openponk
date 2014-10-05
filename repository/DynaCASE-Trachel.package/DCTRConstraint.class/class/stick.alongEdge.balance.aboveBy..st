@@ -1,15 +1,15 @@
 public - sticking
-stick: aShape betweenPointsOf: anEdge balance: aFloat aboveBy: anInteger
+stick: aShape alongEdge: anEdge balance: aFloat aboveBy: anInteger
 	| callback b |
 	self
 		move: aShape
-		betweenPointsOf: anEdge
+		alongEdge: anEdge
 		balance: aFloat
 		aboveBy: anInteger.
 	b := [ :shape :step | 
 	self
 		move: aShape
-		betweenPointsOf: anEdge
+		alongEdge: anEdge
 		balance: aFloat
 		aboveBy: anInteger ].
 	callback := TRTranslationCallback block: b.

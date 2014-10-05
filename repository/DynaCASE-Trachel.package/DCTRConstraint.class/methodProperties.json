@@ -1,7 +1,7 @@
 {
 	"class" : {
-		"move:betweenPointsOf:balance:aboveBy:" : "bliznjan 10/4/2014 20:10",
-		"stick:betweenPointsOf:balance:" : "bliznjan 10/4/2014 20:10",
-		"stick:betweenPointsOf:balance:aboveBy:" : "bliznjan 10/4/2014 20:10" },
+		"move:alongEdge:balance:aboveBy:" : "bliznjan 10/5/2014 17:42",
+		"stick:alongEdge:balance:" : "bliznjan 10/5/2014 17:43",
+		"stick:alongEdge:balance:aboveBy:" : "bliznjan 10/5/2014 17:43" },
 	"instance" : {
 		 } }

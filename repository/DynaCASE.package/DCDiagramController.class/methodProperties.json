@@ -3,14 +3,16 @@
 		 },
 	"instance" : {
 		"addModelElement:" : "PeterUhnak 9/1/2014 19:59",
+		"cancelInteractiveLine" : "bliznjan 10/5/2014 10:14",
 		"controllers" : "PeterUhnak 8/29/2014 23:17",
 		"createController:" : "PeterUhnak 8/29/2014 23:17",
 		"findControllerByModel:" : "PeterUhnak 8/29/2014 23:17",
 		"findControllerByView:" : "PeterUhnak 8/29/2014 23:17",
+		"handleInteractiveLine:" : "bliznjan 10/5/2014 10:10",
 		"initialize" : "PeterUhnak 8/29/2014 23:19",
 		"initializePalette:editor:" : "PeterUhnak 9/17/2014 20:13",
 		"model:" : "PeterUhnak 9/17/2014 20:08",
 		"parent" : "PeterUhnak 10/4/2014 12:13",
 		"rebuild" : "PeterUhnak 10/5/2014 01:20",
 		"removeModelElement:" : "PeterUhnak 9/18/2014 00:25",
-		"updateView" : "PeterUhnak 10/5/2014 01:20" } }
+		"updateView" : "PeterUhnak 10/4/2014 13:16" } }

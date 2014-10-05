@@ -1,7 +1,7 @@
 {
 	"class" : {
 		"defaultSpec" : "PeterUhnak 10/5/2014 00:55",
-		"example1" : "PeterUhnak 10/4/2014 14:11",
+		"example1" : "PeterUhnak 9/25/2014 05:41",
 		"example2" : "PeterUhnak 8/28/2014 22:13",
 		"example3" : "PeterUhnak 9/14/2014 11:35",
 		"openFsm" : "PeterUhnak 8/28/2014 21:41",
@@ -15,7 +15,7 @@
 		"initializePresenter" : "PeterUhnak 10/4/2014 22:42",
 		"initializeWidgets" : "PeterUhnak 10/4/2014 23:34",
 		"open" : "PeterUhnak 7/23/2014 22:32",
-		"openDiagram:" : "PeterUhnak 10/4/2014 23:39",
+		"openDiagram:" : "PeterUhnak 10/4/2014 22:29",
 		"openWithSpec" : "PeterUhnak 10/4/2014 23:37",
 		"paletteModel" : "PeterUhnak 7/11/2014 21:49",
 		"reloadView" : "PeterUhnak 10/4/2014 13:55",
@@ -23,7 +23,7 @@
 		"selectDelete" : "bliznjan 10/4/2014 19:19",
 		"selectEdgeItem:" : "bliznjan 10/4/2014 19:19",
 		"selectElementItem:" : "bliznjan 10/4/2014 19:19",
-		"selectItem:" : "bliznjan 10/4/2014 19:10",
+		"selectItem:" : "PeterUhnak 9/17/2014 21:35",
 		"statusModel" : "PeterUhnak 7/16/2014 07:43",
 		"textEditorModel" : "PeterUhnak 8/16/2014 23:47",
 		"title" : "PeterUhnak 7/16/2014 07:43",

@@ -1,0 +1,1 @@
+A DCRTMultiLineHeaded is a combination of RTMultiLine and RTArrowedLine, ie. multiline with head.

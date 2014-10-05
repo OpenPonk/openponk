@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-Roassal2-Misc",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "bliznjan 10/5/2014 10:24",
+	"instvars" : [
+		"linetype",
+		"settingsblock" ],
+	"name" : "DCLineInfo",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

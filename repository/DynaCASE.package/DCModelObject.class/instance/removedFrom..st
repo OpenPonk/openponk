@@ -1,3 +1,4 @@
 removing
-removedFrom: anObject
+removedFrom: anOwner
+	self assert: self owner = anOwner.
 	owner := nil

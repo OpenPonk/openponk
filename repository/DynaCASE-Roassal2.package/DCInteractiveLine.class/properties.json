@@ -1,0 +1,22 @@
+{
+	"category" : "DynaCASE-Roassal2-Interactivity",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "lariover 10/5/2014 19:34",
+	"instvars" : [
+		"source",
+		"target",
+		"view",
+		"mouseBox",
+		"line",
+		"running",
+		"lineBuilder",
+		"onCompleteBlock",
+		"moveSubscription" ],
+	"name" : "DCInteractiveLine",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

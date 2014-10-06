@@ -1,0 +1,13 @@
+{
+	"class" : {
+		"lineInfo:from:on:" : "bliznjan 10/5/2014 11:05" },
+	"instance" : {
+		"cancel" : "PeterUhnak 10/6/2014 22:50",
+		"cleanup" : "PeterUhnak 10/6/2014 22:45",
+		"complete" : "PeterUhnak 10/6/2014 22:59",
+		"from:" : "PeterUhnak 10/6/2014 20:08",
+		"initialize" : "PeterUhnak 10/6/2014 20:19",
+		"lineBuilder:" : "PeterUhnak 10/6/2014 20:22",
+		"renderIn:" : "PeterUhnak 10/6/2014 22:46",
+		"to:" : "PeterUhnak 10/6/2014 22:19",
+		"whenCompleted:" : "PeterUhnak 10/6/2014 22:28" } }

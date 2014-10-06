@@ -14,4 +14,6 @@ reloadView
 						when: TRMouseLeftClick
 						do: [ :event | 
 							"TODO: pass 'event element' once fixed in roassal"
-							self viewEdgeClicked: element ] ] ]
+							self viewEdgeClicked: element ] ] ].
+	diagramController view canvas addMenu: '  + ' callback: [ RTZoomInMove on: diagramController view ].
+	diagramController view canvas addMenu: ' -  ' callback: [ RTZoomOutMove on: diagramController view ]

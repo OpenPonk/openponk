@@ -15,5 +15,6 @@ reloadView
 						do: [ :event | 
 							"TODO: pass 'event element' once fixed in roassal"
 							self viewEdgeClicked: element ] ] ].
-	diagramController view canvas addMenu: '  + ' callback: [ RTZoomInMove on: diagramController view ].
-	diagramController view canvas addMenu: ' -  ' callback: [ RTZoomOutMove on: diagramController view ]
+	roassalView canvas addMenu: '  + ' callback: [ RTZoomInMove on: roassalView ].
+	roassalView canvas addMenu: ' -  ' callback: [ RTZoomOutMove on: roassalView ].
+	diagramController updateView

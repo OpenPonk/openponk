@@ -17,20 +17,15 @@ viewElementClicked: anElement
 				ifNotNil: [ 
 					selectedElement
 						ifNil: [ 
-							selectedElement := anElement.
-							interactiveLine := (DCInteractiveLine lineInfo: selectedItem lineInfo from: selectedElement on: diagramController)
-								attachTo: selectedElement.
+							selectedElement := selectedItem value
+								from: anElement;
+								renderIn: roassalView;
+								yourself.
 							self statusModel text: 'Click on the second of two elements to connect them.' ]
 						ifNotNil: [ 
-							| relation fromElement toElement relationController |
-							fromElement := (diagramController findControllerByView: selectedElement) model.
-							toElement := (diagramController findControllerByView: anElement) model.
-							relation := selectedItem from: fromElement to: toElement.
-							diagram add: relation.
-							diagramController updateView.
-							relationController := diagramController findControllerByModel: relation.
-							relationController view
-								when: TRMouseLeftClick
-								do: [ :event | self viewEdgeClicked: relationController view	"event element" ].
-							self cancelSelection.
-							self statusModel text: '' ] ] ]
+							| controller |
+							selectedElement to: anElement.
+							controller := selectedElement complete.
+							controller view when: TRMouseLeftClick do: [ :event | self viewEdgeClicked: event element ].
+
+							self cancelSelection ] ] ]

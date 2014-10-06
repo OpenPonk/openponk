@@ -1,8 +1,8 @@
 selection handling
-selectItem: aControllerClass
+selectItem: aBlock
 	selectedItem
-		ifNil: [ selectedItem := aControllerClass ]
+		ifNil: [ selectedItem := aBlock ]
 		ifNotNil: [ 
-			selectedItem = aControllerClass
+			selectedItem = aBlock
 				ifTrue: [ selectedItem := nil ]
-				ifFalse: [ selectedItem := aControllerClass ] ]
+				ifFalse: [ selectedItem := aBlock ] ]

@@ -4,13 +4,9 @@ viewClicked: anEvent
 		ifTrue: [ 
 			selectedItem
 				ifNotNil: [ 
-					| element controller |
-					element := selectedItem new.
-					diagram add: element.
-					controller := diagramController findControllerByModel: element.
+					| controller |
+					controller := selectedItem value.
 					controller view translateTo: anEvent position.
-					controller view
-						when: TRMouseLeftClick
-						do: [ :event | self viewElementClicked: event element ].
-					self cancelSelection.
-					self statusModel text: '' ] ]
+					controller view when: TRMouseLeftClick do: [ :event | self viewElementClicked: event element ].
+					roassalView signalUpdate.
+					self cancelSelection ] ]

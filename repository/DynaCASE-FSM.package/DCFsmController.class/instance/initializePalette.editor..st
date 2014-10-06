@@ -1,5 +1,20 @@
 initialization
 initializePalette: aPalette editor: anEditor
+	| callback transitionCallback |
+	callback := [ :class | anEditor selectElementItem: [ self addModelElement: class new ] ].
+	transitionCallback := [ 
+	anEditor
+		selectEdgeItem: [ 
+			DCInteractiveLine new
+				lineBuilder: [ :fromView :toView | DCRTMultiLineHeaded edgeFrom: fromView to: toView ];
+				whenCompleted: [ :fromView :toView | 
+							| controller from to |
+							from := self findControllerByView: fromView.
+							to := self findControllerByView: toView.
+							controller := self addModelElement: (DCFsmTransition from: from model to: to model).
+							self updateView.
+							controller ];
+				yourself ] ].
 	aPalette
 		addGroup: [ :group | 
 					group
@@ -7,25 +22,25 @@ initializePalette: aPalette editor: anEditor
 						addItem: [ :item | 
 									item
 										name: 'Initial';
-										action: [ anEditor selectElementItem: DCFsmInitialState ] ] ];
+										action: [ callback value: DCFsmInitialState ] ] ];
 		addGroup: [ :group | 
 					group
 						name: 'States';
 						addItem: [ :item | 
 									item
 										name: 'State';
-										action: [ anEditor selectElementItem: DCFsmState ] ];
+										action: [ callback value: DCFsmState ] ];
 						addItem: [ :item | 
 									item
 										name: 'Final state';
-										action: [ anEditor selectElementItem: DCFsmFinalState ] ] ];
+										action: [ callback value: DCFsmFinalState ] ] ];
 		addGroup: [ :group | 
 					group
 						name: 'Transitions';
 						addItem: [ :item | 
 									item
 										name: 'Transition';
-										action: [ anEditor selectEdgeItem: DCFsmTransition ] ] ];
+										action: transitionCallback ] ];
 		addGroup: [ :group | 
 					group
 						name: 'Actions';

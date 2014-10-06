@@ -1,1 +1,0 @@
-A DCInteractiveLine is a temporary line displayed while creating associations. After the first element is chosen, it shows how could the line look like at the current moment.

@@ -1,11 +1,11 @@
 accessing
 model: aModel
 	model := aModel.
-	model
+"	model
 		when: DCElementAdded
 		do: [ :event | 
 			self addModelElement: event element.
-			self updateView ].
+			self updateView ]."
 	model
 		when: DCElementRemoved
 		do: [ :event |

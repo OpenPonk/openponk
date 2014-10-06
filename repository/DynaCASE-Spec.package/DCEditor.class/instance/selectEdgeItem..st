@@ -1,4 +1,4 @@
-as yet unclassified
+selection handling
 selectEdgeItem: aControllerClass
 	self cancelSelection.
 	selectedItemType := #edge.

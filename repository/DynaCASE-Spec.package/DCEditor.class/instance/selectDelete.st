@@ -1,4 +1,4 @@
-as yet unclassified
+selection handling
 selectDelete
 	self cancelSelection.
 	selectedItemType := #delete.

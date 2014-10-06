@@ -1,4 +1,4 @@
-as yet unclassified
+selection handling
 cancelSelection
 	selectedElement := nil.
 	selectedItem := nil.

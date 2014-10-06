@@ -1,4 +1,4 @@
-as yet unclassified
+selection handling
 viewElementClicked: anElement
 	selectedItemType = #form
 		ifTrue: [ 
@@ -30,7 +30,7 @@ viewElementClicked: anElement
 							diagramController updateView.
 							relationController := diagramController findControllerByModel: relation.
 							relationController view
-								on: TRMouseLeftClick
+								when: TRMouseLeftClick
 								do: [ :event | self viewEdgeClicked: relationController view	"event element" ].
 							self cancelSelection.
 							self statusModel text: '' ] ] ]

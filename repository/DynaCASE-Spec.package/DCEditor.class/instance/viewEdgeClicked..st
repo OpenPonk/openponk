@@ -1,4 +1,4 @@
-as yet unclassified
+selection handling
 viewEdgeClicked: anElement
 	selectedItemType = #form
 		ifTrue: [ 

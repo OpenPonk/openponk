@@ -1,4 +1,4 @@
-as yet unclassified
+selection handling
 selectItem: aControllerClass
 	selectedItem
 		ifNil: [ selectedItem := aControllerClass ]

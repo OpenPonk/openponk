@@ -1,4 +1,4 @@
-as yet unclassified
+selection handling
 selectElementItem: aControllerClass
 	self cancelSelection.
 	selectedItemType := #element.

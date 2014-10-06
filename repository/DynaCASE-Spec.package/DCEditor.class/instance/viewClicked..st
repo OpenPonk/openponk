@@ -1,4 +1,4 @@
-as yet unclassified
+selection handling
 viewClicked: anEvent
 	selectedItemType = #element
 		ifTrue: [ 
@@ -10,7 +10,7 @@ viewClicked: anEvent
 					controller := diagramController findControllerByModel: element.
 					controller view translateTo: anEvent position.
 					controller view
-						on: TRMouseLeftClick
+						when: TRMouseLeftClick
 						do: [ :event | self viewElementClicked: event element ].
 					self cancelSelection.
 					self statusModel text: '' ] ]

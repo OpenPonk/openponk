@@ -1,20 +1,22 @@
 initialization
 createView
-	| element label shape |
-	element := RTElement new.
-	shape := RTEllipse new
+	| element |
+	element := self roassalShapeClass new
 		size: 50;
-		color: Color white;
-		borderColor: Color black.
-	label := RTLabel new
-		height: 10;
-		text: self model name.
-	element + shape.
-	element + label.
+		color: Color transparent;
+		borderColor: Color black;
+		elementOn: self model name.
+	element
+		@
+			(RTLabelled new
+				view: self parent view;
+				center;
+				color: Color black;
+				yourself).
 	element @ RTDraggable.
 	self model nameHolder
 		whenChangedDo: [ :newValue | 
-			label text: newValue.
+			(element attributeAt: #RTLabelledLabel) text: newValue.
 			element update.
 			element view signalUpdate ].
 	^ element

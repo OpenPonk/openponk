@@ -1,0 +1,1 @@
+A DCTRLineShape is a modification where events are triggered also nearby line.

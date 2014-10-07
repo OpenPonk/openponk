@@ -1,6 +1,8 @@
 {
 	"class" : {
 		"move:alongEdge:balance:aboveBy:" : "bliznjan 10/5/2014 17:42",
+		"stick:alongEdge:" : "bliznjan 10/7/2014 14:47",
+		"stick:alongEdge:aboveBy:" : "bliznjan 10/7/2014 14:48",
 		"stick:alongEdge:balance:" : "bliznjan 10/5/2014 17:43",
 		"stick:alongEdge:balance:aboveBy:" : "bliznjan 10/5/2014 17:43" },
 	"instance" : {

@@ -6,7 +6,7 @@
 		 ],
 	"commentStamp" : "bliznjan 10/7/2014 17:03",
 	"instvars" : [
-		 ],
+		"includesPointEps" ],
 	"name" : "DCTRLineShape",
 	"pools" : [
 		 ],

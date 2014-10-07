@@ -1,3 +1,3 @@
-as yet unclassified
+testing
 includesPoint: aPoint
-	^ ((aPoint dist: (aPoint nearestPointOnLineFrom: from to: to)) < 6)
+	^ aPoint onLineFrom: from to: to within: includesPointEps

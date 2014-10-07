@@ -9,13 +9,14 @@ createEdgeFrom: fromElement to: toElement
 		text: self model name;
 		yourself.
 	self parent view canvas addShape: label.
-	callback := TRRemoveCallback block: [ :shape | label remove ].
-	edge trachelShape shapes first addCallback: callback.
+	callback := TRRemoveCallback new block: [ :shape | label remove ].
+	edge trachelShape addCallback: callback.
 	DCTRConstraint
 		stick: label
 		alongEdge: edge
 		balance: 0.8
 		aboveBy: 12.
+
 	self model nameHolder
 		whenChangedDo: [ :newValue | 
 			label text: newValue.

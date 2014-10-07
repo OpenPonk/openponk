@@ -1,0 +1,3 @@
+initialization
+roassalShapeClass
+	^ DCRoassalSmFinalState

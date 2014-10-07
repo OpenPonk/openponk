@@ -1,0 +1,1 @@
+A DCRTMultiLineHeaded is a modification with head (like arrow) and bounding box around it for mouse events.

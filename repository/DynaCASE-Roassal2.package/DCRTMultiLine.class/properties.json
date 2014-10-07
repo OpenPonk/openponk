@@ -4,10 +4,10 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "bliznjan 10/5/2014 09:26",
+	"commentStamp" : "bliznjan 10/7/2014 17:06",
 	"instvars" : [
 		"head" ],
-	"name" : "DCRTMultiLineHeaded",
+	"name" : "DCRTMultiLine",
 	"pools" : [
 		 ],
 	"super" : "RTMultiLine",

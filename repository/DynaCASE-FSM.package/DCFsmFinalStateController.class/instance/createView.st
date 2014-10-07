@@ -2,7 +2,7 @@ initialization
 createView
 	| element label shape |
 	element := RTElement new.
-	shape := RTEllipse new
+	shape := DCRoassalSmFinalState new
 		size: 50;
 		color: Color white;
 		borderColor: Color black.

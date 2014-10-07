@@ -8,6 +8,7 @@ trachelShapeFor: anEdge
 	multiShape := TRMultiCompositeShape new.
 	2 to: path size do: [ :i | 
 		shape := DCTRLineShape new.
+		shape includesPointEps: 6.
 		shape width: width.
 		shape from: (path at: i - 1) to: (path at: i).
 		shape color: col.

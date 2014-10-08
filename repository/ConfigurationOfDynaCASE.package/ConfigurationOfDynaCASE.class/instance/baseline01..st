@@ -12,7 +12,7 @@ baseline01: spec
 					spec
 						className: #ConfigurationOfGMF;
 						versionString: #development;
-						repository: 'http://smalltalkhub.com/mc/bliznjan/Testing/main/' ].
+						repository: 'http://smalltalkhub.com/mc/DynaCASE/DynaCASE/main/' ].
 			spec
 				project: 'Roassal2'
 				with: [ 

@@ -1,5 +1,7 @@
 {
 	"class" : {
+		"changeExtentOf:like:plus:" : "bliznjan 10/10/2014 22:57",
+		"keepExtentOf:like:plus:" : "bliznjan 10/10/2014 23:01",
 		"move:alongEdge:balance:aboveBy:" : "bliznjan 10/5/2014 17:42",
 		"stick:alongEdge:" : "bliznjan 10/7/2014 14:47",
 		"stick:alongEdge:aboveBy:" : "bliznjan 10/7/2014 14:48",

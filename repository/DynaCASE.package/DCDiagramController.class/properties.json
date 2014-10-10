@@ -8,7 +8,8 @@
 	"instvars" : [
 		"controllerFactory",
 		"controllers",
-		"modelToControllerMapping" ],
+		"modelToControllerMapping",
+		"activationShape" ],
 	"name" : "DCDiagramController",
 	"pools" : [
 		 ],

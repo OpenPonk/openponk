@@ -6,5 +6,5 @@ addModelElement: aModelElement
 	controller parent: self.
 	self controllers add: controller.
 	viewElement := controller view.
-	viewElement view ifNil: [ self view add: viewElement ].
+	self view add: viewElement.
 	^ controller

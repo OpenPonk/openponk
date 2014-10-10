@@ -2,13 +2,13 @@
 	"class" : {
 		 },
 	"instance" : {
-		"activateElement:" : "bliznjan 10/10/2014 11:32",
+		"activateElement:" : "bliznjan 10/10/2014 23:17",
 		"addModelElement:" : "PeterUhnak 10/6/2014 22:43",
 		"cancelInteractiveLine" : "bliznjan 10/5/2014 10:14",
 		"controllers" : "PeterUhnak 8/29/2014 23:17",
 		"createController:" : "PeterUhnak 8/29/2014 23:17",
-		"deactivateAllElements" : "bliznjan 10/10/2014 11:05",
-		"deactivateElement:" : "bliznjan 10/10/2014 11:05",
+		"deactivateAllElements" : "bliznjan 10/10/2014 23:18",
+		"deactivateElement:" : "bliznjan 10/10/2014 23:18",
 		"findControllerByModel:" : "PeterUhnak 8/29/2014 23:17",
 		"findControllerByView:" : "PeterUhnak 8/29/2014 23:17",
 		"handleInteractiveLine:" : "bliznjan 10/5/2014 10:10",

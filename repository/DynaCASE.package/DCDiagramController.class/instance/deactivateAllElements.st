@@ -1,6 +1,6 @@
-adding
+interaction
 deactivateAllElements
-	activationShape ifNotNil: [ activationShape remove ].
-	activationShape := nil.
+	activationElement ifNotNil: [ activationElement remove ].
+	activationElement := nil.
 	self controllers do: [ :controller | controller deactivate ].
 	self updateView

@@ -1,3 +1,3 @@
-as yet unclassified
+interaction
 deactivate
 	^ nil

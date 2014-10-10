@@ -9,7 +9,7 @@
 		"controllerFactory",
 		"controllers",
 		"modelToControllerMapping",
-		"activationShape" ],
+		"activationElement" ],
 	"name" : "DCDiagramController",
 	"pools" : [
 		 ],

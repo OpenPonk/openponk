@@ -1,8 +1,4 @@
-adding
+interaction
 activateElement: anElement
-	(activationShape := (self findControllerByView: anElement) activate)
-		ifNotNil: [ 
-			activationShape := activationShape element.
-			TRConstraint stick: activationShape onTheCenterOf: anElement.
-			self view add: activationShape ].
+	(activationElement := (self findControllerByView: anElement) activate) ifNotNil: [ self view add: activationElement ].
 	self updateView

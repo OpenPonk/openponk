@@ -1,6 +1,6 @@
-adding
+interaction
 deactivateElement: anElement
-	activationShape ifNotNil: [ activationShape remove ].
-	activationShape := nil.
+	activationElement ifNotNil: [ activationElement remove ].
+	activationElement := nil.
 	(self findControllerByView: anElement) deactivate.
 	self updateView

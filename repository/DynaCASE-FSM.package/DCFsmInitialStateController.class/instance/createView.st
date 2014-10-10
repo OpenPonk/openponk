@@ -3,7 +3,7 @@ createView
 	| element shape |
 	element := RTElement new.
 	shape := RTEllipse new
-		size: 10;
+		size: 14;
 		color: Color black.
 	element + shape.
 	element @ RTDraggable.

@@ -2,8 +2,8 @@
 	"class" : {
 		 },
 	"instance" : {
-		"activate" : "bliznjan 10/10/2014 11:20",
+		"activate" : "bliznjan 10/10/2014 11:38",
 		"createEdgeFrom:to:" : "PeterUhnak 10/4/2014 12:30",
 		"createView" : "PeterUhnak 10/4/2014 12:29",
-		"deactivate" : "bliznjan 10/10/2014 11:17",
+		"deactivate" : "bliznjan 10/10/2014 11:38",
 		"handleInteractiveLine:" : "bliznjan 10/5/2014 09:58" } }

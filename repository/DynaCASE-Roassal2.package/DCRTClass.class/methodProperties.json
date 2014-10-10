@@ -1,14 +1,16 @@
 {
 	"class" : {
-		"example1" : "PeterUhnak 10/10/2014 01:57" },
+		"example1" : "PeterUhnak 10/10/2014 18:07",
+		"example2" : "PeterUhnak 10/10/2014 18:07" },
 	"instance" : {
 		"attributes:" : "PeterUhnak 10/10/2014 01:47",
-		"createSeparators" : "PeterUhnak 10/10/2014 01:53",
 		"createTopGroup" : "PeterUhnak 10/10/2014 01:55",
 		"element" : "PeterUhnak 10/10/2014 01:42",
-		"initialize" : "PeterUhnak 10/10/2014 01:47",
-		"initializeCallbacks" : "PeterUhnak 10/10/2014 01:51",
+		"initialize" : "PeterUhnak 10/10/2014 18:02",
+		"initializeCallbacks" : "PeterUhnak 10/10/2014 18:29",
+		"methods:" : "PeterUhnak 10/10/2014 18:02",
 		"name:" : "PeterUhnak 10/10/2014 01:47",
-		"renderIn:" : "PeterUhnak 10/10/2014 01:54",
-		"stereotype:" : "PeterUhnak 10/10/2014 01:50",
-		"update" : "PeterUhnak 10/10/2014 01:55" } }
+		"renderIn:" : "PeterUhnak 10/11/2014 00:34",
+		"stereotype:" : "PeterUhnak 10/10/2014 18:09",
+		"update" : "PeterUhnak 10/10/2014 18:27",
+		"updateSeparatorsWith:with:" : "PeterUhnak 10/11/2014 00:38" } }

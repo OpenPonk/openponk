@@ -1,3 +1,3 @@
 accessing
 stereotype: aString
-	stereotype value: '«' , aString , '»'
+	stereotype value: aString

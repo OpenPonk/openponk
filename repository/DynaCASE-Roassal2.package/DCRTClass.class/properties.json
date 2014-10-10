@@ -13,7 +13,9 @@
 		"attributesGroup",
 		"group",
 		"topGroup",
-		"separatorGroup" ],
+		"separatorGroup",
+		"methods",
+		"methodsGroup" ],
 	"name" : "DCRTClass",
 	"pools" : [
 		 ],

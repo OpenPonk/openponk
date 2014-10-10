@@ -1,11 +1,11 @@
 as yet unclassified
-example1
+example2
 	| view class |
 	view := RTView new.
 	class := DCRTClass new
-		stereotype: 'Kind';
 		name: 'Object';
-		attributes: #('-name: String[0..1]').
+		attributes: #('-name: String');
+		methods: #('+setName(name: String)').
 	class renderIn: view.
 	view open.
 	^ class

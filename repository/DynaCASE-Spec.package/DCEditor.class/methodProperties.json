@@ -4,12 +4,13 @@
 		"example1" : "PeterUhnak 10/4/2014 14:11",
 		"example2" : "PeterUhnak 8/28/2014 22:13",
 		"example3" : "PeterUhnak 9/14/2014 11:35",
+		"menuCommandOn:" : "bliznjan 10/10/2014 12:39",
 		"openFsm" : "PeterUhnak 8/28/2014 21:41",
 		"openOn:" : "PeterUhnak 8/28/2014 21:45",
 		"openUml" : "PeterUhnak 8/28/2014 21:41",
 		"umlite" : "PeterUhnak 8/29/2014 22:30" },
 	"instance" : {
-		"cancelSelection" : "bliznjan 10/7/2014 10:41",
+		"cancelSelection" : "bliznjan 10/10/2014 10:56",
 		"formModel" : "PeterUhnak 7/11/2014 21:49",
 		"initialExtent" : "PeterUhnak 7/16/2014 07:47",
 		"initializePresenter" : "bliznjan 10/6/2014 14:00",
@@ -28,5 +29,5 @@
 		"textEditorModel" : "PeterUhnak 8/16/2014 23:47",
 		"title" : "PeterUhnak 7/16/2014 07:43",
 		"viewClicked:" : "PeterUhnak 10/6/2014 22:57",
-		"viewEdgeClicked:" : "PeterUhnak 10/5/2014 01:09",
-		"viewElementClicked:" : "PeterUhnak 10/6/2014 22:59" } }
+		"viewEdgeClicked:" : "bliznjan 10/10/2014 11:38",
+		"viewElementClicked:" : "bliznjan 10/10/2014 11:38" } }

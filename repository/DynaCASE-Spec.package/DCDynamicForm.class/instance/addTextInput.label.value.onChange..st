@@ -1,7 +1,7 @@
 as yet unclassified
 addTextInput: aName label: aLabel value: aString onChange: aOneArgBlock
 	| control |
-	self addLabel: aName , 'Label' value: aLabel.
+	self addLabel: aName, 'Label' value: aLabel.
 	control := self newTextInput.
 	control autoAccept: true.
 	control text: aString.

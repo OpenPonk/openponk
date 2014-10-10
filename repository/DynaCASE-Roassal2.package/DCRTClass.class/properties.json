@@ -4,13 +4,18 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "PeterUhnak 10/3/2014 22:06",
+	"commentStamp" : "",
 	"instvars" : [
 		"stereotype",
 		"name",
-		"content" ],
-	"name" : "DCRTUmlClass",
+		"attributes",
+		"background",
+		"attributesGroup",
+		"group",
+		"topGroup",
+		"separatorGroup" ],
+	"name" : "DCRTClass",
 	"pools" : [
 		 ],
-	"super" : "RTShape",
+	"super" : "RTShapeBuilder",
 	"type" : "normal" }

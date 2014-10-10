@@ -1,3 +1,0 @@
-rendering
-stereotypeFor: anElement
-	^ stereotype

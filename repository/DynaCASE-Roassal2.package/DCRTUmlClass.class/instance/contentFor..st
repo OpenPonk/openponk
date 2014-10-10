@@ -1,3 +1,0 @@
-rendering
-contentFor: anElement
-	^ content

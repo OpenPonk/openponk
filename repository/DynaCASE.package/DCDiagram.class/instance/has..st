@@ -1,3 +1,3 @@
 testing
 has: anElement
-	^ elements contains: anElement
+	^ elements contains: [ :each | each == anElement ]

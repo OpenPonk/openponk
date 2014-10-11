@@ -1,0 +1,3 @@
+private
+stereotypeFor: aString
+	^ '«' , aString , '»'

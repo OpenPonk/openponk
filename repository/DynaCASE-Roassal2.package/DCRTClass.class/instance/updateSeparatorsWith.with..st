@@ -7,10 +7,10 @@ updateSeparatorsWith: nameBottom with: attributesBottom
 			separatorGroup first renderIn: background view.
 			separatorGroup first update: r offset: nameBottom.
 			group addAll: separatorGroup first ]
-		ifFalse: [ separatorGroup first removeFromView ].
+		ifFalse: [ separatorGroup first hide ].
 	methods value size > 0
 		ifTrue: [ 
 			separatorGroup second renderIn: background view.
 			separatorGroup second update: r offset: attributesBottom.
 			group addAll: separatorGroup second ]
-		ifFalse: [ separatorGroup second removeFromView ]
+		ifFalse: [ separatorGroup second hide ]

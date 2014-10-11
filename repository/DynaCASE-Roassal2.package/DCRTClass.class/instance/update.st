@@ -1,7 +1,7 @@
 updating
 update
-	| y hTop hAttrs r lineShape |
-	lineShape := RTLabel new height: 10.
+	| y hTop hAttrs r labelShape |
+	labelShape := RTLabel new height: 10.
 	attributesGroup do: [ :each | each remove ].
 	attributesGroup removeAll.
 	methodsGroup do: [ :each | each remove ].
@@ -18,14 +18,14 @@ update
 		layout: (RTVerticalLineLayout new gapSize: 0);
 		centerOn: background elements: group.
 	hTop := group height.
-	attributesGroup addAll: (lineShape elementsOn: attributes value).
+	attributesGroup addAll: (labelShape elementsOn: attributes value).
 	group addAll: attributesGroup.
 	background view addAll: attributesGroup.
 	RTNest new
 		layout: (RTVerticalLineLayout new gapSize: 0);
 		centerOn: background elements: group.
 	hAttrs := group height.
-	methodsGroup addAll: (lineShape elementsOn: methods value).
+	methodsGroup addAll: (labelShape elementsOn: methods value).
 	group addAll: methodsGroup.
 	background view addAll: methodsGroup.
 	RTNest new

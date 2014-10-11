@@ -4,13 +4,14 @@
 		"example2" : "PeterUhnak 10/10/2014 18:07" },
 	"instance" : {
 		"attributes:" : "PeterUhnak 10/10/2014 01:47",
-		"createTopGroup" : "PeterUhnak 10/10/2014 01:55",
+		"createTopGroup" : "PeterUhnak 10/11/2014 17:57",
 		"element" : "PeterUhnak 10/10/2014 01:42",
 		"initialize" : "PeterUhnak 10/10/2014 18:02",
-		"initializeCallbacks" : "PeterUhnak 10/10/2014 18:29",
+		"initializeCallbacks" : "PeterUhnak 10/11/2014 17:57",
 		"methods:" : "PeterUhnak 10/10/2014 18:02",
 		"name:" : "PeterUhnak 10/10/2014 01:47",
-		"renderIn:" : "PeterUhnak 10/11/2014 00:34",
+		"renderIn:" : "PeterUhnak 10/11/2014 14:09",
 		"stereotype:" : "PeterUhnak 10/10/2014 18:09",
-		"update" : "PeterUhnak 10/10/2014 18:27",
-		"updateSeparatorsWith:with:" : "PeterUhnak 10/11/2014 00:38" } }
+		"stereotypeFor:" : "PeterUhnak 10/11/2014 17:57",
+		"update" : "PeterUhnak 10/11/2014 17:49",
+		"updateSeparatorsWith:with:" : "PeterUhnak 10/11/2014 17:59" } }

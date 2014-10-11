@@ -2,7 +2,7 @@ private
 initializeCallbacks
 	stereotype
 		whenChangedDo: [ :newValue | 
-			topGroup first shape text: '«' , newValue , '»'.
+			topGroup first shape text: (self stereotypeFor: newValue).
 			topGroup first update.
 			self update ].
 	name

@@ -3,13 +3,10 @@ example3
 	| diagram firstClass secondClass a1 |
 	diagram := DCUmliteDiagram new.
 	firstClass := DCUmliteClass new name: 'FirstClass'.
-	firstClass
-		attributes:
-			'-attr1
--attr2' lines asOrderedCollection.
+	firstClass attributes: #('-attr1' '-attr2') asOrderedCollection.
 	secondClass := DCUmliteClass new
 		name: 'SecondClass';
-		attributes: '-attrX' lines asOrderedCollection;
+		attributes: #('-attrX') asOrderedCollection;
 		yourself.
 	(a1 := DCUmliteAssociation from: firstClass to: secondClass)
 		name: 'association';

@@ -4,10 +4,7 @@ viewEdgeClicked: anElement
 		ifTrue: [ 
 			| controller |
 			controller := diagramController findControllerByView: anElement.
-			self formModel editController: controller.
-			diagramController
-				deactivateAllElements;
-				activateElement: anElement ].
+			self formModel editController: controller ].
 	selectedItemType = #delete
 		ifTrue: [ 
 			| controller |

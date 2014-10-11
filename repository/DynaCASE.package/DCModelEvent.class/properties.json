@@ -4,11 +4,11 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "PeterUhnak 10/11/2014 22:39",
+	"commentStamp" : "PeterUhnak 10/11/2014 22:38",
 	"instvars" : [
 		 ],
-	"name" : "DCElementAdded",
+	"name" : "DCModelEvent",
 	"pools" : [
 		 ],
-	"super" : "DCModelElementEvent",
+	"super" : "Announcement",
 	"type" : "normal" }

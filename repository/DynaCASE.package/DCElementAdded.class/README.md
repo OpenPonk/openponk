@@ -1,1 +1,1 @@
-A DCElementAdded is an event where an element has been added.
+I am an event where an element has been added.

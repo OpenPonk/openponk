@@ -2,4 +2,6 @@ initialization
 initialize
 	super initialize.
 	self name: 'ClassName'.
-	attributesHolder := OrderedCollection new asValueHolder
+	stereotype := NewValueHolder value: ''.
+	attributesHolder := OrderedCollection new asValueHolder.
+	methodsHolder := OrderedCollection new asValueHolder.

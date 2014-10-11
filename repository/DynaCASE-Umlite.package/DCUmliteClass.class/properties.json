@@ -6,7 +6,9 @@
 		 ],
 	"commentStamp" : "lariover 10/5/2014 20:32",
 	"instvars" : [
-		"attributesHolder" ],
+		"attributesHolder",
+		"methodsHolder",
+		"stereotype" ],
 	"name" : "DCUmliteClass",
 	"pools" : [
 		 ],

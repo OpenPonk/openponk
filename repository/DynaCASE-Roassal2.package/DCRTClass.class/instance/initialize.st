@@ -5,5 +5,5 @@ initialize
 	attributes := OrderedCollection new asValueHolder.
 	methods := OrderedCollection new asValueHolder.
 	background := (RTBox new
-		color: Color white;
+		color: Color transparent;
 		borderColor: Color black) element

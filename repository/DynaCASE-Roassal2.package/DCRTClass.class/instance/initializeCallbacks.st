@@ -11,4 +11,12 @@ initializeCallbacks
 			topGroup last update.
 			self update ].
 	attributes whenChangedDo: [ :newValue | self update ].
-	methods whenChangedDo: [ :newValue | self update ]
+	methods whenChangedDo: [ :newValue | self update ].
+	background trachelShape
+		addCallback:
+			(TRRemoveCallback
+				block: [ 
+					topGroup do: #remove.
+					attributesGroup do: #remove.
+					methodsGroup do: #remove.
+					separatorGroup do: [ :each | each do: #remove ] ])

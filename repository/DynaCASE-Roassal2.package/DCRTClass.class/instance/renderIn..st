@@ -19,5 +19,7 @@ renderIn: aView
 	RTNest new on: background nest: group.
 	aView add: background.
 	aView addAll: topGroup.
+	aView addAll: separatorGroup first.
+	aView addAll: separatorGroup second.
 	self initializeCallbacks.
 	self update

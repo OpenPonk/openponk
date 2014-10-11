@@ -16,7 +16,8 @@
 		"selectedItem",
 		"selectedItemType",
 		"selectedElement",
-		"textEditorModel" ],
+		"textEditorModel",
+		"treeModel" ],
 	"name" : "DCEditor",
 	"pools" : [
 		 ],

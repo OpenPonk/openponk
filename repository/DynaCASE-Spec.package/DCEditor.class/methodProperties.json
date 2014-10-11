@@ -1,6 +1,6 @@
 {
 	"class" : {
-		"defaultSpec" : "PeterUhnak 10/11/2014 18:56",
+		"defaultSpec" : "PeterUhnak 10/11/2014 21:09",
 		"example1" : "PeterUhnak 10/4/2014 14:11",
 		"example2" : "PeterUhnak 8/28/2014 22:13",
 		"example3" : "PeterUhnak 10/11/2014 19:05",
@@ -12,9 +12,9 @@
 	"instance" : {
 		"cancelSelection" : "bliznjan 10/10/2014 10:56",
 		"formModel" : "PeterUhnak 7/11/2014 21:49",
-		"initialExtent" : "PeterUhnak 7/16/2014 07:47",
-		"initializePresenter" : "bliznjan 10/6/2014 14:00",
-		"initializeWidgets" : "PeterUhnak 10/4/2014 23:34",
+		"initialExtent" : "PeterUhnak 10/11/2014 21:00",
+		"initializePresenter" : "PeterUhnak 10/11/2014 20:57",
+		"initializeWidgets" : "PeterUhnak 10/11/2014 20:54",
 		"open" : "PeterUhnak 7/23/2014 22:32",
 		"openDiagram:" : "PeterUhnak 10/6/2014 22:53",
 		"openWithSpec" : "PeterUhnak 10/4/2014 23:37",
@@ -28,6 +28,7 @@
 		"statusModel" : "PeterUhnak 7/16/2014 07:43",
 		"textEditorModel" : "PeterUhnak 8/16/2014 23:47",
 		"title" : "PeterUhnak 7/16/2014 07:43",
+		"treeModel" : "PeterUhnak 10/11/2014 20:56",
 		"viewClicked:" : "PeterUhnak 10/6/2014 22:57",
 		"viewEdgeClicked:" : "bliznjan 10/10/2014 11:38",
 		"viewElementClicked:" : "bliznjan 10/10/2014 11:38" } }

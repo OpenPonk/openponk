@@ -9,5 +9,6 @@ openDiagram: aDiagram
 		ifTrue: [ diagramController := DCUmliteController new ].
 	diagramController model: diagram.
 	diagramController initializePalette: paletteModel editor: self.
+	diagramController initializeTree: treeModel.
 	paletteModel rebuildWidget.
 	self reloadView

@@ -1,7 +1,7 @@
 {
 	"class" : {
-		"defaultSpec" : "PeterUhnak 10/11/2014 21:09",
-		"example1" : "PeterUhnak 10/4/2014 14:11",
+		"defaultSpec" : "PeterUhnak 10/11/2014 21:37",
+		"example1" : "PeterUhnak 10/11/2014 21:38",
 		"example2" : "PeterUhnak 8/28/2014 22:13",
 		"example3" : "PeterUhnak 10/11/2014 19:05",
 		"menuCommandOn:" : "bliznjan 10/10/2014 12:39",
@@ -13,10 +13,10 @@
 		"cancelSelection" : "bliznjan 10/10/2014 10:56",
 		"formModel" : "PeterUhnak 7/11/2014 21:49",
 		"initialExtent" : "PeterUhnak 10/11/2014 21:00",
-		"initializePresenter" : "PeterUhnak 10/11/2014 20:57",
+		"initializePresenter" : "PeterUhnak 10/11/2014 21:26",
 		"initializeWidgets" : "PeterUhnak 10/11/2014 20:54",
 		"open" : "PeterUhnak 7/23/2014 22:32",
-		"openDiagram:" : "PeterUhnak 10/6/2014 22:53",
+		"openDiagram:" : "PeterUhnak 10/11/2014 21:26",
 		"openWithSpec" : "PeterUhnak 10/4/2014 23:37",
 		"paletteModel" : "PeterUhnak 7/11/2014 21:49",
 		"reloadView" : "PeterUhnak 10/6/2014 22:55",

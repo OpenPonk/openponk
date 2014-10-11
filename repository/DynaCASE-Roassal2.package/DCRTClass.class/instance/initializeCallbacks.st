@@ -16,7 +16,5 @@ initializeCallbacks
 		addCallback:
 			(TRRemoveCallback
 				block: [ 
-					topGroup do: #remove.
-					attributesGroup do: #remove.
-					methodsGroup do: #remove.
-					separatorGroup do: [ :each | each do: #remove ] ])
+					group do: #remove.
+					separatorGroup do: #remove ])

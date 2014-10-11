@@ -1,3 +1,3 @@
 protocol
 initialExtent
-	^ 1000 @ 600
+	^ 1200 @ 700

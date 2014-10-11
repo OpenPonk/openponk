@@ -1,6 +1,7 @@
 initialization
 initializePresenter
 	textEditorModel doItReceiver: DCTextEditorBindings new.
+	self initializeTopMenu.
 	roassalModel
 		script: [ :view :canvas | 
 			roassalView := view.

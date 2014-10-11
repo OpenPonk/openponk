@@ -10,4 +10,4 @@ buildEditorForm: aForm
 		addTextArea: 'attrs'
 		label: 'attributes'
 		value: self model attributes asStringWithCr
-		onChange: [ :newValue | self model attributes: newValue lines ]
+		onChange: [ :newValue | self model attributes: newValue asString lines ]

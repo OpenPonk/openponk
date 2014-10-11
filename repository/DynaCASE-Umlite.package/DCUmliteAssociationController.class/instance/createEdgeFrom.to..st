@@ -1,8 +1,8 @@
 initialization
 createEdgeFrom: fromElement to: toElement
 	| edge label callback sourceLabel targetLabel |
-	edge := DCUmliteAssociation lineInfo lineType edgeFrom: fromElement to: toElement.
-	DCUmliteAssociation lineInfo modifyLine: edge.
+	edge := DCRTMultiLine edgeFrom: fromElement  to: toElement.
+	edge shape color: Color black.
 	edge shape attachPoint: RTShorterDistanceWithOffsetAttachPoint instance.
 	label := TRLabelShape new
 		color: Color black;

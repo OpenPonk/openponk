@@ -2,7 +2,6 @@ updating
 updateSeparatorsWith: nameBottom with: attributesBottom
 	| r |
 	r := group encompassingRectangle.
-	Transcript show: attributes value; cr.
 	attributes value size > 0
 		ifTrue: [ 
 			separatorGroup first renderIn: background view.

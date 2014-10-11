@@ -1,21 +1,18 @@
 initialization
 createEdgeFrom: fromElement to: toElement
-	| edge label callback sourceLabel targetLabel |
-	edge := DCRTMultiLine edgeFrom: fromElement  to: toElement.
+	| edge label callback sourceLabel targetLabel createLabel |
+	edge := DCRTMultiLine edgeFrom: fromElement to: toElement.
 	edge shape color: Color black.
 	edge shape attachPoint: RTShorterDistanceWithOffsetAttachPoint instance.
-	label := TRLabelShape new
+	createLabel := [ :text | 
+	TRLabelShape new
 		color: Color black;
-		text: self model name;
-		yourself.
-	sourceLabel := TRLabelShape new
-		color: Color black;
-		text: self model sourceName;
-		yourself.
-	targetLabel := TRLabelShape new
-		color: Color black;
-		text: self model targetName;
-		yourself.
+		fontSize: 10;
+		text: text;
+		yourself ].
+	label := createLabel value: self model name.
+	sourceLabel := createLabel value: self model sourceName.
+	targetLabel := createLabel value: self model targetName.
 	self parent view canvas
 		addShape: label;
 		addShape: sourceLabel;

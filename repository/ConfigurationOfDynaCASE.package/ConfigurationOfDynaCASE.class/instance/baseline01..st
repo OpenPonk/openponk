@@ -21,6 +21,13 @@ baseline01: spec
 						versionString: #development;
 						repository: 'http://smalltalkhub.com/mc/ObjectProfile/Roassal2/main/' ].
 			spec
+				project: 'Roassal2'
+				with: [ 
+					spec
+						className: #ConfigurationOfSton;
+						versionString: #stable;
+						repository: 'http://smalltalkhub.com/mc/SvenVanCaekenberghe/STON/main/' ].
+			spec
 				package: 'DynaCASE';
 				package: 'DynaCASE-FSM';
 				package: 'DynaCASE-Roassal2';

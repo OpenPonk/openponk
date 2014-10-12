@@ -5,22 +5,22 @@ initializeTopMenu
 			group
 				addItem: [ :item | 
 					item
-						name: nil;
+						name: 'Open';
 						description: 'Open file';
 						icon: Smalltalk ui icons openIcon;
 						action: [ self openCommand ] ].
 			group
 				addItem: [ :item | 
 					item
-						name: nil;
+						name: 'Save';
 						description: 'Save File';
 						icon: Smalltalk ui icons smallSaveIcon;
-						action: [ self saveAsCommand ] ].
+						action: [ self saveCommand ] ].
 			group
 				addItem: [ :item | 
 					item
-						name: nil;
-						description: 'Print file';
-						icon: Smalltalk ui icons smallPrintIcon;
-						action: [ self inform: 'Print diagram' ] ] ].
+						name: 'Save as...';
+						description: 'Save File';
+						icon: Smalltalk ui icons smallSaveIcon;
+						action: [ self saveAsCommand ] ] ].
 	menuModel applyTo: self

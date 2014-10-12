@@ -21,7 +21,7 @@ baseline01: spec
 						versionString: #development;
 						repository: 'http://smalltalkhub.com/mc/ObjectProfile/Roassal2/main/' ].
 			spec
-				project: 'Roassal2'
+				project: 'STON'
 				with: [ 
 					spec
 						className: #ConfigurationOfSton;

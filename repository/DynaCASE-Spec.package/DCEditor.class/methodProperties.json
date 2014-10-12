@@ -1,7 +1,7 @@
 {
 	"class" : {
 		"defaultSpec" : "PeterUhnak 10/11/2014 23:24",
-		"example1" : "PeterUhnak 10/11/2014 21:38",
+		"example1" : "PeterUhnak 10/4/2014 14:11",
 		"example2" : "PeterUhnak 8/28/2014 22:13",
 		"example3" : "PeterUhnak 10/11/2014 19:05",
 		"menuCommandOn:" : "bliznjan 10/10/2014 12:39",
@@ -12,11 +12,11 @@
 	"instance" : {
 		"askForFileNameToOpen" : "PeterUhnak 10/11/2014 23:44",
 		"askForFileNameToSave:" : "PeterUhnak 10/11/2014 23:48",
-		"cancelSelection" : "bliznjan 10/13/2014 11:01",
+		"cancelSelection" : "bliznjan 10/10/2014 10:56",
 		"closeDiagram" : "PeterUhnak 10/12/2014 00:18",
 		"formModel" : "PeterUhnak 7/11/2014 21:49",
 		"initialExtent" : "PeterUhnak 10/11/2014 23:27",
-		"initializePresenter" : "bliznjan 10/12/2014 21:42",
+		"initializePresenter" : "PeterUhnak 10/11/2014 23:20",
 		"initializeTopMenu" : "PeterUhnak 10/11/2014 23:46",
 		"initializeWidgets" : "PeterUhnak 10/11/2014 23:19",
 		"menuModel" : "PeterUhnak 10/11/2014 23:23",
@@ -26,7 +26,7 @@
 		"openFile:" : "PeterUhnak 10/12/2014 01:57",
 		"openWithSpec" : "PeterUhnak 10/4/2014 23:37",
 		"paletteModel" : "PeterUhnak 7/11/2014 21:49",
-		"reloadView" : "bliznjan 10/12/2014 21:43",
+		"reloadView" : "PeterUhnak 10/6/2014 22:55",
 		"roassalModel" : "PeterUhnak 7/11/2014 21:47",
 		"saveAsCommand" : "PeterUhnak 10/11/2014 23:59",
 		"saveFile:" : "PeterUhnak 10/12/2014 01:15",
@@ -39,6 +39,6 @@
 		"textEditorModel" : "PeterUhnak 8/16/2014 23:47",
 		"title" : "PeterUhnak 7/16/2014 07:43",
 		"treeModel" : "PeterUhnak 10/11/2014 20:56",
-		"viewClicked:" : "bliznjan 10/13/2014 11:13",
-		"viewEdgeClicked:" : "bliznjan 10/13/2014 11:01",
-		"viewElementClicked:" : "bliznjan 10/13/2014 11:13" } }
+		"viewClicked:" : "PeterUhnak 10/6/2014 22:57",
+		"viewEdgeClicked:" : "bliznjan 10/10/2014 11:38",
+		"viewElementClicked:" : "bliznjan 10/10/2014 11:38" } }

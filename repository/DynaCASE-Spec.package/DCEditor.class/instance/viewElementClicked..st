@@ -4,10 +4,10 @@ viewElementClicked: anElement
 		ifTrue: [ 
 			| controller |
 			controller := diagramController findControllerByView: anElement.
-			self cancelSelection.
-			(activeElementsController := controller) activateLevel: 20 color: Color blue.
 			self formModel editController: controller.
-			roassalView signalUpdate ].
+			diagramController
+				deactivateAllElements;
+				activateElement: anElement ].
 	selectedItemType = #delete
 		ifTrue: [ 
 			| controller |
@@ -30,7 +30,4 @@ viewElementClicked: anElement
 							selectedElement to: anElement.
 							controller := selectedElement complete.
 							controller view when: TRMouseLeftClick do: [ :event | self viewEdgeClicked: event element ].
-							self cancelSelection.
-							(activeElementsController := controller) activateLevel: 20 color: Color blue.
-							self formModel editController: controller.
-							roassalView signalUpdate ] ] ]
+							self cancelSelection ] ] ]

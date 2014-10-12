@@ -4,10 +4,10 @@ viewEdgeClicked: anElement
 		ifTrue: [ 
 			| controller |
 			controller := diagramController findControllerByView: anElement.
-			self cancelSelection.
-			(activeElementsController := controller) activateLevel: 20 color: Color blue.
 			self formModel editController: controller.
-			roassalView signalUpdate ].
+			diagramController
+				deactivateAllElements;
+				activateElement: anElement ].
 	selectedItemType = #delete
 		ifTrue: [ 
 			| controller |

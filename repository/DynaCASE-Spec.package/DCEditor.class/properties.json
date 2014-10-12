@@ -19,8 +19,7 @@
 		"textEditorModel",
 		"treeModel",
 		"menuModel",
-		"fileName",
-		"activeElementsController" ],
+		"fileName" ],
 	"name" : "DCEditor",
 	"pools" : [
 		 ],

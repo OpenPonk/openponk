@@ -1,4 +1,4 @@
 file support
 suggestedFileName
 	fileName ifNotNil: [ :f | ^ f ].
-	^ 'diagram.fuel'
+	^ 'diagram.ston'

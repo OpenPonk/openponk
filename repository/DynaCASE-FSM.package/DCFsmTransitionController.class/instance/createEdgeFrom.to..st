@@ -15,7 +15,7 @@ createEdgeFrom: fromElement to: toElement
 		stick: label
 		alongEdge: edge
 		balance: 0.8
-		aboveBy: 12.
+		aboveBy: 10.
 	self model nameHolder
 		whenChangedDo: [ :newValue | 
 			label text: newValue.

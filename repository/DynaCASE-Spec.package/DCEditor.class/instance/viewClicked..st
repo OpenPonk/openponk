@@ -8,5 +8,7 @@ viewClicked: anEvent
 					controller := selectedItem value.
 					controller view translateTo: anEvent position.
 					controller view when: TRMouseLeftClick do: [ :event | self viewElementClicked: event element ].
-					roassalView signalUpdate.
-					self cancelSelection ] ]
+					self cancelSelection.
+					(activeElementsController := controller) activateLevel: 20 color: Color blue.
+					self formModel editController: controller.
+					roassalView signalUpdate ] ]

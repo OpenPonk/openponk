@@ -35,4 +35,5 @@ update
 	r := group encompassingRectangle.
 	y := r top + hTop.
 	self updateSeparatorsWith: hTop with: hAttrs.
-	background view signalUpdate
+	background view signalUpdate.
+	background updateConnectedEdges

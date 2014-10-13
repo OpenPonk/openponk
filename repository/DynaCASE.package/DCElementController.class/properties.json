@@ -6,7 +6,8 @@
 		 ],
 	"commentStamp" : "lariover 10/5/2014 20:26",
 	"instvars" : [
-		 ],
+		"activationView",
+		"activation" ],
 	"name" : "DCElementController",
 	"pools" : [
 		 ],

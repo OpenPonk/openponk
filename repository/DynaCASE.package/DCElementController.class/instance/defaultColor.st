@@ -1,0 +1,3 @@
+hooks
+defaultColor
+	^ Color black

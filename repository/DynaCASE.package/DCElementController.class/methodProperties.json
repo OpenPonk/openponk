@@ -2,10 +2,11 @@
 	"class" : {
 		 },
 	"instance" : {
-		"activate" : "bliznjan 10/10/2014 23:21",
+		"activateLevel:color:" : "bliznjan 10/13/2014 10:59",
+		"activationView" : "bliznjan 10/12/2014 23:38",
 		"buildEditorForm:" : "PeterUhnak 10/5/2014 00:22",
-		"cancelInteractiveLine" : "bliznjan 10/5/2014 10:14",
 		"createView" : "PeterUhnak 10/4/2014 12:22",
-		"deactivate" : "bliznjan 10/10/2014 11:06",
-		"handleInteractiveLine:" : "bliznjan 10/5/2014 09:57",
+		"deactivateLevel:" : "bliznjan 10/13/2014 11:03",
+		"defaultColor" : "bliznjan 10/12/2014 21:25",
+		"initialize" : "bliznjan 10/13/2014 10:58",
 		"view" : "PeterUhnak 10/4/2014 12:26" } }

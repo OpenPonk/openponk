@@ -1,7 +1,8 @@
 userinterface
 updateView
+	self controllers do: [ :each | each view update ].	"does not work with DCUmliteClassController view"
 	self view edges
-		do: [ :edge | 
-			edge trachelShape pushBack.
-			edge update ].
+		do: [ :each | 
+			each pushBack.
+			each update ].
 	self view signalUpdate

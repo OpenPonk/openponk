@@ -6,6 +6,7 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
+		"events",
 		"activations",
 		"originElement" ],
 	"name" : "DCRTAbstractActivable",

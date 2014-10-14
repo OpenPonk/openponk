@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2-Shapes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCRTFilledDiamond",
+	"pools" : [
+		 ],
+	"super" : "RTDiamond",
+	"type" : "normal" }

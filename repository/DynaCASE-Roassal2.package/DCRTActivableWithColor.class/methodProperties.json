@@ -2,5 +2,6 @@
 	"class" : {
 		 },
 	"instance" : {
-		"activatePriority:color:" : "bliznjan 10/14/2014 01:39",
-		"deactivatePriority:" : "bliznjan 10/14/2014 01:42" } }
+		"activatePriority:value:" : "bliznjan 10/14/2014 13:15",
+		"deactivatePriority:" : "bliznjan 10/14/2014 13:14",
+		"initializeElement:" : "bliznjan 10/14/2014 13:37" } }

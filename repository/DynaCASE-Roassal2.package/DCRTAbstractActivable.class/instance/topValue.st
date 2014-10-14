@@ -1,5 +1,5 @@
 private
-topColor
+topValue
 	^ activations
 		at:
 			(activations keys

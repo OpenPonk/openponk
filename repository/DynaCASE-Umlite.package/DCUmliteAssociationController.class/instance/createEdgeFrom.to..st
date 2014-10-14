@@ -1,12 +1,12 @@
 initialization
 createEdgeFrom: fromElement to: toElement
-	| edge label callback sourceLabel targetLabel createLabel |
+	| edge label callback sourceLabel targetLabel createLabel activation |
 	edge := DCRTMultiLine edgeFrom: fromElement to: toElement.
 	edge shape color: Color black.
 	edge shape attachPoint: RTShorterDistanceWithOffsetAttachPoint instance.
 	createLabel := [ :text | 
 	TRLabelShape new
-		color: Color black;
+		color: self defaultColor;
 		fontSize: 10;
 		text: text;
 		yourself ].
@@ -53,5 +53,14 @@ createEdgeFrom: fromElement to: toElement
 			targetLabel text: newValue.
 			edge update.
 			edge view signalUpdate ].
-	edge @ DCRTActivableWithColor.
+	edge @ (activation := DCRTActivableWithColor new).
+	activation
+		activateWhen: TRMouseEnter
+			deactivateWhen: TRMouseLeave
+			priority: 10
+			value: Color gray;
+		activateWhen: DCTRSelectedEvent
+			deactivateWhen: DCTRUnselectedEvent
+			priority: 20
+			value: Color blue.
 	^ edge

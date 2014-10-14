@@ -1,11 +1,11 @@
 as yet unclassified
 createEdgeFrom: fromElement to: toElement
-	| label callback edge |
+	| label callback edge activation |
 	edge := DCRTMultiLine edgeFrom: fromElement to: toElement.
 	edge shape color: Color black.
 	edge shape attachPoint: RTShorterDistanceWithOffsetAttachPoint instance.
 	label := TRLabelShape new
-		color: Color black;
+		color: self defaultColor;
 		text: self model name;
 		yourself.
 	self parent view canvas addShape: label.
@@ -21,5 +21,14 @@ createEdgeFrom: fromElement to: toElement
 			label text: newValue.
 			edge update.
 			edge view signalUpdate ].
-	edge @ DCRTActivableWithColor.
+	edge @ (activation := DCRTActivableWithColor new).
+	activation
+		activateWhen: TRMouseEnter
+			deactivateWhen: TRMouseLeave
+			priority: 10
+			value: Color gray;
+		activateWhen: DCTRSelectedEvent
+			deactivateWhen: DCTRUnselectedEvent
+			priority: 20
+			value: Color blue.
 	^ edge

@@ -1,5 +1,5 @@
 interaction
 initialize
 	super initialize.
-	activation := Dictionary new.
-	activation add: (Association key: 0 value: Color transparent)
+	activations := Dictionary new.
+	activations add: (Association key: 0 value: Color transparent)

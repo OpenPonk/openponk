@@ -1,5 +1,4 @@
 interaction
 initialize
 	super initialize.
-	activation := Dictionary new.
-	activation add: (Association key: 0 value: self defaultColor)
+	activations add: (Association key: 0 value: self defaultColor)

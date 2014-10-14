@@ -8,5 +8,4 @@ addModelElement: aModelElement
 	self controllers add: controller.
 	viewElement := controller view.
 	viewElement view ifNil: [ self view add: viewElement ].
-	self view add: controller activationView.
 	^ controller

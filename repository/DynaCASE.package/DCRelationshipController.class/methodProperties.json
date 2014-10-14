@@ -2,10 +2,9 @@
 	"class" : {
 		 },
 	"instance" : {
-		"activateLevel:color:" : "bliznjan 10/13/2014 11:04",
-		"activationView" : "bliznjan 10/13/2014 11:36",
+		"activatePriority:color:" : "bliznjan 10/13/2014 16:10",
+		"activationView" : "bliznjan 10/13/2014 16:06",
 		"createEdgeFrom:to:" : "PeterUhnak 10/4/2014 12:30",
 		"createView" : "PeterUhnak 10/4/2014 12:29",
-		"deactivate" : "bliznjan 10/13/2014 00:33",
-		"deactivateLevel:" : "bliznjan 10/13/2014 11:05",
-		"initialize" : "bliznjan 10/13/2014 11:05" } }
+		"deactivatePriority:" : "bliznjan 10/13/2014 16:12",
+		"initialize" : "bliznjan 10/13/2014 16:13" } }

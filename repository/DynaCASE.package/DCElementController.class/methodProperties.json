@@ -2,11 +2,11 @@
 	"class" : {
 		 },
 	"instance" : {
-		"activateLevel:color:" : "bliznjan 10/13/2014 10:59",
-		"activationView" : "bliznjan 10/13/2014 11:34",
+		"activatePriority:color:" : "bliznjan 10/13/2014 16:07",
+		"activationView" : "bliznjan 10/13/2014 16:06",
 		"buildEditorForm:" : "PeterUhnak 10/5/2014 00:22",
 		"createView" : "PeterUhnak 10/4/2014 12:22",
-		"deactivateLevel:" : "bliznjan 10/13/2014 11:03",
+		"deactivatePriority:" : "bliznjan 10/13/2014 16:08",
 		"defaultColor" : "bliznjan 10/12/2014 21:25",
-		"initialize" : "bliznjan 10/13/2014 10:58",
+		"initialize" : "bliznjan 10/13/2014 16:11",
 		"view" : "PeterUhnak 10/4/2014 12:26" } }

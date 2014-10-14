@@ -10,11 +10,11 @@ activationView
 			self view
 				when: TRMouseEnter
 				do: [ :event | 
-					self activateLevel: 10 color: Color gray.
+					self activatePriority: 10 color: Color gray.
 					activationView signalUpdate ].
 			self view
 				when: TRMouseLeave
 				do: [ :event | 
-					self deactivateLevel: 10.
+					self deactivatePriority: 10.
 					activationView signalUpdate ].
 			activationView ]

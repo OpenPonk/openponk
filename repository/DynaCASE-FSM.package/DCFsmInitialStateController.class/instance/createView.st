@@ -7,4 +7,5 @@ createView
 		color: Color black.
 	element + shape.
 	element @ RTDraggable.
+	element @ DCRTActivableWithBoundingBox.
 	^ element

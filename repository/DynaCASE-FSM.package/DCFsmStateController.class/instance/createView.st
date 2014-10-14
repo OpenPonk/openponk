@@ -14,6 +14,7 @@ createView
 				color: Color black;
 				yourself).
 	element @ RTDraggable.
+	element @ DCRTActivableWithBoundingBox.
 	self model nameHolder
 		whenChangedDo: [ :newValue | 
 			(element attributeAt: #RTLabelledLabel) text: newValue.

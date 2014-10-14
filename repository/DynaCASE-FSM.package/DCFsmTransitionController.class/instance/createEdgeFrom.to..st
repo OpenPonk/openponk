@@ -21,4 +21,5 @@ createEdgeFrom: fromElement to: toElement
 			label text: newValue.
 			edge update.
 			edge view signalUpdate ].
+	edge @ DCRTActivableWithColor.
 	^ edge

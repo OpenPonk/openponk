@@ -20,7 +20,7 @@
 		"treeModel",
 		"menuModel",
 		"fileName",
-		"activeElementsController" ],
+		"activeElement" ],
 	"name" : "DCEditor",
 	"pools" : [
 		 ],

@@ -4,11 +4,12 @@ viewClicked: anEvent
 		ifTrue: [ 
 			selectedItem
 				ifNotNil: [ 
-					| controller |
+					| controller view |
 					controller := selectedItem value.
-					controller view translateTo: anEvent position.
-					controller view when: TRMouseLeftClick do: [ :event | self viewElementClicked: event element ].
+					view := controller view.
+					view translateTo: anEvent position.
+					view when: TRMouseLeftClick do: [ :event | self viewElementClicked: event element ].
 					self cancelSelection.
-					(activeElementsController := controller) activateLevel: 20 color: Color blue.
+					(activeElement := view) announce: DCTRSelectedEvent.
 					self formModel editController: controller.
 					roassalView signalUpdate ] ]

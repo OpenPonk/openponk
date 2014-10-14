@@ -5,7 +5,7 @@ viewElementClicked: anElement
 			| controller |
 			controller := diagramController findControllerByView: anElement.
 			self cancelSelection.
-			(activeElementsController := controller) activateLevel: 20 color: Color blue.
+			(activeElement := anElement) announce: DCTRSelectedEvent.
 			self formModel editController: controller.
 			roassalView signalUpdate ].
 	selectedItemType = #delete
@@ -26,11 +26,12 @@ viewElementClicked: anElement
 								yourself.
 							self statusModel text: 'Click on the second of two elements to connect them.' ]
 						ifNotNil: [ 
-							| controller |
+							| controller view |
 							selectedElement to: anElement.
 							controller := selectedElement complete.
-							controller view when: TRMouseLeftClick do: [ :event | self viewEdgeClicked: event element ].
+							view := controller view.
+							view when: TRMouseLeftClick do: [ :event | self viewEdgeClicked: event element ].
 							self cancelSelection.
-							(activeElementsController := controller) activateLevel: 20 color: Color blue.
+							(activeElement := view) announce: DCTRSelectedEvent.
 							self formModel editController: controller.
 							roassalView signalUpdate ] ] ]

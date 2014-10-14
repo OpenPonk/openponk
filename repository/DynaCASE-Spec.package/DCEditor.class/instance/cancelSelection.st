@@ -1,9 +1,9 @@
 selection handling
 cancelSelection
-	activeElementsController
+	activeElement
 		ifNotNil: [ 
-			activeElementsController deactivateLevel: 20.
-			activeElementsController := nil ].
+			activeElement announce: DCTRUnselectedEvent.
+			activeElement := nil ].
 	roassalView ifNotNil: [ roassalView signalUpdate ].
 	selectedElement ifNotNil: [ selectedElement cancel ].
 	selectedElement := nil.

@@ -5,7 +5,7 @@ viewEdgeClicked: anElement
 			| controller |
 			controller := diagramController findControllerByView: anElement.
 			self cancelSelection.
-			(activeElementsController := controller) activateLevel: 20 color: Color blue.
+			(activeElement := anElement) announce: DCTRSelectedEvent.
 			self formModel editController: controller.
 			roassalView signalUpdate ].
 	selectedItemType = #delete

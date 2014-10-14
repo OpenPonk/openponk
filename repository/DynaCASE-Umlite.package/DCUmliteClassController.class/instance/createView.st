@@ -11,4 +11,5 @@ createView
 	class methods: self model methods.
 	self model methodsHolder whenChangedDo: [ :newCollection | class methods: newCollection ].
 	class renderIn: self parent view.
+	class element @ DCRTActivableWithBoundingBox.
 	^ class element

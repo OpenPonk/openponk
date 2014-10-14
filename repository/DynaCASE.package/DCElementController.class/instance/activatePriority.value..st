@@ -1,5 +1,5 @@
 interaction
-activatePriority: aPositiveNumber color: aColor
+activatePriority: aPositiveNumber value: aColor
 	activations add: (Association key: aPositiveNumber value: aColor).
 	self activationView shape
 		borderColor:

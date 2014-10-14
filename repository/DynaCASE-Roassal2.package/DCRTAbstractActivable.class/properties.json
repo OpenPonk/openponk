@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-Roassal2-Interactivity",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"activations",
+		"originElement" ],
+	"name" : "DCRTAbstractActivable",
+	"pools" : [
+		 ],
+	"super" : "RTInteraction",
+	"type" : "normal" }

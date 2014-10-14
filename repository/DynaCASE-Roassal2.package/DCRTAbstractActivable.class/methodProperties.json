@@ -1,0 +1,11 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"activatePriority:color:" : "bliznjan 10/13/2014 17:03",
+		"deactivatePriority:" : "bliznjan 10/14/2014 01:06",
+		"initialize" : "bliznjan 10/14/2014 00:16",
+		"initializeElement:" : "bliznjan 10/14/2014 01:36",
+		"registerPriority:color:" : "bliznjan 10/13/2014 22:51",
+		"topColor" : "bliznjan 10/13/2014 16:57",
+		"unregisterPriority:" : "bliznjan 10/13/2014 17:08" } }

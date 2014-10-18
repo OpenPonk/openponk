@@ -17,4 +17,5 @@ reloadView
 							self viewEdgeClicked: element ] ] ].
 	roassalView canvas addMenu: '  + ' callback: [ RTZoomInMove on: roassalView ].
 	roassalView canvas addMenu: ' -  ' callback: [ RTZoomOutMove on: roassalView ].
+	roassalView @ DCRTScrollableView.
 	diagramController updateView

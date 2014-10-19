@@ -1,16 +1,15 @@
 as yet unclassified
 createEdgeFrom: fromElement to: toElement
-	| label callback edge activation |
+	| label edge activation |
 	edge := DCRTMultiLine edgeFrom: fromElement to: toElement.
 	edge shape color: Color black.
 	edge shape attachPoint: RTShorterDistanceWithOffsetAttachPoint instance.
-	label := TRLabelShape new
+	label := (RTLabel new
 		color: self defaultColor;
 		text: self model name;
-		yourself.
-	self parent view canvas addShape: label.
-	callback := TRRemoveCallback new block: [ :shape | label remove ].
-	edge trachelShape addCallback: callback.
+		elementOn: edge) @ RTDraggable.
+	self parent view add: label.
+	edge trachelShape addCallback: (TRRemoveCallback new block: [ :shape | label remove ]).
 	DCTRConstraint
 		stick: label
 		alongEdge: edge
@@ -18,9 +17,9 @@ createEdgeFrom: fromElement to: toElement
 		aboveBy: 10.
 	self model nameHolder
 		whenChangedDo: [ :newValue | 
-			label text: newValue.
-			edge update.
-			edge view signalUpdate ].
+			label shape text: newValue.
+			label update.
+			edge signalUpdate ].
 	edge @ (activation := DCRTActivableWithColor new).
 	activation
 		activateWhen: TRMouseEnter

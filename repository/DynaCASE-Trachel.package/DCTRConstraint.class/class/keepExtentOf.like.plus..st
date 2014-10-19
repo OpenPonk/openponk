@@ -1,9 +1,7 @@
 public - sticking
 keepExtentOf: aShape like: anotherShape plus: aPoint
-	| callback b |
+	| b |
 	self changeExtentOf: aShape like: anotherShape plus: aPoint.
 	b := [ :shape :step | self changeExtentOf: aShape like: anotherShape plus: aPoint ].
-	callback := TRExtentCallback block: b.
-	aShape trachelShape addCallback: callback.
-	callback := TRTranslationCallback block: b.
-	aShape trachelShape addCallback: callback
+	aShape addCallback: (TRExtentCallback block: b).
+	aShape addCallback: (TRTranslationCallback block: b)

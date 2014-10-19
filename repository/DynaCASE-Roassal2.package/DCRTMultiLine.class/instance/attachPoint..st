@@ -1,4 +1,4 @@
 accessing
 attachPoint: anAttachPoint
-	head attachPoint: anAttachPoint.
+	head ifNotNil: [ head attachPoint: anAttachPoint ].
 	attachPoint := anAttachPoint

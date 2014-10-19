@@ -8,12 +8,6 @@ viewElementClicked: anElement
 			(activeElement := anElement) announce: DCTRSelectedEvent.
 			self formModel editController: controller.
 			roassalView signalUpdate ].
-	selectedItemType = #delete
-		ifTrue: [ 
-			| controller |
-			controller := diagramController findControllerByView: anElement.
-			diagram remove: controller model.
-			self cancelSelection ].
 	selectedItemType = #edge
 		ifTrue: [ 
 			selectedItem
@@ -31,6 +25,7 @@ viewElementClicked: anElement
 							controller := selectedElement complete.
 							view := controller view.
 							view when: TRMouseLeftClick do: [ :event | self viewEdgeClicked: event element ].
+							self addMenuFor: view.
 							self cancelSelection.
 							(activeElement := view) announce: DCTRSelectedEvent.
 							self formModel editController: controller.

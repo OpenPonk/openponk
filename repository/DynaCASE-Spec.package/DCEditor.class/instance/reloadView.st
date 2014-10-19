@@ -7,14 +7,17 @@ reloadView
 			| element |
 			element := ctrl view.
 			(element isKindOf: RTElement)
-				ifTrue: [ element when: TRMouseLeftClick do: [ :event | self viewElementClicked: event element ] ].
+				ifTrue: [ 
+					element when: TRMouseLeftClick do: [ :event | self viewElementClicked: event element ].
+					self addMenuFor: element ].
 			(element isKindOf: RTEdge)
 				ifTrue: [ 
 					element
 						when: TRMouseLeftClick
 						do: [ :event | 
 							"TODO: pass 'event element' once fixed in roassal"
-							self viewEdgeClicked: element ] ] ].
+							self viewEdgeClicked: element ].
+					self addMenuFor: element ] ].
 	roassalView canvas addMenu: '  + ' callback: [ RTZoomInMove on: roassalView ].
 	roassalView canvas addMenu: ' -  ' callback: [ RTZoomOutMove on: roassalView ].
 	roassalView @ DCRTScrollableView.

@@ -6,7 +6,10 @@ initializePalette: aPalette editor: anEditor
 	anEditor
 		selectEdgeItem: [ 
 			DCInteractiveLine new
-				lineBuilder: [ :fromView :toView | DCRTMultiLine edgeFrom: fromView to: toView ];
+				lineBuilder: [ :fromView :toView | 
+							DCRTMultiLine new
+								head: RTSimpleArrowHead new;
+								edgeFrom: fromView to: toView ];
 				whenCompleted: [ :fromView :toView | 
 							| controller from to |
 							from := self findControllerByView: fromView.
@@ -47,4 +50,8 @@ initializePalette: aPalette editor: anEditor
 						addItem: [ :item | 
 									item
 										name: 'Cancel selection';
-										action: [ anEditor cancelSelection ] ] ]
+										action: [ anEditor cancelSelection ] ];
+						addItem: [ :item | 
+									item
+										name: 'Delete';
+										action: [ anEditor selectDelete ] ] ]

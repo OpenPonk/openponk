@@ -1,7 +1,9 @@
 as yet unclassified
 createEdgeFrom: fromElement to: toElement
 	| label edge activation |
-	edge := DCRTMultiLine edgeFrom: fromElement to: toElement.
+	edge := DCRTMultiLine new
+		head: RTSimpleArrowHead new;
+		edgeFrom: fromElement to: toElement.
 	edge shape color: Color black.
 	edge shape attachPoint: RTShorterDistanceWithOffsetAttachPoint instance.
 	label := (RTLabel new

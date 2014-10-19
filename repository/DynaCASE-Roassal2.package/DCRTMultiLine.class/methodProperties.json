@@ -2,10 +2,10 @@
 	"class" : {
 		 },
 	"instance" : {
-		"attachPoint:" : "bliznjan 10/2/2014 22:11",
-		"color:" : "bliznjan 10/4/2014 20:10",
+		"attachPoint:" : "bliznjan 10/19/2014 10:26",
+		"color:" : "bliznjan 10/19/2014 10:28",
 		"head" : "bliznjan 10/2/2014 22:11",
-		"head:" : "bliznjan 10/2/2014 22:11",
-		"initialize" : "bliznjan 10/4/2014 20:10",
-		"trachelShapeFor:" : "PeterUhnak 10/9/2014 14:54",
-		"updateFor:trachelShape:" : "PeterUhnak 10/7/2014 10:08" } }
+		"head:" : "bliznjan 10/19/2014 10:26",
+		"initialize" : "bliznjan 10/19/2014 10:26",
+		"trachelShapeFor:" : "bliznjan 10/19/2014 10:28",
+		"updateFor:trachelShape:" : "bliznjan 10/19/2014 10:28" } }

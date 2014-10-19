@@ -12,7 +12,7 @@ initializeCallbacks
 			self update ].
 	attributes whenChangedDo: [ :newValue | self update ].
 	methods whenChangedDo: [ :newValue | self update ].
-	background trachelShape
+	background
 		addCallback:
 			(TRRemoveCallback
 				block: [ 

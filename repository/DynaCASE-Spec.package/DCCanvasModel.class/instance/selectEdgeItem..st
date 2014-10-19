@@ -1,3 +1,3 @@
 selection handling
 selectEdgeItem: aBlock
-	self canvasModel selectEdgeItem: aBlock
+	self selectItem: aBlock type: #edge

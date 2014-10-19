@@ -1,4 +1,3 @@
-as yet unclassified
+instance creation
 closeDiagram
-	diagram := nil.
-	diagramController := nil.
+	diagramController := nil

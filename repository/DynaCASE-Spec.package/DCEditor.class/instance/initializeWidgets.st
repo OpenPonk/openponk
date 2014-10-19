@@ -1,15 +1,13 @@
 initialization
 initializeWidgets
 	textEditorModel := self newText.
-	statusModel := self newLabel.
 	treeModel := self newTree.
 	menuModel := self instantiate: MenuModel.
 	formModel := self instantiate: DCDynamicForm.
-	roassalModel := self instantiate: RoassalModel.
+	canvasModel := self instantiate: DCCanvasModel.
 	paletteModel := self instantiate: DCPaletteModel.
 	self cancelSelection.
 	self focusOrder
-		add: roassalModel;
+		add: canvasModel;
 		add: paletteModel;
-		add: formModel;
-		add: statusModel
+		add: formModel

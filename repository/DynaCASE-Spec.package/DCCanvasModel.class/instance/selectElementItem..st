@@ -1,3 +1,3 @@
 selection handling
 selectElementItem: aBlock
-	self canvasModel selectElementItem: aBlock
+	self selectItem: aBlock type: #element

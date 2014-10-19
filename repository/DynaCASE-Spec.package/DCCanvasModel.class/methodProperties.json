@@ -1,0 +1,20 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"addMenuFor:" : "PeterUhnak 10/19/2014 16:43",
+		"cancelSelection" : "PeterUhnak 10/19/2014 17:11",
+		"deleteElement:" : "PeterUhnak 10/19/2014 22:20",
+		"diagramController" : "PeterUhnak 10/19/2014 17:15",
+		"diagramController:" : "PeterUhnak 10/19/2014 17:15",
+		"initialize" : "PeterUhnak 10/19/2014 21:56",
+		"reloadView" : "PeterUhnak 10/19/2014 22:21",
+		"roassalView" : "PeterUhnak 10/19/2014 16:49",
+		"selectEdgeItem:" : "PeterUhnak 10/19/2014 17:11",
+		"selectElement:" : "PeterUhnak 10/19/2014 21:57",
+		"selectElementItem:" : "PeterUhnak 10/19/2014 17:07",
+		"selectItem:type:" : "PeterUhnak 10/19/2014 17:08",
+		"signalUpdate" : "PeterUhnak 10/19/2014 22:20",
+		"viewClicked:" : "PeterUhnak 10/19/2014 22:20",
+		"viewEdgeClicked:" : "PeterUhnak 10/19/2014 22:20",
+		"viewElementClicked:" : "PeterUhnak 10/19/2014 22:20" } }

@@ -1,4 +1,4 @@
-as yet unclassified
+adding
 addMenuFor: anElement
 	| menu |
 	menu := PluggableMenuSpec new model: anElement.

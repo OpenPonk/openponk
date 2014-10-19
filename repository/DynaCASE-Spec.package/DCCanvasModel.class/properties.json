@@ -1,0 +1,20 @@
+{
+	"category" : "DynaCASE-Spec-Windows",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 10/19/2014 16:36",
+	"instvars" : [
+		"selectedItemType",
+		"selectedItem",
+		"activeElement",
+		"roassalView",
+		"diagramController",
+		"selectedElement",
+		"diagram" ],
+	"name" : "DCCanvasModel",
+	"pools" : [
+		 ],
+	"super" : "RoassalModel",
+	"type" : "normal" }

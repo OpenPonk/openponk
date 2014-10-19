@@ -5,14 +5,13 @@ defaultSpec
 			height: self toolbarHeight;
 		newRow: [ :row | 
 					row
-						newColumn: [ :col | col add: #treeModel top: 0.0 bottom: 0.05 ] origin: 0 @ 0 corner: 0.2 @ 1;
+						newColumn: [ :col | col add: #treeModel top: 0.0 ] origin: 0 @ 0 corner: 0.2 @ 1;
 						addSplitter;
 						newColumn: [ :col | 
 									col
-										add: #roassalModel origin: 0 @ 0 corner: 1 @ 0.8;
+										add: #canvasModel origin: 0 @ 0 corner: 1 @ 0.8;
 										addSplitter;
-										add: #textEditorModel origin: 0 @ 0.8 corner: 1 @ 0.95;
-										add: #statusModel origin: 0 @ 0.95 corner: 1 @ 1 ]
+										add: #textEditorModel origin: 0 @ 0.8 corner: 1 @ 1 ]
 							origin: 0.2 @ 0
 							corner: 0.8 @ 1;
 						addSplitter;
@@ -22,5 +21,6 @@ defaultSpec
 										addSplitter;
 										add: #formModel ]
 							origin: 0.8 @ 0
-							corner: 1 @ 1 ] top: self toolbarHeight;
+							corner: 1 @ 1 ]
+			top: self toolbarHeight;
 		yourself

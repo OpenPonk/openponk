@@ -1,0 +1,1 @@
+I highlight an element or edge when the item is clicked. Previously selected item automatically loses focus.

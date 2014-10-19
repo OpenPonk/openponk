@@ -4,11 +4,12 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "PeterUhnak 10/19/2014 22:10",
 	"instvars" : [
-		"activationElement" ],
-	"name" : "DCRTAbstractActivableWithElement",
+		"onFocus",
+		"onBlur" ],
+	"name" : "DCRTFocusable",
 	"pools" : [
 		 ],
-	"super" : "DCRTAbstractActivable",
+	"super" : "RTAbstractHighlightable",
 	"type" : "normal" }

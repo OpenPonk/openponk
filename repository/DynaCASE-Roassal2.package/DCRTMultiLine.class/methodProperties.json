@@ -2,10 +2,11 @@
 	"class" : {
 		 },
 	"instance" : {
+		"arrowHead" : "PeterUhnak 10/19/2014 23:15",
 		"attachPoint:" : "bliznjan 10/19/2014 19:53",
 		"color:" : "bliznjan 10/19/2014 19:52",
 		"head" : "bliznjan 10/2/2014 22:11",
-		"head:" : "bliznjan 10/19/2014 10:26",
+		"head:" : "bliznjan 10/2/2014 22:11",
 		"initialize" : "bliznjan 10/19/2014 19:50",
-		"trachelShapeFor:" : "bliznjan 10/19/2014 10:28",
-		"updateFor:trachelShape:" : "bliznjan 10/19/2014 10:28" } }
+		"trachelShapeFor:" : "PeterUhnak 10/9/2014 14:54",
+		"updateFor:trachelShape:" : "PeterUhnak 10/7/2014 10:08" } }

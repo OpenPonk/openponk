@@ -1,6 +1,6 @@
 initialization
 createView
-	| element   activation |
+	| element |
 	element := self roassalShapeClass new
 		size: 50;
 		color: Color transparent;
@@ -14,16 +14,7 @@ createView
 				color: Color black;
 				yourself).
 	element @ RTDraggable.
-	element @ (activation := DCRTActivableWithBoundingBox new).
-	activation
-		activateWhen: TRMouseEnter
-			deactivateWhen: TRMouseLeave
-			priority: 10
-			value: Color gray;
-		activateWhen: DCTRSelectedEvent
-			deactivateWhen: DCTRUnselectedEvent
-			priority: 20
-			value: Color blue.
+	element @ DCRTFocusable.
 	self model nameHolder
 		whenChangedDo: [ :newValue | 
 			(element attributeAt: #RTLabelledLabel) text: newValue.

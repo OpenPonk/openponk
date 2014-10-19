@@ -1,28 +1,29 @@
 initialization
 createEdgeFrom: fromElement to: toElement
-	| edge label callback sourceLabel targetLabel createLabel activation |
+	| edge label sourceLabel targetLabel createLabel activation |
 	edge := DCRTMultiLine edgeFrom: fromElement to: toElement.
 	edge shape color: Color black.
 	edge shape attachPoint: RTShorterDistanceWithOffsetAttachPoint instance.
 	createLabel := [ :text | 
-	TRLabelShape new
+	(RTLabel new
 		color: self defaultColor;
-		fontSize: 10;
+		height: 10;
 		text: text;
-		yourself ].
+		elementOn: edge) @ RTDraggable ].
 	label := createLabel value: self model name.
 	sourceLabel := createLabel value: self model sourceName.
 	targetLabel := createLabel value: self model targetName.
-	self parent view canvas
-		addShape: label;
-		addShape: sourceLabel;
-		addShape: targetLabel.
-	callback := TRRemoveCallback
-		block: [ :shape | 
-			label remove.
-			sourceLabel remove.
-			targetLabel remove ].
-	edge trachelShape shapes first addCallback: callback.
+	self parent view
+		add: label;
+		add: sourceLabel;
+		add: targetLabel.
+	edge trachelShape shapes first
+		addCallback:
+			(TRRemoveCallback
+				block: [ :shape | 
+					label remove.
+					sourceLabel remove.
+					targetLabel remove ]).
 	DCTRConstraint
 		stick: label
 		alongEdge: edge
@@ -40,18 +41,18 @@ createEdgeFrom: fromElement to: toElement
 		aboveBy: -12.
 	self model nameHolder
 		whenChangedDo: [ :newValue | 
-			label text: newValue.
-			edge update.
+			label shape text: newValue.
+			label update.
 			edge view signalUpdate ].
 	self model sourceNameHolder
 		whenChangedDo: [ :newValue | 
-			sourceLabel text: newValue.
-			edge update.
+			sourceLabel shape text: newValue.
+			sourceLabel update.
 			edge view signalUpdate ].
 	self model targetNameHolder
 		whenChangedDo: [ :newValue | 
-			targetLabel text: newValue.
-			edge update.
+			targetLabel shape text: newValue.
+			targetLabel update.
 			edge view signalUpdate ].
 	edge @ (activation := DCRTActivableWithColor new).
 	activation

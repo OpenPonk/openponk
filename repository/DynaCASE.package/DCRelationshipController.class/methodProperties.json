@@ -2,9 +2,5 @@
 	"class" : {
 		 },
 	"instance" : {
-		"activatePriority:value:" : "bliznjan 10/14/2014 13:08",
-		"activationView" : "bliznjan 10/14/2014 13:08",
 		"createEdgeFrom:to:" : "PeterUhnak 10/4/2014 12:30",
-		"createView" : "PeterUhnak 10/4/2014 12:29",
-		"deactivatePriority:" : "bliznjan 10/13/2014 16:12",
-		"initialize" : "bliznjan 10/13/2014 16:13" } }
+		"createView" : "PeterUhnak 10/4/2014 12:29" } }

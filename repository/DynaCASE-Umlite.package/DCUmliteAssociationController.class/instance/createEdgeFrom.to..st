@@ -1,7 +1,9 @@
 initialization
 createEdgeFrom: fromElement to: toElement
 	| edge label sourceLabel targetLabel createLabel activation |
-	edge := DCRTMultiLine edgeFrom: fromElement to: toElement.
+	edge := DCRTMultiLine new
+		head: RTSimpleArrowHead new;
+		edgeFrom: fromElement to: toElement.
 	edge shape color: Color black.
 	edge shape attachPoint: RTShorterDistanceWithOffsetAttachPoint instance.
 	createLabel := [ :text | 

@@ -3,7 +3,7 @@
 		 },
 	"instance" : {
 		"addLabelTo:" : "PeterUhnak 10/19/2014 23:03",
-		"constraint:balance:aboveBy:" : "PeterUhnak 10/19/2014 22:55",
+		"constraint:balance:aboveBy:" : "bliznjan 10/20/2014 23:01",
 		"createEdgeFrom:to:" : "PeterUhnak 10/19/2014 23:17",
 		"defaultColor" : "PeterUhnak 10/19/2014 23:01",
 		"updateLabel:whenChanged:" : "PeterUhnak 10/19/2014 23:06" } }

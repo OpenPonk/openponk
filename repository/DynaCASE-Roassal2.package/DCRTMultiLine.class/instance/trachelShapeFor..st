@@ -9,7 +9,7 @@ trachelShapeFor: anEdge
 	2 to: path size do: [ :i | 
 		multiShape
 			addShape:
-				(DCTRDashedLineShape new
+				(DCTRStyledLineShape new
 					dashes: dashes;
 					width: width;
 					from: (path at: i - 1) to: (path at: i);

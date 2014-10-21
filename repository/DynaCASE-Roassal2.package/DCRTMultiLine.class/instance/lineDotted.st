@@ -1,3 +1,3 @@
 drawing
 lineDotted
-	self dashesFill: 1 gap: 2
+	dashes := #("fill" 1 "gap" 2)

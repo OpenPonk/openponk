@@ -6,7 +6,8 @@
 		 ],
 	"commentStamp" : "bliznjan 10/7/2014 17:06",
 	"instvars" : [
-		"head" ],
+		"head",
+		"dashes" ],
 	"name" : "DCRTMultiLine",
 	"pools" : [
 		 ],

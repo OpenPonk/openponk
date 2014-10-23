@@ -1,4 +1,4 @@
-as yet unclassified
+diagram handling
 newDiagramControllerFor: aDiagram
 	| d |
 	d := {(DCFsm -> DCFsmController).
@@ -8,5 +8,6 @@ newDiagramControllerFor: aDiagram
 		ifPresent: [ :class | 
 			^ class new
 				model: aDiagram;
+				editor: self;
 				yourself ]
 		ifAbsent: [ self error: 'Unknown diagram type ' , aDiagram class ]

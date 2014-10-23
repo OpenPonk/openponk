@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Spec-Utils",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"menu" ],
+	"name" : "DCMenuBuilder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

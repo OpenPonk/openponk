@@ -2,4 +2,4 @@ file support
 askForFileNameToSave: suggestedFileName
 	"Ask user for the name of the file to save workspace content to. Use the given file name as the initial answer"
 
-	^ UIManager default request: 'Enter file name to save the diagram to' initialAnswer: suggestedFileName
+	^ UIManager default request: 'Enter file name to save the project to' initialAnswer: suggestedFileName

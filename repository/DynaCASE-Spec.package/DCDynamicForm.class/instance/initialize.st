@@ -2,4 +2,5 @@ initialization
 initialize
 	self reset.
 	super initialize.
-	heights := self defaultHeights
+	heights := self defaultHeights.
+	whenAccepted := [  ]

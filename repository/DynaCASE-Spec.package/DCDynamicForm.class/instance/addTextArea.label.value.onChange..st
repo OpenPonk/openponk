@@ -5,5 +5,8 @@ addTextArea: aName label: aLabel value: aString onChange: aOneArgBlock
 	control := self newText.
 	control autoAccept: true.
 	control text: aString.
-	control whenTextChanged: [ :newValue | aOneArgBlock value: newValue ].
+	control
+		whenTextChanged: [ :newValue | 
+			aOneArgBlock value: newValue.
+			self accepted ].
 	components add: (Array with: aName with: control)

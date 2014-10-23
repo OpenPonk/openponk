@@ -1,6 +1,6 @@
 instance creation
-openProject: aProject
+openOn: aDiagram
 	^ self new
 		open;
-		openProject: aProject;
+		openDiagram: aDiagram;
 		yourself

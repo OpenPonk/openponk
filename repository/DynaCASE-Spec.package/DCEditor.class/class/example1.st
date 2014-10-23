@@ -1,9 +1,7 @@
 instance creation
 example1
-	| project fsm initial first second final t1 t2 t3 t4 |
-	project := DCProject new projectName: 'Example FSM'.
-	fsm := DCFsm new name: 'FS Diagram'.
-	project addDiagram: fsm.
+	| fsm initial first second final t1 t2 t3 t4 |
+	fsm := DCFsm new.
 	initial := DCFsmInitialState new.
 	first := DCFsmState new name: '1'.
 	second := DCFsmState new name: '2'.
@@ -22,4 +20,4 @@ example1
 		add: t2;
 		add: t3;
 		add: t4.
-	^ self openProject: project
+	^ self openOn: fsm

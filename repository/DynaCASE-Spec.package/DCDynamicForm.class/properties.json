@@ -8,8 +8,7 @@
 	"instvars" : [
 		"components",
 		"controller",
-		"heights",
-		"whenAccepted" ],
+		"heights" ],
 	"name" : "DCDynamicForm",
 	"pools" : [
 		 ],

@@ -1,6 +1,6 @@
 file support
 saveFile: aFileName
-	| serializedProject |
-	serializedProject := project serialize.
-	StandardFileStream forceNewFileNamed: aFileName do: [ :stream | STON put: serializedProject onStreamPretty: stream ].
-	project saved
+	| serializedDiagram |
+	serializedDiagram := diagramController serialize.
+	serializedDiagram at: #version put: '0.1'.
+	StandardFileStream forceNewFileNamed: aFileName do: [ :stream | STON put: serializedDiagram onStreamPretty: stream ]

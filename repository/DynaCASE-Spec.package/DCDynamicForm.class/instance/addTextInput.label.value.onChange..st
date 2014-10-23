@@ -5,8 +5,5 @@ addTextInput: aName label: aLabel value: aString onChange: aOneArgBlock
 	control := self newTextInput.
 	control autoAccept: true.
 	control text: aString.
-	control
-		whenTextChanged: [ :newValue | 
-			aOneArgBlock value: newValue.
-			self accepted ].
+	control whenTextChanged: [ :newValue | aOneArgBlock value: newValue ].
 	components add: (Array with: aName with: control)

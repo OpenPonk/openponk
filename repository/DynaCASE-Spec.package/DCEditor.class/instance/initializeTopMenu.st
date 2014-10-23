@@ -6,14 +6,21 @@ initializeTopMenu
 				addItem: [ :item | 
 					item
 						name: 'Open';
-						description: 'Open Project';
+						description: 'Open file';
 						icon: Smalltalk ui icons openIcon;
 						action: [ self openCommand ] ].
 			group
 				addItem: [ :item | 
 					item
 						name: 'Save';
-						description: 'Save Project';
+						description: 'Save File';
 						icon: Smalltalk ui icons smallSaveIcon;
-						action: [ self saveCommand ] ] ].
+						action: [ self saveCommand ] ].
+			group
+				addItem: [ :item | 
+					item
+						name: 'Save as...';
+						description: 'Save File';
+						icon: Smalltalk ui icons smallSaveIcon;
+						action: [ self saveAsCommand ] ] ].
 	menuModel applyTo: self

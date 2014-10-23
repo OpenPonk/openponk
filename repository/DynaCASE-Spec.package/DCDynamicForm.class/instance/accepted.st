@@ -1,3 +1,0 @@
-private
-accepted
-	whenAccepted value

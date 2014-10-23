@@ -1,7 +1,3 @@
-diagram handling
+instance creation
 closeDiagram
-	textEditorModel doItReceiver diagram: nil.
-	diagramController := nil.
-	self rebuildPalette.
-	canvasModel diagramController: nil.
-	canvasModel reloadView
+	diagramController := nil

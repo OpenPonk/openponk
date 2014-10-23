@@ -8,12 +8,12 @@
 	"instvars" : [
 		"canvasModel",
 		"diagramController",
+		"fileName",
 		"formModel",
 		"menuModel",
 		"paletteModel",
 		"textEditorModel",
-		"treeModel",
-		"project" ],
+		"treeModel" ],
 	"name" : "DCEditor",
 	"pools" : [
 		 ],

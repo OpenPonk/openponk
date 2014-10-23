@@ -1,11 +1,13 @@
 file support
 openFile: aFileName
-	| materializedProject |
+	| materializedDigram |
 	aFileName isEmptyOrNil
 		ifTrue: [ ^ self ].
+	fileName := aFileName.
 	aFileName asFileReference
 		readStreamDo: [ :stream | 
-			materializedProject := (STON reader
+			materializedDigram := (STON reader
 				allowComplexMapKeys: true;
 				on: stream) next.
-			self openProject: (materializedProject at: #project) ]
+			self openDiagram: (materializedDigram at: #diagram).
+			diagramController layout: (materializedDigram at: #layout) ]

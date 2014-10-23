@@ -1,9 +1,7 @@
 instance creation
 example3
-	| diagram firstClass secondClass a1 project |
-	project := DCProject new projectName: 'Example Umlite'.
+	| diagram firstClass secondClass a1 |
 	diagram := DCUmliteDiagram new.
-	project addDiagram: diagram.
 	firstClass := DCUmliteClass new name: 'FirstClass'.
 	firstClass attributes: #('-attr1' '-attr2') asOrderedCollection.
 	secondClass := DCUmliteClass new
@@ -18,4 +16,4 @@ example3
 		add: firstClass;
 		add: secondClass;
 		add: a1.
-	^ self openProject: project
+	^ self openOn: diagram

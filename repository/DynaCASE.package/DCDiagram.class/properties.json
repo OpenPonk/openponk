@@ -6,7 +6,8 @@
 		 ],
 	"commentStamp" : "lariover 10/5/2014 19:40",
 	"instvars" : [
-		"elements" ],
+		"elements",
+		"nameHolder" ],
 	"name" : "DCDiagram",
 	"pools" : [
 		 ],

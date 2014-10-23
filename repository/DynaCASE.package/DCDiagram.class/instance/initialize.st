@@ -1,4 +1,5 @@
 initialization
 initialize
 	super initialize.
-	elements := OrderedCollection new
+	elements := OrderedCollection new.
+	nameHolder := NewValueHolder value: ''

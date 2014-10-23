@@ -1,0 +1,18 @@
+{
+	"category" : "DynaCASE-Models",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 10/21/2014 19:27",
+	"instvars" : [
+		"diagrams",
+		"projectName",
+		"dirty",
+		"fileName",
+		"editor" ],
+	"name" : "DCProject",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

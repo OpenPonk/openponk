@@ -1,0 +1,3 @@
+accessing
+dirty
+	^ dirty value

@@ -11,7 +11,8 @@ reloadView
 			(element isKindOf: RTEdge)
 				ifTrue: [ element when: TRMouseLeftClick do: [ :event | self viewEdgeClicked: event element ] ].
 			self addMenuFor: element ].
-	roassalView canvas addMenu: '  + ' callback: [ RTZoomInMove on: roassalView ].
-	roassalView canvas addMenu: ' -  ' callback: [ RTZoomOutMove on: roassalView ].
+	roassalView canvas addMenu: ' [ + ]' callback: [ RTZoomInMove on: roassalView ].
+	roassalView canvas addMenu: '[ - ] ' callback: [ RTZoomOutMove on: roassalView ].
+	roassalView canvas addMenu: '[ view all ]' callback: [ roassalView canvas camera focusOnCenterScaled ].
 	roassalView @ DCRTScrollableView.
 	diagramController updateView

@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-Trachel-Shapes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"center",
+		"radius" ],
+	"name" : "DCTRCircleHeadShape",
+	"pools" : [
+		 ],
+	"super" : "TRAbstractLineDecoratorShape",
+	"type" : "normal" }

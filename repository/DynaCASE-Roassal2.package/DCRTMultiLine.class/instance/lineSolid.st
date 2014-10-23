@@ -1,3 +1,3 @@
-drawing
+shapes
 lineSolid
 	dashes := nil

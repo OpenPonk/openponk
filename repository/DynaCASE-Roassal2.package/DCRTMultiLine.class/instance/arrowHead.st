@@ -1,3 +1,3 @@
-as yet unclassified
+shapes
 arrowHead
 	self head: RTSimpleArrowHead new

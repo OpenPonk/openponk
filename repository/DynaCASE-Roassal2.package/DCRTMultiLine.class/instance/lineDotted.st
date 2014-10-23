@@ -1,3 +1,3 @@
-drawing
+shapes
 lineDotted
 	dashes := #("fill" 1 "gap" 2)

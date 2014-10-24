@@ -3,7 +3,9 @@
 		 },
 	"instance" : {
 		"addLabelTo:" : "PeterUhnak 10/19/2014 23:03",
-		"constraint:balance:aboveBy:" : "bliznjan 10/20/2014 23:01",
+		"constraint:balance:offset:" : "bliznjan 10/24/2014 22:58",
+		"constraint:toSourceDistance:offset:" : "bliznjan 10/24/2014 21:07",
+		"constraint:toTargetDistance:offset:" : "bliznjan 10/24/2014 21:07",
 		"createEdgeFrom:to:" : "bliznjan 10/21/2014 01:48",
 		"defaultColor" : "PeterUhnak 10/19/2014 23:01",
 		"updateLabel:whenChanged:" : "PeterUhnak 10/19/2014 23:06" } }

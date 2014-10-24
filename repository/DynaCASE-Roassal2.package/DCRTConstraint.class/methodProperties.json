@@ -1,0 +1,15 @@
+{
+	"class" : {
+		"fix:alongEdge:" : "bliznjan 10/24/2014 23:01",
+		"fix:nearEndOfEdge:" : "bliznjan 10/24/2014 23:00",
+		"fix:nearStartOfEdge:" : "bliznjan 10/24/2014 23:00",
+		"move:alongEdge:balance:offset:" : "bliznjan 10/24/2014 22:58",
+		"move:alongEdge:offset:" : "bliznjan 10/24/2014 22:58",
+		"move:nearEndOfEdge:distance:offset:" : "bliznjan 10/24/2014 22:59",
+		"move:nearStartOfEdge:distance:offset:" : "bliznjan 10/24/2014 22:59",
+		"stick:alongEdge:offset:" : "bliznjan 10/24/2014 22:58",
+		"stick:alongLine:balance:offset:" : "bliznjan 10/24/2014 22:59",
+		"stick:nearEndOfEdge:distance:offset:" : "bliznjan 10/24/2014 23:00",
+		"stick:nearStartOfEdge:distance:offset:" : "bliznjan 10/24/2014 23:00" },
+	"instance" : {
+		 } }

@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCRTConstraint",
+	"pools" : [
+		 ],
+	"super" : "TRObject",
+	"type" : "normal" }

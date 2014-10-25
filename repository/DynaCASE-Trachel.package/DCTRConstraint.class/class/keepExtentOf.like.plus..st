@@ -1,4 +1,4 @@
-public - sticking
+public - resizing
 keepExtentOf: aShape like: anotherShape plus: aPoint
 	| b |
 	self changeExtentOf: aShape like: anotherShape plus: aPoint.

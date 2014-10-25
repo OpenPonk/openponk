@@ -1,4 +1,4 @@
-public - sticking
+public - moving
 move: aShape alongEdge: anEdge balance: aFloat offset: aNumber
 	| vector startPoint endPoint |
 	startPoint := anEdge shape startingPointOf: anEdge.

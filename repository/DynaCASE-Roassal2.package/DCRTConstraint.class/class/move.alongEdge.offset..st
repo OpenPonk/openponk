@@ -1,4 +1,4 @@
-public - sticking
+public - moving
 move: aShape alongEdge: anEdge offset: aNumber
 	self
 		move: aShape

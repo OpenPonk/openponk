@@ -1,33 +1,11 @@
 public - sticking
 stick: aShape nearEndOfEdge: anEdge distance: aNumber offset: anotherNumber
-	| callbackex callbacktr block |
+	| callbacks |
+	callbacks := self callbacksOfEdge: anEdge.
+	aShape when: TRMouseDragEnd do: [ self doFix: aShape nearEndOfEdge: anEdge callbacks: callbacks ].
 	self
-		move: aShape
+		doStick: aShape
 		nearEndOfEdge: anEdge
 		distance: aNumber
-		offset: anotherNumber.
-	block := [ :shape :step | 
-	self
-		move: aShape
-		nearEndOfEdge: anEdge
-		distance: aNumber
-		offset: anotherNumber ].
-	callbacktr := TRTranslationCallback block: block.
-	callbackex := TRExtentCallback block: block.
-	anEdge from
-		addCallback: callbacktr;
-		addCallback: callbackex.
-	anEdge to
-		addCallback: callbacktr;
-		addCallback: callbackex.
-	aShape
-		when: TRMouseDragEnd
-		do: [ 
-			anEdge from trachelShape
-				removeCallback: callbacktr ifAbsent: nil;
-				removeCallback: callbackex ifAbsent: nil.
-			anEdge to trachelShape
-				removeCallback: callbacktr ifAbsent: nil;
-				removeCallback: callbackex ifAbsent: nil.
-			aShape announcer unsubscribe: self.
-			self fix: aShape nearEndOfEdge: anEdge ]
+		offset: anotherNumber
+		callbacks: callbacks

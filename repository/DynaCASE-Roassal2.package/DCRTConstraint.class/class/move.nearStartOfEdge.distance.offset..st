@@ -1,4 +1,4 @@
-public - sticking
+public - moving
 move: aShape nearStartOfEdge: anEdge distance: aNumber offset: anotherNumber
 	| vector startPoint endPoint |
 	startPoint := anEdge shape startingPointOf: anEdge.

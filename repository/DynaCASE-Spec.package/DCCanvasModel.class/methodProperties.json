@@ -3,7 +3,7 @@
 		 },
 	"instance" : {
 		"addMenuFor:" : "PeterUhnak 10/19/2014 16:43",
-		"cancelSelection" : "PeterUhnak 10/19/2014 17:11",
+		"cancelSelection" : "bliznjan 10/26/2014 15:10",
 		"deleteElement:" : "PeterUhnak 10/19/2014 22:20",
 		"detachDiagramController" : "PeterUhnak 10/23/2014 21:48",
 		"diagramController" : "PeterUhnak 10/19/2014 17:15",
@@ -13,10 +13,10 @@
 		"reloadView" : "PeterUhnak 10/24/2014 00:07",
 		"roassalView" : "PeterUhnak 10/19/2014 16:49",
 		"selectEdgeItem:" : "PeterUhnak 10/19/2014 17:11",
-		"selectElement:" : "PeterUhnak 10/19/2014 21:57",
+		"selectElement:" : "bliznjan 10/26/2014 15:12",
 		"selectElementItem:" : "PeterUhnak 10/19/2014 17:07",
-		"selectItem:type:" : "PeterUhnak 10/19/2014 17:08",
+		"selectItem:type:" : "bliznjan 10/26/2014 15:13",
 		"signalUpdate" : "PeterUhnak 10/19/2014 22:20",
 		"viewClicked:" : "PeterUhnak 10/19/2014 22:20",
 		"viewEdgeClicked:" : "PeterUhnak 10/19/2014 22:20",
-		"viewElementClicked:" : "PeterUhnak 10/19/2014 22:20" } }
+		"viewElementClicked:" : "bliznjan 10/26/2014 15:12" } }

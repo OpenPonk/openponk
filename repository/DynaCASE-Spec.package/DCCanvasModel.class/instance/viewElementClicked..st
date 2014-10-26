@@ -12,10 +12,12 @@ viewElementClicked: anElement
 		ifTrue: [ 
 			selectedElement
 				ifNil: [ 
-					selectedElement := selectedItem value
-						from: anElement;
-						renderIn: roassalView;
-						yourself ]
+					self
+						selectElement:
+							(selectedItem value
+								from: anElement;
+								renderIn: roassalView;
+								yourself) ]
 				ifNotNil: [ 
 					| controller view |
 					selectedElement to: anElement.

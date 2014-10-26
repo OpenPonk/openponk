@@ -11,7 +11,8 @@
 		"roassalView",
 		"diagramController",
 		"selectedElement",
-		"diagram" ],
+		"diagram",
+		"focusedController" ],
 	"name" : "DCCanvasModel",
 	"pools" : [
 		 ],

@@ -1,5 +1,10 @@
 selection handling
 cancelSelection
-	selectedElement := nil.
-	selectedItem := nil.
-	selectedItemType := nil
+	selectedItem
+		ifNotNil: [ 
+			selectedElement
+				ifNotNil: [ 
+					selectedElement cancel.
+					selectedElement := nil ].
+			selectedItem := nil.
+			selectedItemType := nil ]

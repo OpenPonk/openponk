@@ -6,7 +6,6 @@ initializeWidgets
 	formModel := self instantiate: DCDynamicForm.
 	canvasModel := self instantiate: DCCanvasModel.
 	paletteModel := self instantiate: DCPaletteModel.
-	self cancelSelection.
 	self focusOrder
 		add: canvasModel;
 		add: paletteModel;

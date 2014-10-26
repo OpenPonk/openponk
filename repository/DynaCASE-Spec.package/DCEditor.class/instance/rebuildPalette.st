@@ -4,4 +4,14 @@ rebuildPalette
 		ifNotNil: [ 
 			paletteModel removeAll.
 			diagramController initializePalette: paletteModel editor: self ].
-	paletteModel rebuildWidget
+	paletteModel
+		addGroup: [ :group | 
+					group
+						name: 'Actions';
+						addItem: [ :item | 
+									item
+										name: 'Cancel selection';
+										action: [ 
+													self cancelFocus.
+													self canvasModel cancelSelection ] ] ];
+		rebuildWidget

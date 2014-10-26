@@ -9,5 +9,5 @@ viewClicked: anEvent
 			view when: TRMouseLeftClick do: [ :event | self viewElementClicked: event element ].
 			self addMenuFor: view.
 			self cancelSelection.
-			self owner formModel editController: controller.
+			self focusOnController: controller.
 			self signalUpdate ]

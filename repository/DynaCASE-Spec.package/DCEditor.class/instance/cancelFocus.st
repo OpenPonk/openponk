@@ -1,3 +1,3 @@
 selection handling
-cancelSelection
+cancelFocus
 	self formModel editController: nil

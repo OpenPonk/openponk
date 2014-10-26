@@ -1,13 +1,6 @@
 as yet unclassified
 viewElementClicked: anElement
-	selectedItemType
-		ifNil: [ 
-			| controller |
-			controller := diagramController findControllerByView: anElement.
-			self cancelSelection.
-			self selectElement: anElement.
-			self owner formModel editController: controller.
-			self signalUpdate ].
+	selectedItemType ifNil: [ self focusOn: anElement ].
 	selectedItemType = #edge
 		ifTrue: [ 
 			selectedElement
@@ -26,5 +19,5 @@ viewElementClicked: anElement
 					view when: TRMouseLeftClick do: [ :event | self viewEdgeClicked: event element ].
 					self addMenuFor: view.
 					self cancelSelection.
-					self owner formModel editController: controller.
+					self focusOnController: controller.
 					self signalUpdate ] ]

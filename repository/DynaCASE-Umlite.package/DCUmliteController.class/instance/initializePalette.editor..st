@@ -28,15 +28,8 @@ initializePalette: aPalette editor: anEditor
 										action: [ callback value: DCUmliteClass ] ] ];
 		addGroup: [ :group | 
 					group
-						name: 'Transitions';
+						name: 'Associations';
 						addItem: [ :item | 
 									item
-										name: 'Transition';
-										action: transitionCallback ] ];
-		addGroup: [ :group | 
-					group
-						name: 'Actions';
-						addItem: [ :item | 
-									item
-										name: 'Cancel selection';
-										action: [ anEditor cancelSelection ] ] ]
+										name: 'Association';
+										action: transitionCallback ] ]

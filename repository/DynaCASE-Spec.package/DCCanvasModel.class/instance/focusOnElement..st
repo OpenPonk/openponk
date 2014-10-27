@@ -1,3 +1,3 @@
 selection handling
-focusOn: anElement
+focusOnElement: anElement
 	self focusOnController: (diagramController findControllerByView: anElement)

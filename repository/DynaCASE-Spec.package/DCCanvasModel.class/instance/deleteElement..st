@@ -1,6 +1,6 @@
 as yet unclassified
 deleteElement: anElement
-	(diagramController findControllerByView: anElement) = focusedController
+	anElement = focusedElement
 		ifTrue: [ self cancelFocus ].
 	diagramController removeFromView: anElement.
 	self signalUpdate

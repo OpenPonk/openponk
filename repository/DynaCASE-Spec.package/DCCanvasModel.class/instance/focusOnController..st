@@ -1,7 +1,10 @@
 selection handling
 focusOnController: aController
-	focusedController = aController
+	| element |
+	element := aController view.
+	focusedElement = element
 		ifFalse: [ 
-			focusedController := aController.
+			focusedElement := element.
+			element announce: DCTRFocused.
 			self owner focusOn: aController.
 			self signalUpdate ]

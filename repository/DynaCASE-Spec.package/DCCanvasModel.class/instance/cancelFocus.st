@@ -1,6 +1,7 @@
 selection handling
 cancelFocus
-	focusedController
+	focusedElement
 		ifNotNil: [ 
-			focusedController := nil.
+			focusedElement announce: DCTRUnfocused.
+			focusedElement := nil.
 			self owner cancelFocus ]

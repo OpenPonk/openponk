@@ -1,6 +1,6 @@
 as yet unclassified
 viewElementClicked: anElement
-	selectedItemType ifNil: [ self focusOn: anElement ].
+	selectedItemType ifNil: [ self focusOnElement: anElement ].
 	selectedItemType = #edge
 		ifTrue: [ 
 			selectedElement

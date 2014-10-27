@@ -3,14 +3,14 @@
 		 },
 	"instance" : {
 		"addMenuFor:" : "PeterUhnak 10/19/2014 16:43",
-		"cancelFocus" : "bliznjan 10/26/2014 23:00",
+		"cancelFocus" : "bliznjan 10/27/2014 11:31",
 		"cancelSelection" : "bliznjan 10/26/2014 22:50",
-		"deleteElement:" : "bliznjan 10/26/2014 23:07",
+		"deleteElement:" : "bliznjan 10/27/2014 11:12",
 		"detachDiagramController" : "PeterUhnak 10/23/2014 21:48",
 		"diagramController" : "PeterUhnak 10/19/2014 17:15",
 		"diagramController:" : "PeterUhnak 10/23/2014 21:48",
-		"focusOn:" : "bliznjan 10/26/2014 23:07",
-		"focusOnController:" : "bliznjan 10/26/2014 23:07",
+		"focusOnController:" : "bliznjan 10/27/2014 11:24",
+		"focusOnElement:" : "bliznjan 10/27/2014 11:26",
 		"initialize" : "bliznjan 10/26/2014 22:56",
 		"loadElementsFromController" : "PeterUhnak 10/23/2014 21:49",
 		"reloadView" : "PeterUhnak 10/24/2014 00:07",
@@ -20,6 +20,6 @@
 		"selectElementItem:" : "PeterUhnak 10/19/2014 17:07",
 		"selectItem:type:" : "bliznjan 10/26/2014 15:13",
 		"signalUpdate" : "PeterUhnak 10/19/2014 22:20",
-		"viewClicked:" : "bliznjan 10/26/2014 23:08",
-		"viewEdgeClicked:" : "bliznjan 10/26/2014 22:46",
-		"viewElementClicked:" : "bliznjan 10/26/2014 23:08" } }
+		"viewClicked:" : "bliznjan 10/27/2014 11:26",
+		"viewEdgeClicked:" : "bliznjan 10/27/2014 11:27",
+		"viewElementClicked:" : "bliznjan 10/27/2014 11:27" } }

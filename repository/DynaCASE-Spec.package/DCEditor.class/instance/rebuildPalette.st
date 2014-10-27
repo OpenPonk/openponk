@@ -12,6 +12,6 @@ rebuildPalette
 									item
 										name: 'Cancel selection';
 										action: [ 
-													self cancelFocus.
+													self canvasModel cancelFocus.
 													self canvasModel cancelSelection ] ] ];
 		rebuildWidget

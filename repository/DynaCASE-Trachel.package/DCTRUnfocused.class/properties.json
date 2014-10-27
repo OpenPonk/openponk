@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Trachel-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCTRUnfocused",
+	"pools" : [
+		 ],
+	"super" : "DCTRAbstractFocusing",
+	"type" : "normal" }

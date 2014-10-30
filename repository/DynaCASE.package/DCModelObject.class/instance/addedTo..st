@@ -1,3 +1,3 @@
-accessing
+adding
 addedTo: anObject
 	owner := anObject

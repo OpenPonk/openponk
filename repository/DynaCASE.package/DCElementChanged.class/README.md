@@ -1,0 +1,1 @@
+I get announced when an element has changed (name, parameters and such).

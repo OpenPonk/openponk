@@ -2,4 +2,6 @@ adding
 add: anElement
 	elements add: anElement.
 	anElement addedTo: self.
-	self announcer announce: (DCElementAdded element: anElement)
+	anElement when: DCElementChanged do: [ self changed ].
+	self announce: (DCElementAdded element: anElement).
+	self changed

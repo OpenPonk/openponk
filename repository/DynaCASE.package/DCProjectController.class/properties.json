@@ -1,0 +1,16 @@
+{
+	"category" : "DynaCASE-Controllers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"workbench",
+		"editor",
+		"project" ],
+	"name" : "DCProjectController",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,3 +1,3 @@
 accessing
-saved
+setClean
 	self dirty: false

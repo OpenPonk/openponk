@@ -1,0 +1,3 @@
+accessing
+editorModel
+	^ editorModel

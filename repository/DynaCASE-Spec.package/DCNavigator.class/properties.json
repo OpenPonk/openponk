@@ -4,13 +4,11 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "PeterUhnak 10/29/2014 17:55",
+	"commentStamp" : "",
 	"instvars" : [
-		"canvasModel",
-		"diagramController",
-		"paletteModel",
-		"textEditorModel" ],
-	"name" : "DCEditor",
+		"tree",
+		"project" ],
+	"name" : "DCNavigator",
 	"pools" : [
 		 ],
 	"super" : "ComposableModel",

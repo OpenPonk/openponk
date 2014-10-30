@@ -1,6 +1,6 @@
 initialization
 initializeTopMenu
-	menuModel
+	topMenuModel
 		addGroup: [ :group | 
 			group
 				addItem: [ :item | 
@@ -16,4 +16,4 @@ initializeTopMenu
 						description: 'Save Project';
 						icon: Smalltalk ui icons smallSaveIcon;
 						action: [ self saveCommand ] ] ].
-	menuModel applyTo: self
+	topMenuModel applyTo: self

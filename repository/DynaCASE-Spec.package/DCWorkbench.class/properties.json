@@ -1,0 +1,20 @@
+{
+	"category" : "DynaCASE-Spec-Windows",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 10/29/2014 17:53",
+	"instvars" : [
+		"topMenuModel",
+		"navigatorModel",
+		"editorModel",
+		"formModel",
+		"project",
+		"projectController",
+		"treeController" ],
+	"name" : "DCWorkbench",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

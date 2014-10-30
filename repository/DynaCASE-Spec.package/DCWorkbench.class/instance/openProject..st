@@ -3,7 +3,12 @@ openProject: aProject
 	self assert: aProject class = DCProject.
 	project ifNotNil: [ self closeProject ].
 	project := aProject.
+	(projectController := DCProjectController new)
+		project: project;
+		editor: self editorModel;
+		workbench: self.
 	self updateTitle.
 	project whenDirtyChanged: [ self updateTitle ].
-	project openedIn: self.
-	aProject initializeTree: treeModel.
+	navigatorModel openOn: project.
+	project setClean.
+	projectController openFirstDiagram

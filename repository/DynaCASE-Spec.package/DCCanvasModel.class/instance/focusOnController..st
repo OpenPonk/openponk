@@ -1,10 +1,11 @@
 selection handling
 focusOnController: aController
-	| element |
+	| element form |
 	element := aController view.
 	focusedElement = element
 		ifFalse: [ 
 			focusedElement := element.
 			element announce: DCTRFocused.
-			self owner focusOn: aController.
+			form := self workbench openFormOn: aController.
+			element when: DCTRUnfocused do: [ form editController: nil ].
 			self signalUpdate ]

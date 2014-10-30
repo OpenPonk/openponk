@@ -1,4 +1,4 @@
-accessing
+protocol
 title
 	| s |
 	s := ''.

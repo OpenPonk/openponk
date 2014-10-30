@@ -1,4 +1,4 @@
-specs
+menu
 menuCommandOn: aBuilder
 	<worldMenu>
 	(aBuilder item: #'DynaCASE example1')

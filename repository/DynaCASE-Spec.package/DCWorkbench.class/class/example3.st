@@ -1,4 +1,4 @@
-instance creation
+examples
 example3
 	| diagram firstClass secondClass a1 project |
 	project := DCProject new projectName: 'Example Umlite'.

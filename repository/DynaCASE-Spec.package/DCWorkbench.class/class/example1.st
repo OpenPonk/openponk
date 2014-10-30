@@ -1,4 +1,4 @@
-instance creation
+examples
 example1
 	| project fsm initial first second final t1 t2 t3 t4 |
 	project := DCProject new projectName: 'Example FSM'.

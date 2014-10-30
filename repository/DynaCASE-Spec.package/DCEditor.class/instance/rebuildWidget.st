@@ -1,0 +1,3 @@
+protocol
+rebuildWidget
+	self paletteModel rebuildWidget

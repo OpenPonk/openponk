@@ -1,6 +1,5 @@
 private
 loadElementsFromController
-	diagramController view: roassalView.
 	diagramController rebuild.
 	diagramController controllers
 		do: [ :ctrl | 

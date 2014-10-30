@@ -1,3 +1,0 @@
-accessing
-detachDiagramController
-	diagramController view: nil

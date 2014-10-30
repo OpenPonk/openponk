@@ -1,4 +1,5 @@
 accessing
 diagramController: aDiagramController
-	diagramController ifNotNil: [ self detachDiagramController ].
+	diagramController ifNotNil: [ diagramController view: nil ].
+	aDiagramController ifNotNil: [ aDiagramController view: roassalView ].
 	diagramController := aDiagramController

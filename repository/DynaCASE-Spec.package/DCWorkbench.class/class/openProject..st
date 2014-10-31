@@ -1,5 +1,5 @@
 project handling
 openProject: aProject
-	^ self open;
+	^ self open
 		openProject: aProject;
 		yourself

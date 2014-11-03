@@ -1,3 +1,3 @@
 private
-deselectTool: aTool
+selectSelectionTool
 	items first performAction

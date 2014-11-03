@@ -3,4 +3,4 @@ targetSelected: aController
 	(aController canBeTargetFor: objectController)
 		ifTrue: [ 
 			aController addAsTargetFor: objectController.
-			self palette deselectTool: self ]
+			self palette deselectTool ]

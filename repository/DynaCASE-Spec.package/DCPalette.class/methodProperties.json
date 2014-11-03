@@ -3,12 +3,12 @@
 		"defaultSpec" : "PeterUhnak 11/3/2014 11:35" },
 	"instance" : {
 		"addItem" : "PeterUhnak 11/3/2014 18:21",
-		"createPaletteFor:" : "PeterUhnak 11/3/2014 13:21",
+		"createPaletteFor:" : "PeterUhnak 11/3/2014 20:45",
 		"createWidgets" : "PeterUhnak 11/3/2014 11:58",
-		"deselectTool:" : "PeterUhnak 11/3/2014 14:43",
+		"deselectTool" : "PeterUhnak 11/3/2014 20:46",
 		"diagramController" : "PeterUhnak 11/3/2014 13:15",
 		"dynamicLayout" : "PeterUhnak 11/3/2014 18:22",
-		"initialize" : "PeterUhnak 11/3/2014 17:31",
+		"initialize" : "PeterUhnak 11/3/2014 20:44",
 		"initializeWidgets" : "PeterUhnak 11/3/2014 13:10",
 		"newConnectionCreationTool:factory:" : "PeterUhnak 11/3/2014 15:36",
 		"newCreationTool:factory:" : "PeterUhnak 11/3/2014 13:32",
@@ -17,4 +17,5 @@
 		"rebuildWidget" : "PeterUhnak 11/3/2014 11:37",
 		"removeAll" : "PeterUhnak 11/3/2014 12:26",
 		"selectItem:tool:" : "PeterUhnak 11/3/2014 13:11",
+		"selectSelectionTool" : "PeterUhnak 11/3/2014 20:44",
 		"workbench" : "PeterUhnak 11/3/2014 13:21" } }

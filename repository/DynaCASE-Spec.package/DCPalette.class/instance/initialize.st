@@ -4,4 +4,4 @@ initialize
 	selectedItem := nil.
 	selectedTool := nil.
 	super initialize.
-	self bindKeyCombination: Character escape toAction: [ items first performAction ]
+	self bindKeyCombination: Character escape toAction: [ self selectSelectionTool ]

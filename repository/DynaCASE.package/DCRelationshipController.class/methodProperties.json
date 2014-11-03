@@ -2,6 +2,7 @@
 	"class" : {
 		 },
 	"instance" : {
+		"connectionFeedback" : "PeterUhnak 11/3/2014 19:04",
 		"createEdgeFrom:to:" : "PeterUhnak 10/4/2014 12:30",
 		"createModel" : "PeterUhnak 11/3/2014 16:11",
 		"createView" : "PeterUhnak 11/3/2014 15:48",

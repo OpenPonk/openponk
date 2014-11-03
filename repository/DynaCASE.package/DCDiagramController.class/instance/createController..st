@@ -1,4 +1,4 @@
-as yet unclassified
+instance creation
 createController: aModel
 	| controller |
 	controller := (modelToControllerMapping at: aModel class) new.

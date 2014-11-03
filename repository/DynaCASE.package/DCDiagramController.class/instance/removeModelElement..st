@@ -1,4 +1,4 @@
-as yet unclassified
+removing
 removeModelElement: aModelElement
 	| controller |
 	controller := self findControllerByModel: aModelElement.

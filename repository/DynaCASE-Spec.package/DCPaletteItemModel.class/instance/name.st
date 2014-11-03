@@ -1,3 +1,0 @@
-protocol
-name
-	^ name

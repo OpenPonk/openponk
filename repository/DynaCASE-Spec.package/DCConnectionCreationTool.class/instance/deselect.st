@@ -1,6 +1,6 @@
 actions
 deselect
-	self removeFeedback.
+	feedback value: nil.
 	connectionFeedback
 		ifNotNil: [ 
 			connectionFeedback remove.

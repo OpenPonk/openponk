@@ -1,7 +1,6 @@
 examples
 example3
 	| diagram firstClass secondClass a1 project |
-	self error: 'Umlite diagram hasn''t been ported to new palette.'.
 	project := DCProject new projectName: 'Example Umlite'.
 	diagram := DCUmliteDiagram new.
 	project addDiagram: diagram.

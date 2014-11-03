@@ -1,5 +1,7 @@
 callbacks
 targetEntered: aController
-	(aController canBeTargetFor: connectionController)
-		ifTrue: [ self acceptFeedbackFor: aController view ]
-		ifFalse: [ self denyFeedbackFor: aController view ]
+	feedback
+		value:
+			((aController canBeTargetFor: connectionController)
+				ifTrue: [ DCAcceptDenyFeedbackBuilder acceptFeedbackFor: aController view ]
+				ifFalse: [ DCAcceptDenyFeedbackBuilder denyFeedbackFor: aController view ])

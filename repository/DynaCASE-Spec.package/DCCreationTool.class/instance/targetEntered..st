@@ -1,5 +1,7 @@
 callbacks
 targetEntered: aController
-	(aController canBeSourceFor: objectController)
-		ifTrue: [ self acceptFeedbackFor: aController view ]
-		ifFalse: [ self denyFeedbackFor: aController view ]
+	feedback
+		value:
+			((aController canBeSourceFor: objectController)
+				ifTrue: [ DCAcceptDenyFeedbackBuilder acceptFeedbackFor: aController view ]
+				ifFalse: [ DCAcceptDenyFeedbackBuilder denyFeedbackFor: aController view ])

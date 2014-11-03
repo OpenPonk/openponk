@@ -1,5 +1,5 @@
 instance creation
 newSeparator
-	"todo"
-
-	
+	| item |
+	item := self newLabel.
+	items add: item

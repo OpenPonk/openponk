@@ -1,3 +1,3 @@
 actions
 deselect
-	self removeFeedback
+	feedback value: nil

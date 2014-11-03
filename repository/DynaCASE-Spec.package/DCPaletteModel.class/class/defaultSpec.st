@@ -1,3 +1,0 @@
-specs
-defaultSpec
-	^ SpecLayout composed

@@ -7,12 +7,12 @@ baseline01: spec
 			spec blessing: #baseline.
 			spec repository: 'http://smalltalkhub.com/mc/DynaCASE/DynaCASE/main/'.
 			spec
-				project: 'GMF'
+"				project: 'GMF'
 					with: [ 
 							spec
 								className: #ConfigurationOfGMF;
 								versionString: #development;
-								repository: 'http://smalltalkhub.com/mc/volosmat/GMFP/main/' ];
+								repository: 'http://smalltalkhub.com/mc/volosmat/GMFP/main/' ];"
 				project: 'Roassal2'
 					with: [ 
 							spec
@@ -33,4 +33,4 @@ baseline01: spec
 				package: 'DynaCASE-Spec';
 				package: 'DynaCASE-Trachel';
 				package: 'DynaCASE-Umlite';
-				package: 'GMF-MetaModel' with: [ spec requires: #('GMF') ] ]
+				package: 'GMF-MetaModel' ]

@@ -2,7 +2,8 @@ diagram handling
 newDiagramControllerFor: aDiagram
 	| d |
 	d := {(DCFsm -> DCFsmController).
-	(DCUmliteDiagram -> DCUmliteController)} asDictionary.
+	(DCUmliteDiagram -> DCUmliteController).
+	(DCOmlDiagram -> DCOmlController) } asDictionary.
 	d
 		at: aDiagram class
 		ifPresent: [ :class | 
@@ -10,4 +11,4 @@ newDiagramControllerFor: aDiagram
 				model: aDiagram;
 				editor: self;
 				yourself ]
-		ifAbsent: [ self error: 'Unknown diagram type ' , aDiagram class ]
+		ifAbsent: [ self error: 'Unknown diagram type' ]

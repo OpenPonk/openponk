@@ -1,4 +1,4 @@
-as yet unclassified
+hooks
 createView
 	| class |
 	class := DCRTClass new.

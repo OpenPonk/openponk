@@ -1,4 +1,4 @@
-as yet unclassified
+hooks
 buildEditorForm: aForm
 	aForm
 		addTextInput: 'stereotype'

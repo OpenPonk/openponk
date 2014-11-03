@@ -2,7 +2,8 @@
 	"class" : {
 		 },
 	"instance" : {
+		"canBeTargetFor:" : "PeterUhnak 11/3/2014 19:10",
 		"initialize" : "PeterUhnak 9/2/2014 08:38",
-		"initializePalette:editor:" : "bliznjan 10/26/2014 22:29",
+		"initializePalette:" : "PeterUhnak 11/3/2014 19:04",
 		"rebuild" : "PeterUhnak 10/5/2014 01:20",
 		"updateView" : "bliznjan 10/13/2014 10:29" } }

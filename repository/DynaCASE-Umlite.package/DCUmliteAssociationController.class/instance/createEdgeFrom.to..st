@@ -1,4 +1,4 @@
-initialization
+hooks
 createEdgeFrom: fromElement to: toElement
 	| builder edge label sourceLabel targetLabel |
 	builder := DCRTRelationshipBuilder new.

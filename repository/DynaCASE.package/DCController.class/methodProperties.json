@@ -2,10 +2,14 @@
 	"class" : {
 		 },
 	"instance" : {
+		"canBeSourceFor:" : "PeterUhnak 11/3/2014 13:36",
+		"canBeTargetFor:" : "PeterUhnak 11/3/2014 13:35",
+		"hideSelectionFeedback" : "PeterUhnak 11/3/2014 17:17",
 		"model" : "PeterUhnak 6/24/2014 08:48",
 		"model:" : "PeterUhnak 8/15/2014 22:36",
 		"parent" : "PeterUhnak 8/15/2014 22:42",
 		"parent:" : "PeterUhnak 8/15/2014 22:42",
 		"remove" : "PeterUhnak 10/30/2014 19:05",
+		"showSelectionFeedback" : "PeterUhnak 11/3/2014 13:55",
 		"view" : "PeterUhnak 6/24/2014 08:48",
 		"view:" : "PeterUhnak 8/15/2014 22:36" } }

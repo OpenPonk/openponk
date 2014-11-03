@@ -9,7 +9,9 @@
 		"controllerFactory",
 		"controllers",
 		"modelToControllerMapping",
-		"editor" ],
+		"editor",
+		"hoverHolder",
+		"figureAdded" ],
 	"name" : "DCDiagramController",
 	"pools" : [
 		 ],

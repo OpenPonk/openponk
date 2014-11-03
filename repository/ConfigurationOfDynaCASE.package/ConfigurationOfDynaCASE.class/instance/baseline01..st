@@ -30,7 +30,7 @@ baseline01: spec
 			spec
 				package: 'DynaCASE';
 				package: 'DynaCASE-FSM';
-				package: 'DynacASE-OntoUML';
+				package: 'DynaCASE-OntoUML';
 				package: 'DynaCASE-Roassal2';
 				package: 'DynaCASE-Spec';
 				package: 'DynaCASE-Trachel';

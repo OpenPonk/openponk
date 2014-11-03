@@ -1,5 +1,5 @@
-accessing
+hooks
 createModel
 	^ self modelClass new
-		name: 'a Kind';
+		name: 'new object';
 		yourself

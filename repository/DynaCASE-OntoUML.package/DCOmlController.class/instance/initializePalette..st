@@ -3,4 +3,4 @@ initializePalette: aPalette
 	aPalette
 		newCreationTool: 'Kind' factory: [ DCOmlKindController new ];
 		newSeparator;
-		newConnectionCreationTool: 'Basic Association' factory: [  ]
+		newConnectionCreationTool: 'Basic Association' factory: [ DCOmlBasicAssociationController new ]

@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-OntoUML-Models",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCOmlDiagram",
+	"pools" : [
+		 ],
+	"super" : "DCDiagram",
+	"type" : "normal" }

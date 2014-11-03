@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-OntoUML-Controllers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCOmlAssociationController",
+	"pools" : [
+		 ],
+	"super" : "DCRelationshipController",
+	"type" : "normal" }

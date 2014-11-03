@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-OntoUML-Controllers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"acceptsAsTarget" ],
+	"name" : "DCOmlController",
+	"pools" : [
+		 ],
+	"super" : "DCDiagramController",
+	"type" : "normal" }

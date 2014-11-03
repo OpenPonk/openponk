@@ -2,10 +2,10 @@
 	"class" : {
 		 },
 	"instance" : {
-		"addLabelTo:" : "PeterUhnak 10/19/2014 23:03",
+		"addLabelTo:" : "PeterUhnak 10/30/2014 17:39",
 		"constraint:balance:offset:" : "bliznjan 11/1/2014 20:22",
 		"constraint:toSourceDistance:offset:" : "bliznjan 11/1/2014 20:18",
 		"constraint:toTargetDistance:offset:" : "bliznjan 11/1/2014 20:19",
-		"createEdgeFrom:to:" : "bliznjan 10/31/2014 14:32",
+		"createEdgeFrom:to:" : "bliznjan 10/21/2014 01:48",
 		"defaultColor" : "PeterUhnak 10/19/2014 23:01",
 		"updateLabel:whenChanged:" : "PeterUhnak 10/19/2014 23:06" } }

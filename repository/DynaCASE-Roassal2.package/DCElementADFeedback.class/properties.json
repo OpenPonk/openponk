@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2-Builders",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCElementADFeedback",
+	"pools" : [
+		 ],
+	"super" : "DCAcceptDenyFeedbackBuilder",
+	"type" : "normal" }

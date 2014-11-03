@@ -1,0 +1,3 @@
+accessing
+denyColor
+	^ Color red

@@ -1,3 +1,0 @@
-actions
-cancel
-	self cleanup

@@ -1,4 +1,4 @@
-as yet unclassified
+actions
 doUnhighlightElement: anElement
 	(anElement isKindOf: RTEdge)
 		ifTrue: [ ^ self doUnhighlightEdge: anElement ].

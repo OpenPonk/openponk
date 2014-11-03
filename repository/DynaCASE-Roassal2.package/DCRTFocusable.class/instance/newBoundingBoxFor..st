@@ -1,4 +1,4 @@
-as yet unclassified
+instance creation
 newBoundingBoxFor: anElement
 	| boundingBox |
 	boundingBox := RTBox new

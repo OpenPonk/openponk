@@ -2,12 +2,8 @@
 	"class" : {
 		 },
 	"instance" : {
-		"cancel" : "bliznjan 10/7/2014 10:45",
-		"cleanup" : "bliznjan 10/7/2014 10:46",
-		"complete" : "bliznjan 10/7/2014 10:46",
 		"from:" : "PeterUhnak 10/6/2014 20:08",
 		"initialize" : "PeterUhnak 10/6/2014 20:19",
 		"lineBuilder:" : "PeterUhnak 10/6/2014 20:22",
-		"renderIn:" : "bliznjan 10/7/2014 10:33",
-		"to:" : "PeterUhnak 10/6/2014 22:19",
-		"whenCompleted:" : "PeterUhnak 10/6/2014 22:28" } }
+		"remove" : "PeterUhnak 11/3/2014 17:26",
+		"renderIn:" : "bliznjan 10/7/2014 10:33" } }

@@ -1,5 +1,5 @@
 accessing
-cleanup
+remove
 	running
 		ifTrue: [ 
 			running := false.

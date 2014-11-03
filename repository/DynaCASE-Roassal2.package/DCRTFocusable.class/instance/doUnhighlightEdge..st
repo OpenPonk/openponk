@@ -1,4 +1,4 @@
-as yet unclassified
+actions
 doUnhighlightEdge: anEdge
 	(anEdge attributes includesKey: #focusOriginalColor)
 		ifFalse: [ ^ self ].

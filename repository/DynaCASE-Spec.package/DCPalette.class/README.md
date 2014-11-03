@@ -1,0 +1,1 @@
+DCPalette is actions menu for a specific diagram. It is added as part of DCEditor.

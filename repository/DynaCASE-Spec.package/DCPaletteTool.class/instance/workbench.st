@@ -1,0 +1,3 @@
+accessing
+workbench
+	^ palette workbench

@@ -1,4 +1,4 @@
-as yet unclassified
+signalling
 reloadView
 	self cleanView.
 	diagramController ifNotNil: [ self loadElementsFromController ].

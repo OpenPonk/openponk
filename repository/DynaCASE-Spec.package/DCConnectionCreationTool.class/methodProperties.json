@@ -1,0 +1,16 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"acceptFeedbackFor:" : "PeterUhnak 11/3/2014 17:05",
+		"denyFeedbackFor:" : "PeterUhnak 11/3/2014 17:05",
+		"deselect" : "PeterUhnak 11/3/2014 17:26",
+		"factory:" : "PeterUhnak 11/3/2014 15:30",
+		"feedbackFor:color:" : "PeterUhnak 11/3/2014 17:11",
+		"removeFeedback" : "PeterUhnak 11/3/2014 17:11",
+		"select" : "PeterUhnak 11/3/2014 15:33",
+		"selectTarget" : "PeterUhnak 11/3/2014 15:34",
+		"sourceEntered:" : "PeterUhnak 11/3/2014 17:05",
+		"sourceSelected:" : "PeterUhnak 11/3/2014 17:24",
+		"targetEntered:" : "PeterUhnak 11/3/2014 17:05",
+		"targetSelected:" : "PeterUhnak 11/3/2014 17:12" } }

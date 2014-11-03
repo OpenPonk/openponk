@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Spec-Palettes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"selectedController" ],
+	"name" : "DCSelectionTool",
+	"pools" : [
+		 ],
+	"super" : "DCPaletteTool",
+	"type" : "normal" }

@@ -1,0 +1,20 @@
+{
+	"category" : "DynaCASE-Spec-Palettes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"factory",
+		"connectionController",
+		"canBeTarget",
+		"canBeSource",
+		"sourceController",
+		"feedback",
+		"connectionFeedback" ],
+	"name" : "DCConnectionCreationTool",
+	"pools" : [
+		 ],
+	"super" : "DCPaletteTool",
+	"type" : "normal" }

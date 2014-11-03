@@ -1,0 +1,17 @@
+{
+	"category" : "DynaCASE-Spec-Palettes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"factory",
+		"objectController",
+		"canBeTarget",
+		"feedback" ],
+	"name" : "DCCreationTool",
+	"pools" : [
+		 ],
+	"super" : "DCPaletteTool",
+	"type" : "normal" }

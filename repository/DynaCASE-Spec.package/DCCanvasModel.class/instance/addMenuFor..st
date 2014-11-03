@@ -1,6 +1,6 @@
 adding
-addMenuFor: anElement
+addMenuFor: aFigure
 	| menu |
-	menu := PluggableMenuSpec new model: anElement.
-	menu add: 'Delete' action: (MessageSend receiver: self selector: #deleteElement: argument: anElement).
-	anElement when: TRMouseRightClick do: [ :event | menu asMenuMorph popUpInWorld ]
+	menu := PluggableMenuSpec new model: aFigure.
+	menu add: 'Delete' action: (MessageSend receiver: self selector: #deleteFigure: argument: aFigure).
+	aFigure when: TRMouseRightClick do: [ :event | menu asMenuMorph popUpInWorld ]

@@ -1,0 +1,18 @@
+{
+	"category" : "DynaCASE-Spec-Palettes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 11/3/2014 12:29",
+	"instvars" : [
+		"items",
+		"selectedTool",
+		"selectedItem",
+		"diagramController",
+		"editor" ],
+	"name" : "DCPalette",
+	"pools" : [
+		 ],
+	"super" : "DynamicComposableModel",
+	"type" : "normal" }

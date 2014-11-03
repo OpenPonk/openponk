@@ -1,0 +1,10 @@
+{
+	"class" : {
+		"checkIfObject:isInCollection:" : "volosmat 4/1/2014 16:52" },
+	"instance" : {
+		"addElement:" : "volosmat 7/14/2014 16:37",
+		"at:" : "volosmat 7/14/2014 16:37",
+		"atId:" : "volosmat 7/14/2014 20:59",
+		"initialize" : "volosmat 4/27/2014 13:07",
+		"modelElements" : "volosmat 10/28/2013 22:09",
+		"removeElement:" : "volosmat 7/14/2014 16:37" } }

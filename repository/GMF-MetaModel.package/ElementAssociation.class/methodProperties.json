@@ -1,0 +1,27 @@
+{
+	"class" : {
+		"name:" : "volosmat 3/12/2014 11:35",
+		"name:start:end:" : "volosmat 3/12/2014 11:35",
+		"name:start:startMultiplicity:end:endMultiplicity:" : "volosmat 3/12/2014 11:35" },
+	"instance" : {
+		"=" : "volosmat 7/17/2014 10:16",
+		"asAssociation:" : "volosmat 3/12/2014 11:28",
+		"asCharacterization" : "volosmat 12/30/2013 13:11",
+		"asComponentOf" : "volosmat 12/30/2013 13:12",
+		"asDerivation" : "volosmat 12/30/2013 13:10",
+		"asFormalAssociation" : "volosmat 12/30/2013 13:12",
+		"asMaterialAssociation" : "volosmat 12/30/2013 13:13",
+		"asMediation" : "volosmat 12/30/2013 13:11",
+		"asMemberOf" : "volosmat 12/30/2013 13:12",
+		"asSubCollectionOf" : "volosmat 12/30/2013 13:12",
+		"asSubQuantityOf" : "volosmat 12/30/2013 13:12",
+		"end" : "Anonymous 4/5/2013 11:30",
+		"end:" : "volosmat 8/1/2014 12:48",
+		"endMultiplicity" : "volosmat 4/24/2014 11:25",
+		"endMultiplicity:" : "volosmat 3/12/2014 11:28",
+		"hash" : "volosmat 4/2/2014 16:40",
+		"initialize" : "volosmat 4/2/2014 15:52",
+		"start" : "Anonymous 4/5/2013 11:30",
+		"start:" : "volosmat 8/1/2014 12:48",
+		"startMultiplicity" : "volosmat 4/24/2014 11:25",
+		"startMultiplicity:" : "volosmat 3/12/2014 11:29" } }

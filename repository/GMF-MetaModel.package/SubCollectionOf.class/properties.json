@@ -1,0 +1,14 @@
+{
+	"category" : "GMF-MetaModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "SubCollectionOf",
+	"pools" : [
+		 ],
+	"super" : "Meronymic",
+	"type" : "normal" }

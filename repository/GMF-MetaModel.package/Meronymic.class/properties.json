@@ -1,0 +1,18 @@
+{
+	"category" : "GMF-MetaModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"essential",
+		"inseparable",
+		"immutablePart",
+		"immutableWhole",
+		"sharable" ],
+	"name" : "Meronymic",
+	"pools" : [
+		 ],
+	"super" : "DirectedBinaryAssociation",
+	"type" : "normal" }

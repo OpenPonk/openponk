@@ -1,0 +1,13 @@
+{
+	"class" : {
+		"parentClass:child:" : "volosmat 4/2/2014 18:15",
+		"parentClass:complete:disjoint:child:" : "volosmat 4/2/2014 18:15" },
+	"instance" : {
+		"child" : "volosmat 4/2/2014 18:12",
+		"child:" : "volosmat 4/2/2014 18:14",
+		"complete:" : "volosmat 3/12/2014 11:21",
+		"disjoint:" : "volosmat 3/12/2014 11:22",
+		"isComplete" : "volosmat 4/3/2014 19:01",
+		"isDisjoint" : "volosmat 4/3/2014 19:01",
+		"parentClass" : "volosmat 3/12/2014 11:20",
+		"parentClass:" : "volosmat 3/12/2014 11:20" } }

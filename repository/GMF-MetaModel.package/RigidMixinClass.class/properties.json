@@ -1,0 +1,14 @@
+{
+	"category" : "GMF-MetaModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "RigidMixinClass",
+	"pools" : [
+		 ],
+	"super" : "MixinClass",
+	"type" : "normal" }

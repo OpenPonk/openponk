@@ -1,0 +1,3 @@
+accesing
+childs
+	^ self subclassResponsibility 

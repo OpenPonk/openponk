@@ -1,0 +1,21 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"setUp" : "volosmat 4/3/2014 17:53",
+		"setUpDB" : "volosmat 4/3/2014 17:49",
+		"testCategory" : "volosmat 4/3/2014 19:19",
+		"testCollective" : "volosmat 4/24/2014 23:40",
+		"testElement" : "volosmat 4/3/2014 20:26",
+		"testMixin" : "volosmat 4/3/2014 19:31",
+		"testModeAndQuality" : "volosmat 4/3/2014 19:51",
+		"testNonSortal" : "volosmat 4/3/2014 19:51",
+		"testPhase" : "volosmat 4/3/2014 19:00",
+		"testQuantity" : "volosmat 4/3/2014 19:51",
+		"testRelator" : "volosmat 4/3/2014 19:53",
+		"testRigidMixin" : "volosmat 4/3/2014 19:19",
+		"testRigidSortal" : "volosmat 4/3/2014 18:50",
+		"testRole" : "volosmat 4/3/2014 18:54",
+		"testRoleMixin" : "volosmat 4/3/2014 19:34",
+		"testSubKind" : "volosmat 4/3/2014 18:31",
+		"testSubsranceSortal" : "volosmat 4/3/2014 17:52" } }

@@ -1,0 +1,3 @@
+accessing
+mixObjects
+	^ mixObjects copy

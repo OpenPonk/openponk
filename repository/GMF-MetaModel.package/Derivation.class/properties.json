@@ -1,0 +1,14 @@
+{
+	"category" : "GMF-MetaModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "Derivation",
+	"pools" : [
+		 ],
+	"super" : "DependencyRelationship",
+	"type" : "normal" }

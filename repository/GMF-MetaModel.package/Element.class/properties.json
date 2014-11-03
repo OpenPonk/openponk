@@ -1,0 +1,16 @@
+{
+	"category" : "GMF-MetaModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "volosmat 5/3/2014 13:29",
+	"instvars" : [
+		"name",
+		"transformed",
+		"id" ],
+	"name" : "Element",
+	"pools" : [
+		 ],
+	"super" : "DCNamedElement",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+accessing
+subObjects
+	^ subObjects copy

@@ -1,0 +1,14 @@
+{
+	"category" : "GMF-MetaModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "BasicAssociation",
+	"pools" : [
+		 ],
+	"super" : "ElementAssociation",
+	"type" : "normal" }

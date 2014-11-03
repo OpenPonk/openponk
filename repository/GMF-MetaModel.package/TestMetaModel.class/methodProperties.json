@@ -1,0 +1,17 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"setUp" : "volosmat 3/18/2014 22:27",
+		"setUpDB" : "volosmat 3/18/2014 22:26",
+		"testAddAssociationToElement" : "volosmat 4/3/2014 14:41",
+		"testAddAttributeToElement" : "volosmat 4/3/2014 14:15",
+		"testAddElement" : "volosmat 4/3/2014 12:34",
+		"testAddMethodToElement" : "volosmat 4/3/2014 14:40",
+		"testAddNonUniqueElement" : "volosmat 4/3/2014 21:53",
+		"testInverseRelationElementAssociation" : "volosmat 4/4/2014 15:47",
+		"testInverseRelationElementAttribute" : "volosmat 4/4/2014 15:35",
+		"testInverseRelationElementMethod" : "volosmat 4/4/2014 15:37",
+		"testInverseRelationElementParent" : "volosmat 4/4/2014 18:16",
+		"testInverseRelationMetaModelElement" : "volosmat 4/27/2014 13:32",
+		"testRemoveElement" : "volosmat 4/27/2014 13:31" } }

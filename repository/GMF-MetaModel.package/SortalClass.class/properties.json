@@ -1,0 +1,14 @@
+{
+	"category" : "GMF-MetaModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "SortalClass",
+	"pools" : [
+		 ],
+	"super" : "ObjectClass",
+	"type" : "normal" }

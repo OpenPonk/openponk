@@ -1,0 +1,3 @@
+validating
+isElementValid
+	^ super isElementValid

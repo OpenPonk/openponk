@@ -1,0 +1,19 @@
+{
+	"class" : {
+		"name:dataType:multiplicity:element:" : "volosmat 4/2/2014 13:43",
+		"name:dataType:multiplicity:instance:element:" : "volosmat 4/30/2014 10:27",
+		"name:multiplicity:" : "volosmat 4/24/2014 11:16" },
+	"instance" : {
+		"=" : "volosmat 4/2/2014 14:31",
+		"asString" : "volosmat 3/12/2014 11:37",
+		"dataType" : "Anonymous 4/5/2013 10:28",
+		"dataType:" : "Anonymous 4/5/2013 10:28",
+		"element" : "volosmat 4/2/2014 13:35",
+		"element:" : "volosmat 4/2/2014 13:52",
+		"hash" : "volosmat 4/2/2014 14:32",
+		"instance:" : "volosmat 7/16/2013 21:49",
+		"isInstance" : "volosmat 3/12/2014 11:38",
+		"multiplicity" : "volosmat 4/24/2014 11:26",
+		"multiplicity:" : "volosmat 3/12/2014 11:38",
+		"name" : "Anonymous 4/5/2013 10:29",
+		"name:" : "Anonymous 4/5/2013 10:28" } }

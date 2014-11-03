@@ -1,0 +1,14 @@
+{
+	"category" : "GMF-MetaModel-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"metaModel" ],
+	"name" : "TestOntoUMLClassRules",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

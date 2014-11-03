@@ -1,0 +1,14 @@
+{
+	"category" : "GMF-MetaModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "Phase",
+	"pools" : [
+		 ],
+	"super" : "AntiRigidSortalClass",
+	"type" : "normal" }

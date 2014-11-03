@@ -1,0 +1,17 @@
+{
+	"category" : "GMF-MetaModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "volosmat 8/1/2014 13:01",
+	"instvars" : [
+		"disjoint",
+		"complete",
+		"parentClass",
+		"child" ],
+	"name" : "ParentClass",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

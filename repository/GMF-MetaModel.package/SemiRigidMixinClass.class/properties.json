@@ -1,0 +1,14 @@
+{
+	"category" : "GMF-MetaModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "SemiRigidMixinClass",
+	"pools" : [
+		 ],
+	"super" : "NonRigidMixinClass",
+	"type" : "normal" }

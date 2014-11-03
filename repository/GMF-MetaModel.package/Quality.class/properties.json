@@ -1,0 +1,14 @@
+{
+	"category" : "GMF-MetaModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"asAttribute" ],
+	"name" : "Quality",
+	"pools" : [
+		 ],
+	"super" : "MomentClass",
+	"type" : "normal" }

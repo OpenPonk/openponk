@@ -1,0 +1,14 @@
+{
+	"category" : "GMF-MetaModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"roles" ],
+	"name" : "RoleMixin",
+	"pools" : [
+		 ],
+	"super" : "AntiRigidMixinClass",
+	"type" : "normal" }

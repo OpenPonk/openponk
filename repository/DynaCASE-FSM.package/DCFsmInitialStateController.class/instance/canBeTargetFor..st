@@ -1,0 +1,3 @@
+testing
+canBeTargetFor: aController
+	^ false

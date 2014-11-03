@@ -2,4 +2,6 @@
 	"class" : {
 		 },
 	"instance" : {
-		"createEdgeFrom:to:" : "bliznjan 10/24/2014 15:32" } }
+		"connectionFeedback" : "PeterUhnak 11/3/2014 17:23",
+		"createEdgeFrom:to:" : "PeterUhnak 11/3/2014 15:48",
+		"modelClass" : "PeterUhnak 11/3/2014 14:06" } }

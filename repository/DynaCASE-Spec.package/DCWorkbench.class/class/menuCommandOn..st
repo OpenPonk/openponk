@@ -1,9 +1,9 @@
 menu
 menuCommandOn: aBuilder
 	<worldMenu>
-	(aBuilder item: #'DynaCASE example1')
+	(aBuilder item: #'DynaCASE exampleFsm')
 		parent: #MostUsedTools;
-		action: [ self example1 ].
-	(aBuilder item: #'DynaCASE example3')
+		action: [ self exampleFsm ].
+	(aBuilder item: #'DynaCASE exampleUmlite')
 		parent: #MostUsedTools;
-		action: [ self example3 ]
+		action: [ self exampleUmlite ]

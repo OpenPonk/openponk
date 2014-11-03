@@ -1,10 +1,9 @@
 {
 	"class" : {
 		"defaultSpec" : "PeterUhnak 10/30/2014 17:16",
-		"example1" : "PeterUhnak 10/29/2014 17:56",
-		"example2" : "PeterUhnak 11/3/2014 19:26",
-		"example3" : "PeterUhnak 11/3/2014 19:10",
-		"menuCommandOn:" : "PeterUhnak 10/29/2014 17:55",
+		"exampleFsm" : "PeterUhnak 11/3/2014 22:03",
+		"exampleUmlite" : "PeterUhnak 11/3/2014 22:03",
+		"menuCommandOn:" : "PeterUhnak 11/3/2014 22:03",
 		"open" : "PeterUhnak 10/30/2014 23:44",
 		"openProject:" : "bliznjan 10/31/2014 12:24" },
 	"instance" : {

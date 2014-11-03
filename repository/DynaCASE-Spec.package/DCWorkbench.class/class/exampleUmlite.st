@@ -1,5 +1,5 @@
 examples
-example3
+exampleUmlite
 	| diagram firstClass secondClass a1 project |
 	project := DCProject new projectName: 'Example Umlite'.
 	diagram := DCUmliteDiagram new.

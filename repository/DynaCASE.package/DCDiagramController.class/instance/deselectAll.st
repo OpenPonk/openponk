@@ -1,0 +1,3 @@
+protocol-canvas
+deselectAll
+	deselectionHolder value

@@ -11,7 +11,8 @@
 		"modelToControllerMapping",
 		"editor",
 		"hoverHolder",
-		"figureAdded" ],
+		"figureAdded",
+		"deselectionHolder" ],
 	"name" : "DCDiagramController",
 	"pools" : [
 		 ],

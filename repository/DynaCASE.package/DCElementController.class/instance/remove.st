@@ -1,8 +1,8 @@
 actions
 remove
 	super remove.
+	self parent deselectAll.
 	view view
 		ifNotNil: [ 
-			self hideSelectionFeedback.
 			view remove.
 			view := nil ]

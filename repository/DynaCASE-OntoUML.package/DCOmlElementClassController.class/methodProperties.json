@@ -4,6 +4,8 @@
 	"instance" : {
 		"addAsSourceFor:" : "PeterUhnak 11/3/2014 23:57",
 		"addAsTargetFor:" : "PeterUhnak 11/3/2014 23:57",
-		"canBeSourceFor:" : "PeterUhnak 11/3/2014 23:58",
-		"canBeTargetFor:" : "PeterUhnak 11/3/2014 23:58",
-		"createModel" : "PeterUhnak 11/3/2014 23:54" } }
+		"canBeSourceFor:" : "PeterUhnak 11/4/2014 18:46",
+		"canBeTargetFor:" : "PeterUhnak 11/4/2014 18:46",
+		"createModel" : "PeterUhnak 11/3/2014 23:54",
+		"createView" : "PeterUhnak 11/4/2014 18:37",
+		"modelClass" : "PeterUhnak 11/4/2014 18:30" } }

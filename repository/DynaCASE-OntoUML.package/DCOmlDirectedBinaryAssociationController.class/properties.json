@@ -7,8 +7,8 @@
 	"commentStamp" : "",
 	"instvars" : [
 		 ],
-	"name" : "DCOmlKindController",
+	"name" : "DCOmlDirectedBinaryAssociationController",
 	"pools" : [
 		 ],
-	"super" : "DCOmlSubstanceSortalController",
+	"super" : "DCOmlElementAssociationController",
 	"type" : "normal" }

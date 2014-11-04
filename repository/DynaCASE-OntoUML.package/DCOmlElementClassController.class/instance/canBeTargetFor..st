@@ -1,3 +1,3 @@
 testing
 canBeTargetFor: aController
-	^ aController modelClass = BasicAssociation
+	^ ElementAssociation allSubclasses includes: aController modelClass

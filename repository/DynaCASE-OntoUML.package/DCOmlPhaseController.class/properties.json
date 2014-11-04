@@ -7,8 +7,8 @@
 	"commentStamp" : "",
 	"instvars" : [
 		 ],
-	"name" : "DCOmlKindController",
+	"name" : "DCOmlPhaseController",
 	"pools" : [
 		 ],
-	"super" : "DCOmlSubstanceSortalController",
+	"super" : "DCOmlAntiRigidSortalClassController",
 	"type" : "normal" }

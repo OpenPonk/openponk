@@ -1,4 +1,4 @@
-as yet unclassified
+hooks
 connectionFeedback
 	^ DCInteractiveLine new
 		lineBuilder: [ :fromFigure :toFigure | 

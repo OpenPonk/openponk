@@ -1,3 +1,4 @@
 as yet unclassified
 reset
-	components := OrderedCollection new
+	components := OrderedCollection new.
+	focusOrder := OrderedCollection new

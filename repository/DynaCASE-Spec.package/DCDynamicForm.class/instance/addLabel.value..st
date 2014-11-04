@@ -1,4 +1,4 @@
-as yet unclassified
+adding
 addLabel: aName value: aString
 	| control |
 	control := self newLabel.

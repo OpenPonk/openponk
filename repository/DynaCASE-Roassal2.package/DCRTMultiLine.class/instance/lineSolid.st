@@ -1,3 +1,0 @@
-shapes
-lineSolid
-	dashes := nil

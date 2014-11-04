@@ -1,0 +1,16 @@
+{
+	"category" : "DynaCASE-Roassal2-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"view",
+		"builder",
+		"offset" ],
+	"name" : "DCFigureExamples",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

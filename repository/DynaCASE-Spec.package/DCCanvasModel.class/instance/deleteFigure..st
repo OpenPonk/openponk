@@ -1,4 +1,5 @@
 removing
 deleteFigure: aFigure
-	diagramController removeFromView: aFigure.
-	self signalUpdate
+	self diagramController deselectAll.
+	self diagramController removeFromView: aFigure.
+	self signalUpdate.

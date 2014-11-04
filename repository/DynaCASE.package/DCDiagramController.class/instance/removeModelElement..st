@@ -3,4 +3,4 @@ removeModelElement: aModelElement
 	| controller |
 	controller := self findControllerByModel: aModelElement.
 	self controllers remove: controller.
-	controller view remove
+	controller remove

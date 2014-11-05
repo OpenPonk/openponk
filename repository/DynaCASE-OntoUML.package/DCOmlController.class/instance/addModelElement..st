@@ -1,4 +1,4 @@
-as yet unclassified
+adding
 addModelElement: aModelElement
 	| controller figure |
 	self controllers detect: [ :ctrl | ctrl model = aModelElement ] ifFound: [ ^ self ].
@@ -19,4 +19,5 @@ addModelElement: aModelElement
 				target: toCtrl ].
 	figure := controller figure.
 	figure view ifNil: [ figure renderIn: self view ].
+	controller refreshFigure.
 	^ controller

@@ -1,23 +1,23 @@
 initialization
-createView
-	| element |
-	element := self roassalShapeClass new
+createFigure
+	| aFigure |
+	aFigure := self roassalShapeClass new
 		size: 50;
 		color: Color transparent;
 		borderColor: self defaultColor;
 		elementOn: self model name.
-	element
+	aFigure
 		@
 			(RTLabelled new
 				view: self parent view;
 				center;
 				color: Color black;
 				yourself).
-	element @ RTDraggable.
-	element @ DCRTFocusable.
+	aFigure @ RTDraggable.
+	aFigure @ DCRTFocusable.
 	self model nameHolder
 		whenChangedDo: [ :newValue | 
-			(element attributeAt: #RTLabelledLabel) text: newValue.
-			element update.
-			element view signalUpdate ].
-	^ element
+			(aFigure attributeAt: #RTLabelledLabel) text: newValue.
+			aFigure update.
+			aFigure view signalUpdate ].
+	^ aFigure

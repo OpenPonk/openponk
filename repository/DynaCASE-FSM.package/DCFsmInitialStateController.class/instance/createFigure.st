@@ -1,5 +1,5 @@
 initialization
-createView
+createFigure
 	| element shape |
 	element := RTElement new.
 	shape := RTEllipse new

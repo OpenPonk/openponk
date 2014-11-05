@@ -11,4 +11,5 @@ addAsTargetFor: aController
 	newFigure := aController figure.
 	newFigure view ifNil: [ self view add: newFigure ].
 	figureAdded value: newFigure.
+	aController refreshFigure.
 	self view signalUpdate

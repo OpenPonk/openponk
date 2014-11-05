@@ -1,4 +1,3 @@
 actions
 deselect
-	feedback value: nil.
-	objectController := nil
+	feedback value: nil

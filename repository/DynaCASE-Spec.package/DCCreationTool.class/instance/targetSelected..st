@@ -4,4 +4,5 @@ targetSelected: aController
 		ifTrue: [ 
 			aController addAsTargetFor: objectController.
 			self palette deselectTool.
-			self palette selectedTool targetSelected: objectController ]
+			self palette selectedTool targetSelected: objectController.
+			objectController := nil ]

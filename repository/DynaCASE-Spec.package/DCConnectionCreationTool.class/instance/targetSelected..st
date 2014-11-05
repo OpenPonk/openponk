@@ -4,4 +4,5 @@ targetSelected: aController
 		ifTrue: [ 
 			aController addAsTargetFor: connectionController.
 			self palette deselectTool.
-			self palette selectedTool targetSelected: connectionController ]
+			self palette selectedTool targetSelected: connectionController.
+			connectionController := nil ]

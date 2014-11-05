@@ -4,5 +4,4 @@ deselect
 	connectionFeedback
 		ifNotNil: [ 
 			connectionFeedback remove.
-			connectionFeedback := nil ].
-	connectionController := nil
+			connectionFeedback := nil ]

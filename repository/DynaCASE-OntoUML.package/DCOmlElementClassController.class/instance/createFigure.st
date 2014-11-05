@@ -1,5 +1,5 @@
 as yet unclassified
-createView
+createFigure
 	| class |
 	class := DCRTClass new.
 	class stereotype: self modelClass asString asLowercase.

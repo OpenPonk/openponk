@@ -1,3 +1,3 @@
 announcements
-whenDirtyChanged: aBlock
+whenChanged: aBlock
 	dirty whenChangedDo: aBlock

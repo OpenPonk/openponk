@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCProjectTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

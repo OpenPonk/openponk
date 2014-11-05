@@ -2,4 +2,5 @@ removing
 removedFrom: anOwner do: aBlock
 	self assert: self owner = anOwner.
 	aBlock value.
-	owner := nil
+	owner := nil.
+	self changed

@@ -1,3 +1,4 @@
 adding
 addedTo: anObject
-	owner := anObject
+	owner := anObject.
+	self changed

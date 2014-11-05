@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCDiagramTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

@@ -6,4 +6,5 @@ initialize
 	methods := OrderedCollection new asValueHolder.
 	background := (RTBox new
 		color: Color transparent;
-		borderColor: Color black) element
+		borderColor: Color black) element.
+	background model: self

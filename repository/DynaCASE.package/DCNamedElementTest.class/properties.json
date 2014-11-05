@@ -10,5 +10,5 @@
 	"name" : "DCNamedElementTest",
 	"pools" : [
 		 ],
-	"super" : "TestCase",
+	"super" : "DCTestCase",
 	"type" : "normal" }

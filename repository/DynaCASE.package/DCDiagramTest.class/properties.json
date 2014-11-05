@@ -10,5 +10,5 @@
 	"name" : "DCDiagramTest",
 	"pools" : [
 		 ],
-	"super" : "TestCase",
+	"super" : "DCTestCase",
 	"type" : "normal" }

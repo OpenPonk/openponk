@@ -7,8 +7,8 @@
 	"commentStamp" : "",
 	"instvars" : [
 		 ],
-	"name" : "DCProjectControllerTest",
+	"name" : "DCTestCase",
 	"pools" : [
 		 ],
-	"super" : "DCTestCase",
+	"super" : "TestCase",
 	"type" : "normal" }

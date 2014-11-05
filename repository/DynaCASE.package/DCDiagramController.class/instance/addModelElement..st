@@ -19,4 +19,5 @@ addModelElement: aModelElement
 				target: toCtrl ].
 	figure := controller figure.
 	figure view ifNil: [ self view add: figure ].
+	controller refreshFigure.
 	^ controller

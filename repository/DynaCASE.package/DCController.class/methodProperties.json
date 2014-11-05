@@ -4,11 +4,13 @@
 	"instance" : {
 		"canBeSourceFor:" : "PeterUhnak 11/3/2014 13:36",
 		"canBeTargetFor:" : "PeterUhnak 11/3/2014 13:35",
-		"figure" : "PeterUhnak 11/5/2014 08:35",
+		"figure" : "PeterUhnak 11/5/2014 11:18",
 		"hideSelectionFeedback" : "PeterUhnak 11/3/2014 17:17",
-		"model" : "PeterUhnak 6/24/2014 08:48",
-		"model:" : "PeterUhnak 8/15/2014 22:36",
+		"initialize" : "PeterUhnak 11/5/2014 11:19",
+		"model" : "PeterUhnak 11/5/2014 11:13",
+		"model:" : "PeterUhnak 11/5/2014 11:13",
 		"parent" : "PeterUhnak 8/15/2014 22:42",
 		"parent:" : "PeterUhnak 8/15/2014 22:42",
+		"refreshFigure" : "PeterUhnak 11/5/2014 11:12",
 		"remove" : "PeterUhnak 11/4/2014 23:25",
 		"showSelectionFeedback" : "PeterUhnak 11/3/2014 13:55" } }

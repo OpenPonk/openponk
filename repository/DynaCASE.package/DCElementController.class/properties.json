@@ -6,7 +6,7 @@
 		 ],
 	"commentStamp" : "lariover 10/5/2014 20:26",
 	"instvars" : [
-		 ],
+		"figure" ],
 	"name" : "DCElementController",
 	"pools" : [
 		 ],

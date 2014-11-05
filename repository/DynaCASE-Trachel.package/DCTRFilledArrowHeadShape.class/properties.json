@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Trachel-Shapes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCTRFilledArrowHeadShape",
+	"pools" : [
+		 ],
+	"super" : "TREmptyArrowHeadShape",
+	"type" : "normal" }

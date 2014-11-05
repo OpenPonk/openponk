@@ -11,7 +11,7 @@ exampleUmlite
 		attributes: #('-attrX') asOrderedCollection;
 		yourself.
 	(a1 := DCUmliteAssociation from: firstClass to: secondClass)
-		name: 'association';
+		name: 'association>';
 		sourceName: '+firstClass[1]';
 		targetName: '+secondClass[1..*]'.
 	diagram

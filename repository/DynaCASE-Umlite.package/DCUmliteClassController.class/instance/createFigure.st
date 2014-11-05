@@ -1,5 +1,5 @@
 hooks
-createView
+createFigure
 	| class |
 	class := DCRTClass new.
 	class stereotype: self model stereotype.

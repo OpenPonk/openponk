@@ -1,6 +1,6 @@
 adding
 addAsTargetFor: aController
-	| newModel viewElement |
+	| newModel newFigure |
 	self assert: (self canBeTargetFor: aController).
 	aController target: self.
 	aController parent: self parent.
@@ -8,6 +8,6 @@ addAsTargetFor: aController
 	self parent model add: newModel.
 	aController model: newModel.
 	self parent controllers add: aController.
-	viewElement := aController view.
-	viewElement view ifNil: [ self view add: viewElement ].
-	self parent figureAdded: viewElement
+	newFigure := aController figure.
+	newFigure view ifNil: [ self parent view add: newFigure ].
+	self parent figureAdded: newFigure

@@ -5,4 +5,4 @@ connectionFeedback
 					DCRTMultiLine new
 						arrowHead;
 						edgeFrom: fromFigure to: toFigure ];
-		from: source view
+		from: source figure

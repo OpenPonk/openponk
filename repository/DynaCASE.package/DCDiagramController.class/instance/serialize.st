@@ -5,9 +5,9 @@ serialize
 	layout := Dictionary new.
 	diagram elements
 		do: [ :each | 
-			| v |
-			v := (self findControllerByModel: each) view.
-			(v isKindOf: RTElement)
-				ifTrue: [ layout at: each put: v position ] ].
+			| f |
+			f := (self controllerForModel: each) figure.
+			(f isKindOf: RTElement)
+				ifTrue: [ layout at: each put: f position ] ].
 	^ {(#diagram -> diagram).
 	(#layout -> layout)} asDictionary

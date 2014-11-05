@@ -7,9 +7,9 @@
 	"commentStamp" : "PeterUhnak 10/11/2014 22:42",
 	"instvars" : [
 		"model",
-		"view",
 		"parent",
-		"selectionHolder" ],
+		"selectionHolder",
+		"figure" ],
 	"name" : "DCController",
 	"pools" : [
 		 ],

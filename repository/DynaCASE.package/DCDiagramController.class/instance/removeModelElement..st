@@ -1,6 +1,6 @@
 removing
 removeModelElement: aModelElement
 	| controller |
-	controller := self findControllerByModel: aModelElement.
+	controller := self controllerForModel: aModelElement.
 	self controllers remove: controller.
 	controller remove

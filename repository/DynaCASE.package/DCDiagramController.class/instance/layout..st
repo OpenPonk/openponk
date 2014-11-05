@@ -3,6 +3,6 @@ layout: aLayout
 	aLayout
 		associationsDo: [ :pair | 
 			| v |
-			v := (self findControllerByModel: pair key) view.
+			v := (self controllerForModel: pair key) view.
 			v translateTo: pair value ].
 	self updateView

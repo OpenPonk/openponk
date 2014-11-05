@@ -2,7 +2,7 @@ actions
 remove
 	super remove.
 	self parent deselectAll.
-	view view
+	figure view
 		ifNotNil: [ 
-			view remove.
-			view := nil ]
+			figure remove.
+			figure := nil ]

@@ -4,12 +4,11 @@
 	"instance" : {
 		"canBeSourceFor:" : "PeterUhnak 11/3/2014 13:36",
 		"canBeTargetFor:" : "PeterUhnak 11/3/2014 13:35",
+		"figure" : "PeterUhnak 11/5/2014 08:35",
 		"hideSelectionFeedback" : "PeterUhnak 11/3/2014 17:17",
 		"model" : "PeterUhnak 6/24/2014 08:48",
 		"model:" : "PeterUhnak 8/15/2014 22:36",
 		"parent" : "PeterUhnak 8/15/2014 22:42",
 		"parent:" : "PeterUhnak 8/15/2014 22:42",
 		"remove" : "PeterUhnak 11/4/2014 23:25",
-		"showSelectionFeedback" : "PeterUhnak 11/3/2014 13:55",
-		"view" : "PeterUhnak 6/24/2014 08:48",
-		"view:" : "PeterUhnak 8/15/2014 22:36" } }
+		"showSelectionFeedback" : "PeterUhnak 11/3/2014 13:55" } }

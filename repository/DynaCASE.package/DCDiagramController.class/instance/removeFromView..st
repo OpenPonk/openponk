@@ -1,5 +1,5 @@
 removing
-removeFromView: aViewElement
-	model remove: (self findControllerByView: aViewElement) model	"	controller := self findControllerByView: aViewElement.
+removeFromView: aFigure
+	model remove: (self controllerForFigure: aFigure) model	"	controller := self findControllerByView: aViewElement.
 	self controllers remove: controller.
 	controller view remove"

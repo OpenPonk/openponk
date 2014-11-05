@@ -1,3 +1,3 @@
 hooks
-createView
+createFigure
 	^ self subclassResponsibility

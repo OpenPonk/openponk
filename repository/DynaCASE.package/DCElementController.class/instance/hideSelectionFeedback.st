@@ -1,6 +1,6 @@
 canvas actions
 hideSelectionFeedback
-	self view view
+	self figure view
 		ifNotNil: [ 
-			self view announce: DCTRUnfocused.
-			self view view signalUpdate ]
+			self figure announce: DCTRUnfocused.
+			self figure view signalUpdate ]

@@ -1,6 +1,6 @@
 adding
 addModelElement: aModelElement
-	| controller viewElement |
+	| controller figure |
 	self controllers detect: [ :ctrl | ctrl model = aModelElement ] ifFound: [ ^ self ].
 	(self model has: aModelElement)
 		ifFalse: [ self model add: aModelElement ].
@@ -17,6 +17,6 @@ addModelElement: aModelElement
 			controller
 				source: fromCtrl;
 				target: toCtrl ].
-	viewElement := controller view.
-	viewElement view ifNil: [ self view add: viewElement ].
+	figure := controller figure.
+	figure view ifNil: [ self view add: figure ].
 	^ controller

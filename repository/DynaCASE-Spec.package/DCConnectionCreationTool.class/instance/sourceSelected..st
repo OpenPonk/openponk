@@ -4,5 +4,5 @@ sourceSelected: aController
 		ifTrue: [ 
 			aController addAsSourceFor: connectionController.
 			connectionFeedback := connectionController connectionFeedback.
-			connectionFeedback renderIn: aController view view.
+			connectionFeedback renderIn: aController figure view.
 			self selectTarget ]

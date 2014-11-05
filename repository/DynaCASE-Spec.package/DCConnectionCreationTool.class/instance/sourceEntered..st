@@ -3,5 +3,5 @@ sourceEntered: aController
 	feedback
 		value:
 			((aController canBeSourceFor: connectionController)
-				ifTrue: [ DCAcceptDenyFeedbackBuilder acceptFeedbackFor: aController view ]
-				ifFalse: [ DCAcceptDenyFeedbackBuilder denyFeedbackFor: aController view ])
+				ifTrue: [ DCAcceptDenyFeedbackBuilder acceptFeedbackFor: aController figure ]
+				ifFalse: [ DCAcceptDenyFeedbackBuilder denyFeedbackFor: aController figure ])

@@ -4,5 +4,5 @@ loadElementsFromController
 	diagramController controllers
 		do: [ :ctrl | 
 			| element |
-			element := ctrl view.
+			element := ctrl figure.
 			self figureAdded: element ]

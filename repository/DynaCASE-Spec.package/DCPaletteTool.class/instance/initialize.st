@@ -1,3 +1,0 @@
-initialization
-initialize
-	selected := false

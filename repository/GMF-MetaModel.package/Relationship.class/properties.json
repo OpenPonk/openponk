@@ -6,12 +6,9 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"start",
-		"startMultiplicity",
-		"end",
-		"endMultiplicity" ],
-	"name" : "ElementAssociation",
+		 ],
+	"name" : "Relationship",
 	"pools" : [
 		 ],
-	"super" : "Relationship",
+	"super" : "Element",
 	"type" : "normal" }

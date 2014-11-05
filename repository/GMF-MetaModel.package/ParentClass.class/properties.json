@@ -13,5 +13,5 @@
 	"name" : "ParentClass",
 	"pools" : [
 		 ],
-	"super" : "Object",
+	"super" : "Relationship",
 	"type" : "normal" }

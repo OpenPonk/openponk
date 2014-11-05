@@ -3,15 +3,15 @@ initializePalette: aPalette
 	| matcher name |
 	matcher := 'DCOml(.*)Controller' asRegex.
 
-	DCOmlElementClassController
-		withAllSubclassesDo: [ :class | 
+	(DCOmlElementClassController withAllSubclasses select: [ :class | class isAbstract not ])
+		do: [ :class | 
 			matcher matches: class asString.
 			name := matcher subexpression: 2.
 			aPalette newCreationTool: name factory: [ class new ] ].
 	aPalette newSeparator.
 
-	DCOmlElementAssociationController
-		withAllSubclassesDo: [ :class | 
+	(DCOmlRelationshipController withAllSubclasses select: [ :class | class isAbstract not ])
+		do: [ :class | 
 			matcher matches: class asString.
 			name := matcher subexpression: 2.
 			aPalette newConnectionCreationTool: name factory: [ class new ] ]

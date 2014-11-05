@@ -1,11 +1,11 @@
 {
 	"class" : {
-		 },
+		"isAbstract" : "PeterUhnak 11/5/2014 19:03" },
 	"instance" : {
 		"addAsSourceFor:" : "PeterUhnak 11/3/2014 23:57",
 		"addAsTargetFor:" : "PeterUhnak 11/3/2014 23:57",
 		"canBeSourceFor:" : "PeterUhnak 11/4/2014 18:46",
 		"canBeTargetFor:" : "PeterUhnak 11/4/2014 18:46",
-		"createFigure" : "PeterUhnak 11/5/2014 08:16",
+		"createFigure" : "PeterUhnak 11/5/2014 19:05",
 		"createModel" : "PeterUhnak 11/3/2014 23:54",
 		"modelClass" : "PeterUhnak 11/4/2014 18:30" } }

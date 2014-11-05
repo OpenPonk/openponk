@@ -2,9 +2,9 @@
 	"class" : {
 		 },
 	"instance" : {
-		"addModelElement:" : "PeterUhnak 11/4/2014 00:19",
+		"addModelElement:" : "PeterUhnak 11/5/2014 19:07",
 		"canBeTargetFor:" : "PeterUhnak 11/4/2014 18:46",
 		"initialize" : "PeterUhnak 11/4/2014 00:16",
-		"initializePalette:" : "PeterUhnak 11/4/2014 18:35",
-		"rebuild" : "PeterUhnak 11/3/2014 22:37",
+		"initializePalette:" : "PeterUhnak 11/5/2014 19:03",
+		"rebuild" : "PeterUhnak 11/5/2014 19:07",
 		"updateView" : "PeterUhnak 11/3/2014 22:27" } }

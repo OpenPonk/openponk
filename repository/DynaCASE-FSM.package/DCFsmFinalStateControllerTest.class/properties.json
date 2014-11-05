@@ -4,11 +4,11 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "tothmatu 10/4/2014 17:13",
+	"commentStamp" : "",
 	"instvars" : [
 		 ],
-	"name" : "DCFsmControllersTest",
+	"name" : "DCFsmFinalStateControllerTest",
 	"pools" : [
 		 ],
-	"super" : "TestCase",
+	"super" : "DCControllerTest",
 	"type" : "normal" }

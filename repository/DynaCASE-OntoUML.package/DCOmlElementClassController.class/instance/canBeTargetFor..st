@@ -1,3 +1,3 @@
 testing
 canBeTargetFor: aController
-	^ ElementAssociation allSubclasses includes: aController modelClass
+	^ aController isKindOf: DCOmlRelationshipController

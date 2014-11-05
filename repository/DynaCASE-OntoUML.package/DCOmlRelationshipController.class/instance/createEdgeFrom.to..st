@@ -1,10 +1,10 @@
 hooks
-createEdgeFrom: fromElement to: toElement
+createEdgeFrom: fromFigure to: toFigure
 	| builder edge label sourceMultiplicityLabel targetMultiplicityLabel |
 	^ DCRTCallbackBuilder
 		block: [ :view | 
 			builder := DCRTRelationshipBuilder new.
-			edge := builder createEdgeFrom: fromElement to: toElement.
+			edge := builder createEdgeFrom: fromFigure to: toFigure.
 			edge shape head: nil.
 			view add: edge.
 			label := builder addLabelTo: edge.

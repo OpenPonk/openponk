@@ -1,5 +1,5 @@
 hooks
 createModel
 	^ self modelClass new
-		name: 'new object';
+		name: 'an object';
 		yourself

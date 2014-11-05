@@ -9,4 +9,4 @@ initializeTree
 	tree
 		expandRoots;
 		autoDeselection: false.
-	project whenDirtyChanged: [ tree updateTree ]
+	project whenChanged: [ tree updateTree ]

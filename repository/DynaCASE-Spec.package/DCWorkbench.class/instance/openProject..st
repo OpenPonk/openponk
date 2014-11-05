@@ -8,7 +8,7 @@ openProject: aProject
 		editor: self editorModel;
 		workbench: self.
 	self updateTitle.
-	project whenDirtyChanged: [ self updateTitle ].
+	project whenChanged: [ self updateTitle ].
 	navigatorModel openOn: project.
 	project setClean.
 	projectController openFirstDiagram

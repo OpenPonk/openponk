@@ -7,8 +7,8 @@
 	"commentStamp" : "",
 	"instvars" : [
 		 ],
-	"name" : "DCRTFilledCircleHead",
+	"name" : "DCRTEmptyNarrowArrowHead",
 	"pools" : [
 		 ],
-	"super" : "DCRTCircleHead",
+	"super" : "RTLineDecoration",
 	"type" : "normal" }

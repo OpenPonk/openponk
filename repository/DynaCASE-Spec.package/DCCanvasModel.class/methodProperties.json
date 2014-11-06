@@ -2,19 +2,22 @@
 	"class" : {
 		 },
 	"instance" : {
+		"addCanvasMenu" : "bliznjan 11/6/2014 22:52",
 		"addMenuFor:" : "PeterUhnak 11/4/2014 23:36",
 		"addMouseEventsFor:" : "PeterUhnak 11/5/2014 08:24",
 		"cleanView" : "PeterUhnak 10/30/2014 17:41",
-		"createCanvasMenu" : "bliznjan 11/6/2014 12:53",
 		"deleteFigure:" : "PeterUhnak 11/4/2014 23:40",
 		"diagramController" : "PeterUhnak 10/19/2014 17:15",
 		"diagramController:" : "PeterUhnak 11/3/2014 15:18",
-		"exportAs:" : "bliznjan 11/6/2014 12:46",
+		"exportAs:" : "bliznjan 11/6/2014 21:59",
 		"figureAdded:" : "PeterUhnak 11/3/2014 17:02",
 		"initialize" : "PeterUhnak 11/3/2014 17:30",
 		"loadElementsFromController" : "PeterUhnak 11/5/2014 08:31",
-		"reloadView" : "bliznjan 11/6/2014 11:47",
+		"reloadCanvasMenu" : "bliznjan 11/6/2014 22:33",
+		"reloadView" : "bliznjan 11/6/2014 22:34",
 		"roassalView" : "PeterUhnak 10/19/2014 16:49",
 		"signalUpdate" : "PeterUhnak 10/19/2014 22:20",
 		"viewClicked:" : "PeterUhnak 11/3/2014 15:20",
-		"workbench" : "PeterUhnak 10/30/2014 18:11" } }
+		"workbench" : "PeterUhnak 10/30/2014 18:11",
+		"zoom" : "bliznjan 11/6/2014 22:08",
+		"zoom:" : "bliznjan 11/6/2014 22:34" } }

@@ -2,5 +2,5 @@ signalling
 reloadView
 	self cleanView.
 	diagramController ifNotNil: [ self loadElementsFromController ].
-	self createCanvasMenu.
+	self addCanvasMenu.
 	diagramController ifNotNil: [ diagramController updateView ]

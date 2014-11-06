@@ -5,6 +5,12 @@ exportAs: imageFormat
  		self exportAs: #PNG
 		self exportAs: 'PNG' "
 
-	roassalView canvas fixedShapes do: [ :shape | shape remove ].
-	roassalView canvas morph perform: ('exportAs' , imageFormat) asSymbol.
-	self createCanvasMenu
+	| exportCanvas |
+	exportCanvas := roassalView canvas veryDeepCopy.
+	exportCanvas fixedShapes do: [ :shape | shape remove ].
+	exportCanvas camera
+		focusOnCenter;
+		scale: 1.0001.
+	exportCanvas morph
+		extent: exportCanvas encompassingRectangle extent + (20 @ 20);
+		perform: ('exportAs' , imageFormat) asSymbol

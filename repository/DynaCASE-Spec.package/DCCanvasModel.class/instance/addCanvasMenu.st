@@ -1,6 +1,6 @@
 adding
 addCanvasMenu
-	| builder exportMenus |
+	| builder exportMenus callback |
 	builder := RTMenuBuilder new view: roassalView.
 	builder menu: '' callback: [  ].	"just visual indentiation of menu"
 	builder menu: '   - ' background: Color veryLightGray callback: [ self zoom: self zoom * 0.8 ].
@@ -9,21 +9,39 @@ addCanvasMenu
 		background: Color veryLightGray
 		callback: [ self zoom: 1.0001 ].
 	builder menu: '   +' background: Color veryLightGray callback: [ self zoom: self zoom * 1.25 ].
-	roassalView canvas
-		when: TRMouseWheelEvent
-		do: [ 
-			roassalView canvas announcer unsubscribe: self.
-			self reloadCanvasMenu ].
-	builder
-		menu: ' view all'
-		background: Color veryLightGray
-		callback: [ 
-			roassalView canvas focusOnCenterScaled.
-			self reloadCanvasMenu ].
+	builder menu: ' view all' background: Color veryLightGray callback: [ roassalView canvas focusOnCenterScaled ].
 	exportMenus := Array
-		with: ' PNG' -> [ self exportAs: #PNG ]
-		with: ' JPEG' -> [ self exportAs: #JPEG ]
-		with: ' BMP' -> [ self exportAs: #BMP ]
-		with: ' GIF' -> [ self exportAs: #GIF ].
+		with:
+			' PNG'
+				-> [ 
+					self
+						exportAs: #png;
+						reloadCanvasMenu ]
+		with:
+			' JPEG'
+				-> [ 
+					self
+						exportAs: #jpeg;
+						reloadCanvasMenu ]
+		with:
+			' BMP'
+				-> [ 
+					self
+						exportAs: #bmp;
+						reloadCanvasMenu ]
+		with:
+			' GIF'
+				-> [ 
+					self
+						exportAs: #gif;
+						reloadCanvasMenu ].
 	builder menu: '    export as picture...' submenus: exportMenus background: Color veryLightGray.
-	self signalUpdate
+	self signalUpdate.
+	callback := TRCameraScaleCallback new.
+	callback
+		block: [ 
+			self reloadCanvasMenu.
+			roassalView canvas camera
+				removeCallback: callback
+				ifAbsent: [ UnhandledError signal: 'this callback should run only once then delete itself' ] ].
+	roassalView canvas camera addCallback: callback

@@ -1,5 +1,5 @@
 private 
-callbacksOfEdge: anEdge
+createCallbacksOfEdge: anEdge
 	| callbacks |
 	callbacks := Bag with: TRTranslationCallback new with: TRExtentCallback new.
 	callbacks

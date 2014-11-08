@@ -2,7 +2,8 @@ public
 constraint: aLabel toTargetDistance: aNumber offset: anotherNumber
 	DCRTConstraint
 		stick: aLabel
-			nearEndOfEdge: aLabel model
+			near: #end
+			ofEdge: aLabel model
 			distance: aNumber
 			offset: anotherNumber;
 		whenDragging: aLabel

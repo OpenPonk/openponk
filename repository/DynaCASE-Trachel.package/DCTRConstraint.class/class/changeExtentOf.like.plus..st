@@ -1,3 +1,3 @@
 public - resizing
-changeExtentOf: aShape like: anotherShape plus: aPoint
-	^ aShape extent: anotherShape encompassingRectangle extent + aPoint
+changeExtentOf: conformingShape like: originShape plus: aPoint
+	^ conformingShape extent: originShape encompassingRectangle extent + aPoint

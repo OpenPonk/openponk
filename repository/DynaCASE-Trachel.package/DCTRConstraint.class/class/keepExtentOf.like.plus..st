@@ -1,7 +1,7 @@
 public - resizing
-keepExtentOf: aShape like: anotherShape plus: aPoint
+keepExtentOf: conformingShape like: originShape plus: aPoint
 	| b |
-	self changeExtentOf: aShape like: anotherShape plus: aPoint.
-	b := [ :shape :step | self changeExtentOf: aShape like: anotherShape plus: aPoint ].
-	aShape addCallback: (TRExtentCallback block: b).
-	aShape addCallback: (TRTranslationCallback block: b)
+	self changeExtentOf: conformingShape like: originShape plus: aPoint.
+	b := [ :shape :step | self changeExtentOf: conformingShape like: originShape plus: aPoint ].
+	originShape addCallback: (TRExtentCallback block: b).
+	originShape addCallback: (TRTranslationCallback block: b)

@@ -1,0 +1,19 @@
+{
+	"category" : "DynaCASE-Roassal2-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"box1",
+		"box2",
+		"edge",
+		"shape1",
+		"shape2",
+		"shape3" ],
+	"name" : "DCRTEdgeConstraintTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

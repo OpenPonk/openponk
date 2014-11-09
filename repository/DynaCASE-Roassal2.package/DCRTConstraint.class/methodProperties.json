@@ -1,20 +1,5 @@
 {
 	"class" : {
-		"createCallbacksOfEdge:" : "bliznjan 11/9/2014 00:02",
-		"doFix:alongEdge:callbacks:" : "bliznjan 10/26/2014 00:35",
-		"doFix:near:ofEdge:callbacks:" : "bliznjan 11/9/2014 00:32",
-		"doFix:nearPoint:ofEdge:using:" : "bliznjan 10/26/2014 00:27",
-		"doStick:alongEdge:balance:offset:callbacks:" : "bliznjan 10/26/2014 00:24",
-		"doStick:near:ofEdge:distance:offset:callbacks:" : "bliznjan 11/9/2014 00:42",
-		"fix:alongEdge:" : "bliznjan 11/9/2014 00:02",
-		"fix:near:ofEdge:" : "bliznjan 11/9/2014 00:23",
-		"move:alongEdge:balance:offset:" : "bliznjan 10/24/2014 22:58",
-		"move:alongEdge:offset:" : "bliznjan 10/24/2014 22:58",
-		"move:nearEndOfEdge:distance:offset:" : "bliznjan 10/24/2014 22:59",
-		"move:nearStartOfEdge:distance:offset:" : "bliznjan 10/24/2014 22:59",
-		"stick:alongEdge:balance:offset:" : "bliznjan 11/9/2014 00:02",
-		"stick:alongEdge:offset:" : "bliznjan 10/25/2014 18:30",
-		"stick:near:ofEdge:distance:offset:" : "bliznjan 11/9/2014 00:18",
 		"whenDragging:drawLineToPoint:" : "bliznjan 10/31/2014 14:31" },
 	"instance" : {
 		 } }

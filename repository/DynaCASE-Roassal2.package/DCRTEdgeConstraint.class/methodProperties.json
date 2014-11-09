@@ -1,0 +1,14 @@
+{
+	"class" : {
+		"fix:alongEdge:" : "bliznjan 11/9/2014 13:09",
+		"fix:near:ofEdge:" : "bliznjan 11/9/2014 16:57",
+		"move:alongEdge:balance:offset:" : "bliznjan 11/9/2014 13:49",
+		"move:alongEdge:offset:" : "bliznjan 11/9/2014 12:57",
+		"move:nearEndOfEdge:distance:offset:" : "bliznjan 11/9/2014 12:57",
+		"move:nearStartOfEdge:distance:offset:" : "bliznjan 11/9/2014 12:57",
+		"stick:alongEdge:balance:offset:" : "bliznjan 11/9/2014 15:39",
+		"stick:alongEdge:offset:" : "bliznjan 11/9/2014 12:57",
+		"stick:near:ofEdge:distance:offset:" : "bliznjan 11/9/2014 16:16",
+		"subscribeShape:edge:whenDragOnce:whenMove:" : "bliznjan 11/9/2014 16:13" },
+	"instance" : {
+		 } }

@@ -1,5 +1,5 @@
-private 
-doFix: aShape alongEdge: anEdge callbacks: callbacks
+public - sticking
+fix: aShape alongEdge: anEdge
 	| startPoint endPoint nearestPoint edgeVector nearestPointVector positionVector edgeVectorR balance offset |
 	startPoint := anEdge shape startingPointOf: anEdge.
 	endPoint := anEdge shape endingPointOf: anEdge.
@@ -21,8 +21,7 @@ doFix: aShape alongEdge: anEdge callbacks: callbacks
 						ifTrue: [ balance := nearestPointVector x / edgeVector x ]
 						ifFalse: [ balance := nearestPointVector / edgeVector ] ] ].
 	self
-		doStick: aShape
+		stick: aShape
 		alongEdge: anEdge
 		balance: balance
 		offset: offset
-		callbacks: callbacks

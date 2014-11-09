@@ -1,6 +1,6 @@
 public
 constraint: aLabel balance: aFloat offset: aNumber
-	DCRTConstraint
+	DCRTEdgeConstraint
 		stick: aLabel
 			alongEdge: aLabel model
 			balance: aFloat

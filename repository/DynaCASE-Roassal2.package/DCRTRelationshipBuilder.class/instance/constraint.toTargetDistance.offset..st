@@ -1,6 +1,6 @@
 public
 constraint: aLabel toTargetDistance: aNumber offset: anotherNumber
-	DCRTConstraint
+	DCRTEdgeConstraint
 		stick: aLabel
 			near: #end
 			ofEdge: aLabel model

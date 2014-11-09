@@ -1,0 +1,18 @@
+{
+	"category" : "DynaCASE-Trachel-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"canvas",
+		"fileName",
+		"imageExporter",
+		"format",
+		"oversize" ],
+	"name" : "DCCanvasExporter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

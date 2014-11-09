@@ -35,7 +35,7 @@ addCanvasMenu
 					self
 						exportAs: #gif;
 						reloadCanvasMenu ].
-	builder menu: '    export as picture...' submenus: exportMenus background: Color veryLightGray.
+	builder menu: ' export as picture...' submenus: exportMenus background: Color veryLightGray.
 	self signalUpdate.
 	callback := TRCameraScaleCallback new.
 	callback
@@ -43,5 +43,5 @@ addCanvasMenu
 			self reloadCanvasMenu.
 			roassalView canvas camera
 				removeCallback: callback
-				ifAbsent: [ UnhandledError signal: 'this callback should run only once then delete itself' ] ].
+				ifAbsent: [ self error: 'this callback should run only once then delete itself' ] ].
 	roassalView canvas camera addCallback: callback

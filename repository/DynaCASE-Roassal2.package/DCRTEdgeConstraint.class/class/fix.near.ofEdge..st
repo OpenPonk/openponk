@@ -5,10 +5,9 @@ fix: aShape near: origin ofEdge: anEdge
 	| startPoint endPoint originPoint nearestPoint edgeVector positionVector offset distance |
 	startPoint := anEdge shape startingPointOf: anEdge.
 	endPoint := anEdge shape endingPointOf: anEdge.
-	origin = #start
-		ifTrue: [ originPoint := startPoint ].
-	origin = #end
-		ifTrue: [ originPoint := endPoint ].
+	originPoint := origin = #start
+		ifTrue: [ startPoint ]
+		ifFalse: [ endPoint ].
 	nearestPoint := aShape position nearestPointAlongLineFrom: startPoint to: endPoint.
 	edgeVector := endPoint - startPoint.
 	positionVector := aShape position - nearestPoint.

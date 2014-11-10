@@ -5,13 +5,11 @@ stick: aShape near: origin ofEdge: anEdge distance: aNumber offset: anotherNumbe
 	| moveBlock |
 	moveBlock := [ 
 	self
-		perform: ('move:near' , origin asString capitalized , 'OfEdge:distance:offset:') asSymbol
-		withArguments:
-			(Array
-				with: aShape
-				with: anEdge
-				with: aNumber
-				with: anotherNumber) ].
+		move: aShape
+		near: origin
+		ofEdge: anEdge
+		distance: aNumber
+		offset: anotherNumber ].
 	moveBlock value.
 	self
 		subscribeShape: aShape

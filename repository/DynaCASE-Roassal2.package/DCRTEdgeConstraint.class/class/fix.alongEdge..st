@@ -6,8 +6,8 @@ fix: aShape alongEdge: anEdge
 	edgeVector := endPoint - startPoint.
 	nearestPoint := aShape position nearestPointAlongLineFrom: startPoint to: endPoint.
 	positionVector := aShape position - nearestPoint.
-	offset := aShape position dist: nearestPoint.
 	edgeVectorR := edgeVector r.
+	offset := aShape position dist: nearestPoint.
 	(edgeVector + positionVector rightRotated) r > edgeVectorR
 		ifTrue: [ offset := offset negated ].
 	edgeVectorR < 5

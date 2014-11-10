@@ -8,6 +8,6 @@ format: imageFormat
 	| imageFormatUC |
 	format := imageFormat.
 	imageFormatUC := imageFormat asUppercase.
-	(imageFormatUC = #JPEG or: imageFormatUC = #JPG)
-		ifTrue: [ imageExporter := PluginBasedJPEGReadWriter ]
-		ifFalse: [ imageExporter := Smalltalk at: (imageFormatUC , 'ReadWriter') asSymbol ]
+	imageExporter := (imageFormatUC = #JPEG or: imageFormatUC = #JPG)
+		ifTrue: [ PluginBasedJPEGReadWriter ]
+		ifFalse: [ Smalltalk at: (imageFormatUC , 'ReadWriter') asSymbol ]

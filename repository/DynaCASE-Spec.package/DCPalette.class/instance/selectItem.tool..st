@@ -4,7 +4,5 @@ selectItem: anItem tool: aTool
 		ifNotNil: [ 
 			selectedTool deselect.
 			selectedItem state: false ].
-	selectedTool := aTool.
-	selectedTool select.
-	selectedItem := anItem.
-	selectedItem state: true
+	(selectedTool := aTool) select.
+	(selectedItem := anItem) state: true

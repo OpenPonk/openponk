@@ -1,6 +1,5 @@
 actions
 targetSelected: aController
 	selectedController ifNotNil: [ selectedController hideSelectionFeedback ].
-	selectedController := aController.
-	selectedController showSelectionFeedback.
+	(selectedController := aController) showSelectionFeedback.
 	self workbench openFormOn: selectedController

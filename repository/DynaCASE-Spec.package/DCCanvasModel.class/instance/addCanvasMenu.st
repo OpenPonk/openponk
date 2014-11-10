@@ -3,39 +3,39 @@ addCanvasMenu
 	| builder exportMenus callback |
 	builder := RTMenuBuilder new view: roassalView.
 	builder menu: '' callback: [  ].	"just visual indentiation of menu"
-	builder menu: '   - ' background: Color veryLightGray callback: [ self zoom: self zoom * 0.8 ].
+	builder menu: '  -  ' background: Color veryLightGray callback: [ self zoom: self zoom * 0.8 ].
 	builder
-		menu: ' ' , (self zoom * 100) truncated asString , ' %'
+		menu: ' ' , (self zoom * 100) truncated asString , ' % '
 		background: Color veryLightGray
 		callback: [ self zoom: 1.0001 ].
-	builder menu: '   +' background: Color veryLightGray callback: [ self zoom: self zoom * 1.25 ].
-	builder menu: ' view all' background: Color veryLightGray callback: [ roassalView canvas focusOnCenterScaled ].
+	builder menu: '  +  ' background: Color veryLightGray callback: [ self zoom: self zoom * 1.25 ].
+	builder menu: ' view all ' background: Color veryLightGray callback: [ roassalView canvas focusOnCenterScaled ].
 	exportMenus := Array
 		with:
-			' PNG'
+			' PNG '
 				-> [ 
 					self
 						exportAs: #png;
 						reloadCanvasMenu ]
 		with:
-			' JPEG'
+			' JPEG '
 				-> [ 
 					self
 						exportAs: #jpeg;
 						reloadCanvasMenu ]
 		with:
-			' BMP'
+			' BMP '
 				-> [ 
 					self
 						exportAs: #bmp;
 						reloadCanvasMenu ]
 		with:
-			' GIF'
+			' GIF '
 				-> [ 
 					self
 						exportAs: #gif;
 						reloadCanvasMenu ].
-	builder menu: ' export as picture...' submenus: exportMenus background: Color veryLightGray.
+	builder menu: ' export as picture... ' submenus: exportMenus background: Color veryLightGray.
 	self signalUpdate.
 	callback := TRCameraScaleCallback new.
 	callback

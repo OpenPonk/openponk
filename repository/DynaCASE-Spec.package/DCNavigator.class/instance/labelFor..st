@@ -1,9 +1,5 @@
 private
 labelFor: anObject
-	| res |
-	res := anObject.
-	(anObject isKindOf: DCNamedElement)
-		ifTrue: [ res := anObject name , ' (' , anObject class name , ')' ].
-	(anObject isKindOf: DCDiagram)
-		ifTrue: [ res := anObject name , ' (' , anObject class name , ')' ].
-	^ res
+	(anObject isKindOf: DCNamedElement) | (anObject isKindOf: DCDiagram)
+		ifTrue: [ ^ anObject name , ' (' , anObject class name , ')' ].
+	^ anObject

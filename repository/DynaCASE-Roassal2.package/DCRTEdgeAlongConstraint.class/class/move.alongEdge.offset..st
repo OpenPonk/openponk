@@ -1,7 +1,8 @@
 public - moving
 move: aShape alongEdge: anEdge offset: aNumber
-	self new
+	^ self new
 		shape: aShape;
 		edge: anEdge;
 		offset: aNumber;
-		move
+		move;
+		yourself

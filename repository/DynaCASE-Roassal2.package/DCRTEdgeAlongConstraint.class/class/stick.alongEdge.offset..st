@@ -1,7 +1,8 @@
 public - sticking
 stick: aShape alongEdge: anEdge offset: aNumber
-	self new
+	^ self new
 		shape: aShape;
 		edge: anEdge;
 		offset: aNumber;
-		stick
+		stick;
+		yourself

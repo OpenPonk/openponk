@@ -1,6 +1,7 @@
 public - sticking
 fix: aShape alongEdge: anEdge
-	self new
+	^ self new
 		shape: aShape;
 		edge: anEdge;
-		fix
+		fix;
+		yourself

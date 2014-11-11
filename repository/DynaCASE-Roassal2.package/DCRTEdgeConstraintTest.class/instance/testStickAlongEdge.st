@@ -2,13 +2,13 @@ as yet unclassified
 testStickAlongEdge
 	"mousedrag events are not tested (yet)"
 
-	DCRTEdgeConstraint stick: shape1 alongEdge: edge offset: 0.
-	DCRTEdgeConstraint
+	DCRTEdgeAlongConstraint stick: shape1 alongEdge: edge offset: 0.
+	DCRTEdgeAlongConstraint
 		stick: shape2
 		alongEdge: edge
 		balance: 0
 		offset: 10.
-	DCRTEdgeConstraint
+	DCRTEdgeAlongConstraint
 		stick: shape3
 		alongEdge: edge
 		balance: -0.5

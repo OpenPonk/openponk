@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-Roassal2-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"distance",
+		"origin" ],
+	"name" : "DCRTEdgeEndConstraint",
+	"pools" : [
+		 ],
+	"super" : "DCRTEdgeAbstractConstraint",
+	"type" : "normal" }

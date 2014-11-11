@@ -1,13 +1,13 @@
-public - sticking
-fix: aShape alongEdge: anEdge
-	| startPoint endPoint nearestPoint edgeVector nearestPointVector positionVector edgeVectorR balance offset |
-	startPoint := anEdge shape startingPointOf: anEdge.
-	endPoint := anEdge shape endingPointOf: anEdge.
+running
+fix
+	| startPoint endPoint nearestPoint edgeVector nearestPointVector positionVector edgeVectorR |
+	startPoint := edge shape startingPointOf: edge.
+	endPoint := edge shape endingPointOf: edge.
 	edgeVector := endPoint - startPoint.
-	nearestPoint := aShape position nearestPointAlongLineFrom: startPoint to: endPoint.
-	positionVector := aShape position - nearestPoint.
+	nearestPoint := shape position nearestPointAlongLineFrom: startPoint to: endPoint.
+	positionVector := shape position - nearestPoint.
 	edgeVectorR := edgeVector r.
-	offset := aShape position dist: nearestPoint.
+	offset := shape position dist: nearestPoint.
 	(edgeVector + positionVector rightRotated) r > edgeVectorR
 		ifTrue: [ offset := offset negated ].
 	edgeVectorR < 5
@@ -20,8 +20,4 @@ fix: aShape alongEdge: anEdge
 					edgeVector y = 0
 						ifTrue: [ balance := nearestPointVector x / edgeVector x ]
 						ifFalse: [ balance := nearestPointVector / edgeVector ] ] ].
-	self
-		stick: aShape
-		alongEdge: anEdge
-		balance: balance
-		offset: offset
+	self stick

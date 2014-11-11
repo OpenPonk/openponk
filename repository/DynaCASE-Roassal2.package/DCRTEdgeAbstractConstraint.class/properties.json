@@ -1,0 +1,18 @@
+{
+	"category" : "DynaCASE-Roassal2-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"callbacks",
+		"edge",
+		"shape",
+		"subscription",
+		"offset" ],
+	"name" : "DCRTEdgeAbstractConstraint",
+	"pools" : [
+		 ],
+	"super" : "DCRTConstraint",
+	"type" : "normal" }

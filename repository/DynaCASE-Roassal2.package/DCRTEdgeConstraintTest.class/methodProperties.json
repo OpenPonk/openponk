@@ -3,9 +3,9 @@
 		 },
 	"instance" : {
 		"setUp" : "bliznjan 11/9/2014 16:42",
-		"testFixAlongEdge" : "bliznjan 11/9/2014 17:15",
-		"testFixNearOriginOfEdge" : "bliznjan 11/9/2014 17:15",
-		"testMoveAlongEdge" : "bliznjan 11/9/2014 16:23",
-		"testMoveNearOriginOfEdge" : "bliznjan 11/10/2014 01:17",
-		"testStickAlongEdge" : "bliznjan 11/9/2014 17:15",
-		"testStickNearOriginOfEdge" : "bliznjan 11/9/2014 17:15" } }
+		"testFixAlongEdge" : "bliznjan 11/11/2014 15:31",
+		"testFixNearOriginOfEdge" : "bliznjan 11/11/2014 15:32",
+		"testMoveAlongEdge" : "bliznjan 11/11/2014 15:32",
+		"testMoveNearOriginOfEdge" : "bliznjan 11/11/2014 15:33",
+		"testStickAlongEdge" : "bliznjan 11/11/2014 15:33",
+		"testStickNearOriginOfEdge" : "bliznjan 11/11/2014 15:33" } }

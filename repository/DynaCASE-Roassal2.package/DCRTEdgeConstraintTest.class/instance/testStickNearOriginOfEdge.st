@@ -2,19 +2,19 @@ as yet unclassified
 testStickNearOriginOfEdge
 	"mousedrag events are not tested (yet)"
 
-	DCRTEdgeConstraint
+	DCRTEdgeEndConstraint
 		stick: shape1
 		near: #start
 		ofEdge: edge
 		distance: 50
 		offset: 0.
-	DCRTEdgeConstraint
+	DCRTEdgeEndConstraint
 		stick: shape2
 		near: #start
 		ofEdge: edge
 		distance: 0
 		offset: 10.
-	DCRTEdgeConstraint
+	DCRTEdgeEndConstraint
 		stick: shape3
 		near: #end
 		ofEdge: edge

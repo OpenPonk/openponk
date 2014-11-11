@@ -1,0 +1,12 @@
+{
+	"class" : {
+		"fix:near:ofEdge:" : "bliznjan 11/11/2014 15:29",
+		"move:near:ofEdge:distance:offset:" : "bliznjan 11/11/2014 15:29",
+		"stick:near:ofEdge:distance:offset:" : "bliznjan 11/11/2014 15:30" },
+	"instance" : {
+		"distance:" : "bliznjan 11/11/2014 13:55",
+		"fix" : "bliznjan 11/11/2014 14:54",
+		"initialize" : "bliznjan 11/11/2014 15:44",
+		"move" : "bliznjan 11/11/2014 14:54",
+		"near" : "bliznjan 11/11/2014 15:20",
+		"near:" : "bliznjan 11/11/2014 15:34" } }

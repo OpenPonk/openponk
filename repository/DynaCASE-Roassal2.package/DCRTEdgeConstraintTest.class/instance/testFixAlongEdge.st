@@ -2,9 +2,9 @@ as yet unclassified
 testFixAlongEdge
 	"mousedrag events are not tested (yet)"
 
-	DCRTEdgeConstraint fix: shape1 alongEdge: edge.
-	DCRTEdgeConstraint fix: shape2 alongEdge: edge.
-	DCRTEdgeConstraint fix: shape3 alongEdge: edge.
+	DCRTEdgeAlongConstraint fix: shape1 alongEdge: edge.
+	DCRTEdgeAlongConstraint fix: shape2 alongEdge: edge.
+	DCRTEdgeAlongConstraint fix: shape3 alongEdge: edge.
 	self assert: shape1 position = (50 @ 0).
 	self assert: shape2 position = (0 @ 10).
 	self assert: shape3 position = (-50 @ -10).

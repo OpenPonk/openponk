@@ -1,0 +1,12 @@
+{
+	"class" : {
+		"fix:alongEdge:" : "bliznjan 11/11/2014 15:27",
+		"move:alongEdge:balance:offset:" : "bliznjan 11/11/2014 15:27",
+		"move:alongEdge:offset:" : "bliznjan 11/11/2014 15:28",
+		"stick:alongEdge:balance:offset:" : "bliznjan 11/11/2014 15:28",
+		"stick:alongEdge:offset:" : "bliznjan 11/11/2014 15:28" },
+	"instance" : {
+		"balance:" : "bliznjan 11/11/2014 13:54",
+		"fix" : "bliznjan 11/11/2014 14:53",
+		"initialize" : "bliznjan 11/11/2014 13:56",
+		"move" : "bliznjan 11/11/2014 14:53" } }

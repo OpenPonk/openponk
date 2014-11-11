@@ -6,9 +6,9 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		 ],
-	"name" : "DCRTEdgeConstraint",
+		"balance" ],
+	"name" : "DCRTEdgeAlongConstraint",
 	"pools" : [
 		 ],
-	"super" : "DCRTConstraint",
+	"super" : "DCRTEdgeAbstractConstraint",
 	"type" : "normal" }

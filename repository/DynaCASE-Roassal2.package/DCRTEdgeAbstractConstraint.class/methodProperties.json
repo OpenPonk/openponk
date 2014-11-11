@@ -1,0 +1,17 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"edge" : "bliznjan 11/11/2014 13:29",
+		"edge:" : "bliznjan 11/11/2014 13:30",
+		"fix" : "bliznjan 11/11/2014 14:58",
+		"initialize" : "bliznjan 11/11/2014 13:57",
+		"move" : "bliznjan 11/11/2014 14:57",
+		"offset:" : "bliznjan 11/11/2014 13:54",
+		"removeCallbacksOfEdge" : "bliznjan 11/11/2014 15:45",
+		"setCallbacksOfEdge" : "bliznjan 11/11/2014 15:52",
+		"shape" : "bliznjan 11/11/2014 13:29",
+		"shape:" : "bliznjan 11/11/2014 13:30",
+		"stick" : "bliznjan 11/11/2014 15:37",
+		"subscribeShapeDrag" : "bliznjan 11/11/2014 15:54",
+		"unSubscribeShapeDrag" : "bliznjan 11/11/2014 15:54" } }

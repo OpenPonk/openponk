@@ -1,10 +1,11 @@
 public
 constraint: aLabel toSourceDistance: aNumber offset: anotherNumber
-	DCRTEdgeConstraint
+	DCRTEdgeEndConstraint
 		stick: aLabel
-			near: #start
-			ofEdge: aLabel model
-			distance: aNumber
-			offset: anotherNumber;
+		near: #start
+		ofEdge: aLabel model
+		distance: aNumber
+		offset: anotherNumber.
+	DCRTElementsConstraint
 		whenDragging: aLabel
-			drawLineToPoint: [ (aLabel model shape startingPointOf: aLabel model) * 0.9 + ((aLabel model shape endingPointOf: aLabel model) * 0.1) ]
+		drawLineToPoint: [ (aLabel model shape startingPointOf: aLabel model) * 0.9 + ((aLabel model shape endingPointOf: aLabel model) * 0.1) ]

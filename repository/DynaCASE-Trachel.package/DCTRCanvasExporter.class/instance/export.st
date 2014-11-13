@@ -4,6 +4,6 @@ export
 	imageExporter
 		putForm:
 			(canvas morph
-				extent: canvas morph extent + oversize;
+				extent: canvas morph extent + (canvas camera scale * oversize);
 				yourself) imageForm
 		onFileNamed: fileName

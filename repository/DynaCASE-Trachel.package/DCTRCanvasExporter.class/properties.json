@@ -4,14 +4,14 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "bliznjan 11/13/2014 19:40",
 	"instvars" : [
 		"canvas",
 		"fileName",
 		"imageExporter",
 		"format",
 		"oversize" ],
-	"name" : "DCCanvasExporter",
+	"name" : "DCTRCanvasExporter",
 	"pools" : [
 		 ],
 	"super" : "Object",

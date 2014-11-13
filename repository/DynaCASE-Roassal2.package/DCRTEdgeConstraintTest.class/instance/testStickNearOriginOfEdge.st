@@ -4,20 +4,17 @@ testStickNearOriginOfEdge
 
 	DCRTEdgeEndConstraint
 		stick: shape1
-		near: #start
-		ofEdge: edge
+		nearStartOfEdge: edge
 		distance: 50
 		offset: 0.
 	DCRTEdgeEndConstraint
 		stick: shape2
-		near: #start
-		ofEdge: edge
+		nearStartOfEdge: edge
 		distance: 0
 		offset: 10.
 	DCRTEdgeEndConstraint
 		stick: shape3
-		near: #end
-		ofEdge: edge
+		nearEndOfEdge: edge
 		distance: 150
 		offset: -10.
 	self assert: shape1 position = (50 @ 0).

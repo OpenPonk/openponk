@@ -2,8 +2,7 @@ public
 constraint: aLabel toSourceDistance: aNumber offset: anotherNumber
 	DCRTEdgeEndConstraint
 		stick: aLabel
-		near: #start
-		ofEdge: aLabel model
+		nearStartOfEdge: aLabel model
 		distance: aNumber
 		offset: anotherNumber.
 	DCRTElementsConstraint

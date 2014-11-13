@@ -1,8 +1,8 @@
 public - sticking
-fix: aShape near: origin ofEdge: anEdge
+fix: aShape nearEndOfEdge: anEdge
 	^ self new
 		shape: aShape;
 		edge: anEdge;
-		near: origin;
+		nearEnd;
 		fix;
 		yourself

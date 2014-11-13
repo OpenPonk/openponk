@@ -1,0 +1,3 @@
+accessing
+nearEnd
+	origin := #end

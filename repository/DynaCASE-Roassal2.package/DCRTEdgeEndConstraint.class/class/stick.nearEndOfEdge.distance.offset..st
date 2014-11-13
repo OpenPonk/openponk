@@ -1,9 +1,9 @@
 public - sticking
-stick: aShape near: origin ofEdge: anEdge distance: aNumber offset: anotherNumber
+stick: aShape nearEndOfEdge: anEdge distance: aNumber offset: anotherNumber
 	^ self new
 		shape: aShape;
 		edge: anEdge;
-		near: origin;
+		nearEnd;
 		distance: aNumber;
 		offset: anotherNumber;
 		stick;

@@ -5,7 +5,7 @@ exportAs: imageFormat
 		self exportAs: 'png'
  		self exportAs: #png"
 
-	(DCCanvasExporter canvas: roassalView canvas)
+	(DCTRCanvasExporter canvas: roassalView canvas)
 		withoutFixedShapes;
 		whole;
 		centered;

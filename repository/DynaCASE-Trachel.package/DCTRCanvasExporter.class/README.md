@@ -6,7 +6,6 @@ A DCTRCanvasExporter is exporter of canvas into image
 	(DCTRCanvasExporter canvas: roassalView canvas)
 		withoutFixedShapes;
 		whole;
-		centered;
 		defaultScale;
 		oversizedBy: 20 @ 20;
 		format: #gif;

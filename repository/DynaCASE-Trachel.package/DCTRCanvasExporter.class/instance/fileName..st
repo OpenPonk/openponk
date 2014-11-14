@@ -1,3 +1,3 @@
 settings
-fileName: fileNameOrBlock
-	fileName := fileNameOrBlock value
+fileName: aFileName
+	fileName := aFileName

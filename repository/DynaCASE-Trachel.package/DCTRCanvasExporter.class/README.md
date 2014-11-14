@@ -8,6 +8,6 @@ A DCTRCanvasExporter is exporter of canvas into image
 		whole;
 		defaultScale;
 		oversizedBy: 20 @ 20;
-		format: #gif;
-		fileName: [ (UIManager default request: 'Please enter file name' initialAnswer: 'export.gif') ifNil: [ ^ nil ] ];
+		format: #png;
+		fileName: ((UIManager default request: 'Please enter file name' initialAnswer: 'export.png') ifNil: [ ^ nil ]);
 		export

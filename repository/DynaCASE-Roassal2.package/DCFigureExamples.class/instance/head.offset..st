@@ -14,8 +14,8 @@ head: aName offset: aNumber
 		add: e2;
 		add: l1.
 
-	e1 translateBy: -110 @ aNumber.
-	e2 translateBy: 110 @ aNumber.
+	e1 translateBy: -100 @ aNumber.
+	e2 translateBy: 100 @ aNumber.
 
 	RTLabelled new
 		color: Color black;

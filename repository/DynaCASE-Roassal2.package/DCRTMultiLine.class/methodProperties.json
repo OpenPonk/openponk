@@ -3,9 +3,11 @@
 		 },
 	"instance" : {
 		"arrowHead" : "PeterUhnak 10/19/2014 23:15",
-		"attachPoint:" : "bliznjan 10/19/2014 19:53",
+		"attachPoint:" : "bliznjan 11/15/2014 16:37",
+		"checkLineToSelfFor:" : "bliznjan 11/15/2014 16:43",
 		"circleHead" : "PeterUhnak 11/4/2014 18:55",
 		"color:" : "bliznjan 10/19/2014 19:52",
+		"createLineToSelf" : "bliznjan 11/15/2014 16:42",
 		"dashdotLine" : "PeterUhnak 11/4/2014 20:26",
 		"dashedLine" : "PeterUhnak 11/4/2014 20:27",
 		"dashes" : "PeterUhnak 11/5/2014 11:49",
@@ -19,7 +21,6 @@
 		"filledNarrowArrowHead" : "bliznjan 11/6/2014 10:52",
 		"head" : "bliznjan 10/2/2014 22:11",
 		"head:" : "bliznjan 11/10/2014 01:30",
-		"initialize" : "bliznjan 10/19/2014 19:50",
 		"solidLine" : "PeterUhnak 11/4/2014 20:27",
-		"trachelShapeFor:" : "bliznjan 10/21/2014 01:47",
-		"updateFor:trachelShape:" : "PeterUhnak 10/7/2014 10:08" } }
+		"trachelShapeFor:" : "bliznjan 11/15/2014 16:43",
+		"updateFor:trachelShape:" : "bliznjan 11/15/2014 16:39" } }

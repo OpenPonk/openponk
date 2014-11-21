@@ -6,9 +6,9 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		 ],
-	"name" : "DCRTFilledCircleHead",
+		"tail" ],
+	"name" : "DCRTLineDecoration",
 	"pools" : [
 		 ],
-	"super" : "DCRTCircleHead",
+	"super" : "RTLineDecoration",
 	"type" : "normal" }

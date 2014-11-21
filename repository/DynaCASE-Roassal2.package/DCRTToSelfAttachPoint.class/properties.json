@@ -1,12 +1,12 @@
 {
-	"category" : "DynaCASE-Roassal2",
+	"category" : "DynaCASE-Roassal2-Core",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		 ],
+		"distance" ],
 	"name" : "DCRTToSelfAttachPoint",
 	"pools" : [
 		 ],

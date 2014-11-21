@@ -1,3 +1,3 @@
 heads
 arrowHead
-	self head: RTSimpleArrowHead new
+	self head: DCRTSimpleArrow new

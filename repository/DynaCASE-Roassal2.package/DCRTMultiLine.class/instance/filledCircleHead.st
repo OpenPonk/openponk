@@ -1,3 +1,3 @@
 heads
 filledCircleHead
-	self head: DCRTFilledCircleHead new
+	self head: DCRTFilledCircle new

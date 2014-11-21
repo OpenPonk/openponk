@@ -1,3 +1,3 @@
 public - hooks
 startingPointOf: aRTEdge
-	^ aRTEdge from encompassingRectangle rightCenter
+	^ aRTEdge from encompassingRectangle bottomRight - (0 @ distance)

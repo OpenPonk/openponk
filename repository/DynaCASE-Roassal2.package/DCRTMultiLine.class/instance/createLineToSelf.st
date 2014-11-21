@@ -1,12 +1,14 @@
 private
 createLineToSelf
-	self attachPoint: DCRTToSelfAttachPoint new.
+	self attachPoint: DCRTToSelfWithOffsetAttachPoint new.
 	(blockProducingPath value: 0 @ 0 value: 0 @ 0) size = 2
 		ifTrue: [ 
 			self
 				block: [ :fromPoint :toPoint | 
 					| rectangle |
-					rectangle := (fromPoint min: toPoint) corner: (fromPoint max: toPoint) + (30 @ 30).
+					rectangle := Rectangle
+						origin: (fromPoint min: toPoint)
+						extent: 2 * ((fromPoint max: toPoint) - (fromPoint min: toPoint)) + (12 @ 12).
 					Array
 						with: fromPoint
 						with: rectangle topRight

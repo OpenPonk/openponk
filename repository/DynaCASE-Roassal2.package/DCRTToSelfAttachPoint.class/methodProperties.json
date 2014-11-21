@@ -2,5 +2,8 @@
 	"class" : {
 		 },
 	"instance" : {
-		"endingPointOf:" : "bliznjan 11/15/2014 16:18",
-		"startingPointOf:" : "bliznjan 11/15/2014 16:18" } }
+		"distanceFromCorner" : "bliznjan 11/21/2014 18:01",
+		"distanceFromCorner:" : "bliznjan 11/21/2014 18:01",
+		"endingPointOf:" : "bliznjan 11/21/2014 18:02",
+		"initialize" : "bliznjan 11/21/2014 18:02",
+		"startingPointOf:" : "bliznjan 11/21/2014 18:02" } }

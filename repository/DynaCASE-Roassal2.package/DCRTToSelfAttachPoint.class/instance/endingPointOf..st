@@ -1,3 +1,3 @@
 public - hooks
 endingPointOf: aRTEdge
-	^ aRTEdge from encompassingRectangle bottomCenter
+	^ aRTEdge from encompassingRectangle bottomRight - (distance @ 0)

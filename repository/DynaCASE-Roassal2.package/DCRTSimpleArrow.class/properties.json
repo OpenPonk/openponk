@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2-Shapes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCRTSimpleArrow",
+	"pools" : [
+		 ],
+	"super" : "DCRTLineDecoration",
+	"type" : "normal" }

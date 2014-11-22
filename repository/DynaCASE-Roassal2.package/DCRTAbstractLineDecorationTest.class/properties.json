@@ -4,15 +4,11 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "bliznjan 11/22/2014 15:32",
+	"commentStamp" : "<historical>",
 	"instvars" : [
-		"box1",
-		"box2",
-		"edge",
-		"shape1",
-		"shape2",
-		"shape3" ],
-	"name" : "DCRTEdgeConstraintTest",
+		"from",
+		"to" ],
+	"name" : "DCRTAbstractLineDecorationTest",
 	"pools" : [
 		 ],
 	"super" : "TestCase",

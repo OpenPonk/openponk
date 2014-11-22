@@ -1,0 +1,19 @@
+{
+	"category" : "DynaCASE-Roassal2-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "bliznjan 11/22/2014 15:32",
+	"instvars" : [
+		"box1",
+		"box2",
+		"edge",
+		"shape1",
+		"shape2",
+		"shape3" ],
+	"name" : "DCRTConstraintTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

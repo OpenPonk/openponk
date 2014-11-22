@@ -10,5 +10,5 @@
 	"name" : "DCRTFilledCircle",
 	"pools" : [
 		 ],
-	"super" : "DCRTEmptyCircle",
+	"super" : "DCRTAbstractCircle",
 	"type" : "normal" }

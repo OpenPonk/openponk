@@ -1,4 +1,4 @@
-as yet unclassified
+hooks
 updateFor: edge trachelShape: trachelShape
 	tail
 		ifFalse: [ self updateAsHeadFor: edge trachelShape: trachelShape ]

@@ -1,3 +1,3 @@
 heads
 arrowTail
-	self tail: DCRTSimpleArrow new asTail
+	self tail: DCRTSimpleArrow asTail

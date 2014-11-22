@@ -1,3 +1,3 @@
 heads
 filledDiamondHead
-	self head: DCRTFilledDiamond new
+	self head: DCRTFilledDiamond asHead

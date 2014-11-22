@@ -1,4 +1,4 @@
-as yet unclassified
+public
 offsetDistanceFor: anEdge
 	"Return the offset in case of multiple edges with the same starting and ending points"
 

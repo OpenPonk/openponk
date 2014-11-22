@@ -1,3 +1,3 @@
 heads
 diamondHead
-	self head: DCRTEmptyDiamond new
+	self head: DCRTEmptyDiamond asHead

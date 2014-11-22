@@ -10,5 +10,5 @@
 	"name" : "DCRTFilledArrow",
 	"pools" : [
 		 ],
-	"super" : "DCRTEmptyArrow",
+	"super" : "DCRTAbstractArrow",
 	"type" : "normal" }

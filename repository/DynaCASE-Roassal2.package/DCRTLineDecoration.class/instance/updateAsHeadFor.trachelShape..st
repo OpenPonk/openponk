@@ -1,9 +1,9 @@
-as yet unclassified
+private
 updateAsHeadFor: edge trachelShape: trachelShape
 	| f |
 	f := attachPoint startingPointOf: edge.
-	line ~= nil
-		ifTrue: [ 
+	line
+		ifNotNil: [ 
 			| tShape |
 			tShape := edge trachelShape shape1.
 			tShape class = TRBezierShape

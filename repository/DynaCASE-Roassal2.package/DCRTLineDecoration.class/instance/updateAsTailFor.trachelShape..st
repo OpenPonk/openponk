@@ -1,16 +1,16 @@
-as yet unclassified
+private
 updateAsTailFor: edge trachelShape: trachelShape
-	| t |
-	t := attachPoint endingPointOf: edge.
-	line ~= nil
-		ifTrue: [ 
+	| f |
+	f := attachPoint endingPointOf: edge.
+	line
+		ifNotNil: [ 
 			| tShape |
 			tShape := edge trachelShape shape1.
 			tShape class = TRBezierShape
-				ifTrue: [ t := tShape points second ] ].
+				ifTrue: [ f := tShape points second ] ].
 	trachelShape
-		from: (attachPoint startingPointOf: edge);
-		to: t;
+		from: f;
+		to: (attachPoint startingPointOf: edge);
 		color: (self colorFor: edge);
 		width: (self widthFor: edge);
 		resetPath

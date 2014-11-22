@@ -1,4 +1,4 @@
-as yet unclassified
+public
 trachelShapeFor: anEdge from: aPoint
 	^ self
 		trachelShapeFor: anEdge

@@ -10,5 +10,5 @@
 	"name" : "DCRTFilledDiamond",
 	"pools" : [
 		 ],
-	"super" : "DCRTEmptyDiamond",
+	"super" : "DCRTAbstractDiamond",
 	"type" : "normal" }

@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testStickNearOriginOfEdge
 	"mousedrag events are not tested (yet)"
 

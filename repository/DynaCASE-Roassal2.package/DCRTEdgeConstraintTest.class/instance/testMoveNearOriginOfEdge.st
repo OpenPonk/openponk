@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testMoveNearOriginOfEdge
 	DCRTEdgeEndConstraint
 		move: shape1

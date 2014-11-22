@@ -1,9 +1,9 @@
-as yet unclassified
+private
 trachelShapeAsHeadFor: anEdge
 	| f shape |
 	f := attachPoint startingPointOf: anEdge.
-	line ~= nil
-		ifTrue: [ 
+	line
+		ifNotNil: [ 
 			| tShape |
 			tShape := line trachelShapeFor: anEdge.
 			tShape class = TRBezierShape

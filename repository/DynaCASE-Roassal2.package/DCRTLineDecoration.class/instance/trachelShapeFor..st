@@ -1,4 +1,4 @@
-as yet unclassified
+public
 trachelShapeFor: anEdge
 	^ tail
 		ifFalse: [ self trachelShapeAsHeadFor: anEdge ]

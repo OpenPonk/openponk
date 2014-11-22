@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 heads
 	| heads |
 	heads := (DCRTMultiLine methods collect: [ :m | m selector ]) select: [ :m | m endsWith: 'Head' ].

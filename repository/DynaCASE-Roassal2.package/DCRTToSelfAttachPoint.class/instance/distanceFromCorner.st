@@ -1,3 +1,3 @@
-public - hooks
+accessing
 distanceFromCorner
 	^ distance

@@ -1,4 +1,4 @@
-as yet unclassified
+private
 trachelShapeFor: anEdge from: fromPoint to: toPoint
 	| shape |
 	shape := self trachelShapeClass

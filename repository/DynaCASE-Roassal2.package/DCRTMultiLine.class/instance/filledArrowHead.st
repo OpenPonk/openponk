@@ -1,3 +1,3 @@
 heads
 filledArrowHead
-	self head: DCRTFilledArrow new
+	self head: DCRTFilledArrow asHead

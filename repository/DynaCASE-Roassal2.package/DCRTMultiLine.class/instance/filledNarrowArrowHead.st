@@ -1,3 +1,3 @@
 heads
 filledNarrowArrowHead
-	self head: DCRTFilledNarrowArrow new
+	self head: DCRTFilledNarrowArrow asHead

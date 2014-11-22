@@ -1,3 +1,3 @@
 heads
 emptyArrowHead
-	self head: DCRTEmptyArrow new
+	self head: DCRTEmptyArrow asHead

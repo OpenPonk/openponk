@@ -1,3 +1,4 @@
 heads
 arrowHead
-	self head: DCRTSimpleArrow new
+	self head: DCRTSimpleArrow asHead.
+	self emptyNarrowArrowTail.

@@ -16,6 +16,6 @@ updateFor: anEdge trachelShape: trachelShape
 			head
 				updateFor: anEdge
 				trachelShape: (trachelShape shapes at: trachelShape shapes size - (tail ifNil: [ 0 ] ifNotNil: [ 1 ]))
-				from: (path at: path size - 1) ].
+				from: path allButLast last ].
 	tail ifNotNil: [ tail updateFor: anEdge trachelShape: trachelShape shapes last from: path second ].
 	^ trachelShape

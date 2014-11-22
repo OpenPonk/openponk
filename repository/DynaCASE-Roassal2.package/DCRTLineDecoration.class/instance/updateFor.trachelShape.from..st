@@ -1,4 +1,4 @@
-as yet unclassified
+hooks
 updateFor: anEdge trachelShape: trachelShape from: aPoint
 	self
 		updateFor: anEdge

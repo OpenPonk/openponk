@@ -1,16 +1,16 @@
-as yet unclassified
+private
 trachelShapeAsTailFor: anEdge
-	| t shape |
-	t := attachPoint endingPointOf: anEdge.
-	line ~= nil
-		ifTrue: [ 
+	| f shape |
+	f := attachPoint endingPointOf: anEdge.
+	line
+		ifNotNil: [ 
 			| tShape |
 			tShape := line trachelShapeFor: anEdge.
 			tShape class = TRBezierShape
-				ifTrue: [ t := tShape points second ] ].
+				ifTrue: [ f := tShape points second ] ].
 	shape := self trachelShapeClass
-		from: (attachPoint startingPointOf: anEdge)
-		to: t
+		from: f
+		to: (attachPoint startingPointOf: anEdge)
 		width: (self widthFor: anEdge)
 		size: (self mySize rtValue: anEdge)
 		color: (self colorFor: anEdge)

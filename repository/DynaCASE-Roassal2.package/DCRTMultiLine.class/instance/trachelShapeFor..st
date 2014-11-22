@@ -14,6 +14,6 @@ trachelShapeFor: anEdge
 					width: width;
 					from: (path at: i - 1) to: (path at: i);
 					color: (self colorFor: anEdge)) ].
-	head ifNotNil: [ multiShape addShape: (head trachelShapeFor: anEdge from: (path at: path size - 1)) ].
+	head ifNotNil: [ multiShape addShape: (head trachelShapeFor: anEdge from: path allButLast last) ].
 	tail ifNotNil: [ multiShape addShape: (tail trachelShapeFor: anEdge from: path second) ].
 	^ multiShape

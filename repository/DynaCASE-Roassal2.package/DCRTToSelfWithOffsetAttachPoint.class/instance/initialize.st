@@ -1,4 +1,4 @@
-as yet unclassified
+public - hooks
 initialize
 	super initialize.
 	offset := 10.

@@ -1,4 +1,4 @@
-as yet unclassified
+adding
 line: aName offset: aNumber
 	| e1 e2 l1 boxShape |
 	boxShape := RTBox new.

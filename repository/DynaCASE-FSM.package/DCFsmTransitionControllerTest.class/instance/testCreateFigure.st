@@ -17,5 +17,5 @@ testCreateFigure
 	self assert: view elements size = 3.
 	self assert: figure shape class = DCRTMultiLine.
 	self assert: figure shape color = Color black.
-	self assert: figure shape head class = RTSimpleArrowHead.
+	self assert: figure shape head shape = DCRTSimpleArrow.
 	self assert: figure shape dashes = nil

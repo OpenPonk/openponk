@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testKeepingExtent
 	originShape extent: 10 @ 10.
 	conformingShape extent: 20 @ 20.

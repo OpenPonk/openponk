@@ -10,5 +10,5 @@
 	"name" : "DCRTAbstractNarrowArrow",
 	"pools" : [
 		 ],
-	"super" : "DCRTLineDecoration",
+	"super" : "DCRTLineDecorationShape",
 	"type" : "normal" }

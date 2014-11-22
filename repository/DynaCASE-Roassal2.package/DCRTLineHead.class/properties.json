@@ -7,8 +7,8 @@
 	"commentStamp" : "",
 	"instvars" : [
 		 ],
-	"name" : "DCRTAbstractCircle",
+	"name" : "DCRTLineHead",
 	"pools" : [
 		 ],
-	"super" : "DCRTLineDecorationShape",
+	"super" : "DCRTAbstractLineDecoration",
 	"type" : "normal" }

@@ -1,3 +1,0 @@
-converting
-asTail
-	tail := true

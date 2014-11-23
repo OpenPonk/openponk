@@ -1,4 +1,4 @@
-as yet unclassified
+private
 added: aRTElement
 	aRTElement
 		addCallback: transCallback;

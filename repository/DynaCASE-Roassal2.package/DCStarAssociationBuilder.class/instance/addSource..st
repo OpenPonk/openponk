@@ -1,4 +1,4 @@
-as yet unclassified
+adding
 addSource: aRTElement
 	(self elements includes: aRTElement)
 		ifFalse: [ 

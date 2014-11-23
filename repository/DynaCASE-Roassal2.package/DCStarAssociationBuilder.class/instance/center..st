@@ -1,4 +1,4 @@
-as yet unclassified
+setting
 center: aPoint
 	selfCentering := false.
 	^ centerDragBox translateTo: aPoint

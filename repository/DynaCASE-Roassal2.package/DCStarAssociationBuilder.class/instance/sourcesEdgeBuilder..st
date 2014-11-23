@@ -1,3 +1,3 @@
-as yet unclassified
+setting
 sourcesEdgeBuilder: aBlock
 	sourcesBuilder := aBlock

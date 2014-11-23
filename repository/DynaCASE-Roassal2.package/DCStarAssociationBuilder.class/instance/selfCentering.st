@@ -1,4 +1,4 @@
-as yet unclassified
+setting
 selfCentering
 	selfCentering := true.
 	self update

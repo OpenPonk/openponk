@@ -1,4 +1,4 @@
-as yet unclassified
+initialization
 initialize
 	| block |
 	targets := Set new.
@@ -12,8 +12,9 @@ initialize
 		color: Color transparent;
 		element.
 	TRConstraint stick: center onTheCenterOf: centerDragBox.
-	centerDragBox @ RTDraggable.
-	centerDragBox when: TRMouseDragEnd do: [ selfCentering := false ].
+	centerDragBox
+		@ RTDraggable;
+		when: TRMouseDragEnd do: [ selfCentering := false ].
 	block := [ :shape :step | self update ].
 	transCallback := TRTranslationCallback block: block.
 	extentCallback := TRExtentCallback block: block.

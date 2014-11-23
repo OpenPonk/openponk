@@ -1,4 +1,4 @@
-as yet unclassified
+setting
 defaultCenteringBlock
 	centeringBlock := [ :srcs :tgts | 
 	| sourcesAvg targetsAvg |

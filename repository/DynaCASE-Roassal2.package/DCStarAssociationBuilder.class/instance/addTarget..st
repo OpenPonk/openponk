@@ -1,4 +1,4 @@
-as yet unclassified
+adding
 addTarget: aRTElement
 	(self elements includes: aRTElement)
 		ifFalse: [ 

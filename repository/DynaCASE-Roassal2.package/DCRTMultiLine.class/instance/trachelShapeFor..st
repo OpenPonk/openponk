@@ -1,10 +1,7 @@
 public
 trachelShapeFor: anEdge
-	| multiShape fromPoint toPoint path |
-	self checkLineToSelfFor: anEdge.
-	fromPoint := attachPoint startingPointOf: anEdge.
-	toPoint := attachPoint endingPointOf: anEdge.
-	path := blockProducingPath value: fromPoint value: toPoint.
+	| multiShape path |
+	path := self pathFor: anEdge.
 	multiShape := TRMultiCompositeShape new.
 	2 to: path size do: [ :i | 
 		multiShape

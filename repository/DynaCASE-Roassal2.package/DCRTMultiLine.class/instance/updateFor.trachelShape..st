@@ -1,10 +1,7 @@
 public
 updateFor: anEdge trachelShape: trachelShape
-	| fromPoint toPoint path col shape |
-	self checkLineToSelfFor: anEdge.
-	fromPoint := attachPoint startingPointOf: anEdge.
-	toPoint := attachPoint endingPointOf: anEdge.
-	path := blockProducingPath value: fromPoint value: toPoint.
+	| path col shape |
+	path := self pathFor: anEdge.
 	col := self colorFor: anEdge.
 	2 to: path size do: [ :i | 
 		shape := trachelShape shapes at: i - 1.

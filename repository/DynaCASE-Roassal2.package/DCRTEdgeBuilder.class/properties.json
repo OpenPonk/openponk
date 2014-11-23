@@ -7,7 +7,7 @@
 	"commentStamp" : "",
 	"instvars" : [
 		 ],
-	"name" : "DCRTRelationshipBuilder",
+	"name" : "DCRTEdgeBuilder",
 	"pools" : [
 		 ],
 	"super" : "RTBuilder",

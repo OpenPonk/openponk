@@ -1,4 +1,4 @@
 initialization
 initialize
 	view := RTView new.
-	builder := DCRTRelationshipBuilder new.
+	builder := DCRTEdgeBuilder new.

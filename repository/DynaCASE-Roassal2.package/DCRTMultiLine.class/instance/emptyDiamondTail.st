@@ -1,3 +1,3 @@
 heads
-diamondTail
+emptyDiamondTail
 	self tail: DCRTEmptyDiamond asTail

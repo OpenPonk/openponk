@@ -7,7 +7,7 @@ addModelElement: aModelElement
 	controller := self createController: aModelElement.
 	controller parent: self.
 	self controllers add: controller.
-	(controller isKindOf: DCOmlGeneralizationController)
+	(controller isKindOf: DCOmlParentClassController)
 		ifTrue: [ 
 			| fromModel toModel fromCtrl toCtrl |
 			fromModel := aModelElement child.
@@ -17,6 +17,7 @@ addModelElement: aModelElement
 			controller
 				source: fromCtrl;
 				target: toCtrl ].
+
 	(controller isKindOf: DCOmlBasicAssociationController)
 		ifTrue: [ 
 			| fromModel toModel fromCtrl toCtrl |

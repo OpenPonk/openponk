@@ -2,9 +2,9 @@
 	"class" : {
 		 },
 	"instance" : {
-		"addModelElement:" : "PeterUhnak 11/5/2014 23:09",
+		"addModelElement:" : "PeterUhnak 11/23/2014 02:22",
 		"canBeTargetFor:" : "PeterUhnak 11/4/2014 18:46",
-		"initialize" : "PeterUhnak 11/5/2014 22:59",
+		"controllerNameFor:" : "PeterUhnak 11/23/2014 02:21",
 		"initializePalette:" : "PeterUhnak 11/5/2014 22:33",
 		"paletteNameFor:" : "PeterUhnak 11/5/2014 22:26",
 		"rebuild" : "PeterUhnak 11/5/2014 23:09",

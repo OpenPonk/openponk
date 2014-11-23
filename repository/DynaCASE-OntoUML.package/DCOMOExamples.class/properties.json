@@ -1,5 +1,5 @@
 {
-	"category" : "DynaCASE-OntoUML-Controllers",
+	"category" : "DynaCASE-OntoUML-OMO",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
@@ -7,8 +7,8 @@
 	"commentStamp" : "",
 	"instvars" : [
 		 ],
-	"name" : "DCOmlGeneralizationController",
+	"name" : "DCOMOExamples",
 	"pools" : [
 		 ],
-	"super" : "DCOmlRelationshipController",
+	"super" : "Object",
 	"type" : "normal" }

@@ -3,7 +3,7 @@ createEdgeFrom: fromElement to: toElement
 	| builder label edge |
 	^ DCRTCallbackBuilder
 		block: [ :view | 
-			builder := DCRTRelationshipBuilder new.
+			builder := DCRTEdgeBuilder new.
 			edge := builder createEdgeFrom: fromElement to: toElement.
 			view add: edge.
 			label := builder addLabelTo: edge.

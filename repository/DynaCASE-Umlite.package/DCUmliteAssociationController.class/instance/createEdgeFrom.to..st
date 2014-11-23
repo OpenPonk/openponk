@@ -3,7 +3,7 @@ createEdgeFrom: fromFigure to: toFigure
 	| builder edge label sourceMultiplicityLabel targetMultiplicityLabel |
 	^ DCRTCallbackBuilder
 		block: [ :view | 
-			builder := DCRTRelationshipBuilder new.
+			builder := DCRTEdgeBuilder new.
 			edge := builder createEdgeFrom: fromFigure to: toFigure.
 			edge shape head: nil.
 			view add: edge.

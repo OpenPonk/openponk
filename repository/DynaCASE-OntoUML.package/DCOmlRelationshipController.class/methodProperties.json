@@ -2,9 +2,9 @@
 	"class" : {
 		"isAbstract" : "PeterUhnak 11/5/2014 18:19" },
 	"instance" : {
-		"connectionFeedback" : "PeterUhnak 11/5/2014 19:12",
+		"connectionFeedback" : "PeterUhnak 11/23/2014 16:39",
 		"convertName:" : "PeterUhnak 11/5/2014 19:18",
-		"createEdgeFrom:to:" : "PeterUhnak 11/5/2014 22:30",
+		"createEdgeFrom:to:" : "PeterUhnak 11/23/2014 16:46",
 		"createModel" : "PeterUhnak 11/4/2014 00:12",
 		"modelClass" : "PeterUhnak 11/4/2014 18:31",
 		"refreshFigure" : "PeterUhnak 11/5/2014 19:18" } }

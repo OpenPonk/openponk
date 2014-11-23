@@ -17,7 +17,7 @@ addModelElement: aModelElement
 			controller
 				source: fromCtrl;
 				target: toCtrl ].
-	(controller isKindOf: DCOmlBasicAssociationController)
+	(controller isKindOf: DCOmlGeneralizationController) not & (controller isKindOf: DCOmlRelationshipController)
 		ifTrue: [ 
 			| fromModel toModel fromCtrl toCtrl |
 			fromModel := aModelElement start.

@@ -9,10 +9,22 @@ exampleSortals03
 	living := Phase name: 'LivingPerson' metaModel: model.
 	deceased := Phase name: 'DeceasedPerson' metaModel: model.
 	model
-		add: (Generalization new parent: person; child: man);
-		add: (Generalization new parent: person; child: woman);
-		add: (Generalization new parent: person; child: living);
-		add: (Generalization new parent: person; child: deceased).
+		add:
+				(Generalization new
+						parent: person;
+						child: man);
+		add:
+				(Generalization new
+						parent: person;
+						child: woman);
+		add:
+				(Generalization new
+						parent: person;
+						child: living);
+		add:
+				(Generalization new
+						parent: person;
+						child: deceased).
 	aLayout := Dictionary new.
 	aLayout
 		at: person put: 32.5 @ 21.0;
@@ -23,4 +35,4 @@ exampleSortals03
 		at: deceased put: 275 @ 40.
 	project addDiagram: model.
 	project layouts: (Dictionary new at: model put: aLayout).
-	^ project
+	DCWorkbench openProject: project

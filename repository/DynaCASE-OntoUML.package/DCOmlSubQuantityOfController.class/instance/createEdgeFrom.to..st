@@ -1,13 +1,12 @@
 hooks
 createEdgeFrom: fromFigure to: toFigure
-	| builder edge label sourceMultiplicityLabel targetMultiplicityLabel |
+	| builder edge label sourceMultiplicityLabel targetMultiplicityLabel qualifier |
 	^ DCRTCallbackBuilder
 		block: [ :view | 
 			builder := DCRTEdgeBuilder new.
 			edge := builder createLineFrom: fromFigure to: toFigure.
 			edge shape filledDiamondHead.
 			edge resetShape.
-			edge shape color: Color black.
 			view add: edge.
 
 			label := builder addLabelTo: edge.
@@ -18,4 +17,10 @@ createEdgeFrom: fromFigure to: toFigure
 
 			targetMultiplicityLabel := builder addLabelTo: edge.
 			builder constraint: targetMultiplicityLabel toTargetDistance: 10 offset: 12.
+			
+			qualifier := builder addLabelTo: edge.
+			qualifier shape color: Color black.
+			qualifier shape text: 'Q'.
+			qualifier update.
+			builder constraint: qualifier toTargetDistance: 15 offset: -10.
 			edge ]

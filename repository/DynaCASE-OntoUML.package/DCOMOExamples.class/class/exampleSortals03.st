@@ -9,10 +9,10 @@ exampleSortals03
 	living := Phase name: 'LivingPerson' metaModel: model.
 	deceased := Phase name: 'DeceasedPerson' metaModel: model.
 	model
-		add: (ParentClass parentClass: person child: man);
-		add: (ParentClass parentClass: person child: woman);
-		add: (ParentClass parentClass: person child: living);
-		add: (ParentClass parentClass: person child: deceased).
+		add: (Generalization new parent: person; child: man);
+		add: (Generalization new parent: person; child: woman);
+		add: (Generalization new parent: person; child: living);
+		add: (Generalization new parent: person; child: deceased).
 	aLayout := Dictionary new.
 	aLayout
 		at: person put: 32.5 @ 21.0;

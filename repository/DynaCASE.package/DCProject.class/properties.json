@@ -10,7 +10,8 @@
 		"projectName",
 		"dirty",
 		"fileName",
-		"editor" ],
+		"editor",
+		"layouts" ],
 	"name" : "DCProject",
 	"pools" : [
 		 ],

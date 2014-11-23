@@ -1,0 +1,15 @@
+{
+	"category" : "GMF-MetaModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"parent",
+		"child" ],
+	"name" : "Generalization",
+	"pools" : [
+		 ],
+	"super" : "Relationship",
+	"type" : "normal" }

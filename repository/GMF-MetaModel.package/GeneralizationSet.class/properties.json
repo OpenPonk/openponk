@@ -1,0 +1,16 @@
+{
+	"category" : "GMF-MetaModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"disjoint",
+		"complete",
+		"generalizations" ],
+	"name" : "GeneralizationSet",
+	"pools" : [
+		 ],
+	"super" : "DCModelObject",
+	"type" : "normal" }

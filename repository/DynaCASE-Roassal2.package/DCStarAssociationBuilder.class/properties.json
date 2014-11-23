@@ -1,0 +1,25 @@
+{
+	"category" : "DynaCASE-Roassal2-Shapes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "bliznjan 11/23/2014 18:49",
+	"instvars" : [
+		"lines",
+		"targets",
+		"sources",
+		"center",
+		"selfCentering",
+		"callbacks",
+		"transCallback",
+		"extentCallback",
+		"targetsBuilder",
+		"sourcesBuilder",
+		"centerDragBox",
+		"centeringBlock" ],
+	"name" : "DCStarAssociationBuilder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

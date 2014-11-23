@@ -1,0 +1,21 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"addSource:" : "bliznjan 11/23/2014 18:21",
+		"addSources:" : "bliznjan 11/23/2014 17:12",
+		"addTarget:" : "bliznjan 11/23/2014 18:20",
+		"addTargets:" : "bliznjan 11/23/2014 17:12",
+		"added:" : "bliznjan 11/23/2014 18:34",
+		"center" : "bliznjan 11/23/2014 17:02",
+		"center:" : "bliznjan 11/23/2014 18:37",
+		"centeringBlock:" : "bliznjan 11/23/2014 18:43",
+		"defaultCenteringBlock" : "bliznjan 11/23/2014 18:42",
+		"elements" : "bliznjan 11/23/2014 16:56",
+		"initialize" : "bliznjan 11/23/2014 18:43",
+		"selfCentering" : "bliznjan 11/23/2014 17:26",
+		"sources" : "bliznjan 11/23/2014 16:54",
+		"sourcesEdgeBuilder:" : "bliznjan 11/23/2014 17:37",
+		"targets" : "bliznjan 11/23/2014 16:53",
+		"targetsEdgeBuilder:" : "bliznjan 11/23/2014 17:37",
+		"update" : "bliznjan 11/23/2014 18:46" } }

@@ -1,6 +1,6 @@
 instance creation
 createController: aModel
 	| controller |
-	controller := (modelToControllerMapping at: aModel class) new.
+	controller := (self controllerNameFor: aModel) new.
 	controller model: aModel.
 	^ controller

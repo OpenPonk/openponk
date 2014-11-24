@@ -10,5 +10,5 @@
 	"name" : "DCOmlComponentOfController",
 	"pools" : [
 		 ],
-	"super" : "DCOmlRelationshipController",
+	"super" : "DCOmlMeronymicController",
 	"type" : "normal" }

@@ -5,7 +5,9 @@ createEdgeFrom: fromFigure to: toFigure
 		block: [ :view | 
 			builder := DCRTEdgeBuilder new.
 			edge := builder createLineFrom: fromFigure to: toFigure.
-			edge shape filledDiamondHead.
+			self model isShareable
+				ifTrue: [ edge shape emptyDiamondHead ]
+				ifFalse: [ edge shape filledDiamondHead ].
 			edge resetShape.
 			view add: edge.
 
@@ -17,7 +19,7 @@ createEdgeFrom: fromFigure to: toFigure
 
 			targetMultiplicityLabel := builder addLabelTo: edge.
 			builder constraint: targetMultiplicityLabel toTargetDistance: 10 offset: 12.
-			
+
 			qualifier := builder addLabelTo: edge.
 			qualifier shape color: Color black.
 			qualifier shape text: 'C'.

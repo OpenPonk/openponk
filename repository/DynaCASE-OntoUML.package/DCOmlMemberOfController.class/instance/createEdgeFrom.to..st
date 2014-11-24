@@ -5,7 +5,9 @@ createEdgeFrom: fromFigure to: toFigure
 		block: [ :view | 
 			builder := DCRTEdgeBuilder new.
 			edge := builder createLineFrom: fromFigure to: toFigure.
-			edge shape emptyDiamondHead.
+			self model isShareable
+				ifTrue: [ edge shape emptyDiamondHead ]
+				ifFalse: [ edge shape filledDiamondHead ].
 			edge resetShape.
 			view add: edge.
 

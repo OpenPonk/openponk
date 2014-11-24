@@ -6,6 +6,6 @@ initialize
 	immutablePart 		:= false.
 	immutableWhole 	:= false.
 	inseparable 		:= false.
-	sharable			:= false.
+	shareable			:= false.
 
 	^self

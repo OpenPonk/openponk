@@ -1,3 +1,3 @@
 accessing
-essential: anObject
-	essential := anObject
+essential: aBoolean
+	essential := aBoolean

@@ -1,3 +1,3 @@
 accessing
-immutablePart: anObject
-	immutablePart := anObject
+immutablePart: aBoolean
+	immutablePart := aBoolean

@@ -1,3 +1,3 @@
 accessing
-inseparable: anObject
-	inseparable := anObject
+inseparable: aBoolean
+	inseparable := aBoolean

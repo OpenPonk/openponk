@@ -1,3 +1,3 @@
 accessing
-immutableWhole: anObject
-	immutableWhole := anObject
+immutableWhole: aBoolean
+	immutableWhole := aBoolean

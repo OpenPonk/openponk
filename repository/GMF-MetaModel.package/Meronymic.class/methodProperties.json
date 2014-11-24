@@ -2,14 +2,14 @@
 	"class" : {
 		 },
 	"instance" : {
-		"essential:" : "volosmat 4/3/2014 09:50",
-		"immutablePart:" : "volosmat 4/3/2014 09:50",
-		"immutableWhole:" : "volosmat 4/3/2014 09:51",
-		"initialize" : "volosmat 4/3/2014 20:35",
-		"inseparable:" : "volosmat 4/3/2014 09:51",
+		"essential:" : "PeterUhnak 11/24/2014 19:51",
+		"immutablePart:" : "PeterUhnak 11/24/2014 19:51",
+		"immutableWhole:" : "PeterUhnak 11/24/2014 19:51",
+		"initialize" : "PeterUhnak 11/24/2014 19:50",
+		"inseparable:" : "PeterUhnak 11/24/2014 19:51",
 		"isEssential" : "volosmat 4/3/2014 09:50",
 		"isImmutablePart" : "volosmat 4/3/2014 09:50",
 		"isImmutableWhole" : "volosmat 4/3/2014 09:51",
 		"isInseparable" : "volosmat 4/3/2014 09:51",
-		"isSharable" : "volosmat 4/3/2014 09:52",
-		"sharable:" : "volosmat 4/3/2014 09:52" } }
+		"isShareable" : "PeterUhnak 11/24/2014 19:50",
+		"shareable:" : "PeterUhnak 11/24/2014 19:50" } }

@@ -12,8 +12,8 @@ testElement
 	
 	self deny: part1 isElementValid & part2 isElementValid.
 	
-	( part1 searchAssociation: 'TestMeronymic1' ) sharable: true.
-	( part1 searchAssociation: 'TestMeronymic3' ) sharable: true.
+	( part1 searchAssociation: 'TestMeronymic1' ) shareable: true.
+	( part1 searchAssociation: 'TestMeronymic3' ) shareable: true.
 	
 	self assert: part1 isElementValid
 	

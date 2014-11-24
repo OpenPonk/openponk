@@ -2,7 +2,7 @@
 	"class" : {
 		 },
 	"instance" : {
-		"addLabelTo:" : "PeterUhnak 11/5/2014 11:56",
+		"addLabelNamed:to:" : "PeterUhnak 11/24/2014 22:45",
 		"constraint:balance:offset:" : "bliznjan 11/11/2014 16:05",
 		"constraint:toSourceDistance:offset:" : "bliznjan 11/13/2014 16:58",
 		"constraint:toTargetDistance:offset:" : "bliznjan 11/13/2014 16:58",

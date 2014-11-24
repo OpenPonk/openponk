@@ -1,3 +1,3 @@
 *DynaCASE-Roassal2
 labels
-	^ self attributeAt: #DCLabels ifAbsentPut: [ OrderedCollection new ]
+	^ self attributeAt: #DCLabels ifAbsentPut: [ Dictionary new ]

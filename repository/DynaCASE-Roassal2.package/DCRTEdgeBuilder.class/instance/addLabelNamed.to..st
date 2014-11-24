@@ -1,5 +1,5 @@
-public
-addLabelTo: anEdge
+as yet unclassified
+addLabelNamed: aSymbol to: anEdge
 	| label |
 	label := (RTLabel new
 		height: 10;
@@ -11,8 +11,8 @@ addLabelTo: anEdge
 		addCallback:
 			(TRRemoveCallback new
 				block: [ :shape | 
-					anEdge labels remove: label.
+					anEdge labels removeKey: aSymbol.
 					label remove ]).
-	anEdge labels add: label.
+	anEdge labels at: aSymbol put: label.
 	anEdge view add: label.
 	^ label

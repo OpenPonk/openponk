@@ -1,9 +1,7 @@
 hooks
 refreshFigure
-	figure view
-		ifNotNil: [ 
-			figure remove.
-			figure := nil ].
-	self figure update.
-	self figure view signalUpdate.
+	figure view ifNil: [ ^ self ].
+	figure remove.
+	figure := nil.
+	self parent figureAdded: self figure.
 	super refreshFigure

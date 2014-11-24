@@ -1,12 +1,12 @@
 hooks
 refreshFigure
-	figure labels first shape text: (self convertName: self model name).
-	figure labels first update.
+	(figure labels at: #name) shape text: (self convertName: self model name).
+	(figure labels at: #name) update.
 
-	figure labels second shape text: self model startMultiplicity.
-	figure labels second update.
+	(figure labels at: #sourceMultiplicity) shape text: self model startMultiplicity.
+	(figure labels at: #sourceMultiplicity) update.
 
-	figure labels third shape text: self model endMultiplicity.
-	figure labels third update.
+	(figure labels at: #targetMultiplicity) shape text: self model endMultiplicity.
+	(figure labels at: #targetMultiplicity) update.
 
 	figure signalUpdate

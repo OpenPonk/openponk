@@ -1,0 +1,3 @@
+accessing
+edges
+	^ center connectedEdges

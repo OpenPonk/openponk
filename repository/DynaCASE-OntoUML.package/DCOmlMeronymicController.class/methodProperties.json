@@ -3,4 +3,7 @@
 		"isAbstract" : "PeterUhnak 11/24/2014 19:47" },
 	"instance" : {
 		"buildEditorForm:" : "PeterUhnak 11/24/2014 22:19",
-		"refreshFigure" : "PeterUhnak 11/24/2014 22:37" } }
+		"createEdgeFrom:to:" : "PeterUhnak 11/24/2014 23:04",
+		"meronymicStringFor:" : "PeterUhnak 11/24/2014 23:06",
+		"qualifier" : "PeterUhnak 11/24/2014 22:53",
+		"refreshFigure" : "PeterUhnak 11/24/2014 23:05" } }

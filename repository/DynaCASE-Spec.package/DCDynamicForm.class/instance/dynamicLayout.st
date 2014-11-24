@@ -7,6 +7,6 @@ dynamicLayout
 					keys
 						do: [ :key | 
 							height := self heightFor: (self perform: key).
-							c newRow: key height: height ].
+							height ifNil: [ c newRow: key ] ifNotNil: [ c newRow: key height: height ] ].
 					c newRow: [ :r |  ]	"last row is emtpy to take up all the remaining available space" ];
 		yourself

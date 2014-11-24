@@ -1,3 +1,3 @@
 accessing
 heightFor: aModel
-	^heights at: aModel class ifAbsent: nil
+	^ heights at: aModel class ifAbsent: nil

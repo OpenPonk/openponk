@@ -1,3 +1,4 @@
 hooks
 convertName: aString
-	^ (aString copyReplaceAll: '>' with: '▸') copyReplaceAll: '<' with: '◂'
+	^ aString
+	"	^ (aString copyReplaceAll: '>' with: '▸') copyReplaceAll: '<' with: '◂'"

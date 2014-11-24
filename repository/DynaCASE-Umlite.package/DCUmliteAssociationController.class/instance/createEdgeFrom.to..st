@@ -5,7 +5,6 @@ createEdgeFrom: fromFigure to: toFigure
 		block: [ :view | 
 			builder := DCRTEdgeBuilder new.
 			edge := builder createEdgeFrom: fromFigure to: toFigure.
-			edge shape head: nil.
 			view add: edge.
 			label := builder addLabelTo: edge.
 			builder constraint: label balance: 0.5 offset: -12.

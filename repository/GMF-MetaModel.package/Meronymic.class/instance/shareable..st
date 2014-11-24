@@ -1,3 +1,4 @@
 accessing
 shareable: aBoolean
-	shareable := aBoolean
+	shareable := aBoolean.
+	self changed

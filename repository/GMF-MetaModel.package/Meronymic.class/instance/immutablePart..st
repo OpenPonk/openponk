@@ -1,3 +1,4 @@
 accessing
 immutablePart: aBoolean
-	immutablePart := aBoolean
+	immutablePart := aBoolean.
+	self changed

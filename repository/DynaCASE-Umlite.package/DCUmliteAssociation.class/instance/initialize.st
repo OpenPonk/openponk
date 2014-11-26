@@ -1,9 +1,5 @@
-as yet unclassified
+initialization
 initialize
 	super initialize.
-	sourceName := NewValueHolder new
-		value: '';
-		yourself.
-	targetName := NewValueHolder new
-		value: '';
-		yourself
+	sourceName := self newLabelValueHolder.
+	targetName := self newLabelValueHolder

@@ -1,0 +1,1 @@
+A DCTRAbstractFocusing is event for figure selection

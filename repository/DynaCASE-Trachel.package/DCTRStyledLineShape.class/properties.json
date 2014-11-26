@@ -4,7 +4,7 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "bliznjan 11/26/2014 00:36",
 	"instvars" : [
 		"dashes" ],
 	"name" : "DCTRStyledLineShape",

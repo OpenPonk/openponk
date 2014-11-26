@@ -10,7 +10,7 @@ testFigureRefresh
 	ctrl target: toCtrl.
 	ctrl model: ctrl createModel.
 	ctrl figure: (ctrl createFigure renderIn: view).
-	label := ctrl figure labels first.
+	label := ctrl figure labels at: #name.
 	self assert: label trachelShape text = ''.
 	ctrl model name: 'new name'.
 	ctrl refreshFigure.

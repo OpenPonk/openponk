@@ -1,5 +1,5 @@
-as yet unclassified
+hooks
 refreshFigure
-	figure labels first shape text: self model name.
-	figure labels first update.
+	(figure labels at: #name) shape text: self model name.
+	(figure labels at: #name) update.
 	figure signalUpdate

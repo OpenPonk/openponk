@@ -1,0 +1,3 @@
+settings
+asJPEG
+	self asJPG

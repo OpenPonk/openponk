@@ -1,7 +1,13 @@
 setting
 defaultCenteringBlock
-	centeringBlock := [ :srcs :tgts | 
-	| sourcesAvg targetsAvg |
-	sourcesAvg := (srcs collect: [ :each | each position ]) average.
-	targetsAvg := (tgts collect: [ :each | each position ]) average.
-	(sourcesAvg + targetsAvg) * 0.5 ]
+	self
+		selfCenteringBlock: [ :srcs :tgts | 
+			| sourcesAvg targetsAvg |
+			targetsAvg := [ (tgts collect: [ :each | each position ]) average ].
+			sourcesAvg := [ (srcs collect: [ :each | each position ]) average ].
+			srcs size = 0
+				ifTrue: [ targetsAvg value ]
+				ifFalse: [ 
+					tgts size = 0
+						ifTrue: [ sourcesAvg value ]
+						ifFalse: [ (sourcesAvg value + targetsAvg value) * 0.5 ] ] ]

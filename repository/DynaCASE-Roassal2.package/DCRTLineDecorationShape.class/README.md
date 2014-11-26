@@ -1,0 +1,1 @@
+A DCRTLineDecorationShape contains information about trachel shape used as DCRTAbstractLineDecoration

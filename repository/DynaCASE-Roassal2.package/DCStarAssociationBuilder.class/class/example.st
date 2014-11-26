@@ -58,4 +58,4 @@ example
 		addSource: e3;
 		addSource: e4;
 		addTarget: e5.
-	v open.
+	v open

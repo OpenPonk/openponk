@@ -1,0 +1,1 @@
+A DCRTAbstractLineDecoration is a Roassal shape used as head or tail of line

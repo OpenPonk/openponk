@@ -19,5 +19,4 @@ initialize
 	self
 		defaultEdgeBuilders;
 		defaultCenteringBlock;
-		selfCentering;
 		whenCenter: TRMouseDragEnd do: [ selfCentering := false ]

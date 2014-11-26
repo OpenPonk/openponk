@@ -10,7 +10,7 @@ exportAs: imageFormat
 		whole;
 		defaultScale;
 		oversizedBy: 20 @ 20;
-		format: imageFormat;
+		perform: ('as' , imageFormat asUppercase) asSymbol;
 		fileName:
 				((UIManager default request: 'Please enter file name' initialAnswer: self workbench title , '.' , imageFormat)
 						ifNil: [ ^ nil ]);

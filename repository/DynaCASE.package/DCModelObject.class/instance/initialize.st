@@ -1,4 +1,3 @@
 initialization
 initialize
-	nameHolder := NewValueHolder value: ''.
-	nameHolder whenChangedDo: [ self changed ]
+	nameHolder := self newLabelValueHolder

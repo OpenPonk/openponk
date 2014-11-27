@@ -10,7 +10,6 @@
 		"fileName",
 		"imageExporter",
 		"format",
-		"bounds",
 		"oversize" ],
 	"name" : "DCTRCanvasExporter",
 	"pools" : [

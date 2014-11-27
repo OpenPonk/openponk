@@ -1,5 +1,3 @@
 converting
 asTail
-	^ DCRTLineTail
-		shape: self shape;
-		yourself
+	^ DCRTLineTail shape: self shape

@@ -1,42 +1,28 @@
 example
 example
-	| v e1 e2 e3 e4 e5 s |
-	v := RTView new.
-	e1 := (RTBox new
-		size: 40;
-		element)
+	| shape e1 e2 e3 e4 e5 s view |
+	shape := RTBox new size: 40.
+	(e1 := shape element)
+		translateTo: -100 @ 100;
+		@ RTDraggable.
+	(e2 := shape element)
 		translateTo: 100 @ 0;
-		yourself.
-	e1 @ RTDraggable.
-	v add: e1.
-	e2 := (RTBox new
-		size: 40;
-		element)
-		translateTo: 0 @ 0;
-		yourself.
-	e2 @ RTDraggable.
-	v add: e2.
-	e3 := (RTBox new
-		size: 40;
-		element)
-		translateTo: -100 @ 0;
-		yourself.
-	e3 @ RTDraggable.
-	v add: e3.
-	e4 := (RTBox new
-		size: 40;
-		element)
-		translateTo: 150 @ -100;
-		yourself.
-	e4 @ RTDraggable.
-	v add: e4.
-	e5 := (RTBox new
-		size: 40;
-		element)
-		translateTo: 100 @ -200;
-		yourself.
-	e5 @ RTDraggable.
-	v add: e5.
+		@ RTDraggable.
+	(e3 := shape element)
+		translateTo: 0 @ 100;
+		@ RTDraggable.
+	(e4 := shape element)
+		translateTo: 100 @ 100;
+		@ RTDraggable.
+	(e5 := shape element)
+		translateTo: -100 @ -100;
+		@ RTDraggable.
+	(view := RTView new)
+		add: e1;
+		add: e2;
+		add: e3;
+		add: e4;
+		add: e5.
 	s := self new.
 	s
 		sourcesEdgeBuilder: [ :from :to | 
@@ -50,12 +36,11 @@ example
 				attachPoint: RTShorterDistanceWithOffsetAttachPoint instance;
 				color: Color black;
 				emptyArrowHead;
-				edgeFrom: from to: to ].
-	"s centeringBlock: [ :srcs :tgts | tgts anyOne position + (0@100) ]."
+				edgeFrom: from to: to ].	"s centeringBlock: [ :srcs :tgts | tgts anyOne position + (0@100) ]."
 	s
 		addSource: e1;
 		addSource: e2;
 		addSource: e3;
 		addSource: e4;
 		addTarget: e5.
-	v open
+	view open

@@ -4,14 +4,12 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "bliznjan 11/23/2014 19:08",
+	"commentStamp" : "bliznjan 11/27/2014 16:07",
 	"instvars" : [
-		"lines",
 		"targets",
 		"sources",
 		"center",
 		"selfCentering",
-		"callbacks",
 		"transCallback",
 		"extentCallback",
 		"targetsBuilder",

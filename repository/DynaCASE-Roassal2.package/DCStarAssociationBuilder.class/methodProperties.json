@@ -1,7 +1,8 @@
 {
 	"class" : {
-		"example" : "bliznjan 11/26/2014 01:52" },
+		"example" : "bliznjan 11/27/2014 16:32" },
 	"instance" : {
+		"addCallback:" : "bliznjan 11/27/2014 17:06",
 		"addSource:" : "bliznjan 11/23/2014 18:21",
 		"addSources:" : "bliznjan 11/23/2014 17:12",
 		"addTarget:" : "bliznjan 11/23/2014 18:20",
@@ -18,6 +19,7 @@
 		"position" : "bliznjan 11/24/2014 00:48",
 		"position:" : "bliznjan 11/24/2014 00:48",
 		"remove" : "bliznjan 11/25/2014 19:25",
+		"removeCallback:" : "bliznjan 11/27/2014 17:06",
 		"removeEdge:" : "bliznjan 11/25/2014 19:12",
 		"removeElement:" : "bliznjan 11/25/2014 19:18",
 		"removeElement:edge:" : "bliznjan 11/25/2014 19:11",
@@ -27,6 +29,7 @@
 		"sourcesEdgeBuilder:" : "bliznjan 11/23/2014 17:37",
 		"targets" : "bliznjan 11/23/2014 16:53",
 		"targetsEdgeBuilder:" : "bliznjan 11/23/2014 17:37",
+		"translateBy:" : "bliznjan 11/27/2014 16:06",
 		"translateTo:" : "bliznjan 11/24/2014 01:03",
 		"update" : "bliznjan 11/26/2014 01:32",
 		"whenCenter:do:" : "bliznjan 11/24/2014 00:59" } }

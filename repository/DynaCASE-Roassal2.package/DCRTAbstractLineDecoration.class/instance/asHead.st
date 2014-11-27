@@ -1,5 +1,3 @@
 converting
 asHead
-	^ DCRTLineHead
-		shape: self shape;
-		yourself
+	^ DCRTLineHead shape: self shape

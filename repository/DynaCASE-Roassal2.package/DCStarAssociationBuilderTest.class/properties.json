@@ -1,0 +1,20 @@
+{
+	"category" : "DynaCASE-Roassal2-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"builder",
+		"e1",
+		"e2",
+		"e3",
+		"e4",
+		"e5",
+		"view" ],
+	"name" : "DCStarAssociationBuilderTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

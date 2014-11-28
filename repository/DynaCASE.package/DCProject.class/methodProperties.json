@@ -2,17 +2,17 @@
 	"class" : {
 		 },
 	"instance" : {
-		"addDiagram:" : "PeterUhnak 11/5/2014 01:39",
+		"addDiagram:" : "PeterUhnak 11/28/2014 14:54",
+		"beClean" : "PeterUhnak 11/28/2014 14:54",
+		"beDirty" : "PeterUhnak 11/28/2014 14:54",
 		"diagrams" : "PeterUhnak 10/21/2014 19:26",
 		"dirty" : "PeterUhnak 10/23/2014 21:28",
 		"dirty:" : "PeterUhnak 11/5/2014 00:38",
 		"fileName" : "PeterUhnak 10/23/2014 23:06",
 		"fileName:" : "PeterUhnak 10/23/2014 23:06",
-		"initialize" : "PeterUhnak 11/5/2014 01:39",
+		"initialize" : "PeterUhnak 11/28/2014 14:54",
 		"layouts:" : "PeterUhnak 11/23/2014 02:46",
 		"projectName" : "PeterUhnak 10/21/2014 19:28",
 		"projectName:" : "PeterUhnak 10/23/2014 22:16",
 		"removeDiagram:" : "PeterUhnak 11/5/2014 07:45",
-		"setClean" : "PeterUhnak 10/30/2014 18:03",
-		"setDirty" : "PeterUhnak 11/5/2014 01:42",
 		"whenChanged:" : "PeterUhnak 11/5/2014 00:36" } }

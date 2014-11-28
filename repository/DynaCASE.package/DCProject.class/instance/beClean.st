@@ -1,3 +1,3 @@
 accessing
-setClean
+beClean
 	self dirty: false

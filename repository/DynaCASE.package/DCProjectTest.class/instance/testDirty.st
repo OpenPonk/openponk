@@ -10,11 +10,11 @@ testDirty
 	self assert: project dirty.
 
 	changed := false.
-	project setClean.
+	project beClean.
 	self assert: changed.
 	self deny: project dirty.
 
 	changed := false.
-	project setDirty.
+	project beDirty.
 	self assert: changed.
 	self assert: project dirty

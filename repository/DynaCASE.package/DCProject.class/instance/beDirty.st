@@ -1,3 +1,3 @@
 accessing
-setDirty
+beDirty
 	self dirty: true

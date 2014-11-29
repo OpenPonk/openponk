@@ -8,7 +8,8 @@
 	"instvars" : [
 		"announcer",
 		"owner",
-		"nameHolder" ],
+		"nameHolder",
+		"dcID" ],
 	"name" : "DCModelObject",
 	"pools" : [
 		 ],

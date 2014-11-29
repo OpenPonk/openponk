@@ -1,0 +1,3 @@
+serializing
+serializeElement: anElement
+	^ anElement

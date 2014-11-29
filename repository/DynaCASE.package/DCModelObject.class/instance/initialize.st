@@ -1,3 +1,4 @@
 initialization
 initialize
-	nameHolder := self newLabelValueHolder
+	nameHolder := self newLabelValueHolder.
+	dcID := UUID new

@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Serialization",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCSerializer",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

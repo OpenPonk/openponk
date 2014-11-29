@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"serializer" ],
+	"name" : "DCSerializerTest",
+	"pools" : [
+		 ],
+	"super" : "DCTestCase",
+	"type" : "normal" }

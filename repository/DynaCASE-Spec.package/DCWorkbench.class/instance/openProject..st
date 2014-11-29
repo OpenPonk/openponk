@@ -10,5 +10,5 @@ openProject: aProject
 	self updateTitle.
 	project whenChanged: [ self updateTitle ].
 	navigatorModel openOn: project.
-	project setClean.
+	project beClean.
 	projectController openFirstDiagram

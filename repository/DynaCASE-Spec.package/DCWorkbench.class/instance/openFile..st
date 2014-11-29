@@ -1,12 +1,13 @@
 file support
 openFile: aFileName
-	| materializedProject |
+	| materialization serializer serializedProject |
 	aFileName isEmptyOrNil
 		ifTrue: [ ^ self ].
 	aFileName asFileReference
 		readStreamDo: [ :stream | 
-			materializedProject := (STON reader
+			materialization := (STON reader
 				allowComplexMapKeys: true;
 				on: stream) next.
-			self assert: (materializedProject at: #version) = '1.1'.
-			self openProject: (materializedProject at: #project) ]
+			serializer := DCSerializer new.
+			serializedProject := serializer materializeProject: materialization.
+			self openProject: serializedProject ]

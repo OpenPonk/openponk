@@ -1,7 +1,7 @@
 file support
 saveFile: aFileName
-	| serializedProject |
-	serializedProject := projectController serializeProject.
+	| serializer serializedProject |
+	serializer := DCSerializer new.
+	serializedProject := serializer serializeProject: project.
 	StandardFileStream forceNewFileNamed: aFileName do: [ :stream | STON put: serializedProject onStreamPretty: stream ].
-	project beClean.
-	
+	project beClean

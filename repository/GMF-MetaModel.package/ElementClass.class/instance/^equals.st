@@ -1,3 +1,3 @@
 comparing
 = xElement
-	^ self name = xElement name
+	^ self name =xElement name

@@ -1,0 +1,23 @@
+{
+	"class" : {
+		"RecentProjects" : "PeterUhnak 11/30/2014 20:21",
+		"RecentProjects:" : "PeterUhnak 11/30/2014 20:21",
+		"addToRecent:named:" : "PeterUhnak 11/30/2014 02:44",
+		"defaultSpec" : "PeterUhnak 11/30/2014 01:53",
+		"initialize" : "PeterUhnak 11/30/2014 02:43",
+		"menuCommandOn:" : "PeterUhnak 11/30/2014 02:03",
+		"open" : "PeterUhnak 11/30/2014 01:31" },
+	"instance" : {
+		"askForFileNameToOpen" : "PeterUhnak 11/30/2014 02:34",
+		"initializePresenter" : "PeterUhnak 11/30/2014 21:17",
+		"initializeWidgets" : "PeterUhnak 11/30/2014 20:48",
+		"newProjectButton" : "PeterUhnak 11/30/2014 01:41",
+		"open" : "PeterUhnak 11/30/2014 02:03",
+		"openFile:" : "PeterUhnak 11/30/2014 20:41",
+		"openFromFileButton" : "PeterUhnak 11/30/2014 01:41",
+		"quickStartLabel" : "PeterUhnak 11/30/2014 01:53",
+		"quickStartLabel:" : "PeterUhnak 11/30/2014 01:53",
+		"recentProjectsLabel" : "PeterUhnak 11/30/2014 01:46",
+		"recentProjectsList" : "PeterUhnak 11/30/2014 01:41",
+		"removeCommand:" : "PeterUhnak 11/30/2014 21:15",
+		"title" : "PeterUhnak 11/30/2014 01:39" } }

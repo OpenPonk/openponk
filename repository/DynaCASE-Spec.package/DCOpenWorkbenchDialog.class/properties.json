@@ -1,0 +1,18 @@
+{
+	"category" : "DynaCASE-Spec-Windows",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"RecentProjects" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"newProjectButton",
+		"openFromFileButton",
+		"recentProjectsLabel",
+		"recentProjectsList",
+		"quickStartLabel" ],
+	"name" : "DCOpenWorkbenchDialog",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

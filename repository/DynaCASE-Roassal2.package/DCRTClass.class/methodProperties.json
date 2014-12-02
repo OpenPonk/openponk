@@ -5,6 +5,7 @@
 	"instance" : {
 		"attributes:" : "PeterUhnak 10/11/2014 18:19",
 		"createTopGroup" : "PeterUhnak 10/11/2014 17:57",
+		"deepCleanGroup:" : "PeterUhnak 12/2/2014 18:31",
 		"element" : "PeterUhnak 10/10/2014 01:42",
 		"initialize" : "PeterUhnak 11/5/2014 19:20",
 		"initializeCallbacks" : "bliznjan 10/19/2014 13:56",
@@ -13,5 +14,5 @@
 		"renderIn:" : "PeterUhnak 10/11/2014 19:07",
 		"stereotype:" : "PeterUhnak 10/10/2014 18:09",
 		"stereotypeFor:" : "PeterUhnak 10/11/2014 17:57",
-		"update" : "bliznjan 10/13/2014 01:27",
+		"update" : "PeterUhnak 12/2/2014 18:31",
 		"updateSeparatorsWith:with:" : "PeterUhnak 10/11/2014 19:13" } }

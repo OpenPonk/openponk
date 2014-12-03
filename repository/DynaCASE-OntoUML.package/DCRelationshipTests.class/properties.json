@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-OntoUML-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCRelationshipTests",
+	"pools" : [
+		 ],
+	"super" : "DCDiagramTest",
+	"type" : "normal" }

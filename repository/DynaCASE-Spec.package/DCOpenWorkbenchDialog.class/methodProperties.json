@@ -9,8 +9,8 @@
 		"open" : "PeterUhnak 11/30/2014 01:31" },
 	"instance" : {
 		"askForFileNameToOpen" : "PeterUhnak 11/30/2014 02:34",
-		"initializePresenter" : "PeterUhnak 11/30/2014 21:17",
-		"initializeWidgets" : "PeterUhnak 11/30/2014 20:48",
+		"initializePresenter" : "PeterUhnak 12/2/2014 18:54",
+		"initializeWidgets" : "PeterUhnak 12/2/2014 18:52",
 		"newProjectButton" : "PeterUhnak 11/30/2014 01:41",
 		"open" : "PeterUhnak 11/30/2014 02:03",
 		"openFile:" : "PeterUhnak 11/30/2014 20:41",
@@ -20,4 +20,5 @@
 		"recentProjectsLabel" : "PeterUhnak 11/30/2014 01:46",
 		"recentProjectsList" : "PeterUhnak 11/30/2014 01:41",
 		"removeCommand:" : "PeterUhnak 11/30/2014 21:15",
+		"rightClickMenu:" : "PeterUhnak 12/2/2014 18:45",
 		"title" : "PeterUhnak 11/30/2014 01:39" } }

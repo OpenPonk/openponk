@@ -1,7 +1,7 @@
 initialization
 initializeWidgets
 	recentProjectsLabel := self newLabel.
-	recentProjectsList := self newList.
+	recentProjectsList := self instantiate: NewListModel.
 	quickStartLabel := self newLabel.
 	newProjectButton := self newButton.
 	openFromFileButton := self newButton.

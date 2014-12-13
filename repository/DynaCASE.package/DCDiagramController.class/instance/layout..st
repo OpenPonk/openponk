@@ -1,8 +1,5 @@
 accessing
 layout: aLayout
 	aLayout
-		associationsDo: [ :pair | 
-			| v |
-			v := (self controllerForModel: pair key) view.
-			v translateTo: pair value ].
+		associationsDo: [ :pair | (self controllers detect: [ :ctrl | ctrl model dcID = pair key ]) layout: pair value ].
 	self updateView

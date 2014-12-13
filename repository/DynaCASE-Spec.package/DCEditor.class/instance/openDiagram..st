@@ -4,8 +4,9 @@ openDiagram: aDiagram
 	diagramController ifNotNil: [ self closeDiagram ].
 	textEditorModel doItReceiver diagram: aDiagram.
 	diagramController := self newDiagramControllerFor: aDiagram.
-	layout := self workbench projectController layoutFor: aDiagram.
-	layout ifNotNil: [ diagramController layout: layout ].
+	self workbench projectController addDiagramController: diagramController.
 	self rebuildPalette.
 	canvasModel diagramController: diagramController.
-	canvasModel reloadView
+	canvasModel reloadView.
+	layout := self workbench projectController layoutFor: aDiagram.
+	layout ifNotNil: [ diagramController layout: layout ]

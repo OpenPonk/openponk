@@ -1,3 +1,3 @@
-as yet unclassified
+adding
 addDiagramController: aController
 	controllers add: aController

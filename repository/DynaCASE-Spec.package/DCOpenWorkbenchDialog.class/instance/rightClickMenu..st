@@ -1,8 +1,11 @@
 initialization
 rightClickMenu: menu
 	| el menuBuilder |
-	recentProjectsList hasSelectedItem
-		ifFalse: [ ^ self ].
+	recentProjectsList selectedItem ifNil: [ ^ self ].
 	menuBuilder := DCMenuBuilder new menu: menu.
-	el := recentProjectsList selectedItem content.
-	menuBuilder addItem: 'Delete' action: [ self inspect: el ]
+	el := recentProjectsList selectedItem.
+	menuBuilder
+		addItem: 'Remove from list'
+		action: [ 
+			self class RecentProjects remove: el.
+			self updateRecentProjects ]

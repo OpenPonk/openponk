@@ -9,7 +9,7 @@ initializeWidgets
 	quickStartLabel label: 'Quick Start'.
 	newProjectButton label: 'Create New Project'.
 	openFromFileButton label: 'Open...'.
-	recentProjectsList items: self class RecentProjects.
+	self updateRecentProjects.
 	self focusOrder
 		add: recentProjectsList;
 		add: newProjectButton;

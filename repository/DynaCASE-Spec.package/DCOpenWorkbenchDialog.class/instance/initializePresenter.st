@@ -1,11 +1,8 @@
 initialization
 initializePresenter
-	newProjectButton
-		action: [ 
-			DCWorkbench openNewProject.
-			self delete ].
+	newProjectButton action: [ self createNewProject ].
 	openFromFileButton action: [ self askForFileNameToOpen ].
 	recentProjectsList
 		handlesDoubleClick: true;
-		doubleClick: [ :event | event inspect	"self openFile: item value" ];
+		doubleClickAction: [ :event | self openFile ];
 		menu: [ :menu | self rightClickMenu: menu ]

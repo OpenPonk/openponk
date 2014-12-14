@@ -6,4 +6,4 @@ saveFile: aFileName
 	serializedProject := serializer serializeProject: project.
 	StandardFileStream forceNewFileNamed: aFileName do: [ :stream | STON put: serializedProject onStreamPretty: stream ].
 	project beClean.
-	DCOpenWorkbenchDialog addToRecent: aFileName fullName named: project projectName
+	DCOpenWorkbenchDialog addToRecent: aFileName named: project projectName

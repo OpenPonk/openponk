@@ -4,5 +4,5 @@ initializePresenter
 	openFromFileButton action: [ self askForFileNameToOpen ].
 	recentProjectsList
 		handlesDoubleClick: true;
-		doubleClickAction: [ :event | self openFile ];
+		doubleClickAction: [ :event | self openFromList ];
 		menu: [ :menu | self rightClickMenu: menu ]

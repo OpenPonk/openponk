@@ -10,4 +10,5 @@ openFile: aFileName
 				on: stream) next.
 			serializer := DCSerializer new.
 			serializedProject := serializer materializeProject: materialization.
+			serializedProject fileName: aFileName.
 			self openProject: serializedProject ]

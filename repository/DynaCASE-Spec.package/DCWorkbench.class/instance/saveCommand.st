@@ -1,5 +1,5 @@
 menu actions
 saveCommand
 	project fileName
-		ifNil: [ project fileName: ((self askForFileNameToSave: project projectName , '.ston') ifNil: [ ^ self ]) ].
+		ifNil: [ project fileName: (self askForFileNameToSave ifNil: [ ^ self ]) fullName ].
 	self saveFile: project fileName

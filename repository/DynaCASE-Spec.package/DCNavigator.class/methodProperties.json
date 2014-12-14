@@ -3,6 +3,7 @@
 		"defaultSpec" : "PeterUhnak 10/30/2014 17:18" },
 	"instance" : {
 		"childrenFor:" : "PeterUhnak 10/30/2014 17:21",
+		"deleteDiagramCommand:" : "PeterUhnak 12/14/2014 20:47",
 		"deleteElementCommand:" : "PeterUhnak 10/30/2014 17:13",
 		"doubleClick" : "PeterUhnak 10/30/2014 17:35",
 		"editElementCommand:" : "PeterUhnak 10/30/2014 17:49",
@@ -10,9 +11,9 @@
 		"initializeWidgets" : "PeterUhnak 10/30/2014 17:19",
 		"inspectCommand:" : "PeterUhnak 10/30/2014 17:13",
 		"labelFor:" : "bliznjan 11/10/2014 01:27",
-		"openCommand:" : "PeterUhnak 10/30/2014 17:31",
+		"openCommand:" : "PeterUhnak 12/14/2014 20:48",
 		"openOn:" : "PeterUhnak 10/30/2014 17:18",
 		"renameCommand:" : "PeterUhnak 10/30/2014 18:31",
-		"rightClickMenu:" : "PeterUhnak 10/30/2014 18:02",
+		"rightClickMenu:" : "PeterUhnak 12/14/2014 20:47",
 		"tree" : "PeterUhnak 10/30/2014 17:18",
 		"workbench" : "PeterUhnak 10/30/2014 18:11" } }

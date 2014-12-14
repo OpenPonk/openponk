@@ -8,7 +8,7 @@ initializeTopMenu
 						name: 'New';
 						description: 'New Diagram';
 						icon: Smalltalk ui icons smallNewIcon;
-						action: [ self newCommand  ] ] .
+						action: [ self newDiagramCommand  ] ] .
 			group
 				addItem: [ :item | 
 					item

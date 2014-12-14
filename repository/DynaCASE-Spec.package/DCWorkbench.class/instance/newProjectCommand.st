@@ -1,5 +1,5 @@
 menu actions
-newCommand
+newProjectCommand
 	|choice|
 	(UIManager default confirm: 'Do you wish to save current project?' orCancel: [ ^ self ])
 				ifTrue: [ 	project fileName

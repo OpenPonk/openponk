@@ -1,4 +1,4 @@
 menu commands
-openCommand: anObject
-	(anObject isKindOf: DCDiagram)
-		ifTrue: [ self workbench openEditorOn: anObject ]
+openCommand: aDiagram
+	self assert: (aDiagram isKindOf: DCDiagram).
+	self workbench openEditorOn: aDiagram

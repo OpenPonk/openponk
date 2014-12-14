@@ -1,3 +1,3 @@
 accessing
 layoutFor: aDiagram
-	^ layouts at: aDiagram dcID ifAbsent: [ nil ]
+	^ layouts at: aDiagram dcID asString ifAbsent: [ nil ]

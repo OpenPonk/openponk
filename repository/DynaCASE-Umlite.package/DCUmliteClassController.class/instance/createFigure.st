@@ -5,7 +5,7 @@ createFigure
 	class stereotype: self model stereotype.
 	self model stereotypeHolder whenChangedDo: [ :newValue | class stereotype: newValue ].
 	class name: self model name.
-	self model nameHolder whenChangedDo: [ :newValue | class name: newValue ].
+	self model whenChanged: [ class name: self model name ].
 	class attributes: self model attributes.
 	self model attributesHolder whenChangedDo: [ :newCollection | class attributes: newCollection ].
 	class methods: self model methods.

@@ -1,3 +1,4 @@
 accessing
 sourceName: aString
-	sourceName value: aString
+	sourceName := aString.
+	self changed

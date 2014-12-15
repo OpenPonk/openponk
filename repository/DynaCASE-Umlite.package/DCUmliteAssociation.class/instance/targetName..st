@@ -1,3 +1,3 @@
 accessing
 targetName: aString
-	targetName value: aString
+	targetName := aString

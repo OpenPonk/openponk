@@ -7,9 +7,9 @@
 	"commentStamp" : "lariover 10/5/2014 20:27",
 	"instvars" : [
 		"announcer",
+		"dcID",
 		"owner",
-		"nameHolder",
-		"dcID" ],
+		"dcName" ],
 	"name" : "DCModelObject",
 	"pools" : [
 		 ],

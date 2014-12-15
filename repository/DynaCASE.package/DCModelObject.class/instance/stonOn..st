@@ -1,4 +1,4 @@
-ston
+*DynaCASE-Serialization
 stonOn: stonWriter
 	| instanceVariableNames |
 	(instanceVariableNames := self class allInstVarNames) isEmpty

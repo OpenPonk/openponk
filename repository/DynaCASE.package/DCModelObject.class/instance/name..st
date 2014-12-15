@@ -1,3 +1,4 @@
 accessing
 name: aString
-	self nameHolder value: aString
+	dcName := aString.
+	self changed

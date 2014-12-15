@@ -2,10 +2,14 @@ initialization
 initializeWidgets
 	topMenuModel := self instantiate: MenuModel.
 	navigatorModel := self instantiate: DCNavigator.
-	editorModel := self instantiate: DCEditor.
+	tabManager := self newTabManager.
+	"	editorModel := self instantiate: DCEditor."
 	formModel := self instantiate: DCDynamicForm.
+	openDiagrams := OrderedCollection new.
+
 	self focusOrder
 		add: topMenuModel;
 		add: navigatorModel;
-		add: editorModel;
+		add: tabManager;
 		add: formModel
+	"		add: editorModel;"

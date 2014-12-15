@@ -9,7 +9,8 @@
 		"canvasModel",
 		"diagramController",
 		"paletteModel",
-		"textEditorModel" ],
+		"textEditorModel",
+		"workbench" ],
 	"name" : "DCEditor",
 	"pools" : [
 		 ],

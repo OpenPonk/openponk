@@ -5,7 +5,7 @@ newDiagramCommand
 	choice = 0
 		ifTrue: [ ^ self ].
 	choice = 1
-		ifTrue: [ diagram := DCFsm new: 'FSM Diagram' ].
+		ifTrue: [ diagram := DCFsm new name: 'FSM Diagram' ].
 	choice = 2
-		ifTrue: [ diagram := MetaModel new: 'OntoUML Diagram' ].
+		ifTrue: [ diagram := DCOmlDiagram new name: 'OntoUML Diagram' ].
 	self projectController project addDiagram: diagram

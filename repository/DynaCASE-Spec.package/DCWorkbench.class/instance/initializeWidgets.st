@@ -5,7 +5,6 @@ initializeWidgets
 	tabManager := self newTabManager.
 	"	editorModel := self instantiate: DCEditor."
 	formModel := self instantiate: DCDynamicForm.
-	openDiagrams := OrderedCollection new.
 
 	self focusOrder
 		add: topMenuModel;

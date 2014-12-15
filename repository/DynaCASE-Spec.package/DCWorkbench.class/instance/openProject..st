@@ -1,7 +1,6 @@
 project handling
 openProject: aProject
 	self assert: aProject class = DCProject.
-	project ifNotNil: [ self closeProject ].
 	project := aProject.
 	(projectController := DCProjectController new)
 		project: project;

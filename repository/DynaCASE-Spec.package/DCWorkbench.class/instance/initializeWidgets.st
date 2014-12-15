@@ -3,7 +3,6 @@ initializeWidgets
 	topMenuModel := self instantiate: MenuModel.
 	navigatorModel := self instantiate: DCNavigator.
 	tabManager := self newTabManager.
-	"	editorModel := self instantiate: DCEditor."
 	formModel := self instantiate: DCDynamicForm.
 
 	self focusOrder
@@ -11,4 +10,3 @@ initializeWidgets
 		add: navigatorModel;
 		add: tabManager;
 		add: formModel
-	"		add: editorModel;"

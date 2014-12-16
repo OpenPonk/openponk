@@ -1,11 +1,13 @@
 {
 	"class" : {
-		"defaultSpec" : "PeterUhnak 10/29/2014 18:17" },
+		"defaultSpec" : "lariover 12/13/2014 19:04" },
 	"instance" : {
+		"canvasMenuModel" : "lariover 12/9/2014 11:45",
 		"canvasModel" : "PeterUhnak 10/19/2014 16:39",
-		"closeDiagram" : "PeterUhnak 12/14/2014 20:38",
-		"initializePresenter" : "PeterUhnak 10/29/2014 18:09",
-		"initializeWidgets" : "PeterUhnak 11/3/2014 11:57",
+		"closeDiagram" : "PeterUhnak 12/13/2014 15:28",
+		"initializeCanvasMenu" : "lariover 12/13/2014 19:06",
+		"initializePresenter" : "lariover 12/14/2014 19:43",
+		"initializeWidgets" : "lariover 12/9/2014 11:21",
 		"model" : "PeterUhnak 12/15/2014 01:23",
 		"newDiagramControllerFor:" : "PeterUhnak 11/3/2014 22:23",
 		"openDiagram:" : "PeterUhnak 12/13/2014 16:23",
@@ -14,6 +16,7 @@
 		"rebuildWidget" : "PeterUhnak 10/29/2014 18:10",
 		"selectEdgeItem:" : "bliznjan 11/4/2014 13:41",
 		"selectElementItem:" : "bliznjan 11/4/2014 13:41",
+		"showExportFormatMenu" : "lariover 12/14/2014 19:43",
 		"textEditorModel" : "PeterUhnak 8/16/2014 23:47",
 		"workbench" : "PeterUhnak 12/15/2014 11:48",
 		"workbench:" : "PeterUhnak 12/15/2014 11:48" } }

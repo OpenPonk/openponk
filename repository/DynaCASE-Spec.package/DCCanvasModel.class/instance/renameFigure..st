@@ -1,4 +1,3 @@
 as yet unclassified
-renameFigure:aFigure
-
-self diagramController renameElementRepresentedBy: aFigure.
+renameFigure: aFigure
+	self diagramController renameElementRepresentedBy: aFigure

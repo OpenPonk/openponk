@@ -1,0 +1,3 @@
+as yet unclassified
+showAllFigures
+	roassalView canvas focusOnCenterScaled

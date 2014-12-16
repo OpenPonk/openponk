@@ -1,4 +1,4 @@
-as yet unclassified
+running
 testRemovingOfRelationships
 	| kind subkind1 subkind2 kind3 role kind2 basicAsoc1 generalization1 generalization2 generalization3 basicAsoc2 basicAsoc3 memberOf model |
 	model := DCOmlDiagram new.

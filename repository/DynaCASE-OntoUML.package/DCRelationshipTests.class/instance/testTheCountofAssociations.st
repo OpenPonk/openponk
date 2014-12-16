@@ -1,4 +1,4 @@
-as yet unclassified
+running
 testTheCountofAssociations
 	| kind1 kind2 kind3 kind4 asoc model |
 	model := DCDiagram new.

@@ -1,4 +1,4 @@
-as yet unclassified
+running
 testTheCountOfGeneralizations
 	| kind subkind1 subkind2 subkind3 subkind4 generalization model |
 	model := DCDiagram new.

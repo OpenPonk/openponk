@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 relationships
 	owner ifNil: [ ^ #() ].
 	^ (owner elements select: [ :each | each isKindOf: ElementAssociation ])

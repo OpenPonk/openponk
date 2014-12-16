@@ -1,4 +1,4 @@
-as yet unclassified
+synchronization
 syncAssociations
 	self relationships
 		do: [ :asoc | 

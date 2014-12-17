@@ -1,13 +1,16 @@
 {
 	"class" : {
-		"defaultSpec" : "PeterUhnak 10/30/2014 17:18" },
+		"defaultSpec" : "PeterUhnak 10/30/2014 17:18",
+		"iconFor:" : "PeterUhnak 12/17/2014 18:40",
+		"initialize" : "PeterUhnak 12/17/2014 18:38" },
 	"instance" : {
 		"childrenFor:" : "PeterUhnak 10/30/2014 17:21",
 		"deleteDiagramCommand:" : "PeterUhnak 12/14/2014 20:47",
 		"deleteElementCommand:" : "PeterUhnak 10/30/2014 17:13",
 		"doubleClick" : "PeterUhnak 10/30/2014 17:35",
 		"editElementCommand:" : "PeterUhnak 10/30/2014 17:49",
-		"initializeTree" : "PeterUhnak 11/5/2014 00:29",
+		"iconFor:" : "PeterUhnak 12/17/2014 18:26",
+		"initializeTree" : "PeterUhnak 12/17/2014 18:21",
 		"initializeWidgets" : "PeterUhnak 10/30/2014 17:19",
 		"inspectCommand:" : "PeterUhnak 10/30/2014 17:13",
 		"labelFor:" : "bliznjan 11/10/2014 01:27",

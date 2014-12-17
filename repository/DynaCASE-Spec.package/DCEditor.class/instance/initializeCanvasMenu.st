@@ -5,9 +5,9 @@ initializeCanvasMenu
 			group
 				addItem: [ :item | 
 					item
-						name: '+';
-						description: 'Zoom in';
-						action: [ canvasModel zoom: canvasModel zoom * 1.25 ] ].
+						name: '-';
+						description: 'Zoom out';
+						action: [ canvasModel zoom: canvasModel zoom * 0.8 ] ].
 			group
 				addItem: [ :item | 
 					item
@@ -17,9 +17,9 @@ initializeCanvasMenu
 			group
 				addItem: [ :item | 
 					item
-						name: '-';
-						description: 'Zoom out';
-						action: [ canvasModel zoom: canvasModel zoom * 0.8 ] ].
+						name: '+';
+						description: 'Zoom in';
+						action: [ canvasModel zoom: canvasModel zoom * 1.25 ] ].
 			group
 				addItem: [ :item | 
 					item

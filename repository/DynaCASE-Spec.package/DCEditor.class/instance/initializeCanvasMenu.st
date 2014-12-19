@@ -11,7 +11,7 @@ initializeCanvasMenu
 			group
 				addItem: [ :item | 
 					item
-						name: '100%';
+						name: 'Zoom to 100%';
 						description: 'Zoom to 100%';
 						action: [ canvasModel zoom: 1.0001 ] ].
 			group

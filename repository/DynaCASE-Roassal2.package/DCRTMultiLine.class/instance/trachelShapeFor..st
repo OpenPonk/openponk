@@ -2,7 +2,7 @@ public
 trachelShapeFor: anEdge
 	| multiShape path |
 	path := self pathFor: anEdge.
-	multiShape := TRMultiCompositeShape new.
+	multiShape := TRCompositeShape new.
 	2 to: path size do: [ :i | 
 		multiShape
 			addShape:

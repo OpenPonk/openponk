@@ -2,7 +2,7 @@ examples
 exampleUmlite
 	| diagram firstClass secondClass a1 project |
 	project := DCProject new projectName: 'Example Umlite'.
-	diagram := DCUmliteDiagram new.
+	diagram := DCUmliteDiagram new name: 'Umlite diagram'.
 	project addDiagram: diagram.
 	firstClass := DCUmliteClass new name: 'FirstClass'.
 	firstClass attributes: #('-attr1' '-attr2') asOrderedCollection.

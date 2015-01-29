@@ -1,5 +1,5 @@
 accessing
-attributes: anObject
-	attributes := anObject.
-	
-	attributes ifNil: [ attributes := Set new ]
+attributes: aSet
+	attributes := aSet.
+	attributes ifNil: [ attributes := Set new ].
+	self changed

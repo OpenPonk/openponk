@@ -1,5 +1,5 @@
 accessing
-methods: anObject
-	methods := anObject.
-	
-	methods ifNil: [ methods := Set new ]
+methods: aSet
+	methods := aSet.
+	methods ifNil: [ methods := Set new ].
+	self changed

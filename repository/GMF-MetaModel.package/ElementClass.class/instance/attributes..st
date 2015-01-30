@@ -1,5 +1,5 @@
 accessing
 attributes: aSet
 	attributes := aSet.
-	attributes ifNil: [ attributes := Set new ].
+	attributes ifNil: [ attributes := #() ].
 	self changed

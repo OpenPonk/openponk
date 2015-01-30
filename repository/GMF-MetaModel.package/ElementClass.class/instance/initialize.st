@@ -3,8 +3,8 @@ initialize
 	super initialize.
 
 	name 			:= nil.
-	attributes 		:= Set new.
-	methods 		:= Set new.
+	attributes 		:= #().
+	methods 		:= #().
 	associations 	:= Set new.
 	parents 		:= Set new.
 	transformed 	:= false.

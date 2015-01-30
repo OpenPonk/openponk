@@ -4,19 +4,19 @@ showExportFormatMenu
 	menu := MenuMorph new.
 	menu
 		add: 'PNG'
-			target: canvasModel
+			target: self canvasModel
 			selector: #exportAs:
 			argument: #png;
 		add: 'JPEG'
-			target: canvasModel
+			target: self canvasModel
 			selector: #exportAs:
 			argument: #jpeg;
 		add: 'BMP'
-			target: canvasModel
+			target: self canvasModel
 			selector: #exportAs:
 			argument: #bmp;
 		add: 'GIF'
-			target: canvasModel
+			target: self canvasModel
 			selector: #exportAs:
 			argument: #gif.
 	menu addTitle: 'Select picture format'.

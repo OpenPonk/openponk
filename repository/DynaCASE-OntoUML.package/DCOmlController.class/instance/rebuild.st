@@ -8,4 +8,5 @@ rebuild
 			RTGridLayout new
 				gapSize: 80;
 				on: els ].
-	self updateView
+	self updateView.
+	self view canvas camera focusOnCenter

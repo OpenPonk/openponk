@@ -7,9 +7,8 @@ defaultSpec
 									col
 										add: #canvasModel origin: 0 @ 0 corner: 1 @ 0.8;
 										addSplitter;
-										add: #canvasMenuModel origin: 0 @ 0.8 corner: 1 @ 0.87;
-										addSplitter;
-										add: #textEditorModel origin: 0 @ 0.87 corner: 1 @ 1 ]
+										add: #canvasMenuModel height: (self toolbarHeight + 6);
+										add: #textEditorModel ]
 							origin: 0 @ 0
 							corner: 0.8 @ 1;
 						addSplitter;

@@ -1,6 +1,6 @@
 initialization
 initializeWidgets
-	canvasMenuModel := self instantiate: MenuModel.
+	canvasMenuModel := self instantiate: DCEditorMenu.
 	textEditorModel := self newText.
 	canvasModel := self instantiate: DCCanvasModel.
 	paletteModel := self instantiate: DCPalette.

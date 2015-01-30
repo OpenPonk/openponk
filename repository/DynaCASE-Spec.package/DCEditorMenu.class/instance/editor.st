@@ -1,0 +1,3 @@
+accessing
+editor
+	^ self owner

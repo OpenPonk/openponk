@@ -1,0 +1,14 @@
+{
+	"class" : {
+		"defaultSpec" : "PeterUhnak 1/30/2015 10:53" },
+	"instance" : {
+		"canvasModel" : "PeterUhnak 1/30/2015 11:08",
+		"editor" : "PeterUhnak 1/30/2015 11:07",
+		"initializeCanvasMenu" : "PeterUhnak 1/30/2015 10:55",
+		"initializePresenter" : "PeterUhnak 1/30/2015 10:50",
+		"initializeWidgets" : "PeterUhnak 1/30/2015 10:52",
+		"layoutFor:" : "PeterUhnak 1/30/2015 11:15",
+		"layoutOptions" : "PeterUhnak 1/30/2015 11:02",
+		"menuModel" : "PeterUhnak 1/30/2015 10:52",
+		"showLayoutSubmenu" : "PeterUhnak 1/30/2015 11:09",
+		"workbench" : "PeterUhnak 1/30/2015 11:08" } }

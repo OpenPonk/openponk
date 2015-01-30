@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Spec-Windows",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"menuModel" ],
+	"name" : "DCEditorMenu",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

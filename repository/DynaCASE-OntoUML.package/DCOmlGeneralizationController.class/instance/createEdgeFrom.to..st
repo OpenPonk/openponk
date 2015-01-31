@@ -5,7 +5,7 @@ createEdgeFrom: fromFigure to: toFigure
 		block: [ :view | 
 			builder := DCRTEdgeBuilder new.
 			edge := builder createEdgeFrom: fromFigure to: toFigure.
-			edge shape emptyArrowHead.
+			edge shape emptyNarrowArrowHead.
 			edge resetShape.
 			edge shape color: Color black.
 			edge ]

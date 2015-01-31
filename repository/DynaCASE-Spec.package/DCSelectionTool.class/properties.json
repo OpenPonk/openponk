@@ -4,7 +4,7 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "PeterUhnak 1/30/2015 23:16",
 	"instvars" : [
 		"selectedController" ],
 	"name" : "DCSelectionTool",

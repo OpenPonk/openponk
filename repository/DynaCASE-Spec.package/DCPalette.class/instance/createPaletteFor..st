@@ -1,4 +1,4 @@
-accessing
+protocol
 createPaletteFor: aDiagramController
 	diagramController := aDiagramController.
 	self removeAll.

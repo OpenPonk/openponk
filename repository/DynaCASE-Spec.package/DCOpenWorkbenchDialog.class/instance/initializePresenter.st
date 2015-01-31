@@ -5,4 +5,5 @@ initializePresenter
 	recentProjectsList
 		handlesDoubleClick: true;
 		doubleClickAction: [ :event | self openFromList ];
-		menu: [ :menu | self rightClickMenu: menu ]
+		menu: [ :menu | self rightClickMenu: menu ];
+		displayBlock: [ :item | item key , ' (' , item value , ')' ]

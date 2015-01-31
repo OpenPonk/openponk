@@ -2,6 +2,7 @@ as yet unclassified
 openEditorOn: aDiagram
 	| editor tab |
 	(editor := DCEditor new) workbench: self.
+	editor buildWithSpec.
 	(tab := self newTab)
 		label: aDiagram name;
 		retrievingBlock: editor buildWithSpec asWidget.

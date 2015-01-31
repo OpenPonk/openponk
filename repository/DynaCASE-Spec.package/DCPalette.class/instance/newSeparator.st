@@ -1,4 +1,4 @@
-instance creation
+protocol
 newSeparator
 	| item |
 	item := self newLabel.

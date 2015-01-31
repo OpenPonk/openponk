@@ -1,4 +1,4 @@
-as yet unclassified
+protocol
 newConnectionCreationTool: aLabel factory: aBlock icon: anIcon
 	| item tool |
 	item := self addItem.

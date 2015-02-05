@@ -3,6 +3,6 @@ connectionFeedback
 	^ DCInteractiveLine new
 		lineBuilder: [ :fromFigure :toFigure | 
 					DCRTMultiLine new
-						emptyArrowHead;
+						emptyNarrowArrowHead;
 						edgeFrom: fromFigure to: toFigure ];
 		from: source figure

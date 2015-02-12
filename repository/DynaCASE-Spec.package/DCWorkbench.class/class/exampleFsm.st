@@ -2,7 +2,7 @@ examples
 exampleFsm
 	| project fsm initial first second final t1 t2 t3 t4 |
 	project := DCProject new projectName: 'Example FSM'.
-	fsm := DCFsm new name: 'FS Diagram'.
+	fsm := DCFsm new name: 'FSM Diagram'.
 	project addDiagram: fsm.
 	initial := DCFsmInitialState new.
 	first := DCFsmState new name: '1'.

@@ -1,3 +1,3 @@
-actions
+protocol
 select
 	^ self subclassResponsibility

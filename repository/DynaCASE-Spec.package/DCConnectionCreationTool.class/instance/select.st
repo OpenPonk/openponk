@@ -1,4 +1,4 @@
-actions
+protocol
 select
 	feedback := nil asValueHolder.
 	feedback whenChangedDo: [ :newVal :oldVal | oldVal ifNotNil: [ oldVal remove ] ].

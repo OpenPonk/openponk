@@ -1,4 +1,4 @@
-actions
+protocol
 select
 	selectedController := nil.
 	self diagramController whenHoverChanged: [ :ctrl |  ].

@@ -1,5 +1,7 @@
 running
 fix
+	"a little math... reverse process of move: gets settings according to shape and edge positions"
+
 	| startPoint endPoint nearestPoint edgeVector nearestPointVector positionVector edgeVectorR |
 	startPoint := edge shape startingPointOf: edge.
 	endPoint := edge shape endingPointOf: edge.

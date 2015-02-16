@@ -1,1 +1,1 @@
-A DCRTToSelfAttachPoint is for connecting an element with itself
+A DCRTToSelfAttachPoint is attachpoint for connecting an element with itself

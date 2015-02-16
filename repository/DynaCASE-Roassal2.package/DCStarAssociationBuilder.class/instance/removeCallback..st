@@ -1,3 +1,3 @@
 events
 removeCallback: aCallback
-	center trachelShape removeCallback: aCallback
+	self removeCallback: aCallback ifAbsent: nil

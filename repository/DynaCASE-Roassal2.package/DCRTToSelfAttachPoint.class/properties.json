@@ -4,7 +4,7 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "lariover 2/12/2015 22:59",
+	"commentStamp" : "bliznjan 2/16/2015 12:42",
 	"instvars" : [
 		"distance" ],
 	"name" : "DCRTToSelfAttachPoint",

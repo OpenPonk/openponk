@@ -1,16 +1,16 @@
 {
 	"class" : {
-		"fix:nearEndOfEdge:" : "bliznjan 11/13/2014 16:55",
-		"fix:nearStartOfEdge:" : "bliznjan 11/13/2014 16:55",
-		"move:nearEndOfEdge:distance:offset:" : "bliznjan 11/13/2014 16:55",
-		"move:nearStartOfEdge:distance:offset:" : "bliznjan 11/13/2014 16:55",
-		"stick:nearEndOfEdge:distance:offset:" : "bliznjan 11/13/2014 16:54",
-		"stick:nearStartOfEdge:distance:offset:" : "bliznjan 11/13/2014 16:55" },
+		"fix:nearEndOfEdge:" : "bliznjan 2/16/2015 12:56",
+		"fix:nearStartOfEdge:" : "bliznjan 2/16/2015 12:56",
+		"move:nearEndOfEdge:distance:offset:" : "bliznjan 2/16/2015 12:57",
+		"move:nearStartOfEdge:distance:offset:" : "bliznjan 2/16/2015 12:57",
+		"stick:nearEndOfEdge:distance:offset:" : "bliznjan 2/16/2015 12:57",
+		"stick:nearStartOfEdge:distance:offset:" : "bliznjan 2/16/2015 12:58" },
 	"instance" : {
 		"distance:" : "bliznjan 11/11/2014 13:55",
-		"fix" : "bliznjan 11/11/2014 14:54",
+		"fix" : "bliznjan 2/16/2015 13:01",
 		"initialize" : "bliznjan 11/11/2014 15:44",
-		"move" : "bliznjan 11/11/2014 14:54",
+		"move" : "bliznjan 2/16/2015 13:00",
 		"near" : "bliznjan 11/11/2014 15:20",
 		"nearEnd" : "bliznjan 11/13/2014 16:55",
 		"nearStart" : "bliznjan 11/13/2014 16:54" } }

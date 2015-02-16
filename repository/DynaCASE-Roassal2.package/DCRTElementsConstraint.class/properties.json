@@ -10,5 +10,5 @@
 	"name" : "DCRTElementsConstraint",
 	"pools" : [
 		 ],
-	"super" : "DCRTConstraint",
+	"super" : "DCRTAbstractConstraint",
 	"type" : "normal" }

@@ -8,5 +8,5 @@ testFixedPosition
 	self assert: builder center = (500 @ 50).
 	builder translateBy: -100 @ -50.
 	self assert: builder position = (400 @ 0).
-	builder selfCentering.
+	builder dynamicCentering.
 	self assert: builder center = ((e1 position + e2 position) / 2)

@@ -14,5 +14,5 @@
 	"name" : "DCRTEdgeAbstractConstraint",
 	"pools" : [
 		 ],
-	"super" : "DCRTConstraint",
+	"super" : "DCRTAbstractConstraint",
 	"type" : "normal" }

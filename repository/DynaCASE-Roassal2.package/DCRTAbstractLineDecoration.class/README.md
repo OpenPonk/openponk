@@ -1,1 +1,6 @@
-A DCRTAbstractLineDecoration is a Roassal shape used as the head or the tail of  a line
+A DCRTAbstractLineDecoration is a handler of head or tail of a line.
+
+Usage: 
+	DCRTLineHead shape: DCRTEmptyArrow
+	or
+	DCRTEmptyArrow asHead

@@ -1,7 +1,9 @@
 setting
 defaultCenteringBlock
+	"sets centering to dynamic, using default centering block"
+
 	self
-		selfCenteringBlock: [ :srcs :tgts | 
+		dynamicCenteringBlock: [ :srcs :tgts | 
 			| sourcesAvg targetsAvg |
 			targetsAvg := [ (tgts collect: [ :each | each position ]) average ].
 			sourcesAvg := [ (srcs collect: [ :each | each position ]) average ].

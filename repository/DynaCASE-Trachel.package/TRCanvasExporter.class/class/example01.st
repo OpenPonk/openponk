@@ -1,9 +1,14 @@
-A DCTRCanvasExporter is exporter of canvas into image
+example
+example01
+	| b view |
+	b := RTMondrian new.
+	b nodes: RTShape withAllSubclasses.
+	b edges connectFrom: #superclass.
+	b layout tree.
+	b build.
 	
-	supported formats: png, jpg, jpeg, bmp, gif	
-	usage example:
-
-	(DCTRCanvasExporter canvas: aRTView canvas)
+	view := b view.
+	(self canvas: view canvas)
 		withoutFixedShapes;
 		whole;
 		defaultScale;

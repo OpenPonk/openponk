@@ -6,4 +6,5 @@ canvas: aCanvas
 	canvas morph
 		ifNil: [ 
 			canvas buildMorph.
-			self whole ]
+			self whole ].
+	self initialize

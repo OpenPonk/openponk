@@ -1,23 +1,24 @@
 as yet unclassified
 showExportFormatMenu
-	| menu |
+	| menu fileName |
 	menu := MenuMorph new.
+	fileName := self workbench projectController project projectName , ' - DynaCASE'.
 	menu
 		add: 'PNG'
 			target: self canvasModel
-			selector: #exportAs:
-			argument: #png;
+			selector: #exportAsPng:
+			argument: fileName;
 		add: 'JPEG'
 			target: self canvasModel
-			selector: #exportAs:
-			argument: #jpeg;
+			selector: #exportAsJpg:
+			argument: fileName;
 		add: 'BMP'
 			target: self canvasModel
-			selector: #exportAs:
-			argument: #bmp;
+			selector: #exportAsBmp:
+			argument: fileName;
 		add: 'GIF'
 			target: self canvasModel
-			selector: #exportAs:
-			argument: #gif.
+			selector: #exportAsGif:
+			argument: fileName.
 	menu addTitle: 'Select picture format'.
 	menu popUpInWorld

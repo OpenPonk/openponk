@@ -1,7 +1,7 @@
 private
 trachelShapeFor: anEdge from: fromPoint to: toPoint
 	| tShape |
-	tShape := self shape trachelShapeClass
+	tShape := self trachelShapeClass
 		from: fromPoint
 		to: toPoint
 		width: (self widthFor: anEdge)

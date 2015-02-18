@@ -1,6 +1,7 @@
 private
-exportWith: settings toFile: fileName
-	| exporter |
+exportWith: settings toFile: defaultName
+	| exporter fileName |
+	fileName := (UIManager default request: 'Please enter file name' initialAnswer: defaultName) ifNil: [ ^ nil ].
 	exporter := (TRCanvasExporter canvas: roassalView canvas)
 		withoutFixedShapes;
 		whole;

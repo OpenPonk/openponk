@@ -5,4 +5,4 @@ showLayoutSubmenu
 	choice = 0
 		ifTrue: [ ^ self ].
 	opt := ((self layoutOptions at: choice) copyWithoutAll: ' ') asSymbol.
-	self editor model applyRTBasedLayout: (self layoutFor: choice)
+	self editor diagramController applyRTBasedLayout: (self layoutFor: choice)

@@ -2,7 +2,7 @@ as yet unclassified
 showExportFormatMenu
 	| menu fileName |
 	menu := MenuMorph new.
-	fileName := self workbench projectController project projectName , ' - DynaCASE'.
+	fileName := self editor diagramController model name , ' - DynaCASE'.
 	menu
 		add: 'PNG'
 			target: self canvasModel

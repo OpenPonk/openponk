@@ -6,9 +6,10 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		 ],
-	"name" : "DCRTEllipseAttachPoint",
+		"from",
+		"to" ],
+	"name" : "DCLineSegment",
 	"pools" : [
 		 ],
-	"super" : "DCRTEncompassingAttachPoint",
+	"super" : "Object",
 	"type" : "normal" }

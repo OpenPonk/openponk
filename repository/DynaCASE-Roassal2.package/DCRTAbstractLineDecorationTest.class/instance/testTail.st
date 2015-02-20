@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testTail
 	| tail line edge trachelShape |
 	tail := DCRTLineTail shape: DCRTSimpleArrow.

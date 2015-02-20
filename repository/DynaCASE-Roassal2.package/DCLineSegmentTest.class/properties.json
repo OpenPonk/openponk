@@ -1,0 +1,17 @@
+{
+	"category" : "DynaCASE-Roassal2-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"lineX",
+		"lineY",
+		"lineDiagonal",
+		"lineX0" ],
+	"name" : "DCLineSegmentTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

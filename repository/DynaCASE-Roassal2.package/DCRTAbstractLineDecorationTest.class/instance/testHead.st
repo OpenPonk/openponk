@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testHead
 	| head line edge trachelShape |
 	head := DCRTLineHead shape: DCRTSimpleArrow.

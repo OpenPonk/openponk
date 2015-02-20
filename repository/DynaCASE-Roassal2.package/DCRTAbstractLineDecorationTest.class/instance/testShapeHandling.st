@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testShapeHandling
 	| head |
 	head := DCRTLineHead shape: DCRTEmptyArrow.

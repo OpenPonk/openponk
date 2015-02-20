@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testCustomFromPoint
 	| head line edge trachelShape |
 	head := DCRTLineHead shape: DCRTSimpleArrow.

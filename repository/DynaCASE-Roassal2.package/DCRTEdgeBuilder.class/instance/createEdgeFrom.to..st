@@ -4,7 +4,8 @@ createEdgeFrom: fromElement to: toElement
 	edge := DCRTMultiLine new
 		color: self defaultColor;
 		arrowHead;
-		withShorterDistanceWithOffsetAttachPoint;
+"		withShorterDistanceWithOffsetAttachPoint;"
+		attachPoint: DCRTCircleAttachPoint new;
 		edgeFrom: fromElement to: toElement.
 	edge @ DCRTFocusable.
 	^ edge

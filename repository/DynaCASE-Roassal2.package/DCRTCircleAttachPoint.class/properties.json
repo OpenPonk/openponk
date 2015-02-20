@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCRTCircleAttachPoint",
+	"pools" : [
+		 ],
+	"super" : "DCRTEncompassingAttachPoint",
+	"type" : "normal" }

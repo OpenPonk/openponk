@@ -5,7 +5,7 @@ createEdgeFrom: fromElement to: toElement
 		color: self defaultColor;
 		arrowHead;
 "		withShorterDistanceWithOffsetAttachPoint;"
-		attachPoint: DCRTCircleAttachPoint new;
+		attachPoint: DCRTRectangleAttachPoint new;
 		edgeFrom: fromElement to: toElement.
 	edge @ DCRTFocusable.
 	^ edge

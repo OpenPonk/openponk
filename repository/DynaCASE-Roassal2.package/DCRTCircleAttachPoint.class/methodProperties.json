@@ -2,4 +2,6 @@
 	"class" : {
 		 },
 	"instance" : {
-		"attachPointFrom:to:" : "bliznjan 2/20/2015 13:10" } }
+		"attachPointOn:from:to:" : "bliznjan 2/20/2015 23:00",
+		"endingPointOf:" : "bliznjan 2/20/2015 22:59",
+		"startingPointOf:" : "bliznjan 2/20/2015 22:59" } }

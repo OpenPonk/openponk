@@ -4,10 +4,10 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "bliznjan 2/23/2015 13:16",
 	"instvars" : [
 		"offset" ],
-	"name" : "DCRTEncompassingAttachPoint",
+	"name" : "DCRTContinuousAttachPoint",
 	"pools" : [
 		 ],
 	"super" : "RTAttachPoint",

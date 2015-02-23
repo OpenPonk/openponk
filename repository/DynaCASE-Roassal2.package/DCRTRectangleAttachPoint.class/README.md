@@ -1,0 +1,1 @@
+Continuous attach point which presumes both shapes are not rotated rectangles

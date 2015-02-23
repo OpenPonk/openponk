@@ -4,7 +4,9 @@
 	"instance" : {
 		"setUp" : "bliznjan 2/20/2015 16:54",
 		"testAngles" : "bliznjan 2/20/2015 15:31",
-		"testIntersectLines" : "bliznjan 2/20/2015 17:08",
+		"testIntersectHorizontal" : "bliznjan 2/23/2015 15:14",
+		"testIntersectLines" : "bliznjan 2/23/2015 15:48",
+		"testIntersectVertical" : "bliznjan 2/23/2015 13:35",
 		"testIntersection" : "bliznjan 2/20/2015 17:14",
 		"testLength" : "bliznjan 2/20/2015 15:30",
 		"testNormalForm" : "bliznjan 2/20/2015 16:51",

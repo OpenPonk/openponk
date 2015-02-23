@@ -3,6 +3,10 @@ intersectLines: other
 	"point of intersection of line on which line segment lies with line of other line segment or nil if parallel"
 
 	| det x y |
+	other from y = other to y
+		ifTrue: [ ^ self intersectHorizontalLine: other ].
+	other from x = other to x
+		ifTrue: [ ^ self intersectVerticalLine: other ].
 	det := self a * other b - (other a * self b).
 	det isZero
 		ifTrue: [ ^ nil ].

@@ -1,21 +1,16 @@
 comparing
 intersectRectangle: aRectangle
-	"point of intersection with rectanhle or nil if it does not exists"
+	"collection of points of intersection with not rotated rectangle"
 
-	| topLeft topRight bottomLeft bottomRight intersection |
-	topLeft := aRectangle topLeft.
-	topRight := aRectangle topRight.
+	| pts bottomLeft bottomRight topLeft topRight |
 	bottomLeft := aRectangle bottomLeft.
 	bottomRight := aRectangle bottomRight.
-	intersection := self intersectionFrom: topLeft to: topRight.
-	intersection
-		ifNil: [ 
-			intersection := self intersectionFrom: bottomLeft to: bottomRight.
-			intersection
-				ifNil: [ 
-					intersection := self intersectionFrom: topLeft to: bottomLeft.
-					intersection
-						ifNil: [ 
-							intersection := self intersectionFrom: topRight to: bottomRight.
-							intersection ifNil: [ ^ nil ] ] ] ].
-	^ intersection
+	topLeft := aRectangle topLeft.
+	topRight := aRectangle topRight.
+	pts := Set new.
+	pts add: (self intersectHorizontal: (self class from: topLeft to: topRight)).
+	pts add: (self intersectHorizontal: (self class from: bottomLeft to: bottomRight)).
+	pts add: (self intersectVertical: (self class from: topLeft to: bottomLeft)).
+	pts add: (self intersectVertical: (self class from: topRight to: bottomRight)).
+	pts remove: nil ifAbsent: [  ].
+	^ pts

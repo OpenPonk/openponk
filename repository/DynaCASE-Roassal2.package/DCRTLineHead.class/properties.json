@@ -10,5 +10,5 @@
 	"name" : "DCRTLineHead",
 	"pools" : [
 		 ],
-	"super" : "DCRTAbstractLineDecoration",
+	"super" : "DCRTLineDecoration",
 	"type" : "normal" }

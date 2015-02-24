@@ -1,11 +1,11 @@
 private
 intersectHorizontalLine: other
-	"point of intersection of line on which line segment lies with line of other line segment or nil if parallel. Other must be horizontal (optimization purposes)"
+	"point of intersection of line on which line segment lies with line of other line segment or nil if parallel. Self must be horizontal (optimization purposes)"
 
 	| x y vector |
-	vector := self vector.
+	vector := other vector.
 	vector y isZero
 		ifTrue: [ ^ nil ].
-	y := other from y.
-	x := (other from y - self from y) * self cotan + self from x.
+	y := self from y.
+	x := (self from y - other from y) * other cotan + other from x.
 	^ x @ y

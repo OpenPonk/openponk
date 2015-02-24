@@ -3,9 +3,5 @@ added: aRTElement
 	aRTElement
 		addCallback: transCallback;
 		addCallback: extentCallback.
-	center view
-		ifNil: [ 
-			aRTElement view
-				add: center;
-				add: centerDragBox ].
+	self view ifNil: [ self addToView: aRTElement view ].
 	self update

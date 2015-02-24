@@ -1,6 +1,6 @@
 tests
 testIntersectVertical
-	self assert: (lineX0 intersectVertical: lineY) = (lineX0 intersection: lineY).
-	self assert: (lineX intersectVertical: lineY) = (lineX intersection: lineY).
-	self assert: (lineDiagonal intersectVertical: lineY) = (lineDiagonal intersection: lineY).
+	self assert: (lineY intersectVertical: lineX0) = (lineY intersection: lineX0).
+	self assert: (lineY intersectVertical: lineX) = (lineY intersection: lineX).
+	self assert: (lineY intersectVertical: lineDiagonal) = (lineY intersection: lineDiagonal).
 	self assert: (lineY intersectVertical: lineY) = (lineY intersection: lineY)

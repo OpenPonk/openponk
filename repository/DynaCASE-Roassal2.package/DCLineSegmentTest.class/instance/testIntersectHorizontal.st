@@ -2,9 +2,9 @@ tests
 testIntersectHorizontal
 	"assumes intersection: method is tested elsewhere"
 
-	self assert: (lineY intersectHorizontal: lineX) = (lineY intersection: lineX).
-	self assert: (lineY intersectHorizontal: lineX0) = (lineY intersection: lineX0).
-	self assert: (lineDiagonal intersectHorizontal: lineX) = (lineDiagonal intersection: lineX).
-	self assert: (lineDiagonal intersectHorizontal: lineX0) = (lineDiagonal intersection: lineX0).
-	self assert: (lineX intersectHorizontal: lineX0) = (lineX intersection: lineX0).
+	self assert: (lineX intersectHorizontal: lineY) = (lineX intersection: lineY).
+	self assert: (lineX0 intersectHorizontal: lineY) = (lineX0 intersection: lineY).
+	self assert: (lineX intersectHorizontal: lineDiagonal) = (lineX intersection: lineDiagonal).
+	self assert: (lineX0 intersectHorizontal: lineDiagonal) = (lineX0 intersection: lineDiagonal).
+	self assert: (lineX0 intersectHorizontal: lineX) = (lineX0 intersection: lineX).
 	self assert: (lineX intersectHorizontal: lineX) = (lineX intersection: lineX)

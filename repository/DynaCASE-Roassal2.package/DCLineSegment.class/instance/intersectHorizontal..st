@@ -1,10 +1,9 @@
 private
 intersectHorizontal: other
-	"Intersection with other line segment. Other must be horizontal (optimization purposes)"
+	"Intersection with other line segment. Self must be horizontal (optimization purposes)"
 
 	| pt |
-	pt := self intersectHorizontalLine: other.
-	pt ifNil: [ ^ nil ].
-	pt x < other left x | (pt x > other right x) | (pt y < self bottom y) | (pt y > self top y)
+	(pt := self intersectHorizontalLine: other) ifNil: [ ^ nil ].
+	pt x < self left x | (pt x > self right x) | (pt y < other bottom y) | (pt y > other top y)
 		ifTrue: [ ^ nil ].
 	^ pt

@@ -1,4 +1,4 @@
-A DCRTAbstractLineDecoration is a handler of head or tail of a line.
+A DCRTLineDecoration is an abstract handler of head or tail of a line.
 
 Usage: 
 	DCRTLineHead shape: DCRTEmptyArrow

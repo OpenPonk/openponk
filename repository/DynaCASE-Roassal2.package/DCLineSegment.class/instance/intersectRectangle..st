@@ -8,9 +8,9 @@ intersectRectangle: aRectangle
 	topLeft := aRectangle topLeft.
 	topRight := aRectangle topRight.
 	pts := Set new.
-	pts add: (self intersectHorizontal: (self class from: topLeft to: topRight)).
-	pts add: (self intersectHorizontal: (self class from: bottomLeft to: bottomRight)).
-	pts add: (self intersectVertical: (self class from: topLeft to: bottomLeft)).
-	pts add: (self intersectVertical: (self class from: topRight to: bottomRight)).
+	pts add: ((self class from: topLeft to: topRight) intersectHorizontal: self).
+	pts add: ((self class from: bottomLeft to: bottomRight) intersectHorizontal: self).
+	pts add: ((self class from: topLeft to: bottomLeft) intersectVertical: self).
+	pts add: ((self class from: topRight to: bottomRight) intersectVertical: self).
 	pts remove: nil ifAbsent: [  ].
 	^ pts

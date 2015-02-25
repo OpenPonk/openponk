@@ -8,7 +8,7 @@ baseline: spec
 					className: #ConfigurationOfRoassal2;
 					versionString: #'development';
 					repository: 'http://smalltalkhub.com/mc/ObjectProfile/Roassal2/main/' ];
-			project: 'STON' with: [
+			project: 'Ston' with: [
 				spec
 					className: #ConfigurationOfSton;
 					versionString: #'stable';

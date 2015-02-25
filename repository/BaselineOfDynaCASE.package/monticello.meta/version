@@ -1,1 +1,2 @@
-(name 'BaselineOfDynaCASE-PeterUhnak.1' message 'Added baseline.' id 'deb53455-15eb-4289-9bd9-40332b18da8b' date '20 February 2015' time '10:29:18.69812 pm' author 'PeterUhnak' ancestors () stepChildren ())
+(name 'BaselineOfDynaCASE-PeterUhnak.2' message 'Update the baseline to (hopefully) properly load packages.' id '451f2899-4c62-4670-b1cc-1f575ad3104e' date '25 February 2015' time '2:10:23.70244 pm' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnÃk.1' message 'Added baseline.
+' id '64c6a33d-38f4-5f49-9606-f210047bc15e' date '20 February 2015' time '10:29:18 pm' author 'PeterUhnÃk' ancestors () stepChildren ())) stepChildren ())

@@ -14,7 +14,8 @@ baseline: spec
 					versionString: #'stable';
 					repository: 'http://smalltalkhub.com/mc/SvenVanCaekenberghe/STON/main/' ].
 		spec 
-			package: 'DynaCASE';
+			package: 'DynaCASE' with: [
+				spec requires: #('Roassal2' 'Ston' ). ];
 			package: 'DynaCASE-FSM';
 			package: 'DynaCASE-OntoUML';
 			package: 'DynaCASE-Roassal2';

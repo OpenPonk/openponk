@@ -1,0 +1,18 @@
+{
+	"category" : "DynaCASE-Roassal2-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"el",
+		"elX",
+		"elD",
+		"edgeX",
+		"edgeD" ],
+	"name" : "DCRTRectangleAttachPointTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

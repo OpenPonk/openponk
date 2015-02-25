@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2-LineDecorations",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "bliznjan 2/24/2015 11:50",
+	"instvars" : [
+		"shape" ],
+	"name" : "DCRTLineDecoration",
+	"pools" : [
+		 ],
+	"super" : "RTLineDecoration",
+	"type" : "normal" }

@@ -1,4 +1,4 @@
-as yet unclassified
+adding
 addLabelNamed: aSymbol to: anEdge
 	| label |
 	label := (RTLabel new

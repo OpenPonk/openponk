@@ -1,3 +1,3 @@
 hooks
 trachelShapeClass
-	^ TRAbstractLineDecoratorShape 
+	^ TRAbstractLineDecoratorShape

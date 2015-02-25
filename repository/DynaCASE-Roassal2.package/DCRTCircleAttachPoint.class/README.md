@@ -1,0 +1,1 @@
+Continuous attach point which presumes both shapes are circles whose radius = half of width of encompassingRectangle

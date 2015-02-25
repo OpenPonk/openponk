@@ -4,11 +4,11 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "bliznjan 2/23/2015 13:16",
 	"instvars" : [
 		 ],
 	"name" : "DCRTCircleAttachPoint",
 	"pools" : [
 		 ],
-	"super" : "DCRTEncompassingAttachPoint",
+	"super" : "DCRTContinuousAttachPoint",
 	"type" : "normal" }

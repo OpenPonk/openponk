@@ -1,0 +1,1 @@
+A DCLineSegment is line from 'from' point to 'to' point

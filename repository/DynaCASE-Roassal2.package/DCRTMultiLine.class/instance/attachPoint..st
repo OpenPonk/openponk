@@ -1,5 +1,5 @@
 attach point
 attachPoint: anAttachPoint
-	tail ifNotNil: [ tail attachPoint: anAttachPoint ].
-	head ifNotNil: [ head attachPoint: anAttachPoint ].
+	tail attachPoint: anAttachPoint.
+	head attachPoint: anAttachPoint.
 	attachPoint := anAttachPoint

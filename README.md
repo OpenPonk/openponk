@@ -2,7 +2,7 @@ DynaCASE
 ========
 
 
-1. install GitFileTree
+ - 1. install GitFileTree
 ```
 Gofer new
   url: 'http://smalltalkhub.com/mc/Pharo/MetaRepoForPharo30/main';
@@ -10,9 +10,15 @@ Gofer new
   loadDevelopment.
 ```
 
-2. clone git repo
+- 2. clone git repo
 ```
-git clone git@github.com:dynacase/dynacase.git
+git clone git@github.com:dynacase/dynacase.git /my/path/to/dynacase
 ```
 
-3. add local repo via Monticello (`gitfiletree:///my/path/to/wherever/repository`)
+- 3. load project from local repo
+```
+Metacello new
+    baseline: 'DynaCASE';
+    repository: 'gitfiletree:///my/path/to/dynacase/repository';
+    load.
+```

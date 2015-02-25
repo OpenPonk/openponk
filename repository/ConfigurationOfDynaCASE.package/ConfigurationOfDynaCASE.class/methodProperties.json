@@ -1,17 +1,17 @@
 {
 	"class" : {
-		"DevelopmentSupport" : "PeterUhnak 7/26/2014 15:05",
-		"baseConfigurationClassIfAbsent:" : "PeterUhnak 7/26/2014 15:05",
-		"ensureMetacello" : "PeterUhnak 7/26/2014 15:05",
-		"ensureMetacelloBaseConfiguration" : "PeterUhnak 7/26/2014 15:05",
-		"isMetacelloConfig" : "PeterUhnak 7/26/2014 15:05",
-		"load" : "PeterUhnak 7/26/2014 15:05",
-		"loadBleedingEdge" : "PeterUhnak 7/26/2014 15:05",
-		"loadDevelopment" : "PeterUhnak 7/26/2014 15:05",
-		"project" : "PeterUhnak 7/26/2014 15:05",
-		"validate" : "PeterUhnak 7/26/2014 15:05" },
+		"DevelopmentSupport" : "PeterUhnak 11/3/2014 23:43:53",
+		"baseConfigurationClassIfAbsent:" : "PeterUhnak 11/3/2014 23:43:53",
+		"ensureMetacello" : "PeterUhnak 11/3/2014 23:43:53",
+		"ensureMetacelloBaseConfiguration" : "PeterUhnak 11/3/2014 23:43:53",
+		"isMetacelloConfig" : "PeterUhnak 11/3/2014 23:43:53",
+		"load" : "PeterUhnak 11/3/2014 23:43:53",
+		"loadBleedingEdge" : "PeterUhnak 11/3/2014 23:43:53",
+		"loadDevelopment" : "PeterUhnak 11/3/2014 23:43:53",
+		"project" : "PeterUhnak 11/3/2014 23:43:53",
+		"validate" : "PeterUhnak 11/3/2014 23:43:53" },
 	"instance" : {
-		"baseline01:" : "PeterUhnak 11/3/2014 23:43",
-		"customProjectAttributes" : "PeterUhnak 7/26/2014 15:05",
-		"development:" : "PeterUhnak 7/26/2014 15:05",
-		"project" : "PeterUhnak 7/26/2014 15:05" } }
+		"baseline01:" : "PeterUhnak 2/25/2015 14:05",
+		"customProjectAttributes" : "PeterUhnak 11/3/2014 23:43:53",
+		"development:" : "PeterUhnak 11/3/2014 23:43:53",
+		"project" : "PeterUhnak 11/3/2014 23:43:53" } }

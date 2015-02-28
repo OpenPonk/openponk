@@ -7,12 +7,15 @@
 		"createTopGroup" : "PeterUhnak 10/11/2014 17:57",
 		"deepCleanGroup:" : "PeterUhnak 12/2/2014 18:31",
 		"element" : "PeterUhnak 10/10/2014 01:42",
+		"encompassingRectangle" : "bliznjan 2/28/2015 18:03",
 		"initialize" : "PeterUhnak 11/5/2014 19:20",
 		"initializeCallbacks" : "bliznjan 10/19/2014 13:56",
 		"methods:" : "PeterUhnak 10/10/2014 18:02",
 		"name:" : "PeterUhnak 10/10/2014 01:47",
-		"renderIn:" : "PeterUhnak 10/11/2014 19:07",
+		"renderIn:" : "bliznjan 2/28/2015 18:16",
 		"stereotype:" : "PeterUhnak 10/10/2014 18:09",
 		"stereotypeFor:" : "PeterUhnak 10/11/2014 17:57",
-		"update" : "PeterUhnak 12/2/2014 18:31",
-		"updateSeparatorsWith:with:" : "PeterUhnak 10/11/2014 19:13" } }
+		"update" : "bliznjan 2/28/2015 18:58",
+		"updateSeparator:of:offset:" : "bliznjan 2/28/2015 18:54",
+		"updateSeparatorsWith:with:" : "bliznjan 2/28/2015 18:35",
+		"updateSubgroup:of:" : "bliznjan 2/28/2015 19:07" } }

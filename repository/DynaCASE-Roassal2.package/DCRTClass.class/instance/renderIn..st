@@ -6,20 +6,15 @@ renderIn: aView
 	methodsGroup := RTGroup new.
 	separatorGroup := RTGroup new.
 	separatorGroup
-		add:
-			(DCRTClassSeparator new
-				build;
-				yourself).
-	separatorGroup
-		add:
-			(DCRTClassSeparator new
-				build;
-				yourself).
+		add: DCRTClassSeparator build;
+		add: DCRTClassSeparator build.
 	background @ RTDraggable.
 	RTNest new on: background nest: group.
-	aView add: background.
-	aView addAll: topGroup.
-	aView addAll: separatorGroup first.
-	aView addAll: separatorGroup second.
-	self initializeCallbacks.
-	self update
+	aView
+		add: background;
+		addAll: topGroup;
+		addAll: separatorGroup first;
+		addAll: separatorGroup second.
+	self
+		initializeCallbacks;
+		update

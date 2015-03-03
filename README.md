@@ -19,3 +19,7 @@ Metacello new
 	repository: 'gitfiletree:///my/path/to/dynacase/repository';
 	load.
 ```
+Windows note: Use forward slashes (/) even on Windows. For example
+```
+    repository: 'gitfiletree:///C:/Users/Username/Pharo/dynacase/repository';
+```

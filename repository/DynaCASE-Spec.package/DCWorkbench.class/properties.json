@@ -9,7 +9,6 @@
 		"topMenuModel",
 		"navigatorModel",
 		"tabManager",
-		"editorModel",
 		"formModel",
 		"project",
 		"projectController",

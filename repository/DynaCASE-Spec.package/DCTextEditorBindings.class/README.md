@@ -1,1 +1,0 @@
-I am a bindings holder to be used for TextModel>>doItReceiver: to allow direct access to my internals through editor.

@@ -5,10 +5,9 @@ defaultSpec
 					row
 						newColumn: [ :col | 
 									col
-										add: #canvasModel origin: 0 @ 0 corner: 1 @ 0.8;
+										add: #canvasModel;
 										addSplitter;
-										add: #canvasMenuModel height: (self toolbarHeight + 6);
-										add: #textEditorModel ]
+										add: #canvasMenuModel height: self toolbarHeight - 1 ]
 							origin: 0 @ 0
 							corner: 0.8 @ 1;
 						addSplitter;

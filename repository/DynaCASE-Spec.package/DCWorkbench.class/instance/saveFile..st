@@ -5,5 +5,4 @@ saveFile: aFileName
 	self projectController persistLayouts.
 	serializedProject := serializer serializeProject: project.
 	StandardFileStream forceNewFileNamed: aFileName do: [ :stream | STON put: serializedProject onStreamPretty: stream ].
-	project beClean.
-	DCOpenWorkbenchDialog addToRecent: aFileName named: project projectName
+	project beClean

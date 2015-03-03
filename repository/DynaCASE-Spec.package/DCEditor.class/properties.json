@@ -9,7 +9,6 @@
 		"canvasModel",
 		"diagramController",
 		"paletteModel",
-		"textEditorModel",
 		"workbench",
 		"canvasMenuModel" ],
 	"name" : "DCEditor",

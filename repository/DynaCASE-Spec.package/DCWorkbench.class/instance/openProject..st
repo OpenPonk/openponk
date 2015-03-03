@@ -4,7 +4,6 @@ openProject: aProject
 	project := aProject.
 	(projectController := DCProjectController new)
 		project: project;
-		editor: self editorModel;
 		workbench: self.
 	self updateTitle.
 	project whenChanged: [ self updateTitle ].

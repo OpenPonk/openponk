@@ -1,6 +1,10 @@
 DynaCASE
 ========
 
+Pharo 4.0 is not frozen yet, thus using latest image may result in unexpected errors.
+
+Try using **40500** (2015-02-23 18:13) (http://files.pharo.org/image/40/40500.zip)
+
 
 - 1. clone git repo
 ```

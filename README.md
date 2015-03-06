@@ -5,7 +5,7 @@ DynaCASE
 - 1. clone git repo
 ```
 # for read-only
-https://github.com/dynacase/dynacase.git /my/path/to/dynacase
+git clone https://github.com/dynacase/dynacase.git /my/path/to/dynacase
 
 # for read-write
 git clone git@github.com:dynacase/dynacase.git /my/path/to/dynacase

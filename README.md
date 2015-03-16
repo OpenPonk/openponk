@@ -17,7 +17,7 @@ git clone git@github.com:dynacase/dynacase.git /my/path/to/dynacase
 
  - 2. install GitFileTree & load project
 
-NOTE that you should point Metacello to ''repository'' subfolder, not the root folder.
+NOTE that you should point Metacello to `repository` subfolder, not the root folder.
  
 ```
 Gofer new

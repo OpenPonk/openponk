@@ -27,7 +27,7 @@ Gofer new
 
 Metacello new
 	baseline: 'DynaCASE';
-	repository: 'gitfiletree:///my/path/to/dynacase/repository';
+	repository: 'gitfiletree:///my_path_to_dynacase/repository';
 	load.
 ```
 

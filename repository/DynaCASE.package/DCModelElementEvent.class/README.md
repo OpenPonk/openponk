@@ -1,1 +1,0 @@
-I am a base class for model element events. I am announced when the element changes.

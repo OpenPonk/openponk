@@ -1,1 +1,0 @@
-I am a base class for model events.

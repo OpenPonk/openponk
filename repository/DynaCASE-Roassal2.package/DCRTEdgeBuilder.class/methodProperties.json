@@ -2,11 +2,11 @@
 	"class" : {
 		 },
 	"instance" : {
-		"addLabelNamed:to:" : "PeterUhnak 11/24/2014 22:45",
-		"constraint:balance:offset:" : "bliznjan 11/11/2014 16:05",
-		"constraint:toSourceDistance:offset:" : "bliznjan 11/13/2014 16:58",
-		"constraint:toTargetDistance:offset:" : "bliznjan 11/13/2014 16:58",
-		"createEdgeFrom:to:" : "bliznjan 2/23/2015 13:43",
-		"createLineFrom:to:" : "bliznjan 2/20/2015 12:48",
-		"defaultColor" : "PeterUhnak 10/19/2014 23:01",
-		"updateLabel:whenChanged:" : "PeterUhnak 10/19/2014 23:06" } }
+		"addLabelNamed:to:" : "bliznjan 2/28/2015 19:16:05",
+		"constraint:balance:offset:" : "bliznjan 2/28/2015 19:16:05",
+		"constraint:toSourceDistance:offset:" : "bliznjan 2/28/2015 19:16:05",
+		"constraint:toTargetDistance:offset:" : "bliznjan 2/28/2015 19:16:05",
+		"createEdgeFrom:to:" : "bliznjan 2/28/2015 19:16:05",
+		"createLineFrom:to:" : "bliznjan 2/28/2015 19:16:05",
+		"defaultColor" : "bliznjan 2/28/2015 19:16:05",
+		"updateLabel:whenChanged:" : "bliznjan 2/28/2015 19:16:05" } }

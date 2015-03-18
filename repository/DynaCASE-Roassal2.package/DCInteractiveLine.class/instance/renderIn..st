@@ -9,7 +9,6 @@ renderIn: aView
 
 	line := lineBuilder value: source value: mouseBox.
 	line shape color: Color veryLightGray.
-	line shape attachPoint: RTShorterDistanceWithOffsetAttachPoint instance.
 
 	mouseBox translateTo: source position.
 	aView add: mouseBox.

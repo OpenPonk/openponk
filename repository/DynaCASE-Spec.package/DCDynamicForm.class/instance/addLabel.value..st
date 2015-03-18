@@ -2,5 +2,5 @@ adding
 addLabel: aName value: aString
 	| control |
 	control := self newLabel.
-	control text: aString.
+	control label: aString.
 	components add: (Array with: aName with: control)

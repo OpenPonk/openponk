@@ -2,8 +2,8 @@
 	"class" : {
 		 },
 	"instance" : {
-		"from:" : "PeterUhnak 10/6/2014 20:08",
-		"initialize" : "PeterUhnak 10/6/2014 20:19",
-		"lineBuilder:" : "PeterUhnak 10/6/2014 20:22",
-		"remove" : "PeterUhnak 11/3/2014 17:26",
-		"renderIn:" : "bliznjan 10/7/2014 10:33" } }
+		"from:" : "bliznjan 2/28/2015 19:16:05",
+		"initialize" : "bliznjan 2/28/2015 19:16:05",
+		"lineBuilder:" : "bliznjan 2/28/2015 19:16:05",
+		"remove" : "bliznjan 2/28/2015 19:16:05",
+		"renderIn:" : "bliznjan 3/18/2015 13:14" } }

@@ -3,12 +3,9 @@ baseline: spec
 	<baseline>
 	spec for: #'common' do: [
 		spec 
-			project: 'DynaCASE-Model' with: [ 
+			baseline: 'DynaCASEModel' with: [
 				spec
-					baseline: 'DynaCASEModel' with: [ 
-						spec repository: 'github://dynacase/dynacase-model'
-					]
-			];
+					repository: 'github://dynacase/dynacase-model/repository' ];
 			project: 'Roassal2' with: [
 				spec
 					className: #ConfigurationOfRoassal2;

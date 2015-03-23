@@ -1,3 +1,3 @@
-as yet unclassified
+accessing
 controllerNameFor: aModel
 	^ modelToControllerMapping at: aModel class

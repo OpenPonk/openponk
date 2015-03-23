@@ -1,9 +1,7 @@
 public
 updateLabel: aLabel whenChanged: aValueHolder
-	aLabel shape text: aValueHolder value.
-	aLabel update.
+	aLabel trachelShape text: aValueHolder value.
 	aValueHolder
 		whenChangedDo: [ :newValue | 
-			aLabel shape text: newValue.
-			aLabel update.
+			aLabel trachelShape text: newValue.
 			aLabel model signalUpdate ]

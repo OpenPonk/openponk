@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 reset
 	components := OrderedCollection new.
 	focusOrder := OrderedCollection new

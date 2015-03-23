@@ -1,3 +1,3 @@
 hooks
 refreshFigure
-	"nothing to do"
+	"do nothing"

@@ -1,8 +1,6 @@
 userinterface
 updateView
-	self controllers do: [ :each | each figure update ].	"does not work with DCUmliteClassController view"
-	self view edges
+	self controllers
 		do: [ :each | 
-			each pushBack.
-			each update ].
-	self view signalUpdate
+			each refreshFigure.
+			each figure trachelShape triggerCallbacksForStep: 0 @ 0 ]

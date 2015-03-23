@@ -2,11 +2,13 @@
 	"class" : {
 		 },
 	"instance" : {
-		"addLabelNamed:to:" : "bliznjan 2/28/2015 19:16:05",
-		"constraint:balance:offset:" : "bliznjan 2/28/2015 19:16:05",
-		"constraint:toSourceDistance:offset:" : "bliznjan 2/28/2015 19:16:05",
-		"constraint:toTargetDistance:offset:" : "bliznjan 2/28/2015 19:16:05",
-		"createEdgeFrom:to:" : "bliznjan 2/28/2015 19:16:05",
+		"addLabelNamed:to:" : "bliznjan 3/18/2015 13:19:35",
+		"constraint:balance:offset:" : "bliznjan 3/22/2015 20:54",
+		"constraint:below:" : "bliznjan 3/22/2015 20:34",
+		"constraint:toSourceDistance:offset:" : "bliznjan 3/18/2015 13:19:35",
+		"constraint:toTargetDistance:offset:" : "bliznjan 3/18/2015 13:19:35",
+		"createEdgeFrom:to:" : "bliznjan 3/22/2015 20:48",
+		"createEdgeFrom:to:head:" : "bliznjan 3/22/2015 20:44",
 		"createLineFrom:to:" : "bliznjan 2/28/2015 19:16:05",
-		"defaultColor" : "bliznjan 2/28/2015 19:16:05",
-		"updateLabel:whenChanged:" : "bliznjan 2/28/2015 19:16:05" } }
+		"defaultColor" : "bliznjan 3/18/2015 13:19:35",
+		"updateLabel:whenChanged:" : "bliznjan 3/22/2015 17:59" } }

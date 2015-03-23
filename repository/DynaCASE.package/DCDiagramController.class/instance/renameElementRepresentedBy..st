@@ -1,3 +1,3 @@
-as yet unclassified
+actions
 renameElementRepresentedBy: aFigure
 	(self controllerForFigure: aFigure) rename

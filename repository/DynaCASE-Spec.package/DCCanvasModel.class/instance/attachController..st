@@ -1,5 +1,5 @@
 accessing
 attachController: aDiagramController
-	aDiagramController view: roassalView.
-	aDiagramController whenFigureAdded: [ :figure | self figureAdded: figure ].
-	diagramController := aDiagramController
+	(diagramController := aDiagramController)
+		view: roassalView;
+		whenFigureAdded: [ :figure | self figureAdded: figure ]

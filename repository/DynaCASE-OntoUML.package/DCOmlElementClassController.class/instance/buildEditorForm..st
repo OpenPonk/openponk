@@ -1,10 +1,6 @@
 hooks
 buildEditorForm: aForm
-	aForm
-		addTextInput: 'name'
-		label: 'name'
-		value: self model name
-		onChange: [ :newValue | self model name: newValue ].
+	super buildEditorForm: aForm.
 	aForm
 		addTextArea: 'attrs'
 		label: 'attributes'

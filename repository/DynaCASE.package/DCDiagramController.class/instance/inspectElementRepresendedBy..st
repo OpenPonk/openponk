@@ -1,3 +1,3 @@
-as yet unclassified
+debugging
 inspectElementRepresendedBy: aFigure
 	(self controllerForFigure: aFigure) inspectModel

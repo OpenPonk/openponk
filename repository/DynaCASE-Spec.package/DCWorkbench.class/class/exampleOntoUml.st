@@ -1,5 +1,6 @@
 examples
 exampleOntoUml
+	<example:'DynaCASE example OntoUML'>
 	| diagram project firstKind secondKind basicAssociation subKind generalization |
 	project := DCProject new projectName: 'Example OntoUML'.
 	diagram := DCOmlDiagram new name: 'OntoUML diagram'.

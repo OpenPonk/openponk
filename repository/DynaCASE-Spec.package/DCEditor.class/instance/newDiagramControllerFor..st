@@ -3,7 +3,8 @@ newDiagramControllerFor: aDiagram
 	| d |
 	d := {(DCFsm -> DCFsmController).
 	(DCUmliteDiagram -> DCUmliteController).
-	(DCOmlDiagram -> DCOmlController) } asDictionary.
+	(DCOmlDiagram -> DCOmlController).
+	(BormDiagram -> BormDiagramController) } asDictionary.
 	d
 		at: aDiagram class
 		ifPresent: [ :class | 

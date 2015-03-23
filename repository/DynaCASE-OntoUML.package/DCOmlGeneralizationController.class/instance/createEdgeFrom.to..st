@@ -4,8 +4,5 @@ createEdgeFrom: fromFigure to: toFigure
 	^ DCRTCallbackBuilder
 		block: [ :view | 
 			builder := DCRTEdgeBuilder new.
-			edge := builder createEdgeFrom: fromFigure to: toFigure.
-			edge shape emptyNarrowArrowHead.
-			edge resetShape.
-			edge shape color: Color black.
+			edge := builder createEdgeFrom: fromFigure to: toFigure head: DCRTEmptyNarrowArrow.
 			edge ]

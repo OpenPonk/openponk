@@ -4,7 +4,7 @@ createEdgeFrom: fromFigure to: toFigure
 	^ DCRTCallbackBuilder
 		block: [ :view | 
 			builder := DCRTEdgeBuilder new.
-			edge := builder createLineFrom: fromFigure to: toFigure.
+			edge := builder createEdgeFrom: fromFigure to: toFigure.
 			view add: edge.
 
 			label := builder addLabelNamed: #name to: edge.
@@ -15,4 +15,5 @@ createEdgeFrom: fromFigure to: toFigure
 
 			targetMultiplicityLabel := builder addLabelNamed: #targetMultiplicity to: edge.
 			builder constraint: targetMultiplicityLabel toTargetDistance: 10 offset: 12.
+			
 			edge ]

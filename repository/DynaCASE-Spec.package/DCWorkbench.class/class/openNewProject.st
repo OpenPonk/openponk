@@ -1,4 +1,4 @@
-as yet unclassified
+instance creation
 openNewProject
 	| project diagram |
 	project := DCProject new projectName: 'New Project'.

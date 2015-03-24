@@ -1,3 +1,3 @@
-initialization
+public
 defaultColor
-	^ Color black
+	^ shape color: Color black

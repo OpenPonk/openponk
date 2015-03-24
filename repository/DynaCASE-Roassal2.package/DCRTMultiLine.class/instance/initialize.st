@@ -1,6 +1,4 @@
 initialization
 initialize
 	super initialize.
-	self
-		notDecorated;
-		withContinuousRectangleAttachPoint
+	self notDecorated

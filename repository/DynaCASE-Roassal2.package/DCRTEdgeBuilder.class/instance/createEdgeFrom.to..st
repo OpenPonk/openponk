@@ -1,3 +1,7 @@
 public
 createEdgeFrom: fromElement to: toElement
-	^ self createEdgeFrom: fromElement to: toElement head: DCRTNoDecorationShape
+	"creates edge without labels"
+
+	^ (shape edgeFrom: fromElement to: toElement)
+		@ DCRTFocusable;
+		yourself

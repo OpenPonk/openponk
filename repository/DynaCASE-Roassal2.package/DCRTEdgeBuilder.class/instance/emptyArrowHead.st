@@ -1,0 +1,3 @@
+heads
+emptyArrowHead
+	shape emptyArrowHead

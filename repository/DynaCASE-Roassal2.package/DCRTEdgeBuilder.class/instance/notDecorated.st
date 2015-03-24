@@ -1,0 +1,3 @@
+heads
+notDecorated
+	shape notDecorated

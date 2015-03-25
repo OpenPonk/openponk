@@ -1,0 +1,3 @@
+adding
+addAsSourceFor: aController
+	self subclassResponsibility

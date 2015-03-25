@@ -1,0 +1,5 @@
+*.package/monticello.meta/version       merge=mcVersion
+*.package/*.class/methodProperties.json     merge=mcMethodProperties
+*.package/*.class/properties.json       merge=mcProperties
+*.package/*.extension/methodProperties.json     merge=mcMethodProperties
+*.package/*.extension/properties.json       merge=mcProperties

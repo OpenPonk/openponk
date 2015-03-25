@@ -1,0 +1,3 @@
+adding
+addAsTargetFor: aController
+	self subclassResponsibility

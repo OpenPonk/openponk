@@ -6,6 +6,12 @@ childrenFor: anObject
 		ifTrue: [ col addAll: anObject elements ].
 	(anObject isKindOf: DCNamedElement)
 		ifTrue: [ 
-			"responsibility of subclasses"
-			 ].
+			| name "todo: double dispatch?" |
+			name := anObject class asString asSymbol.
+			name = #BormParticipant
+				ifTrue: [ col addAll: anObject nodes ].
+			name = #BormActivity | (name = #BormState)
+				ifTrue: [ col addAll: anObject outgoing ].
+			name = #BormActivity
+				ifTrue: [ col addAll: anObject sent ] ].
 	^ col

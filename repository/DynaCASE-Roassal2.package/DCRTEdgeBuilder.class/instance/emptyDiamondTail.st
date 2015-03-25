@@ -1,0 +1,3 @@
+heads
+emptyDiamondTail
+	shape emptyDiamondTail

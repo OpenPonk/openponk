@@ -1,4 +1,4 @@
-as yet unclassified
+actions
 rename
 	| result modelObject |
 	modelObject := self model.

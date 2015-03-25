@@ -21,7 +21,7 @@ NOTE that you should point Metacello to `repository` subfolder, not the root fol
  
 ```
 Gofer new
-	url: 'http://smalltalkhub.com/mc/Pharo/MetaRepoForPharo30/main';
+	url: 'http://smalltalkhub.com/mc/Pharo/MetaRepoForPharo40/main';
 	configurationOf: 'GitFileTree';
 	loadDevelopment.
 

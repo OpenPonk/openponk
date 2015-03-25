@@ -1,3 +1,3 @@
-as yet unclassified
+debugging
 inspectModel
 	self model inspect

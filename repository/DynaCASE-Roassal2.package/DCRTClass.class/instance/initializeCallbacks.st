@@ -2,13 +2,11 @@ private
 initializeCallbacks
 	stereotype
 		whenChangedDo: [ :newValue | 
-			topGroup first shape text: (self stereotypeFor: newValue).
-			topGroup first update.
+			topGroup first trachelShape text: (self stereotypeFor: newValue).
 			self update ].
 	name
 		whenChangedDo: [ :newValue | 
-			topGroup last shape text: newValue.
-			topGroup last update.
+			topGroup last trachelShape text: newValue.
 			self update ].
 	attributes whenChangedDo: [ :newValue | self update ].
 	methods whenChangedDo: [ :newValue | self update ].

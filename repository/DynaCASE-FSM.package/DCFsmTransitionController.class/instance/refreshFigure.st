@@ -1,5 +1,4 @@
 hooks
 refreshFigure
-	(figure labels at: #name) shape text: self model name.
-	(figure labels at: #name) update.
-	figure signalUpdate
+	self figureLabel: #name text: self model name.
+	super refreshFigure

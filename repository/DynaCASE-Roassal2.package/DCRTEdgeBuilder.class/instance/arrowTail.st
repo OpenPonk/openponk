@@ -1,0 +1,3 @@
+heads
+arrowTail
+	shape arrowTail

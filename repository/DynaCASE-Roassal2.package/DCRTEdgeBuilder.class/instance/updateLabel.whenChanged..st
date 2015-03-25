@@ -1,9 +1,9 @@
-public
-updateLabel: aLabel whenChanged: aValueHolder
-	aLabel shape text: aValueHolder value.
-	aLabel update.
+labels
+updateLabel: aSymbol whenChanged: aValueHolder
+	| label |
+	label := self labelNamed: aSymbol.
+	label trachelShape text: aValueHolder value.
 	aValueHolder
 		whenChangedDo: [ :newValue | 
-			aLabel shape text: newValue.
-			aLabel update.
-			aLabel model signalUpdate ]
+			label trachelShape text: newValue.
+			label signalUpdate ]

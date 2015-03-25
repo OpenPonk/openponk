@@ -1,11 +1,9 @@
 diagram handling
 newDiagramControllerFor: aDiagram
-	| d |
-	d := {(DCFsm -> DCFsmController).
-	(DCUmliteDiagram -> DCUmliteController).
-	(DCOmlDiagram -> DCOmlController).
-	(BormDiagram -> BormDiagramController) } asDictionary.
-	d
+	| diagramControllers |
+ 	diagramControllers := Dictionary new.
+ 	DCDiagramController allSubclasses do: [ :each | diagramControllers at: each modelClass put: each ].
+ 	diagramControllers
 		at: aDiagram class
 		ifPresent: [ :class | 
 			^ class new

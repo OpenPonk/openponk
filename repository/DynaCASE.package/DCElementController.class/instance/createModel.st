@@ -1,3 +1,3 @@
 hooks
 createModel
-	^ self modelClass new
+	^ self model ifNil: [ self modelClass new ]

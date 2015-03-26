@@ -1,4 +1,4 @@
-examples
+*DynaCASE-FSM
 exampleFsm
 	<example:'DynaCASE example FSM'>
 	| project fsm initial first second final t1 t2 t3 t4 |

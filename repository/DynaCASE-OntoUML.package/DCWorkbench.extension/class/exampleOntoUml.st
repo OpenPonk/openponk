@@ -1,4 +1,4 @@
-examples
+*DynaCASE-OntoUML
 exampleOntoUml
 	<example:'DynaCASE example OntoUML'>
 	| diagram project firstKind secondKind basicAssociation subKind generalization |

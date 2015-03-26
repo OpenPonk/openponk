@@ -1,5 +1,6 @@
-examples
+*DynaCASE-Umlite
 exampleUmlite
+"	<example:'DynaCASE example Umlite'>"
 	| diagram firstClass secondClass a1 project |
 	project := DCProject new projectName: 'Example Umlite'.
 	diagram := DCUmliteDiagram new name: 'Umlite diagram'.

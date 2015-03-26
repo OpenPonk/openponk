@@ -1,12 +1,12 @@
 {
 	"class" : {
-		"shape:" : "bliznjan 2/28/2015 19:16:05" },
+		"shape:" : "bliznjan 3/18/2015 13:19:35" },
 	"instance" : {
-		"asHead" : "bliznjan 2/28/2015 19:16:05",
-		"asTail" : "bliznjan 2/28/2015 19:16:05",
-		"initialize" : "bliznjan 2/28/2015 19:16:05",
-		"shape" : "bliznjan 2/28/2015 19:16:05",
-		"shape:" : "bliznjan 2/28/2015 19:16:05",
-		"trachelShapeClass" : "bliznjan 2/28/2015 19:16:05",
-		"trachelShapeFor:from:to:" : "bliznjan 2/28/2015 19:16:05",
-		"updateFor:trachelShape:from:to:" : "bliznjan 2/28/2015 19:16:05" } }
+		"asHead" : "bliznjan 3/18/2015 13:19:35",
+		"asTail" : "bliznjan 3/18/2015 13:19:35",
+		"initialize" : "bliznjan 3/18/2015 13:19:35",
+		"shape" : "bliznjan 3/18/2015 13:19:35",
+		"shape:" : "bliznjan 3/18/2015 13:19:35",
+		"trachelShapeClass" : "bliznjan 3/18/2015 13:19:35",
+		"trachelShapeFor:from:to:" : "bliznjan 3/18/2015 13:19:35",
+		"updateFor:trachelShape:from:to:" : "bliznjan 3/18/2015 13:19:35" } }

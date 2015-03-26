@@ -27,16 +27,19 @@ Gofer new
 	loadDevelopment.
 
 "(optional) lock local version of DynaCASE model (if you need to make modifications to it)"
+"to get DynaCASE model for R/W clone it from here https://github.com/dynacase/dynacase-model"
+"
 Metacello new
 	baseline: 'DynaCASEModel';
 	repository: 'gitfiletree:///my_path_to_dynacase_model/repository';
 	lock.
+"
 
 "load DynaCASE"
 Metacello new
 	baseline: 'DynaCASE';
 	repository: 'gitfiletree:///my_path_to_dynacase/repository';
-	onConflict: [ :ex | ex allow ]; "required only if overriding packages"
+	"onConflict: [ :ex | ex allow ];" "required only if overriding packages"
 	load.
 ```
 

@@ -1,4 +1,4 @@
-(name 'DynaCASE-Roassal2-PeterUhnak.103' message 'Added DCRTResizable interaction (from BORM).' id '42807ff1-b69c-4896-b9a9-ee1ee2605a74' date '26 March 2015' time '4:30:18.468185 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Roassal2-bliznjan.102' message 'Revert "adapting to roassal changes"
+(name 'DynaCASE-Roassal2-PeterUhnak.104' message 'Added lineWidth:' id 'fbd7b208-a63a-430f-a27d-072e2fa8fad4' date '28 March 2015' time '1:09:10.076082 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Roassal2-bliznjan.102' message 'Revert "adapting to roassal changes"
 ' id 'a8869051-3a24-5363-bf01-4f3e4d011c24' date '24 March 2015' time '11:42:33 pm' author 'bliznjan' ancestors ((name 'DynaCASE-Roassal2-bliznjan.101' message 'adapting to roassal changes
 ' id '177be16b-88a6-51a7-8164-75c43d8fe4db' date '24 March 2015' time '7:04:15 pm' author 'bliznjan' ancestors ((name 'DynaCASE-Roassal2-bliznjan.100' message 'improved DCRTEdgeBuilder
 ' id '737646be-3606-5d76-9170-6d291b6a43c1' date '24 March 2015' time '3:32:41 pm' author 'bliznjan' ancestors ((name 'DynaCASE-Roassal2-bliznjan.98' message 'Use default DCRTMultiline attachPoint

@@ -1,6 +1,6 @@
 {
 	"class" : {
-		"modelClass" : "bliznjan 3/23/2015 14:22" },
+		"modelClass" : "PeterUhnak 3/26/2015 00:10:59" },
 	"instance" : {
 		"addAsSourceFor:" : "PeterUhnÃk 3/24/2015 01:26:50",
 		"addAsTargetFor:" : "PeterUhnÃk 3/24/2015 01:26:50",
@@ -13,9 +13,9 @@
 		"layout:" : "PeterUhnÃk 3/24/2015 01:26:50",
 		"model" : "PeterUhnÃk 3/24/2015 01:26:50",
 		"model:" : "PeterUhnÃk 3/24/2015 01:26:50",
-		"modelClass" : "bliznjan 3/23/2015 14:19",
+		"modelClass" : "PeterUhnak 3/26/2015 00:10:59",
 		"parent" : "PeterUhnÃk 3/24/2015 01:26:50",
 		"parent:" : "PeterUhnÃk 3/24/2015 01:26:50",
-		"refreshFigure" : "bliznjan 3/24/2015 12:20",
+		"refreshFigure" : "PeterUhnak 3/26/2015 00:10:59",
 		"remove" : "PeterUhnÃk 3/24/2015 01:26:50",
 		"showSelectionFeedback" : "PeterUhnÃk 3/24/2015 01:26:50" } }

@@ -2,7 +2,8 @@
 	"class" : {
 		 },
 	"instance" : {
-		"createIcons" : "PeterUhnÃk 3/24/2015 01:26:50",
+		"createBasicDCIcons" : "PeterUhnak 3/28/2015 14:59",
+		"createIconsFromDirectory:" : "PeterUhnak 3/28/2015 14:58",
 		"dcFsmDiagramIcon" : "PeterUhnÃk 3/24/2015 01:26:50",
 		"dcFsmDiagramIconContents" : "PeterUhnÃk 3/24/2015 01:26:50",
 		"dcFsmFinalStateIcon" : "PeterUhnÃk 3/24/2015 01:26:50",

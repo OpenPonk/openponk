@@ -36,7 +36,14 @@ initializeCanvasMenu
 			group
 				addItem: [ :item | 
 					item
-						name: 'Layout';
+						name: 'RTLayout';
 						description: 'Layout diagram';
-						action: [ self showLayoutSubmenu ] ] ].
+						action: [ self showLayoutSubmenu ] ].
+			group
+				addItem: [ :item | 
+					item
+						name: 'Diagram Controller';
+						description: 'Inspect Diagram Controller';
+						action: [ self editor diagramController inspect ] ] ].
+
 	menuModel applyTo: self

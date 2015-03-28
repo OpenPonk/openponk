@@ -1,6 +1,10 @@
 {
 	"class" : {
-		"changeExtentOf:like:plus:" : "bliznjan 2/16/2015 10:00",
-		"keepExtentOf:like:plus:" : "bliznjan 2/24/2015 11:19" },
+		"changeExtentOf:like:plus:" : "bliznjan 2/24/2015 13:15:48",
+		"keepExtentOf:like:plus:" : "bliznjan 2/24/2015 13:15:48",
+		"move:onTheTopRightOf:" : "PeterUhnak 3/28/2015 15:44",
+		"move:onTheTopRightOf:withPadding:" : "PeterUhnak 3/28/2015 15:45",
+		"move:onTheTopRightOf:withWidthPadding:withHeightPadding:" : "PeterUhnak 3/28/2015 15:44",
+		"stick:onTheTopRightOf:" : "PeterUhnak 3/28/2015 15:44" },
 	"instance" : {
 		 } }

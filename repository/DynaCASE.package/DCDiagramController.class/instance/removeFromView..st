@@ -1,5 +1,8 @@
 removing
 removeFromView: aFigure
-	model remove: (self controllerForFigure: aFigure) model	"	controller := self findControllerByView: aViewElement.
-	self controllers remove: controller.
-	controller view remove"
+	"Remove an object represented by aFigure from the model.
+	It is object's owner's controller responsibility to remove the object."
+
+	| removedModel |
+	removedModel := (self controllerForFigure: aFigure) model.
+	(self controllerForModel: removedModel owner) removeModelElement: removedModel

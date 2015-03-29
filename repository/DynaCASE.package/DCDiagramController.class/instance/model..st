@@ -1,6 +1,7 @@
 accessing
 model: aModel
 	model := aModel.
+	self registerModelEvents: model.
 "	model
 		when: DCElementAdded
 		do: [ :event | 
@@ -9,5 +10,5 @@ model: aModel
 	model
 		when: DCElementRemoved
 		do: [ :event |
-			self removeModelElement: event element.
+			self removeControllerOf: event element.
 			self updateView ]

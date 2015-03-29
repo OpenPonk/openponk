@@ -1,0 +1,3 @@
+accessing
+borderRadiusElement: aValueOrAOneArgBlock
+	borderRadius := aValueOrAOneArgBlock

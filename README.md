@@ -1,16 +1,24 @@
 DynaCASE
 ========
 
-Pharo 4.0 is not frozen yet, thus using latest image may result in unexpected errors.
+If you want to just try it, run
 
-Try using **40500** (2015-02-23 18:13) (http://files.pharo.org/image/40/40500.zip)
-
-
-- 1. clone git repo
 ```
-# for read-only
-git clone https://github.com/dynacase/dynacase.git /my/path/to/dynacase
+Gofer new
+    url: 'http://smalltalkhub.com/mc/Pharo/MetaRepoForPharo40/main';
+    configurationOf: 'GitFileTree';
+    loadDevelopment.
 
+Metacello new
+    baseline: 'DynaCASE';
+    repository: 'github://dynacase/dynacase/repository';
+    load.
+```
+
+For development purposes you need to have local git repository:
+
+- 1. clone git repo (make sure it's `git@github` and not `https://...`)
+```
 # for read-write
 git clone git@github.com:dynacase/dynacase.git /my/path/to/dynacase
 ```

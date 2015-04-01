@@ -24,6 +24,5 @@ baseline: spec
 			package: 'DynaCASE-Roassal2';
 			package: 'DynaCASE-Spec';
 			package: 'DynaCASE-Trachel';
-			package: 'DynaCASE-Umlite';
 			package: 'GMF-MetaModel'.
-		spec group: 'default' with: #('DynaCASE' 'DynaCASE-FSM' 'DynaCASE-OntoUML' 'DynaCASE-Roassal2' 'DynaCASE-Spec' 'DynaCASE-Trachel' 'DynaCASE-Umlite' 'GMF-MetaModel' ). ].
+		spec group: 'default' with: #('DynaCASE' 'DynaCASE-FSM' 'DynaCASE-OntoUML' 'DynaCASE-Roassal2' 'DynaCASE-Spec' 'DynaCASE-Trachel' 'GMF-MetaModel' ). ].

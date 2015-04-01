@@ -5,7 +5,7 @@ addModelElement: aModelElement
 	(self model has: aModelElement)
 		ifFalse: [ self model add: aModelElement ].
 	controller := self createController: aModelElement.
-	controller parent: self.
+	controller diagramController: self.
 	self controllers add: controller.
 	(controller isKindOf: DCOmlGeneralizationController)
 		ifTrue: [ 

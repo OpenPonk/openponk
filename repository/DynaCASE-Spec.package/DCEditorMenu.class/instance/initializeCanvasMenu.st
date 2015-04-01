@@ -44,6 +44,12 @@ initializeCanvasMenu
 					item
 						name: 'Diagram Controller';
 						description: 'Inspect Diagram Controller';
-						action: [ self editor diagramController inspect ] ] ].
+						action: [ self editor diagramController inspect ] ].
+			group
+				addItem: [ :item | 
+					item
+						name: 'Inspect View';
+						description: 'Inspect View';
+						action: [ self canvasModel roassalView inspect ] ] ].
 
 	menuModel applyTo: self

@@ -5,4 +5,5 @@ defaultHeights
 	^ {(LabelModel -> (lineHeight - 5)).
 	(TextInputFieldModel -> lineHeight).
 	(TextModel -> (lineHeight * 4)).
+	(DropListModel -> (lineHeight)).
 	(CheckBoxModel -> (lineHeight * 1))} asDictionary

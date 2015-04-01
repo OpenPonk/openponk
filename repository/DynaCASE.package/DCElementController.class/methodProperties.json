@@ -2,6 +2,7 @@
 	"class" : {
 		 },
 	"instance" : {
+		"attach" : "PeterUhnak 4/1/2015 20:45",
 		"buildEditorForm:" : "PeterUhnÃk 3/24/2015 01:26:50",
 		"createFigure" : "PeterUhnÃk 3/24/2015 01:26:50",
 		"createModel" : "PeterUhnak 3/25/2015 21:26",
@@ -13,7 +14,7 @@
 		"inspectModel" : "PeterUhnak 3/26/2015 00:10:59",
 		"layout" : "PeterUhnÃk 3/24/2015 01:26:50",
 		"layout:" : "PeterUhnÃk 3/24/2015 01:26:50",
-		"registerModelEvents:" : "PeterUhnak 4/1/2015 18:19",
+		"registerModelEvents:" : "PeterUhnak 4/1/2015 19:30",
 		"remove" : "PeterUhnak 4/1/2015 18:35",
 		"rename" : "PeterUhnak 3/26/2015 00:10:59",
 		"showSelectionFeedback" : "PeterUhnÃk 3/24/2015 01:26:50" } }

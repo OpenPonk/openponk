@@ -4,4 +4,4 @@ registerModelEvents: aModel
 		when: DCElementRemoved
 		do: [ :event | 
 			self diagramController removeControllerOf: event element.
-			self updateView ]
+			self diagramController updateView ]

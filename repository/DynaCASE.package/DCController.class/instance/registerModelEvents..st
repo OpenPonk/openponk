@@ -1,3 +1,7 @@
 events - registering
 registerModelEvents: aModel
-	"by default do nothing"
+	aModel
+		when: DCElementRemoved
+		do: [ :event | 
+			self diagramController removeControllerOf: event element.
+			self updateView ]

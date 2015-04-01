@@ -1,3 +1,3 @@
 initialization
 initialize
-	model := nil asValueHolder
+	model := nil

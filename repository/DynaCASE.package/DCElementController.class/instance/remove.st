@@ -1,7 +1,7 @@
 actions
 remove
 	super remove.
-	self parent deselectAll.
+	self diagramController deselectAll.
 	figure view
 		ifNotNil: [ 
 			figure remove.

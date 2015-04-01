@@ -5,9 +5,9 @@ addAsTargetFor: aController
 	newModel := aController createModel.
 	self model add: newModel.
 	aController
-		parent: self;
+		diagramController: self diagramController;
 		model: newModel.
-	self controllers add: aController.
+	self diagramController controllers add: aController.
 	newFigure := aController figure.
 	newFigure view ifNil: [ self view add: newFigure ].
 	figureAdded value: newFigure.

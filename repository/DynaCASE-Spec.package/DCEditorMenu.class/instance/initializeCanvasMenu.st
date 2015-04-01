@@ -5,20 +5,21 @@ initializeCanvasMenu
 			group
 				addItem: [ :item | 
 					item
-						name: '-';
 						description: 'Zoom out';
+						icon: Smalltalk ui icons dcZoomOutIcon;
 						action: [ self canvasModel zoom: self canvasModel zoom * 0.8 ] ].
 			group
 				addItem: [ :item | 
 					item
-						name: 'Zoom to 100%';
+						name: '100%';
 						description: 'Zoom to 100%';
+						icon: Smalltalk ui icons dcZoomIcon;
 						action: [ self canvasModel zoom: 1.0001 ] ].
 			group
 				addItem: [ :item | 
 					item
-						name: '+';
 						description: 'Zoom in';
+						icon: Smalltalk ui icons dcZoomInIcon;
 						action: [ self canvasModel zoom: self canvasModel zoom * 1.25 ] ].
 			group
 				addItem: [ :item | 
@@ -36,7 +37,7 @@ initializeCanvasMenu
 			group
 				addItem: [ :item | 
 					item
-						name: 'RTLayout';
+						name: 'Layout';
 						description: 'Layout diagram';
 						action: [ self showLayoutSubmenu ] ].
 			group
@@ -51,5 +52,4 @@ initializeCanvasMenu
 						name: 'Inspect View';
 						description: 'Inspect View';
 						action: [ self canvasModel roassalView inspect ] ] ].
-
 	menuModel applyTo: self

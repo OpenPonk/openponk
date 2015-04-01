@@ -1,3 +1,3 @@
 accessing
 model: aModel
-	model value: aModel
+	model := aModel

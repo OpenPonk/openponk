@@ -1,3 +1,3 @@
 accessing
 model
-	^ model value
+	^ model

@@ -1,0 +1,3 @@
+removing
+removeModelElement: aModelElement
+	self subclassResponsibility

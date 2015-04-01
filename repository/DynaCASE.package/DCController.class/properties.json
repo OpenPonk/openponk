@@ -8,7 +8,8 @@
 	"instvars" : [
 		"model",
 		"parent",
-		"selectionHolder" ],
+		"selectionHolder",
+		"diagramController" ],
 	"name" : "DCController",
 	"pools" : [
 		 ],

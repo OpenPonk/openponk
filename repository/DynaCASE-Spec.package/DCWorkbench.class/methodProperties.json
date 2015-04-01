@@ -1,6 +1,9 @@
 {
 	"class" : {
 		"defaultSpec" : "PeterUhnak 3/26/2015 00:10:59",
+		"exampleFsm" : "PeterUhnÃk 3/25/2015 07:10:23",
+		"exampleOntoUml" : "PeterUhnÃk 3/25/2015 07:10:23",
+		"exampleUmlite" : "PeterUhnÃk 3/25/2015 07:10:23",
 		"menuCommandOn:" : "PeterUhnak 3/26/2015 00:10:59",
 		"open" : "PeterUhnak 3/26/2015 00:10:59",
 		"openFromFile:" : "PeterUhnak 3/26/2015 00:10:59",

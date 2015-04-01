@@ -1,18 +1,18 @@
 {
 	"class" : {
-		"defaultSpec" : "PeterUhnÃk 3/25/2015 07:10:23" },
+		"defaultSpec" : "PeterUhnak 3/26/2015 00:10:59" },
 	"instance" : {
-		"applyLayoutFor:" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"canvasMenuModel" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"canvasModel" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"diagramController" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"initializeWidgets" : "PeterUhnÃk 3/25/2015 07:10:23",
+		"applyLayoutFor:" : "PeterUhnak 3/26/2015 00:10:59",
+		"canvasMenuModel" : "PeterUhnak 3/26/2015 00:10:59",
+		"canvasModel" : "PeterUhnak 3/26/2015 00:10:59",
+		"diagramController" : "PeterUhnak 3/26/2015 00:10:59",
+		"initializeWidgets" : "PeterUhnak 3/26/2015 00:10:59",
 		"newDiagramControllerFor:" : "PeterUhnak 3/26/2015 00:10:59",
-		"openDiagram:" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"paletteModel" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"rebuildPalette" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"rebuildWidget" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"selectEdgeItem:" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"selectElementItem:" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"workbench" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"workbench:" : "PeterUhnÃk 3/25/2015 07:10:23" } }
+		"openDiagram:" : "PeterUhnak 3/26/2015 00:10:59",
+		"paletteModel" : "PeterUhnak 3/26/2015 00:10:59",
+		"rebuildPalette" : "PeterUhnak 3/26/2015 00:10:59",
+		"rebuildWidget" : "PeterUhnak 3/26/2015 00:10:59",
+		"selectEdgeItem:" : "PeterUhnak 3/26/2015 00:10:59",
+		"selectElementItem:" : "PeterUhnak 3/26/2015 00:10:59",
+		"workbench" : "PeterUhnak 3/26/2015 00:10:59",
+		"workbench:" : "PeterUhnak 3/26/2015 00:10:59" } }

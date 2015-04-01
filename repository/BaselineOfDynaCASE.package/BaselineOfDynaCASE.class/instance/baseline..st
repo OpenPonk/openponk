@@ -19,10 +19,10 @@ baseline: spec
 		spec 
 			package: 'DynaCASE' with: [
 				spec requires: #('DynaCASEModel' 'Roassal2' 'Ston' ). ];
-			package: 'DynaCASE-FSM';
-			package: 'DynaCASE-OntoUML';
+			package: 'DynaCASE-Trachel';
 			package: 'DynaCASE-Roassal2';
 			package: 'DynaCASE-Spec';
-			package: 'DynaCASE-Trachel';
-			package: 'GMF-MetaModel'.
-		spec group: 'default' with: #('DynaCASE' 'DynaCASE-FSM' 'DynaCASE-OntoUML' 'DynaCASE-Roassal2' 'DynaCASE-Spec' 'DynaCASE-Trachel' 'GMF-MetaModel' ). ].
+			package: 'DynaCASE-FSM';
+			package: 'GMF-MetaModel';
+			package: 'DynaCASE-OntoUML'.
+		spec group: 'default' with: #('DynaCASE' 'DynaCASE-Trachel' 'DynaCASE-Roassal2' 'DynaCASE-Spec' 'DynaCASE-FSM' 'GMF-MetaModel' 'DynaCASE-OntoUML' ). ].

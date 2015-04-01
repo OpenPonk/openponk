@@ -10,7 +10,6 @@
 		"diagramController:" : "PeterUhnak 4/1/2015 17:53",
 		"figure" : "PeterUhnÃk 3/24/2015 01:26:50",
 		"hideSelectionFeedback" : "PeterUhnÃk 3/24/2015 01:26:50",
-		"initialize" : "PeterUhnak 4/1/2015 17:49",
 		"layout" : "PeterUhnÃk 3/24/2015 01:26:50",
 		"layout:" : "PeterUhnÃk 3/24/2015 01:26:50",
 		"model" : "PeterUhnak 4/1/2015 17:49",
@@ -19,7 +18,7 @@
 		"parent" : "PeterUhnak 4/1/2015 17:53",
 		"parent:" : "PeterUhnak 4/1/2015 17:53",
 		"refreshFigure" : "PeterUhnak 3/26/2015 00:10:59",
-		"registerModelEvents:" : "PeterUhnak 4/1/2015 17:50",
+		"registerModelEvents:" : "PeterUhnak 4/1/2015 18:19",
 		"remove" : "PeterUhnÃk 3/24/2015 01:26:50",
 		"removeModelElement:" : "PeterUhnak 3/28/2015 20:27",
 		"showSelectionFeedback" : "PeterUhnÃk 3/24/2015 01:26:50" } }

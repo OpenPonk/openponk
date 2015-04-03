@@ -1,3 +1,3 @@
 labels
-addLabel: aString named: aSymbol
+addLabel: aSymbol text: aString
 	labels at: aSymbol put: (self newLabel: aString)

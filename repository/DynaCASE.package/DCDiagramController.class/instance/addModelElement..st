@@ -19,5 +19,5 @@ addModelElement: aModelElement
 				target: toCtrl ].
 	figure := controller figure.
 	figure view ifNil: [ figure renderIn: self view ].
-	controller refreshFigure.
+	controller attach.
 	^ controller

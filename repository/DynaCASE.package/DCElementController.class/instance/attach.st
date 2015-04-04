@@ -1,4 +1,4 @@
-as yet unclassified
+events - registering
 attach
 	| newFigure |
 	self registerModelEvents: model.

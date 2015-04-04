@@ -13,5 +13,7 @@ childrenFor: anObject
 			name = #BormActivity | (name = #BormState)
 				ifTrue: [ col addAll: anObject outgoing ].
 			name = #BormActivity
-				ifTrue: [ col addAll: anObject sent ] ].
+				ifTrue: [ col addAll: anObject sent ].
+			name = #BormCommunication
+				ifTrue: [ col addAll: anObject dataFlows ] ].
 	^ col

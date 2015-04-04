@@ -1,16 +1,16 @@
 {
 	"class" : {
-		"fix:nearEndOfEdge:" : "bliznjan 3/18/2015 13:19:35",
-		"fix:nearStartOfEdge:" : "bliznjan 3/18/2015 13:19:35",
-		"move:nearEndOfEdge:distance:offset:" : "bliznjan 3/18/2015 13:19:35",
-		"move:nearStartOfEdge:distance:offset:" : "bliznjan 3/18/2015 13:19:35",
-		"stick:nearEndOfEdge:distance:offset:" : "bliznjan 3/18/2015 13:19:35",
-		"stick:nearStartOfEdge:distance:offset:" : "bliznjan 3/18/2015 13:19:35" },
+		"fix:nearEndOfEdge:" : "PeterUhnak 3/29/2015 22:46:15",
+		"fix:nearStartOfEdge:" : "PeterUhnak 3/29/2015 22:46:15",
+		"move:nearEndOfEdge:distance:offset:" : "PeterUhnak 3/29/2015 22:46:15",
+		"move:nearStartOfEdge:distance:offset:" : "PeterUhnak 3/29/2015 22:46:15",
+		"stick:nearEndOfEdge:distance:offset:" : "PeterUhnak 3/29/2015 22:46:15",
+		"stick:nearStartOfEdge:distance:offset:" : "PeterUhnak 3/29/2015 22:46:15" },
 	"instance" : {
-		"distance:" : "bliznjan 3/18/2015 13:19:35",
-		"fix" : "bliznjan 3/18/2015 13:19:35",
-		"initialize" : "bliznjan 3/18/2015 13:19:35",
-		"move" : "bliznjan 3/18/2015 13:19:35",
-		"near" : "bliznjan 3/18/2015 13:19:35",
-		"nearEnd" : "bliznjan 3/18/2015 13:19:35",
-		"nearStart" : "bliznjan 3/18/2015 13:19:35" } }
+		"distance:" : "PeterUhnak 3/29/2015 22:46:15",
+		"fix" : "PeterUhnak 3/29/2015 22:46:15",
+		"initialize" : "PeterUhnak 3/29/2015 22:46:15",
+		"move" : "PeterUhnak 3/29/2015 22:46:15",
+		"near" : "PeterUhnak 3/29/2015 22:46:15",
+		"nearEnd" : "PeterUhnak 3/29/2015 22:46:15",
+		"nearStart" : "PeterUhnak 3/29/2015 22:46:15" } }

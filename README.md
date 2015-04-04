@@ -1,19 +1,16 @@
 DynaCASE
 ========
 
-If you want to just try it, run
+## For non-development
 
 ```
-Gofer new
-    url: 'http://smalltalkhub.com/mc/Pharo/MetaRepoForPharo40/main';
-    configurationOf: 'GitFileTree';
-    loadDevelopment.
-
 Metacello new
     baseline: 'DynaCASE';
     repository: 'github://dynacase/dynacase/repository';
     load.
 ```
+
+## For development
 
 For development purposes you need to have local git repository:
 

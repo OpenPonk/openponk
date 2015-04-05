@@ -1,8 +1,8 @@
 private
 loadElementsFromController
 	diagramController rebuild.
-	diagramController controllers
+"	diagramController controllers
 		do: [ :ctrl | 
 			| element |
 			element := ctrl figure.
-			self figureAdded: element ]
+			self figureAdded: element ]"

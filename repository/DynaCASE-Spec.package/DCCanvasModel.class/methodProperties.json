@@ -4,7 +4,7 @@
 	"instance" : {
 		"addCanvasMenu" : "PeterUhnÃk 3/25/2015 07:10:23",
 		"addMenuFor:" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"addMouseEventsFor:" : "PeterUhnÃk 3/25/2015 07:10:23",
+		"addMouseEventsFor:" : "PeterUhnak 4/5/2015 20:54",
 		"attachController:" : "PeterUhnak 3/26/2015 00:10:59",
 		"cleanView" : "PeterUhnÃk 3/25/2015 07:10:23",
 		"deleteFigure:" : "PeterUhnÃk 3/25/2015 07:10:23",
@@ -17,7 +17,7 @@
 		"figureAdded:" : "PeterUhnÃk 3/25/2015 07:10:23",
 		"initialize" : "PeterUhnÃk 3/25/2015 07:10:23",
 		"inspectFigure:" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"loadElementsFromController" : "PeterUhnak 3/25/2015 23:32",
+		"loadElementsFromController" : "PeterUhnak 4/5/2015 20:25",
 		"reloadCanvasMenu" : "PeterUhnÃk 3/25/2015 07:10:23",
 		"reloadView" : "PeterUhnÃk 3/25/2015 07:10:23",
 		"renameFigure:" : "PeterUhnÃk 3/25/2015 07:10:23",

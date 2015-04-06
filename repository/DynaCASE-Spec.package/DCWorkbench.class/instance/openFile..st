@@ -1,6 +1,6 @@
 file support
 openFile: aFileName
-	| materialization serializer serializedProject |
+	| materialization serializer materializedProject |
 	aFileName isEmptyOrNil
 		ifTrue: [ ^ self ].
 	aFileName asFileReference
@@ -9,6 +9,6 @@ openFile: aFileName
 				allowComplexMapKeys: true;
 				on: stream) next.
 			serializer := DCSerializer new.
-			serializedProject := serializer materializeProject: materialization.
-			serializedProject fileName: aFileName.
-			self openProject: serializedProject ]
+			materializedProject := serializer materializeProject: materialization.
+			materializedProject fileName: aFileName.
+			self openProject: materializedProject ]

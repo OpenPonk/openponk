@@ -1,3 +1,3 @@
-as yet unclassified
+opening
 open
 	self openWithSpec

@@ -1,11 +1,9 @@
 as yet unclassified
-iconForDiagram: aDiagram
-	| s |
-	s := aDiagram className asSymbol.
-	s = #BormDiagram
+iconForDiagram: aSymbol
+	aSymbol = #BormDiagram
 		ifTrue: [ ^ #BormEditorIcons asClass current diagram16Icon ].
-	s = #DCFsm
+	aSymbol = #DCFsm
 		ifTrue: [ ^ Smalltalk ui icons dcFsmDiagramIcon ].
-	s = #DCOmlDiagram
+	aSymbol = #DCOmlDiagram
 		ifTrue: [ ^ Smalltalk ui icons dcOmlDiagramIcon ].
 	^ nil

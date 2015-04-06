@@ -3,5 +3,4 @@ move: aShape onTheCenterRightOf: anotherShape withWidthPadding: widthPadding wit
 	| rectangle rect |
 	rect := anotherShape encompassingRectangle.
 	rectangle := anotherShape encompassingRectangle topRight.
-	^ aShape
-		translateTo: (rectangle x - aShape width - widthPadding) @ (rectangle y + (rect height / 2) - (aShape height / 2))
+	^ aShape translateTo: (rectangle x - aShape width) @ (rectangle y + (rect height / 2))

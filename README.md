@@ -1,5 +1,10 @@
-DynaCASE
-========
+# DynaCASE
+
+## NOTE:
+After loading DynaCASE you need to manually load 'Roassal2Spec-johanfabry.6'
+
+`World > Monticello Browser > Roassal2 repo > Open > Roassal2Spec > Roassal2Spec-johanfabry.6 > Load`
+
 
 ## For non-development
 

@@ -1,18 +1,18 @@
 {
 	"class" : {
-		"defaultSpec" : "PeterUhnÃk 3/25/2015 07:10:23" },
+		"defaultSpec" : "PeterUhnak 4/6/2015 04:04:43" },
 	"instance" : {
-		"applyLayoutFor:" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"canvasMenuModel" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"canvasModel" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"diagramController" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"initializeWidgets" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"newDiagramControllerFor:" : "PeterUhnak 3/26/2015 00:10:59",
-		"openDiagram:" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"paletteModel" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"rebuildPalette" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"rebuildWidget" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"selectEdgeItem:" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"selectElementItem:" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"workbench" : "PeterUhnÃk 3/25/2015 07:10:23",
-		"workbench:" : "PeterUhnÃk 3/25/2015 07:10:23" } }
+		"applyLayoutFor:" : "PeterUhnak 4/6/2015 04:04:43",
+		"canvasMenuModel" : "PeterUhnak 4/6/2015 04:04:43",
+		"canvasModel" : "PeterUhnak 4/6/2015 04:04:43",
+		"diagramController" : "PeterUhnak 4/6/2015 04:04:43",
+		"initializeWidgets" : "PeterUhnak 4/6/2015 04:04:43",
+		"newDiagramControllerFor:" : "PeterUhnak 4/6/2015 04:04:43",
+		"openDiagram:" : "PeterUhnak 4/6/2015 04:04:43",
+		"paletteModel" : "PeterUhnak 4/6/2015 04:04:43",
+		"rebuildPalette" : "PeterUhnak 4/6/2015 04:04:43",
+		"rebuildWidget" : "PeterUhnak 4/6/2015 04:04:43",
+		"selectEdgeItem:" : "PeterUhnak 4/6/2015 04:04:43",
+		"selectElementItem:" : "PeterUhnak 4/6/2015 04:04:43",
+		"workbench" : "PeterUhnak 4/6/2015 04:04:43",
+		"workbench:" : "PeterUhnak 4/6/2015 04:04:43" } }

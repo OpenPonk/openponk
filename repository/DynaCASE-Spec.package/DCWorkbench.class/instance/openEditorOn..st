@@ -10,5 +10,5 @@ openEditorOn: aDiagram
 	tabManager addTab: tab.
 	editor openDiagram: aDiagram.
 	editor rebuildWidget.
-	"	aDiagram whenChanged: [ tab label: aDiagram name ]."
+	aDiagram whenChanged: [ tab label: aDiagram name ].
 	editor paletteModel rebuildWidget

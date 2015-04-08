@@ -1,8 +1,8 @@
 callbacks
 targetSelected: aController
 	(aController canBeTargetFor: connectionController)
-		ifTrue: [ 
-			aController addAsTargetFor: connectionController.
-			self palette deselectTool.
-			self palette selectedTool targetSelected: connectionController.
-			connectionController := nil ]
+		ifFalse: [ ^ self ].
+	aController addAsTargetFor: connectionController.
+	self palette deselectTool.
+	self palette selectedTool targetSelected: connectionController.
+	connectionController := nil

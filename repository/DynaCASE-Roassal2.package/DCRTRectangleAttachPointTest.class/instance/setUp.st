@@ -1,4 +1,4 @@
-as yet unclassified
+running
 setUp
 	| shape |
 	shape := RTBox new size: 20.

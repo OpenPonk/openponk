@@ -6,11 +6,8 @@
 		 ],
 	"commentStamp" : "PeterUhnak 1/30/2015 23:15",
 	"instvars" : [
-		"factory",
 		"connectionController",
-		"canBeTarget",
-		"canBeSource",
-		"sourceController",
+		"factory",
 		"feedback",
 		"connectionFeedback" ],
 	"name" : "DCConnectionCreationTool",

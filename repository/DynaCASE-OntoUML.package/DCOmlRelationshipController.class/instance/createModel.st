@@ -4,4 +4,5 @@ createModel
 		start: source model;
 		end: target model;
 		startMultiplicity: 1;
-		endMultiplicity: 1
+		endMultiplicity: 1;
+		yourself

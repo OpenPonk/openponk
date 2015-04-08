@@ -2,8 +2,9 @@
 	"class" : {
 		"modelClass" : "PeterUhnak 4/6/2015 00:32:47" },
 	"instance" : {
-		"addAsSourceFor:" : "PeterUhnak 4/6/2015 00:32:47",
-		"addAsTargetFor:" : "PeterUhnak 4/6/2015 00:32:47",
+		"addAsSourceFor:" : "bliznjan 4/8/2015 09:17",
+		"addAsTargetFor:" : "bliznjan 4/8/2015 09:17",
+		"buildEditorForm:" : "bliznjan 4/8/2015 10:09",
 		"canBeSourceFor:" : "PeterUhnak 4/6/2015 00:32:47",
 		"canBeTargetFor:" : "PeterUhnak 4/6/2015 00:32:47",
 		"diagramController" : "PeterUhnak 4/6/2015 00:32:47",
@@ -20,5 +21,5 @@
 		"refreshFigure" : "PeterUhnak 4/6/2015 00:32:47",
 		"registerModelEvents:" : "PeterUhnak 4/6/2015 00:32:47",
 		"remove" : "PeterUhnak 4/6/2015 00:32:47",
-		"removeModelElement:" : "PeterUhnak 4/6/2015 00:32:47",
+		"removeModelElement:" : "bliznjan 4/8/2015 09:42",
 		"showSelectionFeedback" : "PeterUhnak 4/6/2015 00:32:47" } }

@@ -7,8 +7,7 @@
 	"commentStamp" : "lariover 12/14/2014 19:47",
 	"instvars" : [
 		"tree",
-		"project",
-		"childrenVisitor" ],
+		"project" ],
 	"name" : "DCNavigator",
 	"pools" : [
 		 ],

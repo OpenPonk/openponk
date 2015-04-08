@@ -9,8 +9,7 @@
 		"items",
 		"selectedTool",
 		"selectedItem",
-		"diagramController",
-		"editor" ],
+		"diagramController" ],
 	"name" : "DCPalette",
 	"pools" : [
 		 ],

@@ -17,10 +17,4 @@ setUp
 	(e5 := shape element)
 		translateTo: -100 @ -100;
 		@ RTDraggable.
-	(view := RTView new)
-		add: e1;
-		add: e2;
-		add: e3;
-		add: e4;
-		add: e5.
 	builder := DCStarAssociationBuilder new

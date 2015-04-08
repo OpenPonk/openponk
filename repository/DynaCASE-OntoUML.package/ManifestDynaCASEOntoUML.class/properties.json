@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-OntoUML",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestDynaCASEOntoUML",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

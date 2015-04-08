@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-FSM",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestDynaCASEFSM",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

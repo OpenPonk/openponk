@@ -2,4 +2,5 @@ hooks
 createModel
 	^ self modelClass new
 		child: source model;
-		parent: target model
+		parent: target model;
+		yourself

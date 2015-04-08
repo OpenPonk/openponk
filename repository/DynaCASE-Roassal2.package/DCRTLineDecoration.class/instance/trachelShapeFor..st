@@ -1,11 +1,11 @@
 public
 trachelShapeFor: anEdge
 	| fromPoint |
-	fromPoint := attachPoint startingPointOf: anEdge.
+	fromPoint := self sourcePointOf: anEdge.
 	line
 		ifNotNil: [ 
 			| lineShape |
 			lineShape := line trachelShapeFor: anEdge.
 			lineShape class = TRBezierShape
-				ifTrue: [ fromPoint := lineShape points allButLast last ] ].
+				ifTrue: [ fromPoint := self sourcePointOfBezier: lineShape ] ].
 	^ self trachelShapeFor: anEdge from: fromPoint

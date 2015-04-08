@@ -7,7 +7,6 @@
 	"commentStamp" : "PeterUhnak 10/6/2014 19:16",
 	"instvars" : [
 		"components",
-		"controller",
 		"heights",
 		"whenAccepted" ],
 	"name" : "DCDynamicForm",

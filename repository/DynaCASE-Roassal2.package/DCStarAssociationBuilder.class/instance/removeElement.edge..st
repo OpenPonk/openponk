@@ -5,6 +5,6 @@ removeElement: aRTElement edge: aRTEdge
 		ifTrue: [ targets remove: aRTElement ]
 		ifFalse: [ sources remove: aRTElement ].
 	aRTElement trachelShape
-		removeCallback: transCallback ifAbsent: [ self fail: 'callback should have been added by "self added:" method' ];
-		removeCallback: extentCallback ifAbsent: [ self fail: 'callback should have been added by "self added:" method' ].
+		removeCallback: transCallback ifAbsent: [ self error: 'callback should have been added by "self added:" method' ];
+		removeCallback: extentCallback ifAbsent: [ self error: 'callback should have been added by "self added:" method' ].
 	self update

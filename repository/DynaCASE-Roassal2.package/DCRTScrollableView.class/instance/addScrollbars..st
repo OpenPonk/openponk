@@ -14,9 +14,9 @@ addScrollbars: aView
 			| d step |
 			step := e step x @ 0.
 			d := aView canvas camera distanceFromPixelToSpace: step.
-			d x > 0
-				ifTrue: [ d := (d x min: aView canvas extent x - bottomBar encompassingRectangle right) @ 0 ]
-				ifFalse: [ d := (d x max: bottomBar encompassingRectangle left negated) @ 0 ].
+			d := d x > 0
+				ifTrue: [ (d x min: aView canvas extent x - bottomBar encompassingRectangle right) @ 0 ]
+				ifFalse: [ (d x max: bottomBar encompassingRectangle left negated) @ 0 ].
 			bottomBar translateBy: d.
 			aView canvas camera translateBy: d.
 			e signalUpdate ].

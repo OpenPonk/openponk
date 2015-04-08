@@ -1,9 +1,10 @@
 private
 newLabel: aString
-	^ (RTLabel new
+	| label |
+	label := RTLabel new
 		height: 10;
 		color: shape color;
 		text: aString;
-		element)
-		@ RTDraggable;
-		yourself
+		element.
+	label @ RTDraggable.
+	^ label

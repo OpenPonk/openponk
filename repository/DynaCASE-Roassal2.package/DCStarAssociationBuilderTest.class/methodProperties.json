@@ -2,10 +2,10 @@
 	"class" : {
 		 },
 	"instance" : {
-		"setUp" : "bliznjan 4/3/2015 20:34:27",
+		"setUp" : "bliznjan 4/8/2015 12:23",
 		"tearDown" : "bliznjan 4/3/2015 20:34:27",
 		"testAccessors" : "bliznjan 4/3/2015 20:34:27",
-		"testAddingAndRemoving" : "bliznjan 4/3/2015 20:34:27",
+		"testAddingAndRemoving" : "bliznjan 4/8/2015 11:34",
 		"testElementsTranslation" : "bliznjan 4/3/2015 20:34:27",
 		"testFixedPosition" : "bliznjan 4/3/2015 20:34:27",
 		"testMultipleElements" : "bliznjan 4/3/2015 20:34:27",

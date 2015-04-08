@@ -1,9 +1,9 @@
-private
-trachelShapeFor: anEdge from: fromPoint to: toPoint
+public
+trachelShapeFor: anEdge from: aPoint
 	| tShape |
 	tShape := self trachelShapeClass
-		from: fromPoint
-		to: toPoint
+		from: aPoint
+		to: (self targetPointOf: anEdge)
 		width: (self widthFor: anEdge)
 		size: (self mySize rtValue: anEdge)
 		color: (self colorFor: anEdge)

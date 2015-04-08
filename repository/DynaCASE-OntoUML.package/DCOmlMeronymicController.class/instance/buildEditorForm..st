@@ -3,12 +3,12 @@ buildEditorForm: aForm
 	super buildEditorForm: aForm.
 	aForm
 		addCheckbox: 'sharable'
-		label: 'sharable'
+		label: 'Sharable'
 		value: self model isShareable
 		onChange: [ :newValue | self model shareable: newValue ].
 	aForm
 		addCheckbox: 'essential'
-		label: 'essential'
+		label: 'Essential'
 		value: self model isEssential
 		onChange: [ :newValue | self model essential: newValue ].
 	aForm

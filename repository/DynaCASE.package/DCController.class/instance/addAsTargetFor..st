@@ -1,3 +1,5 @@
 adding
 addAsTargetFor: aController
-	self subclassResponsibility
+	"Redefine this method if needed"
+
+	self error: 'I cannot be target for anything.'

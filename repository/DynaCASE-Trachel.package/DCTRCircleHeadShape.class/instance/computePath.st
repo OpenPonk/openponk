@@ -1,8 +1,9 @@
 hooks
 computePath
-	| vector r unit |
+	| vector r unit radius center |
 	vector := self to - self from.
-	(r := vector r) = 0
+	r := vector r.
+	r = 0
 		ifTrue: [ ^ false ].
 	unit := vector / r.
 	radius := unit / 2 * size.

@@ -16,7 +16,7 @@ exampleOntoUml
 		end: secondKind;
 		startMultiplicity: 1;
 		endMultiplicity: '*'.
-	generalization := Generalization new parent: secondKind; child: subKind.
+	generalization := Generalization new parent: secondKind; child: subKind; yourself.
 	diagram
 		add: firstKind;
 		add: secondKind;

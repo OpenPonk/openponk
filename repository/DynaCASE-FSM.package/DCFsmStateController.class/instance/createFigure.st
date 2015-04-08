@@ -1,4 +1,4 @@
-initialization
+hooks
 createFigure
 	^ DCRTCallbackBuilder
 		block: [ :view | 

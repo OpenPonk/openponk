@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestDynaCASERoassal",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

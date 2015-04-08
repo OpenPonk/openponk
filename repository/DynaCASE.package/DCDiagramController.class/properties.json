@@ -6,7 +6,6 @@
 		 ],
 	"commentStamp" : "PeterUhnak 10/11/2014 22:42",
 	"instvars" : [
-		"controllerFactory",
 		"view",
 		"controllers",
 		"modelToControllerMapping",

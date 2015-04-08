@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testNoCollision
 	self assert: (edgeX shape startingPointOf: edgeX) = (10 @ 0).
 	self assert: (edgeX shape endingPointOf: edgeX) = (90 @ 0).

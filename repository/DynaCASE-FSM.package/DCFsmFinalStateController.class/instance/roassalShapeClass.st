@@ -1,3 +1,3 @@
-initialization
+hooks
 roassalShapeClass
 	^ DCRoassalSmFinalState

@@ -1,6 +1,6 @@
 running
 setUp
-	| shape |
+	| shape view |
 	shape := RTBox new size: 40.
 	(e1 := shape element)
 		translateTo: 0 @ 0;
@@ -17,4 +17,10 @@ setUp
 	(e5 := shape element)
 		translateTo: -100 @ -100;
 		@ RTDraggable.
+	(view := RTView new)
+		add: e1;
+		add: e2;
+		add: e3;
+		add: e4;
+		add: e5.
 	builder := DCStarAssociationBuilder new

@@ -15,5 +15,13 @@ childrenFor: anObject
 			name = #BormActivity
 				ifTrue: [ col addAll: anObject sent ].
 			name = #BormCommunication
-				ifTrue: [ col addAll: anObject dataFlows ] ].
+				ifTrue: [ col addAll: anObject dataFlows ].
+			name = #BormCommunication
+				ifTrue: [ 
+					anObject hasConstraint
+						ifTrue: [ col add: anObject constraint ] ].
+			name = #BormTransition
+				ifTrue: [ 
+					anObject hasConstraint
+						ifTrue: [ col add: anObject constraint ] ] ].
 	^ col

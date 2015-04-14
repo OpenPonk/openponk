@@ -1,3 +1,3 @@
 testing
 canBeTargetFor: aController
-	^ AcceptsAsTarget includes: aController class asString asSymbol
+	^ AcceptsAsTarget includes: aController class

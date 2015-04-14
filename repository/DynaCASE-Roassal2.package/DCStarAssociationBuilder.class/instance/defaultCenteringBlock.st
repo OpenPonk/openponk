@@ -7,6 +7,9 @@ defaultCenteringBlock
 			| sourcesAvg targetsAvg |
 			targetsAvg := [ (tgts collect: [ :each | each position ]) average ].
 			sourcesAvg := [ (srcs collect: [ :each | each position ]) average ].
-			srcs
-				ifEmpty: [ targetsAvg value ]
-				ifNotEmpty: [ tgts ifEmpty: [ sourcesAvg value ] ifNotEmpty: [ (sourcesAvg value + targetsAvg value) * 0.5 ] ] ]
+			srcs size = 0
+				ifTrue: [ targetsAvg value ]
+				ifFalse: [ 
+					tgts size = 0
+						ifTrue: [ sourcesAvg value ]
+						ifFalse: [ (sourcesAvg value + targetsAvg value) * 0.5 ] ] ]

@@ -1,4 +1,4 @@
-as yet unclassified
+converting
 askForFileNameToOpen
 	| path |
 	path := UITheme builder fileOpen: 'Choose project file to open' extensions: #('ston').

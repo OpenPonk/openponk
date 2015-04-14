@@ -10,7 +10,8 @@ trachelShapeFor: anEdge
 					dashes: dashes;
 					width: width;
 					from: (path at: i - 1) to: (path at: i);
-					color: (self colorFor: anEdge)) ].
+					color: (self colorFor: anEdge);
+					yourself) ].
 	multiShape
 		addShape: (head trachelShapeFor: anEdge from: path allButLast last);
 		addShape: (tail trachelShapeFor: anEdge from: path second).

@@ -10,5 +10,5 @@
 	"name" : "DCFsmInitialStateControllerTest",
 	"pools" : [
 		 ],
-	"super" : "DCControllerTest",
+	"super" : "DCFsmVertexControllerTest",
 	"type" : "normal" }

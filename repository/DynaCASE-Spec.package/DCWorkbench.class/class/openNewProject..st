@@ -1,7 +1,3 @@
 instance creation
 openNewProject: aName
-	| project diagram |
-	project := DCProject new projectName: aName.
-	diagram := DCOmlDiagram new.
-	project addDiagram: diagram.
-	^ self openProject: project
+	^ self openProject: (DCProject name: aName)

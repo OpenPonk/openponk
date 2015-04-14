@@ -1,6 +1,6 @@
 running
 setUp
-	| shape |
+	| shape view |
 	shape := RTBox new size: 40.
 	(e1 := shape element)
 		translateTo: 0 @ 0;

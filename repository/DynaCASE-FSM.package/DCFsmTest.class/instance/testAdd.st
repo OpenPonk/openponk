@@ -2,7 +2,7 @@ tests
 testAdd
 	| d first second t |
 	d := DCFsm new.
-	self assert: d elements size = 0.
+	self assert: d elements isEmpty.
 
 	first := DCFsmState new name: '1'.
 	d add: first.

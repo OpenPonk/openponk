@@ -3,7 +3,7 @@ buildEditorForm: aForm
 	super buildEditorForm: aForm.
 	aForm
 		addTextInput: 'sourceMultiplicity'
-		label: 'source multiplicity'
+		label: 'Source multiplicity'
 		value: self model startMultiplicity
 		onChange: [ :newValue | 
 			self model
@@ -11,7 +11,7 @@ buildEditorForm: aForm
 				changed ].
 	aForm
 		addTextInput: 'targetMultiplicity'
-		label: 'target multiplicity'
+		label: 'Target multiplicity'
 		value: self model endMultiplicity
 		onChange: [ :newValue | 
 			self model

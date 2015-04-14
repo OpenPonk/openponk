@@ -7,7 +7,6 @@
 	"commentStamp" : "",
 	"instvars" : [
 		"view",
-		"builder",
 		"offset" ],
 	"name" : "DCFigureExamples",
 	"pools" : [

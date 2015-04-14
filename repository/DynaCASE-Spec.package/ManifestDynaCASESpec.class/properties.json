@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Spec",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestDynaCASESpec",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

@@ -11,8 +11,7 @@
 		"tabManager",
 		"formModel",
 		"project",
-		"projectController",
-		"treeController" ],
+		"projectController" ],
 	"name" : "DCWorkbench",
 	"pools" : [
 		 ],

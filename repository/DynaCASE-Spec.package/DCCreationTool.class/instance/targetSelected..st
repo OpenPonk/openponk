@@ -1,8 +1,8 @@
 callbacks
 targetSelected: aController
 	(aController canBeTargetFor: objectController)
-		ifTrue: [ 
-			aController addAsTargetFor: objectController.
-			self palette deselectTool.
-			self palette selectedTool targetSelected: objectController.
-			objectController := nil ]
+		ifFalse: [ ^ self ].
+	aController addAsTargetFor: objectController.
+	self palette deselectTool.
+	self palette selectedTool targetSelected: objectController.
+	objectController := nil

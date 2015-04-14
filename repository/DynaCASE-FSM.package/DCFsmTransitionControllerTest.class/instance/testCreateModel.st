@@ -1,10 +1,8 @@
 tests
 testCreateModel
-	| ctrl model fromCtrl toCtrl |
+	| model |
 	ctrl := self createController.
-	fromCtrl := DCFsmInitialStateController new.
 	fromCtrl model: fromCtrl createModel.
-	toCtrl := DCFsmFinalStateController new.
 	toCtrl model: toCtrl createModel.
 	ctrl source: fromCtrl.
 	ctrl target: toCtrl.

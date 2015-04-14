@@ -6,8 +6,7 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"center",
-		"radius" ],
+		 ],
 	"name" : "DCTRCircleHeadShape",
 	"pools" : [
 		 ],

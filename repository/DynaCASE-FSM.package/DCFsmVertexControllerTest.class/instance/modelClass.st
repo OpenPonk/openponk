@@ -1,0 +1,3 @@
+hooks
+modelClass
+	^ self subclassResponsibility

@@ -7,7 +7,8 @@ openFile: aFileName
 		readStreamDo: [ :stream | 
 			materialization := (STON reader
 				allowComplexMapKeys: true;
-				on: stream) next.
+				on: stream;
+				yourself) next.
 			serializer := DCSerializer new.
 			materializedProject := serializer materializeProject: materialization.
 			materializedProject fileName: aFileName.

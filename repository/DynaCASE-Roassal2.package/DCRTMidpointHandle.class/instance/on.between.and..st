@@ -1,5 +1,5 @@
 as yet unclassified
-on: edgeHandler between: fromElement and: toElement
-	handler := edgeHandler.
+on: anEdge between: fromElement and: toElement
+	edge := anEdge.
 	from := fromElement.
 	to := toElement

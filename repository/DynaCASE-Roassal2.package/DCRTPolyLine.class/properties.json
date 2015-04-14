@@ -1,5 +1,5 @@
 {
-	"category" : "DynaCASE-Roassal2-Shapes",
+	"category" : "DynaCASE-Roassal2-PolyLine",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
@@ -8,7 +8,9 @@
 	"instvars" : [
 		"points",
 		"segments",
-		"handles" ],
+		"handles",
+		"midpointHandles",
+		"handlesActive" ],
 	"name" : "DCRTPolyLine",
 	"pools" : [
 		 ],

@@ -1,5 +1,5 @@
 {
-	"category" : "DynaCASE-Roassal2-EdgeHandles",
+	"category" : "DynaCASE-Roassal2-PolyLine",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
@@ -12,7 +12,7 @@
 		"edge",
 		"index",
 		"element",
-		"positionHolder" ],
+		"pointLink" ],
 	"name" : "DCRTHandle",
 	"pools" : [
 		 ],

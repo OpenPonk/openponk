@@ -3,4 +3,4 @@ remove
 	element remove.
 	element := nil.
 	edge := nil.
-	positionHolder := nil
+	pointLink := nil

@@ -1,5 +1,10 @@
 public
 removeHandlesFor: anEdge
+	handlesActive
+		ifFalse: [ ^ self ].
 	handles do: #remove.
 	handles := OrderedCollection new.
-	anEdge signalUpdate
+	midpointHandles do: #remove.
+	midpointHandles := OrderedCollection new.
+	anEdge signalUpdate.
+	handlesActive := false

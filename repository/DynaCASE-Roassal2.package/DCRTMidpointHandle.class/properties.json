@@ -1,5 +1,5 @@
 {
-	"category" : "DynaCASE-Roassal2-EdgeHandles",
+	"category" : "DynaCASE-Roassal2-PolyLine",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
@@ -8,8 +8,8 @@
 	"instvars" : [
 		"from",
 		"to",
-		"handler",
-		"element" ],
+		"element",
+		"edge" ],
 	"name" : "DCRTMidpointHandle",
 	"pools" : [
 		 ],

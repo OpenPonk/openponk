@@ -1,6 +1,9 @@
 public
 showHandlesFor: anEdge
-	handles ifNotEmpty: [ ^ self ].
+	handlesActive
+		ifTrue: [ ^ self ].
 	points linksDo: [ :each | handles add: (DCRTHandle new on: anEdge at: each) ].
 	handles do: [ :each | each renderIn: anEdge view ].
-	anEdge signalUpdate
+	self showMidpointHandlesFor: anEdge.
+	anEdge signalUpdate.
+	handlesActive := true

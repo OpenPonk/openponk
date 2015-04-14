@@ -1,3 +1,3 @@
 as yet unclassified
 promote
-	handler promote: self
+	edge shape promoteFor: edge handle: self

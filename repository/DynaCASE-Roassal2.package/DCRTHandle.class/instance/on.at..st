@@ -1,4 +1,4 @@
 as yet unclassified
-on: anEdge at: aPositionHolder
+on: anEdge at: aPointLink
 	edge := anEdge.
-	positionHolder := aPositionHolder
+	pointLink := aPointLink

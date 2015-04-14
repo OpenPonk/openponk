@@ -1,0 +1,3 @@
+attach point
+withShorterDistanceWithOffsetAttachPoint
+	self attachPoint: RTShorterDistanceWithOffsetAttachPoint new

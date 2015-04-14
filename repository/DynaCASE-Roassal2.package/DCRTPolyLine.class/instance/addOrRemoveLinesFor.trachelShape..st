@@ -1,20 +1,20 @@
 rendering
 addOrRemoveLinesFor: anEdge trachelShape: trachelShape
-	| segmentsCount pointsCount shape col |
-	col := self colorFor: anEdge.
-	segmentsCount := trachelShape shapes size - 1.
+	| segmentsCount pointsCount shape canvas |
+	canvas := trachelShape canvas.
+	segmentsCount := (trachelShape shapes select: [ :each | each isKindOf: TRAbstractLineShape ]) size - 1.	"-1 base segment"
 	pointsCount := self points size.
 	pointsCount - segmentsCount
 		timesRepeat: [ 
 			"add segments"
 			shape := self lineSegmentFor: anEdge from: 0 @ 0 to: 0 @ 0.
 
-			trachelShape addShape: shape.
+			trachelShape addShapeFirst: shape.
 			shape element: trachelShape element.
 			shape announcer: trachelShape element announcer.
-			shape addedIn: trachelShape canvas ].
+			shape addedIn: canvas ].
 
 	segmentsCount - pointsCount
 		timesRepeat: [ 
 			"remove segments"
-			trachelShape removeLast remove ]
+			trachelShape removeFirst remove ]

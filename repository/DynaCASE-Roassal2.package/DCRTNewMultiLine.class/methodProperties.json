@@ -1,6 +1,6 @@
 {
 	"class" : {
-		 },
+		"example" : "PeterUhnak 4/14/2015 23:18" },
 	"instance" : {
 		"arrowHead" : "PeterUhnak 4/14/2015 21:42",
 		"arrowTail" : "PeterUhnak 4/14/2015 21:42",
@@ -39,7 +39,7 @@
 		"tail" : "PeterUhnak 4/14/2015 21:42",
 		"tail:" : "PeterUhnak 4/14/2015 21:42",
 		"trachelShapeFor:" : "PeterUhnak 4/14/2015 22:20",
-		"updateFor:trachelShape:" : "PeterUhnak 4/14/2015 22:20",
+		"updateFor:trachelShape:" : "PeterUhnak 4/14/2015 22:55",
 		"withContinuousCircleAttachPoint" : "PeterUhnak 4/14/2015 21:42",
 		"withContinuousRectangleAttachPoint" : "PeterUhnak 4/14/2015 21:42",
 		"withShorterDistanceWithOffsetAttachPoint" : "PeterUhnak 4/14/2015 21:42" } }

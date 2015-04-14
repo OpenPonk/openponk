@@ -1,0 +1,12 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"addOrRemoveLinesFor:trachelShape:" : "PeterUhnak 4/14/2015 17:02",
+		"addPoint:" : "PeterUhnak 4/14/2015 16:50",
+		"initialize" : "PeterUhnak 4/14/2015 16:52",
+		"points" : "PeterUhnak 4/14/2015 16:51",
+		"removeHandlesFor:" : "PeterUhnak 4/14/2015 16:53",
+		"showHandlesFor:" : "PeterUhnak 4/14/2015 16:52",
+		"trachelShapeFor:" : "PeterUhnak 4/14/2015 14:00",
+		"updateFor:trachelShape:" : "PeterUhnak 4/14/2015 14:00" } }

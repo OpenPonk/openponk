@@ -1,0 +1,19 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"addBendPointAt:" : "PeterUhnak 4/12/2015 19:37",
+		"addMidpointFor:" : "PeterUhnak 4/12/2015 21:27",
+		"addMouseInteractivity" : "PeterUhnak 4/11/2015 23:11",
+		"createHandles" : "PeterUhnak 4/12/2015 23:06",
+		"findPositionFor:" : "PeterUhnak 4/11/2015 23:32",
+		"fixedPositionFor:index:" : "PeterUhnak 4/11/2015 23:26",
+		"handleShape" : "PeterUhnak 4/12/2015 21:35",
+		"initialize" : "PeterUhnak 4/12/2015 21:23",
+		"initializeElement:" : "PeterUhnak 4/13/2015 12:49",
+		"path" : "PeterUhnak 4/12/2015 21:32",
+		"promote:" : "PeterUhnak 4/13/2015 01:06",
+		"refreshInView" : "PeterUhnak 4/12/2015 23:02",
+		"removeHandles" : "PeterUhnak 4/12/2015 21:23",
+		"resetPath" : "PeterUhnak 4/12/2015 21:28",
+		"updateHandles" : "PeterUhnak 4/12/2015 23:01" } }

@@ -12,5 +12,5 @@
 	"name" : "DCRTEdgeBuilder",
 	"pools" : [
 		 ],
-	"super" : "RTAbstractBuilder",
+	"super" : "RTObject",
 	"type" : "normal" }

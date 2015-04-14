@@ -1,0 +1,16 @@
+{
+	"category" : "DynaCASE-Roassal2-EdgeHandles",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"bendPoints",
+		"edge",
+		"handles" ],
+	"name" : "DCRTEdgeHandles",
+	"pools" : [
+		 ],
+	"super" : "RTInteraction",
+	"type" : "normal" }

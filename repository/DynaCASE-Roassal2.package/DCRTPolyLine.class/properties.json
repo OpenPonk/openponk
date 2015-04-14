@@ -1,0 +1,16 @@
+{
+	"category" : "DynaCASE-Roassal2-Shapes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"points",
+		"segments",
+		"handles" ],
+	"name" : "DCRTPolyLine",
+	"pools" : [
+		 ],
+	"super" : "RTAbstractLine",
+	"type" : "normal" }

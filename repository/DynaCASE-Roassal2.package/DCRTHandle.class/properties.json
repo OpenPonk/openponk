@@ -1,0 +1,20 @@
+{
+	"category" : "DynaCASE-Roassal2-EdgeHandles",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"handler",
+		"from",
+		"to",
+		"edge",
+		"index",
+		"element",
+		"positionHolder" ],
+	"name" : "DCRTHandle",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

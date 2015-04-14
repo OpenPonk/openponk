@@ -1,17 +1,17 @@
 {
 	"class" : {
-		"shape:" : "bliznjan 4/3/2015 20:34:27" },
+		"shape:" : "bliznjan 4/8/2015 12:26:30" },
 	"instance" : {
-		"asHead" : "bliznjan 4/3/2015 20:34:27",
-		"asTail" : "bliznjan 4/3/2015 20:34:27",
-		"initialize" : "bliznjan 4/3/2015 20:34:27",
-		"shape" : "bliznjan 4/3/2015 20:34:27",
-		"shape:" : "bliznjan 4/3/2015 20:34:27",
-		"sourcePointOf:" : "bliznjan 4/8/2015 11:05",
-		"sourcePointOfBezier:" : "bliznjan 4/8/2015 11:15",
-		"targetPointOf:" : "bliznjan 4/8/2015 11:05",
-		"trachelShapeClass" : "bliznjan 4/3/2015 20:34:27",
-		"trachelShapeFor:" : "bliznjan 4/8/2015 11:37",
-		"trachelShapeFor:from:" : "bliznjan 4/8/2015 11:39",
-		"updateFor:trachelShape:" : "bliznjan 4/8/2015 11:36",
-		"updateFor:trachelShape:from:" : "bliznjan 4/8/2015 11:40" } }
+		"asHead" : "bliznjan 4/8/2015 12:26:30",
+		"asTail" : "bliznjan 4/8/2015 12:26:30",
+		"initialize" : "bliznjan 4/8/2015 12:26:30",
+		"shape" : "bliznjan 4/8/2015 12:26:30",
+		"shape:" : "bliznjan 4/8/2015 12:26:30",
+		"sourcePointOf:" : "bliznjan 4/8/2015 12:26:30",
+		"sourcePointOfBezier:" : "bliznjan 4/8/2015 12:26:30",
+		"targetPointOf:" : "bliznjan 4/8/2015 12:26:30",
+		"trachelShapeClass" : "bliznjan 4/8/2015 12:26:30",
+		"trachelShapeFor:" : "bliznjan 4/8/2015 12:26:30",
+		"trachelShapeFor:from:" : "bliznjan 4/8/2015 12:26:30",
+		"updateFor:trachelShape:" : "bliznjan 4/8/2015 12:26:30",
+		"updateFor:trachelShape:from:" : "bliznjan 4/8/2015 12:26:30" } }

@@ -1,3 +1,4 @@
 running
 setUp
-	view := RTView new
+	view := RTView new.
+	ctrl := self createController

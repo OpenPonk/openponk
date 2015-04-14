@@ -2,5 +2,6 @@
 	"class" : {
 		 },
 	"instance" : {
-		"ruleCollectionMessagesToExternalObjectRuleV1FalsePositive" : "bliznjan 4/7/2015 20:46",
-		"ruleMissingYourselfRuleV1FalsePositive" : "bliznjan 4/8/2015 10:25" } }
+		"ruleCollectionMessagesToExternalObjectRuleV1FalsePositive" : "bliznjan 4/14/2015 12:19:01",
+		"ruleMissingYourselfRuleV1FalsePositive" : "bliznjan 4/14/2015 12:19:01",
+		"ruleRefersToClassRuleV1FalsePositive" : "bliznjan 4/14/2015 12:19:01" } }

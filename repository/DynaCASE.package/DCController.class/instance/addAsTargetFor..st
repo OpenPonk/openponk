@@ -1,5 +1,5 @@
 adding
 addAsTargetFor: aController
-	"Redefine this method if needed"
-
-	self error: 'I cannot be target for anything.'
+	(self canBeTargetFor: aController)
+		ifTrue: [ self subclassResponsibility ]
+		ifFalse: [ self error: self class asString , ' cannot be target for ' , aController class asString ]

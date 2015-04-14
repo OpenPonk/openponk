@@ -2,15 +2,15 @@ tests
 testChangedOnRemove
 	| project diagram changed element |
 	project := DCProject new.
-	project whenChanged: [ changed := true ].
 	diagram := DCDiagram new.
-	project addDiagram: diagram.
 	element := DCNamedElement new.
+	project whenChanged: [ changed := true ].
+	project addDiagram: diagram.
 	diagram add: element.
 
 	changed := false.
 	project removeDiagram: diagram.
-	"	self assert: changed"	"currently broken in Pharo - fix pending"
+	self assert: changed.
 
 	changed := false.
 	diagram name: 'new name'.

@@ -2,12 +2,12 @@
 	"class" : {
 		 },
 	"instance" : {
-		"setUp" : "bliznjan 4/3/2015 20:34:27",
-		"testAngles" : "bliznjan 4/3/2015 20:34:27",
-		"testIntersectHorizontal" : "bliznjan 4/3/2015 20:34:27",
-		"testIntersectLines" : "bliznjan 4/3/2015 20:34:27",
-		"testIntersectVertical" : "bliznjan 4/3/2015 20:34:27",
-		"testIntersection" : "bliznjan 4/3/2015 20:34:27",
-		"testLength" : "bliznjan 4/3/2015 20:34:27",
-		"testNormalForm" : "bliznjan 4/3/2015 20:34:27",
-		"testVector" : "bliznjan 4/3/2015 20:34:27" } }
+		"setUp" : "bliznjan 4/8/2015 12:26:30",
+		"testAngles" : "bliznjan 4/8/2015 12:26:30",
+		"testIntersectHorizontal" : "bliznjan 4/8/2015 12:26:30",
+		"testIntersectLines" : "bliznjan 4/8/2015 12:26:30",
+		"testIntersectVertical" : "bliznjan 4/8/2015 12:26:30",
+		"testIntersection" : "bliznjan 4/8/2015 12:26:30",
+		"testLength" : "bliznjan 4/8/2015 12:26:30",
+		"testNormalForm" : "bliznjan 4/8/2015 12:26:30",
+		"testVector" : "bliznjan 4/8/2015 12:26:30" } }

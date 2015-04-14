@@ -3,6 +3,9 @@
 		 },
 	"instance" : {
 		"attach" : "bliznjan 4/14/2015 09:45",
+		"attachFigure" : "PeterUhnak 4/7/2015 18:31",
+		"attachTo:" : "PeterUhnak 4/7/2015 18:31",
+		"buildEditorForm:" : "PeterUhnak 4/6/2015 00:32:47",
 		"createFigure" : "bliznjan 4/8/2015 12:03:15",
 		"createModel" : "bliznjan 4/8/2015 12:03:15",
 		"defaultColor" : "bliznjan 4/8/2015 12:03:15",
@@ -13,6 +16,7 @@
 		"inspectModel" : "bliznjan 4/8/2015 12:03:15",
 		"layout" : "bliznjan 4/8/2015 12:03:15",
 		"layout:" : "bliznjan 4/8/2015 12:03:15",
+		"loadModel" : "PeterUhnak 4/7/2015 18:40",
 		"registerModelEvents:" : "bliznjan 4/14/2015 09:37",
 		"remove" : "bliznjan 4/8/2015 12:03:15",
 		"rename" : "bliznjan 4/8/2015 12:03:15",

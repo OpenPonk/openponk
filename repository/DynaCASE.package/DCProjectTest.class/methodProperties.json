@@ -2,7 +2,7 @@
 	"class" : {
 		 },
 	"instance" : {
-		"testAddRemove" : "bliznjan 4/8/2015 11:31",
-		"testChangedOnAdd" : "PeterUhnak 4/6/2015 00:32:47",
-		"testChangedOnRemove" : "PeterUhnak 4/6/2015 00:32:47",
-		"testDirty" : "PeterUhnak 4/6/2015 00:32:47" } }
+		"testAddRemove" : "bliznjan 4/11/2015 16:29",
+		"testChangedOnAdd" : "bliznjan 4/8/2015 12:03:15",
+		"testChangedOnRemove" : "bliznjan 4/11/2015 16:31",
+		"testDirty" : "bliznjan 4/8/2015 12:03:15" } }

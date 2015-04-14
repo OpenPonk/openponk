@@ -1,5 +1,5 @@
 removing
 removeModelElement: aModelElement
-	"Redefine in container-like classes"
+	"Remove self as target of aModelElement"
 
-	self error: 'I do not own any elements'
+	self subclassResponsibility

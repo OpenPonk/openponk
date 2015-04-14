@@ -1,5 +1,5 @@
 adding
 addAsSourceFor: aController
-	"Redefine this method if needed"
-
-	self error: 'I cannot be source for anything.'
+	(self canBeSourceFor: aController)
+		ifTrue: [ self subclassResponsibility ]
+		ifFalse: [ self error: self class asString , ' cannot be source for ' , aController class asString ]

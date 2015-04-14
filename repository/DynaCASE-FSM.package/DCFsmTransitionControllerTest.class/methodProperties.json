@@ -2,6 +2,7 @@
 	"class" : {
 		 },
 	"instance" : {
-		"testCreateFigure" : "bliznjan 4/8/2015 10:42",
-		"testCreateModel" : "bliznjan 4/3/2015 19:10:32",
-		"testFigureRefresh" : "bliznjan 4/3/2015 19:10:32" } }
+		"setUp" : "bliznjan 4/11/2015 17:01",
+		"testCreateFigure" : "bliznjan 4/11/2015 17:01",
+		"testCreateModel" : "bliznjan 4/11/2015 17:14",
+		"testFigureRefresh" : "bliznjan 4/11/2015 17:16" } }

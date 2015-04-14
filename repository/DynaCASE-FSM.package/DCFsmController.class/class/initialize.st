@@ -1,9 +1,9 @@
-initialization
+class initialization
 initialize
 	super initialize.
-	modelToControllerMapping
+	ModelToControllerMapping
 		at: DCFsmInitialState put: DCFsmInitialStateController;
 		at: DCFsmState put: DCFsmStateController;
 		at: DCFsmFinalState put: DCFsmFinalStateController;
 		at: DCFsmTransition put: DCFsmTransitionController.
-	acceptsAsTarget := #(#DCFsmInitialStateController #DCFsmStateController #DCFsmFinalStateController)
+	AcceptsAsTarget := #(#DCFsmInitialStateController #DCFsmStateController #DCFsmFinalStateController)

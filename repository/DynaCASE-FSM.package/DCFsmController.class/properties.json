@@ -3,10 +3,10 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		 ],
+		"AcceptsAsTarget" ],
 	"commentStamp" : "tothmatu 10/4/2014 17:02",
 	"instvars" : [
-		"acceptsAsTarget" ],
+		 ],
 	"name" : "DCFsmController",
 	"pools" : [
 		 ],

@@ -1,17 +1,9 @@
 public
 trachelShapeFor: anEdge
-	| shape multiShape col fromPoint toPoint path |
-	col := self colorFor: anEdge.
-	fromPoint := attachPoint startingPointOf: anEdge.
-	toPoint := attachPoint endingPointOf: anEdge.
-	path := {fromPoint} , self points , {toPoint}.
-
+	| shape multiShape path |
+	path := self pathFor: anEdge.
 	multiShape := TRCompositeShape new.
 	2 to: path size do: [ :i | 
-		shape := TRLineShape new.
-		shape width: width.
-		shape from: (path at: i - 1) to: (path at: i).
-		shape color: col.
-
+		shape := self lineSegmentFor: anEdge from: (path at: i - 1) to: (path at: i).
 		multiShape addShape: shape ].
 	^ multiShape

@@ -1,3 +1,3 @@
-as yet unclassified
+accessing
 points
 	^ points asArray collect: [ :each | each value ]

@@ -7,10 +7,7 @@ addOrRemoveLinesFor: anEdge trachelShape: trachelShape
 	pointsCount - segmentsCount
 		timesRepeat: [ 
 			"add segments"
-			shape := TRLineShape new.
-			shape width: width.
-			shape from: 0 @ 0 to: 0 @ 0.
-			shape color: col.
+			shape := self lineSegmentFor: anEdge from: 0 @ 0 to: 0 @ 0.
 
 			trachelShape addShape: shape.
 			shape element: trachelShape element.

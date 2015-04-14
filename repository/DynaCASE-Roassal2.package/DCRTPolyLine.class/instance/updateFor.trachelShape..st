@@ -1,11 +1,8 @@
 rendering
 updateFor: anEdge trachelShape: trachelShape
-	| shape col fromPoint toPoint path |
-	self logCr: 'updateFor:trachelShape:.'.
+	| shape col path |
 	col := self colorFor: anEdge.
-	fromPoint := attachPoint startingPointOf: anEdge.
-	toPoint := attachPoint endingPointOf: anEdge.
-	path := {fromPoint} , self points , {toPoint}.
+	path := self pathFor: anEdge.
 
 	self addOrRemoveLinesFor: anEdge trachelShape: trachelShape.
 

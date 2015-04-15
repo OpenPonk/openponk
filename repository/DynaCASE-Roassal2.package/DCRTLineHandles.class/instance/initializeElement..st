@@ -8,4 +8,5 @@ initializeElement: element
 			visible
 				ifTrue: [ element shape removeHandlesFor: element ]
 				ifFalse: [ element shape showHandlesFor: element ].
-			visible := visible not ]
+			visible := visible not ].
+	element trachelShape addCallback: (TRRemoveCallback block: [ element shape removeHandlesFor: element ])

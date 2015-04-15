@@ -3,6 +3,6 @@ remove
 	super remove.
 	self diagramController deselectAll.
 	figure view
-		ifNotNil: [
+		ifNotNil: [ 
 			figure remove.
 			figure := nil ]

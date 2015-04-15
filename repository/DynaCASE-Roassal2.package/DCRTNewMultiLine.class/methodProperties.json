@@ -4,7 +4,7 @@
 	"instance" : {
 		"arrowHead" : "PeterUhnak 4/14/2015 21:42",
 		"arrowTail" : "PeterUhnak 4/14/2015 21:42",
-		"attachPoint:" : "PeterUhnak 4/14/2015 21:42",
+		"attachPoint:" : "PeterUhnak 4/15/2015 18:46",
 		"checkLineToSelfFor:" : "PeterUhnak 4/14/2015 21:42",
 		"color:" : "PeterUhnak 4/14/2015 21:42",
 		"createLineToSelf" : "PeterUhnak 4/14/2015 21:42",
@@ -40,6 +40,6 @@
 		"tail:" : "PeterUhnak 4/14/2015 21:42",
 		"trachelShapeFor:" : "PeterUhnak 4/14/2015 22:20",
 		"updateFor:trachelShape:" : "PeterUhnak 4/14/2015 22:55",
-		"withContinuousCircleAttachPoint" : "PeterUhnak 4/14/2015 21:42",
-		"withContinuousRectangleAttachPoint" : "PeterUhnak 4/14/2015 21:42",
+		"withContinuousCircleAttachPoint" : "PeterUhnak 4/15/2015 18:38",
+		"withContinuousRectangleAttachPoint" : "PeterUhnak 4/15/2015 18:44",
 		"withShorterDistanceWithOffsetAttachPoint" : "PeterUhnak 4/14/2015 21:42" } }

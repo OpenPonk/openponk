@@ -1,3 +1,3 @@
 attach point
 withContinuousRectangleAttachPoint
-	self attachPoint: DCRTRectangleAttachPoint new
+	self attachPoint: DCRTNewRectangleAttachPoint new

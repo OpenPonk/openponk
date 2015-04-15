@@ -1,3 +1,3 @@
 accessing
 controllerNameFor: aModel
-	^ self class controllerClassFor: aModel class
+	^ modelToControllerMapping at: aModel class

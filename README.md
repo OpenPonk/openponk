@@ -1,13 +1,5 @@
 # DynaCASE
 
-## NOTE:
-(This may not be necessary anymore, unless you have older version.)
-
-After loading DynaCASE you need to manually load 'Roassal2Spec-johanfabry.6'
-
-`World > Monticello Browser > Roassal2 repo > Open > Roassal2Spec > Roassal2Spec-johanfabry.6 > Load`
-
-
 ## For non-development
 
 ```
@@ -30,7 +22,7 @@ git clone git@github.com:dynacase/dynacase.git /my/path/to/dynacase
  - 2. install GitFileTree & load project
 
 NOTE that you should point Metacello to `repository` subfolder, not the root folder.
- 
+
 ```
 "install GitFileTree"
 Gofer new

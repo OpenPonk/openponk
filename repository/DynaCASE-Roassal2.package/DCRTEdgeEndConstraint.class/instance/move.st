@@ -11,8 +11,8 @@ move
 				ifTrue: [ startPoint ]
 				ifFalse: [ endPoint ]).
 	(vector := endPoint - startPoint) isZero
-		ifTrue: [ ^ self ].
-	distVector := distance * vector normalized.
-	origin = #end
-		ifTrue: [ distVector := distVector negated ].
-	shape translateBy: vector normal * offset + distVector
+		ifFalse: [ 
+			distVector := distance * vector normalized.
+			origin = #end
+				ifTrue: [ distVector := distVector negated ].
+			shape translateBy: vector normal * offset + distVector ]

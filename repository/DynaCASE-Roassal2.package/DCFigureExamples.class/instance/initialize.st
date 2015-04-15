@@ -1,3 +1,4 @@
 initialization
 initialize
-	view := RTView new
+	view := RTView new.
+	builder := DCRTEdgeBuilder new.

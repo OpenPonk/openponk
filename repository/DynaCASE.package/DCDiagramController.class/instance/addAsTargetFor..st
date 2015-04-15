@@ -7,6 +7,6 @@ addAsTargetFor: aController
 	aController
 		diagramController: self diagramController;
 		model: newModel.
-	self controllers add: aController.
+	self diagramController controllers add: aController.
 	aController attach.
 	self view signalUpdate

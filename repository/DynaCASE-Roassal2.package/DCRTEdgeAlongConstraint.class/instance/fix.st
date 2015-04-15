@@ -16,10 +16,10 @@ fix
 		ifTrue: [ balance := 0.5 ]
 		ifFalse: [ 
 			nearestPointVector := nearestPoint - startPoint.
-			balance := edgeVector x = 0
-				ifTrue: [ nearestPointVector y / edgeVector y ]
+			edgeVector x = 0
+				ifTrue: [ balance := nearestPointVector y / edgeVector y ]
 				ifFalse: [ 
 					edgeVector y = 0
-						ifTrue: [ nearestPointVector x / edgeVector x ]
-						ifFalse: [ nearestPointVector / edgeVector ] ] ].
+						ifTrue: [ balance := nearestPointVector x / edgeVector x ]
+						ifFalse: [ balance := nearestPointVector / edgeVector ] ] ].
 	self stick

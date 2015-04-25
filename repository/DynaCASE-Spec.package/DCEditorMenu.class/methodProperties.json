@@ -1,15 +1,15 @@
 {
 	"class" : {
-		"defaultSpec" : "PeterUhnak 4/7/2015 12:34:20" },
+		"defaultSpec" : "PeterUhnak 4/14/2015 23:20:54" },
 	"instance" : {
-		"canvasModel" : "PeterUhnak 4/7/2015 12:34:20",
-		"editor" : "PeterUhnak 4/7/2015 12:34:20",
-		"initializeCanvasMenu" : "PeterUhnak 4/7/2015 12:34:20",
-		"initializePresenter" : "PeterUhnak 4/7/2015 12:34:20",
-		"initializeWidgets" : "PeterUhnak 4/7/2015 12:34:20",
-		"layoutFor:" : "PeterUhnak 4/7/2015 12:34:20",
-		"layoutOptions" : "PeterUhnak 4/7/2015 12:34:20",
-		"menuModel" : "PeterUhnak 4/7/2015 12:34:20",
-		"showExportFormatMenu" : "PeterUhnak 4/7/2015 12:34:20",
-		"showLayoutSubmenu" : "bliznjan 4/7/2015 18:20",
-		"workbench" : "PeterUhnak 4/7/2015 12:34:20" } }
+		"canvasModel" : "PeterUhnak 4/14/2015 23:20:54",
+		"editor" : "PeterUhnak 4/14/2015 23:20:54",
+		"initializeCanvasMenu" : "PeterUhnak 4/14/2015 23:20:54",
+		"initializePresenter" : "PeterUhnak 4/14/2015 23:20:54",
+		"initializeWidgets" : "PeterUhnak 4/14/2015 23:20:54",
+		"layoutFor:" : "PeterUhnak 4/14/2015 23:20:54",
+		"layoutOptions" : "PeterUhnak 4/14/2015 23:20:54",
+		"menuModel" : "PeterUhnak 4/14/2015 23:20:54",
+		"showExportFormatMenu" : "PeterUhnak 4/14/2015 23:20:54",
+		"showLayoutSubmenu" : "PeterUhnak 4/14/2015 23:20:54",
+		"workbench" : "PeterUhnak 4/14/2015 23:20:54" } }

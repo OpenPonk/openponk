@@ -1,6 +1,5 @@
-*DynaCASE-FSM
+examples
 exampleFsm
-	<example:'DynaCASE example FSM'>
 	| project fsm initial first second final t1 t2 t3 t4 |
 	project := DCProject new projectName: 'Example FSM'.
 	fsm := DCFsm new name: 'FSM Diagram'.
@@ -23,4 +22,4 @@ exampleFsm
 		add: t2;
 		add: t3;
 		add: t4.
-	^ self openProject: project
+	DCWorkbench openProject: project

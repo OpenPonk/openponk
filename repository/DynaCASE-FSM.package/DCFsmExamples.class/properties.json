@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-FSM-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCFsmExamples",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

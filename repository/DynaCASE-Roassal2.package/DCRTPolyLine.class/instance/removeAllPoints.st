@@ -1,0 +1,3 @@
+public
+removeAllPoints
+	points removeAll

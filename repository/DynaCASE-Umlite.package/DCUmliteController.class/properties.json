@@ -10,5 +10,5 @@
 	"name" : "DCUmliteController",
 	"pools" : [
 		 ],
-	"super" : "DCDiagramController",
+	"super" : "Object",
 	"type" : "normal" }

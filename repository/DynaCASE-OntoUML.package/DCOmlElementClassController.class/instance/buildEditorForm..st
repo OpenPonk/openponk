@@ -1,13 +1,17 @@
 hooks
 buildEditorForm: aForm
-	super buildEditorForm: aForm.
+	aForm
+		addTextInput: 'name'
+		label: 'name'
+		value: self model name
+		onChange: [ :newValue | self model name: newValue ].
 	aForm
 		addTextArea: 'attrs'
-		label: 'Attributes'
+		label: 'attributes'
 		value: self model attributes asStringWithCr
-		onChange: [ :newValue | self model attributes: newValue asString lines ].
+		onChange: [ :newValue | self parseAttributes: newValue ].
 	aForm
 		addTextArea: 'methods'
-		label: 'Methods'
+		label: 'methods'
 		value: self model methods asStringWithCr
-		onChange: [ :newValue | self model methods: newValue asString lines ]
+		onChange: [ :newValue | self parseMethods: newValue ]

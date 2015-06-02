@@ -1,3 +1,3 @@
-as yet unclassified
+metamodel
 modelElements
-	self elements copy
+	^ self metaModel modelElements

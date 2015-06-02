@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-OntoUML-Controllers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCOmlDerivationController",
+	"pools" : [
+		 ],
+	"super" : "DCOmlDependencyRelationshipController",
+	"type" : "normal" }

@@ -1,3 +1,3 @@
 search
-searchMethod: xName 
-	^ methods detect: [ :each | each name = xName ].
+searchMethod: aNameString 
+	^ methods detect: [ :each | each name = aNameString ].

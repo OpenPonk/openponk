@@ -5,9 +5,11 @@ testRole
 	
 	self deny: role isElementValid.
 	
-	ParentClass
-		parentClass: (Kind name: 'Person' metaModel: metaModel)
-		child: role.
+	Generalization
+		parent: (Kind name: 'Person' metaModel: metaModel)
+		child: role
+		generalizationSet: (GeneralizationSet new).
+		
 	Mediation
 		name: 'Mediation'
 		start: role

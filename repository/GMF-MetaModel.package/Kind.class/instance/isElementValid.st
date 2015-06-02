@@ -1,4 +1,4 @@
 validating
 isElementValid
-	^ (parents
-		anySatisfy: [:each | each parentClass isKindOf: MomentClass]) not & super isElementValid 
+	^ (self generalizations
+		anySatisfy: [:each | each parent isKindOf: MomentClass]) not & super isElementValid 

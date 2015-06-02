@@ -5,7 +5,10 @@ testSubsranceSortal
 	
 	self assert: element isElementValid.
 	
-	ParentClass parentClass: ( Kind name: 'RigidSortal' metaModel: metaModel ) child: element.
+	Generalization 
+		parent: ( Kind name: 'RigidSortal' metaModel: metaModel ) 
+		child: element
+		generalizationSet: (GeneralizationSet new).
 	
 	self deny: element isElementValid
 	

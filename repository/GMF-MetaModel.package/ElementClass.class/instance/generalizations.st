@@ -1,5 +1,14 @@
-accessing
+inheritance
 generalizations
-	owner ifNil: [ ^ #() ].
-	^ (owner elements select: [ :each | each isKindOf: Generalization ])
-		select: [ :each | each child == self | (each parent == self) ]
+	| result generalization |
+	result := Set new.
+	
+	generalizationSets do: [ :each | 
+		generalization := (each search: self name).
+		generalization ifNotNil: [
+			result add: (each search: self name) ]
+	].
+	
+	^ result
+	
+	

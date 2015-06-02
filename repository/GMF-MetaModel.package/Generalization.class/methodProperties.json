@@ -1,8 +1,11 @@
 {
 	"class" : {
-		 },
+		"parent:child:generalizationSet:" : "volosmat 4/7/2015 15:25" },
 	"instance" : {
-		"child" : "PeterUhnak 11/23/2014 14:56",
-		"child:" : "PeterUhnak 11/23/2014 14:56",
-		"parent" : "PeterUhnak 11/23/2014 14:57",
-		"parent:" : "PeterUhnak 11/23/2014 14:57" } }
+		"child" : "PeterUhnak 1/30/2015 14:45:03",
+		"child:" : "volosmat 4/7/2015 14:56",
+		"generalizationSet" : "volosmat 3/24/2015 18:00",
+		"generalizationSet:" : "volosmat 3/24/2015 18:10",
+		"hash" : "volosmat 4/14/2015 18:02",
+		"parent" : "PeterUhnak 1/30/2015 14:45:03",
+		"parent:" : "volosmat 4/7/2015 15:17" } }

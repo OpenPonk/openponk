@@ -1,3 +1,5 @@
 removing
-removeParent: xName
-	parents := parents reject: [ :each | each parentClass name = xName ]
+removeParent: aNameString
+	generalizationSets do: [ :each |
+		each remove: aNameString child: self name
+		 ] 

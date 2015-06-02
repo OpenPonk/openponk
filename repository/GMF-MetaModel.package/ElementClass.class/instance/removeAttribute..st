@@ -1,3 +1,3 @@
 removing
-removeAttribute: xName
-	attributes := attributes reject: [ :each | each name = xName ]
+removeAttribute: aNameString
+	attributes := attributes reject: [ :each | each name = aNameString ]

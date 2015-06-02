@@ -1,13 +1,16 @@
 running
 testPhase
-	| phase |
+	| phase generalizationSet |
+	
+	generalizationSet := GeneralizationSet new.
 	phase := Phase name: 'NewPhase' metaModel: metaModel.
-	ParentClass
-		parentClass: (Kind name: 'PhaseParent' metaModel: metaModel)
-		child: phase.
+	Generalization
+		parent: (Kind name: 'PhaseParent' metaModel: metaModel)
+		child: phase
+		generalizationSet: generalizationSet.
 	self assert: phase isElementValid.
 	
-	(phase searchParent: 'PhaseParent')
+	generalizationSet
 		disjoint: false.
 		
 	self deny: phase isElementValid

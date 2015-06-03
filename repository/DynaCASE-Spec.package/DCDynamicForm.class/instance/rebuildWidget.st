@@ -1,4 +1,4 @@
-building widgets
+private - building widgets
 rebuildWidget
 	self widgets removeAll.
 	self createWidgets.

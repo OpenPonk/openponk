@@ -2,20 +2,17 @@
 	"class" : {
 		"defaultSpec" : "PeterUhnak 4/14/2015 23:20:54" },
 	"instance" : {
-		"accepted" : "PeterUhnak 4/14/2015 23:20:54",
-		"addCheckbox:label:value:onChange:" : "PeterUhnak 4/14/2015 23:20:54",
-		"addDropList:label:with:" : "PeterUhnak 4/14/2015 23:20:54",
-		"addLabel:value:" : "PeterUhnak 4/14/2015 23:20:54",
-		"addTextArea:label:value:onChange:" : "PeterUhnak 4/14/2015 23:20:54",
-		"addTextField:control:label:value:onChange:" : "PeterUhnak 4/14/2015 23:20:54",
-		"addTextInput:label:value:onChange:" : "PeterUhnak 4/14/2015 23:20:54",
-		"createWidgets" : "PeterUhnak 4/14/2015 23:20:54",
+		"addCheckbox:" : "PeterUhnak 6/3/2015 02:36",
+		"addControl:" : "PeterUhnak 6/3/2015 02:20",
+		"addDroplist:" : "PeterUhnak 6/3/2015 02:53",
+		"addLabel:" : "PeterUhnak 6/3/2015 02:25",
+		"addText:" : "PeterUhnak 6/3/2015 02:25",
+		"addTextInput:" : "PeterUhnak 6/3/2015 02:25",
+		"createWidgets" : "PeterUhnak 6/3/2015 02:24",
 		"defaultHeights" : "PeterUhnak 4/14/2015 23:20:54",
 		"dynamicLayout" : "PeterUhnak 4/14/2015 23:20:54",
 		"editController:" : "PeterUhnak 4/14/2015 23:20:54",
 		"heightFor:" : "PeterUhnak 4/14/2015 23:20:54",
 		"initialize" : "PeterUhnak 4/14/2015 23:20:54",
 		"rebuildWidget" : "PeterUhnak 4/14/2015 23:20:54",
-		"reset" : "PeterUhnak 4/14/2015 23:20:54",
-		"whenAcceptedDo:" : "PeterUhnak 4/14/2015 23:20:54",
-		"workbench" : "PeterUhnak 4/14/2015 23:20:54" } }
+		"reset" : "PeterUhnak 4/14/2015 23:20:54" } }

@@ -1,7 +1,5 @@
 hooks
 buildEditorForm: aForm
-	aForm
-		addTextInput: 'name'
-		label: 'Name'
-		value: self model name
-		onChange: [ :newValue | self model name: newValue ]
+	(aForm addTextInput: 'Name')
+		text: self model name;
+		whenTextIsAccepted: [ :newValue | self model name: newValue ]

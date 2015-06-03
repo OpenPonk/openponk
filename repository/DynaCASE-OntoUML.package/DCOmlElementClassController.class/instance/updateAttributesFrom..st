@@ -1,8 +1,8 @@
 parsing - private
-parseAttributes: anAttributes
+updateAttributesFrom: aText
 	| attrStrCol attrTokens |
 	
-	attrStrCol := (anAttributes asString copyReplaceAll: ' ' with: '') lines.
+	attrStrCol := (aText asString copyReplaceAll: ' ' with: '') lines.
 	
 	"compare count of attributes from a form and from an element"
 	attrStrCol size ~= self model attributes size

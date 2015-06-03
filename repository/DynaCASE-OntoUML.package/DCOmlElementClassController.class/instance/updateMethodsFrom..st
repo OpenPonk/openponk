@@ -1,8 +1,8 @@
 parsing - private
-parseMethods: aMethods
+updateMethodsFrom: aText
 	| methodStrCol methodTokens |
 	
-	methodStrCol := (aMethods asString copyReplaceAll: ' ' with: '') lines.
+	methodStrCol := (aText asString copyReplaceAll: ' ' with: '') lines.
 	
 	"compare count of attributes from a form and from an element"
 	methodStrCol size ~= self model methods size

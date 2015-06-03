@@ -7,7 +7,4 @@ removeElement: anElement
 	(anElement isKindOf: Relationship)
 		ifTrue: [ forRemove := self metaModel removeRelationship: anElement ].
 	
-	(forRemove isMemberOf: OrderedCollection)
-		ifTrue: [ forRemove do: [ :each | super remove: each ] ];
-		ifFalse: [ super remove: forRemove ]
-	
+	forRemove do: [ :each | super remove: each ].

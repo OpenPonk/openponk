@@ -2,13 +2,6 @@ metamodel
 addElement: anElement
 
 	(anElement isKindOf: ElementClass) 
-		ifTrue: [ 
-			anElement metaModel isNil 
-				ifTrue: [ anElement 
-								metaModel: self metaModel 
-								checkDuplicity: false];
-				ifFalse: [ self metaModel 
-								addElement: anElement 
-								checkDuplicity: false ] ].
+		ifTrue: [ self metaModel addElement: anElement ].
 		
 	super add: anElement

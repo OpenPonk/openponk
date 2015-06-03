@@ -1,3 +1,5 @@
 adding
 addElement: anElement
-	self addElement: anElement checkDuplicity: true
+	[ modelElements at: anElement name ]
+		on: Error
+		do: [ modelElements at: anElement name put: anElement ]

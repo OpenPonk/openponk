@@ -1,7 +1,6 @@
 removing
 removeRelationship: aRelationship
-	
-	(aRelationship isKindOf: ElementAssociation) 
-		ifTrue: [ ^ self removeAssociation: aRelationship ].
+	(aRelationship isKindOf: ElementAssociation)
+		ifTrue: [ self removeAssociation: aRelationship ].
 	(aRelationship isKindOf: Generalization)
-		ifTrue: [ ^ self removeGeneralization: aRelationship ]
+		ifTrue: [ self removeGeneralization: aRelationship ]

@@ -18,10 +18,6 @@ removeElement: anElement
 				do: [  ]
 			]].
 	
-	removed add: anElement. 
-	
-	[ modelElements removeKey: anElement name ]
-		on: Error
-		do: [ modelElements removeKey: anElement dcID ].
-	
-	 ^ removed
+	removed add: anElement.
+	modelElements removeKey: anElement name.
+	^ removed

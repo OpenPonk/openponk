@@ -1,3 +1,3 @@
 validating
 isElementNameValid
-	^  self name first canBeGlobalVarInitial & super isElementNameValid
+	^ name first canBeGlobalVarInitial & super isElementNameValid

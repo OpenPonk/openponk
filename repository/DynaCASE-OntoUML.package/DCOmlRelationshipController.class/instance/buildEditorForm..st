@@ -2,14 +2,14 @@ hooks
 buildEditorForm: aForm
 	super buildEditorForm: aForm.
 
-	aForm
-		addTextInput: 'startMultiplicity'
-		label: 'startMultiplicity'
-		value: self model startMultiplicity 
-		onChange: [ :newValue | self model startMultiplicity: newValue ].
-	
-	aForm
-		addTextInput: 'endMultiplicity'
-		label: 'endMultiplicity'
-		value: self model endMultiplicity 
-		onChange: [ :newValue | self model endMultiplicity: newValue ].
+	(aForm addTextInput: 'Start Multiplicity')
+		text: self model startMultiplicity;
+		whenTextIsAccepted: [ :newValue | 
+					self model startMultiplicity: newValue.
+					self model changed ].
+
+	(aForm addTextInput: 'End Multiplicity')
+		text: self model endMultiplicity;
+		whenTextIsAccepted: [ :newValue | 
+					self model endMultiplicity: newValue.
+					self model changed ]

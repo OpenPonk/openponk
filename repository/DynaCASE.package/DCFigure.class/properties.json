@@ -1,0 +1,18 @@
+{
+	"category" : "DynaCASE-Figures",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 6/3/2015 04:07",
+	"instvars" : [
+		"figures",
+		"background",
+		"view",
+		"needRebuild",
+		"removedFigures" ],
+	"name" : "DCFigure",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

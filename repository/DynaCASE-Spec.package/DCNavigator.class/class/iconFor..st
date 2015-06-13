@@ -2,6 +2,8 @@ as yet unclassified
 iconFor: anObject
 	| symbol |
 	symbol := anObject className asSymbol.
+	((anObject isKindOf: DCFsmState) and: [ anObject isFinal ])
+		ifTrue: [ ^ Smalltalk ui icons dcFsmFinalStateIcon ].
 	^ (Icons
 		at: symbol
 		ifAbsent: [ 

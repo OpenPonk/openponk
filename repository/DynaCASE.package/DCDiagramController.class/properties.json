@@ -1,7 +1,7 @@
 {
 	"category" : "DynaCASE-Controllers",
 	"classinstvars" : [
-		"ModelToControllerMapping" ],
+		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "PeterUhnak 10/11/2014 22:42",
@@ -11,7 +11,8 @@
 		"editor",
 		"hoverHolder",
 		"figureAdded",
-		"deselectionHolder" ],
+		"deselectionHolder",
+		"modelToControllerMapping" ],
 	"name" : "DCDiagramController",
 	"pools" : [
 		 ],

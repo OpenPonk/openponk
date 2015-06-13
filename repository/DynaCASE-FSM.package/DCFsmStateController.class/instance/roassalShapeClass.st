@@ -1,3 +1,0 @@
-hooks
-roassalShapeClass
-	^ RTEllipse

@@ -1,5 +1,6 @@
 tests
 testCreateFigure
+	self skip.
 	super testCreateFigure.
 	self assert: figure class = RTElement.
 	self assert: figure shape class = RTEllipse.

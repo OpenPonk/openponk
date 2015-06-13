@@ -1,3 +1,3 @@
 hooks
 modelClass
-	^ DCFsmFinalState
+	^ DCFsmState

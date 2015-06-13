@@ -5,4 +5,5 @@ update
 		timesRepeat: [ 
 			self figures do: #update.
 			self layoutOn: self figures.
-			self updateBackground ]
+			self updateBackground ].
+	view signalUpdate

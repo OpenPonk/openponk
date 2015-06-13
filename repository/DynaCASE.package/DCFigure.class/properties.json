@@ -9,7 +9,6 @@
 		"figures",
 		"background",
 		"view",
-		"needRebuild",
 		"removedFigures" ],
 	"name" : "DCFigure",
 	"pools" : [

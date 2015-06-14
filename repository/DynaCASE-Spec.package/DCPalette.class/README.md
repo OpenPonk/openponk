@@ -1,1 +1,12 @@
-DCPalette is actions menu for a specific diagram. It is added as part of DCEditor.
+I am a container and manager for palette entries. I am added as part of DCEditor.
+
+!! Responsibility
+
+Be a container for entries.
+Manage changes between tools.
+
+!! Collaborators
+
+DCPaletteEntry
+DCPaletteTool
+DCEditor

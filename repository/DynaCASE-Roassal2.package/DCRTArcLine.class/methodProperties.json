@@ -1,0 +1,14 @@
+{
+	"class" : {
+		"constraintLabel:at:" : "PeterUhnak 6/15/2015 17:30" },
+	"instance" : {
+		"arcShapeFor:" : "PeterUhnak 6/15/2015 16:31",
+		"attachPoint:" : "PeterUhnak 6/15/2015 09:31",
+		"color:" : "PeterUhnak 6/15/2015 09:31",
+		"head:" : "PeterUhnak 6/15/2015 09:32",
+		"initialize" : "PeterUhnak 6/15/2015 16:04",
+		"radius:" : "PeterUhnak 6/15/2015 12:44",
+		"tail:" : "PeterUhnak 6/15/2015 09:33",
+		"trachelShapeFor:" : "PeterUhnak 6/15/2015 16:57",
+		"updateArcFor:trachelShape:" : "PeterUhnak 6/15/2015 17:01",
+		"updateFor:trachelShape:" : "PeterUhnak 6/15/2015 17:04" } }

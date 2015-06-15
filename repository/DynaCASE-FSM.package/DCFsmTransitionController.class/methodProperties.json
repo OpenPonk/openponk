@@ -2,6 +2,8 @@
 	"class" : {
 		 },
 	"instance" : {
-		"edgeBuilder" : "bliznjan 4/14/2015 14:00:47",
+		"createEdgeFor:inView:" : "PeterUhnak 6/15/2015 17:41",
+		"createEdgeFrom:to:" : "PeterUhnak 6/15/2015 17:25",
+		"edgeBuilder" : "PeterUhnak 6/14/2015 22:04",
 		"modelClass" : "bliznjan 4/14/2015 14:00:47",
-		"refreshFigure" : "bliznjan 4/14/2015 14:00:47" } }
+		"refreshFigure" : "PeterUhnak 6/15/2015 17:37" } }

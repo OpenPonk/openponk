@@ -1,0 +1,17 @@
+{
+	"category" : "DynaCASE-Trachel-Shapes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"from",
+		"to",
+		"radius",
+		"width" ],
+	"name" : "DCTRArcShape",
+	"pools" : [
+		 ],
+	"super" : "TRAbstractLineShape",
+	"type" : "normal" }

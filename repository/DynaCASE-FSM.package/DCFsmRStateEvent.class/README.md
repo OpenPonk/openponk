@@ -1,0 +1,1 @@
+I am root class for state-related events.

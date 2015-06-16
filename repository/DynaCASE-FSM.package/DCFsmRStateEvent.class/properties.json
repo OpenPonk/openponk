@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-FSM-Simulations",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 6/15/2015 22:36",
+	"instvars" : [
+		"state",
+		"transition" ],
+	"name" : "DCFsmRStateEvent",
+	"pools" : [
+		 ],
+	"super" : "DCFsmRecognizerEvent",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-FSM-Simulations",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 6/15/2015 22:35",
+	"instvars" : [
+		 ],
+	"name" : "DCFsmStateReached",
+	"pools" : [
+		 ],
+	"super" : "DCFsmRStateEvent",
+	"type" : "normal" }

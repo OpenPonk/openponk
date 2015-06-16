@@ -1,3 +1,3 @@
 testing
 isFinal
-	^ isFinal
+	^ false

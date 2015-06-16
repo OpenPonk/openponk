@@ -1,0 +1,3 @@
+terminators
+inputConsumed
+	^ self complete

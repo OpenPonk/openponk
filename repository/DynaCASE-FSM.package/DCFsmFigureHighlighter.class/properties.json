@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-FSM-Figures",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 6/15/2015 23:57",
+	"instvars" : [
+		"label" ],
+	"name" : "DCFsmFigureHighlighter",
+	"pools" : [
+		 ],
+	"super" : "DCFigure",
+	"type" : "normal" }

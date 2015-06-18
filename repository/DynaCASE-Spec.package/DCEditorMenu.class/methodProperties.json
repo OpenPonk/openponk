@@ -1,15 +1,10 @@
 {
 	"class" : {
-		"defaultSpec" : "PeterUhnak 4/14/2015 23:20:54" },
+		"defaultSpec" : "PeterUhnak 6/18/2015 06:28" },
 	"instance" : {
-		"canvasModel" : "PeterUhnak 4/14/2015 23:20:54",
-		"editor" : "PeterUhnak 4/14/2015 23:20:54",
-		"initializeCanvasMenu" : "PeterUhnak 4/14/2015 23:20:54",
-		"initializePresenter" : "PeterUhnak 4/14/2015 23:20:54",
-		"initializeWidgets" : "PeterUhnak 4/14/2015 23:20:54",
-		"layoutFor:" : "PeterUhnak 4/14/2015 23:20:54",
-		"layoutOptions" : "PeterUhnak 4/14/2015 23:20:54",
-		"menuModel" : "PeterUhnak 4/14/2015 23:20:54",
-		"showExportFormatMenu" : "PeterUhnak 4/14/2015 23:20:54",
-		"showLayoutSubmenu" : "PeterUhnak 4/14/2015 23:20:54",
-		"workbench" : "PeterUhnak 4/14/2015 23:20:54" } }
+		"canvasModel" : "PeterUhnak 6/14/2015 22:03:07",
+		"createWidgets" : "PeterUhnak 6/18/2015 06:39",
+		"dynamicLayout" : "PeterUhnak 6/18/2015 06:31",
+		"editor" : "PeterUhnak 6/14/2015 22:03:07",
+		"loadToolbars" : "PeterUhnak 6/18/2015 06:39",
+		"rebuildWidget" : "PeterUhnak 6/18/2015 06:20" } }

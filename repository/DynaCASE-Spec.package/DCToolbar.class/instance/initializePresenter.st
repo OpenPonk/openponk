@@ -1,3 +1,3 @@
 initialization
 initializePresenter
-	self initializeCanvasMenu
+	menuModel applyTo: self

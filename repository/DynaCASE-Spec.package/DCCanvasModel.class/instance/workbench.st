@@ -1,3 +1,3 @@
 accessing
 workbench
-	^ owner workbench
+	^ self editor workbench

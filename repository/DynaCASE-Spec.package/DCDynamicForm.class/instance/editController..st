@@ -1,4 +1,4 @@
-as yet unclassified
+public
 editController: aController
 	components ifNotEmpty: [ self reset ].
 	aController ifNotNil: [ aController buildEditorForm: self ].

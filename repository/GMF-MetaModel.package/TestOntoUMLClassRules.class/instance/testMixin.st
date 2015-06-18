@@ -1,6 +1,6 @@
 running
 testMixin
-	| mixin |
+	| mixin generalizationSet |
 	mixin := Mixin
 				name: 'Mixin'
 				abstract: true
@@ -8,9 +8,13 @@ testMixin
 				
 	self deny: mixin isElementValid.
 	
+	generalizationSet := GeneralizationSet new.
+	
 	mixin
-		addObject: (Kind name: 'MixedObject' metaModel: metaModel).
+		addObject: (Kind name: 'MixedObject' metaModel: metaModel)
+		generalizationSet: generalizationSet.
 	mixin
-		addObject: (Phase name: 'MixedPhase' metaModel: metaModel).
+		addObject: (Phase name: 'MixedPhase' metaModel: metaModel)
+		generalizationSet: generalizationSet.
 		
 	self assert: mixin isElementValid

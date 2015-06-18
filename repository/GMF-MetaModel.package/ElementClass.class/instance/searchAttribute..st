@@ -1,3 +1,3 @@
 search
-searchAttribute: xName 
-	^ attributes detect: [ :each | each name = xName ].
+searchAttribute: aNameString 
+	^ attributes detect: [ :each | each name = aNameString ].

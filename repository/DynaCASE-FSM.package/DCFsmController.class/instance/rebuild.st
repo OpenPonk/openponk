@@ -1,5 +1,7 @@
 userinterface
 rebuild
 	super rebuild.
-	RTHorizontalTreeLayout on: self view elements.
+	RTHorizontalTreeLayout new
+		horizontalGap: 50;
+		on: (self controllers select: [ :each | each isKindOf: DCFsmVertexController ] thenCollect: #figure).
 	self view canvas camera focusOnCenter

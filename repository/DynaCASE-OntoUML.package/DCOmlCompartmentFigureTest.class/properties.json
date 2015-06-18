@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-OntoUML-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 6/4/2015 21:48",
+	"instvars" : [
+		"view",
+		"figure" ],
+	"name" : "DCOmlCompartmentFigureTest",
+	"pools" : [
+		 ],
+	"super" : "DCTestCase",
+	"type" : "normal" }

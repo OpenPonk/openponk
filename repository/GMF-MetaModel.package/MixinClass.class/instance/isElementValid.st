@@ -1,4 +1,4 @@
 validating
 isElementValid
-	^ (parents
-		anySatisfy: [:each | each parentClass isKindOf: SortalClass]) not & super isElementValid 
+	^ (self generalizations
+		anySatisfy: [:each | each parent isKindOf: SortalClass]) not & super isElementValid 

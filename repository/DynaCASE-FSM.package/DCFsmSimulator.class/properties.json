@@ -1,0 +1,23 @@
+{
+	"category" : "DynaCASE-FSM-Simulations",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 6/15/2015 23:16",
+	"instvars" : [
+		"diagramController",
+		"recognizer",
+		"input",
+		"start",
+		"stop",
+		"step",
+		"reset",
+		"inputLabel",
+		"remainderLabel",
+		"symbolLabel" ],
+	"name" : "DCFsmSimulator",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

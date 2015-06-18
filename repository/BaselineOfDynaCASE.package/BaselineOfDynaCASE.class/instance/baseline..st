@@ -9,7 +9,7 @@ baseline: spec
 			project: 'Roassal2' with: [
 				spec
 					className: #ConfigurationOfRoassal2;
-					versionString: '1.52';
+					versionString: '1.5.2';
 					repository: 'http://smalltalkhub.com/mc/ObjectProfile/Roassal2/main/' ];
 			project: 'Ston' with: [
 				spec

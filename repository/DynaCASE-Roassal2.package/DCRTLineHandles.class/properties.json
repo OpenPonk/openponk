@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2-PolyLine",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCRTLineHandles",
+	"pools" : [
+		 ],
+	"super" : "RTInteraction",
+	"type" : "normal" }

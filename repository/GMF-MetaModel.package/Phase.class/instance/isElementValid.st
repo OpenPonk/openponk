@@ -1,4 +1,4 @@
 validating
 isElementValid
-	^ (parents anySatisfy: [:each | each isDisjoint & each isComplete])
+	^ (self generalizationSets anySatisfy: [:each | each disjoint & each complete])
 			& super isElementValid 

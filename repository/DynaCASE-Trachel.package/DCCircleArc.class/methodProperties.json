@@ -1,0 +1,11 @@
+{
+	"class" : {
+		"from:to:radius:" : "PeterUhnak 6/15/2015 10:06" },
+	"instance" : {
+		"angles" : "PeterUhnak 6/15/2015 12:56",
+		"biggerAngle" : "PeterUhnak 6/15/2015 12:00",
+		"circle" : "PeterUhnak 6/15/2015 11:57",
+		"from" : "PeterUhnak 6/15/2015 11:57",
+		"setFrom:to:radius:" : "PeterUhnak 6/15/2015 11:57",
+		"smallerAngle" : "PeterUhnak 6/15/2015 12:00",
+		"to" : "PeterUhnak 6/15/2015 11:57" } }

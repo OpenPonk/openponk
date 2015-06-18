@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Icons",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Current" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"icons" ],
+	"name" : "DCIcons",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

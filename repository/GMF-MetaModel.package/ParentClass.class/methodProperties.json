@@ -1,13 +1,13 @@
 {
 	"class" : {
-		"parentClass:child:" : "volosmat 4/2/2014 18:15",
-		"parentClass:complete:disjoint:child:" : "volosmat 4/2/2014 18:15" },
+		"parentClass:child:" : "PeterUhnak 1/30/2015 14:45:03",
+		"parentClass:complete:disjoint:child:" : "PeterUhnak 1/30/2015 14:45:03" },
 	"instance" : {
-		"child" : "volosmat 4/2/2014 18:12",
-		"child:" : "volosmat 4/2/2014 18:14",
-		"complete:" : "volosmat 3/12/2014 11:21",
-		"disjoint:" : "volosmat 3/12/2014 11:22",
-		"isComplete" : "volosmat 4/3/2014 19:01",
-		"isDisjoint" : "volosmat 4/3/2014 19:01",
-		"parentClass" : "volosmat 3/12/2014 11:20",
-		"parentClass:" : "volosmat 3/12/2014 11:20" } }
+		"child" : "PeterUhnak 1/30/2015 14:45:03",
+		"child:" : "PeterUhnak 1/30/2015 14:45:03",
+		"complete:" : "PeterUhnak 1/30/2015 14:45:03",
+		"disjoint:" : "PeterUhnak 1/30/2015 14:45:03",
+		"isComplete" : "PeterUhnak 1/30/2015 14:45:03",
+		"isDisjoint" : "PeterUhnak 1/30/2015 14:45:03",
+		"parentClass" : "PeterUhnak 1/30/2015 14:45:03",
+		"parentClass:" : "PeterUhnak 1/30/2015 14:45:03" } }

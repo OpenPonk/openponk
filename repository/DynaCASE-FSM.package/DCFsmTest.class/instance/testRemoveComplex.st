@@ -6,7 +6,8 @@ testRemoveComplex
 	initial := DCFsmInitialState new.
 	first := DCFsmState new name: '1'.
 	second := DCFsmState new name: '2'.
-	final := DCFsmFinalState new name: '3'.
+	final := DCFsmState new name: '3'.
+	final beFinal.
 	diagram
 		add: initial;
 		add: first;

@@ -6,4 +6,6 @@ iconForDiagram: aSymbol
 		ifTrue: [ ^ Smalltalk ui icons dcFsmDiagramIcon ].
 	aSymbol = #DCOmlDiagram
 		ifTrue: [ ^ Smalltalk ui icons dcOmlDiagramIcon ].
+	aSymbol = #DMMindMap
+		ifTrue: [ ^ #DMIcons asClass current mindMapIcon ].
 	^ nil

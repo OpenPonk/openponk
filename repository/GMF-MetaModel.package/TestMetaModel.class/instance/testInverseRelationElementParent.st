@@ -3,7 +3,10 @@ testInverseRelationElementParent
 	| element |
 	element := SubKind name: 'SubKindTestElement' metaModel: metaModel.
 	
-	ParentClass parentClass: (Kind name: 'TestChildKind' metaModel: metaModel) child: element.
+	Generalization 
+		parent: (Kind name: 'TestChildKind' metaModel: metaModel) 
+		child: element
+		generalizationSet: (GeneralizationSet new).
 	 
-	self assert: (element searchParent: 'TestChildKind') parentClass name = 'TestChildKind'
+	self assert: (element searchParent: 'TestChildKind') parent name = 'TestChildKind'
 	

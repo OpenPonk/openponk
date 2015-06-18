@@ -9,14 +9,6 @@ v addAll: es; add: e.
 es @ RTDraggable.
 RTHorizontalLineLayout new horizontalGap: 50; on: es.
 visible := false.
-e when: TRMouseRightClick do: [ 
-	visible ifTrue: [ 
-		e shape removeHandlesFor: e.
-		 ] ifFalse: [ 
-		e shape showHandlesFor: e.
-		 ]
-	.
-	visible := visible not.
-].
+e @ DCRTLineHandles.
 
 v open

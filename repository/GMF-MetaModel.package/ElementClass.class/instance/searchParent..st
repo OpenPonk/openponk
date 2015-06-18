@@ -1,3 +1,3 @@
 search
-searchParent: xName 
-	^ parents detect: [ :each | each parentClass name = xName ].
+searchParent: aNameString 
+	^ self generalizations detect: [ :each | each parent name = aNameString ].

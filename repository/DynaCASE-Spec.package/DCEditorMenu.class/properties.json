@@ -4,11 +4,12 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "PeterUhnak 6/18/2015 06:46",
 	"instvars" : [
-		"menuModel" ],
+		"menuModel",
+		"toolbarModel" ],
 	"name" : "DCEditorMenu",
 	"pools" : [
 		 ],
-	"super" : "ComposableModel",
+	"super" : "DynamicComposableModel",
 	"type" : "normal" }

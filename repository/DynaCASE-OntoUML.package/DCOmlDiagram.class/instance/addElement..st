@@ -1,3 +1,7 @@
-as yet unclassified
+metamodel
 addElement: anElement
-	self add: anElement
+
+	(anElement isKindOf: ElementClass) 
+		ifTrue: [ self metaModel addElement: anElement ].
+		
+	super add: anElement

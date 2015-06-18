@@ -8,8 +8,9 @@ testRigidMixin
 				
 	self assert: rigidMixin isElementValid.
 	
-	ParentClass
-		parentClass: (RoleMixin name: 'RoleMixin' metaModel: metaModel)
-		child: rigidMixin.
+	Generalization
+		parent: (RoleMixin name: 'RoleMixin' metaModel: metaModel)
+		child: rigidMixin
+		generalizationSet: (GeneralizationSet new).
 		
 	self deny: rigidMixin isElementValid

@@ -4,4 +4,5 @@ initialize
 	selectionHolder := [  ].
 	deselectionHolder := [  ].
 	hoverHolder := [  ].
-	figureAdded := [ :figure |  ]
+	figureAdded := [ :figure |  ].
+	modelToControllerMapping := self modelToControllerMapping

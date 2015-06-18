@@ -1,13 +1,16 @@
 private
 childrenFor: anObject
-	| col |
+	"todo: double dispatch?"
+
+	| col name |
+	name := anObject class asString asSymbol.
 	col := OrderedCollection new.
+	name = #DMMindMap
+		ifTrue: [ ^ col ].
 	(anObject isKindOf: DCDiagram)
 		ifTrue: [ col addAll: anObject elements ].
 	(anObject isKindOf: DCNamedElement)
 		ifTrue: [ 
-			| name "todo: double dispatch?" |
-			name := anObject class asString asSymbol.
 			name = #BormParticipant
 				ifTrue: [ col addAll: anObject nodes ].
 			name = #BormActivity | (name = #BormState)

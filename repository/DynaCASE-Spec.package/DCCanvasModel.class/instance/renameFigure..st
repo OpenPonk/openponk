@@ -1,3 +1,3 @@
 as yet unclassified
 renameFigure: aFigure
-	self diagramController renameElementRepresentedBy: aFigure
+	DCRenameElementCommand executeOn: (self diagramController modelForFigure: aFigure)

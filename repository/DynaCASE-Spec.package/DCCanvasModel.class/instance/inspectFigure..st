@@ -1,3 +1,3 @@
 as yet unclassified
 inspectFigure: aFigure
-	self diagramController inspectElementRepresendedBy: aFigure
+	(self diagramController controllerForFigure: aFigure) model inspect

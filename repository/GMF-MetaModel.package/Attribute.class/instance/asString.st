@@ -1,3 +1,3 @@
-accessing
+printing
 asString
-	^name , ':' , dataType , '[' , multiplicity asString , ']'
+	^ name , ':' , dataType , '[' , multiplicity asString , ']'

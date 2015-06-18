@@ -1,13 +1,16 @@
 {
 	"class" : {
-		"isAbstract" : "PeterUhnak 4/4/2015 02:21:39" },
+		"isAbstract" : "PeterUhnak 4/14/2015 23:20:54" },
 	"instance" : {
-		"addAsSourceFor:" : "PeterUhnak 4/4/2015 02:21:39",
-		"addAsTargetFor:" : "PeterUhnak 4/4/2015 02:21:39",
-		"buildEditorForm:" : "bliznjan 4/8/2015 10:10",
-		"canBeSourceFor:" : "PeterUhnak 4/4/2015 02:21:39",
-		"canBeTargetFor:" : "PeterUhnak 4/4/2015 02:21:39",
-		"createFigure" : "PeterUhnak 4/4/2015 02:21:39",
-		"createModel" : "PeterUhnak 4/4/2015 02:21:39",
-		"modelClass" : "PeterUhnak 4/4/2015 02:21:39",
-		"refreshFigure" : "PeterUhnak 4/4/2015 02:21:39" } }
+		"addAsSourceFor:" : "PeterUhnak 4/14/2015 23:20:54",
+		"addAsTargetFor:" : "PeterUhnak 4/14/2015 23:20:54",
+		"buildEditorForm:" : "PeterUhnak 6/3/2015 03:30",
+		"canBeSourceFor:" : "PeterUhnak 4/14/2015 23:20:54",
+		"canBeTargetFor:" : "PeterUhnak 4/14/2015 23:20:54",
+		"createFigure" : "PeterUhnak 6/10/2015 13:45",
+		"createFigureWip" : "PeterUhnak 6/10/2015 13:45",
+		"createModel" : "volosmat 5/8/2015 13:34",
+		"modelClass" : "PeterUhnak 4/14/2015 23:20:54",
+		"refreshFigure" : "PeterUhnak 6/10/2015 13:46",
+		"updateAttributesFrom:" : "PeterUhnak 6/3/2015 03:30",
+		"updateMethodsFrom:" : "PeterUhnak 6/3/2015 03:30" } }

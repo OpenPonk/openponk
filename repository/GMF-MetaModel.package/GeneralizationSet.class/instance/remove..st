@@ -1,3 +1,8 @@
-as yet unclassified
-remove: aGeneralization
-	self generalizations remove: aGeneralization
+add/remove
+remove: aChildName
+	| removed |
+	removed := self generalizations detect: [ :each | each child name = aChildName ].
+	
+	generalizations remove: removed.
+	
+	^ removed

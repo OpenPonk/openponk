@@ -8,8 +8,9 @@ testNonSortal
 				
 	self assert: nonSortal isElementValid.
 	
-	ParentClass
-		parentClass: (Kind name: 'Parent' metaModel: metaModel)
-		child: nonSortal.
+	Generalization
+		parent: (Kind name: 'Parent' metaModel: metaModel)
+		child: nonSortal
+		generalizationSet: (GeneralizationSet new).
 		
 	self deny: nonSortal isElementValid

@@ -2,6 +2,9 @@
 	"class" : {
 		 },
 	"instance" : {
-		"createModel" : "bliznjan 4/7/2015 18:32",
-		"edgeBuilder" : "PeterUhnak 4/4/2015 02:21:39",
-		"refreshFigure" : "PeterUhnak 4/4/2015 02:21:39" } }
+		"buildEditorForm:" : "PeterUhnak 6/3/2015 02:34",
+		"connectionFeedback" : "PeterUhnak 6/3/2015 03:38",
+		"createEdgeFrom:to:" : "PeterUhnak 6/3/2015 03:38",
+		"createModel" : "volosmat 5/8/2015 14:40",
+		"edgeBuilder" : "PeterUhnak 4/14/2015 23:20:54",
+		"refreshFigure" : "PeterUhnak 4/14/2015 23:20:54" } }

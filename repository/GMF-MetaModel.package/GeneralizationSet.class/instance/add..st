@@ -1,3 +1,5 @@
-as yet unclassified
+add/remove
 add: aGeneralization
-	self generalizations add: aGeneralization
+	self generalizations add: aGeneralization.
+	aGeneralization child addGeneralizationSet: self
+	

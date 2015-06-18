@@ -6,7 +6,7 @@
 		 ],
 	"commentStamp" : "tothmatu 10/4/2014 17:08",
 	"instvars" : [
-		 ],
+		"isFinal" ],
 	"name" : "DCFsmState",
 	"pools" : [
 		 ],

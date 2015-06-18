@@ -1,4 +1,4 @@
-hooks
+figures
 edgeBuilder
 	^ DCRTEdgeBuilder new
 		arrowHead;

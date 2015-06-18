@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-UICommands",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 6/18/2015 06:51",
+	"instvars" : [
+		"object" ],
+	"name" : "DCRenameElementCommand",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

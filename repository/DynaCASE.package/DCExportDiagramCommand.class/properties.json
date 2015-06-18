@@ -6,8 +6,9 @@
 		 ],
 	"commentStamp" : "PeterUhnak 6/18/2015 07:01",
 	"instvars" : [
-		 ],
-	"name" : "DCRenameElementCommand",
+		"exporter",
+		"defaultFileName" ],
+	"name" : "DCExportDiagramCommand",
 	"pools" : [
 		 ],
 	"super" : "DCUICommand",

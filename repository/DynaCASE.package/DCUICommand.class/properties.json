@@ -4,11 +4,11 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "PeterUhnak 6/18/2015 07:01",
+	"commentStamp" : "PeterUhnak 6/18/2015 06:59",
 	"instvars" : [
-		 ],
-	"name" : "DCRenameElementCommand",
+		"object" ],
+	"name" : "DCUICommand",
 	"pools" : [
 		 ],
-	"super" : "DCUICommand",
+	"super" : "Object",
 	"type" : "normal" }

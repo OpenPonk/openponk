@@ -1,3 +1,6 @@
-exporting
+toolbar
 exportAsJpg: fileName
-	self exportWith: [ :exporter | exporter asJPG ] toFile: fileName , '.jpg'
+	(DCExportDiagramCommand on: roassalView canvas)
+		asJpeg;
+		fileName: fileName , '.jpg';
+		execute

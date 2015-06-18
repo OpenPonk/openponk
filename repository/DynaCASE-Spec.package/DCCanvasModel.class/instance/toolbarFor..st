@@ -22,7 +22,7 @@ toolbarFor: aGroup
 
 	(aGroup addItem: 'Export')
 		description: 'Export diagram as ...';
-		subMenu: self exportFormatSubmenu.
+		subMenu: self exportSubmenu.
 
 	(aGroup addItem: 'Inspect View')
 		description: 'Inspect View';

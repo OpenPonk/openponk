@@ -1,5 +1,5 @@
 toolbar
-exportFormatSubmenu
+exportSubmenu
 	| fileName |
 	fileName := self editor diagramController model name , ' - DynaCASE'.
 	^ MenuModel new

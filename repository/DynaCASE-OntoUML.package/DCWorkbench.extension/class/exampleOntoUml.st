@@ -7,8 +7,8 @@ exampleOntoUml
 	project addDiagram: diagram.
 	firstKind := Kind new name: 'Universe'.
 	secondKind := Kind new name: 'Star'.
-	secondKind attributes: { 'size: Integer[1]'. 'color: Color[1]' }.
-	secondKind methods: { '/expand(newSize: Integer[1])/' }.
+	secondKind attributes: { 'size: Integer[1]'. 'color: Color[1]' } asOrderedCollection.
+	secondKind methods: { '/expand(newSize: Integer[1])/' } asOrderedCollection.
 	subKind := SubKind new name: 'Dwarf star'.
 	(basicAssociation := BasicAssociation new)
 		name: 'stars>';

@@ -1,12 +1,12 @@
 {
 	"class" : {
-		"isAbstract" : "PeterUhnak 4/14/2015 23:20:54" },
+		"isAbstract" : "PeterUhnak 6/10/2015 13:46:42" },
 	"instance" : {
-		"buildEditorForm:" : "PeterUhnak 6/3/2015 02:39",
-		"createEdgeFrom:to:" : "PeterUhnak 6/3/2015 03:39",
-		"edgeBuilder" : "PeterUhnak 4/14/2015 23:20:54",
-		"meronymicString" : "PeterUhnak 4/14/2015 23:20:54",
-		"meronymicStringFor:" : "PeterUhnak 4/14/2015 23:20:54",
-		"qualifier" : "PeterUhnak 4/14/2015 23:20:54",
-		"qualifierString" : "PeterUhnak 4/14/2015 23:20:54",
-		"refreshFigure" : "PeterUhnak 6/3/2015 03:40" } }
+		"buildEditorForm:" : "PeterUhnak 6/10/2015 13:46:42",
+		"createEdgeFrom:to:" : "PeterUhnak 6/10/2015 13:46:42",
+		"edgeBuilder" : "PeterUhnak 6/10/2015 13:46:42",
+		"meronymicString" : "PeterUhnak 6/10/2015 13:46:42",
+		"meronymicStringFor:" : "PeterUhnak 6/10/2015 13:46:42",
+		"qualifier" : "PeterUhnak 6/10/2015 13:46:42",
+		"qualifierString" : "PeterUhnak 6/10/2015 13:46:42",
+		"refreshFigure" : "PeterUhnak 6/10/2015 13:46:42" } }

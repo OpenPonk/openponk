@@ -2,13 +2,13 @@
 	"class" : {
 		 },
 	"instance" : {
-		"setUp" : "PeterUhnak 1/30/2015 14:45:03",
-		"setUpDB" : "PeterUhnak 1/30/2015 14:45:03",
-		"testCharacterization" : "PeterUhnak 1/30/2015 14:45:03",
-		"testComponentOf" : "PeterUhnak 1/30/2015 14:45:03",
-		"testDerivation" : "PeterUhnak 1/30/2015 14:45:03",
-		"testMaterialAssociation" : "PeterUhnak 1/30/2015 14:45:03",
-		"testMediation" : "PeterUhnak 1/30/2015 14:45:03",
-		"testMemberOf" : "PeterUhnak 1/30/2015 14:45:03",
-		"testSubCollectionOf" : "PeterUhnak 1/30/2015 14:45:03",
-		"testSubQuantityOf" : "PeterUhnak 1/30/2015 14:45:03" } }
+		"setUp" : "PeterUhnak 6/3/2015 03:54:11",
+		"setUpDB" : "PeterUhnak 6/3/2015 03:54:11",
+		"testCharacterization" : "PeterUhnak 6/3/2015 03:54:11",
+		"testComponentOf" : "PeterUhnak 6/3/2015 03:54:11",
+		"testDerivation" : "PeterUhnak 6/3/2015 03:54:11",
+		"testMaterialAssociation" : "PeterUhnak 6/3/2015 03:54:11",
+		"testMediation" : "PeterUhnak 6/3/2015 03:54:11",
+		"testMemberOf" : "PeterUhnak 6/3/2015 03:54:11",
+		"testSubCollectionOf" : "PeterUhnak 6/3/2015 03:54:11",
+		"testSubQuantityOf" : "PeterUhnak 6/3/2015 03:54:11" } }

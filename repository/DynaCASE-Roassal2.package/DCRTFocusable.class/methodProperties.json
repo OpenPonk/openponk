@@ -2,9 +2,11 @@
 	"class" : {
 		 },
 	"instance" : {
-		"doHighlightEdge:" : "PeterUhnak 4/15/2015 19:22:21",
-		"doHighlightElement:" : "PeterUhnak 6/15/2015 17:43",
-		"doUnhighlightEdge:" : "PeterUhnak 4/15/2015 19:22:21",
-		"doUnhighlightElement:" : "PeterUhnak 6/15/2015 17:46",
-		"initializeElement:" : "PeterUhnak 4/15/2015 19:22:21",
-		"newBoundingBoxFor:" : "PeterUhnak 4/15/2015 19:22:21" } }
+		"doHighlightClass:" : "PeterUhnak 6/21/2015 17:14",
+		"doHighlightEdge:" : "PeterUhnak 6/15/2015 20:57:24",
+		"doHighlightElement:" : "PeterUhnak 6/21/2015 17:12",
+		"doUnhighlightClass:" : "PeterUhnak 6/21/2015 17:12",
+		"doUnhighlightEdge:" : "PeterUhnak 6/15/2015 20:57:24",
+		"doUnhighlightElement:" : "PeterUhnak 6/21/2015 17:16",
+		"initializeElement:" : "PeterUhnak 6/15/2015 20:57:24",
+		"newBoundingBoxFor:" : "PeterUhnak 6/15/2015 20:57:24" } }

@@ -1,12 +1,12 @@
 {
 	"class" : {
-		"shape:" : "PeterUhnak 4/15/2015 19:22:21" },
+		"shape:" : "PeterUhnak 6/15/2015 20:57:24" },
 	"instance" : {
-		"asHead" : "PeterUhnak 4/15/2015 19:22:21",
-		"asTail" : "PeterUhnak 4/15/2015 19:22:21",
-		"initialize" : "PeterUhnak 4/15/2015 19:22:21",
-		"shape" : "PeterUhnak 4/15/2015 19:22:21",
-		"shape:" : "PeterUhnak 4/15/2015 19:22:21",
-		"trachelShapeClass" : "PeterUhnak 4/15/2015 19:22:21",
-		"trachelShapeFor:from:to:" : "PeterUhnak 4/15/2015 19:22:21",
-		"updateFor:trachelShape:from:to:" : "PeterUhnak 4/15/2015 19:22:21" } }
+		"asHead" : "PeterUhnak 6/15/2015 20:57:24",
+		"asTail" : "PeterUhnak 6/15/2015 20:57:24",
+		"initialize" : "PeterUhnak 6/15/2015 20:57:24",
+		"shape" : "PeterUhnak 6/15/2015 20:57:24",
+		"shape:" : "PeterUhnak 6/15/2015 20:57:24",
+		"trachelShapeClass" : "PeterUhnak 6/15/2015 20:57:24",
+		"trachelShapeFor:from:to:" : "PeterUhnak 6/15/2015 20:57:24",
+		"updateFor:trachelShape:from:to:" : "PeterUhnak 6/15/2015 20:57:24" } }

@@ -1,3 +1,3 @@
 printing
 asString
-	^ name , ':' , dataType , '[' , multiplicity asString , ']'
+	^ name , (dataType ifNotNil: [ ': ' , dataType ]) , (multiplicity ifNotEmpty: [ '[' , multiplicity , ']' ])

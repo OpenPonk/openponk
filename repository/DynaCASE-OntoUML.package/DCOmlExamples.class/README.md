@@ -1,0 +1,1 @@
+In my class-side I contain a bunch of examples of OntoUML diagrams.

@@ -6,7 +6,8 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		 ],
+		"attributeParser",
+		"methodParser" ],
 	"name" : "DCOmlElementClassController",
 	"pools" : [
 		 ],

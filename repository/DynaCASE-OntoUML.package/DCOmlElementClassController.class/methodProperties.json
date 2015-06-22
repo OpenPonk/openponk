@@ -4,13 +4,15 @@
 	"instance" : {
 		"addAsSourceFor:" : "PeterUhnak 6/10/2015 13:46:42",
 		"addAsTargetFor:" : "PeterUhnak 6/10/2015 13:46:42",
-		"buildEditorForm:" : "PeterUhnak 6/10/2015 13:46:42",
+		"buildEditorForm:" : "PeterUhnak 6/22/2015 12:41",
 		"canBeSourceFor:" : "PeterUhnak 6/10/2015 13:46:42",
 		"canBeTargetFor:" : "PeterUhnak 6/10/2015 13:46:42",
 		"createFigure" : "PeterUhnak 6/10/2015 13:46:42",
 		"createFigureWip" : "PeterUhnak 6/10/2015 13:46:42",
 		"createModel" : "PeterUhnak 6/10/2015 13:46:42",
+		"initialize" : "PeterUhnak 6/22/2015 12:43",
+		"joinProps:" : "PeterUhnak 6/22/2015 12:41",
 		"modelClass" : "PeterUhnak 6/10/2015 13:46:42",
-		"refreshFigure" : "PeterUhnak 6/10/2015 13:46:42",
-		"updateAttributesFrom:" : "PeterUhnak 6/10/2015 13:46:42",
-		"updateMethodsFrom:" : "PeterUhnak 6/10/2015 13:46:42" } }
+		"refreshFigure" : "PeterUhnak 6/22/2015 11:48",
+		"updateAttributesFrom:" : "PeterUhnak 6/22/2015 12:44",
+		"updateMethodsFrom:" : "PeterUhnak 6/22/2015 12:44" } }

@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-UMLClass-Parsers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCUmlPropertyGrammarTest",
+	"pools" : [
+		 ],
+	"super" : "DCUmlPropGrammarTest",
+	"type" : "normal" }

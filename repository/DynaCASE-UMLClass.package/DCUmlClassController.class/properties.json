@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-UMLClass-Controllers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCUmlClassController",
+	"pools" : [
+		 ],
+	"super" : "DCElementController",
+	"type" : "normal" }

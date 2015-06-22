@@ -1,8 +1,11 @@
 {
 	"class" : {
+		"createExampleDiagram" : "PeterUhnak 6/22/2015 13:07",
 		"exampleAgregations07" : "PeterUhnak 6/10/2015 13:46:42",
-		"exampleDiagram" : "PeterUhnak 6/22/2015 12:39",
+		"exampleDiagram" : "PeterUhnak 6/22/2015 13:08",
+		"exampleEmpty" : "PeterUhnak 6/22/2015 13:08",
 		"exampleMerology06" : "PeterUhnak 6/10/2015 13:46:42",
-		"exampleSortals03" : "PeterUhnak 6/10/2015 13:46:42" },
+		"exampleSortals03" : "PeterUhnak 6/10/2015 13:46:42",
+		"menuCommandOn:" : "PeterUhnak 6/22/2015 13:06" },
 	"instance" : {
 		 } }

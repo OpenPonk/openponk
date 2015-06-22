@@ -10,5 +10,5 @@
 	"name" : "DCOmlMethodBuilderTest",
 	"pools" : [
 		 ],
-	"super" : "DUmlOperationGrammarTest",
+	"super" : "DCUmlOperationGrammarTest",
 	"type" : "normal" }

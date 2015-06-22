@@ -10,5 +10,5 @@
 	"name" : "DCOmlMethodBuilder",
 	"pools" : [
 		 ],
-	"super" : "DUmlOperationGrammar",
+	"super" : "DCUmlOperationGrammar",
 	"type" : "normal" }

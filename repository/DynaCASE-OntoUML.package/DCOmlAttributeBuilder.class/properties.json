@@ -10,5 +10,5 @@
 	"name" : "DCOmlAttributeBuilder",
 	"pools" : [
 		 ],
-	"super" : "DUmlPropertyGrammar",
+	"super" : "DCUmlPropertyGrammar",
 	"type" : "normal" }

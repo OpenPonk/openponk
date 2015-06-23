@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-UMLClass-Models",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCUmlRelationship",
+	"pools" : [
+		 ],
+	"super" : "DCEdge",
+	"type" : "normal" }

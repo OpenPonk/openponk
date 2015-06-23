@@ -1,3 +1,3 @@
 accessing
-parameters: anObject
-	parameters := anObject
+parameters: aCollection
+	parameters := aCollection

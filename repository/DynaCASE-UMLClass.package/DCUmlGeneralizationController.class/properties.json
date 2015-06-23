@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-UMLClass-Controllers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCUmlGeneralizationController",
+	"pools" : [
+		 ],
+	"super" : "DCUmlRelationshipController",
+	"type" : "normal" }

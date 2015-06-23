@@ -1,0 +1,17 @@
+{
+	"category" : "DynaCASE-UMLClass-Models",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"sourceName",
+		"targetName",
+		"sourceMultiplicity",
+		"targetMultiplicity" ],
+	"name" : "DCUmlAssociation",
+	"pools" : [
+		 ],
+	"super" : "DCUmlRelationship",
+	"type" : "normal" }

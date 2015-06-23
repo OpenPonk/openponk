@@ -2,15 +2,15 @@
 	"class" : {
 		 },
 	"instance" : {
-		"add:" : "volosmat 4/7/2015 14:56",
-		"complete" : "volosmat 4/7/2015 17:17",
-		"complete:" : "PeterUhnak 1/30/2015 14:45:03",
-		"disjoint" : "volosmat 4/7/2015 17:17",
-		"disjoint:" : "PeterUhnak 1/30/2015 14:45:03",
-		"generalizations" : "PeterUhnak 1/30/2015 14:45:03",
-		"hash" : "volosmat 4/7/2015 14:54",
-		"initialize" : "volosmat 4/7/2015 17:17",
-		"remove:" : "PeterUhnak 6/2/2015 13:17",
-		"remove:child:" : "volosmat 4/14/2015 18:24",
-		"search:" : "volosmat 4/14/2015 18:50",
-		"search:child:" : "volosmat 4/14/2015 18:50" } }
+		"add:" : "PeterUhnak 6/3/2015 03:54:11",
+		"complete" : "PeterUhnak 6/3/2015 03:54:11",
+		"complete:" : "PeterUhnak 6/3/2015 03:54:11",
+		"disjoint" : "PeterUhnak 6/3/2015 03:54:11",
+		"disjoint:" : "PeterUhnak 6/3/2015 03:54:11",
+		"generalizations" : "PeterUhnak 6/3/2015 03:54:11",
+		"hash" : "PeterUhnak 6/3/2015 03:54:11",
+		"initialize" : "PeterUhnak 6/3/2015 03:54:11",
+		"remove:" : "PeterUhnak 6/3/2015 03:54:11",
+		"remove:child:" : "PeterUhnak 6/3/2015 03:54:11",
+		"search:" : "PeterUhnak 6/3/2015 03:54:11",
+		"search:child:" : "PeterUhnak 6/3/2015 03:54:11" } }

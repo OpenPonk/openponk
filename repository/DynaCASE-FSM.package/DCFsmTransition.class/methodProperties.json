@@ -1,11 +1,11 @@
 {
 	"class" : {
-		"from:to:" : "bliznjan 4/14/2015 14:00:47",
-		"from:to:named:" : "PeterUhnak 6/13/2015 05:49" },
+		"from:to:" : "PeterUhnak 6/16/2015 08:16:56",
+		"from:to:named:" : "PeterUhnak 6/16/2015 08:16:56" },
 	"instance" : {
-		"isTransition" : "PeterUhnak 6/16/2015 00:26",
-		"isVertex" : "PeterUhnak 6/16/2015 00:26",
-		"source" : "bliznjan 4/14/2015 14:00:47",
-		"source:" : "bliznjan 4/14/2015 14:00:47",
-		"target" : "bliznjan 4/14/2015 14:00:47",
-		"target:" : "bliznjan 4/14/2015 14:00:47" } }
+		"isTransition" : "PeterUhnak 6/16/2015 08:16:56",
+		"isVertex" : "PeterUhnak 6/16/2015 08:16:56",
+		"source" : "PeterUhnak 6/16/2015 08:16:56",
+		"source:" : "PeterUhnak 6/16/2015 08:16:56",
+		"target" : "PeterUhnak 6/16/2015 08:16:56",
+		"target:" : "PeterUhnak 6/16/2015 08:16:56" } }

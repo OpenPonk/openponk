@@ -2,8 +2,8 @@
 	"class" : {
 		 },
 	"instance" : {
-		"canBeTargetFor:" : "PeterUhnak 6/13/2015 05:22",
-		"initializePalette:" : "PeterUhnak 6/14/2015 22:02",
-		"modelClass" : "bliznjan 4/14/2015 14:00:47",
-		"modelToControllerMapping" : "PeterUhnak 6/14/2015 00:12",
-		"rebuild" : "PeterUhnak 6/13/2015 10:06" } }
+		"canBeTargetFor:" : "PeterUhnak 6/16/2015 08:16:56",
+		"initializePalette:" : "PeterUhnak 6/16/2015 08:16:56",
+		"modelClass" : "PeterUhnak 6/16/2015 08:16:56",
+		"modelToControllerMapping" : "PeterUhnak 6/16/2015 08:16:56",
+		"rebuild" : "PeterUhnak 6/16/2015 08:16:56" } }

@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Spec-Utils",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 6/27/2015 23:58",
+	"instvars" : [
+		 ],
+	"name" : "DCDefaultNavigatorAdapter",
+	"pools" : [
+		 ],
+	"super" : "DCNavigatorAdapter",
+	"type" : "normal" }

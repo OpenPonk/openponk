@@ -4,7 +4,7 @@ initializeTree
 		roots: project diagrams;
 		doubleClick: [ self doubleClick ];
 		menu: [ :menu | self rightClickMenu: menu ];
-		displayBlock: [ :anObject | self labelFor: anObject ];
+		displayBlock: [ :anObject | self displayFor: anObject ];
 		childrenBlock: [ :anObject | self childrenFor: anObject ];
 		iconBlock: [ :anObject | self iconFor: anObject ].
 	tree

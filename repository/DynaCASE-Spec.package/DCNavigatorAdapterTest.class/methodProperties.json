@@ -1,0 +1,12 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"adapterClass" : "PeterUhnak 6/28/2015 00:18",
+		"childrenFor:equals:" : "PeterUhnak 6/28/2015 01:35",
+		"displayFor:equals:" : "PeterUhnak 6/28/2015 01:35",
+		"iconFor:equals:" : "PeterUhnak 6/27/2015 23:37",
+		"setUp" : "PeterUhnak 6/28/2015 01:38",
+		"testCull" : "PeterUhnak 6/28/2015 00:21",
+		"testDefaultChildren" : "PeterUhnak 6/28/2015 01:37",
+		"testDefaultDisplay" : "PeterUhnak 6/28/2015 01:33" } }

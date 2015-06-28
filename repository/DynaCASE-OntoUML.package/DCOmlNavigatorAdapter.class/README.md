@@ -1,0 +1,1 @@
+I specify custom mappings for OntoUML.

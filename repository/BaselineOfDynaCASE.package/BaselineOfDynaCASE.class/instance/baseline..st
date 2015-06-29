@@ -24,7 +24,7 @@ baseline: spec
 					repository: 'http://smalltalkhub.com/mc/Moose/PetitParser/main/' ].
 		spec 
 			package: 'DynaCASE' with: [
-				spec requires: #('DynaCASEModel' 'Roassal2' 'Ston' ). ];
+				spec requires: #('DynaCASEModel' 'Roassal2' 'Ston' 'PetitParser' ). ];
 			package: 'DynaCASE-Trachel';
 			package: 'DynaCASE-Roassal2';
 			package: 'DynaCASE-Spec';

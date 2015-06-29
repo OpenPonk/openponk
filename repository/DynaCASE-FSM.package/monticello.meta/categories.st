@@ -1,4 +1,5 @@
 SystemOrganization addCategory: #'DynaCASE-FSM'!
+SystemOrganization addCategory: 'DynaCASE-FSM-Adapters'!
 SystemOrganization addCategory: 'DynaCASE-FSM-Controllers'!
 SystemOrganization addCategory: 'DynaCASE-FSM-Examples'!
 SystemOrganization addCategory: 'DynaCASE-FSM-Figures'!

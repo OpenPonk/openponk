@@ -1,0 +1,3 @@
+testing
+isNormal
+	^ isFinal not

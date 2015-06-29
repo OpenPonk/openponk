@@ -15,7 +15,13 @@ baseline: spec
 				spec
 					className: #ConfigurationOfSton;
 					versionString: #'stable';
-					repository: 'http://smalltalkhub.com/mc/SvenVanCaekenberghe/STON/main/' ].
+					repository: 'http://smalltalkhub.com/mc/SvenVanCaekenberghe/STON/main/' ];
+			project: 'PetitParser' with: [ 
+				spec
+					className: #ConfigurationOfPetitParser;
+					versionString: #development;
+					loads: #('Parser');
+					repository: 'http://smalltalkhub.com/mc/Moose/PetitParser/main/' ].
 		spec 
 			package: 'DynaCASE' with: [
 				spec requires: #('DynaCASEModel' 'Roassal2' 'Ston' ). ];

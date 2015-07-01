@@ -1,6 +1,6 @@
 {
 	"class" : {
-		 },
+		"isAbstract" : "PeterUhnak 7/1/2015 12:08" },
 	"instance" : {
 		"newBox:" : "PeterUhnak 6/10/2015 13:46:42",
 		"setUp" : "PeterUhnak 6/10/2015 13:46:42",

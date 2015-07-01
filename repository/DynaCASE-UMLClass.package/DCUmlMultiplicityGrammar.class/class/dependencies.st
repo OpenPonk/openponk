@@ -1,3 +1,3 @@
 accessing
 dependencies
-	^ {DUmlLiteralGrammar}
+	^ {DCUmlLiteralGrammar}

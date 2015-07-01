@@ -1,6 +1,7 @@
 running
 setUp
 	| shape |
+	true ifTrue: [ ^self skip ].
 	shape := RTBox new size: 40.
 	(e1 := shape element)
 		translateTo: 0 @ 0;

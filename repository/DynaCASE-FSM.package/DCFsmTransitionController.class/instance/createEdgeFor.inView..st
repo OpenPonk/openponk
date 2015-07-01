@@ -13,6 +13,9 @@ createEdgeFor: anElement inView: view
 		elementOn: 'wut'.
 	aFigure attributeAt: #DCArcLabel put: aLabel.
 	DCRTArcLine constraintLabel: aLabel at: aFigure.
+	
+	aFigure trachelShape addCallback: (TRRemoveCallback with: aLabel).
+	
 	view add: aLabel.
 
 	aFigure @ DCRTFocusable.

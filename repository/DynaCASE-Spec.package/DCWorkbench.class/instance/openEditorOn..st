@@ -5,7 +5,7 @@ openEditorOn: aDiagram
 	editor buildWithSpec.
 	(tab := self newTab)
 		label: aDiagram name;
-		icon: (self iconForDiagram: aDiagram className asSymbol);
+		icon: ((pluginRegistry pluginFor: aDiagram) icon);
 		retrievingBlock: editor buildWithSpec asWidget.
 	tabManager addTab: tab.
 	editor openDiagram: aDiagram.

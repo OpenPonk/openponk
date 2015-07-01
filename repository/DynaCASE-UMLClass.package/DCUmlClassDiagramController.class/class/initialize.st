@@ -1,5 +1,5 @@
 class initialization
 initialize
-	ModelToControllerMapping := {(DUmlClass -> DUmlClassController).
+	"ModelToControllerMapping := {(DUmlClass -> DUmlClassController).
 	(DUmlAssociation -> DUmlAssociationController).
-	(DUmlGeneralization -> DUmlGeneralizationController)} asDictionary
+	(DUmlGeneralization -> DUmlGeneralizationController)} asDictionary"

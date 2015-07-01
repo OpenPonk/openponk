@@ -1,5 +1,6 @@
 examples
 exampleSimple
+"
 	| project diagram obj el dia proj |
 	project := DCProject named: 'UML Class Diagram'.
 	diagram := DUmlClassDiagram named: 'UML Class Diagram'.
@@ -39,4 +40,4 @@ exampleSimple
 						sourceMultiplicity: '0..1';
 						yourself).
 
-	DCWorkbench openProject: project
+	DCWorkbench openProject: project"

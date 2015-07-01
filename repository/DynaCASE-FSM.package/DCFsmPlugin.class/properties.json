@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-FSM-Adapters",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 7/2/2015 00:43",
+	"instvars" : [
+		 ],
+	"name" : "DCFsmPlugin",
+	"pools" : [
+		 ],
+	"super" : "DCPlugin",
+	"type" : "normal" }

@@ -11,7 +11,8 @@
 		"tabManager",
 		"formModel",
 		"project",
-		"projectController" ],
+		"projectController",
+		"pluginRegistry" ],
 	"name" : "DCWorkbench",
 	"pools" : [
 		 ],

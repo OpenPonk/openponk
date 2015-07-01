@@ -1,5 +1,6 @@
 running
 setUp
+	true ifTrue: [ ^ self skip ].
 	lineX := DCLineSegment from: 10 @ -10 to: 110 @ -10.
 	lineY := DCLineSegment from: 10 @ -10 to: 10 @ 90.
 	lineDiagonal := DCLineSegment from: 10 @ -10 to: -90 @ -110.

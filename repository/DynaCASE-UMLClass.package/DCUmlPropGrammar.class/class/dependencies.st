@@ -1,4 +1,4 @@
 accessing
 dependencies
-	^ {DUmlLiteralGrammar.
-	DUmlMultiplicityGrammar}
+	^ {DCUmlLiteralGrammar.
+	DCUmlMultiplicityGrammar}

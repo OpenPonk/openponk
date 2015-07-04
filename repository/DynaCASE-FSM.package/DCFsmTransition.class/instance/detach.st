@@ -1,4 +1,4 @@
-as yet unclassified
+removing
 detach
 	super detach.
 	source := nil.

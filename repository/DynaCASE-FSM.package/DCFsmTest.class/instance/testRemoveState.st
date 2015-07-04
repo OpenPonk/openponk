@@ -1,18 +1,15 @@
 tests
 testRemoveState
-	| d first second t |
-	d := DCFsm new.
-	first := DCFsmState new name: '1'.
-	second := DCFsmState new name: '2'.
-	t := DCFsmTransition from: first to: second.
-	
-	d
-		add: first;
-		add: second;
-		add: t.
-	self assert: d elements size = 3.
-	
-	d remove: first.
-	self assert: d elements size = 1.
-	self assert: first outgoing isEmpty.
-	self assert: second incoming isEmpty
+	diagram add: initial.
+	diagram add: state.
+	diagram add: final.
+	diagram add: firstTransition.
+	diagram add: secondTransition.
+
+	state remove.
+	self assert: state owner isNil.
+	self assert: firstTransition source isNil.
+	self assert: secondTransition source isNil.
+	self assert: initial outgoing isEmpty.
+	self assert: state incoming isEmpty.
+	self assertCollection: diagram elements hasSameElements: (Array with: initial with: final)

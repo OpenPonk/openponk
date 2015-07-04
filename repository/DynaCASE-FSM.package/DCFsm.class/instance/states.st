@@ -1,3 +1,3 @@
 accessing
 states
-	^ elements select: [ :each | each isKindOf: DCFsmVertex ]
+	^ elements select: [ :each | each isVertex ]

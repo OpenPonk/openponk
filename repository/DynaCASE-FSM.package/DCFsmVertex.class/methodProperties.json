@@ -4,11 +4,12 @@
 	"instance" : {
 		"->" : "PeterUhnak 6/16/2015 08:16:56",
 		"gtInspectorPresentation:" : "PeterUhnak 6/16/2015 08:16:56",
-		"incoming" : "PeterUhnak 6/16/2015 08:16:56",
+		"incoming" : "PeterUhnak 7/5/2015 00:15",
 		"isFinal" : "PeterUhnak 6/16/2015 08:16:56",
 		"isInitial" : "PeterUhnak 6/16/2015 08:16:56",
 		"isNormal" : "PeterUhnak 6/28/2015 00:31",
 		"isTransition" : "PeterUhnak 6/16/2015 08:16:56",
 		"isVertex" : "PeterUhnak 6/16/2015 08:16:56",
-		"outgoing" : "PeterUhnak 6/16/2015 08:16:56",
+		"outgoing" : "PeterUhnak 7/5/2015 00:15",
+		"relatedElements" : "PeterUhnak 7/5/2015 00:19",
 		"removedFrom:" : "PeterUhnak 6/16/2015 08:16:56" } }

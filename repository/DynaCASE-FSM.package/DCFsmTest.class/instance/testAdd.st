@@ -1,17 +1,11 @@
 tests
 testAdd
-	| d first second t |
-	d := DCFsm new.
-	self assert: d elements isEmpty.
-
-	first := DCFsmState new name: '1'.
-	d add: first.
-	second := DCFsmState new name: '2'.
-	d add: second.
-	self assert: d elements size = 2.
-	self assert: d elements first owner = d.
-
-	t := DCFsmTransition from: d elements first to: d elements second.
-	d add: t.
-	self assert: d elements size = 3.
-	self assert: d elements third owner = d.
+	self assert: diagram elements isEmpty.
+	diagram add: initial.
+	diagram add: state.
+	diagram add: firstTransition.
+	self assertCollection: diagram ownedElements hasSameElements: (Array with: initial with: firstTransition with: state).
+	self assert: initial owner equals: diagram.
+	self assert: state owner equals: diagram.
+	self assertCollection: initial outgoing hasSameElements: {firstTransition}.
+	self assertCollection: state incoming hasSameElements: {firstTransition}

@@ -2,8 +2,8 @@
 	"class" : {
 		 },
 	"instance" : {
-		"testAdd" : "PeterUhnak 6/16/2015 08:16:56",
-		"testRemoveComplex" : "PeterUhnak 6/16/2015 08:16:56",
-		"testRemoveState" : "PeterUhnak 6/16/2015 08:16:56",
-		"testRemoveTransition" : "PeterUhnak 6/16/2015 08:16:56",
-		"testTransitions" : "PeterUhnak 6/16/2015 08:16:56" } }
+		"setUp" : "PeterUhnak 7/4/2015 22:24",
+		"testAdd" : "PeterUhnak 7/5/2015 00:04",
+		"testRemoveState" : "PeterUhnak 7/5/2015 00:00",
+		"testRemoveTransition" : "PeterUhnak 7/5/2015 00:02",
+		"testTransition" : "PeterUhnak 7/5/2015 00:04" } }

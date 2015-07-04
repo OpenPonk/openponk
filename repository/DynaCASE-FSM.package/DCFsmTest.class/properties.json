@@ -6,7 +6,13 @@
 		 ],
 	"commentStamp" : "tothmatu 10/4/2014 17:14",
 	"instvars" : [
-		 ],
+		"diagram",
+		"initial",
+		"final",
+		"state",
+		"firstTransition",
+		"secondTransition",
+		"selfTransition" ],
 	"name" : "DCFsmTest",
 	"pools" : [
 		 ],

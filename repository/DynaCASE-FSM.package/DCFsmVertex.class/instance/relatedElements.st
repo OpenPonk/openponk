@@ -1,3 +1,3 @@
 accessing
 relatedElements
-	^ self incoming , self outgoing
+	^ (self incoming , self outgoing) asSet asOrderedCollection

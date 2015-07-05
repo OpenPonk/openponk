@@ -10,5 +10,5 @@
 	"name" : "DCFsm",
 	"pools" : [
 		 ],
-	"super" : "DCModelObject",
+	"super" : "DCNamedElement",
 	"type" : "normal" }

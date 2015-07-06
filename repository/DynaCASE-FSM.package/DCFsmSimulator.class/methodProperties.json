@@ -4,7 +4,7 @@
 	"instance" : {
 		"backAction" : "PeterUhnak 7/7/2015 00:24",
 		"backButton" : "PeterUhnak 7/6/2015 11:59",
-		"initialize" : "PeterUhnak 7/7/2015 00:37",
+		"initialize" : "PeterUhnak 7/7/2015 00:40",
 		"initializePresenter" : "PeterUhnak 7/7/2015 00:34",
 		"initializeWidgets" : "PeterUhnak 7/6/2015 12:06",
 		"input" : "PeterUhnak 6/16/2015 08:16:56",
@@ -20,4 +20,4 @@
 		"stopAction" : "PeterUhnak 7/7/2015 00:36",
 		"stopButton" : "PeterUhnak 7/6/2015 08:31",
 		"title" : "PeterUhnak 6/16/2015 08:16:56",
-		"watchRecognizer:" : "PeterUhnak 7/7/2015 00:37" } }
+		"watchRecognizer:" : "PeterUhnak 7/7/2015 00:40" } }

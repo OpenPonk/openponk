@@ -1,5 +1,5 @@
 initialization
 initialize
-	recognizer := DCFsmNewRecognizer new.
+	recognizer := DCFsmRecognizer new.
 	self watchRecognizer: recognizer.
 	super initialize

@@ -11,7 +11,7 @@
 		"consumed",
 		"path",
 		"current" ],
-	"name" : "DCFsmNewRecognizer",
+	"name" : "DCFsmRecognizer",
 	"pools" : [
 		 ],
 	"super" : "DCAnnouncableObject",

@@ -7,7 +7,7 @@
 	"commentStamp" : "PeterUhnak 7/6/2015 23:49",
 	"instvars" : [
 		"place" ],
-	"name" : "DCFsmNewRecognizerEvent",
+	"name" : "DCFsmRecognizerEvent",
 	"pools" : [
 		 ],
 	"super" : "Announcement",

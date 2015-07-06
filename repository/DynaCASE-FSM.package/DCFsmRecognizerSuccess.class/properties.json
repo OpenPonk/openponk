@@ -10,5 +10,5 @@
 	"name" : "DCFsmRecognizerSuccess",
 	"pools" : [
 		 ],
-	"super" : "DCFsmNewRecognizerEvent",
+	"super" : "DCFsmRecognizerEvent",
 	"type" : "normal" }

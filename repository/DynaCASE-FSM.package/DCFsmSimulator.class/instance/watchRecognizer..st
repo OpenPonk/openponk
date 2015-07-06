@@ -1,7 +1,7 @@
 events
 watchRecognizer: aRecognizer
 	aRecognizer
-		when: DCFsmNewRecognizerEvent
+		when: DCFsmRecognizerEvent
 		do: [ :ann | 
 			aRecognizer isInputEmpty
 				ifFalse: [ nextButton enable ].

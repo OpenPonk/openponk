@@ -10,5 +10,5 @@
 	"name" : "DCFsmRecognizerLeave",
 	"pools" : [
 		 ],
-	"super" : "DCFsmNewRecognizerEvent",
+	"super" : "DCFsmRecognizerEvent",
 	"type" : "normal" }

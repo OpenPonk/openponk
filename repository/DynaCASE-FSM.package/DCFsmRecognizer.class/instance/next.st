@@ -1,7 +1,7 @@
 stepping
 next
 	| transition |
-	current isVertex & input isEmpty
+	current isState & input isEmpty
 		ifTrue: [ ^ self beComplete ].
 	path push: current.
 	current isTransition

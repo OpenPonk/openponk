@@ -2,5 +2,5 @@ stepping
 back
 	path ifEmpty: [ ^ self ].
 	self goTo: path pop.
-	current isVertex
+	current isState
 		ifTrue: [ input push: consumed pop ]

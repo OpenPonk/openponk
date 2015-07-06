@@ -1,3 +1,3 @@
 testing
 isInputEmpty
-	^ current isVertex & input isEmpty
+	^ current isState & input isEmpty

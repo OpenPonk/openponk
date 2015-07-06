@@ -1,3 +1,0 @@
-accessing
-remainder
-	^ remainder joinUsing: ''

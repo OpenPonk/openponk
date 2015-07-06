@@ -5,12 +5,16 @@ defaultSpec
 					row
 						add: #inputLabel;
 						add: #input;
-						add: #start;
-						add: #step;
-						add: #stop;
-						add: #reset ]
+						add: #startButton;
+						add: #stopButton;
+						add: #resetButton ]
+			height: 25;
+		newRow: [ :row | row add: #letterPanel ] height: self toolbarHeight;
+		newRow: [ :row | 
+					row
+						add: #backButton;
+						add: #nextButton;
+						newColumn: [ :col |  ] ]
 			height: self toolbarHeight;
-		newRow: [ :row | row add: #remainderLabel ] height: self toolbarHeight;
-		newRow: [ :row | row add: #symbolLabel ] height: self toolbarHeight;
 		newRow: [ :row |  ];
 		yourself

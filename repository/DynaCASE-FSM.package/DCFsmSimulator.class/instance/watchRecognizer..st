@@ -1,32 +1,25 @@
 events
 watchRecognizer: aRecognizer
 	aRecognizer
-		when: DCFsmStateCompleted
+		when: DCFsmNewRecognizerEvent
 		do: [ :ann | 
-			self stopAction.
-			aRecognizer accepts
-				ifTrue: [ DCFsmFigureHighlighter highlightElement: (diagramController figureFor: ann state) with: Color green ] ].
-
-	aRecognizer when: DCFsmRecognizerStepCompleted do: [ :ann | step enable ].
-
-	aRecognizer
-		when: DCFsmSymbolReached
-		do: [ :ann | 
-			self remainderLabel: aRecognizer remainder.
-			self symbolLabel: ann symbol ].
+			aRecognizer isInputEmpty
+				ifFalse: [ nextButton enable ].
+			aRecognizer isPathEmpty
+				ifFalse: [ backButton enable ] ].
 
 	aRecognizer
-		when: DCFsmTransitionDeparted
-		do: [ :ann | DCFsmFigureHighlighter unhighlightEdge: (diagramController figureFor: ann transition) ].
-	aRecognizer
-		when: DCFsmTransitionReached
-		do: [ :ann | DCFsmFigureHighlighter highlightEdge: (diagramController figureFor: ann transition) ].
+		when: DCFsmRecognizerSuccess
+		do: [ :ann | DCFsmFigureHighlighter highlightElement: (diagramController figureFor: ann place) with: Color green ].
 
 	aRecognizer
-		when: DCFsmStateDeparted
-		do: [ :ann | DCFsmFigureHighlighter unhighlightElement: (diagramController figureFor: ann state) ].
+		when: DCFsmRecognizerFailure
+		do: [ :ann | DCFsmFigureHighlighter highlightElement: (diagramController figureFor: ann place) with: Color red ].
+
 	aRecognizer
-		when: DCFsmStateReached
-		do: [ :ann | 
-			DCFsmFigureHighlighter highlightElement: (diagramController figureFor: ann state).
-			DCFsmFigureHighlighter unhighlightEdge: (diagramController figureFor: ann transition) ]
+		when: DCFsmRecognizerLeave
+		do: [ :ann | DCFsmFigureHighlighter unhighlight: (diagramController figureFor: ann place) ].
+
+	aRecognizer
+		when: DCFsmRecognizerEnter
+		do: [ :ann | DCFsmFigureHighlighter highlight: (diagramController figureFor: ann place) with: Color orange ]

@@ -1,3 +1,3 @@
-accessing
+accessing - spec fields
 inputLabel
 	^ inputLabel

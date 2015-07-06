@@ -6,9 +6,9 @@
 		 ],
 	"commentStamp" : "PeterUhnak 6/15/2015 23:57",
 	"instvars" : [
-		"label" ],
+		 ],
 	"name" : "DCFsmFigureHighlighter",
 	"pools" : [
 		 ],
-	"super" : "DCFigure",
+	"super" : "Object",
 	"type" : "normal" }

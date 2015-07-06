@@ -1,4 +1,4 @@
-api
+api - unhighlight
 unhighlightEdge: anEdge
 	(anEdge hasAttribute: self name)
 		ifFalse: [ ^ self ].

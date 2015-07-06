@@ -1,11 +1,10 @@
 actions
 startAction
 	input disable.
-	start disable.
-	stop enable.
-	step enable.
+	startButton disable.
+	stopButton enable.
+	backButton disable.
+	nextButton enable.
 	self resetAction.
-	recognizer model: diagramController model.
-	self remainderLabel: input text.
-	self symbolLabel: ''.
-	recognizer runOn: input text
+	recognizer input: input text startingAt: (diagramController model elements detect: #isInitial).
+	letterPanel widget data: input text

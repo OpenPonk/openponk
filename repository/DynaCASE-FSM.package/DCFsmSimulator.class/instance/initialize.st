@@ -1,6 +1,5 @@
 initialization
 initialize
-	recognizer := DCFsmRecognizer new.
-	recognizer delay: 0.5.
+	recognizer := DCFsmNewRecognizer new.
 	self watchRecognizer: recognizer.
 	super initialize

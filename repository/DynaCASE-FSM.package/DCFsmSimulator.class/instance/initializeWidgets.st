@@ -2,9 +2,12 @@ initialization
 initializeWidgets
 	inputLabel := self newLabel.
 	input := self newTextInput.
-	start := self newButton.
-	stop := self newButton.
-	step := self newButton.
-	reset := self newButton.
-	remainderLabel := self newLabel.
-	symbolLabel := self newLabel
+
+	startButton := self newButton.
+	stopButton := self newButton.
+	resetButton := self newButton.
+
+	letterPanel := DCFsmLetterPanel new asSpecAdapter.
+
+	backButton := self newButton.
+	nextButton := self newButton

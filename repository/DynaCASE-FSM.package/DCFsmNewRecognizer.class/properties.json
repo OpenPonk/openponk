@@ -1,0 +1,18 @@
+{
+	"category" : "DynaCASE-FSM-Simulations",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 7/6/2015 23:36",
+	"instvars" : [
+		"model",
+		"input",
+		"consumed",
+		"path",
+		"current" ],
+	"name" : "DCFsmNewRecognizer",
+	"pools" : [
+		 ],
+	"super" : "DCAnnouncableObject",
+	"type" : "normal" }

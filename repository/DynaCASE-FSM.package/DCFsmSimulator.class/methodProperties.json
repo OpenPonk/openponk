@@ -1,9 +1,10 @@
 {
 	"class" : {
-		"defaultSpec" : "PeterUhnak 7/6/2015 12:07" },
+		"defaultSpec" : "PeterUhnak 7/8/2015 21:24" },
 	"instance" : {
 		"backAction" : "PeterUhnak 7/7/2015 00:24",
 		"backButton" : "PeterUhnak 7/6/2015 11:59",
+		"initialExtent" : "PeterUhnak 7/8/2015 21:24",
 		"initialize" : "PeterUhnak 7/7/2015 00:40",
 		"initializePresenter" : "PeterUhnak 7/7/2015 00:34",
 		"initializeWidgets" : "PeterUhnak 7/6/2015 12:06",

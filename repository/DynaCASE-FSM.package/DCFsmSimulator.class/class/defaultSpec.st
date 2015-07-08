@@ -4,11 +4,13 @@ defaultSpec
 		newRow: [ :row | 
 					row
 						add: #inputLabel;
-						add: #input;
+						add: #input width: 250 ] height: 25;
+		newRow: [ :row | 
+					row
 						add: #startButton;
 						add: #stopButton;
 						add: #resetButton ]
-			height: 25;
+			height: self toolbarHeight;
 		newRow: [ :row | row add: #letterPanel ] height: self toolbarHeight;
 		newRow: [ :row | 
 					row

@@ -2,8 +2,8 @@
 	"class" : {
 		 },
 	"instance" : {
-		"back" : "PeterUhnak 7/7/2015 00:50",
-		"beComplete" : "PeterUhnak 7/6/2015 23:53",
+		"back" : "PeterUhnak 7/8/2015 21:01",
+		"beComplete" : "PeterUhnak 7/8/2015 21:01",
 		"beFailure" : "PeterUhnak 7/6/2015 23:57",
 		"beSuccess" : "PeterUhnak 7/6/2015 23:57",
 		"goTo:" : "PeterUhnak 7/7/2015 00:11",
@@ -11,6 +11,6 @@
 		"inputPosition" : "PeterUhnak 7/7/2015 00:48",
 		"isInputEmpty" : "PeterUhnak 7/7/2015 00:50",
 		"isPathEmpty" : "PeterUhnak 7/7/2015 00:28",
-		"next" : "PeterUhnak 7/7/2015 00:50",
-		"reset" : "PeterUhnak 7/7/2015 00:16",
-		"transitionFrom:using:" : "PeterUhnak 7/6/2015 23:45" } }
+		"next" : "PeterUhnak 7/8/2015 21:03",
+		"reset" : "PeterUhnak 7/8/2015 21:01",
+		"transitionFrom:using:" : "PeterUhnak 7/8/2015 21:03" } }

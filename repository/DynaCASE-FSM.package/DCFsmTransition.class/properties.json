@@ -7,7 +7,8 @@
 	"commentStamp" : "tothmatu 10/4/2014 17:06",
 	"instvars" : [
 		"source",
-		"target" ],
+		"target",
+		"matchBlock" ],
 	"name" : "DCFsmTransition",
 	"pools" : [
 		 ],

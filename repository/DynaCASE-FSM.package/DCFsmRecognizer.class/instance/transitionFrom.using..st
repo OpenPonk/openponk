@@ -1,3 +1,3 @@
 private
 transitionFrom: aState using: aSymbol
-	^ aState outgoing detect: [ :each | each name = aSymbol asString ] ifNone: [ nil ]
+	^ aState outgoing detect: [ :each | each matches: aSymbol asString ] ifNone: [ nil ]

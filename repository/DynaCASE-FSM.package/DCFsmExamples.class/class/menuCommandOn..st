@@ -10,4 +10,10 @@ menuCommandOn: aBuilder
 						parent: #'DC Finite State Machine';
 						label: 'FSM Example Divisibility';
 						icon: DCIcons current dcFsmDiagramIcon;
-						action: [ self exampleDivisibility ] ]
+						action: [ self exampleDivisibility ].
+
+					(aBuilder item: #'FSM Example 2')
+						parent: #'DC Finite State Machine';
+						label: 'FSM Example Decimal';
+						icon: DCIcons current dcFsmDiagramIcon;
+						action: [ self exampleDecimal ] ]

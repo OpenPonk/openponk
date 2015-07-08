@@ -10,7 +10,8 @@
 		"input",
 		"consumed",
 		"path",
-		"current" ],
+		"current",
+		"canContinue" ],
 	"name" : "DCFsmRecognizer",
 	"pools" : [
 		 ],

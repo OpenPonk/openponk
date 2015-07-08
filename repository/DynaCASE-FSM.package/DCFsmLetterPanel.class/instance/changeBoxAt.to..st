@@ -1,5 +1,6 @@
 accessing
 changeBoxAt: anIndex to: aSymbol
+
 	self submorphs
 		withIndexDo: [ :morph :index | 
 			index < anIndex

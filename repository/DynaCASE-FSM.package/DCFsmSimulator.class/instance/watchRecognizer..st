@@ -7,7 +7,7 @@ watchRecognizer: aRecognizer
 				ifFalse: [ nextButton enable ].
 			aRecognizer isPathEmpty
 				ifFalse: [ backButton enable ].
-			ann place isState
+			(ann isKindOf: DCFsmRecognizerFailure) not & ann place isState
 				ifTrue: [ self letterPanel widget changeBoxAt: aRecognizer inputPosition - 1 to: #beSuccess ].
 			ann place isTransition
 				ifTrue: [ self letterPanel widget changeBoxAt: aRecognizer inputPosition - 1 to: #beProcessed ] ].

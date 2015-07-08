@@ -2,4 +2,5 @@ terminators
 beComplete
 	input isEmpty & current isFinal
 		ifTrue: [ self beSuccess ]
-		ifFalse: [ self beFailure ]
+		ifFalse: [ self beFailure ].
+	canContinue := false

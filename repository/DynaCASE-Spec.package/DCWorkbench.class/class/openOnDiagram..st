@@ -2,5 +2,5 @@ project handling
 openOnDiagram: aDiagram
 	| project |
 	project := DCProject named: 'New Project'.
-	project add: aDiagram.
+	project addDiagram: aDiagram.
 	self openProject: project

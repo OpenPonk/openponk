@@ -32,7 +32,7 @@ exampleDecimal
 			(d -> k name: 'd').
 			(k -> k name: 'd')}.
 
-	isDigit := [ :aValue | aValue size = 1 and: [ (aValue at: 1) isDigit ] ].
+	isDigit := [ :aValue | '^[0-9]$' asRegex matches: aValue ].
 	fsm transitions select: [ :each | each name = 'd' ] thenDo: [ :each | each matchBlock: isDigit ].
 
 	DCWorkbench openProject: project

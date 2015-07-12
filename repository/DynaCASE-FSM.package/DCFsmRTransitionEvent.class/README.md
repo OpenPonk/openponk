@@ -1,1 +1,0 @@
-I am root class for transition-related events.

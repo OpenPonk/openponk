@@ -1,0 +1,15 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"beFailure" : "PeterUhnak 7/6/2015 07:55",
+		"beNormal" : "PeterUhnak 7/6/2015 08:21",
+		"beProcessed" : "PeterUhnak 7/7/2015 00:47",
+		"beSuccess" : "PeterUhnak 7/6/2015 08:21",
+		"defaultBorderColor" : "PeterUhnak 7/6/2015 08:24",
+		"defaultBorderWidth" : "PeterUhnak 7/6/2015 07:48",
+		"defaultBounds" : "PeterUhnak 7/6/2015 08:20",
+		"defaultColor" : "PeterUhnak 7/6/2015 08:23",
+		"initialize" : "PeterUhnak 7/6/2015 08:20",
+		"letter:" : "PeterUhnak 7/6/2015 07:59",
+		"morphForLetter:" : "PeterUhnak 7/6/2015 08:10" } }

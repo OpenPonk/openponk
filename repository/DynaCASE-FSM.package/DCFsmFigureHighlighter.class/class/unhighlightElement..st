@@ -1,4 +1,4 @@
-api
+api - unhighlight
 unhighlightElement: anElement
 	(anElement hasAttribute: self name)
 		ifFalse: [ ^ self ].

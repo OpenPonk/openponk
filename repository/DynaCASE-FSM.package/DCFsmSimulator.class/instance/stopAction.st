@@ -1,6 +1,8 @@
 actions
 stopAction
 	input enable.
-	start enable.
-	stop disable.
-	step disable
+	startButton enable.
+	stopButton disable.
+	backButton disable.
+	nextButton disable.
+	letterPanel widget data: ''

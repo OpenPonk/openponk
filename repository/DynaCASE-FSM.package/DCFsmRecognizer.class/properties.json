@@ -4,19 +4,16 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "PeterUhnak 6/15/2015 22:28",
+	"commentStamp" : "PeterUhnak 7/6/2015 23:36",
 	"instvars" : [
 		"model",
 		"input",
-		"remainder",
-		"accepts",
-		"completed",
-		"state",
-		"transition",
-		"announcer",
-		"delay" ],
+		"consumed",
+		"path",
+		"current",
+		"canContinue" ],
 	"name" : "DCFsmRecognizer",
 	"pools" : [
 		 ],
-	"super" : "Object",
+	"super" : "DCAnnouncableObject",
 	"type" : "normal" }

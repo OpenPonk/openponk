@@ -1,3 +1,3 @@
 accessing
 states
-	^ elements select: [ :each | each isVertex ]
+	^ elements select: [ :each | each isState ]

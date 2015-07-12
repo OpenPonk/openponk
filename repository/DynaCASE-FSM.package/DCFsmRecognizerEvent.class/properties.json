@@ -4,9 +4,9 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "PeterUhnak 6/15/2015 22:32",
+	"commentStamp" : "PeterUhnak 7/6/2015 23:49",
 	"instvars" : [
-		 ],
+		"place" ],
 	"name" : "DCFsmRecognizerEvent",
 	"pools" : [
 		 ],

@@ -2,27 +2,34 @@ initialization
 initializePresenter
 	super initializePresenter.
 	inputLabel label: 'Input:'.
+	
 	input autoAccept: true.
-	input textHolder whenChangedDo: [ :text | text ifEmpty: [ start disable ] ifNotEmpty: [ start enable ] ].
-	start
+	input textHolder whenChangedDo: [ :text | text ifEmpty: [ startButton disable ] ifNotEmpty: [ startButton enable ] ].
+	
+	startButton
 		label: 'Start';
 		icon: Smalltalk ui icons smallPrintItIcon;
 		action: [ self startAction ];
 		disable.
-	step
-		label: 'Step';
-		icon: Smalltalk ui icons forwardIcon;
-		action: [ self stepAction ];
-		disable.
-	stop
+	stopButton
 		label: 'Stop';
 		icon: Smalltalk ui icons stopIcon;
 		action: [ self stopAction ];
 		disable.
-	reset
+	resetButton
 		label: 'Reset';
 		icon: Smalltalk ui icons smallUpdateIcon;
 		action: [ self resetAction ].
-		
-	remainderLabel label: 'Remainder: ><'.
-	symbolLabel label: 'Symbol: ><'
+
+	letterPanel widget data: ''.
+
+	backButton
+		label: 'Back';
+		icon: Smalltalk ui icons backIcon;
+		action: [ self backAction ];
+		disable.
+	nextButton
+		label: 'Next';
+		icon: Smalltalk ui icons forwardIcon;
+		action: [ self nextAction ];
+		disable

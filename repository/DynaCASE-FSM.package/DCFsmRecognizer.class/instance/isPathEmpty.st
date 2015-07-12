@@ -1,0 +1,3 @@
+testing
+isPathEmpty
+	^ path isEmpty

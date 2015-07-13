@@ -6,7 +6,7 @@ generalizations
 	generalizationSets do: [ :each | 
 		generalization := (each search: self name).
 		generalization ifNotNil: [
-			result add: (each search: self name) ]
+			result add: generalization ]
 	].
 	
 	^ result

@@ -4,7 +4,7 @@
 	"instance" : {
 		"addCanvasMenu" : "PeterUhnak 6/18/2015 19:40:41",
 		"addMenuFor:" : "PeterUhnak 6/18/2015 19:40:41",
-		"addMouseEventsFor:" : "PeterUhnak 6/18/2015 19:40:41",
+		"addMouseEventsFor:" : "PeterUhnak 7/12/2015 16:02",
 		"attachController:" : "PeterUhnak 6/18/2015 19:40:41",
 		"cleanView" : "PeterUhnak 6/18/2015 19:40:41",
 		"deleteFigure:" : "PeterUhnak 6/18/2015 19:40:41",
@@ -13,7 +13,7 @@
 		"exportAsJpg:" : "PeterUhnak 6/18/2015 19:40:41",
 		"exportAsPng:" : "PeterUhnak 6/18/2015 19:40:41",
 		"exportSubmenu" : "PeterUhnak 6/18/2015 19:40:41",
-		"figureAdded:" : "PeterUhnak 6/18/2015 19:40:41",
+		"figureAdded:" : "PeterUhnak 7/12/2015 16:02",
 		"initialize" : "PeterUhnak 6/18/2015 19:40:41",
 		"inspectFigure:" : "PeterUhnak 6/18/2015 19:40:41",
 		"loadElementsFromController" : "PeterUhnak 6/18/2015 19:40:41",
@@ -24,7 +24,7 @@
 		"showAllFigures" : "PeterUhnak 6/18/2015 19:40:41",
 		"signalUpdate" : "PeterUhnak 6/18/2015 19:40:41",
 		"toolbarFor:" : "PeterUhnak 6/18/2015 19:40:41",
-		"viewClicked:" : "PeterUhnak 6/18/2015 19:40:41",
+		"viewClicked:" : "PeterUhnak 7/12/2015 16:02",
 		"workbench" : "PeterUhnak 6/18/2015 19:40:41",
 		"zoom" : "PeterUhnak 6/18/2015 19:40:41",
 		"zoom:" : "PeterUhnak 6/18/2015 19:40:41" } }

@@ -1,7 +1,7 @@
 accessing
 heads
 	| heads |
-	heads := (RTStyledMultiLine methods collect: [ :m | m selector ]) select: [ :m | m endsWith: 'Head' ].
+	heads := (DCRTStyledMultiLine methods collect: [ :m | m selector ]) select: [ :m | m endsWith: 'Head' ].
 	offset := 0.
 	heads
 		do: [ :name | 

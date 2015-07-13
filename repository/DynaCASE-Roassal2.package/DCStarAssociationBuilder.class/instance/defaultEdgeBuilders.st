@@ -2,12 +2,12 @@ setting
 defaultEdgeBuilders
 	self
 		sourcesEdgeBuilder: [ :from :to | 
-					RTStyledMultiLine new
+					DCRTStyledMultiLine new
 						attachPoint: RTShorterDistanceWithOffsetAttachPoint instance;
 						color: Color black;
 						edgeFrom: from to: to ];
 		targetsEdgeBuilder: [ :from :to | 
-					RTStyledMultiLine new
+					DCRTStyledMultiLine new
 						attachPoint: RTShorterDistanceWithOffsetAttachPoint instance;
 						color: Color black;
 						emptyArrowHead;

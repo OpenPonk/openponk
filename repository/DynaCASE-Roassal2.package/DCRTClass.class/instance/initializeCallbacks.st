@@ -10,9 +10,4 @@ initializeCallbacks
 			self update ].
 	attributes whenChangedDo: [ :newValue | self update ].
 	methods whenChangedDo: [ :newValue | self update ].
-	background
-		addCallback:
-			(TRRemoveCallback
-				block: [ 
-					group do: #remove.
-					separatorGroup do: #remove ])
+	background addCallback: (TRRemoveCallback block: [ group do: [ :each | each view ifNotNil: [ each remove ] ] ])

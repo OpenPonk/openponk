@@ -1,3 +1,3 @@
 heads
 arrowTail
-	self tail: DCRTSimpleArrow asTail
+	self tail: RTSimpleArrow asTail

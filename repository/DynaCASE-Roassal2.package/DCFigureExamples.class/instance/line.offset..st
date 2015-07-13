@@ -4,7 +4,7 @@ line: aName offset: aNumber
 	boxShape := RTBox new.
 	e1 := boxShape element.
 	e2 := boxShape element.
-	l1 := DCRTMultiLine new
+	l1 := RTStyledMultiLine new
 		perform: aName asSymbol;
 		edgeFrom: e1 to: e2.
 	l1 model: aName.

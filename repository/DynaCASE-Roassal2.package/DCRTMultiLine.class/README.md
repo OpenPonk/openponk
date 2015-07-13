@@ -1,1 +1,0 @@
-A DCRTMultiLineHeaded is a multi-purpose modification of RTMultiLine with head and/or tail (like arrow) and possibility of being styled (dashed, dotted...).

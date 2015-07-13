@@ -1,9 +1,0 @@
-{
-	"class" : {
-		 },
-	"instance" : {
-		"setUp" : "PeterUhnak 7/1/2015 18:54",
-		"testCustomFromPoint" : "PeterUhnak 6/15/2015 20:57:24",
-		"testHead" : "PeterUhnak 6/15/2015 20:57:24",
-		"testShapeHandling" : "PeterUhnak 6/15/2015 20:57:24",
-		"testTail" : "PeterUhnak 6/15/2015 20:57:24" } }

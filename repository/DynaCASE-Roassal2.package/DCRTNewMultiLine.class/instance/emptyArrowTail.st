@@ -1,3 +1,3 @@
 heads
 emptyArrowTail
-	self tail: DCRTEmptyArrow asTail
+	self tail: RTEmptyArrow asTail

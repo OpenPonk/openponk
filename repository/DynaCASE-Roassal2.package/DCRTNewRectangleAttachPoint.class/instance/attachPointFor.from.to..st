@@ -10,6 +10,6 @@ attachPointFor: anEdge from: fromRect to: toRect
 		ifTrue: [ ^ fromRect pointNearestTo: toPoint ].
 	(toRect containsRect: fromRect)
 		ifTrue: [ ^ fromRect pointNearestTo: (toRect pointNearestTo: fromPoint) ].
-	intersections := (DCLineSegment from: fromPoint to: toPoint) intersectRectangle: fromRect.
+	intersections := (RTLineSegment from: fromPoint to: toPoint) intersectRectangle: fromRect.
 	intersections ifEmpty: [ ^ fromRect pointNearestTo: toPoint ].
 	^ intersections detectMin: [ :each | each r ]

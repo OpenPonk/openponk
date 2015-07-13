@@ -1,1 +1,0 @@
-A DCRTLineTail is a handler of tail of a line

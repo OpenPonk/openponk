@@ -1,3 +1,0 @@
-accessing
-tail
-	^ tail

@@ -1,3 +1,0 @@
-attach point
-withContinuousCircleAttachPoint
-	self attachPoint: DCRTCircleAttachPoint new

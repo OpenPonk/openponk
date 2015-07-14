@@ -8,6 +8,7 @@ doUnhighlightElement: anElement
 
 	(anElement hasAttribute: #focusOriginalColor)
 		ifFalse: [ ^ self ].
+
 	anElement shape borderColor: (anElement attributeAt: #focusOriginalColor).
 	anElement removeAttributeAt: #focusOriginalColor.
 	anElement update

@@ -7,6 +7,6 @@ doHighlightElement: anElement
 	(anElement model isMemberOf: DCRTClass)
 		ifTrue: [ ^ self doHighlightClass: anElement ].
 
-	anElement attributeAt: #focusOriginalColor put: anElement shape borderColor.
+	anElement attributeAt: #focusOriginalColor put: (anElement shape borderColorFor: anElement).
 	anElement shape borderColor: Color blue.
 	anElement update

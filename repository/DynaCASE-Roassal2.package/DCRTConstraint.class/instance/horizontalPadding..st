@@ -1,3 +1,3 @@
-public - padding
+public - modifiers
 horizontalPadding: aNumber
 	horizontalPadding := aNumber

@@ -1,0 +1,3 @@
+accessing
+diagramControllerClass
+	^ self subclassResponsibility

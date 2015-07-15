@@ -1,6 +1,7 @@
 {
 	"class" : {
-		"defaultSpec" : "PeterUhnak 6/18/2015 19:40:41" },
+		"defaultSpec" : "PeterUhnak 6/18/2015 19:40:41",
+		"openOn:" : "PeterUhnak 7/13/2015 22:26" },
 	"instance" : {
 		"childrenFor:" : "PeterUhnak 6/28/2015 01:29",
 		"deleteDiagramCommand:" : "PeterUhnak 6/18/2015 19:40:41",
@@ -13,7 +14,7 @@
 		"initializeTree" : "PeterUhnak 6/28/2015 00:14",
 		"initializeWidgets" : "PeterUhnak 6/18/2015 19:40:41",
 		"inspectCommand:" : "PeterUhnak 6/18/2015 19:40:41",
-		"openCommand:" : "PeterUhnak 6/18/2015 19:40:41",
+		"openCommand:" : "PeterUhnak 7/13/2015 23:09",
 		"openOn:" : "PeterUhnak 6/18/2015 19:40:41",
 		"registerAdapter:" : "PeterUhnak 6/28/2015 00:02",
 		"registerAdapters" : "PeterUhnak 6/28/2015 00:09",

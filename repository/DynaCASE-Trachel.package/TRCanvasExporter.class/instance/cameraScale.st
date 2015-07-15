@@ -1,3 +1,3 @@
-private
+accessing
 cameraScale
 	^ canvas camera scale

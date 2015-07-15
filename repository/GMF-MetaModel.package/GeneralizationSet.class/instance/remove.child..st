@@ -1,4 +1,6 @@
 add/remove
 remove: aParentName child: aChildName
-	generalizations := self generalizations reject: [ :each | 
-		each parent name = aParentName & each child name = aChildName ].
+	| removed |
+	removed := self generalizations detect: [ :any | any parent name = aParentName and: [ any child name = aChildName ] ].
+	generalizations remove: removed.
+	^ removed

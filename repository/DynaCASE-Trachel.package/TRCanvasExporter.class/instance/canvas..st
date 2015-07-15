@@ -1,6 +1,6 @@
 settings
 canvas: aCanvas
-	"sets canvas for export, resets all settings"
+	"sets canvas for export, resets all immediate settings"
 
 	canvas := aCanvas veryDeepCopy.
 	canvas morph

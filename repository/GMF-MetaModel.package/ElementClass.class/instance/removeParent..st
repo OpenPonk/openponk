@@ -1,5 +1,6 @@
 removing
 removeParent: aNameString
-	generalizationSets do: [ :each |
-		each remove: aNameString child: self name
-		 ] 
+	| removed |
+	removed := OrderedCollection new.
+	generalizationSets do: [ :each | removed add: (each remove: aNameString child: self name) ].
+	^ removed

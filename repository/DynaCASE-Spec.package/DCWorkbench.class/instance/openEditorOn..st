@@ -1,13 +1,15 @@
 opening
 openEditorOn: aDiagram
-	| editor tab |
+	| editor tab plugin |
 	(editor := DCEditor new) workbench: self.
 	editor buildWithSpec.
+	plugin := pluginRegistry pluginFor: aDiagram.
 	(tab := self newTab)
 		label: aDiagram name;
-		icon: ((pluginRegistry pluginFor: aDiagram) icon);
+		icon: (plugin icon);
 		retrievingBlock: editor buildWithSpec asWidget.
 	tabManager addTab: tab.
+	editor plugin: plugin.
 	editor openDiagram: aDiagram.
 	editor rebuildWidget.
 	aDiagram whenChanged: [ tab label: aDiagram name ].

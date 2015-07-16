@@ -9,8 +9,8 @@ createEdgeFor: anElement inView: view
 
 	aLabel := RTLabel new
 		color: Color black;
-		height: 11;
-		elementOn: 'wut'.
+		height: 10;
+		elementOn: ''.
 	aFigure attributeAt: #DCArcLabel put: aLabel.
 	DCRTArcLine constraintLabel: aLabel at: aFigure.
 	

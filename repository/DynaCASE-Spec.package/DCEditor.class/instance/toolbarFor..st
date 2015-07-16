@@ -5,4 +5,4 @@ toolbarFor: aGroup
 		description: 'Inspect Diagram Controller';
 		action: [ self diagramController inspect ].
 
-	plugin editorToolbarFor: aGroup
+	plugin toolbarForEditor: self inGroup: aGroup

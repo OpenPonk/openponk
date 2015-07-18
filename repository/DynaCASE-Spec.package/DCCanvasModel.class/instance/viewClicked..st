@@ -1,4 +1,4 @@
 selection handling
 viewClicked: anEvent
-	self lastEvent: anEvent.
+	self lastClickPosition: anEvent position.
 	self diagramController selectView

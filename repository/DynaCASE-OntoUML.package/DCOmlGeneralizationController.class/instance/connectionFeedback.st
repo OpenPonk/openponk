@@ -2,7 +2,7 @@ hooks
 connectionFeedback
 	^ DCInteractiveLine new
 		lineBuilder: [ :fromFigure :toFigure | 
-					DCRTMultiLine new
+					DCRTStyledMultiLine new
 						emptyNarrowArrowHead;
 						edgeFrom: fromFigure to: toFigure ];
 		from: source figure

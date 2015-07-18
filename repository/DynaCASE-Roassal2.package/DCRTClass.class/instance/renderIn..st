@@ -8,7 +8,7 @@ renderIn: aView
 	separatorGroup
 		add: DCRTClassSeparator build;
 		add: DCRTClassSeparator build.
-	background @ DCRTDraggable.
+	background @ RTDraggableSnapToGrid.
 	RTNest new on: background nest: group.
 	aView
 		add: background;

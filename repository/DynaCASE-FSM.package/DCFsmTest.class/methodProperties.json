@@ -2,9 +2,9 @@
 	"class" : {
 		 },
 	"instance" : {
-		"setUp" : "PeterUhnak 7/4/2015 22:24",
-		"testAdd" : "PeterUhnak 7/5/2015 00:04",
-		"testRemoveState" : "PeterUhnak 7/5/2015 00:00",
-		"testRemoveState2" : "PeterUhnak 7/5/2015 00:18",
-		"testRemoveTransition" : "PeterUhnak 7/5/2015 00:02",
-		"testTransition" : "PeterUhnak 7/5/2015 00:04" } }
+		"setUp" : "PeterUhnak 7/9/2015 20:34:38",
+		"testAdd" : "PeterUhnak 7/9/2015 20:34:38",
+		"testRemoveState" : "PeterUhnak 7/9/2015 20:34:38",
+		"testRemoveState2" : "PeterUhnak 7/9/2015 20:34:38",
+		"testRemoveTransition" : "PeterUhnak 7/9/2015 20:34:38",
+		"testTransition" : "PeterUhnak 7/9/2015 20:34:38" } }

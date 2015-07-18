@@ -1,3 +1,3 @@
 heads
 emptyCircleHead
-	self head: DCRTEmptyCircle asHead
+	self head: RTEmptyCircle asHead

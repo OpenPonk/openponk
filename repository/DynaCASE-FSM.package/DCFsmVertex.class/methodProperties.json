@@ -2,14 +2,14 @@
 	"class" : {
 		 },
 	"instance" : {
-		"->" : "PeterUhnak 6/16/2015 08:16:56",
-		"gtInspectorPresentation:" : "PeterUhnak 6/16/2015 08:16:56",
-		"incoming" : "PeterUhnak 7/5/2015 00:15",
-		"isFinal" : "PeterUhnak 6/16/2015 08:16:56",
-		"isInitial" : "PeterUhnak 6/16/2015 08:16:56",
-		"isNormal" : "PeterUhnak 6/28/2015 00:31",
-		"isState" : "PeterUhnak 7/7/2015 00:50",
-		"isTransition" : "PeterUhnak 6/16/2015 08:16:56",
-		"outgoing" : "PeterUhnak 7/5/2015 00:15",
-		"relatedElements" : "PeterUhnak 7/5/2015 00:19",
-		"removedFrom:" : "PeterUhnak 6/16/2015 08:16:56" } }
+		"->" : "PeterUhnak 7/9/2015 20:34:38",
+		"gtInspectorPresentation:" : "PeterUhnak 7/9/2015 20:34:38",
+		"incoming" : "PeterUhnak 7/9/2015 20:34:38",
+		"isFinal" : "PeterUhnak 7/9/2015 20:34:38",
+		"isInitial" : "PeterUhnak 7/9/2015 20:34:38",
+		"isNormal" : "PeterUhnak 7/9/2015 20:34:38",
+		"isState" : "PeterUhnak 7/9/2015 20:34:38",
+		"isTransition" : "PeterUhnak 7/9/2015 20:34:38",
+		"outgoing" : "PeterUhnak 7/9/2015 20:34:38",
+		"relatedElements" : "PeterUhnak 7/9/2015 20:34:38",
+		"removedFrom:" : "PeterUhnak 7/9/2015 20:34:38" } }

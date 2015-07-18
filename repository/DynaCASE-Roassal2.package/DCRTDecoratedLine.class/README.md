@@ -1,1 +1,0 @@
-A DCRTDecoratedLine is an arrowed line on both ends between its extremities

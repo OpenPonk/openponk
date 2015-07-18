@@ -4,13 +4,15 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "bliznjan 2/16/2015 11:38",
+	"commentStamp" : "bliznjan 7/15/2015 09:14",
 	"instvars" : [
 		"canvas",
 		"fileName",
 		"imageExporter",
 		"format",
-		"oversize" ],
+		"oversize",
+		"margin",
+		"finalized" ],
 	"name" : "TRCanvasExporter",
 	"pools" : [
 		 ],

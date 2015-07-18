@@ -1,1 +1,0 @@
-I am an interaction which allows the element to be dragged in a steps of fixed size equivalent to the size of the grid.

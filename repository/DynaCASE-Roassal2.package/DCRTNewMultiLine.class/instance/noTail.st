@@ -1,3 +1,3 @@
 heads
 noTail
-	self tail: DCRTNoDecorationShape asTail
+	self tail: RTNoDecorationShape asTail

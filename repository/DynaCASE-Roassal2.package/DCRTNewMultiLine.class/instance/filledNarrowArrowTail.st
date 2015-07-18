@@ -1,3 +1,3 @@
 heads
 filledNarrowArrowTail
-	self tail: DCRTFilledNarrowArrow asTail
+	self tail: RTFilledNarrowArrow asTail

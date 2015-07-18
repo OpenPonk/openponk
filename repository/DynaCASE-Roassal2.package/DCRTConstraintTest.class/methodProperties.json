@@ -2,10 +2,10 @@
 	"class" : {
 		 },
 	"instance" : {
-		"setUp" : "PeterUhnak 7/1/2015 18:54",
-		"testFixAlongEdge" : "PeterUhnak 6/15/2015 20:57:24",
-		"testFixNearOriginOfEdge" : "PeterUhnak 6/15/2015 20:57:24",
-		"testMoveAlongEdge" : "PeterUhnak 6/15/2015 20:57:24",
-		"testMoveNearOriginOfEdge" : "PeterUhnak 6/15/2015 20:57:24",
-		"testStickAlongEdge" : "PeterUhnak 6/15/2015 20:57:24",
-		"testStickNearOriginOfEdge" : "PeterUhnak 6/15/2015 20:57:24" } }
+		"setUp" : "PeterUhnak 7/15/2015 10:26:31",
+		"testFixAlongEdge" : "PeterUhnak 7/15/2015 10:26:31",
+		"testFixNearOriginOfEdge" : "PeterUhnak 7/15/2015 10:26:31",
+		"testMoveAlongEdge" : "PeterUhnak 7/15/2015 10:26:31",
+		"testMoveNearOriginOfEdge" : "PeterUhnak 7/15/2015 10:26:31",
+		"testStickAlongEdge" : "PeterUhnak 7/15/2015 10:26:31",
+		"testStickNearOriginOfEdge" : "PeterUhnak 7/15/2015 10:26:31" } }

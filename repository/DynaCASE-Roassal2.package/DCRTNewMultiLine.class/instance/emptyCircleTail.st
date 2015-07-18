@@ -1,3 +1,3 @@
 heads
 emptyCircleTail
-	self tail: DCRTEmptyCircle asTail
+	self tail: RTEmptyCircle asTail

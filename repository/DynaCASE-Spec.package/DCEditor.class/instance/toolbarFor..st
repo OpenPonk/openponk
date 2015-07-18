@@ -5,8 +5,4 @@ toolbarFor: aGroup
 		description: 'Inspect Diagram Controller';
 		action: [ self diagramController inspect ].
 
-	(self diagramController isMemberOf: DCFsmController)
-		ifTrue: [ 
-			(aGroup addItem: 'Simulation')
-				description: '';
-				action: [ DCFsmSimulator new openOn: self diagramController ] ]
+	plugin toolbarForEditor: self inGroup: aGroup

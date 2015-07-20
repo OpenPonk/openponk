@@ -1,3 +1,0 @@
-hooks
-computePath
-	"do nothing"

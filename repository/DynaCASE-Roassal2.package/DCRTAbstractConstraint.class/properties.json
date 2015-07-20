@@ -10,5 +10,5 @@
 	"name" : "DCRTAbstractConstraint",
 	"pools" : [
 		 ],
-	"super" : "Object",
+	"super" : "TRObject",
 	"type" : "normal" }

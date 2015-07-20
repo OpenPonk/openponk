@@ -1,0 +1,24 @@
+{
+	"category" : "DynaCASE-Roassal2-Builders",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 7/14/2015 00:29",
+	"instvars" : [
+		"parentY",
+		"childY",
+		"childShape",
+		"parentShape",
+		"verticalPadding",
+		"horizontalPadding",
+		"parentX",
+		"childX",
+		"directionY",
+		"directionX",
+		"orientation" ],
+	"name" : "DCRTConstraint",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Trachel-Shapes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "bliznjan 11/26/2014 00:36",
+	"instvars" : [
+		"dashes" ],
+	"name" : "DCTRStyledLineShape",
+	"pools" : [
+		 ],
+	"super" : "TRLineShape",
+	"type" : "normal" }

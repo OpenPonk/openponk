@@ -1,7 +1,7 @@
 accessing
 lines
 	| lines |
-	lines := (RTStyledMultiLine methods collect: [ :m | m selector ]) select: [ :m | m endsWith: 'Line' ].
+	lines := (DCRTStyledMultiLine methods collect: [ :m | m selector ]) select: [ :m | m endsWith: 'Line' ].
 	offset := 0.
 	lines
 		do: [ :name | 

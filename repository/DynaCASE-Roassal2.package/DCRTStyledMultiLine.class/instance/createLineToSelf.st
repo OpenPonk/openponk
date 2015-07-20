@@ -2,7 +2,7 @@ private
 createLineToSelf
 	"changes path to display itself from one element to the same one"
 
-	self attachPoint: DCRTOrthogonalSelfAttachPoint new.
+	self attachPoint: DCRTToSelfWithOffsetAttachPoint new.
 	(blockProducingPath value: 0 @ 0 value: 0 @ 0) size = 2
 		ifTrue: [ 
 			self

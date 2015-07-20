@@ -1,6 +1,6 @@
 public
 lineSegmentFor: anEdge from: aSource to: aTarget
-	^ TRStyledLineShape new
+	^ DCTRStyledLineShape new
 		dashes: dashes;
 		width: width;
 		from: aSource to: aTarget;

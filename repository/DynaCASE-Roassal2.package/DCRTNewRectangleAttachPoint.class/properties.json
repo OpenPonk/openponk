@@ -10,5 +10,5 @@
 	"name" : "DCRTNewRectangleAttachPoint",
 	"pools" : [
 		 ],
-	"super" : "RTContinuousAttachPoint",
+	"super" : "RTRectangleAttachPoint",
 	"type" : "normal" }

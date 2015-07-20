@@ -1,9 +1,12 @@
 {
 	"class" : {
-		"isAbstract" : "PeterUhnak 11/24/2014 19:47" },
+		"isAbstract" : "PeterUhnak 6/10/2015 13:46:42" },
 	"instance" : {
-		"buildEditorForm:" : "PeterUhnak 11/24/2014 22:19",
-		"createEdgeFrom:to:" : "PeterUhnak 11/24/2014 23:04",
-		"meronymicStringFor:" : "PeterUhnak 11/24/2014 23:06",
-		"qualifier" : "PeterUhnak 11/24/2014 22:53",
-		"refreshFigure" : "PeterUhnak 11/24/2014 23:05" } }
+		"buildEditorForm:" : "PeterUhnak 6/10/2015 13:46:42",
+		"createEdgeFrom:to:" : "PeterUhnak 6/10/2015 13:46:42",
+		"edgeBuilder" : "PeterUhnak 6/10/2015 13:46:42",
+		"meronymicString" : "PeterUhnak 6/10/2015 13:46:42",
+		"meronymicStringFor:" : "PeterUhnak 6/10/2015 13:46:42",
+		"qualifier" : "PeterUhnak 6/10/2015 13:46:42",
+		"qualifierString" : "PeterUhnak 6/10/2015 13:46:42",
+		"refreshFigure" : "PeterUhnak 6/10/2015 13:46:42" } }

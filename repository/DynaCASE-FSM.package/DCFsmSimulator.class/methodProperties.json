@@ -1,0 +1,24 @@
+{
+	"class" : {
+		"defaultSpec" : "PeterUhnak 7/9/2015 20:34:38" },
+	"instance" : {
+		"backAction" : "PeterUhnak 7/9/2015 20:34:38",
+		"backButton" : "PeterUhnak 7/9/2015 20:34:38",
+		"initialExtent" : "PeterUhnak 7/9/2015 20:34:38",
+		"initialize" : "PeterUhnak 7/9/2015 20:34:38",
+		"initializePresenter" : "PeterUhnak 7/9/2015 20:34:38",
+		"initializeWidgets" : "PeterUhnak 7/9/2015 20:34:38",
+		"input" : "PeterUhnak 7/9/2015 20:34:38",
+		"inputLabel" : "PeterUhnak 7/9/2015 20:34:38",
+		"letterPanel" : "PeterUhnak 7/9/2015 20:34:38",
+		"nextAction" : "PeterUhnak 7/9/2015 20:34:38",
+		"nextButton" : "PeterUhnak 7/9/2015 20:34:38",
+		"openOn:" : "PeterUhnak 7/9/2015 20:34:38",
+		"resetAction" : "PeterUhnak 7/9/2015 20:34:38",
+		"resetButton" : "PeterUhnak 7/9/2015 20:34:38",
+		"startAction" : "PeterUhnak 7/9/2015 20:34:38",
+		"startButton" : "PeterUhnak 7/9/2015 20:34:38",
+		"stopAction" : "PeterUhnak 7/9/2015 20:34:38",
+		"stopButton" : "PeterUhnak 7/9/2015 20:34:38",
+		"title" : "PeterUhnak 7/9/2015 20:34:38",
+		"watchRecognizer:" : "PeterUhnak 7/9/2015 20:34:38" } }

@@ -1,3 +1,6 @@
-as yet unclassified
+widget API
 iconFor: anObject
-	^ self class iconFor: anObject
+	adapters
+		do: [ :each | 
+			(each hasMappingFor: anObject)
+				ifTrue: [ (each iconFor: anObject) ifNotNil: [ :v | ^ v ] ] ]

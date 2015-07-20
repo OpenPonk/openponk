@@ -1,0 +1,7 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"ruleCollectionMessagesToExternalObjectRuleV1FalsePositive" : "PeterUhnak 7/16/2015 17:28:51",
+		"ruleInconsistentMethodClassificationRuleV1FalsePositive" : "PeterUhnak 7/16/2015 17:28:51",
+		"ruleMissingYourselfRuleV1FalsePositive" : "PeterUhnak 7/16/2015 17:28:51" } }

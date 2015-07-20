@@ -1,3 +1,3 @@
-instance creation
+opening
 open
 	self openWithSpec

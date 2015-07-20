@@ -1,0 +1,3 @@
+testing
+hasStereotype
+	^ stereotype isNotNil

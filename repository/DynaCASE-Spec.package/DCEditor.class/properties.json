@@ -10,7 +10,8 @@
 		"diagramController",
 		"paletteModel",
 		"workbench",
-		"canvasMenuModel" ],
+		"canvasMenuModel",
+		"plugin" ],
 	"name" : "DCEditor",
 	"pools" : [
 		 ],

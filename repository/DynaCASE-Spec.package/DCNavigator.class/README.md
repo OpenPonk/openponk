@@ -1,11 +1,10 @@
-A DCNavigator represents the tree view of project. Each root is a diagram and and branches are the elements from this specific diagram.
+I am a tree view of a project. To define model-specific mappings subclass DCNavigatorAdapter.
 
-Instance Variables
-	project:		<Object>
-	tree:		<Object>
+!! Responsibility
 
-project
-	- xxxxx
+Display project in a tree view.
 
-tree
-	- xxxxx
+!! Collaborators
+
+DCNavigatorAdapter allSubclasses
+

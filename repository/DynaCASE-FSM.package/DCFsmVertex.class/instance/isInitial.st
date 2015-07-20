@@ -1,0 +1,3 @@
+testing
+isInitial
+	^ false

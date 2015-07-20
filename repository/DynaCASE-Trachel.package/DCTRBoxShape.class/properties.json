@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Trachel-Shapes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 3/29/2015 20:56",
+	"instvars" : [
+		"borderRadius" ],
+	"name" : "DCTRBoxShape",
+	"pools" : [
+		 ],
+	"super" : "TRBoxShape",
+	"type" : "normal" }

@@ -1,4 +1,4 @@
-as yet unclassified
+gt-inspector
 gtInspectorPresentation: composite
 	<gtInspectorPresentationOrder: 30>
 	composite table

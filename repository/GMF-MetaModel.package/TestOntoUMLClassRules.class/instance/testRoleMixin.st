@@ -16,6 +16,7 @@ testRoleMixin
 	self deny: roleMixin isElementValid.
 	
 	roleMixin
-		addRole: (Role name: 'MixedRole' metaModel: metaModel).
+		addRole: (Role name: 'MixedRole' metaModel: metaModel)
+		generalizationSet: (GeneralizationSet new).
 		
 	self assert: roleMixin isElementValid

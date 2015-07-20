@@ -1,4 +1,4 @@
-as yet unclassified
+testing - instance creation
 createController
 	| name |
 	name := self class name asString.

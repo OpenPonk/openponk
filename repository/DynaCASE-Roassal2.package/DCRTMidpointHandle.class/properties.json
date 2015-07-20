@@ -1,0 +1,17 @@
+{
+	"category" : "DynaCASE-Roassal2-PolyLine",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"from",
+		"to",
+		"element",
+		"edge" ],
+	"name" : "DCRTMidpointHandle",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

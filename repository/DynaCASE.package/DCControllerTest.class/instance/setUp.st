@@ -1,3 +1,5 @@
 running
 setUp
-	view := RTView new
+	true ifTrue: [ ^ self skip ].
+	view := RTView new.
+	ctrl := self createController

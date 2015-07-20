@@ -11,7 +11,9 @@
 		"parents",
 		"abstract",
 		"attributes",
-		"metaModel" ],
+		"metaModel",
+		"generalizationSets",
+		"children" ],
 	"name" : "ElementClass",
 	"pools" : [
 		 ],

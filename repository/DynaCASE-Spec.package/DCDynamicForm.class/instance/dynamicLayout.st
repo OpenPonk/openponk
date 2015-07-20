@@ -1,4 +1,4 @@
-building widgets
+private - building widgets
 dynamicLayout
 	| keys height |
 	keys := self widgets keys.

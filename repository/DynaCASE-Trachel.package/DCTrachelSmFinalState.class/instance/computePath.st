@@ -1,4 +1,4 @@
-hooks
+private
 computePath
 	canvas ifNil: [ ^ self ].
 	path := self athensCanvas

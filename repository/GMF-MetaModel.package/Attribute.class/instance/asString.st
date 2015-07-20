@@ -1,3 +1,4 @@
-accessing
+printing
 asString
-	^name , ':' , dataType , '[' , multiplicity asString , ']'
+	^ name , (dataType ifNil: [ '' ] ifNotNil: [ ': ' , dataType ])
+		, (multiplicity ifNotEmpty: [ '[' , multiplicity , ']' ])

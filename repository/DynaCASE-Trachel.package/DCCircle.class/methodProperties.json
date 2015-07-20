@@ -1,0 +1,17 @@
+{
+	"class" : {
+		"centersFor:and:radius:" : "PeterUhnak 6/15/2015 13:22",
+		"circlesFor:and:radius:" : "PeterUhnak 6/15/2015 11:56",
+		"radius:" : "PeterUhnak 6/15/2015 10:07",
+		"radius:center:" : "PeterUhnak 6/15/2015 10:07" },
+	"instance" : {
+		"bottom" : "PeterUhnak 6/15/2015 10:09",
+		"center" : "PeterUhnak 6/15/2015 12:18",
+		"containsPoint:" : "PeterUhnak 6/15/2015 17:36",
+		"left" : "PeterUhnak 6/15/2015 10:09",
+		"printOn:" : "PeterUhnak 6/15/2015 11:54",
+		"radius" : "PeterUhnak 6/15/2015 12:19",
+		"right" : "PeterUhnak 6/15/2015 10:09",
+		"setRadius:center:" : "PeterUhnak 6/15/2015 10:08",
+		"tangentAt:" : "PeterUhnak 6/15/2015 16:55",
+		"top" : "PeterUhnak 6/15/2015 10:09" } }

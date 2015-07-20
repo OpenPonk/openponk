@@ -7,7 +7,8 @@
 	"commentStamp" : "PeterUhnak 10/19/2014 16:36",
 	"instvars" : [
 		"roassalView",
-		"diagramController" ],
+		"diagramController",
+		"lastClickPosition" ],
 	"name" : "DCCanvasModel",
 	"pools" : [
 		 ],

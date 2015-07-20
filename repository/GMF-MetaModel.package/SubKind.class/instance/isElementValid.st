@@ -1,7 +1,7 @@
 validating
 isElementValid
-	parents do: [:each | 
-		( each parentClass isKindOf: SubstanceSortal ) ifTrue: [ ^ super isElementValid ].
-		( each parentClass isMemberOf: SubKind ) ifTrue: [ ^ each parentClass isElementValid ] ].
+	self generalizations do: [:each | 
+		( each parent  isKindOf: SubstanceSortal ) ifTrue: [ ^ super isElementValid ].
+		( each parent isMemberOf: SubKind ) ifTrue: [ ^ each parent isElementValid ] ].
 
      ^ false.

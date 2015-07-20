@@ -1,1 +1,0 @@
-A DCTRConstraint is an extension of Trachel TRConstraint with added possibilities.

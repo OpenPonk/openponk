@@ -1,11 +1,6 @@
 export
 export
-	"Makes the export itself.
-Due to applying oversize and scaling to morph limits it is recommended to use only once for single instance."
+	"Makes the export itself. Repeatable last step of process. Do not change any settings after export has been made."
 
-	canvas ifNil: [ self error: 'No canvas selected' ].
-	fileName ifNil: [ self error: 'File name not set' ].
-	self
-		applyOversize;
-		scaleToMorphLimits.
+	self finalize.
 	imageExporter putForm: canvas morph imageForm onFileNamed: fileName value

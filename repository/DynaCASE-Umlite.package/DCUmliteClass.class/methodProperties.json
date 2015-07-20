@@ -2,15 +2,15 @@
 	"class" : {
 		 },
 	"instance" : {
-		"associations" : "PeterUhnak 10/5/2014 02:11",
-		"attributes" : "PeterUhnak 9/1/2014 20:48",
-		"attributes:" : "PeterUhnak 9/1/2014 20:47",
-		"attributesHolder" : "PeterUhnak 9/1/2014 20:49",
-		"initialize" : "PeterUhnak 10/11/2014 18:59",
-		"methods" : "PeterUhnak 10/11/2014 18:49",
-		"methods:" : "PeterUhnak 10/11/2014 18:49",
-		"methodsHolder" : "PeterUhnak 10/11/2014 18:49",
-		"removedFrom:" : "PeterUhnak 10/5/2014 02:05",
-		"stereotype" : "PeterUhnak 10/11/2014 18:58",
-		"stereotype:" : "PeterUhnak 10/11/2014 18:58",
-		"stereotypeHolder" : "PeterUhnak 10/11/2014 18:58" } }
+		"associations" : "bliznjan 3/26/2015 13:37:56",
+		"attributes" : "bliznjan 3/26/2015 13:37:56",
+		"attributes:" : "bliznjan 3/26/2015 13:37:56",
+		"attributesHolder" : "bliznjan 3/26/2015 13:37:56",
+		"initialize" : "bliznjan 3/26/2015 13:37:56",
+		"methods" : "bliznjan 3/26/2015 13:37:56",
+		"methods:" : "bliznjan 3/26/2015 13:37:56",
+		"methodsHolder" : "bliznjan 3/26/2015 13:37:56",
+		"removedFrom:" : "bliznjan 3/26/2015 13:37:56",
+		"stereotype" : "bliznjan 3/26/2015 13:37:56",
+		"stereotype:" : "bliznjan 3/26/2015 13:37:56",
+		"stereotypeHolder" : "bliznjan 3/26/2015 13:37:56" } }

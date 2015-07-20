@@ -1,3 +1,3 @@
-building widgets
+private - building widgets
 createWidgets
-	components do: [ :item | self assign: item second to: ('control' , item first) asSymbol ]
+	components do: [ :each | self assign: each to: ('control' , each hash asString) asSymbol ]

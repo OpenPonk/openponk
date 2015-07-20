@@ -6,7 +6,7 @@ example01
 	b edges connectFrom: #superclass.
 	b layout tree.
 	b build.
-	
+
 	view := b view.
 	(self canvas: view canvas)
 		withoutFixedShapes;
@@ -15,4 +15,7 @@ example01
 		oversizedBy: 20 @ 20;
 		asPNG;
 		fileName: ((UIManager default request: 'Please enter file name' initialAnswer: 'export.png') ifNil: [ ^ nil ]);
+		export;
+		fileName: 'export.jpg';
+		asJPG;
 		export

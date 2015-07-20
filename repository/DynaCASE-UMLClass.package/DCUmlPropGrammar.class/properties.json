@@ -1,0 +1,18 @@
+{
+	"category" : "DynaCASE-UMLClass-Parsers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 6/22/2015 12:18",
+	"instvars" : [
+		"visibility",
+		"type",
+		"multiplicity",
+		"symbol",
+		"multiplicityRange" ],
+	"name" : "DCUmlPropGrammar",
+	"pools" : [
+		 ],
+	"super" : "PPCompositeParser",
+	"type" : "normal" }

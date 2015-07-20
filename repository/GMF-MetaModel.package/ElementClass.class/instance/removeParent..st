@@ -1,3 +1,6 @@
 removing
-removeParent: xName
-	parents := parents reject: [ :each | each parentClass name = xName ]
+removeParent: aNameString
+	| removed |
+	removed := OrderedCollection new.
+	generalizationSets do: [ :each | removed add: (each remove: aNameString child: self name) ].
+	^ removed

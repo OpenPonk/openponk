@@ -2,6 +2,9 @@
 	"class" : {
 		 },
 	"instance" : {
-		"addElement:" : "PeterUhnak 11/23/2014 02:14",
-		"modelElements" : "PeterUhnak 11/23/2014 02:14",
-		"removeElement:" : "PeterUhnak 11/23/2014 02:14" } }
+		"add:" : "PeterUhnak 6/10/2015 13:46:42",
+		"addElement:" : "PeterUhnak 6/10/2015 13:46:42",
+		"metaModel" : "PeterUhnak 6/10/2015 13:46:42",
+		"modelElements" : "PeterUhnak 6/10/2015 13:46:42",
+		"remove:" : "PeterUhnak 6/10/2015 13:46:42",
+		"removeElement:" : "bliznjan 7/13/2015 10:45" } }

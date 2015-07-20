@@ -1,3 +1,3 @@
 removing
-removeMethod: xName
-	methods := methods reject: [ :each | each name = xName ]
+removeMethod: aNameString
+	methods := methods reject: [ :each | each name = aNameString ]

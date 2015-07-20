@@ -1,5 +1,5 @@
 validating
 isElementValid
-	^ (parents
-		anySatisfy: [:each | (each parentClass isKindOf: AntiRigidSortalClass) 
-				| ( each parentClass isKindOf: AntiRigidMixinClass)]) not & super isElementValid
+	^ (self generalizations
+		anySatisfy: [:each | (each parent isKindOf: AntiRigidSortalClass) 
+				| ( each parent isKindOf: AntiRigidMixinClass)]) not & super isElementValid

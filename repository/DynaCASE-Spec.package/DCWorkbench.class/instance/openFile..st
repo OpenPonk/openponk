@@ -1,14 +1,15 @@
 file support
 openFile: aFileName
-	| materialization serializer serializedProject |
+	| materialization serializer materializedProject |
 	aFileName isEmptyOrNil
 		ifTrue: [ ^ self ].
 	aFileName asFileReference
 		readStreamDo: [ :stream | 
 			materialization := (STON reader
 				allowComplexMapKeys: true;
-				on: stream) next.
+				on: stream;
+				yourself) next.
 			serializer := DCSerializer new.
-			serializedProject := serializer materializeProject: materialization.
-			serializedProject fileName: aFileName.
-			self openProject: serializedProject ]
+			materializedProject := serializer materializeProject: materialization.
+			materializedProject fileName: aFileName.
+			self openProject: materializedProject ]

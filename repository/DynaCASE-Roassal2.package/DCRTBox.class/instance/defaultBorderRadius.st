@@ -1,0 +1,3 @@
+configuration
+defaultBorderRadius
+	^ 0

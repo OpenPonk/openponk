@@ -1,3 +1,3 @@
 accessing
 disjoint
-	^ disjoint
+	^ disjoint copy

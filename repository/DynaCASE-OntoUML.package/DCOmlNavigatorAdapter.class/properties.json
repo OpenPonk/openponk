@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-OntoUML-Adapters",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 6/28/2015 01:24",
+	"instvars" : [
+		 ],
+	"name" : "DCOmlNavigatorAdapter",
+	"pools" : [
+		 ],
+	"super" : "DCNavigatorAdapter",
+	"type" : "normal" }

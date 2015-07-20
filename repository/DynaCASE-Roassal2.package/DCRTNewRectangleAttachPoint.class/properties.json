@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 7/12/2015 10:39",
+	"instvars" : [
+		 ],
+	"name" : "DCRTNewRectangleAttachPoint",
+	"pools" : [
+		 ],
+	"super" : "RTRectangleAttachPoint",
+	"type" : "normal" }

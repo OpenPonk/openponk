@@ -6,9 +6,9 @@
 		 ],
 	"commentStamp" : "volosmat 5/3/2014 13:29",
 	"instvars" : [
-		"name",
 		"transformed",
-		"id" ],
+		"id",
+		"name" ],
 	"name" : "Element",
 	"pools" : [
 		 ],

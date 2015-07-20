@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2-LineDecorations",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCRTAbstractDoubleArrow",
+	"pools" : [
+		 ],
+	"super" : "RTLineDecorationShape",
+	"type" : "normal" }

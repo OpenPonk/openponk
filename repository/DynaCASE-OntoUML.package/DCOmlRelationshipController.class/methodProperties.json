@@ -1,10 +1,11 @@
 {
 	"class" : {
-		"isAbstract" : "PeterUhnak 11/5/2014 18:19" },
+		"isAbstract" : "PeterUhnak 6/10/2015 13:46:42" },
 	"instance" : {
-		"connectionFeedback" : "PeterUhnak 11/23/2014 16:39",
-		"convertName:" : "PeterUhnak 11/24/2014 19:26",
-		"createEdgeFrom:to:" : "PeterUhnak 11/24/2014 22:48",
-		"createModel" : "PeterUhnak 11/4/2014 00:12",
-		"modelClass" : "PeterUhnak 11/4/2014 18:31",
-		"refreshFigure" : "PeterUhnak 11/24/2014 22:49" } }
+		"buildEditorForm:" : "PeterUhnak 6/10/2015 13:46:42",
+		"connectionFeedback" : "PeterUhnak 6/10/2015 13:46:42",
+		"convertName:" : "PeterUhnak 6/10/2015 13:46:42",
+		"createModel" : "PeterUhnak 6/10/2015 13:46:42",
+		"edgeBuilder" : "PeterUhnak 6/10/2015 13:46:42",
+		"modelClass" : "PeterUhnak 6/10/2015 13:46:42",
+		"refreshFigure" : "PeterUhnak 6/22/2015 13:04" } }

@@ -1,0 +1,24 @@
+{
+	"class" : {
+		"isAbstract" : "PeterUhnak 7/16/2015 17:28:51",
+		"registerAdapter:" : "PeterUhnak 7/16/2015 17:28:51" },
+	"instance" : {
+		"actionFor:" : "PeterUhnak 7/16/2015 17:28:51",
+		"actionMapping" : "PeterUhnak 7/16/2015 17:28:51",
+		"childrenFor:" : "PeterUhnak 7/16/2015 17:28:51",
+		"childrenMapping" : "PeterUhnak 7/16/2015 17:28:51",
+		"cull:with:" : "PeterUhnak 7/16/2015 17:28:51",
+		"displayFor:" : "PeterUhnak 7/16/2015 17:28:51",
+		"displayMapping" : "PeterUhnak 7/16/2015 17:28:51",
+		"hasMappingFor:" : "PeterUhnak 7/16/2015 17:28:51",
+		"hierarchyFor:" : "PeterUhnak 7/16/2015 17:28:51",
+		"iconFor:" : "PeterUhnak 7/16/2015 17:28:51",
+		"iconMapping" : "PeterUhnak 7/16/2015 17:28:51",
+		"mappingFor:in:" : "PeterUhnak 7/16/2015 17:28:51",
+		"menuFor:" : "PeterUhnak 7/16/2015 17:28:51",
+		"menuMapping" : "PeterUhnak 7/16/2015 17:28:51",
+		"retrieveActionMapping" : "PeterUhnak 7/16/2015 17:28:51",
+		"retrieveChildrenMapping" : "PeterUhnak 7/16/2015 17:28:51",
+		"retrieveDisplayMapping" : "PeterUhnak 7/16/2015 17:28:51",
+		"retrieveIconMapping" : "PeterUhnak 7/16/2015 17:28:51",
+		"retrieveMenuMapping" : "PeterUhnak 7/16/2015 17:28:51" } }

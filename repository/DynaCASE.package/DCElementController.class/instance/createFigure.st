@@ -1,3 +1,3 @@
 hooks
 createFigure
-	^ self subclassResponsibility
+	^ DCRTCallbackBuilder block: [ :view | self createFigureIn: view ]

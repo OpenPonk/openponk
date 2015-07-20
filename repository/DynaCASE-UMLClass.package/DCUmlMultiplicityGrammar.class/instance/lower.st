@@ -1,0 +1,3 @@
+grammar
+lower
+	^ naturalLiteral

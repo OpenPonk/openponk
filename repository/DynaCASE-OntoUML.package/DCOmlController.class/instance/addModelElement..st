@@ -1,11 +1,11 @@
 adding
 addModelElement: aModelElement
-	| controller figure |
+	| controller  |
 	self controllers detect: [ :ctrl | ctrl model = aModelElement ] ifFound: [ ^ self ].
 	(self model has: aModelElement)
 		ifFalse: [ self model add: aModelElement ].
 	controller := self createController: aModelElement.
-	controller parent: self.
+	controller diagramController: self.
 	self controllers add: controller.
 	(controller isKindOf: DCOmlGeneralizationController)
 		ifTrue: [ 
@@ -27,7 +27,6 @@ addModelElement: aModelElement
 			controller
 				source: fromCtrl;
 				target: toCtrl ].
-	figure := controller figure.
-	figure view ifNil: [ figure renderIn: self view ].
-	controller refreshFigure.
+	controller registerModelEvents: controller model.
+	controller attachFigure.
 	^ controller

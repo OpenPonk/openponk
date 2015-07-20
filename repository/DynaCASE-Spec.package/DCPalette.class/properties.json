@@ -4,13 +4,12 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "PeterUhnak 11/3/2014 12:29",
+	"commentStamp" : "PeterUhnak 6/14/2015 21:54",
 	"instvars" : [
 		"items",
 		"selectedTool",
 		"selectedItem",
-		"diagramController",
-		"editor" ],
+		"diagramController" ],
 	"name" : "DCPalette",
 	"pools" : [
 		 ],

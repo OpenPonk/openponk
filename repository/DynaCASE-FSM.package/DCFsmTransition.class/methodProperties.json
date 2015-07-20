@@ -1,8 +1,15 @@
 {
 	"class" : {
-		"from:to:" : "PeterUhnak 8/10/2014 22:25" },
+		"from:to:" : "PeterUhnak 7/9/2015 20:34:38",
+		"from:to:named:" : "PeterUhnak 7/9/2015 20:34:38" },
 	"instance" : {
-		"source" : "PeterUhnak 8/10/2014 22:22",
-		"source:" : "PeterUhnak 8/10/2014 22:22",
-		"target" : "PeterUhnak 8/10/2014 22:22",
-		"target:" : "PeterUhnak 8/10/2014 22:22" } }
+		"detach" : "PeterUhnak 7/9/2015 20:34:38",
+		"initialize" : "PeterUhnak 7/9/2015 20:34:38",
+		"isState" : "PeterUhnak 7/9/2015 20:34:38",
+		"isTransition" : "PeterUhnak 7/9/2015 20:34:38",
+		"matchBlock:" : "PeterUhnak 7/9/2015 20:34:38",
+		"matches:" : "PeterUhnak 7/9/2015 20:34:38",
+		"source" : "PeterUhnak 7/9/2015 20:34:38",
+		"source:" : "PeterUhnak 7/9/2015 20:34:38",
+		"target" : "PeterUhnak 7/9/2015 20:34:38",
+		"target:" : "PeterUhnak 7/9/2015 20:34:38" } }

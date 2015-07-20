@@ -1,5 +1,9 @@
-hooks
+figures
 refreshFigure
-	(figure labels at: #name) shape text: self model name.
-	(figure labels at: #name) update.
-	figure signalUpdate
+	self figure from = self figure to
+		ifTrue: [ 
+			(self figure attributeAt: #DCArcLabel)
+				model: self model name;
+				update ]
+		ifFalse: [ self figureLabel: #name text: self model name ].
+	super refreshFigure

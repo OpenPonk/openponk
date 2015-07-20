@@ -12,7 +12,7 @@
 		"formModel",
 		"project",
 		"projectController",
-		"treeController" ],
+		"pluginRegistry" ],
 	"name" : "DCWorkbench",
 	"pools" : [
 		 ],

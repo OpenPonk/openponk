@@ -1,9 +1,9 @@
 initialization
 initializePalette: aPalette
-	(DCOmlElementClassController withAllSubclasses select: [ :class | class isAbstract not ])
+	(DCOmlElementClassController withAllSubclasses reject: [ :class | class isAbstract ])
 		do: [ :class | aPalette newCreationTool: (self paletteNameFor: class) factory: [ class new ] icon: Smalltalk ui icons dcOmlBoxIcon ].
 	aPalette newSeparator.
-	(DCOmlRelationshipController withAllSubclasses select: [ :class | class isAbstract not ])
+	(DCOmlRelationshipController withAllSubclasses reject: [ :class | class isAbstract ])
 		do: [ :class | 
 			aPalette
 				newConnectionCreationTool: (self paletteNameFor: class)

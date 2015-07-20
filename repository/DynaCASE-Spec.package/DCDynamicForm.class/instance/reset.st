@@ -1,4 +1,4 @@
-as yet unclassified
+private
 reset
 	components := OrderedCollection new.
 	focusOrder := OrderedCollection new

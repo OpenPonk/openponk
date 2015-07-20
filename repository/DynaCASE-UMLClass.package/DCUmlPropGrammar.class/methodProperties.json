@@ -1,0 +1,10 @@
+{
+	"class" : {
+		"dependencies" : "PeterUhnak 7/1/2015 12:25",
+		"isAbstract" : "PeterUhnak 6/22/2015 13:14" },
+	"instance" : {
+		"multiplicity" : "PeterUhnak 6/22/2015 12:18",
+		"multiplicityRange" : "PeterUhnak 6/22/2015 13:14",
+		"symbol" : "PeterUhnak 6/22/2015 12:18",
+		"type" : "PeterUhnak 6/22/2015 12:19",
+		"visibility" : "PeterUhnak 6/22/2015 12:18" } }

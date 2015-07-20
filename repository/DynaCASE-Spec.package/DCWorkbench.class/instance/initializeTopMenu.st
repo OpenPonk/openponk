@@ -8,7 +8,7 @@ initializeTopMenu
 						name: 'New';
 						description: 'New Diagram';
 						icon: Smalltalk ui icons smallNewIcon;
-						action: [ self newDiagramCommand  ] ] .
+						subMenu: self newDiagramSubmenu ].
 			group
 				addItem: [ :item | 
 					item
@@ -22,5 +22,5 @@ initializeTopMenu
 						name: 'Save';
 						description: 'Save Project';
 						icon: Smalltalk ui icons smallSaveIcon;
-						action: [ self saveCommand ] ] .].
+						action: [ self saveCommand ] ] ].
 	topMenuModel applyTo: self

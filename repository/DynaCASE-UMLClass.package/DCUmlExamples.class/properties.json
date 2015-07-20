@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-UMLClass-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCUmlExamples",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "bliznjan 2/16/2015 13:44",
+	"instvars" : [
+		"offset" ],
+	"name" : "DCRTOrthogonalSelfAttachPoint",
+	"pools" : [
+		 ],
+	"super" : "DCRTToSelfAttachPoint",
+	"type" : "normal" }

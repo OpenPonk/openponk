@@ -1,8 +1,8 @@
 initialization
 initialize
 	super initialize.
-	modelToControllerMapping := Dictionary new.
 	selectionHolder := [  ].
 	deselectionHolder := [  ].
 	hoverHolder := [  ].
-	figureAdded := [ :figure |  ]
+	figureAdded := [ :figure |  ].
+	modelToControllerMapping := self modelToControllerMapping

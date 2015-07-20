@@ -1,3 +1,6 @@
-exporting
+toolbar
 exportAsPng: fileName
-	self exportWith: [ :exporter | exporter asPNG ] toFile: fileName , '.png'
+	(DCExportDiagramCommand on: roassalView canvas)
+		asPng;
+		fileName: fileName , '.png';
+		execute

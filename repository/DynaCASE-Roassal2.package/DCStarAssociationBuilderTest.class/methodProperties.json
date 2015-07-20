@@ -2,13 +2,13 @@
 	"class" : {
 		 },
 	"instance" : {
-		"setUp" : "bliznjan 2/28/2015 19:16:05",
-		"tearDown" : "bliznjan 2/28/2015 19:16:05",
-		"testAccessors" : "bliznjan 2/28/2015 19:16:05",
-		"testAddingAndRemoving" : "bliznjan 2/28/2015 19:16:05",
-		"testElementsTranslation" : "bliznjan 2/28/2015 19:16:05",
-		"testFixedPosition" : "bliznjan 2/28/2015 19:16:05",
-		"testMultipleElements" : "bliznjan 2/28/2015 19:16:05",
-		"testSourcesOnly" : "bliznjan 2/28/2015 19:16:05",
-		"testStraightLine" : "bliznjan 2/28/2015 19:16:05",
-		"testTargetsOnly" : "bliznjan 2/28/2015 19:16:05" } }
+		"setUp" : "PeterUhnak 7/15/2015 10:26:31",
+		"tearDown" : "PeterUhnak 7/15/2015 10:26:31",
+		"testAccessors" : "PeterUhnak 7/15/2015 10:26:31",
+		"testAddingAndRemoving" : "PeterUhnak 7/15/2015 10:26:31",
+		"testElementsTranslation" : "PeterUhnak 7/15/2015 10:26:31",
+		"testFixedPosition" : "PeterUhnak 7/15/2015 10:26:31",
+		"testMultipleElements" : "PeterUhnak 7/15/2015 10:26:31",
+		"testSourcesOnly" : "PeterUhnak 7/15/2015 10:26:31",
+		"testStraightLine" : "PeterUhnak 7/15/2015 10:26:31",
+		"testTargetsOnly" : "PeterUhnak 7/15/2015 10:26:31" } }

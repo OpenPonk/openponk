@@ -1,4 +1,4 @@
-as yet unclassified
+file support
 openFile: aFileName
 	aFileName isEmptyOrNil
 		ifTrue: [ ^ self ].

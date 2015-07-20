@@ -1,4 +1,5 @@
 hooks
+"protocol: hooks"
 createEdgeFrom: fromFigure to: toFigure
 	| builder edge label sourceMultiplicityLabel targetMultiplicityLabel qualifier |
 	^ DCRTCallbackBuilder

@@ -2,7 +2,9 @@
 	"class" : {
 		 },
 	"instance" : {
-		"connectionFeedback" : "PeterUhnak 2/6/2015 00:01",
-		"createEdgeFrom:to:" : "PeterUhnak 1/30/2015 23:09",
-		"createModel" : "PeterUhnak 11/23/2014 15:21",
-		"refreshFigure" : "PeterUhnak 11/5/2014 22:31" } }
+		"buildEditorForm:" : "PeterUhnak 6/10/2015 13:46:42",
+		"connectionFeedback" : "bliznjan 7/13/2015 20:27",
+		"createEdgeFrom:to:" : "PeterUhnak 6/10/2015 13:46:42",
+		"createModel" : "PeterUhnak 6/10/2015 13:46:42",
+		"edgeBuilder" : "PeterUhnak 6/10/2015 13:46:42",
+		"refreshFigure" : "PeterUhnak 6/10/2015 13:46:42" } }

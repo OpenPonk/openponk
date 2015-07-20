@@ -1,5 +1,3 @@
-accessing
+inheritance
 relationships
-	owner ifNil: [ ^ #() ].
-	^ (owner elements select: [ :each | each isKindOf: ElementAssociation ])
-		select: [ :each | each start == self | (each end == self) ]
+	^ self generalizations union: associations 

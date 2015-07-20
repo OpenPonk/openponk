@@ -1,5 +1,4 @@
-hooks
+figures
 refreshFigure
-	(figure attributeAt: #RTLabelledLabel) text: self model name.
-	figure update.
-	figure view signalUpdate
+	figure label: self model name.
+	figure isFinal: self model isFinal

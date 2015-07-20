@@ -6,7 +6,6 @@
 		 ],
 	"commentStamp" : "PeterUhnak 1/30/2015 23:18",
 	"instvars" : [
-		"items",
 		"palette" ],
 	"name" : "DCPaletteTool",
 	"pools" : [

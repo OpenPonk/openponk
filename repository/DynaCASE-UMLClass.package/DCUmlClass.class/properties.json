@@ -1,0 +1,16 @@
+{
+	"category" : "DynaCASE-UMLClass-Models",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"stereotype",
+		"attributes",
+		"operations" ],
+	"name" : "DCUmlClass",
+	"pools" : [
+		 ],
+	"super" : "DCNamedElement",
+	"type" : "normal" }

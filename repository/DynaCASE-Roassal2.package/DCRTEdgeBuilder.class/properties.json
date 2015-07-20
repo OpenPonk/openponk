@@ -6,9 +6,11 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		 ],
+		"shape",
+		"labels",
+		"constraints" ],
 	"name" : "DCRTEdgeBuilder",
 	"pools" : [
 		 ],
-	"super" : "RTBuilder",
+	"super" : "RTObject",
 	"type" : "normal" }

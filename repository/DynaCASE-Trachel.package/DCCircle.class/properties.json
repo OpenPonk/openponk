@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-Trachel-Primitives",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"radius",
+		"center" ],
+	"name" : "DCCircle",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

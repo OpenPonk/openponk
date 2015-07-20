@@ -4,10 +4,9 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "PeterUhnak 10/6/2014 19:16",
+	"commentStamp" : "PeterUhnak 6/3/2015 02:30",
 	"instvars" : [
 		"components",
-		"controller",
 		"heights",
 		"whenAccepted" ],
 	"name" : "DCDynamicForm",

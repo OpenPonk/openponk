@@ -1,3 +1,3 @@
-hooks
+accessing
 figure: aFigure
 	figure := aFigure

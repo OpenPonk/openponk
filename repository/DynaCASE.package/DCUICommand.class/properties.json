@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-UICommands",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 6/18/2015 06:59",
+	"instvars" : [
+		"object" ],
+	"name" : "DCUICommand",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

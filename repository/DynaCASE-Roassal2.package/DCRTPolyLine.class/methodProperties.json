@@ -1,0 +1,20 @@
+{
+	"class" : {
+		"example" : "PeterUhnak 7/15/2015 10:26:31" },
+	"instance" : {
+		"addOrRemoveLinesFor:trachelShape:" : "PeterUhnak 7/15/2015 10:26:31",
+		"addPoint:" : "PeterUhnak 7/15/2015 10:26:31",
+		"initialize" : "PeterUhnak 7/15/2015 10:26:31",
+		"lineSegmentFor:from:to:" : "PeterUhnak 7/15/2015 10:26:31",
+		"pathFor:" : "PeterUhnak 7/15/2015 10:26:31",
+		"points" : "PeterUhnak 7/15/2015 10:26:31",
+		"promoteFor:handle:" : "PeterUhnak 7/15/2015 10:26:31",
+		"rebuildFor:" : "PeterUhnak 7/15/2015 10:26:31",
+		"removeAllPoints" : "PeterUhnak 7/15/2015 10:26:31",
+		"removeHandlesFor:" : "PeterUhnak 7/15/2015 10:26:31",
+		"removePointLink:for:" : "PeterUhnak 7/15/2015 10:26:31",
+		"showHandlesFor:" : "PeterUhnak 7/15/2015 10:26:31",
+		"showMidpointHandlesFor:" : "PeterUhnak 7/15/2015 10:26:31",
+		"trachelShapeFor:" : "PeterUhnak 7/15/2015 10:26:31",
+		"translateBy:for:" : "PeterUhnak 7/15/2015 10:26:31",
+		"updateFor:trachelShape:" : "PeterUhnak 7/15/2015 10:26:31" } }

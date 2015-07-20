@@ -7,5 +7,5 @@ rightClickMenu: menu
 	menuBuilder
 		addItem: 'Remove from list'
 		action: [ 
-			self class RecentProjects remove: el.
+			self class removeFromRecent: el.
 			self updateRecentProjects ]

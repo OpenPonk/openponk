@@ -2,10 +2,11 @@
 	"class" : {
 		 },
 	"instance" : {
-		"addModelElement:" : "PeterUhnak 11/23/2014 16:36",
-		"canBeTargetFor:" : "PeterUhnak 11/4/2014 18:46",
-		"controllerNameFor:" : "PeterUhnak 11/23/2014 02:21",
-		"initializePalette:" : "PeterUhnak 12/17/2014 18:42",
-		"paletteNameFor:" : "PeterUhnak 11/5/2014 22:26",
-		"rebuild" : "PeterUhnak 1/30/2015 09:56",
-		"updateView" : "PeterUhnak 11/3/2014 22:27" } }
+		"addModelElement:" : "PeterUhnak 6/22/2015 13:03",
+		"canBeTargetFor:" : "PeterUhnak 6/10/2015 13:46:42",
+		"controllerNameFor:" : "PeterUhnak 6/10/2015 13:46:42",
+		"initializePalette:" : "PeterUhnak 6/10/2015 13:46:42",
+		"modelClass" : "PeterUhnak 6/10/2015 13:46:42",
+		"paletteNameFor:" : "PeterUhnak 6/10/2015 13:46:42",
+		"rebuild" : "PeterUhnak 6/10/2015 13:46:42",
+		"updateView" : "PeterUhnak 6/10/2015 13:46:42" } }

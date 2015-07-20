@@ -1,3 +1,3 @@
-accessing
+printing
 asString
-	^name , '(' , ( parameters inject: '' into: [ :str :a | str , a , ',' ]) , ')' , ':' , returnDataType
+	^ name , '(' , (parameters joinUsing: ', ') , ')' , (returnDataType ifNil: [ '' ] ifNotNil: [ ': ' , returnDataType ])

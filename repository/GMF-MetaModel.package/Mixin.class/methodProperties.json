@@ -2,11 +2,11 @@
 	"class" : {
 		 },
 	"instance" : {
-		"addChild:" : "volosmat 8/11/2014 18:18",
-		"addObject:" : "volosmat 8/11/2014 18:18",
-		"childs" : "volosmat 8/11/2014 18:17",
-		"initialize" : "volosmat 4/2/2014 19:58",
-		"isElementValid" : "volosmat 4/2/2014 20:09",
-		"mixObjects" : "volosmat 4/2/2014 20:00",
-		"removeChild:" : "volosmat 8/11/2014 18:19",
-		"removeObject:" : "volosmat 8/11/2014 18:18" } }
+		"addChild:generalizationSet:" : "PeterUhnak 6/3/2015 03:54:11",
+		"addObject:generalizationSet:" : "PeterUhnak 6/3/2015 03:54:11",
+		"childs" : "PeterUhnak 6/3/2015 03:54:11",
+		"initialize" : "PeterUhnak 6/3/2015 03:54:11",
+		"isElementValid" : "PeterUhnak 6/3/2015 03:54:11",
+		"mixObjects" : "PeterUhnak 6/3/2015 03:54:11",
+		"removeChild:" : "PeterUhnak 6/3/2015 03:54:11",
+		"removeObject:" : "PeterUhnak 6/3/2015 03:54:11" } }

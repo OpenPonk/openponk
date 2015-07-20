@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-OntoUML-Parsers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCOmlMethodBuilderTest",
+	"pools" : [
+		 ],
+	"super" : "DCUmlOperationGrammarTest",
+	"type" : "normal" }

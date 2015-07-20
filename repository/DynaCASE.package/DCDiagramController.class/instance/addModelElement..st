@@ -5,7 +5,7 @@ addModelElement: aModelElement
 	(self model has: aModelElement)
 		ifFalse: [ self model add: aModelElement ].
 	controller := self createController: aModelElement.
-	controller parent: self.
+	controller diagramController: self.
 	self controllers add: controller.
 	(controller isKindOf: DCRelationshipController)
 		ifTrue: [ 
@@ -17,7 +17,8 @@ addModelElement: aModelElement
 			controller
 				source: fromCtrl;
 				target: toCtrl ].
+	controller registerModelEvents: controller model.
 	figure := controller figure.
 	figure view ifNil: [ figure renderIn: self view ].
-	controller refreshFigure.
+	self diagramController figureAdded: figure.
 	^ controller

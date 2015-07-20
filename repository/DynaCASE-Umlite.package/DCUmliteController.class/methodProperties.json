@@ -2,8 +2,8 @@
 	"class" : {
 		 },
 	"instance" : {
-		"canBeTargetFor:" : "PeterUhnak 11/3/2014 19:10",
-		"initialize" : "PeterUhnak 9/2/2014 08:38",
-		"initializePalette:" : "PeterUhnak 11/3/2014 19:04",
-		"rebuild" : "PeterUhnak 11/5/2014 08:29",
-		"updateView" : "bliznjan 10/13/2014 10:29" } }
+		"canBeTargetFor:" : "bliznjan 3/26/2015 13:37:56",
+		"initialize" : "bliznjan 3/26/2015 13:37:56",
+		"initializePalette:" : "bliznjan 3/26/2015 13:37:56",
+		"modelClass" : "bliznjan 3/26/2015 13:37:56",
+		"rebuild" : "bliznjan 3/26/2015 13:37:56" } }

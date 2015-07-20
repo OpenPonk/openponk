@@ -1,0 +1,3 @@
+accessing
+diagramClass
+	^ DCFsm

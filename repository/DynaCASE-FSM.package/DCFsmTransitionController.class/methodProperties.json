@@ -2,7 +2,8 @@
 	"class" : {
 		 },
 	"instance" : {
-		"connectionFeedback" : "PeterUhnak 11/5/2014 08:26",
-		"createEdgeFrom:to:" : "PeterUhnak 11/24/2014 22:45",
-		"modelClass" : "PeterUhnak 11/3/2014 14:06",
-		"refreshFigure" : "bliznjan 11/26/2014 23:05" } }
+		"createEdgeFor:inView:" : "PeterUhnak 7/16/2015 11:40",
+		"createEdgeFrom:to:" : "PeterUhnak 7/9/2015 20:34:38",
+		"edgeBuilder" : "bliznjan 7/20/2015 15:42",
+		"modelClass" : "PeterUhnak 7/9/2015 20:34:38",
+		"refreshFigure" : "PeterUhnak 7/9/2015 20:34:38" } }

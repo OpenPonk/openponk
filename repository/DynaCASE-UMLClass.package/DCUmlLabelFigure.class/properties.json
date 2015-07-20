@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-UMLClass-Figures",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCUmlLabelFigure",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -5,6 +5,6 @@ newBoundingBoxFor: anElement
 		color: Color transparent;
 		borderColor: Color blue;
 		element.
-	DCTRConstraint keepExtentOf: boundingBox like: anElement plus: 3 @ 3.
+	DCRTElementsConstraint keepExtentOf: boundingBox like: anElement plus: 3 @ 3.
 	TRConstraint stick: boundingBox onTheCenterOf: anElement.
 	^ boundingBox

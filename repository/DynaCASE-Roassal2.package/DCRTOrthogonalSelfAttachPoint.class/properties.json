@@ -4,11 +4,11 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "bliznjan 11/25/2014 21:58",
+	"commentStamp" : "bliznjan 2/16/2015 13:44",
 	"instvars" : [
-		 ],
-	"name" : "DCRTAbstractConstraint",
+		"offset" ],
+	"name" : "DCRTOrthogonalSelfAttachPoint",
 	"pools" : [
 		 ],
-	"super" : "Object",
+	"super" : "DCRTToSelfAttachPoint",
 	"type" : "normal" }

@@ -4,11 +4,13 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "PeterUhnak 3/23/2015 20:15",
+	"commentStamp" : "PeterUhnak 7/23/2015 21:40",
 	"instvars" : [
-		 ],
+		"element",
+		"handles",
+		"enabled" ],
 	"name" : "DCRTResizable",
 	"pools" : [
 		 ],
-	"super" : "RTResizeable",
+	"super" : "RTInteraction",
 	"type" : "normal" }

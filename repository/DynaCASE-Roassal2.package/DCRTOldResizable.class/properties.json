@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2-Interactivity",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 3/23/2015 20:15",
+	"instvars" : [
+		 ],
+	"name" : "DCRTOldResizable",
+	"pools" : [
+		 ],
+	"super" : "RTResizeable",
+	"type" : "normal" }

@@ -1,0 +1,17 @@
+hooks
+initializeElement: anElement
+	element := anElement.
+
+	element
+		when: TRMouseLeftClick
+		do: [ :evt | 
+			self removeEveryonesHandles.
+			self showHandles ].
+	element when: TRMouseDragStart do: [ :evt | self disable ].
+	element when: TRMouseDragEnd do: [ :evt | self enable ].
+
+	element addCallback: (TRRemoveCallback block: [ :evt | self removeHandles ]).
+
+	self connectWithView: element view.
+
+	self enable

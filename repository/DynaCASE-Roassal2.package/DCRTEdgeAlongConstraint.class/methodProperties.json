@@ -1,12 +1,12 @@
 {
 	"class" : {
-		"fix:alongEdge:" : "PeterUhnak 7/15/2015 10:26:31",
-		"move:alongEdge:balance:offset:" : "PeterUhnak 7/15/2015 10:26:31",
-		"move:alongEdge:offset:" : "PeterUhnak 7/15/2015 10:26:31",
-		"stick:alongEdge:balance:offset:" : "PeterUhnak 7/15/2015 10:26:31",
-		"stick:alongEdge:offset:" : "PeterUhnak 7/15/2015 10:26:31" },
+		"fix:alongEdge:" : "bliznjan 7/20/2015 20:02:27",
+		"move:alongEdge:balance:offset:" : "bliznjan 7/20/2015 20:02:27",
+		"move:alongEdge:offset:" : "bliznjan 7/20/2015 20:02:27",
+		"stick:alongEdge:balance:offset:" : "bliznjan 7/20/2015 20:02:27",
+		"stick:alongEdge:offset:" : "bliznjan 7/20/2015 20:02:27" },
 	"instance" : {
-		"balance:" : "PeterUhnak 7/15/2015 10:26:31",
-		"fix" : "PeterUhnak 7/15/2015 10:26:31",
-		"initialize" : "PeterUhnak 7/15/2015 10:26:31",
-		"move" : "PeterUhnak 7/15/2015 10:26:31" } }
+		"balance:" : "bliznjan 7/20/2015 20:02:27",
+		"fix" : "bliznjan 7/20/2015 20:02:27",
+		"initialize" : "bliznjan 7/20/2015 20:02:27",
+		"move" : "bliznjan 7/20/2015 20:02:27" } }

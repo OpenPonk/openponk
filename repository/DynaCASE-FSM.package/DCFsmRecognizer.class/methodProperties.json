@@ -2,15 +2,15 @@
 	"class" : {
 		 },
 	"instance" : {
-		"back" : "PeterUhnak 7/9/2015 20:34:38",
-		"beComplete" : "PeterUhnak 7/9/2015 20:34:38",
-		"beFailure" : "PeterUhnak 7/9/2015 20:34:38",
-		"beSuccess" : "PeterUhnak 7/9/2015 20:34:38",
-		"goTo:" : "PeterUhnak 7/9/2015 20:34:38",
-		"input:startingAt:" : "PeterUhnak 7/9/2015 20:34:38",
-		"inputPosition" : "PeterUhnak 7/9/2015 20:34:38",
-		"isInputEmpty" : "PeterUhnak 7/9/2015 20:34:38",
-		"isPathEmpty" : "PeterUhnak 7/9/2015 20:34:38",
-		"next" : "PeterUhnak 7/9/2015 20:34:38",
-		"reset" : "PeterUhnak 7/9/2015 20:34:38",
-		"transitionFrom:using:" : "PeterUhnak 7/9/2015 20:34:38" } }
+		"back" : "bliznjan 7/20/2015 20:02:27",
+		"beComplete" : "bliznjan 7/20/2015 20:02:27",
+		"beFailure" : "bliznjan 7/20/2015 20:02:27",
+		"beSuccess" : "bliznjan 7/20/2015 20:02:27",
+		"goTo:" : "bliznjan 7/20/2015 20:02:27",
+		"input:startingAt:" : "bliznjan 7/20/2015 20:02:27",
+		"inputPosition" : "bliznjan 7/20/2015 20:02:27",
+		"isInputEmpty" : "bliznjan 7/20/2015 20:02:27",
+		"isPathEmpty" : "bliznjan 7/20/2015 20:02:27",
+		"next" : "bliznjan 7/20/2015 20:02:27",
+		"reset" : "bliznjan 7/20/2015 20:02:27",
+		"transitionFrom:using:" : "bliznjan 7/20/2015 20:02:27" } }

@@ -1,3 +1,0 @@
-hooks
-modelClass
-	^ DCFsmState

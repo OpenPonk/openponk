@@ -1,15 +1,15 @@
 {
 	"class" : {
-		"from:to:" : "PeterUhnak 7/9/2015 20:34:38",
-		"from:to:named:" : "PeterUhnak 7/9/2015 20:34:38" },
+		"from:to:" : "bliznjan 7/20/2015 20:02:27",
+		"from:to:named:" : "bliznjan 7/20/2015 20:02:27" },
 	"instance" : {
-		"detach" : "PeterUhnak 7/9/2015 20:34:38",
-		"initialize" : "PeterUhnak 7/9/2015 20:34:38",
-		"isState" : "PeterUhnak 7/9/2015 20:34:38",
-		"isTransition" : "PeterUhnak 7/9/2015 20:34:38",
-		"matchBlock:" : "PeterUhnak 7/9/2015 20:34:38",
-		"matches:" : "PeterUhnak 7/9/2015 20:34:38",
-		"source" : "PeterUhnak 7/9/2015 20:34:38",
-		"source:" : "PeterUhnak 7/9/2015 20:34:38",
-		"target" : "PeterUhnak 7/9/2015 20:34:38",
-		"target:" : "PeterUhnak 7/9/2015 20:34:38" } }
+		"detach" : "bliznjan 7/20/2015 20:02:27",
+		"initialize" : "bliznjan 7/20/2015 20:02:27",
+		"isState" : "bliznjan 7/20/2015 20:02:27",
+		"isTransition" : "bliznjan 7/20/2015 20:02:27",
+		"matchBlock:" : "bliznjan 7/20/2015 20:02:27",
+		"matches:" : "bliznjan 7/20/2015 20:02:27",
+		"source" : "bliznjan 7/20/2015 20:02:27",
+		"source:" : "bliznjan 7/20/2015 20:02:27",
+		"target" : "bliznjan 7/20/2015 20:02:27",
+		"target:" : "bliznjan 7/20/2015 20:02:27" } }

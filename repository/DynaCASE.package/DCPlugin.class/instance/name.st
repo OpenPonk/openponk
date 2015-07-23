@@ -1,3 +1,3 @@
 accessing
 name
-	^ 'Default Plugin Name'
+	^ self subclassResponsibility

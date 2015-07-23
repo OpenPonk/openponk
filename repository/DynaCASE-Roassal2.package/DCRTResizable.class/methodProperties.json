@@ -1,8 +1,23 @@
 {
 	"class" : {
-		 },
+		"example" : "PeterUhnak 7/23/2015 21:42" },
 	"instance" : {
-		"callbackFor:element:" : "PeterUhnak 7/15/2015 10:26:31",
-		"createHandleFor:" : "PeterUhnak 7/15/2015 10:26:31",
-		"defaultHandleShape" : "PeterUhnak 7/15/2015 10:26:31",
-		"showResizeHandleOn:" : "PeterUhnak 7/15/2015 10:26:31" } }
+		"addCursorEventsOn:corner:" : "PeterUhnak 7/23/2015 21:07",
+		"attachHandle:toCorner:" : "PeterUhnak 7/23/2015 21:01",
+		"basicCallbackFor:corner:" : "PeterUhnak 7/23/2015 21:16",
+		"callbackFor:corner:" : "PeterUhnak 7/23/2015 21:09",
+		"connectAllHandles" : "PeterUhnak 7/23/2015 21:36",
+		"connectWithView:" : "PeterUhnak 7/23/2015 21:26",
+		"createHandle" : "PeterUhnak 7/23/2015 21:44",
+		"cursorForCorner:" : "PeterUhnak 7/23/2015 20:44",
+		"disable" : "PeterUhnak 7/23/2015 20:45",
+		"enable" : "PeterUhnak 7/23/2015 20:46",
+		"enabled" : "PeterUhnak 7/23/2015 20:46",
+		"initialize" : "PeterUhnak 7/23/2015 20:58",
+		"initializeElement:" : "PeterUhnak 7/23/2015 21:28",
+		"minSize" : "PeterUhnak 7/23/2015 21:13",
+		"negate:forCorner:" : "PeterUhnak 7/23/2015 20:44",
+		"removeEveryonesHandles" : "PeterUhnak 7/23/2015 21:28",
+		"removeHandles" : "PeterUhnak 7/23/2015 21:14",
+		"showHandles" : "PeterUhnak 7/23/2015 21:35",
+		"translateCorner:of:to:" : "PeterUhnak 7/23/2015 20:44" } }

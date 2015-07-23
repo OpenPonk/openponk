@@ -1,10 +1,10 @@
 {
 	"class" : {
-		"example" : "PeterUhnak 7/15/2015 10:26:31" },
+		"example" : "bliznjan 7/20/2015 20:02:27" },
 	"instance" : {
-		"head:offset:" : "PeterUhnak 7/15/2015 10:26:31",
-		"heads" : "bliznjan 7/20/2015 14:55",
-		"initialize" : "PeterUhnak 7/15/2015 10:26:31",
-		"line:offset:" : "PeterUhnak 7/15/2015 10:26:31",
-		"lines" : "bliznjan 7/20/2015 14:55",
-		"open" : "PeterUhnak 7/15/2015 10:26:31" } }
+		"head:offset:" : "bliznjan 7/20/2015 20:02:27",
+		"heads" : "bliznjan 7/20/2015 20:02:27",
+		"initialize" : "bliznjan 7/20/2015 20:02:27",
+		"line:offset:" : "bliznjan 7/20/2015 20:02:27",
+		"lines" : "bliznjan 7/20/2015 20:02:27",
+		"open" : "bliznjan 7/20/2015 20:02:27" } }

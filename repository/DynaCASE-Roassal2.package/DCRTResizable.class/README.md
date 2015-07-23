@@ -1,3 +1,12 @@
-DCRTResizable is interaction for resizing elements.
+I provide element resizing in all eight directions. 
 
-Unlike it's parent it doesn't trigger additional Translation callbacks for any nested elements nor itself. Additionally all points are rounded to (nearest) integers.
+Resizing handles are displayed after clicking on an associated element, and are automatically removed when clicked on a view or another element.
+
+!! Collaborators
+
+DCRTRectangle
+DCRTResizeCanceled
+
+!! Example
+
+see my class side

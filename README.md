@@ -2,7 +2,9 @@
 
 See https://dynacase.github.io/
 
-## For non-development
+## Installation
+
+Download Pharo 5 (4 maybe also works) image and run the following
 
 ```
 Metacello new

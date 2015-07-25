@@ -1,8 +1,10 @@
 hooks
 connectWithView: aView
 	(aView hasAttribute: self className)
-		ifFalse: [ 
-			aView when: TRMouseLeftClick do: [ :evt | aView announce: DCRTResizeCanceled new ].
-			aView attributeAt: self className put: true ].
+		ifFalse: [ self setupView: aView ].
 
-	aView when: DCRTResizeCanceled do: [ self removeHandles ]
+	aView
+		when: DCTRResizeCanceled
+		do: [ :event | 
+			event shape = element trachelShape
+				ifFalse: [ self removeHandles ] ]

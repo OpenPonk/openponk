@@ -1,17 +1,6 @@
-hooks
+initialization
 initializeElement: anElement
-	element := anElement.
-
-	element
-		when: TRMouseLeftClick
-		do: [ :evt | 
-			self removeEveryonesHandles.
-			self showHandles ].
-	element when: TRMouseDragStart do: [ :evt | self disable ].
-	element when: TRMouseDragEnd do: [ :evt | self enable ].
-
-	element addCallback: (TRRemoveCallback block: [ :evt | self removeHandles ]).
-
-	self connectWithView: (view ifNil: [ element view ]).
-
-	self enable
+	"postpone initialization if the element is not yet added to the view"
+	anElement view
+		ifNil: [ anElement addCallback: (TRAddedCallback block: [ :evt | self lazyInitializeElement: anElement ]) ]
+		ifNotNil: [ self lazyInitializeElement: anElement ]

@@ -21,12 +21,12 @@ example
 		height: 30;
 		borderColor: Color black;
 		element} asGroup.
-		
+
 	el := RTBox new
 		size: 50;
 		color: Color black;
 		element.
-		
+
 	edge := RTLine new
 		color: Color black;
 		attachPoint: RTRectangleAttachPoint new;
@@ -37,7 +37,13 @@ example
 		add: el;
 		add: edge.
 
-	RTGridLayout on: v elements.
+	"add empty event to prevent event propagation to the view (and thus test event overseer)"
+	el when: TRMouseLeftClick do: [ :evt |  ].
+	edge when: TRMouseLeftClick do: [ :evt |  ].
+
+	RTGridLayout new
+		gapSize: 50;
+		on: v elements.
 
 	v elements @ RTDraggable.
 	g @ DCRTResizable.

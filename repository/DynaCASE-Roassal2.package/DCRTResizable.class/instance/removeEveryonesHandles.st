@@ -1,3 +1,3 @@
 hooks
 removeEveryonesHandles
-	element view announce: DCRTResizeCanceled new
+	element view announce: DCTRResizeCanceled new

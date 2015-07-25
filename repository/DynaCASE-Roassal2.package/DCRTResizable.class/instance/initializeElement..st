@@ -12,6 +12,6 @@ initializeElement: anElement
 
 	element addCallback: (TRRemoveCallback block: [ :evt | self removeHandles ]).
 
-	self connectWithView: element view.
+	self connectWithView: (view ifNil: [ element view ]).
 
 	self enable

@@ -2,13 +2,13 @@
 	"class" : {
 		 },
 	"instance" : {
-		"translate:to:direction:" : "PeterUhnak 7/22/2015 23:01",
-		"translateBottomLeftOf:to:" : "PeterUhnak 7/22/2015 23:02",
-		"translateBottomOf:to:" : "PeterUhnak 7/22/2015 23:29",
-		"translateBottomRightOf:to:" : "PeterUhnak 7/22/2015 23:02",
-		"translateCenterLeftOf:to:" : "PeterUhnak 7/22/2015 23:03",
-		"translateLeftOf:to:" : "PeterUhnak 7/22/2015 23:29",
-		"translateRightOf:to:" : "PeterUhnak 7/22/2015 23:29",
-		"translateTopLeftOf:to:" : "PeterUhnak 7/22/2015 23:02",
-		"translateTopOf:to:" : "PeterUhnak 7/22/2015 23:29",
-		"translateTopRightOf:to:" : "PeterUhnak 7/22/2015 23:02" } }
+		"translate:to:direction:" : "PeterUhnak 7/25/2015 20:43:12",
+		"translateBottomLeftOf:to:" : "PeterUhnak 7/25/2015 20:43:12",
+		"translateBottomOf:to:" : "PeterUhnak 7/25/2015 20:43:12",
+		"translateBottomRightOf:to:" : "PeterUhnak 7/25/2015 20:43:12",
+		"translateCenterLeftOf:to:" : "PeterUhnak 7/25/2015 20:43:12",
+		"translateLeftOf:to:" : "PeterUhnak 7/25/2015 20:43:12",
+		"translateRightOf:to:" : "PeterUhnak 7/25/2015 20:43:12",
+		"translateTopLeftOf:to:" : "PeterUhnak 7/25/2015 20:43:12",
+		"translateTopOf:to:" : "PeterUhnak 7/25/2015 20:43:12",
+		"translateTopRightOf:to:" : "PeterUhnak 7/25/2015 20:43:12" } }

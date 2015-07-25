@@ -1,17 +1,17 @@
 {
 	"class" : {
-		"centersFor:and:radius:" : "PeterUhnak 6/15/2015 13:22",
-		"circlesFor:and:radius:" : "PeterUhnak 6/15/2015 11:56",
-		"radius:" : "PeterUhnak 6/15/2015 10:07",
-		"radius:center:" : "PeterUhnak 6/15/2015 10:07" },
+		"centersFor:and:radius:" : "bliznjan 7/20/2015 20:02:27",
+		"circlesFor:and:radius:" : "bliznjan 7/20/2015 20:02:27",
+		"radius:" : "bliznjan 7/20/2015 20:02:27",
+		"radius:center:" : "bliznjan 7/20/2015 20:02:27" },
 	"instance" : {
-		"bottom" : "PeterUhnak 6/15/2015 10:09",
-		"center" : "PeterUhnak 6/15/2015 12:18",
-		"containsPoint:" : "PeterUhnak 6/15/2015 17:36",
-		"left" : "PeterUhnak 6/15/2015 10:09",
-		"printOn:" : "PeterUhnak 6/15/2015 11:54",
-		"radius" : "PeterUhnak 6/15/2015 12:19",
-		"right" : "PeterUhnak 6/15/2015 10:09",
-		"setRadius:center:" : "PeterUhnak 6/15/2015 10:08",
-		"tangentAt:" : "PeterUhnak 6/15/2015 16:55",
-		"top" : "PeterUhnak 6/15/2015 10:09" } }
+		"bottom" : "bliznjan 7/20/2015 20:02:27",
+		"center" : "bliznjan 7/20/2015 20:02:27",
+		"containsPoint:" : "bliznjan 7/20/2015 20:02:27",
+		"left" : "bliznjan 7/20/2015 20:02:27",
+		"printOn:" : "bliznjan 7/20/2015 20:02:27",
+		"radius" : "bliznjan 7/20/2015 20:02:27",
+		"right" : "bliznjan 7/20/2015 20:02:27",
+		"setRadius:center:" : "bliznjan 7/20/2015 20:02:27",
+		"tangentAt:" : "bliznjan 7/20/2015 20:02:27",
+		"top" : "bliznjan 7/20/2015 20:02:27" } }

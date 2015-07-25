@@ -4,11 +4,12 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "PeterUhnak 7/23/2015 21:40",
+	"commentStamp" : "PeterUhnak 7/25/2015 16:00",
 	"instvars" : [
 		"element",
 		"handles",
-		"enabled" ],
+		"enabled",
+		"view" ],
 	"name" : "DCRTResizable",
 	"pools" : [
 		 ],

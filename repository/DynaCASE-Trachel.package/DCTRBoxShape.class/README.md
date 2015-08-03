@@ -1,1 +1,0 @@
-Box shape with (optionally) rounded corners.

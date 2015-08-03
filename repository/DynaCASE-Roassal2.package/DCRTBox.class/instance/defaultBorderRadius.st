@@ -1,3 +1,0 @@
-configuration
-defaultBorderRadius
-	^ 0

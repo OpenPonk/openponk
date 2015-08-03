@@ -1,3 +1,0 @@
-hooks
-trachelShapeClass
-	^ DCTRFilledDoubleArrowHeadShape

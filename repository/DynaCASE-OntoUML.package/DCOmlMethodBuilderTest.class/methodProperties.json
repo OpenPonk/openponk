@@ -2,11 +2,11 @@
 	"class" : {
 		 },
 	"instance" : {
-		"parserClass" : "PeterUhnak 6/22/2015 10:08",
-		"testMultiplicity" : "PeterUhnak 6/22/2015 11:12",
-		"testMultiplicityRange" : "PeterUhnak 6/22/2015 11:03",
-		"testOperation" : "PeterUhnak 6/22/2015 12:06",
-		"testOperation2" : "PeterUhnak 6/22/2015 11:35",
-		"testParameter" : "PeterUhnak 6/22/2015 11:26",
-		"testParameterList" : "PeterUhnak 6/22/2015 11:25",
-		"testReturnValue" : "PeterUhnak 6/22/2015 11:39" } }
+		"parserClass" : "bliznjan 7/13/2015 20:30:31",
+		"testMultiplicity" : "bliznjan 7/13/2015 20:30:31",
+		"testMultiplicityRange" : "bliznjan 7/13/2015 20:30:31",
+		"testOperation" : "bliznjan 7/13/2015 20:30:31",
+		"testOperation2" : "bliznjan 7/13/2015 20:30:31",
+		"testParameter" : "bliznjan 7/13/2015 20:30:31",
+		"testParameterList" : "bliznjan 7/13/2015 20:30:31",
+		"testReturnValue" : "bliznjan 7/13/2015 20:30:31" } }

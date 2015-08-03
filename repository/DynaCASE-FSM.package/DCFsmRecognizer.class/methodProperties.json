@@ -2,15 +2,15 @@
 	"class" : {
 		 },
 	"instance" : {
-		"back" : "bliznjan 7/20/2015 20:02:27",
-		"beComplete" : "bliznjan 7/20/2015 20:02:27",
-		"beFailure" : "bliznjan 7/20/2015 20:02:27",
-		"beSuccess" : "bliznjan 7/20/2015 20:02:27",
-		"goTo:" : "bliznjan 7/20/2015 20:02:27",
-		"input:startingAt:" : "bliznjan 7/20/2015 20:02:27",
-		"inputPosition" : "bliznjan 7/20/2015 20:02:27",
-		"isInputEmpty" : "bliznjan 7/20/2015 20:02:27",
-		"isPathEmpty" : "bliznjan 7/20/2015 20:02:27",
-		"next" : "bliznjan 7/20/2015 20:02:27",
-		"reset" : "bliznjan 7/20/2015 20:02:27",
-		"transitionFrom:using:" : "bliznjan 7/20/2015 20:02:27" } }
+		"back" : "PeterUhnak 7/23/2015 22:03:07",
+		"beComplete" : "PeterUhnak 7/23/2015 22:03:07",
+		"beFailure" : "PeterUhnak 7/23/2015 22:03:07",
+		"beSuccess" : "PeterUhnak 7/23/2015 22:03:07",
+		"goTo:" : "PeterUhnak 7/23/2015 22:03:07",
+		"input:startingAt:" : "PeterUhnak 7/23/2015 22:03:07",
+		"inputPosition" : "PeterUhnak 7/23/2015 22:03:07",
+		"isInputEmpty" : "PeterUhnak 7/23/2015 22:03:07",
+		"isPathEmpty" : "PeterUhnak 7/23/2015 22:03:07",
+		"next" : "PeterUhnak 7/23/2015 22:03:07",
+		"reset" : "PeterUhnak 7/23/2015 22:03:07",
+		"transitionFrom:using:" : "PeterUhnak 7/23/2015 22:03:07" } }

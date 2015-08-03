@@ -1,18 +1,18 @@
 {
 	"class" : {
-		"isAbstract" : "PeterUhnak 6/10/2015 13:46:42" },
+		"isAbstract" : "bliznjan 7/13/2015 20:30:31" },
 	"instance" : {
-		"addAsSourceFor:" : "PeterUhnak 6/10/2015 13:46:42",
-		"addAsTargetFor:" : "PeterUhnak 6/10/2015 13:46:42",
-		"buildEditorForm:" : "PeterUhnak 6/22/2015 12:41",
-		"canBeSourceFor:" : "PeterUhnak 6/10/2015 13:46:42",
-		"canBeTargetFor:" : "PeterUhnak 6/10/2015 13:46:42",
-		"createFigure" : "PeterUhnak 6/10/2015 13:46:42",
-		"createFigureWip" : "PeterUhnak 6/10/2015 13:46:42",
-		"createModel" : "PeterUhnak 6/10/2015 13:46:42",
-		"initialize" : "PeterUhnak 6/22/2015 12:43",
-		"joinProps:" : "PeterUhnak 6/22/2015 12:41",
-		"modelClass" : "PeterUhnak 6/10/2015 13:46:42",
-		"refreshFigure" : "PeterUhnak 6/22/2015 11:48",
-		"updateAttributesFrom:" : "PeterUhnak 6/22/2015 12:44",
-		"updateMethodsFrom:" : "PeterUhnak 6/22/2015 12:44" } }
+		"addAsSourceFor:" : "bliznjan 7/13/2015 20:30:31",
+		"addAsTargetFor:" : "bliznjan 7/13/2015 20:30:31",
+		"buildEditorForm:" : "bliznjan 7/13/2015 20:30:31",
+		"canBeSourceFor:" : "bliznjan 7/13/2015 20:30:31",
+		"canBeTargetFor:" : "bliznjan 7/13/2015 20:30:31",
+		"createFigure" : "bliznjan 7/13/2015 20:30:31",
+		"createFigureWip" : "bliznjan 7/13/2015 20:30:31",
+		"createModel" : "bliznjan 7/13/2015 20:30:31",
+		"initialize" : "bliznjan 7/13/2015 20:30:31",
+		"joinProps:" : "bliznjan 7/13/2015 20:30:31",
+		"modelClass" : "bliznjan 7/13/2015 20:30:31",
+		"refreshFigure" : "bliznjan 7/13/2015 20:30:31",
+		"updateAttributesFrom:" : "bliznjan 7/13/2015 20:30:31",
+		"updateMethodsFrom:" : "bliznjan 7/13/2015 20:30:31" } }

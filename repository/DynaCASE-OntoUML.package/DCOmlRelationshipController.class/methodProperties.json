@@ -1,11 +1,11 @@
 {
 	"class" : {
-		"isAbstract" : "PeterUhnak 6/10/2015 13:46:42" },
+		"isAbstract" : "bliznjan 7/13/2015 20:30:31" },
 	"instance" : {
-		"buildEditorForm:" : "PeterUhnak 6/10/2015 13:46:42",
-		"connectionFeedback" : "PeterUhnak 6/10/2015 13:46:42",
-		"convertName:" : "PeterUhnak 6/10/2015 13:46:42",
-		"createModel" : "PeterUhnak 6/10/2015 13:46:42",
-		"edgeBuilder" : "PeterUhnak 6/10/2015 13:46:42",
-		"modelClass" : "PeterUhnak 6/10/2015 13:46:42",
-		"refreshFigure" : "PeterUhnak 6/22/2015 13:04" } }
+		"buildEditorForm:" : "bliznjan 7/13/2015 20:30:31",
+		"connectionFeedback" : "bliznjan 7/13/2015 20:30:31",
+		"convertName:" : "bliznjan 7/13/2015 20:30:31",
+		"createModel" : "bliznjan 7/13/2015 20:30:31",
+		"edgeBuilder" : "bliznjan 7/13/2015 20:30:31",
+		"modelClass" : "bliznjan 7/13/2015 20:30:31",
+		"refreshFigure" : "bliznjan 7/13/2015 20:30:31" } }

@@ -1,1 +1,0 @@
-I am modified EventOverseer that uses its announcer for firing events and thus is more easily observable.

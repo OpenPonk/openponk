@@ -1,18 +1,18 @@
 {
 	"class" : {
-		"isAbstract" : "PeterUhnak 7/1/2015 12:08" },
+		"isAbstract" : "bliznjan 7/13/2015 20:30:31" },
 	"instance" : {
-		"newBox:" : "PeterUhnak 6/10/2015 13:46:42",
-		"setUp" : "PeterUhnak 6/10/2015 13:46:42",
-		"testAdd" : "PeterUhnak 6/10/2015 13:46:42",
-		"testAddAfterRender" : "PeterUhnak 6/10/2015 13:46:42",
-		"testAddBeforeAndAfter" : "PeterUhnak 6/10/2015 13:46:42",
-		"testAddLine" : "PeterUhnak 6/10/2015 13:46:42",
-		"testAddTwo" : "PeterUhnak 6/10/2015 13:46:42",
-		"testChangeLines" : "PeterUhnak 6/10/2015 13:46:42",
-		"testChangeLines2" : "PeterUhnak 6/10/2015 13:46:42",
-		"testChangeLinesFromEmpty" : "PeterUhnak 6/10/2015 13:46:42",
-		"testEmpty" : "PeterUhnak 6/10/2015 13:46:42",
-		"testRemove" : "PeterUhnak 6/10/2015 13:46:42",
-		"testRemoveAll" : "PeterUhnak 6/10/2015 13:46:42",
-		"testWithSpacing" : "PeterUhnak 6/10/2015 13:46:42" } }
+		"newBox:" : "bliznjan 7/13/2015 20:30:31",
+		"setUp" : "bliznjan 7/13/2015 20:30:31",
+		"testAdd" : "bliznjan 7/13/2015 20:30:31",
+		"testAddAfterRender" : "bliznjan 7/13/2015 20:30:31",
+		"testAddBeforeAndAfter" : "bliznjan 7/13/2015 20:30:31",
+		"testAddLine" : "bliznjan 7/13/2015 20:30:31",
+		"testAddTwo" : "bliznjan 7/13/2015 20:30:31",
+		"testChangeLines" : "bliznjan 7/13/2015 20:30:31",
+		"testChangeLines2" : "bliznjan 7/13/2015 20:30:31",
+		"testChangeLinesFromEmpty" : "bliznjan 7/13/2015 20:30:31",
+		"testEmpty" : "bliznjan 7/13/2015 20:30:31",
+		"testRemove" : "bliznjan 7/13/2015 20:30:31",
+		"testRemoveAll" : "bliznjan 7/13/2015 20:30:31",
+		"testWithSpacing" : "bliznjan 7/13/2015 20:30:31" } }

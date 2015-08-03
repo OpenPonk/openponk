@@ -1,6 +1,6 @@
 instance creation
 newInnerCircle
-	^ DCRTBox new
+	^ RTRoundedBox new
 		size: 44;
 		borderRadius: 22;
 		borderWidth: 1;

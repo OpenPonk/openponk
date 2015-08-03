@@ -1,6 +1,6 @@
 instance creation
 newBackground
-	^ DCRTBox new
+	^ RTRoundedBox new
 		size: 50;
 		borderRadius: 25;
 		borderWidth: 1.5;

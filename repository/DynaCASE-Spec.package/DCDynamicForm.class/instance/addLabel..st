@@ -4,7 +4,7 @@ addLabel: aLabel
 	control := self newLabel.
 	control
 		label: aLabel;
-		emphasis: 1.
+		emphasis: #(bold).
 
 	self addControl: control.
 	^ control

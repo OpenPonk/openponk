@@ -2,13 +2,6 @@ initialization
 lazyInitializeElement: anEdge
 	edge := anEdge.
 	visible := false.
-	edge
-		when: TRMouseLeftClick
-		do:
-			[ 
-			visible
-				ifFalse: [ edge shape showHandlesFor: edge ].
-			visible := visible not ].
-	edge trachelShape
-		addCallback: (TRRemoveCallback block: [ edge shape removeHandlesFor: edge ]).
+	edge when: TRMouseLeftClick do: [ self showHandles ].
+	edge trachelShape addCallback: (TRRemoveCallback block: [ self removeHandles ]).
 	self connectWithView: edge view

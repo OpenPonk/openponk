@@ -7,6 +7,4 @@ connectWithView: aView
 		do:
 			[ :event | 
 			(event element = edge) not & visible
-				ifTrue: [ 
-					edge shape removeHandlesFor: edge.
-					visible := visible not ] ]
+				ifTrue: [ self removeHandles ] ]

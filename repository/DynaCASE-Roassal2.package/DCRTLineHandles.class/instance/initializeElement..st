@@ -2,6 +2,8 @@ initialization
 initializeElement: anEdge
 	anEdge
 		when: TRMouseLeftClick
-		do: [ 
+		do:
+			[ 
 			anEdge announcer unsubscribe: self.
-			self lazyInitializeElement: anEdge ]
+			self lazyInitializeElement: anEdge.
+			self showHandles ]

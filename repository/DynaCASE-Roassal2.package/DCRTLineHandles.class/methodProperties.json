@@ -2,4 +2,6 @@
 	"class" : {
 		 },
 	"instance" : {
-		"initializeElement:" : "PeterUhnak 7/25/2015 20:43:12" } }
+		"connectWithView:" : "PeterUhnak 8/18/2015 10:27",
+		"initializeElement:" : "PeterUhnak 8/18/2015 10:26",
+		"setupView:" : "PeterUhnak 8/18/2015 10:27" } }

@@ -1,6 +1,6 @@
-as yet unclassified
-initializeElement: element
-	| visible |
+hooks
+initializeElement: anElement
+	element := anElement.
 	visible := false.
 	element
 		when: TRMouseLeftClick
@@ -9,4 +9,6 @@ initializeElement: element
 				ifTrue: [ element shape removeHandlesFor: element ]
 				ifFalse: [ element shape showHandlesFor: element ].
 			visible := visible not ].
-	element trachelShape addCallback: (TRRemoveCallback block: [ element shape removeHandlesFor: element ])
+	element trachelShape addCallback: (TRRemoveCallback block: [ element shape removeHandlesFor: element ]).
+
+	self connectWithView: element view

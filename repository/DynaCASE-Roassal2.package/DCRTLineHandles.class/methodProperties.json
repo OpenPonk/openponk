@@ -2,6 +2,7 @@
 	"class" : {
 		 },
 	"instance" : {
-		"connectWithView:" : "PeterUhnak 8/18/2015 10:27",
-		"initializeElement:" : "PeterUhnak 8/18/2015 10:26",
-		"setupView:" : "PeterUhnak 8/18/2015 10:27" } }
+		"connectWithView:" : "PeterUhnak 8/18/2015 11:33",
+		"initializeElement:" : "PeterUhnak 8/18/2015 11:15",
+		"lazyInitializeElement:" : "PeterUhnak 8/18/2015 11:21",
+		"setupView:" : "PeterUhnak 8/18/2015 10:29:11" } }

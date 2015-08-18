@@ -2,12 +2,12 @@
 	"class" : {
 		 },
 	"instance" : {
-		"addSegmentTo:" : "PeterUhnak 8/17/2015 21:43",
-		"anchoredElement" : "PeterUhnak 8/17/2015 20:56",
-		"horizontalMovedTo:" : "PeterUhnak 8/17/2015 23:01",
-		"isAnchor" : "PeterUhnak 8/13/2015 07:59",
-		"neighbor:hasMovedBy:" : "PeterUhnak 8/17/2015 23:11",
-		"realignWith:" : "PeterUhnak 8/18/2015 07:18",
-		"removeFirstSegment" : "PeterUhnak 8/18/2015 07:18",
-		"removeLastSegment" : "PeterUhnak 8/18/2015 07:18",
-		"verticalMovedTo:" : "PeterUhnak 8/17/2015 23:02" } }
+		"addSegmentTo:" : "PeterUhnak 8/18/2015 10:29:11",
+		"anchoredElement" : "PeterUhnak 8/18/2015 10:29:11",
+		"horizontalMovedTo:" : "PeterUhnak 8/18/2015 10:29:11",
+		"isAnchor" : "PeterUhnak 8/18/2015 10:29:11",
+		"neighbor:hasMovedBy:" : "PeterUhnak 8/18/2015 10:29:11",
+		"realignWith:" : "PeterUhnak 8/18/2015 10:29:11",
+		"removeFirstSegment" : "PeterUhnak 8/18/2015 10:29:11",
+		"removeLastSegment" : "PeterUhnak 8/18/2015 10:29:11",
+		"verticalMovedTo:" : "PeterUhnak 8/18/2015 10:29:11" } }

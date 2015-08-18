@@ -1,4 +1,4 @@
 initialization
 initialize
 	super initialize.
-	exporter := TRCanvasExporter new
+	exporter := DCTRCanvasExporter new

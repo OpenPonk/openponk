@@ -1,7 +1,7 @@
 private
 updateSubgroup: aSubgroup of: content
 	| height labelShape |
-	labelShape := RTLabel new height: 10.
+	labelShape := RTLabel new color: Color black; height: 10.
 	height := group height.
 	aSubgroup addAll: (labelShape elementsOn: content value).
 	group addAll: aSubgroup.

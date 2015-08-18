@@ -1,0 +1,15 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"addAnchorSegmentFrom:to:" : "PeterUhnak 8/17/2015 20:35",
+		"addCornerFor:" : "PeterUhnak 8/17/2015 20:35",
+		"addHandlesFor:" : "PeterUhnak 8/18/2015 07:01",
+		"connectWithView:" : "PeterUhnak 8/18/2015 08:32",
+		"initialize" : "PeterUhnak 8/13/2015 08:27",
+		"initializeElement:" : "PeterUhnak 8/18/2015 08:30",
+		"lazyInitializeElement:" : "PeterUhnak 8/18/2015 08:34",
+		"removeHandles" : "PeterUhnak 8/18/2015 08:34",
+		"resetHandles" : "PeterUhnak 8/16/2015 22:06",
+		"setupView:" : "PeterUhnak 8/18/2015 08:32",
+		"showHandles" : "PeterUhnak 8/18/2015 06:56" } }

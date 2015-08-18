@@ -1,0 +1,16 @@
+{
+	"category" : "DynaCASE-Roassal2-PolyLine",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 8/13/2015 06:46",
+	"instvars" : [
+		"element",
+		"edge",
+		"initialPosition" ],
+	"name" : "DCRTBaseHandle",
+	"pools" : [
+		 ],
+	"super" : "DoubleLink",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2-Interactivity",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 8/17/2015 23:24",
+	"instvars" : [
+		 ],
+	"name" : "DCRTNoInteraction",
+	"pools" : [
+		 ],
+	"super" : "RTInteraction",
+	"type" : "normal" }

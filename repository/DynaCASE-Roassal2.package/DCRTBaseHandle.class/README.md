@@ -1,0 +1,1 @@
+I am a base class for all orthogonal line handles.

@@ -1,0 +1,17 @@
+{
+	"category" : "DynaCASE-Roassal2-PolyLine",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"edge",
+		"isActive",
+		"handles",
+		"handleFactory" ],
+	"name" : "DCRTOrthogonalHandles",
+	"pools" : [
+		 ],
+	"super" : "RTInteraction",
+	"type" : "normal" }

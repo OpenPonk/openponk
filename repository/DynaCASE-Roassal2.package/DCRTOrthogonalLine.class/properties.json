@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-Roassal2-PolyLine",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 8/13/2015 07:06",
+	"instvars" : [
+		"handleList",
+		"points" ],
+	"name" : "DCRTOrthogonalLine",
+	"pools" : [
+		 ],
+	"super" : "RTAbstractLine",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2-PolyLine",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 8/13/2015 06:49",
+	"instvars" : [
+		 ],
+	"name" : "DCRTAnchorHandle",
+	"pools" : [
+		 ],
+	"super" : "DCRTBaseHandle",
+	"type" : "normal" }

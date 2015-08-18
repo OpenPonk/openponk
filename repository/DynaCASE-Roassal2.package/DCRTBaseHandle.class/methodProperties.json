@@ -1,0 +1,26 @@
+{
+	"class" : {
+		"position:" : "PeterUhnak 8/16/2015 21:59",
+		"position:edge:" : "PeterUhnak 8/16/2015 22:47" },
+	"instance" : {
+		"basicMoveBy:" : "PeterUhnak 8/13/2015 07:57",
+		"basicMoveTo:" : "PeterUhnak 8/13/2015 08:37",
+		"constrainedMoveBy:" : "PeterUhnak 8/13/2015 06:55",
+		"draggableClass" : "PeterUhnak 8/17/2015 23:24",
+		"edge:" : "PeterUhnak 8/13/2015 07:05",
+		"isAnchor" : "PeterUhnak 8/13/2015 07:59",
+		"isCorner" : "PeterUhnak 8/13/2015 08:10",
+		"isHorizontal" : "PeterUhnak 8/13/2015 08:10",
+		"isVertical" : "PeterUhnak 8/13/2015 08:10",
+		"neighbor:hasMovedBy:" : "PeterUhnak 8/13/2015 06:55",
+		"neighbors" : "PeterUhnak 8/17/2015 20:57",
+		"position" : "PeterUhnak 8/13/2015 08:03",
+		"position:" : "PeterUhnak 8/13/2015 07:41",
+		"propagate:from:" : "PeterUhnak 8/13/2015 06:57",
+		"remove" : "PeterUhnak 8/17/2015 21:38",
+		"removeConnectedEdges" : "PeterUhnak 8/13/2015 07:05",
+		"renderIn:" : "PeterUhnak 8/18/2015 07:02",
+		"shape" : "PeterUhnak 8/18/2015 07:30",
+		"value" : "PeterUhnak 8/17/2015 20:44",
+		"x" : "PeterUhnak 8/13/2015 08:03",
+		"y" : "PeterUhnak 8/13/2015 08:03" } }

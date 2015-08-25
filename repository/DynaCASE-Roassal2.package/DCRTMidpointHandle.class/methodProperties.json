@@ -2,9 +2,15 @@
 	"class" : {
 		 },
 	"instance" : {
-		"constraintFor:" : "PeterUhnak 8/18/2015 10:29:11",
+		"beNearEnd" : "PeterUhnak 8/25/2015 07:34",
+		"beNearStart" : "PeterUhnak 8/25/2015 07:34",
+		"constraintFor:" : "PeterUhnak 8/25/2015 07:47",
+		"constraintForEnd:" : "PeterUhnak 8/25/2015 07:43",
+		"constraintForStart:" : "PeterUhnak 8/25/2015 07:43",
+		"constraintForStartEnd:" : "PeterUhnak 8/25/2015 07:47",
 		"element" : "PeterUhnak 8/18/2015 10:29:11",
 		"from" : "PeterUhnak 8/18/2015 10:29:11",
+		"initialize" : "PeterUhnak 8/25/2015 07:44",
 		"on:between:and:" : "PeterUhnak 8/18/2015 10:29:11",
 		"promote" : "PeterUhnak 8/18/2015 10:29:11",
 		"remove" : "PeterUhnak 8/18/2015 10:29:11",

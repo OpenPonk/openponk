@@ -1,6 +1,6 @@
 {
 	"class" : {
-		"example" : "PeterUhnak 8/18/2015 10:29:11" },
+		"example" : "PeterUhnak 8/25/2015 07:28" },
 	"instance" : {
 		"addOrRemoveLinesFor:trachelShape:" : "PeterUhnak 8/18/2015 10:29:11",
 		"addPoint:" : "PeterUhnak 8/18/2015 10:29:11",
@@ -14,7 +14,7 @@
 		"removeHandlesFor:" : "PeterUhnak 8/18/2015 10:29:11",
 		"removePointLink:for:" : "PeterUhnak 8/18/2015 10:29:11",
 		"showHandlesFor:" : "PeterUhnak 8/18/2015 10:29:11",
-		"showMidpointHandlesFor:" : "PeterUhnak 8/18/2015 10:29:11",
+		"showMidpointHandlesFor:" : "PeterUhnak 8/25/2015 07:34",
 		"trachelShapeFor:" : "PeterUhnak 8/18/2015 10:29:11",
 		"translateBy:for:" : "PeterUhnak 8/18/2015 10:29:11",
 		"updateFor:trachelShape:" : "PeterUhnak 8/18/2015 10:29:11" } }

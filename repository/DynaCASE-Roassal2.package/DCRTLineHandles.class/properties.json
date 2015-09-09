@@ -6,8 +6,8 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"element",
-		"visible" ],
+		"visible",
+		"edge" ],
 	"name" : "DCRTLineHandles",
 	"pools" : [
 		 ],

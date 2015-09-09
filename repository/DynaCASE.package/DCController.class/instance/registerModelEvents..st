@@ -1,7 +1,14 @@
 events - registering
 registerModelEvents: aModel
-	aModel
+	aModel announcer
 		when: DCElementRemoved
-		do: [ :event | 
+		do:
+			[ :event | 
+			self diagramController removeControllerOf: event element.
+			self diagramController updateView ].
+	aModel announcer
+		when: MooseEntityRemoved
+		do:
+			[ :event | 
 			self diagramController removeControllerOf: event element.
 			self diagramController updateView ]

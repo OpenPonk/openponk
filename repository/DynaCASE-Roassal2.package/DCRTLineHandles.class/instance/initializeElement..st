@@ -1,14 +1,9 @@
-hooks
-initializeElement: anElement
-	element := anElement.
-	visible := false.
-	element
+initialization
+initializeElement: anEdge
+	anEdge
 		when: TRMouseLeftClick
-		do: [ 
-			visible
-				ifTrue: [ element shape removeHandlesFor: element ]
-				ifFalse: [ element shape showHandlesFor: element ].
-			visible := visible not ].
-	element trachelShape addCallback: (TRRemoveCallback block: [ element shape removeHandlesFor: element ]).
-
-	self connectWithView: element view
+		do:
+			[ 
+			anEdge announcer unsubscribe: self.
+			self lazyInitializeElement: anEdge.
+			self showHandles ]

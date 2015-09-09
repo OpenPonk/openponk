@@ -9,7 +9,9 @@
 		"from",
 		"to",
 		"element",
-		"edge" ],
+		"edge",
+		"nearStart",
+		"nearEnd" ],
 	"name" : "DCRTMidpointHandle",
 	"pools" : [
 		 ],

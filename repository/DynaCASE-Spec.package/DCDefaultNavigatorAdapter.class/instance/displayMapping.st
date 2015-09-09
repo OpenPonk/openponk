@@ -1,3 +1,3 @@
 widget API
 displayMapping
-	^ {(DCModelObject -> #className)}
+	^ {(DCModelObject -> #className). MooseModel -> #mooseName}

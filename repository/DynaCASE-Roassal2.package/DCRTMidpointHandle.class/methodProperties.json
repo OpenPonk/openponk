@@ -2,11 +2,17 @@
 	"class" : {
 		 },
 	"instance" : {
-		"constraintFor:" : "PeterUhnak 7/25/2015 20:43:12",
-		"element" : "PeterUhnak 7/25/2015 20:43:12",
-		"from" : "PeterUhnak 7/25/2015 20:43:12",
-		"on:between:and:" : "PeterUhnak 7/25/2015 20:43:12",
-		"promote" : "PeterUhnak 7/25/2015 20:43:12",
-		"remove" : "PeterUhnak 7/25/2015 20:43:12",
-		"renderIn:" : "PeterUhnak 7/25/2015 20:43:12",
-		"shape" : "PeterUhnak 7/25/2015 20:43:12" } }
+		"beNearEnd" : "PeterUhnak 8/25/2015 08:18:59",
+		"beNearStart" : "PeterUhnak 8/25/2015 08:18:59",
+		"constraintFor:" : "PeterUhnak 8/25/2015 08:18:59",
+		"constraintForEnd:" : "PeterUhnak 8/25/2015 08:18:59",
+		"constraintForStart:" : "PeterUhnak 8/25/2015 08:18:59",
+		"constraintForStartEnd:" : "PeterUhnak 8/25/2015 08:18:59",
+		"element" : "PeterUhnak 8/25/2015 08:18:59",
+		"from" : "PeterUhnak 8/25/2015 08:18:59",
+		"initialize" : "PeterUhnak 8/25/2015 08:18:59",
+		"on:between:and:" : "PeterUhnak 8/25/2015 08:18:59",
+		"promote" : "PeterUhnak 8/25/2015 08:18:59",
+		"remove" : "PeterUhnak 8/25/2015 08:18:59",
+		"renderIn:" : "PeterUhnak 8/25/2015 08:18:59",
+		"shape" : "PeterUhnak 8/25/2015 08:18:59" } }

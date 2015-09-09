@@ -2,9 +2,9 @@ private
 connectWithView: aView
 	(aView hasAttribute: self className)
 		ifFalse: [ self setupView: aView ].
-
-	aView
+	aView canvas eventOverseer
 		when: TRMouseLeftClick
-		do: [ :event | 
-			event shape = element trachelShape & visible
-				ifFalse: [ element shape removeHandlesFor: element ] ]
+		do:
+			[ :event | 
+			(event element = edge) not & visible
+				ifTrue: [ self removeHandles ] ]

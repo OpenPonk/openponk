@@ -2,14 +2,14 @@
 	"class" : {
 		 },
 	"instance" : {
-		"addAnchorSegmentFrom:to:" : "PeterUhnak 8/18/2015 10:29:11",
-		"addCornerFor:" : "PeterUhnak 8/18/2015 10:29:11",
-		"addHandlesFor:" : "PeterUhnak 8/18/2015 10:29:11",
-		"connectWithView:" : "PeterUhnak 8/18/2015 10:29:11",
-		"initialize" : "PeterUhnak 8/18/2015 10:29:11",
-		"initializeElement:" : "PeterUhnak 8/18/2015 10:29:11",
-		"lazyInitializeElement:" : "PeterUhnak 8/18/2015 10:29:11",
-		"removeHandles" : "PeterUhnak 8/18/2015 10:29:11",
-		"resetHandles" : "PeterUhnak 8/18/2015 10:29:11",
-		"setupView:" : "PeterUhnak 8/18/2015 10:29:11",
-		"showHandles" : "PeterUhnak 8/18/2015 10:29:11" } }
+		"addAnchorSegmentFrom:to:" : "PeterUhnak 8/25/2015 08:18:59",
+		"addCornerFor:" : "PeterUhnak 8/25/2015 08:18:59",
+		"addHandlesFor:" : "PeterUhnak 8/25/2015 08:18:59",
+		"connectWithView:" : "PeterUhnak 8/25/2015 08:18:59",
+		"initialize" : "PeterUhnak 8/25/2015 08:18:59",
+		"initializeElement:" : "PeterUhnak 8/25/2015 08:18:59",
+		"lazyInitializeElement:" : "PeterUhnak 8/25/2015 08:18:59",
+		"removeHandles" : "PeterUhnak 8/25/2015 08:18:59",
+		"resetHandles" : "PeterUhnak 8/25/2015 08:18:59",
+		"setupView:" : "PeterUhnak 8/25/2015 08:18:59",
+		"showHandles" : "PeterUhnak 8/25/2015 08:18:59" } }

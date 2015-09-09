@@ -1,4 +1,4 @@
-as yet unclassified
+examples
 example2
 	| view class |
 	view := RTView new.

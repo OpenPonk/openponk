@@ -1,14 +1,14 @@
 {
 	"class" : {
-		"constraintLabel:at:" : "PeterUhnak 8/18/2015 10:29:11" },
+		"constraintLabel:at:" : "PeterUhnak 8/25/2015 08:18:59" },
 	"instance" : {
-		"arcShapeFor:" : "PeterUhnak 8/18/2015 10:29:11",
-		"attachPoint:" : "PeterUhnak 8/18/2015 10:29:11",
-		"color:" : "PeterUhnak 8/18/2015 10:29:11",
-		"head:" : "PeterUhnak 8/18/2015 10:29:11",
-		"initialize" : "PeterUhnak 8/18/2015 10:29:11",
-		"radius:" : "PeterUhnak 8/18/2015 10:29:11",
-		"tail:" : "PeterUhnak 8/18/2015 10:29:11",
-		"trachelShapeFor:" : "PeterUhnak 8/18/2015 10:29:11",
-		"updateArcFor:trachelShape:" : "PeterUhnak 8/18/2015 10:29:11",
-		"updateFor:trachelShape:" : "PeterUhnak 8/18/2015 10:29:11" } }
+		"arcShapeFor:" : "PeterUhnak 8/25/2015 08:18:59",
+		"attachPoint:" : "PeterUhnak 8/25/2015 08:18:59",
+		"color:" : "PeterUhnak 8/25/2015 08:18:59",
+		"head:" : "PeterUhnak 8/25/2015 08:18:59",
+		"initialize" : "PeterUhnak 8/25/2015 08:18:59",
+		"radius:" : "PeterUhnak 8/25/2015 08:18:59",
+		"tail:" : "PeterUhnak 8/25/2015 08:18:59",
+		"trachelShapeFor:" : "PeterUhnak 8/25/2015 08:18:59",
+		"updateArcFor:trachelShape:" : "PeterUhnak 8/25/2015 08:18:59",
+		"updateFor:trachelShape:" : "PeterUhnak 8/25/2015 08:18:59" } }

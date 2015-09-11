@@ -8,7 +8,7 @@ renderIn: aView
 		element.
 
 	line := lineBuilder value: source value: mouseBox.
-	line shape color: Color veryLightGray.
+"	line shape color: Color veryLightGray."
 
 	mouseBox translateTo: source position.
 	aView add: mouseBox.

@@ -7,12 +7,14 @@ openEditorOn: aDiagram
 	(tab := self newTab)
 		label: aDiagram name;
 		icon: plugin icon;
-		retrievingBlock: [ 
+		retrievingBlock:
+			[ 
+			| w |
+			w := editor buildWithSpec asWidget.
 			editor owner: tab.
-			editor buildWithSpec asWidget ].
-	tabManager addTab: tab.
-	editor plugin: plugin.
-	editor openDiagram: aDiagram.
-	editor rebuildWidget.
-	aDiagram whenChanged: [ tab label: aDiagram name ].
-	editor paletteModel rebuildWidget
+			editor plugin: plugin.
+			editor openDiagram: aDiagram.
+			aDiagram whenChanged: [ tab label: aDiagram name ].
+			editor paletteModel rebuildWidget.
+			w ] value.
+	tabManager addTab: tab

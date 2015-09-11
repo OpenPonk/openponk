@@ -6,8 +6,10 @@ openEditorOn: aDiagram
 	plugin := pluginRegistry pluginFor: aDiagram.
 	(tab := self newTab)
 		label: aDiagram name;
-		icon: (plugin icon);
-		retrievingBlock: editor buildWithSpec asWidget.
+		icon: plugin icon;
+		retrievingBlock: [ 
+			editor owner: tab.
+			editor buildWithSpec asWidget ].
 	tabManager addTab: tab.
 	editor plugin: plugin.
 	editor openDiagram: aDiagram.

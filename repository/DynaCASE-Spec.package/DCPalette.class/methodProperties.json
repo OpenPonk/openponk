@@ -2,6 +2,7 @@
 	"class" : {
 		"defaultSpec" : "PeterUhnak 8/18/2015 11:33:59" },
 	"instance" : {
+		"addCreationTool:" : "PeterUhnak 9/10/2015 23:13",
 		"addItem" : "PeterUhnak 8/18/2015 11:33:59",
 		"alignButtons" : "PeterUhnak 8/18/2015 11:33:59",
 		"createPaletteFor:" : "PeterUhnak 8/18/2015 11:33:59",

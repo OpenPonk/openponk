@@ -8,7 +8,7 @@ openEditorOn: aDiagram
 		label: aDiagram name;
 		icon: plugin icon;
 		retrievingBlock:
-			[ 
+				[ 
 			| w |
 			w := editor buildWithSpec asWidget.
 			editor owner: tab.
@@ -16,5 +16,5 @@ openEditorOn: aDiagram
 			editor openDiagram: aDiagram.
 			aDiagram whenChanged: [ tab label: aDiagram name ].
 			editor paletteModel rebuildWidget.
-			w ] value.
+			w ].
 	tabManager addTab: tab

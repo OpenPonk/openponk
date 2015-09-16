@@ -1,0 +1,18 @@
+{
+	"class" : {
+		"element:connection:" : "PeterUhnak 9/16/2015 10:34",
+		"example" : "PeterUhnak 9/16/2015 07:34" },
+	"instance" : {
+		"addGrip" : "PeterUhnak 9/16/2015 10:37",
+		"build" : "PeterUhnak 9/16/2015 07:37",
+		"connection:" : "PeterUhnak 9/16/2015 07:32",
+		"distance:" : "PeterUhnak 9/16/2015 10:45",
+		"element:" : "PeterUhnak 9/16/2015 06:58",
+		"element:connection:" : "PeterUhnak 9/16/2015 07:38",
+		"gripLine" : "PeterUhnak 9/16/2015 07:38",
+		"gripShape" : "PeterUhnak 9/16/2015 07:38",
+		"initialize" : "PeterUhnak 9/16/2015 10:35",
+		"segments" : "PeterUhnak 9/16/2015 07:32",
+		"segmentsForConnection:" : "PeterUhnak 9/16/2015 07:02",
+		"updatePosition" : "PeterUhnak 9/16/2015 07:23",
+		"updatePositionWithoutDistance" : "PeterUhnak 9/16/2015 10:50" } }

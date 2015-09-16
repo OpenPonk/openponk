@@ -1,0 +1,21 @@
+{
+	"category" : "DynaCASE-Roassal2-Constraints",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 9/16/2015 06:28",
+	"instvars" : [
+		"element",
+		"connection",
+		"segmentsRetriever",
+		"gripElement",
+		"gripLine",
+		"gripShape",
+		"gripEdge",
+		"distance" ],
+	"name" : "DCRTRailsConstraint",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

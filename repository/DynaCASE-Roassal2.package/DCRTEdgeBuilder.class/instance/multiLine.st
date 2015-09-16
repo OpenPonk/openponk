@@ -1,5 +1,5 @@
 shapes
 multiLine
-	shape := DCRTNewMultiLine new.
+	shape := DCRTStyledConnection new.
 	self defaultColor.
 	self rectangleAttachPoint

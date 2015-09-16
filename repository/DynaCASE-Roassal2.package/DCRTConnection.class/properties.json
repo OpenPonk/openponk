@@ -1,0 +1,18 @@
+{
+	"category" : "DynaCASE-Roassal2-Connection",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 9/16/2015 06:51",
+	"instvars" : [
+		"points",
+		"segments",
+		"handles",
+		"midpointHandles",
+		"handlesActive" ],
+	"name" : "DCRTConnection",
+	"pools" : [
+		 ],
+	"super" : "RTAbstractLine",
+	"type" : "normal" }

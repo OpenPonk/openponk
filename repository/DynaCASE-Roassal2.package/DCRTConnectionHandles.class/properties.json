@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-Roassal2-Connection",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 9/16/2015 07:29",
+	"instvars" : [
+		"visible",
+		"edge" ],
+	"name" : "DCRTConnectionHandles",
+	"pools" : [
+		 ],
+	"super" : "RTInteraction",
+	"type" : "normal" }

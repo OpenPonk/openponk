@@ -1,10 +1,10 @@
 {
-	"category" : "DynaCASE-Roassal2-PolyLine",
+	"category" : "DynaCASE-Roassal2-Connection",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "PeterUhnak 9/16/2015 07:29",
 	"instvars" : [
 		"from",
 		"to",

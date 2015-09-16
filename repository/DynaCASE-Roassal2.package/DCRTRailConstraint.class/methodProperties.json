@@ -1,0 +1,26 @@
+{
+	"class" : {
+		"element:connection:" : "PeterUhnak 9/16/2015 10:51",
+		"element:connection:relativePosition:distance:" : "PeterUhnak 9/16/2015 11:04",
+		"example" : "PeterUhnak 9/16/2015 21:27" },
+	"instance" : {
+		"addGrip" : "PeterUhnak 9/16/2015 11:33",
+		"build" : "PeterUhnak 9/16/2015 18:39",
+		"computePosition" : "PeterUhnak 9/16/2015 11:31",
+		"connection:" : "PeterUhnak 9/16/2015 10:51",
+		"connectionLength" : "PeterUhnak 9/16/2015 11:32",
+		"distance:" : "PeterUhnak 9/16/2015 10:51",
+		"element:" : "PeterUhnak 9/16/2015 10:51",
+		"element:connection:" : "PeterUhnak 9/16/2015 10:51",
+		"gripLine" : "PeterUhnak 9/16/2015 10:51",
+		"gripShape" : "PeterUhnak 9/16/2015 10:51",
+		"initialPosition:" : "PeterUhnak 9/16/2015 11:28",
+		"initialize" : "PeterUhnak 9/16/2015 10:51",
+		"pointBetween:and:distance:" : "PeterUhnak 9/16/2015 21:49",
+		"segmentForPosition:" : "PeterUhnak 9/16/2015 18:45",
+		"segments" : "PeterUhnak 9/16/2015 10:51",
+		"segmentsForConnection:" : "PeterUhnak 9/16/2015 10:51",
+		"updateParameters" : "PeterUhnak 9/16/2015 21:26",
+		"updatePosition" : "PeterUhnak 9/16/2015 12:39",
+		"updatePositionWithoutDistance" : "PeterUhnak 9/16/2015 10:51",
+		"windingOrder:segment:" : "PeterUhnak 9/16/2015 21:26" } }

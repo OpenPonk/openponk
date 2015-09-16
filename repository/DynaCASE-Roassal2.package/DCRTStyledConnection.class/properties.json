@@ -1,0 +1,16 @@
+{
+	"category" : "DynaCASE-Roassal2-Connection",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"head",
+		"tail",
+		"dashes" ],
+	"name" : "DCRTStyledConnection",
+	"pools" : [
+		 ],
+	"super" : "DCRTConnection",
+	"type" : "normal" }

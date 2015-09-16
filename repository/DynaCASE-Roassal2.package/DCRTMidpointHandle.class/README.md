@@ -1,0 +1,1 @@
+I am a pseudo handle between two real handles. When dragged I am promoted to a real DCRTHandle.

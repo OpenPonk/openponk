@@ -1,4 +1,4 @@
-as yet unclassified
+rendering
 createLineToSelfFor: anEdge
 	| radius  right top topRight rect  |
 	radius := 30.

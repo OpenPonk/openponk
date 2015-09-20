@@ -1,0 +1,1 @@
+I am a Connection that supports addition of head/tail styles and line styles.

@@ -1,4 +1,4 @@
-as yet unclassified
+rendering
 pathFor: anEdge
 	| fromPoint toPoint |
 	(anEdge from = anEdge to and: [ self points isEmpty ])

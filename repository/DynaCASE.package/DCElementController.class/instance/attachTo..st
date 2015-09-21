@@ -1,10 +1,8 @@
 events - registering
 attachTo: aDiagramController
-	self loadModel.
-
 	self diagramController: aDiagramController.
 	aDiagramController controllers add: self.
 
+	self loadModel.
 	self registerModelEvents: model.
-
 	self attachFigure

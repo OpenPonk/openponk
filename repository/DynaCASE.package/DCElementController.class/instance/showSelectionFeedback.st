@@ -1,4 +1,5 @@
 canvas actions
 showSelectionFeedback
 	self figure announce: DCTRFocused.
-	self figure view signalUpdate
+	self diagramController view
+	"self figure view signalUpdate"

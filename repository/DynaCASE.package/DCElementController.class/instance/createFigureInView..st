@@ -1,3 +1,3 @@
 hooks
-createFigureIn: aView
+createFigureInView: aView
 	^ self subclassResponsibility

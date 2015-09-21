@@ -4,9 +4,9 @@
 	"instance" : {
 		"attach" : "PeterUhnak 8/18/2015 10:29:48",
 		"attachFigure" : "PeterUhnak 8/18/2015 10:29:48",
-		"attachTo:" : "PeterUhnak 8/18/2015 10:29:48",
-		"createFigure" : "PeterUhnak 8/18/2015 10:29:48",
-		"createFigureIn:" : "PeterUhnak 8/18/2015 10:29:48",
+		"attachTo:" : "PeterUhnak 9/21/2015 22:45",
+		"createFigure" : "PeterUhnak 9/20/2015 14:43",
+		"createFigureInView:" : "PeterUhnak 9/20/2015 14:44",
 		"createModel" : "PeterUhnak 8/18/2015 10:29:48",
 		"figure" : "PeterUhnak 8/18/2015 10:29:48",
 		"figure:" : "PeterUhnak 8/18/2015 10:29:48",
@@ -18,4 +18,4 @@
 		"registerModelEvents:" : "PeterUhnak 8/18/2015 10:29:48",
 		"remove" : "PeterUhnak 8/18/2015 10:29:48",
 		"removeFigure" : "PeterUhnak 8/18/2015 10:29:48",
-		"showSelectionFeedback" : "PeterUhnak 8/18/2015 10:29:48" } }
+		"showSelectionFeedback" : "PeterUhnak 9/21/2015 18:28" } }

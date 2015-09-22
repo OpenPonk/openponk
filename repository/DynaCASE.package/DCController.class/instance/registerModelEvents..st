@@ -10,5 +10,5 @@ registerModelEvents: aModel
 		when: MooseEntityRemoved
 		do:
 			[ :event | 
-			self diagramController removeControllerOf: event element.
+			self diagramController removeControllerOf: event entity.
 			self diagramController updateView ]

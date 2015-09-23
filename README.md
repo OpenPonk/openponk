@@ -4,14 +4,8 @@ See https://dynacase.github.io/
 
 ## Installation
 
-Download Pharo 5 (4 maybe also works) image and run the following
-
-```
-Metacello new
-    baseline: 'DynaCASE';
-    repository: 'github://dynacase/dynacase/repository';
-    load.
-```
+Download the latest build
+https://ci.inria.fr/pharo-contribution/job/DynaCASE/lastSuccessfulBuild/PHARO=50,VERSION=development,VM=vm/
 
 ## For development
 

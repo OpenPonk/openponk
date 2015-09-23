@@ -2,7 +2,6 @@ opening
 openEditorOn: aDiagram
 	| editor tab plugin |
 	(editor := DCEditor new) workbench: self.
-	editor buildWithSpec.
 	plugin := pluginRegistry pluginFor: aDiagram.
 	(tab := self newTab)
 		label: aDiagram name;

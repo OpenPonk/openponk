@@ -1,3 +1,0 @@
-accessing
-encompassingRectangle
-	^ background encompassingRectangle

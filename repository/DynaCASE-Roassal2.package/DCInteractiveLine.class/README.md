@@ -1,1 +1,3 @@
-A DCInteractiveLine is a temporary line displayed while creating associations. After the first element is chosen, it shows how could the line look like at the current moment.
+I am a smart line that adds a temporary line to the view with one end attached to an element and second following the mouse cursor.
+
+Useful for providing live feedback when creating edges.

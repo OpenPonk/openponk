@@ -41,4 +41,4 @@ example
 	b @ RTDraggable.
 	c @ RTDraggable.
 
-	v
+	v open

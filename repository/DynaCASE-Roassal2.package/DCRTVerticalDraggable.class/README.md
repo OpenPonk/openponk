@@ -1,1 +1,1 @@
-I am an interaction that enables element dragging in vertical (up/down) direction.
+I am an interaction that constraints element dragging in vertical (up/down) direction.

@@ -1,3 +1,0 @@
-private
-stereotypeFor: aString
-	^ '«' , aString , '»'

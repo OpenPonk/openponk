@@ -1,1 +1,0 @@
-A DCRTClass is rectangle-shaped standard class, containing name (and stereotype) in upper part and attributes in lower part.

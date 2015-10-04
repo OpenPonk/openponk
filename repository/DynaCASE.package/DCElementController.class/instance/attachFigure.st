@@ -4,6 +4,6 @@ attachFigure
 
 	| newFigure |
 	newFigure := self figure.
-	newFigure view ifNil: [ self diagramController view add: newFigure ].
+	newFigure view ifNil: [ newFigure renderIn: self diagramController view ].
 	self diagramController figureAdded: newFigure.
 	self refreshFigure

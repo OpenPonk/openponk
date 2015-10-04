@@ -5,6 +5,7 @@
 		"arrowHead" : "PeterUhnak 8/25/2015 08:18:59",
 		"arrowTail" : "PeterUhnak 8/25/2015 08:18:59",
 		"attachPoint:" : "PeterUhnak 8/25/2015 08:18:59",
+		"changeDecorationsFor:trachelShape:" : "PeterUhnak 10/4/2015 21:05",
 		"color:" : "PeterUhnak 8/25/2015 08:18:59",
 		"createLineToSelfFor:" : "PeterUhnak 9/30/2015 17:30",
 		"dashdotLine" : "PeterUhnak 8/25/2015 08:18:59",
@@ -39,7 +40,7 @@
 		"tail" : "PeterUhnak 8/25/2015 08:18:59",
 		"tail:" : "PeterUhnak 8/25/2015 08:18:59",
 		"trachelShapeFor:" : "PeterUhnak 8/25/2015 08:18:59",
-		"updateFor:trachelShape:" : "PeterUhnak 8/25/2015 08:18:59",
+		"updateFor:trachelShape:" : "PeterUhnak 10/4/2015 21:05",
 		"withContinuousCircleAttachPoint" : "PeterUhnak 8/25/2015 08:18:59",
 		"withContinuousRectangleAttachPoint" : "PeterUhnak 8/25/2015 08:18:59",
 		"withShorterDistanceWithOffsetAttachPoint" : "PeterUhnak 8/25/2015 08:18:59" } }

@@ -2,6 +2,8 @@
 	"class" : {
 		 },
 	"instance" : {
+		"addShape:beforeIndex:" : "PeterUhnak 10/4/2015 21:02",
 		"addShapeFirst:" : "PeterUhnak 8/25/2015 08:18:59",
+		"removeAt:" : "PeterUhnak 10/4/2015 20:59",
 		"removeFirst" : "PeterUhnak 8/25/2015 08:18:59",
 		"removeLast" : "PeterUhnak 8/25/2015 08:18:59" } }

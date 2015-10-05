@@ -1,8 +1,6 @@
 accessing
 shape
-	^ RTBox new
-		size: 10;
-"		color: (Color purple alpha: 1);"
-		color: Color transparent;
-		borderColor: Color black;
+	^ RTEllipse new
+		size: 12;
+		color: Color black;
 		yourself

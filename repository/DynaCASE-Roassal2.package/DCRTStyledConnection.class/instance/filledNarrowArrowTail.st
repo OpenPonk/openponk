@@ -1,3 +1,3 @@
 heads
 filledNarrowArrowTail
-	self tail: RTFilledNarrowArrow asTail
+	self tail: RTFilledNarrowArrow

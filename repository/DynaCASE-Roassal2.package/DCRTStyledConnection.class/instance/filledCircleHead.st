@@ -1,3 +1,3 @@
 heads
 filledCircleHead
-	self head: RTFilledCircle asHead
+	self head: RTFilledCircle

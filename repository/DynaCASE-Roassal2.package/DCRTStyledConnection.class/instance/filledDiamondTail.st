@@ -1,3 +1,3 @@
 heads
 filledDiamondTail
-	self tail: RTFilledDiamond asTail
+	self tail: RTFilledDiamond

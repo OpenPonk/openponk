@@ -1,6 +1,7 @@
 accessing
 shape
 	^ RTEllipse new
-		size: 12;
-		color: Color black;
+		size: 9;
+		color: [ :e | e shape colorFor: e ];
+		borderColor: Color black;
 		yourself

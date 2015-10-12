@@ -1,3 +1,3 @@
 heads
 emptyDiamondHead
-	self head: RTEmptyDiamond asHead
+	self head: RTEmptyDiamond

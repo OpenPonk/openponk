@@ -1,3 +1,3 @@
 heads
 noHead
-	self head: RTNoDecorationShape asHead
+	self head: RTNoDecorationShape

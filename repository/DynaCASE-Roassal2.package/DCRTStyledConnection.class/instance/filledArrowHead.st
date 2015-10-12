@@ -1,3 +1,3 @@
 heads
 filledArrowHead
-	self head: RTFilledArrow asHead
+	self head: RTFilledArrow

@@ -1,3 +1,3 @@
 heads
 emptyArrowTail
-	self tail: RTEmptyArrow asTail
+	self tail: RTEmptyArrow

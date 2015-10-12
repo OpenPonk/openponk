@@ -1,3 +1,3 @@
 heads
 emptyDiamondTail
-	self tail: RTEmptyDiamond asTail
+	self tail: RTEmptyDiamond

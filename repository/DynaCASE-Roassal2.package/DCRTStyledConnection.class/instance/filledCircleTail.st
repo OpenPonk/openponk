@@ -1,3 +1,3 @@
 heads
 filledCircleTail
-	self tail: RTFilledCircle asTail
+	self tail: RTFilledCircle

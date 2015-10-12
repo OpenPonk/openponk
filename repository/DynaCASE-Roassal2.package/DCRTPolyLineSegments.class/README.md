@@ -1,0 +1,1 @@
+I am an ordered collection of LineSegments. I provide some extra functions such as searching for specific segment given some position etc.

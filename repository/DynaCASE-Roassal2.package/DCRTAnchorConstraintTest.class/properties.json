@@ -1,0 +1,24 @@
+{
+	"category" : "DynaCASE-Roassal2-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"source",
+		"target",
+		"edge",
+		"edgeElement",
+		"edgeAnchor",
+		"connection",
+		"connectionElement",
+		"connectionAnchor",
+		"view",
+		"segment",
+		"expected" ],
+	"name" : "DCRTAnchorConstraintTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

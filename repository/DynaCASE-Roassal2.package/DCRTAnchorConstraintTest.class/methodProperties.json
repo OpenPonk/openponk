@@ -1,0 +1,10 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"createConnectionAnchor" : "PeterUhnak 10/12/2015 12:08",
+		"createEdgeAnchor" : "PeterUhnak 10/12/2015 11:57",
+		"setUp" : "PeterUhnak 10/12/2015 12:04",
+		"testConnectionPath" : "PeterUhnak 10/12/2015 12:16",
+		"testConnectionSegmentsFor" : "PeterUhnak 10/12/2015 13:53",
+		"testLineSegmentFor" : "PeterUhnak 10/12/2015 12:10" } }

@@ -1,0 +1,21 @@
+{
+	"category" : "DynaCASE-Roassal2-Constraints",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"element",
+		"edge",
+		"minDistance",
+		"balance",
+		"anchorElement",
+		"guideEdge",
+		"anchorShape",
+		"guideLine" ],
+	"name" : "DCRTAnchorConstraint",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

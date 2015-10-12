@@ -1,6 +1,6 @@
 accessing
 renderIn: aView
-	element := self shape element.
+	element := self shape elementOn: edge.
 	aView add: element.
 	element translateTo: pointLink value.
 	element @ RTDraggable.

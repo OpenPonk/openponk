@@ -1,3 +1,3 @@
 heads
 arrowHead
-	self head: RTSimpleArrow asHead
+	self head: RTSimpleArrow

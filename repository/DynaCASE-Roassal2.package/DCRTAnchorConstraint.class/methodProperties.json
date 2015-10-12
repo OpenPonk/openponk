@@ -1,0 +1,25 @@
+{
+	"class" : {
+		"example" : "PeterUhnak 10/12/2015 14:05" },
+	"instance" : {
+		"addAnchor" : "PeterUhnak 10/10/2015 18:23",
+		"anchorSegment" : "PeterUhnak 10/12/2015 13:18",
+		"anchorShape" : "PeterUhnak 10/10/2015 18:26",
+		"balance" : "PeterUhnak 10/10/2015 18:15",
+		"balance:" : "PeterUhnak 10/10/2015 18:15",
+		"build" : "PeterUhnak 10/12/2015 14:10",
+		"computeExtraDistance" : "PeterUhnak 10/12/2015 14:04",
+		"connectionSegmentsFor:" : "PeterUhnak 10/12/2015 12:15",
+		"edge" : "PeterUhnak 10/10/2015 18:15",
+		"edge:" : "PeterUhnak 10/10/2015 18:15",
+		"element" : "PeterUhnak 10/10/2015 18:15",
+		"element:" : "PeterUhnak 10/10/2015 18:15",
+		"guideLine" : "PeterUhnak 10/10/2015 18:26",
+		"initialize" : "PeterUhnak 10/12/2015 14:08",
+		"lineSegmentFor:" : "PeterUhnak 10/12/2015 12:02",
+		"minDistance" : "PeterUhnak 10/10/2015 18:15",
+		"minDistance:" : "PeterUhnak 10/10/2015 18:15",
+		"moveAnchor" : "PeterUhnak 10/12/2015 13:19",
+		"moveElement" : "PeterUhnak 10/12/2015 14:03",
+		"segments" : "PeterUhnak 10/12/2015 13:53",
+		"update" : "PeterUhnak 10/10/2015 18:40" } }

@@ -7,7 +7,7 @@
 	"commentStamp" : "PeterUhnak 10/12/2015 12:48",
 	"instvars" : [
 		"segments" ],
-	"name" : "DCRTPolyLineSegments",
+	"name" : "DCRTPolyLineSegment",
 	"pools" : [
 		 ],
 	"super" : "RTObject",

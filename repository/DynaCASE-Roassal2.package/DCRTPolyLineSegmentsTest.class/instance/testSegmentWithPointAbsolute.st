@@ -1,7 +1,7 @@
 tests
 testSegmentWithPointAbsolute
 	| segments |
-	segments := DCRTPolyLineSegments
+	segments := DCRTPolyLineSegment
 		with: (RTLineSegment from: 0 @ 0 to: 8 @ 6)
 		with: (RTLineSegment from: 8 @ 6 to: 16 @ 0).
 	self

@@ -1,0 +1,15 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"addBoundingBoxFor:" : "PeterUhnak 10/22/2015 19:25",
+		"highlightLabels" : "PeterUhnak 10/22/2015 19:25",
+		"layouter" : "PeterUhnak 10/22/2015 19:18",
+		"layouter:" : "PeterUhnak 10/22/2015 19:18",
+		"showClusters:labeled:" : "PeterUhnak 10/30/2015 13:24",
+		"showEdgeMarks:" : "PeterUhnak 10/24/2015 08:46",
+		"showLabelPositions:" : "PeterUhnak 10/29/2015 02:05",
+		"showMatchingGraph:labeled:" : "PeterUhnak 10/30/2015 13:28",
+		"showOverlapGraph:labeled:" : "PeterUhnak 10/30/2015 13:27",
+		"view" : "PeterUhnak 10/24/2015 08:45",
+		"view:" : "PeterUhnak 10/24/2015 08:45" } }

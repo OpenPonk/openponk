@@ -1,0 +1,18 @@
+{
+	"category" : "DynaCASE-Layouting",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"labels",
+		"visualizer",
+		"spacing",
+		"edgeForLabel",
+		"elements" ],
+	"name" : "DCRTEdgeLabelLayout",
+	"pools" : [
+		 ],
+	"super" : "RTEdgeDrivenLayout",
+	"type" : "normal" }

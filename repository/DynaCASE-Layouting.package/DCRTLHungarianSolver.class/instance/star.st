@@ -1,0 +1,3 @@
+constants
+star
+	^ #star

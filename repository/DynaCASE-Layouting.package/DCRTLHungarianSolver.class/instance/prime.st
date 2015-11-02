@@ -1,0 +1,3 @@
+constants
+prime
+	^ #prime

@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-Layouting",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"nodes",
+		"edges" ],
+	"name" : "DCRTLGraph",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

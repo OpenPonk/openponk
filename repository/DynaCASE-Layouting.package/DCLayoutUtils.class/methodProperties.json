@@ -1,0 +1,8 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"addBoundingBoxFor:" : "PeterUhnak 10/21/2015 18:42",
+		"addBoundingBoxTo:" : "PeterUhnak 10/21/2015 18:48",
+		"computeSolutionSpaceFor:line:" : "PeterUhnak 10/21/2015 22:25",
+		"showSolutionSpaceForLabel:edge:" : "PeterUhnak 10/21/2015 21:51" } }

@@ -1,0 +1,16 @@
+{
+	"category" : "DynaCASE-Layouting",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"leftNodes",
+		"rightNodes",
+		"edges" ],
+	"name" : "DCRTLBipartiteGraph",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

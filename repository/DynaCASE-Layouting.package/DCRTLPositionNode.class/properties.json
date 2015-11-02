@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Layouting",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 10/29/2015 01:59",
+	"instvars" : [
+		"index" ],
+	"name" : "DCRTLPositionNode",
+	"pools" : [
+		 ],
+	"super" : "DCRTLNode",
+	"type" : "normal" }

@@ -1,0 +1,27 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"addToColumnAt:value:" : "PeterUhnak 11/2/2015 02:26",
+		"addToRowAt:value:" : "PeterUhnak 11/2/2015 02:26",
+		"anyNonCoveredZero" : "PeterUhnak 11/2/2015 02:08",
+		"columnAt:has:" : "PeterUhnak 11/2/2015 02:56",
+		"columnHasStar:" : "PeterUhnak 11/2/2015 02:31",
+		"done" : "PeterUhnak 11/2/2015 02:44",
+		"empty" : "PeterUhnak 11/2/2015 00:54",
+		"initialMarks" : "PeterUhnak 11/2/2015 01:45",
+		"isComplete" : "PeterUhnak 11/2/2015 03:02",
+		"minimizeColumns" : "PeterUhnak 11/2/2015 03:07",
+		"minimizeRows" : "PeterUhnak 11/2/2015 03:07",
+		"nonCoveredMin" : "PeterUhnak 11/2/2015 02:22",
+		"prime" : "PeterUhnak 11/2/2015 01:02",
+		"resetCovers" : "PeterUhnak 11/2/2015 02:41",
+		"rowAt:has:" : "PeterUhnak 11/2/2015 02:56",
+		"rowHasStar:" : "PeterUhnak 11/2/2015 02:30",
+		"setup" : "PeterUhnak 11/2/2015 02:42",
+		"solution:" : "PeterUhnak 11/2/2015 03:08",
+		"solve:" : "PeterUhnak 11/2/2015 11:28",
+		"star" : "PeterUhnak 11/2/2015 01:02",
+		"step1" : "PeterUhnak 11/2/2015 11:28",
+		"step2:" : "PeterUhnak 11/2/2015 11:28",
+		"step3" : "PeterUhnak 11/2/2015 02:44" } }

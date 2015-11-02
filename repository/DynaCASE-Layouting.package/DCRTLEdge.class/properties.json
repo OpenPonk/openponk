@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Layouting",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCRTLEdge",
+	"pools" : [
+		 ],
+	"super" : "MalGraphEdge",
+	"type" : "normal" }

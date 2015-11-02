@@ -1,0 +1,18 @@
+{
+	"category" : "DynaCASE-Layouting",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 11/2/2015 00:45",
+	"instvars" : [
+		"matrix",
+		"marks",
+		"size",
+		"rowCovers",
+		"columnCovers" ],
+	"name" : "DCRTLHungarianSolver",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

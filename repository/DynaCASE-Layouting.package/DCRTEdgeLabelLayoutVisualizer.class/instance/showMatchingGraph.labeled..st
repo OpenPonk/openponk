@@ -13,7 +13,10 @@ showMatchingGraph: aGraph labeled: aString
 		nodes: aGraph nodes
 		forEach:
 			[ :node | 
-			b shape circle size: 20; color: Color white; withText: #index.
+			b shape circle
+				size: 20;
+				color: Color white;
+				withText: #index.
 			node isFeature
 				ifTrue: [ b nodes: #() ].
 			node isCluster

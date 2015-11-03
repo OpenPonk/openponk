@@ -1,6 +1,6 @@
 as yet unclassified
 indexPositions: aDictionary
-	"assign each position a unique ID so it can be tracked later"
+	"assign each position a globally (within the view) unique ID so it can be tracked later"
 
 	| indexed i |
 	indexed := OrderedDictionary new.

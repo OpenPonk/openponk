@@ -1,8 +1,12 @@
 tests
 testEdgeMarks
 	| marks |
-	layout spacing: 10.
+	layout spacing: 30.
 	marks := layout edgeMarksFor: edge.
 	self
-		assertCollection: marks
-		hasSameElements: ((10 to: 90 by: 10) collect: [ :each | each @ 0 ])
+		assert: marks
+		equals:
+			{(10 @ 0).
+			(40 @ 0).
+			(70 @ 0).
+			(90 @ 0)}

@@ -2,6 +2,13 @@
 	"class" : {
 		 },
 	"instance" : {
-		"setUp" : "PeterUhnak 10/24/2015 08:40",
-		"testEdgeMarks" : "PeterUhnak 10/24/2015 08:30",
-		"testInitialPositions" : "PeterUhnak 10/24/2015 09:17" } }
+		"assertPosition:equals:" : "PeterUhnak 11/3/2015 07:12",
+		"initialPositions" : "PeterUhnak 11/3/2015 07:33",
+		"positions" : "PeterUhnak 11/3/2015 07:51",
+		"setUp" : "PeterUhnak 11/3/2015 07:37",
+		"testClusterGraphFor" : "PeterUhnak 11/3/2015 07:55",
+		"testEdgeMarks" : "PeterUhnak 11/3/2015 06:47",
+		"testIndexPositions" : "PeterUhnak 11/3/2015 07:49",
+		"testInitialPositions" : "PeterUhnak 11/3/2015 07:34",
+		"testOverlapGraphFor" : "PeterUhnak 11/3/2015 07:54",
+		"testRemoveFeatureOverlaps" : "PeterUhnak 11/3/2015 07:35" } }

@@ -10,7 +10,7 @@ removeFeatureOverlapsFor: aLabel positions: aCollection
 		reject:
 			[ :rect | 
 			self elements
-				detect: [ :el | el encompassingRectangle intersects: rect ]
+				detect: [ :el | el encompassingRectangle intersects: rect bounds ]
 				ifFound: [ true ]
 				ifNone: [ false ] ].
 	"Remove positions overlapping other edges"
@@ -22,12 +22,12 @@ removeFeatureOverlapsFor: aLabel positions: aCollection
 		reject:
 			[ :rect | 
 			otherLines
-				detect: [ :line | (line intersectRectangle: rect) isNotEmpty ]
+				detect: [ :line | (line intersectRectangle: rect bounds) isNotEmpty ]
 				ifFound: [ true ]
 				ifNone: [ false ] ].
 	"Remove positions overlapping it's own line"
 	e := self edgeForLabel: aLabel.
 	segment := RTLineSegment from: (e shape startingPointOf: e) to: (e shape endingPointOf: e).
 	rectangles := rectangles
-		reject: [ :rect | ((segment intersectRectangle: rect) collect: #rounded) isNotEmpty ].
+		reject: [ :rect | ((segment intersectRectangle: rect bounds) collect: #rounded) isNotEmpty ].
 	^ rectangles

@@ -9,8 +9,10 @@ setUp
 	edge := RTLine new
 		attachPoint: RTRectangleAttachPoint new;
 		edgeFrom: elements first to: elements second.
-	label := RTLabel new
-		text: [ :model | model model ];
+	label := RTBox new
+		size: 38;
 		elementOn: edge.
 	layout := DCRTEdgeLabelLayout new.
+	layout elements: elements.
+	layout edges: {edge}.
 	layout labels: {label}

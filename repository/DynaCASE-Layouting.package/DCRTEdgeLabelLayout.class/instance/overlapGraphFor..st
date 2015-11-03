@@ -21,7 +21,7 @@ overlapGraphFor: aDictionary
 		do:
 			[ :a | 
 			positions
-				select: [ :b | a ~= b & (a model intersects: b model) & (added includes: b -> a) not ]
+				select: [ :b | a ~= b & (a model bounds intersects: b model bounds) & (added includes: b -> a) not ]
 				thenDo:
 					[ :b | 
 					graph addEdge: (DCRTLEdge with: 'L to L' from: a to: b).

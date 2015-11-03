@@ -2,9 +2,11 @@
 	"class" : {
 		 },
 	"instance" : {
-		"matrixFor:" : "PeterUhnak 11/1/2015 20:24",
-		"setUp" : "PeterUhnak 11/1/2015 20:22",
-		"testMedium" : "PeterUhnak 11/2/2015 11:44",
-		"testMicro" : "PeterUhnak 11/2/2015 02:54",
-		"testMini" : "PeterUhnak 11/2/2015 11:28",
-		"testSmall" : "PeterUhnak 11/2/2015 11:32" } }
+		"matrixFor:" : "PeterUhnak 11/2/2015 14:00:33",
+		"setUp" : "PeterUhnak 11/2/2015 14:00:33",
+		"testMedium" : "PeterUhnak 11/2/2015 14:00:33",
+		"testMicro" : "PeterUhnak 11/2/2015 14:00:33",
+		"testMini" : "PeterUhnak 11/2/2015 14:00:33",
+		"testPadWithZeros" : "PeterUhnak 11/2/2015 14:17",
+		"testPadWithZeros2" : "PeterUhnak 11/2/2015 14:17",
+		"testSmall" : "PeterUhnak 11/2/2015 14:00:33" } }

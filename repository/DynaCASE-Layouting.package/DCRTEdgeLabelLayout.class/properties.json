@@ -7,10 +7,13 @@
 	"commentStamp" : "",
 	"instvars" : [
 		"labels",
+		"withVisualization",
+		"withProgressBar",
 		"visualizer",
 		"spacing",
 		"edgeForLabel",
-		"elements" ],
+		"elements",
+		"labelForEdge" ],
 	"name" : "DCRTEdgeLabelLayout",
 	"pools" : [
 		 ],

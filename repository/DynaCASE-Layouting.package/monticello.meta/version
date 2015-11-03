@@ -1,1 +1,2 @@
-(name 'DynaCASE-Layouting-PeterUhnak.1' message 'WIP Edge label layouting (using Unified framework & Hungarian algo)' id '3673d4cc-1051-48df-8a1c-594373285995' date '2 November 2015' time '2:00:27.951922 pm' author 'PeterUhnak' ancestors () stepChildren ())
+(name 'DynaCASE-Layouting-PeterUhnak.2' message 'Rewrites, cleanups, ...' id '6b05c748-cc20-497c-b754-9c1aec660d49' date '3 November 2015' time '9:07:17.92896 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Layouting-PeterUhnak.1' message 'WIP Edge label layouting (using Unified framework & Hungarian algo)
+' id 'a67233c5-861c-5ecf-8c6f-8a7b60b51681' date '2 November 2015' time '2:00:33 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

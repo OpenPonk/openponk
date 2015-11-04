@@ -14,8 +14,8 @@ baseline: spec
 			project: 'MooseAlgos' with: [
 				spec
 					className: #ConfigurationOfMooseAlgos;
-					versionString: #'development';
-					repository: 'http://smalltalkhub.com/mc/Moose/MooseAlgos/main/' ];
+					version: 'default';
+					repository: 'http://www.squeaksource.com/MooseAlgos' ];
 			project: 'Ston' with: [
 				spec
 					className: #ConfigurationOfSton;

@@ -13,7 +13,8 @@
 		"spacing",
 		"edgeForLabel",
 		"elements",
-		"labelForEdge" ],
+		"labelForEdge",
+		"labelsStrategy" ],
 	"name" : "DCRTEdgeLabelLayout",
 	"pools" : [
 		 ],

@@ -1,3 +1,3 @@
 as yet unclassified
 edgeForLabel: aLabel
-	^ edgeForLabel value: aLabel
+	^ edgeForLabel cull: aLabel cull: self

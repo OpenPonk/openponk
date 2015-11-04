@@ -27,7 +27,7 @@ showMatchingGraph: aGraph labeled: aString
 	b edges useAssociations: (aGraph edges collect: [ :each | each from -> each to ]).
 	b layout dominanceTree horizontalGap: 30.
 	b build.
-	b edges shape attachPoint: #withContinuousCircleAttachPoint.
+	b edges shape line attachPoint: #withContinuousCircleAttachPoint.
 	bg := RTBox new element.
 	view add: bg.
 	bg @ RTDraggable.

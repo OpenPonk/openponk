@@ -17,6 +17,6 @@ doExecuteVisualized: elementsCollection
 	completeClusters := self completeClustersFor: clusterGraphs.
 	"visualizer showClusters: completeClusters labeled: 'Complete Clusters'."
 	matchingGraph := self matchingGraphFor: overlapGraph classes: completeClusters.
-	visualizer showMatchingGraph: matchingGraph labeled: 'Matching Graph'.
+	"visualizer showMatchingGraph: matchingGraph labeled: 'Matching Graph'."
 	assignment := self findAssignmentFor: matchingGraph.
 	self applyAssignment: assignment

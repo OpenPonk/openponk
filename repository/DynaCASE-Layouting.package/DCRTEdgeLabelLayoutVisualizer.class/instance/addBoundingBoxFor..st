@@ -7,5 +7,9 @@ addBoundingBoxFor: anElement
 		elementOn: anElement.
 	bb extent: anElement extent.
 	TRConstraint stick: bb onTheCenterOf: anElement.
-	anElement view add: bb.
-	bb trachelShape pushBehind: anElement trachelShape
+	view add: bb.
+	bb trachelShape
+		pushBehind:
+			((anElement isKindOf: TRShape)
+				ifTrue: [ anElement ]
+				ifFalse: [ anElement trachelShape ])

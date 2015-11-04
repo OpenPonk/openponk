@@ -11,6 +11,11 @@ baseline: spec
 					className: #ConfigurationOfRoassal2;
 					versionString: #'development';
 					repository: 'http://smalltalkhub.com/mc/ObjectProfile/Roassal2/main/' ];
+			project: 'MooseAlgos' with: [
+				spec
+					className: #ConfigurationOfMooseAlgos;
+					versionString: #'development';
+					repository: 'http://smalltalkhub.com/mc/Moose/MooseAlgos/main/' ];
 			project: 'Ston' with: [
 				spec
 					className: #ConfigurationOfSton;
@@ -24,9 +29,10 @@ baseline: spec
 					repository: 'http://smalltalkhub.com/mc/Moose/PetitParser/main/' ].
 		spec 
 			package: 'DynaCASE' with: [
-				spec requires: #('DynaCASEModel' 'Roassal2' 'Ston' 'PetitParser' ). ];
+				spec requires: #('DynaCASEModel' 'Roassal2' 'MooseAlgos' 'Ston' 'PetitParser' ). ];
 			package: 'DynaCASE-Trachel';
 			package: 'DynaCASE-Roassal2';
+			package: 'DynaCASE-Layouting';
 			package: 'DynaCASE-Spec';
 			package: 'DynaCASE-FSM'.
-		spec group: 'default' with: #('DynaCASE' 'DynaCASE-Trachel' 'DynaCASE-Roassal2' 'DynaCASE-Spec' 'DynaCASE-FSM' ). ].
+		spec group: 'default' with: #('DynaCASE' 'DynaCASE-Trachel' 'DynaCASE-Roassal2' 'DynaCASE-Layouting' 'DynaCASE-Spec' 'DynaCASE-FSM' ). ].

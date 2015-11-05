@@ -9,15 +9,18 @@ doExecuteVisualized: elementsCollection
 	positions := self initialPositions.
 	positions := self removeFeatureOverlaps: positions.
 	positions := self indexPositions: positions.
-"		visualizer
+	"		visualizer
 		showLabelPositions: positions
 		labeled: [ :posNode :label | posNode index ]."
 	visualizer
 		showLabelPositions: positions
 		labeled:
-			"[ :posNode :label | posNode index ]"
-			"[ :posNode :label | (self penaltyForRanking: posNode model of: (self edgeForLabel: label)) rounded ]"
-			[ :posNode :label | (self penaltyForProximity: posNode model of: (self edgeForLabel: label)) rounded ].
+			[ :posNode :label | 
+			(self penaltyForRanking: posNode model of: (self edgeForLabel: label)) asString , '|'
+				, (self penaltyForEdgeProximity: posNode model of: (self edgeForLabel: label)) rounded asString , '/', (self penaltyForElementProximity: posNode model of: (self edgeForLabel: label)) rounded asString ].
+	"[ :posNode :label | posNode index ]."
+	"[ :posNode :label | (self penaltyForRanking: posNode model of: (self edgeForLabel: label)) rounded ]"
+	"[ :posNode :label | (self penaltyForProximity: posNode model of: (self edgeForLabel: label)) rounded ]"
 	overlapGraph := self overlapGraphFor: positions.
 	"visualizer showOverlapGraph: overlapGraph labeled: 'Overlap Graph'."
 	clusterGraphs := self clusterGraphsFor: overlapGraph.

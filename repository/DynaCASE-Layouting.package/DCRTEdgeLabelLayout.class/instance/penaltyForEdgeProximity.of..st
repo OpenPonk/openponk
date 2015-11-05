@@ -11,9 +11,10 @@ penaltyForEdgeProximity: aPosition of: anEdge
 				rounded ]) min.
 	edgeDistance := (aPosition bounds nearestDistanceToLineFrom: line from to: line to)
 		rounded.
-	^ closestAnotherDistance > 10
+	^ (11 - closestAnotherDistance rounded) max: 0
+	"^ closestAnotherDistance > 10
 		ifTrue: [ 0 ]
-		ifFalse: [ 1.5 ]
+		ifFalse: [ 1.5 ]"
 	"^ closestAnotherDistance > 0
 		ifTrue: [ edgeDistance / closestAnotherDistance ]
 		ifFalse: [ 1 ]"

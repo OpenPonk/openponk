@@ -30,7 +30,7 @@ clustersFor: anOverlapGraph
 			(classGraph neighborNodesOf: node)
 				do:
 					[ :neighbor | 
-					(clusters at: node) add: neighbor.
+					(clusters at: node) addAll: (clusters at: neighbor).
 					clusters at: neighbor put: (clusters at: node) ] ].
 	^ ((clusters values asOrderedCollection do: #removeDuplicates) collect: #asArray)
 		removeDuplicates asArray

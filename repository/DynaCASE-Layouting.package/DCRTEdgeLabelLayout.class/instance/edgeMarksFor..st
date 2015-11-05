@@ -10,4 +10,5 @@ edgeMarksFor: anEdge
 		,
 			((1 to: line length / self spacing)
 				collect: [ :i | line from + (i * self spacing * direction) ])
-		, {(line to - (15 * direction))}) removeDuplicates asArray
+		, {(line to - (15 * direction))} collect: [ :each | each rounded ]) removeDuplicates
+		asArray

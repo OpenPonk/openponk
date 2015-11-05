@@ -8,7 +8,10 @@ showClusters: clusterGraphs labeled: aString
 		nodes: clusterGraphs
 		forEach:
 			[ :graph | 
-			b shape circle size: 20; color: Color white; withText: #index.
+			b shape circle
+				size: 20;
+				color: Color white;
+				withText: #index.
 			b nodes: graph nodes.
 			b edges useAssociations: (graph edges collect: [ :each | each from -> each to ]).
 			b layout tree horizontalGap: 30 ].

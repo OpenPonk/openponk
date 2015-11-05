@@ -20,5 +20,8 @@ findAssignmentFor: aMatchingGraph
 				->
 					(((cluster model nodes collect: #model)
 						select: [ :pos | pos feature = (self labelForEdge: feature model) ])
-						detectMin: [ :position | self penaltyForRanking: position of: feature model ]) ].
+						detectMin:
+							[ :position | 
+							(self penaltyForRanking: position of: feature model)
+								+ (self penaltyForProximity: position of: feature model) ]) ].
 	^ assignment asDictionary

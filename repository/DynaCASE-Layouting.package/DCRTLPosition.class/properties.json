@@ -10,7 +10,9 @@
 		"maxRanking",
 		"position",
 		"orientation",
-		"bounds" ],
+		"bounds",
+		"mark",
+		"feature" ],
 	"name" : "DCRTLPosition",
 	"pools" : [
 		 ],

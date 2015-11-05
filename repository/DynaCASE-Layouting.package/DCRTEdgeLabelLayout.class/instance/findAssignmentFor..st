@@ -7,7 +7,7 @@ findAssignmentFor: aMatchingGraph
 		rows: features size
 		columns: clusters size
 		tabulate:
-			[ :i :j | self costForFeature: (features at: i) cluster: (clusters at: j) edges: aMatchingGraph edges ].
+			[ :i :j | self costForFeature: (features at: i) cluster: (clusters at: j) edges: aMatchingGraph ].
 	solver := DCRTLHungarianSolver new.
 	solution := solver paddedSolve: matrix.
 	assignment := (solution collect: #key)
@@ -18,6 +18,7 @@ findAssignmentFor: aMatchingGraph
 			cluster := clusters at: indices second.
 			feature
 				->
-					((cluster model nodes collect: #model)
-						detectMin: [ :position | self penaltyForRanking: position ]) ].
+					(((cluster model nodes collect: #model)
+						select: [ :pos | pos feature = (self labelForEdge: feature model) ])
+						detectMin: [ :position | self penaltyForRanking: position of: feature model ]) ].
 	^ assignment asDictionary

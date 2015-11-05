@@ -1,12 +1,13 @@
 as yet unclassified
-costForFeature: aFeatureNode cluster: aClusterNode edges: someEdges
-	^ someEdges
-		detect: [ :e | (e from = aFeatureNode & e to) = aClusterNode ]
+costForFeature: aFeatureNode cluster: aClusterNode edges: matchingGraph
+	^ matchingGraph edges
+		detect: [ :e | e from = aFeatureNode & (e to = aClusterNode) ]
 		ifFound:
 			[ :e | 
 			(e to model nodes
-				collect:
+				select: [ :positionNode | positionNode model feature = (self labelForEdge: aFeatureNode model) ]
+				thenCollect:
 					[ :positionNode | 
-					(self penaltyForRanking: positionNode model)
-						+ (self penaltyForProximity: positionNode model to: aFeatureNode model) ]) min ]
+					(self penaltyForRanking: positionNode model of: aFeatureNode model)
+						+ (self penaltyForProximity: positionNode model of: aFeatureNode model) ]) min ]
 		ifNone: [ Float infinity ]

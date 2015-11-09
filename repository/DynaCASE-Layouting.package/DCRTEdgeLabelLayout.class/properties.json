@@ -14,7 +14,8 @@
 		"edgeForLabel",
 		"elements",
 		"labelForEdge",
-		"labelsStrategy" ],
+		"labelsStrategy",
+		"labelToEdgeMapping" ],
 	"name" : "DCRTEdgeLabelLayout",
 	"pools" : [
 		 ],

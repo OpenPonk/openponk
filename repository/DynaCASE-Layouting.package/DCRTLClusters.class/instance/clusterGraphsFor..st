@@ -10,7 +10,7 @@ clusterGraphsFor: anOverlapGraph
 			cluster
 				do:
 					[ :node | 
-					((anOverlapGraph neighborNodesOf: node) select: [:each | cluster includes: each ])
+					((anOverlapGraph neighborNodesOf: node) intersection: cluster)
 						do:
 							[ :neighbor | 
 							graph edges

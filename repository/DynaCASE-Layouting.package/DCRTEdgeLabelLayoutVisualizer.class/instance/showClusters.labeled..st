@@ -13,8 +13,9 @@ showClusters: clusterGraphs labeled: aString
 				color: Color white;
 				withText: #index.
 			b nodes: graph nodes.
+			b edges shape arrowedLine withContinuousCircleAttachPoint.
 			b edges useAssociations: (graph edges collect: [ :each | each from -> each to ]).
-			b layout tree horizontalGap: 30 ].
+			b layout tree doNotAttachPoint; horizontalGap: 50; verticalGap: 50 ].
 	b build.
 	bg := RTBox new element.
 	view add: bg.

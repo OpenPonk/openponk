@@ -1,3 +1,3 @@
 accessing
 label
-	^ 'F(' , self model from model , self model to model , ')'
+	^ 'F(' , self model from model asString , self model to model asString , ')'

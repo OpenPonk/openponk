@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Layouting",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 11/9/2015 15:48",
+	"instvars" : [
+		 ],
+	"name" : "DCRTLClusters",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

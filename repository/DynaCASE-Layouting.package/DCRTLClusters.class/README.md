@@ -1,0 +1,1 @@
+I take a graph and produce a collection of (noncomplete) connected clusters.

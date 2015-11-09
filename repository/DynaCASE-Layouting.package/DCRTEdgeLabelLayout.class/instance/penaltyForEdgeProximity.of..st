@@ -8,10 +8,10 @@ penaltyForEdgeProximity: aPosition of: anEdge
 		collect:
 			[ :each | 
 			(aPosition bounds nearestDistanceToLineFrom: (from value: each) to: (to value: each))
-				rounded ]) min.
+				rounded ]) ifEmpty: [ -1000 ] ifNotEmpty: [ :c | c min ].
 	edgeDistance := (aPosition bounds nearestDistanceToLineFrom: line from to: line to)
 		rounded.
-	^ (11 - closestAnotherDistance rounded) max: 0
+	^ 11 - closestAnotherDistance rounded max: 0
 	"^ closestAnotherDistance > 10
 		ifTrue: [ 0 ]
 		ifFalse: [ 1.5 ]"

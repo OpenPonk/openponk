@@ -1,4 +1,4 @@
-as yet unclassified
+examples
 example
 |v es edges lines utils edgeLabels|
 utils := DCLayoutUtils new.

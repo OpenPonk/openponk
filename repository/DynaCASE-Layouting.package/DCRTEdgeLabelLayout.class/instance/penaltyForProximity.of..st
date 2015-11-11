@@ -1,4 +1,4 @@
-as yet unclassified
+cost
 penaltyForProximity: aPosition of: anEdge
 	| p1 p2 |
 	p1 := self penaltyForEdgeProximity: aPosition of: anEdge.

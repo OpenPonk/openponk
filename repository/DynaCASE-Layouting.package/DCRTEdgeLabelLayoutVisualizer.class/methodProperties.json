@@ -1,9 +1,11 @@
 {
 	"class" : {
-		 },
+		"Configuration" : "PeterUhnak 11/11/2015 10:57",
+		"defaultConfiguration" : "PeterUhnak 11/11/2015 10:59",
+		"openConfiguration" : "PeterUhnak 11/11/2015 11:04" },
 	"instance" : {
 		"addBoundingBoxFor:" : "PeterUhnak 11/3/2015 23:53",
-		"highlightLabels" : "PeterUhnak 11/2/2015 14:00:33",
+		"highlightLabels" : "PeterUhnak 11/10/2015 00:07",
 		"layouter" : "PeterUhnak 11/2/2015 14:00:33",
 		"layouter:" : "PeterUhnak 11/2/2015 14:00:33",
 		"showClusters:labeled:" : "PeterUhnak 11/9/2015 17:08",

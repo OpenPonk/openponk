@@ -1,4 +1,4 @@
-as yet unclassified
+cost
 penaltyForElementProximity: aPosition of: anEdge
 	| closestDistance |
 	closestDistance := (elements

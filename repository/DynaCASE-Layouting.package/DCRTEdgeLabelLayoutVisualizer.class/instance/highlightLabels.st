@@ -1,3 +1,3 @@
 visualization
 highlightLabels
-	layouter labels do: [ :each | self addBoundingBoxFor: each ]
+	layouter batchOfUnassignedLabels do: [ :each | self addBoundingBoxFor: each ]

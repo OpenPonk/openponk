@@ -11,5 +11,7 @@ doExecuteNormal: elementsCollection
 	completeClusters := self completeClustersFor: clusterGraphs.
 	matchingGraph := self matchingGraphFor: overlapGraph classes: completeClusters.
 	assignment := self findAssignmentFor: matchingGraph.
-	1halt.
-	self applyAssignment: assignment
+	self applyAssignment: assignment.
+	assignedLabels addAll: self batchOfUnassignedLabels.
+	unassignedLabels removeAll: self batchOfUnassignedLabels.
+	unassignedLabels ifNotEmpty: [ self doExecute: elementsCollection ]

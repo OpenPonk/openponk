@@ -1,4 +1,4 @@
 as yet unclassified
 initialPositions
-	^ (self labels collect: [ :each | each -> (self initialPositionsFor: each) ])
-		as: OrderedDictionary
+	^ (self batchOfUnassignedLabels
+		collect: [ :each | each -> (self initialPositionsFor: each) ]) as: OrderedDictionary

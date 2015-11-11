@@ -1,4 +1,4 @@
-as yet unclassified
+cost
 penaltyForEdgeProximity: aPosition of: anEdge
 	| line closestAnotherDistance edgeDistance from to |
 	from := [ :e | e shape startingPointOf: e ].

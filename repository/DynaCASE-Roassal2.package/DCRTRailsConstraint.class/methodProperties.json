@@ -1,18 +1,18 @@
 {
 	"class" : {
-		"element:connection:" : "PeterUhnak 10/12/2015 15:18:51",
-		"example" : "PeterUhnak 10/12/2015 15:18:51" },
+		"element:connection:" : "PeterUhnak 11/9/2015 18:06:17",
+		"example" : "PeterUhnak 11/9/2015 18:06:17" },
 	"instance" : {
-		"addGrip" : "PeterUhnak 10/12/2015 15:18:51",
-		"build" : "PeterUhnak 10/12/2015 15:18:51",
-		"connection:" : "PeterUhnak 10/12/2015 15:18:51",
-		"distance:" : "PeterUhnak 10/12/2015 15:18:51",
-		"element:" : "PeterUhnak 10/12/2015 15:18:51",
-		"element:connection:" : "PeterUhnak 10/12/2015 15:18:51",
-		"gripLine" : "PeterUhnak 10/12/2015 15:18:51",
-		"gripShape" : "PeterUhnak 10/12/2015 15:18:51",
-		"initialize" : "PeterUhnak 10/12/2015 15:18:51",
-		"segments" : "PeterUhnak 10/12/2015 15:18:51",
-		"segmentsForConnection:" : "PeterUhnak 10/12/2015 15:18:51",
-		"updatePosition" : "PeterUhnak 10/12/2015 15:18:51",
-		"updatePositionWithoutDistance" : "PeterUhnak 10/12/2015 15:18:51" } }
+		"addGrip" : "PeterUhnak 11/9/2015 18:06:17",
+		"build" : "PeterUhnak 11/9/2015 18:06:17",
+		"connection:" : "PeterUhnak 11/9/2015 18:06:17",
+		"distance:" : "PeterUhnak 11/9/2015 18:06:17",
+		"element:" : "PeterUhnak 11/9/2015 18:06:17",
+		"element:connection:" : "PeterUhnak 11/9/2015 18:06:17",
+		"gripLine" : "PeterUhnak 11/9/2015 18:06:17",
+		"gripShape" : "PeterUhnak 11/9/2015 18:06:17",
+		"initialize" : "PeterUhnak 11/9/2015 18:06:17",
+		"segments" : "PeterUhnak 11/9/2015 18:06:17",
+		"segmentsForConnection:" : "PeterUhnak 11/9/2015 18:06:17",
+		"updatePosition" : "PeterUhnak 11/9/2015 18:06:17",
+		"updatePositionWithoutDistance" : "PeterUhnak 11/9/2015 18:06:17" } }

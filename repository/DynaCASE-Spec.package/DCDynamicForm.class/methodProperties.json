@@ -1,18 +1,18 @@
 {
 	"class" : {
-		"defaultSpec" : "PeterUhnak 8/18/2015 11:33:59" },
+		"defaultSpec" : "PeterUhnak 9/23/2015 03:34:53" },
 	"instance" : {
-		"addCheckbox:" : "PeterUhnak 8/18/2015 11:33:59",
-		"addControl:" : "PeterUhnak 8/18/2015 11:33:59",
-		"addDroplist:" : "PeterUhnak 8/18/2015 11:33:59",
-		"addLabel:" : "PeterUhnak 8/18/2015 11:33:59",
-		"addText:" : "PeterUhnak 8/18/2015 11:33:59",
-		"addTextInput:" : "PeterUhnak 8/18/2015 11:33:59",
-		"createWidgets" : "PeterUhnak 8/18/2015 11:33:59",
-		"defaultHeights" : "PeterUhnak 8/18/2015 11:33:59",
-		"dynamicLayout" : "PeterUhnak 8/18/2015 11:33:59",
-		"editController:" : "PeterUhnak 8/18/2015 11:33:59",
-		"heightFor:" : "PeterUhnak 8/18/2015 11:33:59",
-		"initialize" : "PeterUhnak 8/18/2015 11:33:59",
-		"rebuildWidget" : "PeterUhnak 8/18/2015 11:33:59",
-		"reset" : "PeterUhnak 8/18/2015 11:33:59" } }
+		"addCheckbox:" : "PeterUhnak 9/23/2015 03:34:53",
+		"addControl:" : "PeterUhnak 9/23/2015 03:34:53",
+		"addDroplist:" : "PeterUhnak 9/23/2015 03:34:53",
+		"addLabel:" : "PeterUhnak 9/23/2015 03:34:53",
+		"addText:" : "PeterUhnak 9/23/2015 03:34:53",
+		"addTextInput:" : "PeterUhnak 9/23/2015 03:34:53",
+		"createWidgets" : "PeterUhnak 9/23/2015 03:34:53",
+		"defaultHeights" : "PeterUhnak 9/23/2015 03:34:53",
+		"dynamicLayout" : "PeterUhnak 9/23/2015 03:34:53",
+		"editController:" : "PeterUhnak 9/23/2015 03:34:53",
+		"heightFor:" : "PeterUhnak 9/23/2015 03:34:53",
+		"initialize" : "PeterUhnak 9/23/2015 03:34:53",
+		"rebuildWidget" : "PeterUhnak 9/23/2015 03:34:53",
+		"reset" : "PeterUhnak 9/23/2015 03:34:53" } }

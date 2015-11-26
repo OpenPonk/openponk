@@ -2,8 +2,8 @@
 	"class" : {
 		 },
 	"instance" : {
-		"createController" : "PeterUhnak 8/18/2015 10:29:48",
-		"renderFigure" : "PeterUhnak 8/18/2015 10:29:48",
-		"renderFigureOf:" : "PeterUhnak 8/18/2015 10:29:48",
-		"setUp" : "PeterUhnak 8/18/2015 10:29:48",
-		"testCreateController" : "PeterUhnak 8/18/2015 10:29:48" } }
+		"createController" : "PeterUhnak 10/4/2015 21:37:11",
+		"renderFigure" : "PeterUhnak 10/4/2015 21:37:11",
+		"renderFigureOf:" : "PeterUhnak 10/4/2015 21:37:11",
+		"setUp" : "PeterUhnak 10/4/2015 21:37:11",
+		"testCreateController" : "PeterUhnak 10/4/2015 21:37:11" } }

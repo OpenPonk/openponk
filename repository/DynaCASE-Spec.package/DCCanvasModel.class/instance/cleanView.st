@@ -4,4 +4,7 @@ cleanView
 
 	roassalView edges copy do: #remove.
 	roassalView elements copy do: #remove.
-	roassalView canvas clean
+	roassalView canvas shapes copy
+		do: [ :each | 
+			(each isKindOf: TRCanvasGridShape)
+				ifFalse: [ each remove ] ]

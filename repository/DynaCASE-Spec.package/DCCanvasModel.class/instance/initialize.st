@@ -2,8 +2,10 @@ initialization
 initialize
 	super initialize.
 	self
-		script: [ :view :canvas | 
+		script:
+			[ :view :canvas | 
 			roassalView := view.
 			view when: TRMouseLeftClick do: [ :event | self viewClicked: event ].
 			view @ RTDraggableView.
-			view @ RTZoomableView ]
+			view @ RTZoomableView.
+			view @ (RTGridView new gridSize: 20) ]

@@ -1,0 +1,14 @@
+language: smalltalk
+sudo: false
+addons:
+    apt:
+        packages:
+            - libssl1.0.0:i386
+smalltalk:
+    - Pharo-5.0
+env:
+    global:
+        - BASELINE="DynaCASE"
+        - TESTS="DynaCASE.*"
+        - PACKAGES="/repository"
+        - BASELINE_GROUP="default"

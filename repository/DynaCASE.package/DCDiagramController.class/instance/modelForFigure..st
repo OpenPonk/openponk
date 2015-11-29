@@ -1,3 +1,3 @@
 accessing
 modelForFigure: aFigure
-	(self controllerForFigure: aFigure) model
+	^ (self controllerForFigure: aFigure) model

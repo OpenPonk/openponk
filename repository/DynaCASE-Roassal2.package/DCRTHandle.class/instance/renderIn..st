@@ -3,7 +3,7 @@ renderIn: aView
 	element := self shape elementOn: edge.
 	aView add: element.
 	element translateTo: pointLink value.
-	element @ RTDraggable.
+	element @ RTDraggableSnapToGrid center.
 	element addConnectedEdge: edge.
 	element @ (RTMenuActivable new item: 'Remove' action: [ :e | self removePoint ]).
 	element trachelShape

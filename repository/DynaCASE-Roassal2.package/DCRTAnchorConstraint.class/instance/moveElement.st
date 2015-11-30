@@ -10,6 +10,6 @@ moveElement
 			element
 				translateBy: segment vector normal * (minDistance + self computeExtraDistance) negated ].
 	(element encompassingRectangle intersects: edge from encompassingRectangle)
-		ifTrue: [ self moveAwayFromStart ].
+		ifTrue: [ self moveAwayFrom: edge from encompassingRectangle via: segment vector ].
 	(element encompassingRectangle intersects: edge to encompassingRectangle)
-		ifTrue: [ self moveAwayFromEnd ]
+		ifTrue: [ self moveAwayFrom: edge to encompassingRectangle via: segment vector negated ]

@@ -1,9 +1,8 @@
 adding
 translateBy: aPoint for: anEdge
-	points linksDo: [ :each | each value: each value + aPoint ].
+	router translateAllBy: aPoint.
 	handlesActive
-		ifTrue: [ 
-			self removeHandlesFor: anEdge.
+		ifTrue: [ self removeHandlesFor: anEdge.
 			self showHandlesFor: anEdge ].
 	anEdge update.
-	anEdge signalUpdate.
+	anEdge signalUpdate

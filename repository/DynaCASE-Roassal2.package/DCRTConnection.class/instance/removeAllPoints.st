@@ -1,3 +1,0 @@
-public
-removeAllPoints
-	points removeAll

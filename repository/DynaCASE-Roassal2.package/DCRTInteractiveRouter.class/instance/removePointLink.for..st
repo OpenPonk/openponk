@@ -1,4 +1,4 @@
-as yet unclassified
+removing
 removePointLink: aLink for: anEdge
 	points removeLink: aLink.
-	self rebuildFor: anEdge
+	anEdge shape rebuildFor: anEdge

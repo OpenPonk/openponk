@@ -1,7 +1,7 @@
 initialization
 initialize
 	super initialize.
-	points := DoubleLinkedList new.
+	router := DCRTInteractiveRouter new.
 	segments := OrderedCollection new.
 	handles := OrderedCollection new.
 	midpointHandles := OrderedCollection new.

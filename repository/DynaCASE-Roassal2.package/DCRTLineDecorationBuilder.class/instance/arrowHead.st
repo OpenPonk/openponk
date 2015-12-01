@@ -1,3 +1,3 @@
-heads
+decorators
 arrowHead
 	self head: RTSimpleArrow

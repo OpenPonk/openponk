@@ -1,3 +1,3 @@
-heads
+decorators
 emptyArrowTail
 	self tail: RTEmptyArrow

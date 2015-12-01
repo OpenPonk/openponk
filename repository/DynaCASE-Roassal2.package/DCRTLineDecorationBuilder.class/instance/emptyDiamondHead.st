@@ -1,3 +1,3 @@
-heads
+decorators
 emptyDiamondHead
 	self head: RTEmptyDiamond

@@ -1,5 +1,3 @@
 accessing
-tail: aLineDecorationShape
-	(tail := aLineDecorationShape asTail)
-		attachPoint: attachPoint;
-		color: color
+tail: aDecoration
+	decorations tail: aDecoration

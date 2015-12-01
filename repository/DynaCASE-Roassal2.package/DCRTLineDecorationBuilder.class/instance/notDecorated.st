@@ -1,4 +1,4 @@
-heads
+decorators
 notDecorated
 	self
 		noHead;

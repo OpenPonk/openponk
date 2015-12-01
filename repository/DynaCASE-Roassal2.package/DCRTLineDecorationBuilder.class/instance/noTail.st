@@ -1,3 +1,3 @@
-heads
+decorators
 noTail
 	self tail: RTNoDecorationShape

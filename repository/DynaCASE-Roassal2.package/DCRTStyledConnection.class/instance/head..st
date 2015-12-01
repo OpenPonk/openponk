@@ -1,5 +1,3 @@
 accessing
-head: aLineDecorationShape
-	(head := aLineDecorationShape asHead)
-		attachPoint: attachPoint;
-		color: color
+head: aDecoration
+	decorations head: aDecoration

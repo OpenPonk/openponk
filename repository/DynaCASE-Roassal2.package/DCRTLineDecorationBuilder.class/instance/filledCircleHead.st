@@ -1,3 +1,3 @@
-heads
+decorators
 filledCircleHead
 	self head: RTFilledCircle

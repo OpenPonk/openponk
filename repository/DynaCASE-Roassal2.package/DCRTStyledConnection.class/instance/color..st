@@ -1,5 +1,4 @@
 accessing
 color: aColor
-	tail color: aColor.
-	head color: aColor.
+	decorations color: aColor.
 	color := aColor

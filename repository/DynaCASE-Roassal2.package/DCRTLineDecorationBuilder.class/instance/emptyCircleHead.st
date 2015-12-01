@@ -1,3 +1,3 @@
-heads
+decorators
 emptyCircleHead
 	self head: RTEmptyCircle

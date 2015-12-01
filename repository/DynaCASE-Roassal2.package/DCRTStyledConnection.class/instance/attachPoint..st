@@ -1,5 +1,4 @@
-attach point
+accessing
 attachPoint: anAttachPoint
-	tail attachPoint: anAttachPoint.
-	head attachPoint: anAttachPoint.
+	decorations attachPoint: anAttachPoint.
 	attachPoint := anAttachPoint

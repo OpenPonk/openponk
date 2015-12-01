@@ -1,3 +1,3 @@
-heads
+decorators
 filledArrowTail
 	self tail: RTFilledArrow

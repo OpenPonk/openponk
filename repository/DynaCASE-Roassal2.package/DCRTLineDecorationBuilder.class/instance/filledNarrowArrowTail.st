@@ -1,3 +1,3 @@
-heads
+decorators
 filledNarrowArrowTail
 	self tail: RTFilledNarrowArrow

@@ -7,7 +7,9 @@
 	"commentStamp" : "PeterUhnak 9/16/2015 07:29",
 	"instvars" : [
 		"visible",
-		"edge" ],
+		"edge",
+		"handles",
+		"midpointHandles" ],
 	"name" : "DCRTConnectionHandles",
 	"pools" : [
 		 ],

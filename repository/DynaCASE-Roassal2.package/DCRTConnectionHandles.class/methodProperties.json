@@ -3,8 +3,13 @@
 		 },
 	"instance" : {
 		"connectWithView:" : "PeterUhnak 11/9/2015 18:06:17",
+		"initialize" : "PeterUhnak 12/2/2015 06:54",
 		"initializeElement:" : "PeterUhnak 11/9/2015 18:06:17",
-		"lazyInitializeElement:" : "PeterUhnak 11/9/2015 18:06:17",
-		"removeHandles" : "PeterUhnak 11/9/2015 18:06:17",
+		"lazyInitializeElement:" : "PeterUhnak 12/2/2015 07:00",
+		"promoteFor:handle:" : "PeterUhnak 12/2/2015 07:02",
+		"rebuild" : "PeterUhnak 12/2/2015 07:04",
+		"removeHandles" : "PeterUhnak 12/2/2015 06:58",
+		"router" : "PeterUhnak 12/2/2015 07:01",
 		"setupView:" : "PeterUhnak 11/9/2015 18:06:17",
-		"showHandles" : "PeterUhnak 11/9/2015 18:06:17" } }
+		"showHandles" : "PeterUhnak 12/2/2015 06:59",
+		"showMidpointHandlesFor:" : "PeterUhnak 12/2/2015 06:55" } }

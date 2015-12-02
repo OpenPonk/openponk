@@ -1,12 +1,13 @@
 {
-	"category" : "DynaCASE-Roassal2-Interactivity",
+	"category" : "DynaCASE-Roassal2-Connection",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "PeterUhnak 12/1/2015 09:09",
 	"instvars" : [
-		"points" ],
+		"points",
+		"handler" ],
 	"name" : "DCRTInteractiveRouter",
 	"pools" : [
 		 ],

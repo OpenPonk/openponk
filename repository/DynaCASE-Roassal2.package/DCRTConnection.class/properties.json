@@ -6,10 +6,6 @@
 		 ],
 	"commentStamp" : "PeterUhnak 9/16/2015 06:51",
 	"instvars" : [
-		"segments",
-		"handles",
-		"midpointHandles",
-		"handlesActive",
 		"router" ],
 	"name" : "DCRTConnection",
 	"pools" : [

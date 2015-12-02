@@ -1,4 +1,10 @@
 private
 removeHandles
-	edge shape removeHandlesFor: edge.
+	visible
+		ifFalse: [ ^ self ].
+	handles do: #remove.
+	handles := OrderedCollection new.
+	midpointHandles do: #remove.
+	midpointHandles := OrderedCollection new.
+	edge signalUpdate.
 	visible := false

@@ -1,9 +1,9 @@
-public
+rendering
 trachelShapeFor: anEdge
 	| shape multiShape path |
 	path := self pathFor: anEdge.
 	multiShape := TRCompositeShape new.
-	2 to: path size do: [ :i | 
-		shape := self lineSegmentFor: anEdge from: (path at: i - 1) to: (path at: i).
+	path overlappingPairsDo: [ :a :b |
+		shape := self lineSegmentFor: anEdge from: a to: b.
 		multiShape addShape: shape ].
 	^ multiShape

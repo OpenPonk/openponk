@@ -1,3 +1,4 @@
 geometry
 translateAllBy: aDistance
-	points linksDo: [ :each | each value: each value + aDistance ]
+	points linksDo: [ :each | each value: each value + aDistance ].
+	self handler rebuild

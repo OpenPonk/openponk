@@ -6,7 +6,6 @@
 		 ],
 	"commentStamp" : "PeterUhnak 9/16/2015 07:28",
 	"instvars" : [
-		"handler",
 		"from",
 		"to",
 		"edge",

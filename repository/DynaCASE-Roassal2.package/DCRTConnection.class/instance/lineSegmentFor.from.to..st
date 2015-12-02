@@ -1,4 +1,4 @@
-as yet unclassified
+rendering
 lineSegmentFor: anEdge from: aSource to: aTarget
 	^ TRLineShape new
 		width: width;

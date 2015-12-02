@@ -6,7 +6,7 @@ promoteFor: anEdge handle: aMidpointHandle
 	 3. Do full reload."
 	newPoint := DoubleLink value: aMidpointHandle element position.
 	anEdge from = aMidpointHandle from
-		ifTrue: [ router pointLinks addFirst: newPoint ]
-		ifFalse: [ router pointLinks add: newPoint afterLink: (handles detect: [ :each | each element = aMidpointHandle from ]) pointLink ].
-	self rebuildFor: anEdge.
+		ifTrue: [ self router pointLinks addFirst: newPoint ]
+		ifFalse: [ self router pointLinks add: newPoint afterLink: (handles detect: [ :each | each element = aMidpointHandle from ]) pointLink ].
+	self rebuild.
 	anEdge view canvas morph resetShapeBeingPointed

@@ -1,3 +1,3 @@
 as yet unclassified
 promote
-	edge shape promoteFor: edge handle: self
+	edge shape router handler promoteFor: edge handle: self

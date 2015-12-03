@@ -1,6 +1,6 @@
 private
 rebuild
-	visible
+	isActive
 		ifTrue: [ self removeHandles.
 			self showHandles ].
 	edge update.

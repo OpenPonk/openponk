@@ -1,9 +1,9 @@
 as yet unclassified
 showHandles
-	visible
+	isActive
 		ifTrue: [ ^ self ].
 	edge shape router linksDo: [ :each | handles add: (DCRTHandle new on: edge at: each) ].
 	handles do: [ :each | each renderIn: edge view ].
 	self showMidpointHandlesFor: edge.
 	edge signalUpdate.
-	visible := true
+	isActive := true

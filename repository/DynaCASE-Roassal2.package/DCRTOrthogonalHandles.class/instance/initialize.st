@@ -1,6 +1,5 @@
-hooks
+initialization
 initialize
 	super initialize.
-	isActive := false.
-	handleFactory := DCRTHandleFactory new.
-	self resetHandles
+	segmentHandles := OrderedCollection new.
+	isActive := false

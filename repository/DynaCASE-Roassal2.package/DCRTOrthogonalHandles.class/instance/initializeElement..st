@@ -1,3 +1,8 @@
-hooks
+initialization
 initializeElement: anEdge
-	self lazyInitializeElement: anEdge
+	anEdge
+		when: TRMouseLeftClick
+		do:
+			[ anEdge announcer unsubscribe: self.
+			self lazyInitializeElement: anEdge.
+			self addHandles ]

@@ -6,10 +6,12 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
+		"points",
 		"edge",
 		"isActive",
-		"handles",
-		"handleFactory" ],
+		"segmentHandles",
+		"cornerHandles",
+		"handles" ],
 	"name" : "DCRTOrthogonalHandles",
 	"pools" : [
 		 ],

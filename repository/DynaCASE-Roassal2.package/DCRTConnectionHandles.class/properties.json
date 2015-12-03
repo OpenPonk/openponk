@@ -6,10 +6,10 @@
 		 ],
 	"commentStamp" : "PeterUhnak 9/16/2015 07:29",
 	"instvars" : [
-		"visible",
 		"edge",
 		"handles",
-		"midpointHandles" ],
+		"midpointHandles",
+		"isActive" ],
 	"name" : "DCRTConnectionHandles",
 	"pools" : [
 		 ],

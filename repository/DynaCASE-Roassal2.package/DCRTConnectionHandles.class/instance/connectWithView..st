@@ -6,5 +6,5 @@ connectWithView: aView
 		when: TRMouseLeftClick
 		do:
 			[ :event | 
-			(event element = edge) not & visible
+			(event element = edge) not & isActive
 				ifTrue: [ self removeHandles ] ]

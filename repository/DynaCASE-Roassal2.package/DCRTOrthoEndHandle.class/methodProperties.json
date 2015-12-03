@@ -7,6 +7,8 @@
 		"isInsideEndElement:" : "PeterUhnak 12/3/2015 09:06",
 		"moveBy:from:" : "PeterUhnak 12/3/2015 17:31",
 		"moveToBorder:" : "PeterUhnak 12/3/2015 17:38",
+		"movedBy:" : "PeterUhnak 12/3/2015 18:24",
 		"newCornerAt:" : "PeterUhnak 12/3/2015 17:26",
 		"removeIfNeeded:" : "PeterUhnak 12/3/2015 17:32",
-		"removeNeighborCorner" : "PeterUhnak 12/3/2015 17:39" } }
+		"removeNeighborCorner" : "PeterUhnak 12/3/2015 17:39",
+		"renderIn:" : "PeterUhnak 12/3/2015 18:19" } }

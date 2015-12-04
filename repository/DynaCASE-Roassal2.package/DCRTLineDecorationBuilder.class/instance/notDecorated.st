@@ -2,4 +2,5 @@ decorators
 notDecorated
 	self
 		noHead;
-		noTail
+		noTail;
+		attachPoint: RTCenteredAttachPoint new

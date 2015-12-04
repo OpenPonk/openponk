@@ -1,4 +1,4 @@
-as yet unclassified
+removing
 removeIfNecessary
 	(self hasPredecessor and: [ self previous isEnd ])
 		ifTrue: [ self previous removeIfNeeded: self ].

@@ -9,4 +9,6 @@ lazyInitializeElement: anEdge
 				yourself).
 	edge when: TRMouseLeftClick do: [ self addHandles ].
 	edge trachelShape addCallback: (TRRemoveCallback block: [ self removeHandles ]).
-	self connectWithView: edge view
+	self connectWithView: edge view.
+	self addHandles.
+	self removeHandles

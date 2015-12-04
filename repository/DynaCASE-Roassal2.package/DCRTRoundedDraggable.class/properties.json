@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2-Interactivity",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 12/4/2015 16:07",
+	"instvars" : [
+		 ],
+	"name" : "DCRTRoundedDraggable",
+	"pools" : [
+		 ],
+	"super" : "RTDraggable",
+	"type" : "normal" }

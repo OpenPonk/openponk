@@ -18,5 +18,11 @@ ensureOrthogonal
 				ifFalse: [ #x ] ].
 	isOrthogonal
 		ifFalse:
-			[ self shouldBeImplemented.
-			self router points: {(edge from position x @ edge to position y)} ]
+			[ path := edge shape pathFor: edge.
+			self router
+				points:
+					{path first.
+					(path first x @ path last y).
+					path last}.
+			edge update.
+			edge signalUpdate ]	"self shouldBeImplemented."

@@ -1,5 +1,8 @@
 positioning
 movedBy: aVector
-	self previous moveBy: (self constraintVector: aVector for: self previous) from: self.
-	self next moveBy: (self constraintVector: aVector for: self next) from: self.
-	positionLink value: element position
+	positionLink value: positionLink value + aVector.
+	self previous
+		ifNotNil: [ :n | n moveBy: (self constraintVector: aVector for: n) from: self ].
+	self next
+		ifNotNil: [ :n | n moveBy: (self constraintVector: aVector for: n) from: self ].
+	self removeIfNecessary

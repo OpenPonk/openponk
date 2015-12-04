@@ -1,7 +1,7 @@
 positioning
 moveBy: aVector from: aNeighbor
-	(aNeighbor position - self position) abs < (2 @ 2)
-		ifTrue: [ self basicMoveTo: aNeighbor position.
-			^ self remove ].
 	self basicMoveBy: aVector.
+	aNeighbor position = self position
+		ifTrue: [ self remove.
+			^ self removeIfNecessary: aNeighbor ].
 	self removeIfNecessary

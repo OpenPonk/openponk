@@ -1,0 +1,1 @@
+I am draggable that rounds the movement distance to the nearest integer. No more float suffering!

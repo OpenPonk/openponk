@@ -2,13 +2,14 @@
 	"class" : {
 		 },
 	"instance" : {
-		"basicMoveBy:" : "PeterUhnak 12/3/2015 17:23",
-		"basicMoveTo:" : "PeterUhnak 12/3/2015 17:24",
-		"constraintVector:for:" : "PeterUhnak 12/3/2015 18:36",
+		"basicMoveBy:" : "PeterUhnak 12/4/2015 19:22",
+		"basicMoveTo:" : "PeterUhnak 12/4/2015 19:22",
+		"constraintVector:for:" : "PeterUhnak 12/4/2015 16:36",
 		"edge:" : "PeterUhnak 12/3/2015 08:12",
 		"isEnd" : "PeterUhnak 12/3/2015 17:30",
 		"moveBy:from:" : "PeterUhnak 12/3/2015 08:31",
 		"position" : "PeterUhnak 12/3/2015 17:09",
 		"positionLink:" : "PeterUhnak 12/3/2015 17:09",
+		"removeHandle" : "PeterUhnak 12/4/2015 19:20",
 		"renderIn:" : "PeterUhnak 12/3/2015 17:10",
 		"shape" : "PeterUhnak 12/3/2015 08:23" } }

@@ -1,4 +1,6 @@
 positioning
 basicMoveBy: aVector
-	element trachelShape doWithoutCallbacks: [ element translateBy: aVector ].
-	positionLink value: element position
+	positionLink value: positionLink value + aVector.
+	element
+		ifNotNil:
+			[ element trachelShape doWithoutCallbacks: [ element translateBy: aVector ] ]

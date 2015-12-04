@@ -2,8 +2,9 @@
 	"class" : {
 		"positionLink:edge:" : "PeterUhnak 12/3/2015 08:09" },
 	"instance" : {
-		"moveBy:from:" : "PeterUhnak 12/3/2015 23:57",
-		"movedBy:" : "PeterUhnak 12/3/2015 18:23",
-		"remove" : "PeterUhnak 12/3/2015 17:47",
+		"moveBy:from:" : "PeterUhnak 12/4/2015 16:35",
+		"movedBy:" : "PeterUhnak 12/4/2015 19:21",
+		"remove" : "PeterUhnak 12/4/2015 19:18",
 		"removeIfNecessary" : "PeterUhnak 12/3/2015 17:55",
-		"renderIn:" : "PeterUhnak 12/3/2015 17:54" } }
+		"removeIfNecessary:" : "PeterUhnak 12/4/2015 19:59",
+		"renderIn:" : "PeterUhnak 12/4/2015 16:32" } }

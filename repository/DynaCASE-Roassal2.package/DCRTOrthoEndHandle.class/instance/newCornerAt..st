@@ -8,6 +8,6 @@ newCornerAt: aPosition
 			self addSuccessor: corner ]
 		ifFalse: [ positionLink addPredecessor: cornerPosition.
 			self addPredecessor: corner ].
-	corner renderIn: edge view.
+	element ifNotNil: [ corner renderIn: edge view ].
 	edge update.
 	edge signalUpdate

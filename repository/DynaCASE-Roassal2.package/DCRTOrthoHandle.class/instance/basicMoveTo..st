@@ -1,4 +1,7 @@
 positioning
 basicMoveTo: aPosition
-	element trachelShape doWithoutCallbacks: [ element translateTo: aPosition ].
-	positionLink value: element position
+	positionLink value: aPosition.
+	element
+		ifNotNil:
+			[ element trachelShape
+				doWithoutCallbacks: [ element translateTo: aPosition ] ]

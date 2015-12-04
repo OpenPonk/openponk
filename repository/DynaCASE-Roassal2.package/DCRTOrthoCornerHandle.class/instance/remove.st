@@ -1,8 +1,6 @@
-as yet unclassified
+removing
 remove
-	element connectedEdges removeAll.
-	element trachelShape callbacks removeAll.
-	element remove.
+	self removeHandle.
 	positionLink removeLink.
 	self removeLink.
 	edge update.

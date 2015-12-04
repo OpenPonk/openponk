@@ -1,3 +1,4 @@
 as yet unclassified
 moveToBorder: aLine
-	self basicMoveTo: (aLine intersectRectangle: endElement encompassingRectangle) anyOne
+	(aLine intersectRectangle: endElement encompassingRectangle)
+		ifNotEmpty: [ :set | self basicMoveTo: set anyOne ]

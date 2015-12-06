@@ -5,15 +5,18 @@
 		"menuCommandOn:" : "PeterUhnak 12/6/2015 03:32",
 		"open" : "PeterUhnak 12/6/2015 03:31" },
 	"instance" : {
-		"createProject" : "PeterUhnak 12/6/2015 03:59",
+		"createProject" : "PeterUhnak 12/6/2015 12:38",
 		"createProjectButton" : "PeterUhnak 12/6/2015 03:45",
 		"doesNotUnderstand:" : "PeterUhnak 12/6/2015 03:58",
 		"initialize" : "PeterUhnak 12/6/2015 00:43",
-		"initializePresenter" : "PeterUhnak 12/6/2015 04:00",
+		"initializePresenter" : "PeterUhnak 12/6/2015 12:24",
 		"initializeWidgets" : "PeterUhnak 12/6/2015 03:58",
+		"openProject:" : "PeterUhnak 12/6/2015 12:38",
 		"projectMenu:" : "PeterUhnak 12/6/2015 03:38",
+		"projectMenu:for:" : "PeterUhnak 12/6/2015 12:38",
 		"projectNameInput" : "PeterUhnak 12/5/2015 23:58",
 		"quickStartLabel" : "PeterUhnak 12/5/2015 23:58",
 		"recentLabel" : "PeterUhnak 12/5/2015 23:58",
 		"recentList" : "PeterUhnak 12/5/2015 23:58",
-		"setGroup" : "PeterUhnak 12/6/2015 03:59" } }
+		"setGroup" : "PeterUhnak 12/6/2015 03:59",
+		"updateRecentList" : "PeterUhnak 12/6/2015 12:38" } }

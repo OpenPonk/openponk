@@ -4,9 +4,9 @@ initializePresenter
 	recentList
 		items: DCProjectStorage default projects;
 		displayBlock: [ :each | each name ];
-		doubleClickAction: [ recentList selectedItem open ];
+		doubleClickAction: [ self openProject: recentList selectedItem ];
 		handlesDoubleClick: true;
-		menu: [ :menu | self projectMenu: menu ].
+		menu: [ :menu | self projectMenu: menu for: recentList selectedItem ].
 	projectNameInput
 		autoAccept: true;
 		whenTextChanged: [ :newValue | createProjectButton enabled: newValue isNotEmpty ].

@@ -11,5 +11,4 @@ createProject
 					(each first diagramClass new
 						name: each first name;
 						yourself) ].
-	project open.
-	self delete
+	self openProject: project

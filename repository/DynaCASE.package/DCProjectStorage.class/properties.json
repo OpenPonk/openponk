@@ -1,13 +1,13 @@
 {
-	"category" : "DynaCASE",
+	"category" : "DynaCASE-Models",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		"Default" ],
-	"commentStamp" : "PeterUhnak 7/2/2015 00:51",
+	"commentStamp" : "PeterUhnak 12/6/2015 01:18",
 	"instvars" : [
-		"plugins" ],
-	"name" : "DCPluginRegistry",
+		"projects" ],
+	"name" : "DCProjectStorage",
 	"pools" : [
 		 ],
 	"super" : "Object",

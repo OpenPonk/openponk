@@ -1,4 +1,4 @@
-menu
+world menu
 menuCommandOn: aBuilder
 	<worldMenu>
 	(aBuilder item: #DynaCASE)

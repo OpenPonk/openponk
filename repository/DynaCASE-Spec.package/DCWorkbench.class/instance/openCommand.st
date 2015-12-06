@@ -1,3 +1,3 @@
 menu actions
 openCommand
-	DCOpenWorkbenchDialog open
+	DCProjectBrowser open

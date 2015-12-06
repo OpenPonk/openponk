@@ -1,0 +1,19 @@
+{
+	"class" : {
+		"addDiagramButtons:" : "PeterUhnak 12/6/2015 00:54",
+		"defaultSpec" : "PeterUhnak 12/6/2015 03:45",
+		"menuCommandOn:" : "PeterUhnak 12/6/2015 03:32",
+		"open" : "PeterUhnak 12/6/2015 03:31" },
+	"instance" : {
+		"createProject" : "PeterUhnak 12/6/2015 03:59",
+		"createProjectButton" : "PeterUhnak 12/6/2015 03:45",
+		"doesNotUnderstand:" : "PeterUhnak 12/6/2015 03:58",
+		"initialize" : "PeterUhnak 12/6/2015 00:43",
+		"initializePresenter" : "PeterUhnak 12/6/2015 04:00",
+		"initializeWidgets" : "PeterUhnak 12/6/2015 03:58",
+		"projectMenu:" : "PeterUhnak 12/6/2015 03:38",
+		"projectNameInput" : "PeterUhnak 12/5/2015 23:58",
+		"quickStartLabel" : "PeterUhnak 12/5/2015 23:58",
+		"recentLabel" : "PeterUhnak 12/5/2015 23:58",
+		"recentList" : "PeterUhnak 12/5/2015 23:58",
+		"setGroup" : "PeterUhnak 12/6/2015 03:59" } }

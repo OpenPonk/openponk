@@ -3,7 +3,7 @@ moveAwayFrom: aRectangle via: aVector
 	"There should be minDistance between the start and the element. Move it in the direction fo the current segment"
 
 	| vector corners segment |
-	"elements on top of each other... ignore"
+	"source and target of the edge on top of each other... ignore"
 	aVector r = 0
 		ifTrue: [ ^ self ].
 	vector := aVector normalized * (aRectangle origin dist: aRectangle corner).

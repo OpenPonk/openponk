@@ -7,6 +7,7 @@ computeExtraDistance
 	sideOfElement := segment sideOfPoint: element position.
 	normals := element encompassingRectangle corners
 		select: [ :each | (segment sideOfPoint: each) ~= sideOfElement ]
-		thenCollect:
-			[ :each | each dist: (each nearestPointAlongLineFrom: segment from to: segment to) ].
-	^ normals max
+		thenCollect: [ :each | each dist: (each nearestPointAlongLineFrom: segment from to: segment to) ].
+	^ minDistance sign > 0
+		ifTrue: [ normals max ]
+		ifFalse: [ normals max negated ]

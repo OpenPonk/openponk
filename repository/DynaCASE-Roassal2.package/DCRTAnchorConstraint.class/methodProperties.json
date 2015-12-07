@@ -1,7 +1,8 @@
 {
 	"class" : {
 		"example" : "PeterUhnak 11/9/2015 18:06:17",
-		"example2" : "PeterUhnak 11/30/2015 21:11" },
+		"example2" : "PeterUhnak 11/30/2015 21:11",
+		"exampleSelfEdge" : "PeterUhnak 12/7/2015 13:12" },
 	"instance" : {
 		"addAnchor" : "PeterUhnak 11/9/2015 18:06:17",
 		"anchorSegment" : "PeterUhnak 11/9/2015 18:06:17",
@@ -9,7 +10,7 @@
 		"balance" : "PeterUhnak 11/9/2015 18:06:17",
 		"balance:" : "PeterUhnak 11/9/2015 18:06:17",
 		"build" : "PeterUhnak 11/9/2015 18:06:17",
-		"computeExtraDistance" : "PeterUhnak 11/9/2015 18:06:17",
+		"computeExtraDistance" : "PeterUhnak 12/7/2015 13:06",
 		"connectionSegmentsFor:" : "PeterUhnak 11/9/2015 18:06:17",
 		"edge" : "PeterUhnak 11/9/2015 18:06:17",
 		"edge:" : "PeterUhnak 11/9/2015 18:06:17",
@@ -21,10 +22,8 @@
 		"minDistance" : "PeterUhnak 11/9/2015 18:06:17",
 		"minDistance:" : "PeterUhnak 11/9/2015 18:06:17",
 		"moveAnchor" : "PeterUhnak 11/9/2015 18:06:17",
-		"moveAwayFrom:" : "PeterUhnak 11/30/2015 20:46",
-		"moveAwayFrom:via:" : "PeterUhnak 11/30/2015 20:48",
-		"moveAwayFromEnd" : "PeterUhnak 11/9/2015 18:06:17",
-		"moveAwayFromStart" : "PeterUhnak 11/30/2015 19:13",
-		"moveElement" : "PeterUhnak 11/30/2015 20:47",
+		"moveAwayFrom:via:" : "PeterUhnak 12/7/2015 13:11",
+		"moveAwayFromSegment:" : "PeterUhnak 12/7/2015 13:10",
+		"moveElement" : "PeterUhnak 12/7/2015 13:11",
 		"segments" : "PeterUhnak 11/9/2015 18:06:17",
 		"update" : "PeterUhnak 11/9/2015 18:06:17" } }

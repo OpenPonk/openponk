@@ -9,7 +9,7 @@ projectMenu
 	builder
 		addItem: 'Save'
 		icon: Smalltalk ui icons smallSaveIcon
-		action: [ self project saveInImage ].
+		action: [ self workbench projectController saveProject ].
 	builder
 		addItem: 'Add diagram'
 		icon: Smalltalk ui icons smallNewIcon

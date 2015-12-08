@@ -1,11 +1,11 @@
 {
 	"class" : {
-		"from:to:radius:" : "PeterUhnak 8/3/2015 16:17:23" },
+		"from:to:radius:" : "PeterUhnak 10/12/2015 15:16:03" },
 	"instance" : {
-		"angles" : "PeterUhnak 8/3/2015 16:17:23",
-		"biggerAngle" : "PeterUhnak 8/3/2015 16:17:23",
-		"circle" : "PeterUhnak 8/3/2015 16:17:23",
-		"from" : "PeterUhnak 8/3/2015 16:17:23",
-		"setFrom:to:radius:" : "PeterUhnak 8/3/2015 16:17:23",
-		"smallerAngle" : "PeterUhnak 8/3/2015 16:17:23",
-		"to" : "PeterUhnak 8/3/2015 16:17:23" } }
+		"angles" : "PeterUhnak 10/12/2015 15:16:03",
+		"biggerAngle" : "PeterUhnak 10/12/2015 15:16:03",
+		"circle" : "PeterUhnak 10/12/2015 15:16:03",
+		"from" : "PeterUhnak 10/12/2015 15:16:03",
+		"setFrom:to:radius:" : "PeterUhnak 10/12/2015 15:16:03",
+		"smallerAngle" : "PeterUhnak 10/12/2015 15:16:03",
+		"to" : "PeterUhnak 10/12/2015 15:16:03" } }

@@ -1,3 +1,3 @@
 accessing - spec
 workbench
-	^ self
+	^ self owner

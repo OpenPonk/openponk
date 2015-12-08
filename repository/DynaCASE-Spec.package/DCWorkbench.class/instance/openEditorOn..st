@@ -7,14 +7,15 @@ openEditorOn: aDiagram
 		label: aDiagram name;
 		icon: plugin icon;
 		retrievingBlock:
-				[ 
-			| w |
+				[ | w |
 			w := editor buildWithSpec asWidget.
 			editor owner: tab.
 			editor plugin: plugin.
 			editor openDiagram: aDiagram.
 			aDiagram whenChanged: [ tab label: aDiagram name ].
 			editor paletteModel rebuildWidget.
-			editor canvasMenuModel rebuildWidget.
-			w ].
-	tabManager addTab: tab
+			w ];
+		whenTabSelected: [ topToolbar activeEditor: editor ].
+	tabManager addTab: tab.
+	tabManager tabs size = 1
+		ifTrue: [ topToolbar activeEditor: editor ]

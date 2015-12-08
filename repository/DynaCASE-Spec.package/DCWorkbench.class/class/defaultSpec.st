@@ -1,7 +1,7 @@
 specs
 defaultSpec
 	^ SpecLayout composed
-		newRow: [ :row | row newColumn: [ :col | col add: #topMenuModel height: self toolbarHeight ] ]
+		newRow: [ :row | row newColumn: [ :col | col add: #topToolbar height: self toolbarHeight ] ]
 			height: self toolbarHeight;
 		newRow: [ :row | 
 					row

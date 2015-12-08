@@ -1,6 +1,6 @@
 {
 	"class" : {
-		"defaultSpec" : "PeterUhnak 11/27/2015 00:03:53",
+		"defaultSpec" : "PeterUhnak 12/7/2015 22:24",
 		"open" : "PeterUhnak 9/23/2015 03:34:53",
 		"openDiagram:" : "PeterUhnak 11/24/2015 00:08",
 		"openFromFile:" : "PeterUhnak 9/23/2015 03:34:53",
@@ -14,14 +14,12 @@
 		"formModel" : "PeterUhnak 9/23/2015 03:34:53",
 		"initialExtent" : "PeterUhnak 9/23/2015 03:34:53",
 		"initialize" : "PeterUhnak 12/6/2015 00:43",
-		"initializePresenter" : "PeterUhnak 9/23/2015 03:34:53",
-		"initializeTopMenu" : "PeterUhnak 12/6/2015 03:25",
-		"initializeWidgets" : "PeterUhnak 9/23/2015 03:34:53",
+		"initializePresenter" : "PeterUhnak 12/8/2015 18:26",
+		"initializeWidgets" : "PeterUhnak 12/7/2015 22:26",
 		"navigatorModel" : "PeterUhnak 9/23/2015 03:34:53",
-		"newDiagramSubmenu" : "PeterUhnak 9/23/2015 03:34:53",
 		"open" : "PeterUhnak 9/23/2015 03:34:53",
 		"openCommand" : "PeterUhnak 12/6/2015 03:25",
-		"openEditorOn:" : "PeterUhnak 9/23/2015 03:34:53",
+		"openEditorOn:" : "PeterUhnak 12/8/2015 19:49",
 		"openFile:" : "PeterUhnak 9/23/2015 03:34:53",
 		"openFormOn:" : "PeterUhnak 9/23/2015 03:34:53",
 		"openProject:" : "PeterUhnak 9/23/2015 03:34:53",
@@ -31,5 +29,5 @@
 		"saveFile:" : "PeterUhnak 9/23/2015 03:34:53",
 		"tabManager" : "PeterUhnak 9/23/2015 03:34:53",
 		"title" : "PeterUhnak 9/23/2015 03:34:53",
-		"topMenuModel" : "PeterUhnak 9/23/2015 03:34:53",
+		"topToolbar" : "PeterUhnak 12/7/2015 22:24",
 		"workbench" : "PeterUhnak 9/23/2015 03:34:53" } }

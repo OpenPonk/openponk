@@ -1,6 +1,6 @@
 toolbar
-exportAsPng: fileName
+exportAsPng
 	(DCExportDiagramCommand on: roassalView canvas)
 		asPng;
-		fileName: fileName , '.png';
+		fileName: self editor diagramController model name , '.png';
 		execute

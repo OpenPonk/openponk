@@ -1,0 +1,15 @@
+{
+	"class" : {
+		"defaultSpec" : "PeterUhnak 12/7/2015 22:24" },
+	"instance" : {
+		"activeEditor:" : "PeterUhnak 12/8/2015 19:50",
+		"addDiagramMenu" : "PeterUhnak 12/7/2015 22:50",
+		"editorMenu" : "PeterUhnak 12/8/2015 19:10",
+		"initializePresenter" : "PeterUhnak 12/7/2015 22:55",
+		"initializeWidgets" : "PeterUhnak 12/7/2015 21:42",
+		"project" : "PeterUhnak 12/7/2015 22:43",
+		"projectMenu" : "PeterUhnak 12/7/2015 22:54",
+		"rebuildWidget" : "PeterUhnak 12/8/2015 18:22",
+		"toolbar" : "PeterUhnak 12/7/2015 21:43",
+		"toolbarMenu" : "PeterUhnak 12/8/2015 18:43",
+		"workbench" : "PeterUhnak 12/7/2015 22:43" } }

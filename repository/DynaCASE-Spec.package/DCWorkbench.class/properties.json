@@ -6,13 +6,13 @@
 		 ],
 	"commentStamp" : "PeterUhnak 10/29/2014 17:53",
 	"instvars" : [
-		"topMenuModel",
 		"navigatorModel",
 		"tabManager",
 		"formModel",
 		"project",
 		"projectController",
-		"pluginRegistry" ],
+		"pluginRegistry",
+		"topToolbar" ],
 	"name" : "DCWorkbench",
 	"pools" : [
 		 ],

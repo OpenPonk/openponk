@@ -1,3 +1,3 @@
 initialization
 initializePresenter
-	self initializeTopMenu
+	"tabManager whenTabSelected: [ :tab | topToolbar activeEditor: tab ]"

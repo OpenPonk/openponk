@@ -1,9 +1,9 @@
 {
 	"class" : {
-		 },
+		"toolbarMenu:" : "PeterUhnak 12/8/2015 19:21",
+		"toolbarMenuRetriever:" : "PeterUhnak 12/8/2015 19:23" },
 	"instance" : {
-		"diagramClass" : "PeterUhnak 8/3/2015 15:22:47",
-		"diagramControllerClass" : "PeterUhnak 8/3/2015 15:22:47",
-		"icon" : "PeterUhnak 8/3/2015 15:22:47",
-		"name" : "PeterUhnak 8/3/2015 15:22:47",
-		"toolbarForEditor:inGroup:" : "PeterUhnak 8/3/2015 15:22:47" } }
+		"diagramClass" : "PeterUhnak 9/23/2015 03:34:19",
+		"diagramControllerClass" : "PeterUhnak 9/23/2015 03:34:19",
+		"icon" : "PeterUhnak 9/23/2015 03:34:19",
+		"name" : "PeterUhnak 9/23/2015 03:34:19" } }

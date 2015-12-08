@@ -3,6 +3,7 @@ openEditorOn: aDiagram
 	| editor tab plugin |
 	(editor := DCEditor new) workbench: self.
 	plugin := pluginRegistry pluginFor: aDiagram.
+	editor plugin: plugin.
 	(tab := self newTab)
 		label: aDiagram name;
 		icon: plugin icon;
@@ -10,12 +11,9 @@ openEditorOn: aDiagram
 				[ | w |
 			w := editor buildWithSpec asWidget.
 			editor owner: tab.
-			editor plugin: plugin.
 			editor openDiagram: aDiagram.
 			aDiagram whenChanged: [ tab label: aDiagram name ].
 			editor paletteModel rebuildWidget.
 			w ];
 		whenTabSelected: [ topToolbar activeEditor: editor ].
-	tabManager addTab: tab.
-	tabManager tabs size = 1
-		ifTrue: [ topToolbar activeEditor: editor ]
+	tabManager addTab: tab

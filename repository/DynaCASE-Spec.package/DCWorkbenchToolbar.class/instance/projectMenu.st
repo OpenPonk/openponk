@@ -11,6 +11,10 @@ projectMenu
 		icon: Smalltalk ui icons smallSaveIcon
 		action: [ self workbench projectController saveProject ].
 	builder
+		addItem: 'Properties...'
+		icon: Smalltalk ui icons tools
+		action: [ self workbench projectController project maEdit ].
+	builder
 		addItem: 'Add diagram'
 		icon: Smalltalk ui icons smallNewIcon
 		subMenu: self addDiagramMenu.

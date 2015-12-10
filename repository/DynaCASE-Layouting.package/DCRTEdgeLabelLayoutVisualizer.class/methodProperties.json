@@ -1,18 +1,18 @@
 {
 	"class" : {
-		"Configuration" : "PeterUhnak 11/11/2015 10:57",
-		"defaultConfiguration" : "PeterUhnak 11/11/2015 10:59",
-		"openConfiguration" : "PeterUhnak 11/11/2015 11:04" },
+		"Configuration" : "PeterUhnak 11/15/2015 11:40:26",
+		"defaultConfiguration" : "PeterUhnak 11/15/2015 11:40:26",
+		"openConfiguration" : "PeterUhnak 11/15/2015 11:40:26" },
 	"instance" : {
-		"addBoundingBoxFor:" : "PeterUhnak 11/3/2015 23:53",
-		"highlightLabels" : "PeterUhnak 11/10/2015 00:07",
-		"layouter" : "PeterUhnak 11/2/2015 14:00:33",
-		"layouter:" : "PeterUhnak 11/2/2015 14:00:33",
-		"showClusters:labeled:" : "PeterUhnak 11/9/2015 17:08",
-		"showEdgeMarks:" : "PeterUhnak 11/2/2015 14:00:33",
-		"showLabelPositions:" : "PeterUhnak 11/3/2015 07:38",
-		"showLabelPositions:labeled:" : "PeterUhnak 11/5/2015 15:05",
-		"showMatchingGraph:labeled:" : "PeterUhnak 11/3/2015 23:46",
-		"showOverlapGraph:labeled:" : "PeterUhnak 11/9/2015 16:01",
-		"view" : "PeterUhnak 11/2/2015 14:00:33",
-		"view:" : "PeterUhnak 11/2/2015 14:00:33" } }
+		"addBoundingBoxFor:" : "PeterUhnak 11/15/2015 11:40:26",
+		"highlightLabels" : "PeterUhnak 11/15/2015 11:40:26",
+		"layouter" : "PeterUhnak 11/15/2015 11:40:26",
+		"layouter:" : "PeterUhnak 11/15/2015 11:40:26",
+		"showClusters:labeled:" : "PeterUhnak 11/15/2015 11:40:26",
+		"showEdgeMarks:" : "PeterUhnak 11/15/2015 11:40:26",
+		"showLabelPositions:" : "PeterUhnak 11/15/2015 11:40:26",
+		"showLabelPositions:labeled:" : "PeterUhnak 11/15/2015 11:40:26",
+		"showMatchingGraph:labeled:" : "PeterUhnak 11/15/2015 11:40:26",
+		"showOverlapGraph:labeled:" : "PeterUhnak 11/15/2015 11:40:26",
+		"view" : "PeterUhnak 11/15/2015 11:40:26",
+		"view:" : "PeterUhnak 11/15/2015 11:40:26" } }

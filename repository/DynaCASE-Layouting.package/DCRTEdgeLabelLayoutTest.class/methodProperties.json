@@ -2,13 +2,13 @@
 	"class" : {
 		 },
 	"instance" : {
-		"assertPosition:equals:" : "PeterUhnak 11/3/2015 07:12",
-		"initialPositions" : "PeterUhnak 11/3/2015 07:33",
-		"positions" : "PeterUhnak 11/3/2015 07:51",
-		"setUp" : "PeterUhnak 11/3/2015 07:37",
-		"testClusterGraphFor" : "PeterUhnak 11/4/2015 19:59",
-		"testEdgeMarks" : "PeterUhnak 11/3/2015 06:47",
-		"testIndexPositions" : "PeterUhnak 11/3/2015 07:49",
-		"testInitialPositions" : "PeterUhnak 11/3/2015 07:34",
-		"testOverlapGraphFor" : "PeterUhnak 11/3/2015 07:54",
-		"testRemoveFeatureOverlaps" : "PeterUhnak 11/3/2015 07:35" } }
+		"assertPosition:equals:" : "PeterUhnak 11/15/2015 11:40:26",
+		"initialPositions" : "PeterUhnak 11/15/2015 11:40:26",
+		"positions" : "PeterUhnak 11/15/2015 11:40:26",
+		"setUp" : "PeterUhnak 11/15/2015 11:40:26",
+		"testClusterGraphFor" : "PeterUhnak 11/15/2015 11:40:26",
+		"testEdgeMarks" : "PeterUhnak 11/15/2015 11:40:26",
+		"testIndexPositions" : "PeterUhnak 11/15/2015 11:40:26",
+		"testInitialPositions" : "PeterUhnak 11/15/2015 11:40:26",
+		"testOverlapGraphFor" : "PeterUhnak 11/15/2015 11:40:26",
+		"testRemoveFeatureOverlaps" : "PeterUhnak 11/15/2015 11:40:26" } }

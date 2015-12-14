@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Layouting-DGT",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCGTAbstractVertexOrdering",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

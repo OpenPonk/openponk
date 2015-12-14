@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-Layouting-DGT",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"from",
+		"to" ],
+	"name" : "DCGTEdge",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

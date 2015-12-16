@@ -1,0 +1,24 @@
+{
+	"class" : {
+		"exampleRouting" : "PeterUhnak 12/16/2015 16:04",
+		"exampleVisibility" : "PeterUhnak 12/15/2015 02:08" },
+	"instance" : {
+		"applyRoute:to:" : "PeterUhnak 12/15/2015 04:01",
+		"collinearizeRoute:" : "PeterUhnak 12/16/2015 11:45",
+		"collinearizeRoutes:" : "PeterUhnak 12/16/2015 11:43",
+		"determineRoutes:" : "PeterUhnak 12/15/2015 02:11",
+		"determineRoutesFor:" : "PeterUhnak 12/15/2015 02:20",
+		"generateSegments:boxes:" : "PeterUhnak 12/15/2015 02:07",
+		"generateSegments:boxes:fixedAxis:" : "PeterUhnak 12/15/2015 02:07",
+		"interestingPointFor:" : "PeterUhnak 12/16/2015 02:38",
+		"interestingPointsFor:" : "PeterUhnak 12/15/2015 02:29",
+		"orderingFor:" : "PeterUhnak 12/16/2015 12:48",
+		"overlapGraphFor:" : "PeterUhnak 12/16/2015 12:47",
+		"routeFor:visibility:" : "PeterUhnak 12/16/2015 03:48",
+		"routeFrom:to:visibility:" : "PeterUhnak 12/15/2015 03:56",
+		"routesFor:visibility:" : "PeterUhnak 12/15/2015 03:59",
+		"run" : "PeterUhnak 12/15/2015 02:11",
+		"segmentizeRoutes:" : "PeterUhnak 12/16/2015 12:11",
+		"separateRoutes:" : "PeterUhnak 12/16/2015 12:11",
+		"sideCentersFor:" : "PeterUhnak 12/15/2015 02:40",
+		"visibilityGraphFor:" : "PeterUhnak 12/16/2015 04:12" } }

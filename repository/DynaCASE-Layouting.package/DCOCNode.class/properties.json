@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Layouting-OCR",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"element" ],
+	"name" : "DCOCNode",
+	"pools" : [
+		 ],
+	"super" : "DCGTNode",
+	"type" : "normal" }

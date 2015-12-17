@@ -1,3 +1,3 @@
 as yet unclassified
 collinearizeRoutes: routes
-	^ routes collect: [ :each | self collinearizeRoute: each ]
+	^ routes collect: [ :each | self class collinearizeRoute: each ]

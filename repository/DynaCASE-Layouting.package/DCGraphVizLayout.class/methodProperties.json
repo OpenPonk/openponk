@@ -1,0 +1,20 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"addEdgesTo:for:" : "PeterUhnak 12/17/2015 03:06",
+		"addNodesTo:for:" : "PeterUhnak 12/17/2015 03:06",
+		"applyLayout:to:" : "PeterUhnak 12/17/2015 03:06",
+		"applyLayoutToEdges:" : "PeterUhnak 12/17/2015 11:26",
+		"createEmptyGraph" : "PeterUhnak 12/17/2015 11:25",
+		"doExecute:" : "PeterUhnak 12/17/2015 11:15",
+		"edgeLayoutToRoute:" : "PeterUhnak 12/17/2015 11:19",
+		"inchToPixel:" : "PeterUhnak 12/17/2015 03:22",
+		"indexFor:" : "PeterUhnak 12/17/2015 03:23",
+		"initialize" : "PeterUhnak 12/17/2015 03:06",
+		"nodeIndexFor:" : "PeterUhnak 12/17/2015 03:12",
+		"nodePositionFor:" : "PeterUhnak 12/17/2015 03:22",
+		"on:directed:undirected:" : "PeterUhnak 12/17/2015 03:06",
+		"pixelToInch:" : "PeterUhnak 12/17/2015 03:22",
+		"pointToPixel:" : "PeterUhnak 12/17/2015 03:06",
+		"positionFrom:" : "PeterUhnak 12/17/2015 11:18" } }

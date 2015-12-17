@@ -1,11 +1,11 @@
 {
 	"class" : {
+		"collinearizeRoute:" : "PeterUhnak 12/17/2015 01:24",
 		"exampleRouting" : "PeterUhnak 12/16/2015 16:04",
 		"exampleVisibility" : "PeterUhnak 12/15/2015 02:08" },
 	"instance" : {
 		"applyRoute:to:" : "PeterUhnak 12/15/2015 04:01",
-		"collinearizeRoute:" : "PeterUhnak 12/16/2015 11:45",
-		"collinearizeRoutes:" : "PeterUhnak 12/16/2015 11:43",
+		"collinearizeRoutes:" : "PeterUhnak 12/17/2015 01:20",
 		"determineRoutes:" : "PeterUhnak 12/15/2015 02:11",
 		"determineRoutesFor:" : "PeterUhnak 12/15/2015 02:20",
 		"generateSegments:boxes:" : "PeterUhnak 12/15/2015 02:07",

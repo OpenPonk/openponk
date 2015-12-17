@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-Layouting-GraphViz",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"directed",
+		"undirected" ],
+	"name" : "DCGraphVizLayoutXml",
+	"pools" : [
+		 ],
+	"super" : "RTLayout",
+	"type" : "normal" }

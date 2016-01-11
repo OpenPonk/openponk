@@ -8,16 +8,16 @@ applyLayoutToEdges: aCollection
 			| c e |
 			e := allEdges at: (self indexFor: each).
 			c := Color random.
-			e shape router points: (self edgeLayoutToRoute: each).
-			(self edgeLayoutToRoute: each)
+			e shape router points: (self edgeLayoutToRoute: each) allButFirst allButLast.
+			"(self edgeLayoutToRoute: each)
 				do:
 					[ :p | 
 					allEdges anyOne view
 						add:
 							((RTEllipse new
 								color: c;
-								element) translateTo: p) ].
+								element) translateTo: p) ]."
 			e
 				update;
 				signalUpdate ].
-	allEdges anyOne view signalUpdate
+	allEdges ifNotEmpty: [ allEdges anyOne view signalUpdate ]

@@ -4,10 +4,13 @@ example
 v := RTView new.
 es := (RTEllipse new color: Color black; size: 20; elementsOn: #(1 2)).
 e := DCRTStyledConnection new
+	decorate: [ :deco |
+		deco
+			dashdotLine;
+			emptyDiamondTail;
+			filledArrowHead
+	];
 	withContinuousRectangleAttachPoint;
-	dashdotLine;
-	emptyDiamondTail;
-	filledArrowHead;
 	color: Color red;
 	edgeFrom: es first to: es second.
 	e shape addPoint: -50 @ 10.

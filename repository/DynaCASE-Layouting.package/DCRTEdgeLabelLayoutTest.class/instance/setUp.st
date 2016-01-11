@@ -13,6 +13,7 @@ setUp
 		size: 38;
 		elementOn: edge.
 	layout := DCRTEdgeLabelLayout new.
+	layout spacing: 50.
 	layout elements: elements.
 	layout edges: {edge}.
 	layout labels: {label}

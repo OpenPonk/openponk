@@ -6,7 +6,7 @@ testEdgeMarks
 	self
 		assert: marks
 		equals:
-			{(10 @ 0).
+			{(25 @ 0).
 			(40 @ 0).
 			(70 @ 0).
-			(90 @ 0)}
+			(75 @ 0)}

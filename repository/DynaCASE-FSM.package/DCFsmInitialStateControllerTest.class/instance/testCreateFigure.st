@@ -1,6 +1,6 @@
 tests
 testCreateFigure
 	super testCreateFigure.
-	self assert: figure shape class = RTEllipse.
-	self assert: figure color = Color black.
-	self assert: figure extent = (14 @ 14)
+	self assert: figure element shape class equals: RTEllipse.
+	self assert: figure element color equals: Color black.
+	self assert: figure element extent equals: 14 @ 14

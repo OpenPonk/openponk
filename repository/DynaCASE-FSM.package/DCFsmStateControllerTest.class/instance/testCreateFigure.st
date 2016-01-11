@@ -1,8 +1,9 @@
 tests
 testCreateFigure
-	self skip.
-	super testCreateFigure.
-	self assert: figure class = RTElement.
-	self assert: figure shape class = RTEllipse.
-	self assert: figure color = Color transparent.
-	self assert: figure extent = (40 @ 40)
+	self renderFigure.
+	self assert: view elements size equals: 2.
+	self assert: figure class equals: DCFsmStateFigure.
+	self assert: figure element class equals: RTElement.
+	self assert: figure element shape class equals: RTRoundedBox.
+	self assert: figure element color equals: Color transparent.
+	self assert: figure element extent equals: 50 @ 50

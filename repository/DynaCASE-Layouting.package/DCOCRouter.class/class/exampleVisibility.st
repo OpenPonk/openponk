@@ -36,4 +36,4 @@ visGraph edges do: [ :each |
 
 v @ RTDraggableView @ RTZoomableView.
 
-v
+^ v

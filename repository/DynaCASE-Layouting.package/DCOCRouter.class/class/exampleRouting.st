@@ -74,4 +74,4 @@ r2 at: 5 put: 73@ -20."
 
 v @ RTDraggableView @ RTZoomableView.
 
-v
+^ v

@@ -58,9 +58,10 @@ RTDominanceTreeLayout new
 
 DCRTEdgeLabelLayout new
 	labels: edgeLabels;
+	withVisualization;
 "	labels: {edgeLabels last};"
 	on: es edges: edges.
 	
 v canvas camera focusOnCenterScaled: (521.0@700.0).
 
-v
+^ v

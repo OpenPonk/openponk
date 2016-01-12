@@ -1,8 +1,8 @@
 {
 	"class" : {
 		"collinearizeRoute:" : "PeterUhnak 12/17/2015 01:24",
-		"exampleRouting" : "PeterUhnak 1/12/2016 03:39",
-		"exampleVisibility" : "PeterUhnak 12/15/2015 02:08" },
+		"exampleRouting" : "PeterUhnak 1/12/2016 03:41",
+		"exampleVisibility" : "PeterUhnak 1/12/2016 03:42" },
 	"instance" : {
 		"applyRoute:to:" : "PeterUhnak 12/15/2015 04:01",
 		"collinearizeRoutes:" : "PeterUhnak 12/17/2015 01:20",

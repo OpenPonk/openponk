@@ -45,9 +45,10 @@ edges := (lines collect: [ :each | |e lbl|
 DCRTEdgeLabelLayout new
 	spacing: 90;
 	labels: edgeLabels;
+	withVisualization;
 "	labels: {edgeLabels last};"
 	on: es edges: edges.
 	
 v canvas camera focusOnCenterScaled: (450.0@700.0).
 
-v
+^ v

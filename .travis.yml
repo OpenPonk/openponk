@@ -7,8 +7,9 @@ os:
 #  - osx
 
 addons:
-    apt:
-        - libcairo2:i386 # install cairo for Roassal
+  apt:
+    packages:
+      - libcairo2:i386 # install cairo for Roassal
 
 # Select compatible Smalltalk image(s)
 smalltalk:

@@ -29,6 +29,7 @@ prepare_deploy() {
 	fi
 	cat > "$DEPLOY_DIR/run.sh" << EOF
 #!/bin/sh
+readonly VM_UI="vms/Pharo-5.0/pharo-ui"
 readonly VM_UI="$(basename $(dirname "$SMALLTALK_CI_VM"))/pharo-ui"
 \$VM_UI $DEPLOY_NAME.image
 EOF
@@ -38,6 +39,15 @@ EOF
 prepare_image() {
 	cp "$SMALLTALK_CI_IMAGE" "$DEPLOY_DIR/$DEPLOY_NAME.image"
 	cp "$SMALLTALK_CI_CHANGES" "$DEPLOY_DIR/$DEPLOY_NAME.changes"
+}
+
+install_all() {
+	# install core
+	$SMALLTALK_CI_VM $SMALLTALK_CI_IMAGE eval --save "Metacello new baseline: 'DynaCASE'; repository: 'github://dynacase/dynacase/repository'; load"
+	# install BORM
+	$SMALLTALK_CI_VM $SMALLTALK_CI_IMAGE eval --save "Metacello new baseline: 'BormEditor'; repository: 'github://dynacase/borm-editor/repository'; load"
+	# install UML
+	$SMALLTALK_CI_VM $SMALLTALK_CI_IMAGE eval --save "Metacello new baseline: 'DCUmlClassEditor'; repository: 'github://dynacase/class-editor/repository'; load"
 }
 
 prepare_vms() {
@@ -52,6 +62,7 @@ deploy() {
 }
 
 main() {
+	install_all
 	prepare_deploy
 	prepare_image
 	prepare_vms

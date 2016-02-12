@@ -18,10 +18,11 @@ smalltalk:
 before_install:
   - openssl aes-256-cbc -K $encrypted_cacb30fd339e_key -iv $encrypted_cacb30fd339e_iv -in .ssh/id_dynacase_travis.enc -out .ssh/id_dynacase_travis -d
   - chmod 0400 .ssh/id_dynacase_travis
+  - eval $(ssh-agent -s)
+  - ssh-add .ssh/id_dynacase_travis
 
 before_script:
   - echo -e "Host ccmi.fit.cvut.cz\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
 after_success:
-  - tar czf dynacase.tar.gz $SMALLTALK_CI_BUILD
-  - scp -i .ssh/id_dynacase_travis -rp dynacase.tar.gz dynacase@ccmi.fit.cvut.cz:~/builds/
+  - ./deploy.sh

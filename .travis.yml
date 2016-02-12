@@ -14,3 +14,6 @@ addons:
 # Select compatible Smalltalk image(s)
 smalltalk:
   - Pharo-5.0
+
+before_install:
+  - openssl aes-256-cbc -K $encrypted_300117cd6c66_key -iv $encrypted_300117cd6c66_iv -in id_dynacase_travis.enc -out id_dynacase_travis -d

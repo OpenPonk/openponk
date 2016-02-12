@@ -23,4 +23,5 @@ before_script:
   - echo -e "Host ccmi.fit.cvut.cz\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
 after_success:
-  scp -i .ssh/id_dynacase_travis -rp $TRAVIS_BUILD_DIR dynacase@ccmi.fit.cvut.cz:~/builds/
+  tar czf dynacase.tar.gz $TRAVIS_BUILD_DIR
+  scp -i .ssh/id_dynacase_travis -rp dynacase.tar.gz dynacase@ccmi.fit.cvut.cz:~/builds/

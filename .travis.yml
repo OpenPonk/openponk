@@ -1,15 +1,15 @@
 language: smalltalk
 sudo: false
+
+# Select operating system(s)
+os:
+  - linux
+#  - osx
+
 addons:
     apt:
-        packages:
-            - libssl1.0.0:i386
-            - libcairo2:i386
+        - libcairo2:i386 # install cairo for Roassal
+
+# Select compatible Smalltalk image(s)
 smalltalk:
-    - Pharo-5.0
-env:
-    global:
-        - BASELINE="DynaCASE"
-        - TESTS="DynaCASE.*"
-        - PACKAGES="/repository"
-        - BASELINE_GROUP="default"
+  - Pharo-5.0

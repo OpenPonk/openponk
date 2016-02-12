@@ -17,6 +17,7 @@ smalltalk:
 
 before_install:
   - openssl aes-256-cbc -K $encrypted_cacb30fd339e_key -iv $encrypted_cacb30fd339e_iv -in .ssh/id_dynacase_travis.enc -out .ssh/id_dynacase_travis -d
+  - chmod 0400 .ssh/id_dynacase_travis
 
 before_script:
   - echo -e "Host ccmi.fit.cvut.cz\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config

@@ -1,2 +1,2 @@
-(name 'BaselineOfDynaCASE-PeterUhnak.27' message 'More experiemtns.' id 'bd1db706-7d8e-4489-97aa-8cf3aaf060a5' date '13 February 2016' time '6:55:40.013762 pm' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.26' message 'NO circles?
-' id '6b58b43b-c940-50ff-b61e-a116a804f021' date '13 February 2016' time '6:45:32 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'BaselineOfDynaCASE-PeterUhnak.28' message 'Include class editor.' id '34ab5bed-cc2b-4915-95de-31f63600c8be' date '13 February 2016' time '9:11:20.167758 pm' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.27' message 'More experiemtns.
+' id '68bd351a-56a9-5d68-a0cd-e609c7fff915' date '13 February 2016' time '6:55:43 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

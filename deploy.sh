@@ -7,7 +7,7 @@ set -v
 ### TEMP
 
 if [[ 1 -eq 0 ]]; then
-	readonly SMALLTALK_CI_BUILD="smalltalkCI-master/_builds/$(ls smalltalkCI-master/_builds/ | sort -n | head -n 1)"
+	readonly SMALLTALK_CI_BUILD=smalltalkCI-master/_builds/2016_02_12_19_12_22
 	readonly SMALLTALK_CI_IMAGE="$SMALLTALK_CI_BUILD/TravisCI.image"
 	readonly SMALLTALK_CI_CHANGES="$SMALLTALK_CI_BUILD/TravisCI.changes"
 	readonly SMALLTALK_CI_VM=smalltalkCI-master/_cache/vms/Pharo-5.0/pharo
@@ -15,7 +15,7 @@ if [[ 1 -eq 0 ]]; then
 	readonly TRAVIS_BUILD_NUMBER=20
 fi
 
-### /TEMP
+###
 
 
 readonly DEPLOY_DIR="$SMALLTALK_CI_BUILD/deploy"
@@ -29,7 +29,6 @@ prepare_deploy() {
 	fi
 	cat > "$DEPLOY_DIR/run.sh" << EOF
 #!/bin/sh
-readonly VM_UI="vms/Pharo-5.0/pharo-ui"
 readonly VM_UI="$(basename $(dirname "$SMALLTALK_CI_VM"))/pharo-ui"
 \$VM_UI $DEPLOY_NAME.image
 EOF
@@ -39,21 +38,6 @@ EOF
 prepare_image() {
 	cp "$SMALLTALK_CI_IMAGE" "$DEPLOY_DIR/$DEPLOY_NAME.image"
 	cp "$SMALLTALK_CI_CHANGES" "$DEPLOY_DIR/$DEPLOY_NAME.changes"
-	install_all
-}
-
-image_eval() {
-	local command="$1"
-	$SMALLTALK_CI_VM "$DEPLOY_DIR/$DEPLOY_NAME.image" eval --save "$command"
-}
-
-install_all() {
-	# install core
-	image_eval "Metacello new baseline: 'DynaCASE'; repository: 'github://dynacase/dynacase/repository'; load"
-	# install BORM
-	image_eval "Metacello new baseline: 'BormEditor'; repository: 'github://dynacase/borm-editor/repository'; load"
-	# install UML
-	image_eval "Metacello new baseline: 'DCUmlClassEditor'; repository: 'github://dynacase/class-editor/repository'; load"
 }
 
 prepare_vms() {

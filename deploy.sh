@@ -44,7 +44,7 @@ prepare_image() {
 
 image_eval() {
 	local command="$1"
-	$SMALLTALK_CI_VM "$DEPLOY_DIR/$DEPLOY_NAME" eval --save "$command"
+	$SMALLTALK_CI_VM "$DEPLOY_DIR/$DEPLOY_NAME.image" eval --save "$command"
 }
 
 install_all() {

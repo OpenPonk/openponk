@@ -2,7 +2,7 @@
 set -o errexit
 set -v
 
-source "smalltalkCI-master/helpers.sh"
+source "$SMALLTALK_CI_HOME/helpers.sh"
 
 ### TEMP
 

@@ -28,11 +28,11 @@ baseline: spec
 				baseline: 'DCUmlClassEditor'
 					with: [ spec
 						repository: 'github://dynacase/class-editor:master/repository';
-						load: #plugin ];
+						loads: #('plugin') ];
 				baseline: 'BormEditor'
 					with: [ spec
 						repository: 'github://dynacase/borm-editor:master/repository';
-						load: #plugin ].
+						load: #('plugin') ].
 			spec
 				package: 'DynaCASE' with: [ spec requires: #('DynaCASEModel' 'Roassal2' 'Ston' 'PetitParser') ];
 				package: 'DynaCASE-Trachel';

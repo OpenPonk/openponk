@@ -39,15 +39,21 @@ EOF
 prepare_image() {
 	cp "$SMALLTALK_CI_IMAGE" "$DEPLOY_DIR/$DEPLOY_NAME.image"
 	cp "$SMALLTALK_CI_CHANGES" "$DEPLOY_DIR/$DEPLOY_NAME.changes"
+	install_all
+}
+
+image_eval() {
+	local command="$1"
+	$SMALLTALK_CI_VM "$DEPLOY_DIR/$DEPLOY_NAME" eval --save "$command"
 }
 
 install_all() {
 	# install core
-	$SMALLTALK_CI_VM $SMALLTALK_CI_IMAGE eval --save "Metacello new baseline: 'DynaCASE'; repository: 'github://dynacase/dynacase/repository'; load"
+	image_eval "Metacello new baseline: 'DynaCASE'; repository: 'github://dynacase/dynacase/repository'; load"
 	# install BORM
-	$SMALLTALK_CI_VM $SMALLTALK_CI_IMAGE eval --save "Metacello new baseline: 'BormEditor'; repository: 'github://dynacase/borm-editor/repository'; load"
+	image_eval "Metacello new baseline: 'BormEditor'; repository: 'github://dynacase/borm-editor/repository'; load"
 	# install UML
-	$SMALLTALK_CI_VM $SMALLTALK_CI_IMAGE eval --save "Metacello new baseline: 'DCUmlClassEditor'; repository: 'github://dynacase/class-editor/repository'; load"
+	image_eval "Metacello new baseline: 'DCUmlClassEditor'; repository: 'github://dynacase/class-editor/repository'; load"
 }
 
 prepare_vms() {
@@ -62,9 +68,8 @@ deploy() {
 }
 
 main() {
-	install_all
-	prepare_deploy
 	prepare_image
+	prepare_deploy
 	prepare_vms
 	deploy
 }

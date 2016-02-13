@@ -3,7 +3,8 @@ SmalltalkCISpec {
 		SCIMetacelloLoadSpec {
 			#baseline : 'DynaCASE',
 			#directory : 'repository',
-			#platforms : [ #pharo ]
+			#platforms : [ #pharo ],
+			#load : [ 'complete' ]
 		}
 	],
 	#testing : {

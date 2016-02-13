@@ -32,7 +32,7 @@ baseline: spec
 				baseline: 'BormEditor'
 					with: [ spec
 						repository: 'github://dynacase/borm-editor:master/repository';
-						loads: #('plugin') ].
+						loads: #('default') ].
 			spec
 				package: 'DynaCASE' with: [ spec requires: #('DynaCASEModel' 'Roassal2' 'Ston' 'PetitParser') ];
 				package: 'DynaCASE-Trachel';

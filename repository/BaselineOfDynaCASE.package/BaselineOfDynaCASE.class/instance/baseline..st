@@ -28,7 +28,7 @@ baseline: spec
 				baseline: 'DCUmlClassEditor'
 					with: [ spec
 						repository: 'github://dynacase/class-editor:master/repository';
-						loads: #('plugin') ];
+						loads: #('default') ];
 				baseline: 'BormEditor'
 					with: [ spec
 						repository: 'github://dynacase/borm-editor:master/repository';

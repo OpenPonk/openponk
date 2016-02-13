@@ -8,6 +8,9 @@ SmalltalkCISpec {
 		}
 	],
 	#testing : {
-		#packages : [ 'DynaCASE.*', 'Borm.*' ]
+		#packages : [ 'DynaCASE.*' ],
+		#include : {
+			#packages : [ 'Borm.*' ]
+		}
 	}
 }

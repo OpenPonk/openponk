@@ -1,5 +1,4 @@
 #!/bin/bash
-set -o nounset
 set -o errexit
 set -v
 
@@ -8,13 +7,14 @@ source "smalltalkCI-master/helpers.sh"
 ### TEMP
 
 if [[ 1 -eq 0 ]]; then
-	readonly SMALLTALK_CI_BUILD=smalltalkCI-master/_builds/2016_02_12_19_12_22
+	readonly SMALLTALK_CI_BUILD="smalltalkCI-master/_builds/$(ls smalltalkCI-master/_builds | sort -n | head -n 1)"
 	readonly SMALLTALK_CI_IMAGE="$SMALLTALK_CI_BUILD/TravisCI.image"
 	readonly SMALLTALK_CI_CHANGES="$SMALLTALK_CI_BUILD/TravisCI.changes"
 	readonly SMALLTALK_CI_VM=smalltalkCI-master/_cache/vms/Pharo-5.0/pharo
 	readonly SMALLTALK_CI_VMS=smalltalkCI-master/_cache/vms
 	readonly TRAVIS_BUILD_NUMBER=20
 	readonly TRAVIS_BRANCH=master
+	readonly TRAVIS=true
 fi
 
 ###

@@ -25,8 +25,14 @@ baseline: spec
 						versionString: #development;
 						loads: #('Parser');
 						repository: 'http://smalltalkhub.com/mc/Moose/PetitParser/main/' ];
-				baseline: 'DCUmlClassEditor' with: [ spec repository: 'github://dynacase/class-editor:master/repository' ];
-				baseline: 'BormEditor' with: [ spec repository: 'github://dynacase/borm-editor:master/repository' ].
+				baseline: 'DCUmlClassEditor'
+					with: [ spec
+						repository: 'github://dynacase/class-editor:master/repository';
+						load: #plugin ];
+				baseline: 'BormEditor'
+					with: [ spec
+						repository: 'github://dynacase/borm-editor:master/repository';
+						load: #plugin ].
 			spec
 				package: 'DynaCASE' with: [ spec requires: #('DynaCASEModel' 'Roassal2' 'Ston' 'PetitParser') ];
 				package: 'DynaCASE-Trachel';
@@ -34,4 +40,4 @@ baseline: spec
 				package: 'DynaCASE-Spec';
 				package: 'DynaCASE-FSM'.
 			spec group: 'default' with: #('DynaCASE' 'DynaCASE-Trachel' 'DynaCASE-Roassal2' 'DynaCASE-Spec' 'DynaCASE-FSM').
-			spec group: 'complete' with: #('default' 'DCUmlClassEditor' 'BormEditor') ]
+			spec group: 'complete' with: #('default' 'BormEditor') ]

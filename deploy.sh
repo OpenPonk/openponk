@@ -1,6 +1,5 @@
 #!/bin/bash
 set -o errexit
-set -v
 
 source "$SMALLTALK_CI_HOME/helpers.sh"
 

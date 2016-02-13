@@ -1,2 +1,2 @@
-(name 'BaselineOfDynaCASE-PeterUhnak.24' message 'How about this?' id '5e8a0cd4-8930-47a0-9fde-a922d7de0025' date '13 February 2016' time '5:07:41.73612 pm' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.23' message 'Experimenting with bare setups.
-' id 'f6722e86-00bc-5963-92ef-3f520a25e6d9' date '13 February 2016' time '4:56:58 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'BaselineOfDynaCASE-PeterUhnak.25' message 'Typo.' id 'c8ae32ba-4c6b-45d4-9f13-2bf0da0bc6bf' date '13 February 2016' time '5:09:42.770388 pm' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.24' message 'How about this?
+' id '31716829-5454-5f71-9eeb-4660822463b9' date '13 February 2016' time '5:07:44 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

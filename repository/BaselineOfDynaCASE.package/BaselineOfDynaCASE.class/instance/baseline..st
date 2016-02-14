@@ -40,4 +40,4 @@ baseline: spec
 				package: 'DynaCASE-Spec';
 				package: 'DynaCASE-FSM'.
 			spec group: 'default' with: #('DynaCASE' 'DynaCASE-Trachel' 'DynaCASE-Roassal2' 'DynaCASE-Spec' 'DynaCASE-FSM').
-			spec group: 'complete' with: #('default' 'BormEditor' 'ClassEditor') ]
+			spec group: 'complete' with: #('BormEditor' 'DCUmlClassEditor') ]

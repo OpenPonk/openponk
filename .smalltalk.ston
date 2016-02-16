@@ -10,7 +10,7 @@ SmalltalkCISpec {
 	#testing : {
 		#packages : [ 'DynaCASE.*' ],
 		#include : {
-			#packages : [ 'Borm.*' ]
+			#packages : [ 'Borm.*', 'DynaCASE.*' ]
 		}
 	}
 }

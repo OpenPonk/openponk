@@ -1,2 +1,2 @@
-(name 'BaselineOfDynaCASE-PeterUhnak.30' message 'Maybe problems with importing?' id '83f733b0-d945-4715-9811-1b9cfe5b3aac' date '14 February 2016' time '4:40:00.105407 pm' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.29' message 'Don''t load the project itself and let plugin do it for me.
-' id '07ba4f9a-0021-59a3-8b56-a8f390f16080' date '14 February 2016' time '4:32:23 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'BaselineOfDynaCASE-PeterUhnak.31' message 'Hopefully maybe finally fixed all-in-one building.' id '5e90dbc8-edbd-49a6-a7ce-7277500b0cd2' date '16 February 2016' time '10:48:36.331302 am' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.30' message 'Maybe problems with importing?
+' id '04dde13f-eeeb-59bc-8318-cc780a3e2e48' date '14 February 2016' time '4:40:01 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

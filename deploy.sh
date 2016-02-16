@@ -22,7 +22,7 @@ fi
 readonly DEPLOY_NAME="dynacase"
 readonly DEPLOY_DIR="$SMALLTALK_CI_BUILD/deploy/$DEPLOY_NAME"
 readonly SSH_IDENTITY=.ssh/id_dynacase_travis
-readonly DEPLOY_TARGET="dynacase@ccmi.fit.cvut.cz:~/www/builds/"
+readonly DEPLOY_TARGET="dynacase@ccmi.fit.cvut.cz:~/www/builds/all-in-one/"
 
 prepare_deploy() {
 	if [[ ! -d $DEPLOY_DIR ]]; then

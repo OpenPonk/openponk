@@ -22,7 +22,9 @@ fi
 readonly DEPLOY_NAME="dynacase"
 readonly DEPLOY_DIR="$SMALLTALK_CI_BUILD/deploy/$DEPLOY_NAME"
 readonly SSH_IDENTITY=.ssh/id_dynacase_travis
-readonly DEPLOY_TARGET="dynacase@ccmi.fit.cvut.cz:~/www/builds/all-in-one/"
+readonly DEPLOY_MACHINE="dynacase@ccmi.fit.cvut.cz"
+readonly DEPLOY_TARGET_DIR="~/www/builds/all-in-one"
+readonly DEPLOY_TARGET="$DEPLOY_MACHINE:$DEPLOY_TARGET_DIR"
 
 prepare_deploy() {
 	if [[ ! -d $DEPLOY_DIR ]]; then
@@ -54,6 +56,7 @@ deploy() {
 	local build_zip="${DEPLOY_NAME}-${TRAVIS_BUILD_NUMBER}.zip"
 	zip -r "$build_zip" "$DEPLOY_NAME"
 	scp -rp "$build_zip" "$DEPLOY_TARGET"
+	ssh "$DEPLOY_MACHINE" "cp ${DEPLOY_TARGET_DIR}/${build_zip} {$DEPLOY_TARGET_DIR}/latest.zip"
 }
 
 main() {

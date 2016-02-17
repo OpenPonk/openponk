@@ -56,7 +56,7 @@ deploy() {
 	local build_zip="${DEPLOY_NAME}-${TRAVIS_BUILD_NUMBER}.zip"
 	zip -r "$build_zip" "$DEPLOY_NAME"
 	scp -rp "$build_zip" "$DEPLOY_TARGET"
-	ssh "$DEPLOY_MACHINE" "cp ${DEPLOY_TARGET_DIR}/${build_zip} {$DEPLOY_TARGET_DIR}/latest.zip"
+	ssh "$DEPLOY_MACHINE" "cp ${DEPLOY_TARGET_DIR}/${build_zip} ${DEPLOY_TARGET_DIR}/latest.zip"
 }
 
 main() {

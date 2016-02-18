@@ -15,7 +15,7 @@ setup() {
 	elif [ "$OS" == "mac" ]; then
 		PHARO_VM=$(find $VMS/mac -name pharo)
 	elif [ "$OS" == "linux" ]; then
-		PHARO_VM=$(find $VMS/linux -name pharo-ui)
+		PHARO_VM=$(find $VMS/linux -name pharo)
 	fi
 }
 

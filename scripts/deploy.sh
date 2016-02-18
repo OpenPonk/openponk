@@ -30,12 +30,12 @@ prepare_deploy() {
 	cp $TRAVIS_BUILD_DIR/scripts/run.sh $DEPLOY_DIR/run.sh
 }
 
-prepare_image() {
+copy_image() {
 	cp "$SMALLTALK_CI_IMAGE" "$DEPLOY_DIR/$DEPLOY_NAME.image"
 	cp "$SMALLTALK_CI_CHANGES" "$DEPLOY_DIR/$DEPLOY_NAME.changes"
 }
 
-download-vm() {
+download_vm() {
 	local os=$1
 	local vm_dir=$2
 	local url="http://files.pharo.org/get-files/50/pharo-$os-stable.zip"
@@ -43,21 +43,39 @@ download-vm() {
 	curl --silent --location --compressed --output $vm_dir/vm.zip $url
 	unzip -q $vm_dir/vm.zip -d $vm_dir
 	rm -f $vm_dir/vm.zip
+	sources=$(find "$vm_dir/../linux" -name 'PharoV40.sources')
+	cp $sources $vm_dir
 }
 
 prepare_vms() {
 	mkdir -p $DEPLOY_DIR/vms/linux
 	# no need to download linux vm again
 	cp -rv $SMALLTALK_CI_VMS/* $DEPLOY_DIR/vms/linux
-	download-vm mac $DEPLOY_DIR/vms/mac
-	download-vm win $DEPLOY_DIR/vms/win
+	download_vm mac $DEPLOY_DIR/vms/mac
+	download_vm win $DEPLOY_DIR/vms/win
+}
 
+run_in_image() {
+	local cmd= $1
+	local vm=$(find $DEPLOY_DIR/vms/linux -name pharo | tail -n 1)
+	print_info "$cmd"
+	timer_start
+	$vm --nodisplay $DEPLOY_DIR/$DEPLOY_NAME.image eval --save "$cmd"
+	timer_finish
+}
+
+postprocess_image() {
+	# this is mainly to drive the overall size down
+	run_in_image 'Smalltalk cleanUp: true'
+	#run_in_image 'PharoChangesCondenser condense'
+	rm -f $DEPLOY_DIR/$DEPLOY_NAME.changes.bak
 }
 
 deploy() {
 	prepare_deploy
-	prepare_image
+	copy_image
 	prepare_vms
+	postprocess_image
 
 	cd $DEPLOY_DIR/..
 	local build_zip="${DEPLOY_NAME}-${TRAVIS_BUILD_NUMBER}.zip"

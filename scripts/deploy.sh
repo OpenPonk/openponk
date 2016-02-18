@@ -5,7 +5,7 @@ source "$SMALLTALK_CI_HOME/helpers.sh"
 
 ### TEMP
 
-if [[ 1 -eq 0 ]]; then
+if [[ -z $TRAVIS ]]; then
 	readonly SMALLTALK_CI_BUILD="smalltalkCI-master/_builds/$(ls smalltalkCI-master/_builds | sort -n | head -n 1)"
 	readonly SMALLTALK_CI_IMAGE="$SMALLTALK_CI_BUILD/TravisCI.image"
 	readonly SMALLTALK_CI_CHANGES="$SMALLTALK_CI_BUILD/TravisCI.changes"

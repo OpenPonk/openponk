@@ -1,23 +1,20 @@
 #!/bin/bash
 set -o errexit
 
-source "$SMALLTALK_CI_HOME/helpers.sh"
-
-### TEMP
-
 if [[ -z $TRAVIS ]]; then
-	readonly SMALLTALK_CI_BUILD="smalltalkCI-master/_builds/$(ls smalltalkCI-master/_builds | sort -n | head -n 1)"
+	readonly SMALLTALK_CI_HOME="smalltalkCI-master"
+	readonly SMALLTALK_CI_BUILD="$SMALLTALK_CI_HOME/_builds/$(ls smalltalkCI-master/_builds | sort -n | head -n 1)"
 	readonly SMALLTALK_CI_IMAGE="$SMALLTALK_CI_BUILD/TravisCI.image"
 	readonly SMALLTALK_CI_CHANGES="$SMALLTALK_CI_BUILD/TravisCI.changes"
-	readonly SMALLTALK_CI_VM=smalltalkCI-master/_cache/vms/Pharo-5.0/pharo
-	readonly SMALLTALK_CI_VMS=smalltalkCI-master/_cache/vms
+	readonly SMALLTALK_CI_VM=$SMALLTALK_CI_HOME/_cache/vms/Pharo-5.0/pharo
+	readonly SMALLTALK_CI_VMS=$SMALLTALK_CI_HOME/_cache/vms
 	readonly TRAVIS_BUILD_NUMBER=20
 	readonly TRAVIS_BRANCH=master
+	readonly TRAVIS_BUILD_DIR=.
 	readonly TRAVIS=true
 fi
 
-###
-
+source "$SMALLTALK_CI_HOME/helpers.sh"
 
 readonly DEPLOY_NAME="dynacase"
 readonly DEPLOY_DIR="$SMALLTALK_CI_BUILD/deploy/$DEPLOY_NAME"

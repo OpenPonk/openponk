@@ -27,7 +27,7 @@ prepare_deploy() {
 	if [[ ! -d $DEPLOY_DIR ]]; then
 		mkdir -p "$DEPLOY_DIR"
 	fi
-	cp $TRAVIS_BUILD_DIR/scripts/run.sh $DEPLOY_DIR/run.sh
+	cp $TRAVIS_BUILD_DIR/scripts/dynacase.sh $DEPLOY_DIR/dynacase.sh
 }
 
 copy_image() {

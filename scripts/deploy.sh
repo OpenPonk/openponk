@@ -30,12 +30,7 @@ prepare_deploy() {
 	if [[ ! -d $DEPLOY_DIR ]]; then
 		mkdir -p "$DEPLOY_DIR"
 	fi
-	cat > "$DEPLOY_DIR/run.sh" << EOF
-#!/bin/sh
-readonly VM_UI="./vms/Pharo-5.0/pharo-ui"
-\$VM_UI $DEPLOY_NAME.image
-EOF
-	chmod a+x $DEPLOY_DIR/run.sh
+	cp $TRAVIS_BUILD_DIR/scripts/run.sh $DEPLOY_DIR/run.sh
 }
 
 prepare_image() {
@@ -43,8 +38,23 @@ prepare_image() {
 	cp "$SMALLTALK_CI_CHANGES" "$DEPLOY_DIR/$DEPLOY_NAME.changes"
 }
 
+download-vm() {
+	local os=$1
+	local vm_dir=$2
+	local url="http://files.pharo.org/get-files/50/pharo-$os-stable.zip"
+	mkdir -p $vm_dir
+	curl --silent --location --compressed --output $vm_dir/vm.zip $url
+	unzip -q $vm_dir/vm.zip -d $vm_dir
+	rm -f $vm_dir/vm.zip
+}
+
 prepare_vms() {
-	cp -rv "$SMALLTALK_CI_VMS" "$DEPLOY_DIR"
+	mkdir -p $DEPLOY_DIR/vms/linux
+	# no need to download linux vm again
+	cp -rv $SMALLTALK_CI_VMS/* $DEPLOY_DIR/vms/linux
+	download-vm mac $DEPLOY_DIR/vms/mac
+	download-vm win $DEPLOY_DIR/vms/win
+
 }
 
 deploy() {

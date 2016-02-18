@@ -48,15 +48,20 @@ download_vm() {
 }
 
 prepare_vms() {
+	timer_start
 	mkdir -p $DEPLOY_DIR/vms/linux
 	# no need to download linux vm again
-	cp -rv $SMALLTALK_CI_VMS/* $DEPLOY_DIR/vms/linux
+	print_info "copying linux vm"
+	cp -r $SMALLTALK_CI_VMS/* $DEPLOY_DIR/vms/linux
+	print_info "downloading mac vm"
 	download_vm mac $DEPLOY_DIR/vms/mac
+	print_info "downloading win vm"
 	download_vm win $DEPLOY_DIR/vms/win
+	timer_finish
 }
 
 run_in_image() {
-	local cmd= $1
+	local cmd=$1
 	local vm=$(find $DEPLOY_DIR/vms/linux -name pharo | tail -n 1)
 	print_info "$cmd"
 	timer_start
@@ -79,7 +84,7 @@ deploy() {
 
 	cd $DEPLOY_DIR/..
 	local build_zip="${DEPLOY_NAME}-${TRAVIS_BUILD_NUMBER}.zip"
-	zip -r "$build_zip" "$DEPLOY_NAME"
+	zip -qr "$build_zip" "$DEPLOY_NAME"
 	scp -rp "$build_zip" "$DEPLOY_TARGET"
 	ssh "$DEPLOY_MACHINE" "cp ${DEPLOY_TARGET_DIR}/${build_zip} ${DEPLOY_TARGET_DIR}/latest.zip"
 }

@@ -1,15 +1,15 @@
 {
 	"class" : {
-		"defaultSpec" : "PeterUhnak 12/8/2015 22:17:36" },
+		"defaultSpec" : "PeterUhnak 12/10/2015 23:34:25" },
 	"instance" : {
-		"activeEditor:" : "PeterUhnak 12/8/2015 22:17:36",
-		"addDiagramMenu" : "PeterUhnak 12/8/2015 22:17:36",
-		"editorMenu" : "PeterUhnak 12/8/2015 22:17:36",
-		"initializePresenter" : "PeterUhnak 12/8/2015 22:17:36",
-		"initializeWidgets" : "PeterUhnak 12/8/2015 22:17:36",
-		"project" : "PeterUhnak 12/8/2015 22:17:36",
-		"projectMenu" : "PeterUhnak 12/9/2015 18:49",
-		"rebuildWidget" : "PeterUhnak 12/8/2015 22:17:36",
-		"toolbar" : "PeterUhnak 12/8/2015 22:17:36",
-		"toolbarMenu" : "PeterUhnak 12/8/2015 22:17:36",
-		"workbench" : "PeterUhnak 12/8/2015 22:17:36" } }
+		"activeEditor:" : "PeterUhnak 12/10/2015 23:34:25",
+		"addDiagramMenu" : "PeterUhnak 12/10/2015 23:34:25",
+		"editorMenu" : "PeterUhnak 12/10/2015 23:34:25",
+		"initializePresenter" : "PeterUhnak 12/10/2015 23:34:25",
+		"initializeWidgets" : "PeterUhnak 12/10/2015 23:34:25",
+		"project" : "PeterUhnak 12/10/2015 23:34:25",
+		"projectMenu" : "PeterUhnak 12/10/2015 23:34:25",
+		"rebuildWidget" : "PeterUhnak 12/10/2015 23:34:25",
+		"toolbar" : "PeterUhnak 12/10/2015 23:34:25",
+		"toolbarMenu" : "PeterUhnak 12/10/2015 23:34:25",
+		"workbench" : "PeterUhnak 12/10/2015 23:34:25" } }

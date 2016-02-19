@@ -1,6 +1,6 @@
 project handling
 openProject: aProject
-	self assert: aProject class = DCProject.
+	self assert: [ aProject isKindOf: DCProject ].
 	project := aProject.
 	(projectController := DCProjectController new)
 		project: project;

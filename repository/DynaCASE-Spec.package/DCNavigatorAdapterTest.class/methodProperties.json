@@ -2,11 +2,11 @@
 	"class" : {
 		 },
 	"instance" : {
-		"adapterClass" : "PeterUhnak 12/8/2015 22:17:36",
-		"childrenFor:equals:" : "PeterUhnak 12/8/2015 22:17:36",
-		"displayFor:equals:" : "PeterUhnak 12/8/2015 22:17:36",
-		"iconFor:equals:" : "PeterUhnak 12/8/2015 22:17:36",
-		"setUp" : "PeterUhnak 12/8/2015 22:17:36",
-		"testCull" : "PeterUhnak 12/8/2015 22:17:36",
-		"testDefaultChildren" : "PeterUhnak 12/8/2015 22:17:36",
-		"testDefaultDisplay" : "PeterUhnak 12/8/2015 22:17:36" } }
+		"adapterClass" : "PeterUhnak 12/10/2015 23:34:25",
+		"childrenFor:equals:" : "PeterUhnak 12/10/2015 23:34:25",
+		"displayFor:equals:" : "PeterUhnak 12/10/2015 23:34:25",
+		"iconFor:equals:" : "PeterUhnak 12/10/2015 23:34:25",
+		"setUp" : "PeterUhnak 12/10/2015 23:34:25",
+		"testCull" : "PeterUhnak 12/10/2015 23:34:25",
+		"testDefaultChildren" : "PeterUhnak 12/10/2015 23:34:25",
+		"testDefaultDisplay" : "PeterUhnak 12/10/2015 23:34:25" } }

@@ -48,7 +48,7 @@ download_all() {
 main() {
 	local dir=vms
 	download_all $dir
-	zip -qr vms.zip $vm_dir
+	zip -qr vms.zip $dir
 }
 
 main

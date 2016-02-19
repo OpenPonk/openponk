@@ -1,2 +1,2 @@
-(name 'BaselineOfDynaCASE-PeterUhnak.31' message 'Hopefully maybe finally fixed all-in-one building.' id '5e90dbc8-edbd-49a6-a7ce-7277500b0cd2' date '16 February 2016' time '10:48:36.331302 am' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.30' message 'Maybe problems with importing?
-' id '04dde13f-eeeb-59bc-8318-cc780a3e2e48' date '14 February 2016' time '4:40:01 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'BaselineOfDynaCASE-PeterUhnak.32' message 'Added DemoEditor to all-in-one.' id 'b7204a87-3354-4be4-808d-144435fc10ec' date '19 February 2016' time '8:33:52.154611 pm' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.31' message 'Hopefully maybe finally fixed all-in-one building.
+' id '1c4a8f1b-833d-5738-ba7d-b9b591f6f9b7' date '16 February 2016' time '10:48:40 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

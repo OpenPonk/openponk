@@ -37,37 +37,11 @@ copy_image() {
 	cp "$SMALLTALK_CI_CHANGES" "$DEPLOY_DIR/$DEPLOY_NAME.changes"
 }
 
-download_vm() {
-	local os=$1
-	local vm_dir=$2
-	local url="http://files.pharo.org/get-files/50/pharo-$os-stable.zip"
-	mkdir -p $vm_dir
-	curl --silent --location --compressed --output $vm_dir/vm.zip $url
-	unzip -q $vm_dir/vm.zip -d $vm_dir
-	rm -f $vm_dir/vm.zip
-	sources=$(find "$vm_dir/../linux" -name 'PharoV40.sources')
-	cp $sources $vm_dir
-}
-
-prepare_vms() {
-	timer_start
-	mkdir -p $DEPLOY_DIR/vms/linux
-	# no need to download linux vm again
-	print_info "copying linux vm"
-	cp -r $SMALLTALK_CI_VMS/* $DEPLOY_DIR/vms/linux
-	print_info "downloading mac vm"
-	download_vm mac $DEPLOY_DIR/vms/mac
-	print_info "downloading win vm"
-	download_vm win $DEPLOY_DIR/vms/win
-	timer_finish
-}
-
 run_in_image() {
 	local cmd=$1
-	local vm=$(find $DEPLOY_DIR/vms/linux -name pharo | tail -n 1)
 	print_info "$cmd"
 	timer_start
-	$vm --nodisplay $DEPLOY_DIR/$DEPLOY_NAME.image eval --save "$cmd"
+	$SMALLTALK_CI_VM --nodisplay $DEPLOY_DIR/$DEPLOY_NAME.image eval --save "$cmd"
 	timer_finish
 }
 
@@ -81,14 +55,13 @@ postprocess_image() {
 deploy() {
 	prepare_deploy
 	copy_image
-	prepare_vms
 	postprocess_image
 
 	cd $DEPLOY_DIR/..
-	local build_zip="${DEPLOY_NAME}-${TRAVIS_BUILD_NUMBER}.zip"
+	local build_zip="${DEPLOY_NAME}-image-${TRAVIS_BUILD_NUMBER}.zip"
 	zip -qr "$build_zip" "$DEPLOY_NAME"
 	scp -rp "$build_zip" "$DEPLOY_TARGET"
-	ssh "$DEPLOY_MACHINE" "cp ${DEPLOY_TARGET_DIR}/${build_zip} ${DEPLOY_TARGET_DIR}/latest.zip"
+	ssh "$DEPLOY_MACHINE" "~/bundler/post-deploy.sh ${TRAVIS_BUILD_NUMBER}"
 }
 
 main() {

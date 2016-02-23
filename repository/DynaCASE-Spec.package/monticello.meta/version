@@ -1,2 +1,2 @@
-(name 'DynaCASE-Spec-PeterUhnak.192' message 'Do not restrict to superclasses.' id '5519963a-ebab-44d3-ad58-05897732b29d' date '19 February 2016' time '8:15:42.381834 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.191' message 'Added project properites menu.
-' id 'c258a7d0-8a2d-5a14-8d75-f19146eba097' date '10 December 2015' time '11:34:25 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Spec-PeterUhnak.193' message 'Fixed editor opening blanking screen.' id 'c4cef8cd-6d4b-47e5-af42-672b0d5bcc3e' date '23 February 2016' time '11:58:23.929369 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.192' message 'Do not restrict to superclasses.
+' id '08e28ab8-3d51-5204-ad09-9d19db85e04a' date '19 February 2016' time '8:15:48 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

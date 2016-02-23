@@ -1,2 +1,2 @@
-(name 'BaselineOfDynaCASE-PeterUhnak.32' message 'Added DemoEditor to all-in-one.' id 'b7204a87-3354-4be4-808d-144435fc10ec' date '19 February 2016' time '8:33:52.154611 pm' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.31' message 'Hopefully maybe finally fixed all-in-one building.
-' id '1c4a8f1b-833d-5738-ba7d-b9b591f6f9b7' date '16 February 2016' time '10:48:40 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'BaselineOfDynaCASE-PeterUhnak.33' message 'Load FSM as a plugin.' id '0e9430c6-5564-4776-a2ff-8c1f888f4506' date '23 February 2016' time '11:36:23.596833 am' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.32' message 'Added DemoEditor to all-in-one.
+' id '7bb1f0b0-1194-5989-b503-8932840b3996' date '19 February 2016' time '8:33:55 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

@@ -31,9 +31,8 @@ baseline: spec
 				package: 'DynaCASE-Trachel';
 				package: 'DynaCASE-Roassal2';
 				package: 'DynaCASE-Spec';
-				package: 'DynaCASE-FSM';
 				package: 'DynaCASE-Plugins' with: [ spec postLoadDoIt: #postLoadPlugins ].
 			spec
 				group: 'default'
-				with: #('DynaCASE' 'DynaCASE-Trachel' 'DynaCASE-Roassal2' 'DynaCASE-Spec' 'DynaCASE-FSM').
+				with: #('DynaCASE' 'DynaCASE-Trachel' 'DynaCASE-Roassal2' 'DynaCASE-Spec').
 			spec group: 'complete' with: #('default' 'DynaCASE-Plugins') ]

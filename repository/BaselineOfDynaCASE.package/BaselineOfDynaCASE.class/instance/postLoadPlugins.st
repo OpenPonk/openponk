@@ -1,7 +1,7 @@
 accessing
 postLoadPlugins
 	Metacello new
-		baseline: 'BormEditor';
+		baseline: 'FsmEditor';
 		repository: 'github://dynacase/fsm-editor/repository';
 		load.
 	Metacello new

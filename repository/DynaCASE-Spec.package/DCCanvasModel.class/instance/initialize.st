@@ -8,4 +8,4 @@ initialize
 			view when: TRMouseLeftClick do: [ :event | self viewClicked: event ].
 			view @ RTDraggableView.
 			view @ RTZoomableView.
-			view @ (RTGridView new gridSize: 10) ]
+			view @ (RTGridView new gridSize: 20) ]

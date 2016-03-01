@@ -2,14 +2,14 @@
 	"class" : {
 		 },
 	"instance" : {
-		"setUp" : "PeterUhnak 1/11/2016 22:58:15",
-		"testMaterializeDiagram" : "PeterUhnak 1/11/2016 22:58:15",
-		"testMaterializeDiagramBasic" : "PeterUhnak 1/11/2016 22:58:15",
-		"testMaterializeElement" : "PeterUhnak 1/11/2016 22:58:15",
-		"testMaterializeProject" : "PeterUhnak 1/11/2016 22:58:15",
-		"testMaterializeProjectBasic" : "PeterUhnak 1/11/2016 22:58:15",
-		"testSerializeDiagram" : "PeterUhnak 1/11/2016 22:58:15",
-		"testSerializeDiagramBasic" : "PeterUhnak 1/11/2016 22:58:15",
-		"testSerializeElement" : "PeterUhnak 1/11/2016 22:58:15",
-		"testSerializeProject" : "PeterUhnak 1/11/2016 22:58:15",
-		"testSerializeProjectBasic" : "PeterUhnak 1/11/2016 22:58:15" } }
+		"setUp" : "PeterUhnak 2/12/2016 14:30:20",
+		"testMaterializeDiagram" : "PeterUhnak 2/12/2016 14:30:20",
+		"testMaterializeDiagramBasic" : "PeterUhnak 2/12/2016 14:30:20",
+		"testMaterializeElement" : "PeterUhnak 2/12/2016 14:30:20",
+		"testMaterializeProject" : "PeterUhnak 2/12/2016 14:30:20",
+		"testMaterializeProjectBasic" : "PeterUhnak 2/12/2016 14:30:20",
+		"testSerializeDiagram" : "PeterUhnak 2/12/2016 14:30:20",
+		"testSerializeDiagramBasic" : "PeterUhnak 2/12/2016 14:30:20",
+		"testSerializeElement" : "PeterUhnak 2/12/2016 14:30:20",
+		"testSerializeProject" : "PeterUhnak 2/12/2016 14:30:20",
+		"testSerializeProjectBasic" : "PeterUhnak 2/12/2016 14:30:20" } }

@@ -2,13 +2,13 @@
 	"class" : {
 		 },
 	"instance" : {
-		"addDiagramController:" : "PeterUhnak 1/11/2016 22:58:15",
-		"initialize" : "PeterUhnak 1/11/2016 22:58:15",
-		"layoutFor:" : "PeterUhnak 1/11/2016 22:58:15",
-		"openFirstDiagram" : "PeterUhnak 1/11/2016 22:58:15",
-		"persistLayouts" : "PeterUhnak 1/11/2016 22:58:15",
-		"project" : "PeterUhnak 1/11/2016 22:58:15",
-		"project:" : "PeterUhnak 1/11/2016 22:58:15",
-		"removeDiagramController:" : "PeterUhnak 1/11/2016 22:58:15",
-		"saveProject" : "PeterUhnak 1/11/2016 22:58:15",
-		"workbench:" : "PeterUhnak 1/11/2016 22:58:15" } }
+		"addDiagramController:" : "PeterUhnak 2/12/2016 14:30:20",
+		"initialize" : "PeterUhnak 2/12/2016 14:30:20",
+		"layoutFor:" : "PeterUhnak 2/12/2016 14:30:20",
+		"openFirstDiagram" : "PeterUhnak 2/12/2016 14:30:20",
+		"persistLayouts" : "PeterUhnak 2/12/2016 14:30:20",
+		"project" : "PeterUhnak 2/12/2016 14:30:20",
+		"project:" : "PeterUhnak 2/12/2016 14:30:20",
+		"removeDiagramController:" : "PeterUhnak 2/12/2016 14:30:20",
+		"saveProject" : "PeterUhnak 2/12/2016 14:30:20",
+		"workbench:" : "PeterUhnak 2/12/2016 14:30:20" } }

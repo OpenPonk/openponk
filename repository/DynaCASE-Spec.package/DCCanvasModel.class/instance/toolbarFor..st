@@ -4,12 +4,12 @@ toolbarFor: aMenu
 	(builder := DCMenuBuilder new) menu: aMenu.
 	builder
 		addItem: 'Zoom out'
-		icon: Smalltalk ui icons dcZoomOutIcon
+		icon: DCIcons current dcZoomOutIcon
 		action: [ self zoom: self zoom * 0.8 ].
-	builder addItem: '100%' icon: Smalltalk ui icons dcZoomIcon action: [ self zoom: 1.0001 ].
+	builder addItem: '100%' icon: DCIcons current dcZoomIcon action: [ self zoom: 1.0001 ].
 	builder
 		addItem: 'Zoom in'
-		icon: Smalltalk ui icons dcZoomInIcon
+		icon: DCIcons current dcZoomInIcon
 		action: [ self zoom: self zoom * 1.25 ].
 
 	builder addItem: 'View All' action: [ self showAllFigures ]

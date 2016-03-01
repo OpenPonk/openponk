@@ -6,4 +6,4 @@ newSelectionTool
 	item
 		label: 'Select';
 		action: [ self selectItem: item tool: tool ];
-		icon: Smalltalk ui icons dcSelectIcon
+		icon: DCIcons current dcSelectIcon

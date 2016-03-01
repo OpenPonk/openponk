@@ -1,10 +1,15 @@
 private
 feedbackFor: anElement color: aColor
+	|shape|
 	(anElement isKindOf: RTElement)
 		ifFalse: [ ^ self ].
-	feedback := RTBox new
-		color: (aColor alpha: 0.2);
-		borderColor: aColor;
+	shape := RTBox new.
+	(anElement shape class = RTRoundedBox) | (anElement shape class = RTEllipse) ifTrue: [ 
+		shape := RTEllipse new.
+	].
+	feedback := shape
+		color: (aColor alpha: 0.05);
+		borderColor: (aColor alpha: 0.05);
 		element.
 	noBorder
 		ifTrue:

@@ -20,7 +20,7 @@ renderIn: aView
 	moveSubscription := aView announcer
 		when: TRMouseMove
 		do: [ :event | 
-			mouseBox translateTo: event positionFromCamera.
+			mouseBox translateTo: event position.
 			aView signalUpdate ].
 
 	running := true

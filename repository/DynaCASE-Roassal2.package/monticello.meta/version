@@ -1,2 +1,2 @@
-(name 'DynaCASE-Roassal2-PeterUhnak.200' message 'Softer feedback colors + circle support.' id '5d3e5a98-8f35-46ba-a126-4affcf9bc0c6' date '1 March 2016' time '11:32:08.703028 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Roassal2-PeterUhnak.199' message 'Fixed connection example.
-' id '02220bc5-7ad4-58db-8f0e-c5b162b75192' date '11 January 2016' time '10:47:14 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Roassal2-PeterUhnak.201' message 'Force different position so it''s broken only locally...' id '2f31ec73-bc25-4b73-856c-fac228b53b1e' date '2 March 2016' time '9:59:30.097679 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Roassal2-PeterUhnak.200' message 'Softer feedback colors + circle support.
+' id 'f4766d5f-f9a1-59ac-a0b1-850d33130cf9' date '1 March 2016' time '11:32:14 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

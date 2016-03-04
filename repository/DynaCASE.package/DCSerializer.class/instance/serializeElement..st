@@ -1,3 +1,0 @@
-serializing
-serializeElement: anElement
-	^ anElement

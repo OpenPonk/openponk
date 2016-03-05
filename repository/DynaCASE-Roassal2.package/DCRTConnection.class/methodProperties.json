@@ -1,15 +1,15 @@
 {
 	"class" : {
-		"example" : "PeterUhnak 1/11/2016 22:47:14" },
+		"example" : "PeterUhnak 3/2/2016 09:59:36" },
 	"instance" : {
-		"addOrRemoveLinesFor:trachelShape:" : "PeterUhnak 1/11/2016 22:47:14",
-		"addPoint:" : "PeterUhnak 1/11/2016 22:47:14",
-		"initialize" : "PeterUhnak 1/11/2016 22:47:14",
-		"lineSegmentFor:from:to:" : "PeterUhnak 1/11/2016 22:47:14",
-		"pathFor:" : "PeterUhnak 1/11/2016 22:47:14",
-		"points" : "PeterUhnak 1/11/2016 22:47:14",
-		"router" : "PeterUhnak 1/11/2016 22:47:14",
-		"router:" : "PeterUhnak 1/11/2016 22:47:14",
-		"trachelShapeFor:" : "PeterUhnak 1/11/2016 22:47:14",
-		"translateBy:for:" : "PeterUhnak 1/11/2016 22:47:14",
-		"updateFor:trachelShape:" : "PeterUhnak 1/11/2016 22:47:14" } }
+		"addOrRemoveLinesFor:trachelShape:" : "PeterUhnak 3/2/2016 09:59:36",
+		"addPoint:" : "PeterUhnak 3/2/2016 09:59:36",
+		"initialize" : "PeterUhnak 3/2/2016 09:59:36",
+		"lineSegmentFor:from:to:" : "PeterUhnak 3/2/2016 09:59:36",
+		"pathFor:" : "PeterUhnak 3/2/2016 09:59:36",
+		"points" : "PeterUhnak 3/2/2016 09:59:36",
+		"router" : "PeterUhnak 3/2/2016 09:59:36",
+		"router:" : "PeterUhnak 3/2/2016 09:59:36",
+		"trachelShapeFor:" : "PeterUhnak 3/2/2016 09:59:36",
+		"translateBy:for:" : "PeterUhnak 3/2/2016 09:59:36",
+		"updateFor:trachelShape:" : "PeterUhnak 3/2/2016 09:59:36" } }

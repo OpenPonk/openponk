@@ -1,13 +1,13 @@
 {
 	"class" : {
-		"endElement:positionLink:edge:" : "PeterUhnak 1/11/2016 22:47:14" },
+		"endElement:positionLink:edge:" : "PeterUhnak 3/2/2016 09:59:36" },
 	"instance" : {
-		"endElement:" : "PeterUhnak 1/11/2016 22:47:14",
-		"isEnd" : "PeterUhnak 1/11/2016 22:47:14",
-		"isInsideEndElement:" : "PeterUhnak 1/11/2016 22:47:14",
-		"moveBy:from:" : "PeterUhnak 1/11/2016 22:47:14",
-		"moveToBorder:" : "PeterUhnak 1/11/2016 22:47:14",
-		"movedBy:" : "PeterUhnak 1/11/2016 22:47:14",
-		"newCornerAt:" : "PeterUhnak 1/11/2016 22:47:14",
-		"removeIfNeeded:" : "PeterUhnak 1/11/2016 22:47:14",
-		"removeNeighborCorner" : "PeterUhnak 1/11/2016 22:47:14" } }
+		"endElement:" : "PeterUhnak 3/2/2016 09:59:36",
+		"isEnd" : "PeterUhnak 3/2/2016 09:59:36",
+		"isInsideEndElement:" : "PeterUhnak 3/2/2016 09:59:36",
+		"moveBy:from:" : "PeterUhnak 3/2/2016 09:59:36",
+		"moveToBorder:" : "PeterUhnak 3/2/2016 09:59:36",
+		"movedBy:" : "PeterUhnak 3/2/2016 09:59:36",
+		"newCornerAt:" : "PeterUhnak 3/2/2016 09:59:36",
+		"removeIfNeeded:" : "PeterUhnak 3/2/2016 09:59:36",
+		"removeNeighborCorner" : "PeterUhnak 3/2/2016 09:59:36" } }

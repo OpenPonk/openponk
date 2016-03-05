@@ -1,2 +1,2 @@
-(name 'DynaCASE-Roassal2-PeterUhnak.201' message 'Force different position so it''s broken only locally...' id '2f31ec73-bc25-4b73-856c-fac228b53b1e' date '2 March 2016' time '9:59:30.097679 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Roassal2-PeterUhnak.200' message 'Softer feedback colors + circle support.
-' id 'f4766d5f-f9a1-59ac-a0b1-850d33130cf9' date '1 March 2016' time '11:32:14 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Roassal2-PeterUhnak.202' message 'Fixed feedback for RTRoundedBox.' id 'f5743cba-ccde-49b6-b214-1dc6ffeb3755' date '5 March 2016' time '12:22:05.866493 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Roassal2-PeterUhnak.201' message 'Force different position so it''s broken only locally...
+' id 'eb7a8364-4e8c-5dc8-93c8-117f6cdba329' date '2 March 2016' time '9:59:36 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

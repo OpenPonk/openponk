@@ -1,2 +1,2 @@
-(name 'DynaCASE-Roassal2-PeterUhnak.202' message 'Fixed feedback for RTRoundedBox.' id 'f5743cba-ccde-49b6-b214-1dc6ffeb3755' date '5 March 2016' time '12:22:05.866493 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Roassal2-PeterUhnak.201' message 'Force different position so it''s broken only locally...
-' id 'eb7a8364-4e8c-5dc8-93c8-117f6cdba329' date '2 March 2016' time '9:59:36 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Roassal2-PeterUhnak.203' message 'RTEdge>>lineSegments moved directly to Roassal.' id 'd6249454-c37d-4a78-8365-84f87bdd1ec6' date '8 March 2016' time '1:17:34.558549 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Roassal2-PeterUhnak.202' message 'Fixed feedback for RTRoundedBox.
+' id '9aa2ffc4-8d6c-5d82-9dd6-84bb5d2c429f' date '5 March 2016' time '12:22:11 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

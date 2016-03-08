@@ -1,2 +1,2 @@
-(name 'DynaCASE-PeterUhnak.170' message 'Removed some old code.' id 'ea63affb-98a5-484c-8e69-c2f64e37a703' date '4 March 2016' time '1:24:06.097893 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-PeterUhnak.169' message 'Readdded missing icons.
-' id '50aaaa77-3afb-5721-b62f-972f1f19534b' date '1 March 2016' time '1:45:15 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-PeterUhnak.171' message 'Added undo/redo templates.' id '908e7457-51ea-4559-a1c2-dd26b03cd671' date '8 March 2016' time '1:19:10.109696 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-PeterUhnak.170' message 'Removed some old code.
+' id '8d1d1b34-c740-52e6-8d9e-e669423499e5' date '4 March 2016' time '1:24:09 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

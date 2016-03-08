@@ -5,4 +5,5 @@ openDiagram: aDiagram
 	self rebuildPalette.
 	canvasModel attachController: diagramController.
 	canvasModel reloadView.
-	self applyLayoutFor: aDiagram
+	self applyLayoutFor: aDiagram.
+	diagramController saveState

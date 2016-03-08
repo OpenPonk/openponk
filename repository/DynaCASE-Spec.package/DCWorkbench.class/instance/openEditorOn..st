@@ -1,6 +1,8 @@
 opening
 openEditorOn: aDiagram
 	| editor tab plugin widget |
+	(self projectController hasDiagram: aDiagram)
+		ifTrue: [ ^ self ].
 	(editor := DCEditor new) workbench: self.
 	plugin := pluginRegistry pluginFor: aDiagram.
 	editor plugin: plugin.
@@ -14,5 +16,6 @@ openEditorOn: aDiagram
 		label: aDiagram name;
 		icon: plugin icon;
 		retrievingBlock: [ widget ];
-		whenTabSelected: [ topToolbar activeEditor: editor ].
+		whenTabSelected: [ topToolbar activeEditor: editor ];
+		whenBuiltDo: [ :w | w widget when: #tabDeleted send: #tabDeleted to: editor ].
 	tabManager addTab: tab

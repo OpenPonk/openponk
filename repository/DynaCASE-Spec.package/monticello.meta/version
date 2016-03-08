@@ -1,2 +1,2 @@
-(name 'DynaCASE-Spec-PeterUhnak.198' message 'ThemeIcons are not extended anymore.' id 'debb701e-5ecc-4435-9371-fe02df867cc3' date '1 March 2016' time '1:35:13.41659 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.197' message 'Menu fixing.
-' id 'a8cdea04-13d1-5241-b93f-a362ff486933' date '1 March 2016' time '1:28:52 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Spec-PeterUhnak.199' message 'Added undo/redo buttons.It''s no longer possible to open same diagram twice (within same Workbench anyway).Cleanup on Tab removal.' id 'ad40e0c2-50e3-4987-9eb5-2d9c7f8bdf9c' date '8 March 2016' time '1:18:30.070468 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.198' message 'ThemeIcons are not extended anymore.
+' id 'd889e317-b9e6-5739-b2bf-30212b4ccee7' date '1 March 2016' time '1:35:17 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

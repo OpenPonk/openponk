@@ -11,8 +11,20 @@ toolbarFor: aMenu
 		addItem: 'Zoom in'
 		icon: DCIcons current dcZoomInIcon
 		action: [ self zoom: self zoom * 1.25 ].
-
-	builder addItem: 'View All' action: [ self showAllFigures ]
+	builder addItem: 'View All' action: [ self showAllFigures ].
+	builder group
+		addItem: [ :item | 
+			item
+				name: 'Undo';
+				icon: Smalltalk ui icons smallUndo;
+				disable;
+				action: [ self diagramController undo ] ];
+		addItem: [ :item | 
+			item
+				name: 'Redo';
+				icon: Smalltalk ui icons smallRedo;
+				disable;
+				action: [ self diagramController redo ] ]
 
 	"	(aGroup addItem: 'Export')
 		description: 'Export diagram as ...';

@@ -8,7 +8,9 @@
 	"instvars" : [
 		"workbench",
 		"project",
-		"controllers" ],
+		"controllers",
+		"lastSave",
+		"disableAutosave" ],
 	"name" : "DCProjectController",
 	"pools" : [
 		 ],

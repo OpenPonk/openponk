@@ -1,2 +1,2 @@
-(name 'DynaCASE-Spec-PeterUhnak.200' message 'Open from file.' id 'f0cb2f34-8b5b-4b96-82fa-f45e96a72cfc' date '9 March 2016' time '2:06:19.606718 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.199' message 'Added undo/redo buttons.It''s no longer possible to open same diagram twice (within same Workbench anyway).Cleanup on Tab removal.
-' id '6fa5da55-1392-5312-97c1-aea64e2c37d6' date '8 March 2016' time '1:18:33 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Spec-PeterUhnak.201' message 'Higher browser.' id '64576169-99bf-497d-a001-127ed72c3cfd' date '9 March 2016' time '2:14:38.117854 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.200' message 'Open from file.
+' id 'bf6e9cf3-8541-509c-8253-6ca048fddfed' date '9 March 2016' time '2:06:23 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

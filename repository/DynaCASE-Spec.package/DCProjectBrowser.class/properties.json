@@ -12,7 +12,8 @@
 		"projectNameInput",
 		"pluginRegistry",
 		"diagramOptions",
-		"createProjectButton" ],
+		"createProjectButton",
+		"openProjectButton" ],
 	"name" : "DCProjectBrowser",
 	"pools" : [
 		 ],

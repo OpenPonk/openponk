@@ -15,5 +15,6 @@ defaultSpec
 					col add: #projectNameInput height: self buttonHeight.
 					self addDiagramButtons: col.
 					col add: #createProjectButton height: self buttonHeight.
+					col add: #openProjectButton height: self buttonHeight.
 					col newRow: [ :r |  ] ] ];
 		yourself

@@ -12,7 +12,7 @@ loadAutosave
 		ifTrue: [ (data at: #autosave)
 				keysAndValuesDo: [ :key :value | 
 					controllers
-						detect: [ :each | each model dcID asString = key ]
+						detect: [ :each | each model uuid asString = key ]
 						ifFound: [ :ctrl | 
 							| dict |
 							dict := #DCFsmGraphML asClass new import: (value at: #graph).

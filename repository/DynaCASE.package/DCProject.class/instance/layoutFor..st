@@ -1,3 +1,3 @@
 accessing
 layoutFor: aDiagram
-	^ layouts at: aDiagram dcID asString ifAbsent: [ Dictionary new ]
+	^ layouts at: aDiagram uuid asString ifAbsent: [ Dictionary new ]

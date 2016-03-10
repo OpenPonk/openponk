@@ -1,3 +1,3 @@
 accessing
 layout: aLayout for: aDiagram
-	^ layouts at: aDiagram dcID asString put: aLayout
+	^ layouts at: aDiagram uuid asString put: aLayout

@@ -17,7 +17,7 @@ example
 			b.
 			c}.
 
-	v elements @ (RTLabelled new color: Color black).
+	v elements @ (RTLabeled new color: Color black).
 
 	conn := DCRTConnection new
 		color: Color black;

@@ -2,9 +2,9 @@
 	"class" : {
 		 },
 	"instance" : {
-		"createConnectionAnchor" : "PeterUhnak 3/2/2016 09:59:36",
-		"createEdgeAnchor" : "PeterUhnak 3/2/2016 09:59:36",
-		"setUp" : "PeterUhnak 3/2/2016 09:59:36",
-		"testConnectionPath" : "PeterUhnak 3/2/2016 09:59:36",
-		"testConnectionSegmentsFor" : "PeterUhnak 3/2/2016 09:59:36",
-		"testLineSegmentFor" : "PeterUhnak 3/2/2016 09:59:36" } }
+		"createConnectionAnchor" : "PeterUhnak 3/8/2016 13:17:38",
+		"createEdgeAnchor" : "PeterUhnak 3/8/2016 13:17:38",
+		"setUp" : "PeterUhnak 3/8/2016 13:17:38",
+		"testConnectionPath" : "PeterUhnak 3/8/2016 13:17:38",
+		"testConnectionSegmentsFor" : "PeterUhnak 3/8/2016 13:17:38",
+		"testLineSegmentFor" : "PeterUhnak 3/8/2016 13:17:38" } }

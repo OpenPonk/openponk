@@ -1,2 +1,2 @@
-(name 'BaselineOfDynaCASE-PeterUhnak.35' message 'Don''t load Demo until it''s fixed.' id '4e95350f-1439-4a15-924a-db45d43501bf' date '10 March 2016' time '12:25:28.587302 pm' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.34' message 'Wrong baseline.
-' id '522e86e3-2052-58d4-9ade-1a451518ba8b' date '26 February 2016' time '12:00:53 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'BaselineOfDynaCASE-PeterUhnak.36' message 'Readded demo.' id 'e239a03a-52dc-45b7-9a9a-1857f4a41a0f' date '13 March 2016' time '1:56:59.593344 am' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.35' message 'Don''t load Demo until it''s fixed.
+' id '2c269b25-5e09-519b-9577-ed7c554a136f' date '10 March 2016' time '12:25:32 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

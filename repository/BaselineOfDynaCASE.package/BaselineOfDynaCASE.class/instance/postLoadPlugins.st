@@ -12,7 +12,7 @@ postLoadPlugins
 		baseline: 'DCUmlClassEditor';
 		repository: 'github://dynacase/class-editor/repository';
 		load.
-	"Metacello new
+	Metacello new
 		baseline: 'DemoEditor';
 		repository: 'github://dynacase/demo-editor/repository';
-		load"
+		load

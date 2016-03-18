@@ -8,5 +8,5 @@ addDiagramMenu
 			builder
 				addItem: each name
 				icon: each icon
-				action: [ self project addDiagram: (each diagramClass named: each name) ] ].
+				action: [ self project addModel: (each diagramClass named: each name) ] ].
 	^ builder menu

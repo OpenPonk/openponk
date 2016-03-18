@@ -7,7 +7,7 @@ createProject
 		ifFound:
 			[ :each | 
 			project
-				addDiagram:
+				addModel:
 					(each first diagramClass new
 						name: each first name;
 						yourself) ].

@@ -12,6 +12,6 @@ openProjectFromFile
 		valuesDo: [ :each | 
 			| dict |
 			dict := #DCFsmGraphML asClass new import: each.
-			project addDiagram: (dict at: #model).
+			project addModel: (dict at: #model).
 			project layout: (dict at: #layout) for: (dict at: #model) ].
 	self openProject: project

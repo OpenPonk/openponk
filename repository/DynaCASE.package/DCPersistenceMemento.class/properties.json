@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-Persistence",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 3/14/2016 18:25",
+	"instvars" : [
+		"model",
+		"layout" ],
+	"name" : "DCPersistenceMemento",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

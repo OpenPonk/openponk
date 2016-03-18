@@ -1,3 +1,3 @@
 accessing
-layoutFor: aDiagram
-	^ layouts at: aDiagram uuid asString ifAbsent: [ Dictionary new ]
+layoutFor: aModel
+	^ layouts at: aModel uuid asString ifAbsent: [ Dictionary new ]

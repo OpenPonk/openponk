@@ -1,3 +1,3 @@
 accessing
-pluginFor: aDiagram
-	^ plugins detect: [ :each | each diagramClass = aDiagram class ]
+pluginFor: aModel
+	^ plugins detect: [ :each | each diagramClass = aModel class ]

@@ -14,7 +14,7 @@ testChangedOnAdd
 
 	changed := false.
 	diagram := DCDiagram new.
-	project addDiagram: diagram.
+	project addModel: diagram.
 	self assert: changed.
 
 	changed := false.

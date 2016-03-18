@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Persistence",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCAbstractSerializer",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -7,11 +7,11 @@ testChangedOnRemove
 	diagram := DCDiagram new.
 	element := DCNamedElement new.
 	project whenChanged: [ changed := true ].
-	project addDiagram: diagram.
+	project addModel: diagram.
 	diagram add: element.
 
 	changed := false.
-	project removeDiagram: diagram.
+	project removeModel: diagram.
 	self assert: changed.
 
 	changed := false.

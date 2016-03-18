@@ -1,3 +1,3 @@
 accessing
-layout: aLayout for: aDiagram
-	^ layouts at: aDiagram uuid asString put: aLayout
+layout: aLayout for: aModel
+	^ layouts at: aModel uuid asString put: aLayout

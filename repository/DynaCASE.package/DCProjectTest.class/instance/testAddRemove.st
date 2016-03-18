@@ -3,10 +3,10 @@ testAddRemove
 	| project diagram |
 	diagram := DCDiagram new.
 	project := DCProject new.
-	self assert: project diagrams isEmpty.
+	self assert: project models isEmpty.
 
-	project addDiagram: diagram.
-	self assert: project diagrams size = 1.
+	project addModel: diagram.
+	self assert: project models size = 1.
 
-	project removeDiagram: diagram.
-	self assert: project diagrams isEmpty
+	project removeModel: diagram.
+	self assert: project models isEmpty

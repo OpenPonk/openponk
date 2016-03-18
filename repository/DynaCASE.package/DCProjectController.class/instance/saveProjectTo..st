@@ -1,3 +1,6 @@
 saving
-saveProjectTo: aFile
-	self saveState: self newSaveData to: aFile
+saveProjectTo: aFolder
+	self persistenceManager
+		saveProject: (DCPersistenceProjectMemento project: self project)
+		models: self modelMementos
+		to: aFolder

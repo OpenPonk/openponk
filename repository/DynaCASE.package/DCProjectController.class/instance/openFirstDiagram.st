@@ -1,6 +1,6 @@
 actions
 openFirstDiagram
 	disableAutosave := true.
-	project diagrams ifNotEmpty: [ workbench openEditorOn: project diagrams first ].
+	project models ifNotEmpty: [ workbench openEditorOn: project models first ].
 	self loadAutosave.
 	disableAutosave := false

@@ -1,2 +1,2 @@
-(name 'BaselineOfDynaCASE-PeterUhnak.38' message 'DCUmlClassEditor -> ClassEditor.' id 'e2cce4bf-fc27-4b96-a032-084ec3cf8051' date '23 March 2016' time '8:42:56.296738 pm' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.37' message 'Disabled demo again.
-' id 'b7b6545c-0eda-5d3f-85eb-2c4d0310cc5e' date '23 March 2016' time '8:42:22 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'BaselineOfDynaCASE-PeterUhnak.39' message 'Don''t die on conflicting baseline source.' id 'd4c60330-6b16-42d4-ad86-2e3a7ce06336' date '24 March 2016' time '12:05:07.898204 am' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.38' message 'DCUmlClassEditor -> ClassEditor.
+' id '41510ffd-7943-5f01-b7e7-b92e85f11c16' date '23 March 2016' time '8:42:59 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

@@ -12,7 +12,8 @@ postLoadPlugins
 		baseline: 'DCUmlClassEditor';
 		repository: 'github://dynacase/class-editor/repository';
 		load.
-	Metacello new
+	"disabled DEMO because it is using older DC version"
+	"Metacello new
 		baseline: 'DemoEditor';
 		repository: 'github://dynacase/demo-editor/repository';
-		load
+		load"

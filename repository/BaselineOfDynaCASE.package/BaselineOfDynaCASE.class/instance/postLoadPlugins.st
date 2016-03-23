@@ -9,7 +9,7 @@ postLoadPlugins
 		repository: 'github://dynacase/borm-editor/repository';
 		load.
 	Metacello new
-		baseline: 'DCUmlClassEditor';
+		baseline: 'ClassEditor';
 		repository: 'github://dynacase/class-editor/repository';
 		load.
 	"disabled DEMO because it is using older DC version"

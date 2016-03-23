@@ -1,2 +1,2 @@
-(name 'BaselineOfDynaCASE-PeterUhnak.37' message 'Disabled demo again.' id '21a7c72e-c158-4ede-ade3-77c601595dac' date '23 March 2016' time '8:42:18.807603 pm' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.36' message 'Readded demo.
-' id '2214e795-ddf9-5d85-9dba-5bd9350e38aa' date '13 March 2016' time '1:57:02 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'BaselineOfDynaCASE-PeterUhnak.38' message 'DCUmlClassEditor -> ClassEditor.' id 'e2cce4bf-fc27-4b96-a032-084ec3cf8051' date '23 March 2016' time '8:42:56.296738 pm' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.37' message 'Disabled demo again.
+' id 'b7b6545c-0eda-5d3f-85eb-2c4d0310cc5e' date '23 March 2016' time '8:42:22 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

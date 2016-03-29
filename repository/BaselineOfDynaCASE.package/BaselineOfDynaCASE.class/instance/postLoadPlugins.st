@@ -14,9 +14,9 @@ postLoadPlugins
 		baseline: 'ClassEditor';
 		repository: 'github://dynacase/class-editor/repository';
 		onConflict: [ :ex | ex allow ];
-		load
-	"disabled DEMO because it is using older DC version"
-	"Metacello new
+		load.
+	Metacello new
 		baseline: 'DemoEditor';
 		repository: 'github://dynacase/demo-editor/repository';
-		load"
+		onConflict: [ :ex | ex allow ];
+		load

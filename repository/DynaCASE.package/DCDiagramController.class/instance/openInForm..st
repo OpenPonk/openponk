@@ -1,3 +1,3 @@
 actions
 openInForm: aController
-	self editor formModel editController: aController
+	self editor workbench formModel editController: aController

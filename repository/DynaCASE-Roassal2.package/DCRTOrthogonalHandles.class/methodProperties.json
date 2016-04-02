@@ -2,13 +2,13 @@
 	"class" : {
 		 },
 	"instance" : {
-		"addCornerHandles" : "PeterUhnak 3/8/2016 13:17:38",
-		"addHandles" : "PeterUhnak 3/8/2016 13:17:38",
-		"connectWithView:" : "PeterUhnak 3/8/2016 13:17:38",
-		"ensureOrthogonal" : "PeterUhnak 3/8/2016 13:17:38",
-		"initialize" : "PeterUhnak 3/8/2016 13:17:38",
-		"initializeElement:" : "PeterUhnak 3/8/2016 13:17:38",
-		"lazyInitializeElement:" : "PeterUhnak 3/8/2016 13:17:38",
-		"removeHandles" : "PeterUhnak 3/8/2016 13:17:38",
-		"router" : "PeterUhnak 3/8/2016 13:17:38",
-		"setupView:" : "PeterUhnak 3/8/2016 13:17:38" } }
+		"addCornerHandles" : "PeterUhnak 3/13/2016 00:46:23",
+		"addHandles" : "PeterUhnak 3/13/2016 00:46:23",
+		"connectWithView:" : "PeterUhnak 3/13/2016 00:46:23",
+		"ensureOrthogonal" : "PeterUhnak 3/13/2016 00:46:23",
+		"initialize" : "PeterUhnak 3/13/2016 00:46:23",
+		"initializeElement:" : "PeterUhnak 3/13/2016 00:46:23",
+		"lazyInitializeElement:" : "PeterUhnak 3/13/2016 00:46:23",
+		"removeHandles" : "PeterUhnak 3/13/2016 00:46:23",
+		"router" : "PeterUhnak 3/13/2016 00:46:23",
+		"setupView:" : "PeterUhnak 3/13/2016 00:46:23" } }

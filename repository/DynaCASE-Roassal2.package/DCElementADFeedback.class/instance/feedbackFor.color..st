@@ -10,8 +10,8 @@ feedbackFor: anElement color: aColor
 	anElement shape class = RTEllipse
 		ifTrue: [ shape := RTEllipse new ].
 	feedback := shape
-		color: (aColor alpha: 0.05);
-		borderColor: (aColor alpha: 0.05);
+		color: (aColor alpha: 0.2);
+		borderColor: (aColor alpha: 0.2);
 		element.
 	noBorder
 		ifTrue: [ feedback trachelShape strokeWidth: 0.

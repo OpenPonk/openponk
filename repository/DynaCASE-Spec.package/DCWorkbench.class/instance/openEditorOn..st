@@ -17,5 +17,7 @@ openEditorOn: aDiagram
 		icon: plugin icon;
 		retrievingBlock: [ widget ];
 		whenTabSelected: [ topToolbar activeEditor: editor ];
-		whenBuiltDo: [ :w | w widget when: #tabDeleted send: #tabDeleted to: editor ].
+		whenBuiltDo: [ :w | 
+			w widget when: #tabDeleted send: #tabDeleted to: editor.
+			w widget when: #tabDeleted evaluate: [ :t | topToolbar activeEditor: nil ] ].
 	tabManager addTab: tab

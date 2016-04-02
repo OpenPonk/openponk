@@ -7,7 +7,6 @@
 	"commentStamp" : "PeterUhnak 12/7/2015 21:41",
 	"instvars" : [
 		"toolbar",
-		"activeModel",
 		"activeEditor" ],
 	"name" : "DCWorkbenchToolbar",
 	"pools" : [

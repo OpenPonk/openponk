@@ -1,7 +1,11 @@
 menus
 editorMenu
-	| builder |
-	builder := DCMenuBuilder new.
-	activeEditor
-		ifNotNil: [ builder menu addAllFromPragma: 'dcEditorToolbarMenu' target: activeEditor ].
-	^ builder menu
+	| menu |
+	menu := self instantiate: MenuModel.
+	menu
+		fromSpec: (PragmaMenuBuilder pragmaKeyword: #dcEditorToolbarMenu model: activeEditor) menuSpec.
+	menu
+		fromSpec:
+			(DCPragmaPluginMenuBuilder pragmaKeyword: #dcEditorToolbarMenu: model: activeEditor)
+				menuSpec.
+	^ menu

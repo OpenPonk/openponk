@@ -8,7 +8,7 @@ openProjectFromFile
 	data := STON fromStream: stream.
 	project := DCProject named: ((data at: #project) at: #name).
 	project fileName: stream name asFileReference.
-	(data at: #diagrams)
+	(data at: #models)
 		valuesDo: [ :each | 
 			| dict |
 			dict := #DCFsmGraphML asClass new import: each.

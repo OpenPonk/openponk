@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Core-Persistence",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DCNullSerializer",
+	"pools" : [
+		 ],
+	"super" : "DCAbstractSerializer",
+	"type" : "normal" }

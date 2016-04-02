@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-Core-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"view",
+		"ctrl" ],
+	"name" : "DCControllerTest",
+	"pools" : [
+		 ],
+	"super" : "DCTestCase",
+	"type" : "normal" }

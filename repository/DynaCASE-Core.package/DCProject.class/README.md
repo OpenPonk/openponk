@@ -1,0 +1,1 @@
+I represent a collection of diagrams and settings opened in editor.

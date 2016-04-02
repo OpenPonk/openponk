@@ -1,0 +1,3 @@
+hooks
+edgeBuilder
+	^ self subclassResponsibility

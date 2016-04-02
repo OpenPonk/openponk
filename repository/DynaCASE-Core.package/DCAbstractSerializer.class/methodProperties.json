@@ -1,0 +1,10 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"materializeDiagramFrom:" : "PeterUhnak 4/2/2016 19:58",
+		"materializeMementoFrom:" : "PeterUhnak 4/2/2016 23:33",
+		"materializeModelFrom:" : "PeterUhnak 4/2/2016 19:58",
+		"serializeDiagram:" : "PeterUhnak 4/2/2016 19:58",
+		"serializeMemento:" : "PeterUhnak 4/2/2016 23:16",
+		"serializeModel:" : "PeterUhnak 4/2/2016 19:58" } }

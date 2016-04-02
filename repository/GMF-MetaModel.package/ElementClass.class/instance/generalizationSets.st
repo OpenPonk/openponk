@@ -1,3 +1,0 @@
-inheritance
-generalizationSets
-	^ generalizationSets

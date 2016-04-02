@@ -1,3 +1,0 @@
-testing
-isPathEmpty
-	^ path isEmpty

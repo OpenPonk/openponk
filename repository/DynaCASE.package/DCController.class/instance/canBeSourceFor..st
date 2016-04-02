@@ -1,3 +1,0 @@
-testing
-canBeSourceFor: aController
-	^ false

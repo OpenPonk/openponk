@@ -1,3 +1,0 @@
-private - collecting
-collectGeneralizationFigures
-	^ self collectFiguresByClass: DCUmlGeneralizationController

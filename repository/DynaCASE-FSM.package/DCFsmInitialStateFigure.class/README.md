@@ -1,1 +1,0 @@
-I am a figure for FSM initial state.

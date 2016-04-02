@@ -1,3 +1,0 @@
-inheritance
-addGeneralizationSet: aGeneralizationSet
-	generalizationSets add: aGeneralizationSet

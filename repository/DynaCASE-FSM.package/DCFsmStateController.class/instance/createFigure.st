@@ -1,3 +1,0 @@
-figures
-createFigure
-	^ DCFsmStateFigure new

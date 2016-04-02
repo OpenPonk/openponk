@@ -1,3 +1,0 @@
-validating
-isElementValid
-	^ true

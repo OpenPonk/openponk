@@ -1,3 +1,0 @@
-hooks
-createFigure
-	^ DCFsmInitialStateFigure new

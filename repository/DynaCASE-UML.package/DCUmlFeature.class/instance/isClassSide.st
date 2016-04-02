@@ -1,3 +1,0 @@
-accessing
-isClassSide
-	^ isClassSide

@@ -1,9 +1,0 @@
-{
-	"class" : {
-		 },
-	"instance" : {
-		"createController" : "PeterUhnak 3/31/2016 13:57:56",
-		"renderFigure" : "PeterUhnak 3/31/2016 13:57:56",
-		"renderFigureOf:" : "PeterUhnak 3/31/2016 13:57:56",
-		"setUp" : "PeterUhnak 3/31/2016 13:57:56",
-		"testCreateController" : "PeterUhnak 3/31/2016 13:57:56" } }

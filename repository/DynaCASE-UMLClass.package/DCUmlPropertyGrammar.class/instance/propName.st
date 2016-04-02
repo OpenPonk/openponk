@@ -1,3 +1,0 @@
-grammar
-propName
-	^ symbol

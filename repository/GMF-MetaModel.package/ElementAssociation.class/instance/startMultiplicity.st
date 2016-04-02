@@ -1,3 +1,0 @@
-accessing
-startMultiplicity
-	^ startMultiplicity asString

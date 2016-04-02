@@ -1,3 +1,0 @@
-testing
-hasStereotype
-	^ stereotype isNotNil

@@ -1,3 +1,0 @@
-private
-arrow
-	outputStream nextPutAll: ' -> '

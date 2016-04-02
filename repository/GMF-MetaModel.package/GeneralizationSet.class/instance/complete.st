@@ -1,3 +1,0 @@
-accessing
-complete
-	^ complete copy

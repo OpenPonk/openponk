@@ -1,3 +1,0 @@
-building
-buildFooter
-	self string: '}'

@@ -1,3 +1,0 @@
-accessing
-modelElements
-	^ modelElements copy

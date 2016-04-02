@@ -1,1 +1,0 @@
-I convert ST source code to a DCUmlClassDiagram model.

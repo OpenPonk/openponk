@@ -1,3 +1,0 @@
-(name 'DynaCASE-UMLClass-PeterUhnak.3' message 'More naming fixes.' id '578feeef-6169-4df2-864d-067be090c5ba' date '1 July 2015' time '12:26:45.84884 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-UMLClass-PeterUhnak.2' message 'Commented broken code.
-' id 'e00766f0-9704-5b9e-aca1-7f47e376df14' date '1 July 2015' time '11:37:21 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-UMLClass-PeterUhnak.1' message 'Fixed class prefixes.
-' id '9c48e948-3cfc-5bd3-825b-88a9bf34bdbd' date '22 June 2015' time '1:16:42 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())) stepChildren ())

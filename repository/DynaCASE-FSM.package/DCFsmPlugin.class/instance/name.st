@@ -1,3 +1,0 @@
-accessing
-name
-	^ 'FSM Diagram'

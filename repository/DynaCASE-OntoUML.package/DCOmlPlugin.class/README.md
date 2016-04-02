@@ -1,1 +1,0 @@
-I am descriptor for OntoUML editor.

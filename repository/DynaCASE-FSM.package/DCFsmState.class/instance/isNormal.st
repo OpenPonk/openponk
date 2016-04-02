@@ -1,3 +1,0 @@
-testing
-isNormal
-	^ isFinal not

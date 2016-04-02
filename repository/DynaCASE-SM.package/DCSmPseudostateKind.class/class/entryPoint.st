@@ -1,3 +1,0 @@
-defaults
-entryPoint
-	^#entryPoint

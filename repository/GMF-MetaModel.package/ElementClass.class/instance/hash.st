@@ -1,3 +1,0 @@
-identification
-hash
-	^ name hash

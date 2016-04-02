@@ -1,3 +1,0 @@
-accessing
-paletteModel
-	^ paletteModel 

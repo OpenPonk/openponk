@@ -1,3 +1,0 @@
-grammar
-upper
-	^ naturalLiteral / $* asParser

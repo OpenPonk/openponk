@@ -1,1 +1,0 @@
-I am a base class for operations and properties having some convenience methods.

@@ -1,3 +1,0 @@
-accessing
-layout
-	^ self subclassResponsibility

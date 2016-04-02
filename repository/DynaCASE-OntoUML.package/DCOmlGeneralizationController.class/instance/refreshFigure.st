@@ -1,3 +1,0 @@
-hooks
-refreshFigure
-	"do nothing"

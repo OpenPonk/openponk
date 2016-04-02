@@ -1,1 +1,0 @@
-A DCFsmFinalStateController is a controller for the final state in FSM.

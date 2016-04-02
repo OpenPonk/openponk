@@ -1,1 +1,0 @@
-An Element represent element in OntoUML metamodel that can be element or association and provide interface for validate.

@@ -1,3 +1,0 @@
-defaults
-local
-	^#local

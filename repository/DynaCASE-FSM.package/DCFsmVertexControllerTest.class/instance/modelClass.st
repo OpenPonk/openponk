@@ -1,3 +1,0 @@
-hooks
-modelClass
-	^ self subclassResponsibility

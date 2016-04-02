@@ -1,2 +1,2 @@
-(name 'DynaCASE-PeterUhnak.176' message 'Added DCController>>refreshForm to rebuild the dynamic form.' id 'f29718ac-17b0-4a32-ad5d-8afd7481f84d' date '31 March 2016' time '1:57:50.209948 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-PeterUhnak.175' message 'Persistence stuff.
-' id '12fbc3ed-f4ed-599d-99b0-3b0017c217cf' date '18 March 2016' time '1:29:59 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-PeterUhnak.177' message 'diagramClass -> modelClass' id 'd77177a5-6136-4c5e-a808-271760e593a4' date '2 April 2016' time '5:47:22.212977 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-PeterUhnak.176' message 'Added DCController>>refreshForm to rebuild the dynamic form.
+' id 'a709e244-adbe-5a24-b94e-38689743f9a4' date '31 March 2016' time '1:57:56 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

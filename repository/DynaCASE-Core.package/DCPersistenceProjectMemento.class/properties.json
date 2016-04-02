@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Core-Persistence",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 3/16/2016 16:41",
+	"instvars" : [
+		"project" ],
+	"name" : "DCPersistenceProjectMemento",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

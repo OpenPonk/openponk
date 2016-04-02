@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Core-Figures",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 6/4/2015 14:41",
+	"instvars" : [
+		 ],
+	"name" : "DCRTNullLayout",
+	"pools" : [
+		 ],
+	"super" : "RTLayout",
+	"type" : "normal" }

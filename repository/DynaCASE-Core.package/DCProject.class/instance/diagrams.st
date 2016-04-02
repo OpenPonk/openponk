@@ -1,0 +1,3 @@
+accessing
+diagrams
+	^ diagrams value

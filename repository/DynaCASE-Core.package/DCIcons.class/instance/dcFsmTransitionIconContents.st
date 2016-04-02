@@ -1,0 +1,8 @@
+private - contents
+dcFsmTransitionIconContents
+	"Private - Method generated with the content of the file File @ /home/peter/prog/dynacase/icons/dcFsmTransition.png"
+	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAA
+CXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gwREQch13lF2gAAABl0RVh0Q29tbWVudABD
+cmVhdGVkIHdpdGggR0lNUFeBDhcAAABqSURBVDjLY2AYBcQCRlwSzCQY8p+BgeEdAwPDKUpc
+cICBgeEKAwODArKEBQkG/WBgYLBmYGCYwsDA0MDAwNDIwsDA4E+iN/5D2cEMDAyNpHolF2pA
+LkyAhQTNdxgYGJ7gixFCQGc0NWMHAKweDmH+UsOrAAAAAElFTkSuQmCC'

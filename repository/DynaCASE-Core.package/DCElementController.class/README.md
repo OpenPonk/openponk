@@ -1,0 +1,2 @@
+A DCElementController an abstract class which should be a parent for all elements in diagram, such as classes, states.
+It has method which handles the creation of the form for specific element. The controller is also responsible for specification of the view of an element. The precise definition of the form and the view is done by descendants.

@@ -1,0 +1,9 @@
+private - contents
+dcFsmRegularStateIconContents
+	"Private - Method generated with the content of the file File @ /home/peter/prog/dynacase/icons/dcFsmRegularState.png"
+	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAA
+CXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gwREQMGFh81tQAAABl0RVh0Q29tbWVudABD
+cmVhdGVkIHdpdGggR0lNUFeBDhcAAACSSURBVDjLrdO9DcJADIbhR4QG6QbJEvQZAIpscHuk
+YpX02SEFy6SlCY1pgBDy80purE/32WebTxJqdBgiusglM9QY0SOjjMiRG0PzlSYE+YdBDk0z
+5VyZp3qvJP3hPFVJern3ltOjLnBDi/vCB464ijGVKyooMRxspMAZjxUtXHDa/Im7jHHzIu2y
+yrsc06pzfgKTTTJXZ7zJ7gAAAABJRU5ErkJggg=='

@@ -1,0 +1,3 @@
+testing
+historyIsEmpty
+	^ history isEmpty

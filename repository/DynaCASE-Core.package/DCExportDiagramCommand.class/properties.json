@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-Core-UICommands",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 6/18/2015 07:01",
+	"instvars" : [
+		"exporter",
+		"defaultFileName" ],
+	"name" : "DCExportDiagramCommand",
+	"pools" : [
+		 ],
+	"super" : "DCUICommand",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+testing
+hasFigures
+	^ figures isNotEmpty

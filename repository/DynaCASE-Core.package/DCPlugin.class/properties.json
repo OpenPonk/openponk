@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Core-DynaCASE-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 7/2/2015 00:33",
+	"instvars" : [
+		 ],
+	"name" : "DCPlugin",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

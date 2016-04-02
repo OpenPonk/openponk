@@ -1,1 +1,0 @@
-I provide in-image persistance for DCProjects.

@@ -1,1 +1,0 @@
-I persist project metadata (not actual models/diagrams, that's handled elsewhere) to a file.

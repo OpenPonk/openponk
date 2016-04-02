@@ -1,19 +1,19 @@
 opening
-openEditorOn: aDiagram
+openEditorOn: aModel
 	| editor tab plugin widget |
-	(self projectController hasDiagram: aDiagram)
+	(self projectController hasDiagram: aModel)
 		ifTrue: [ ^ self ].
 	(editor := DCEditor new) workbench: self.
-	plugin := pluginRegistry pluginFor: aDiagram.
+	plugin := pluginRegistry pluginFor: aModel.
 	editor plugin: plugin.
 	tab := self newTab.
 	widget := editor buildWithSpec asWidget.
 	editor owner: tab.
-	editor openDiagram: aDiagram.
-	aDiagram whenChanged: [ tab label: aDiagram name ].
+	editor openModel: aModel.
+	aModel whenChanged: [ tab label: aModel name ].
 	editor paletteModel rebuildWidget.
 	tab
-		label: aDiagram name;
+		label: aModel name;
 		icon: plugin icon;
 		retrievingBlock: [ widget ];
 		whenTabSelected: [ topToolbar activeEditor: editor ];

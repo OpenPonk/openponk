@@ -2,11 +2,11 @@
 	"class" : {
 		"defaultSpec" : "PeterUhnak 3/18/2016 13:36:53",
 		"open" : "PeterUhnak 3/18/2016 13:36:53",
-		"openDiagram:" : "PeterUhnak 3/18/2016 13:36:53",
 		"openFromFile:" : "PeterUhnak 3/18/2016 13:36:53",
+		"openModel:" : "PeterUhnak 4/2/2016 17:43",
 		"openNewProject" : "PeterUhnak 3/18/2016 13:36:53",
 		"openNewProject:" : "PeterUhnak 3/18/2016 13:36:53",
-		"openOnDiagram:" : "PeterUhnak 3/18/2016 13:36:53",
+		"openOnModel:" : "PeterUhnak 4/2/2016 17:44",
 		"openProject:" : "PeterUhnak 3/18/2016 13:36:53" },
 	"instance" : {
 		"formModel" : "PeterUhnak 3/18/2016 13:36:53",
@@ -15,7 +15,7 @@
 		"initializeWidgets" : "PeterUhnak 3/18/2016 13:36:53",
 		"navigatorModel" : "PeterUhnak 3/18/2016 13:36:53",
 		"open" : "PeterUhnak 3/18/2016 13:36:53",
-		"openEditorOn:" : "PeterUhnak 4/2/2016 15:11",
+		"openEditorOn:" : "PeterUhnak 4/2/2016 17:44",
 		"openFormOn:" : "PeterUhnak 3/18/2016 13:36:53",
 		"openProject:" : "PeterUhnak 3/18/2016 13:36:53",
 		"pluginRegistry" : "PeterUhnak 3/18/2016 13:36:53",

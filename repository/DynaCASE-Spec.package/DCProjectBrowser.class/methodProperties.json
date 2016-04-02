@@ -1,17 +1,17 @@
 {
 	"class" : {
-		"addDiagramButtons:" : "PeterUhnak 3/18/2016 13:36:53",
+		"addDiagramButtons:" : "PeterUhnak 4/2/2016 17:39",
 		"defaultSpec" : "PeterUhnak 3/18/2016 13:36:53",
 		"menuCommandOn:" : "PeterUhnak 3/18/2016 13:36:53",
 		"open" : "PeterUhnak 3/18/2016 13:36:53" },
 	"instance" : {
-		"createProject" : "PeterUhnak 3/18/2016 13:36:53",
+		"createProject" : "PeterUhnak 4/2/2016 17:39",
 		"createProjectButton" : "PeterUhnak 3/18/2016 13:36:53",
 		"doesNotUnderstand:" : "PeterUhnak 3/18/2016 13:36:53",
 		"initialExtent" : "PeterUhnak 3/18/2016 13:36:53",
 		"initialize" : "PeterUhnak 3/18/2016 13:36:53",
 		"initializePresenter" : "PeterUhnak 3/18/2016 13:36:53",
-		"initializeWidgets" : "PeterUhnak 3/18/2016 13:36:53",
+		"initializeWidgets" : "PeterUhnak 4/2/2016 17:39",
 		"openProject:" : "PeterUhnak 3/18/2016 13:36:53",
 		"openProjectButton" : "PeterUhnak 3/18/2016 13:36:53",
 		"openProjectFromFile" : "PeterUhnak 4/1/2016 14:02",

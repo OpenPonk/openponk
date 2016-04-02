@@ -1,6 +1,6 @@
 project handling
-openDiagram: aDiagram
+openModel: aModel
 	| project |
 	project := DCProject named: 'Project'.
-	project addModel: aDiagram.
+	project addModel: aModel.
 	self openProject: project

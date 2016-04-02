@@ -1,2 +1,2 @@
-(name 'DynaCASE-Spec-PeterUhnak.203' message 'A new/better approach for defining editor and canvas menus.' id '91020e28-0c58-4744-a60b-4bd1df22bf45' date '2 April 2016' time '4:36:39.430712 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.202' message 'Renames addDiagram: -> addModel:
-' id '3806f6b3-165e-5074-852d-1973c9fc33b5' date '18 March 2016' time '1:36:53 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Spec-PeterUhnak.204' message 'Unified most of diagram/model confused namings.' id '9f19de45-88d9-4aab-a490-c92a774eeed1' date '2 April 2016' time '5:46:49.731515 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.203' message 'A new/better approach for defining editor and canvas menus.
+' id 'df40b9a4-0d90-5ed6-ab10-f1827dada832' date '2 April 2016' time '4:36:45 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

@@ -1,5 +1,5 @@
 diagram handling
-applyLayoutFor: aDiagram
+applyLayoutFor: aModel
 	| layout |
-	layout := self workbench projectController layoutFor: aDiagram.
+	layout := self workbench projectController layoutFor: aModel.
 	diagramController layout: layout

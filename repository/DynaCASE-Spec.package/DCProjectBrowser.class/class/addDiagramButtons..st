@@ -4,5 +4,5 @@ addDiagramButtons: aSpecLayout
 		pluginsDo:
 			[ :each | 
 			aSpecLayout
-				add: (each diagramClass asString uncapitalized , 'Radio') asSymbol
+				add: (each modelClass asString uncapitalized , 'Radio') asSymbol
 				height: self buttonHeight ]

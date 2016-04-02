@@ -1,8 +1,8 @@
 diagram handling
-newDiagramControllerFor: aDiagram
+newDiagramControllerFor: aModel
 	| plugin |
-	plugin := self workbench pluginRegistry pluginFor: aDiagram.
+	plugin := self workbench pluginRegistry pluginFor: aModel.
 	^ plugin diagramControllerClass new
-		model: aDiagram;
+		model: aModel;
 		editor: self;
 		yourself

@@ -8,7 +8,7 @@ createProject
 			[ :each | 
 			project
 				addModel:
-					(each first diagramClass new
+					(each first modelClass new
 						name: each first name;
 						yourself) ].
 	self openProject: project

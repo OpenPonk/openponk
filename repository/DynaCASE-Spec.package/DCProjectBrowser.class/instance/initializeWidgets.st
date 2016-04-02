@@ -9,7 +9,7 @@ initializeWidgets
 	pluginRegistry
 		pluginsDo: [ :each | 
 			(diagramOptions
-				at: (each diagramClass asString uncapitalized , 'Radio') asSymbol
+				at: (each modelClass asString uncapitalized , 'Radio') asSymbol
 				put: (Array with: each with: (self newRadioButton label: each name))) second
 				whenBuiltDo: [ :event | event model widget hSpaceFill ] ].
 	self setGroup

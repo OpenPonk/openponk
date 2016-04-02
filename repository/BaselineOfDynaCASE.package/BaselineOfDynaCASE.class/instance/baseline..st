@@ -26,7 +26,7 @@ baseline: spec
 						versionString: #development;
 						loads: #('Parser');
 						repository: 'http://smalltalkhub.com/mc/Moose/PetitParser/main/' ];
-				package: 'DynaCASE'
+				package: 'DynaCASE-Core'
 					with: [ spec requires: #('DynaCASEModel' 'Roassal2' 'Ston' 'PetitParser') ];
 				package: 'DynaCASE-Trachel';
 				package: 'DynaCASE-Roassal2';
@@ -34,5 +34,5 @@ baseline: spec
 				package: 'DynaCASE-Plugins' with: [ spec postLoadDoIt: #postLoadPlugins ].
 			spec
 				group: 'default'
-				with: #('DynaCASE' 'DynaCASE-Trachel' 'DynaCASE-Roassal2' 'DynaCASE-Spec').
+				with: #('DynaCASE-Core' 'DynaCASE-Trachel' 'DynaCASE-Roassal2' 'DynaCASE-Spec').
 			spec group: 'complete' with: #('default' 'DynaCASE-Plugins') ]

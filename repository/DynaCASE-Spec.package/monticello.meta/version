@@ -1,2 +1,2 @@
-(name 'DynaCASE-Spec-PeterUhnak.204' message 'Unified most of diagram/model confused namings.' id '9f19de45-88d9-4aab-a490-c92a774eeed1' date '2 April 2016' time '5:46:49.731515 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.203' message 'A new/better approach for defining editor and canvas menus.
-' id 'df40b9a4-0d90-5ed6-ab10-f1827dada832' date '2 April 2016' time '4:36:45 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Spec-PeterUhnak.205' message 'Moved DslEditor from DC-Spec.' id '1d75b6ed-2aa6-4ada-9996-4dece1fe2523' date '3 April 2016' time '3:56:33.593088 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.204' message 'Unified most of diagram/model confused namings.
+' id '6ad7b985-2414-5ae3-a465-08eeed2b1fa4' date '2 April 2016' time '5:46:55 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

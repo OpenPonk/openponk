@@ -1,0 +1,1 @@
+I am a serialization interface for undo/redo and persistence.

@@ -1,3 +1,3 @@
 testing
 hasUndo
-	^ false
+	^ self autosaveManager historyIsEmpty not

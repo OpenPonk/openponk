@@ -1,3 +1,3 @@
 testing
 hasRedo
-	^ false
+	^ self autosaveManager futureIsEmpty not

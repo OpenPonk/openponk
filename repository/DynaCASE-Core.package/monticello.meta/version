@@ -1,2 +1,2 @@
-(name 'DynaCASE-Core-PeterUhnak.4' message 'Comments.' id 'a5ee539f-d5c6-4811-8bc5-0b96f659ee98' date '3 April 2016' time '9:50:08.42649 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Core-PeterUhnak.3' message 'Renamed ''DynaCASE'' to ''DynaCASE-Core''. For older versions see git log.
-' id '28616f6d-0549-50ab-81b7-fd104f33ed08' date '3 April 2016' time '12:41:48 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Core-PeterUhnak.5' message 'Added STON and FUEL serializers. Added WIP undo/redo support.' id 'c3faaa91-2c4d-437c-a781-b4d41bfccb5e' date '3 April 2016' time '3:57:52.908006 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Core-PeterUhnak.4' message 'Comments.
+' id '8022d492-ff22-557d-b3f8-be9c47da037c' date '3 April 2016' time '9:50:11 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

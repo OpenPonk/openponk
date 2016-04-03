@@ -2,17 +2,13 @@ events - registering
 registerModelEvents: aModel
 	aModel announcer
 		when: DCElementRemoved
-		do:
-			[ :event | 
+		do: [ :event | 
 			self diagramController removeControllerOf: event element.
 			self diagramController updateView ].
 	(Smalltalk hasClassNamed: #MooseEntityRemoved)
-		ifTrue:
-			[ aModel announcer
+		ifTrue: [ aModel announcer
 				when: #MooseEntityRemoved asClass
-				do:
-					[ :event | 
+				do: [ :event | 
 					(self diagramController model includes: event entity)
-						ifTrue:
-							[ self diagramController removeControllerOf: event entity.
+						ifTrue: [ self diagramController removeControllerOf: event entity.
 							self diagramController updateView ] ] ]

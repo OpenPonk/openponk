@@ -1,2 +1,2 @@
-(name 'DynaCASE-Spec-PeterUhnak.205' message 'Moved DslEditor from DC-Spec.' id '1d75b6ed-2aa6-4ada-9996-4dece1fe2523' date '3 April 2016' time '3:56:33.593088 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.204' message 'Unified most of diagram/model confused namings.
-' id '6ad7b985-2414-5ae3-a465-08eeed2b1fa4' date '2 April 2016' time '5:46:55 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Spec-PeterUhnak.206' message 'Separated layout application from controllers rebuilding.' id '17f0c15b-14e8-4dd7-bbf5-93bb0e8df131' date '5 April 2016' time '12:51:07.301669 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.205' message 'Moved DslEditor from DC-Spec.
+' id 'f749598f-edce-597b-81b3-05fbdb5ad040' date '3 April 2016' time '3:56:37 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

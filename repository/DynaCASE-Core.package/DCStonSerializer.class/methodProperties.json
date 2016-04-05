@@ -3,10 +3,10 @@
 		 },
 	"instance" : {
 		"materializeDiagramFrom:" : "PeterUhnak 4/3/2016 15:03",
-		"materializeMementoFrom:" : "PeterUhnak 4/3/2016 15:03",
+		"materializeMementoFrom:" : "PeterUhnak 4/5/2016 12:26",
 		"materializeModelFrom:" : "PeterUhnak 4/3/2016 15:04",
-		"serializeDiagram:" : "PeterUhnak 4/3/2016 15:03",
-		"serializeMemento:" : "PeterUhnak 4/3/2016 15:03",
+		"serializeDiagram:" : "PeterUhnak 4/5/2016 12:51",
+		"serializeMemento:" : "PeterUhnak 4/5/2016 12:26",
 		"serializeModel:" : "PeterUhnak 4/3/2016 15:03",
 		"stonMaterialize:" : "PeterUhnak 4/3/2016 15:06",
 		"stonSerialize:" : "PeterUhnak 4/3/2016 15:04" } }

@@ -1,2 +1,2 @@
-(name 'DynaCASE-Core-PeterUhnak.7' message 'Some methods survived some recovery?' id '34ed9736-b154-4f7c-be89-dc37c8d49fac' date '16 April 2016' time '12:38:01.957871 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Core-PeterUhnak.6' message 'Separated layout application from controllers rebuilding.Issues with STON.
-' id '1e2753ed-670a-5fac-8632-8dd662d1611a' date '5 April 2016' time '12:52 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Core-PeterUhnak.8' message 'Warn but don''t die on missing #modelClass.' id '19109b4a-aa01-4991-ae9d-fec1936b55d0' date '16 April 2016' time '12:44:13.266934 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Core-PeterUhnak.7' message 'Some methods survived some recovery?
+' id '6c806f4a-2618-57bd-abca-5d469a5ca32f' date '16 April 2016' time '12:38:05 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

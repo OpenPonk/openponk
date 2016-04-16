@@ -1,3 +1,4 @@
 accessing
 diagrams
-	^ diagrams value
+	self deprecated: 'Use #models instead'.
+	^ self models

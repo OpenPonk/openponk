@@ -1,2 +1,2 @@
-(name 'DynaCASE-Core-PeterUhnak.6' message 'Separated layout application from controllers rebuilding.Issues with STON.' id '28e21e37-67e3-4d5c-ace9-9a23651c2148' date '5 April 2016' time '12:51:58.698978 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Core-PeterUhnak.5' message 'Added STON and FUEL serializers. Added WIP undo/redo support.
-' id '10e36d9c-469c-5b63-9e97-587f076625b6' date '3 April 2016' time '3:57:55 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Core-PeterUhnak.7' message 'Some methods survived some recovery?' id '34ed9736-b154-4f7c-be89-dc37c8d49fac' date '16 April 2016' time '12:38:01.957871 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Core-PeterUhnak.6' message 'Separated layout application from controllers rebuilding.Issues with STON.
+' id '1e2753ed-670a-5fac-8632-8dd662d1611a' date '5 April 2016' time '12:52 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

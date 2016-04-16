@@ -21,6 +21,11 @@ postLoadPlugins
 		onConflict: [ :ex | ex allow ];
 		load.
 	Metacello new
+		baseline: 'OntoUmlInstancesEditor';
+		repository: 'github://dynacase/ontouml/repository';
+		onConflict: [ :ex | ex allow ];
+		load.
+	Metacello new
 		baseline: 'DemoEditor';
 		repository: 'github://dynacase/demo-editor/repository';
 		onConflict: [ :ex | ex allow ];

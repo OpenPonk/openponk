@@ -1,2 +1,2 @@
-(name 'BaselineOfDynaCASE-PeterUhnak.42' message 'Added ontouml to all-in-one.' id '978f9433-7136-4476-8f45-2dbaa1111c55' date '16 April 2016' time '12:46:13.381113 pm' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.41' message 'DynaCASE -> DynaCASE-Core
-' id '18e893f2-c88b-57cb-985e-f41b9eae4eab' date '3 April 2016' time '12:57:56 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'BaselineOfDynaCASE-PeterUhnak.43' message 'Two baselines in a single repository? Will it choke?' id 'adbbda35-f2bb-4e94-895d-28074f529482' date '16 April 2016' time '12:48:34.469725 pm' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.42' message 'Added ontouml to all-in-one.
+' id '4333d2a8-dca8-5978-acfb-a1770a3c512c' date '16 April 2016' time '12:46:15 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

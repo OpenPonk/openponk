@@ -1,2 +1,2 @@
-(name 'DynaCASE-Core-PeterUhnak.8' message 'Warn but don''t die on missing #modelClass.' id '19109b4a-aa01-4991-ae9d-fec1936b55d0' date '16 April 2016' time '12:44:13.266934 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Core-PeterUhnak.7' message 'Some methods survived some recovery?
-' id '6c806f4a-2618-57bd-abca-5d469a5ca32f' date '16 April 2016' time '12:38:05 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Core-PeterUhnak.9' message 'Do not saveState for OntoUML.' id 'ba9b0473-ef62-4d76-909b-60c0537197f4' date '16 April 2016' time '1:28:01.643868 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Core-PeterUhnak.8' message 'Warn but don''t die on missing #modelClass.
+' id '85ced07a-4533-5531-a1b2-403a67f77e7f' date '16 April 2016' time '12:44:16 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

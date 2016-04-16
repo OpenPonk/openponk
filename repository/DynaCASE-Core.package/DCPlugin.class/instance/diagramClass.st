@@ -1,3 +1,3 @@
 accessing
 diagramClass
-	^ self subclassResponsibility
+	^ self deprecated: 'Use #modelClass'

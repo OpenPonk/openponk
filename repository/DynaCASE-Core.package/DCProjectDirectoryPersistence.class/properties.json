@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Core-Persistence",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 4/21/2016 15:55",
+	"instvars" : [
+		"projectController" ],
+	"name" : "DCProjectDirectoryPersistence",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

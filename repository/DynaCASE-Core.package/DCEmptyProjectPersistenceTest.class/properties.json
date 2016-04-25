@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Core-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"persistence" ],
+	"name" : "DCEmptyProjectPersistenceTest",
+	"pools" : [
+		 ],
+	"super" : "DCProjectPersistenceTest",
+	"type" : "normal" }

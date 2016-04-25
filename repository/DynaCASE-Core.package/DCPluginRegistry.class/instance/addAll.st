@@ -1,3 +1,3 @@
 adding
 addAll
-	DCPlugin allSubclassesDo: [ :each | self addPlugin: each new ]
+	plugins := DCPlugin allSubclasses collect: #new

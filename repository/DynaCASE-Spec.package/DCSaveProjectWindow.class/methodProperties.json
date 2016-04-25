@@ -1,0 +1,21 @@
+{
+	"class" : {
+		"defaultSpec" : "PeterUhnak 4/21/2016 15:30",
+		"open" : "PeterUhnak 4/21/2016 15:37" },
+	"instance" : {
+		"cancel" : "PeterUhnak 4/21/2016 15:40",
+		"chooseFolder" : "PeterUhnak 4/21/2016 15:25",
+		"initialExtent" : "PeterUhnak 4/21/2016 15:32",
+		"initialize" : "PeterUhnak 4/21/2016 15:31",
+		"initializePresenter" : "PeterUhnak 4/21/2016 15:30",
+		"initializeWidgets" : "PeterUhnak 4/21/2016 15:09",
+		"open" : "PeterUhnak 4/21/2016 15:50",
+		"projectController:" : "PeterUhnak 4/21/2016 15:49",
+		"projectFolderButton" : "PeterUhnak 4/21/2016 15:03",
+		"projectFolderInput" : "PeterUhnak 4/21/2016 15:03",
+		"projectFolderLabel" : "PeterUhnak 4/21/2016 15:03",
+		"projectNameInput" : "PeterUhnak 4/21/2016 15:03",
+		"projectNameLabel" : "PeterUhnak 4/21/2016 15:03",
+		"save" : "PeterUhnak 4/21/2016 15:49",
+		"title" : "PeterUhnak 4/21/2016 14:41",
+		"updateFolderInput" : "PeterUhnak 4/21/2016 15:26" } }

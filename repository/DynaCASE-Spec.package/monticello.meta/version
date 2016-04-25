@@ -1,2 +1,2 @@
-(name 'DynaCASE-Spec-PeterUhnak.206' message 'Separated layout application from controllers rebuilding.' id '17f0c15b-14e8-4dd7-bbf5-93bb0e8df131' date '5 April 2016' time '12:51:07.301669 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.205' message 'Moved DslEditor from DC-Spec.
-' id 'f749598f-edce-597b-81b3-05fbdb5ad040' date '3 April 2016' time '3:56:37 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Spec-PeterUhnak.207' message 'Wip project persistence.' id 'eb715bcd-4c7a-4cae-a933-45bf671c02d7' date '25 April 2016' time '4:30:40.345244 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.206' message 'Separated layout application from controllers rebuilding.
+' id 'eef47e34-0eab-530a-9d87-d1bc8362842f' date '5 April 2016' time '12:51:10 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

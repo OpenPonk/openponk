@@ -9,7 +9,9 @@ projectMenu
 	builder
 		addItem: 'Save'
 		icon: Smalltalk ui icons smallSaveIcon
-		action: [ self workbench projectController saveProject ].
+		action: [ DCSaveProjectWindow new
+				projectController: self workbench projectController;
+				open ].
 	builder
 		addItem: 'Properties...'
 		icon: Smalltalk ui icons tools

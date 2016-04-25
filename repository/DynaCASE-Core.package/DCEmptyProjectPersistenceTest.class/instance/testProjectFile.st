@@ -11,7 +11,7 @@ testProjectFile
     <name>My Project</name>
     <documentation>
         <exporter>DynaCASE</exporter>
-        <exporterVersion>0.0-alpha</exporterVersion>
+        <exporterVersion>0.0.0</exporterVersion>
         TIMESTAMP
     </documentation>
 </project>'

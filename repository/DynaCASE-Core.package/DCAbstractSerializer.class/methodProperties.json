@@ -2,9 +2,9 @@
 	"class" : {
 		 },
 	"instance" : {
-		"materializeDiagramFrom:" : "PeterUhnak 4/2/2016 19:58",
-		"materializeMementoFrom:" : "PeterUhnak 4/2/2016 23:33",
-		"materializeModelFrom:" : "PeterUhnak 4/2/2016 19:58",
-		"serializeDiagram:" : "PeterUhnak 4/2/2016 19:58",
-		"serializeMemento:" : "PeterUhnak 4/2/2016 23:16",
-		"serializeModel:" : "PeterUhnak 4/2/2016 19:58" } }
+		"materializeDiagramFrom:" : "PeterUhnak 4/25/2016 16:30:18",
+		"materializeMementoFrom:" : "PeterUhnak 4/25/2016 16:30:18",
+		"materializeModelFrom:" : "PeterUhnak 4/25/2016 16:30:18",
+		"serializeDiagram:" : "PeterUhnak 4/25/2016 16:30:18",
+		"serializeMemento:" : "PeterUhnak 4/25/2016 16:30:18",
+		"serializeModel:" : "PeterUhnak 4/25/2016 16:30:18" } }

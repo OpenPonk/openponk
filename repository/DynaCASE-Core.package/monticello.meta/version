@@ -1,2 +1,2 @@
-(name 'DynaCASE-Core-PeterUhnak.11' message 'Wip project persistence.' id '9dccde8b-945a-4468-92d7-99bac84e3f46' date '25 April 2016' time '4:30:14.849877 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Core-PeterUhnak.10' message 'Don''t shout on missing #modelClass.
-' id '653df49d-914c-56d5-80dd-80383b2afc56' date '16 April 2016' time '1:59:10 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Core-PeterUhnak.12' message 'typo.' id 'b2cfb4b6-afd2-4c49-a300-947c8b151c4d' date '25 April 2016' time '4:46:02.104339 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Core-PeterUhnak.11' message 'Wip project persistence.
+' id 'cbcc1e5b-0fe0-52b4-9289-4cc2f674a2c5' date '25 April 2016' time '4:30:18 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

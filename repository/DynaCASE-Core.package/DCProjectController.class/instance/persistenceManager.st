@@ -1,3 +1,3 @@
 accessing
 persistenceManager
-	^ persistenceManager ifNil: [ persistenceManager := DCPersistenceManager new ]
+	^ persistenceManager ifNil: [ persistenceManager := DCProjectDirectoryPersistence new ]

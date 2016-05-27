@@ -1,0 +1,17 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"setUp" : "PeterUhnak 5/27/2016 13:00",
+		"setUpBasicProject" : "PeterUhnak 5/27/2016 14:29",
+		"tearDown" : "PeterUhnak 5/27/2016 13:00",
+		"testMissingProject" : "PeterUhnak 5/27/2016 12:55",
+		"testModelId" : "PeterUhnak 5/27/2016 15:11",
+		"testPluginReferenceKnown" : "PeterUhnak 5/27/2016 14:27",
+		"testPluginReferenceUnknown" : "PeterUhnak 5/27/2016 15:24",
+		"testRead" : "PeterUhnak 5/27/2016 15:59",
+		"testReadMemento" : "PeterUhnak 5/27/2016 15:53",
+		"testReadMementos" : "PeterUhnak 5/27/2016 15:54",
+		"testReadModelReferences" : "PeterUhnak 5/27/2016 15:15",
+		"testReadProject" : "PeterUhnak 5/27/2016 13:01",
+		"testSetUp" : "PeterUhnak 5/27/2016 12:59" } }

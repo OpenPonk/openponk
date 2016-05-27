@@ -1,6 +1,6 @@
 saving
 saveProjectTo: aFolder
 	self persistenceManager
-		saveProject: (DCPersistenceProjectMemento project: self project)
-		models: self modelMementos
+		saveProject: self project
+		withMementos: self modelMementos
 		to: aFolder asFileReference

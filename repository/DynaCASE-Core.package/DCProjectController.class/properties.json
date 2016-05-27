@@ -10,7 +10,8 @@
 		"project",
 		"controllers",
 		"lastSave",
-		"disableAutosave" ],
+		"disableAutosave",
+		"persistenceManager" ],
 	"name" : "DCProjectController",
 	"pools" : [
 		 ],

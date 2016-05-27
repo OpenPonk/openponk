@@ -1,4 +1,4 @@
-as yet unclassified
+writing
 writeModelReferences: models on: aStream
 	(XMLWriter on: aStream)
 		writeWith: [ :writer | 

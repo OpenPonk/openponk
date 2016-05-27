@@ -1,4 +1,4 @@
-as yet unclassified
+writing
 writeProject: aProject on: aStream
 	(XMLWriter on: aStream)
 		writeWith: [ :writer | 

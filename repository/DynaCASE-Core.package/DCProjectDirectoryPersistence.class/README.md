@@ -1,1 +1,1 @@
-My job is to store a project into a directory.
+My job is to store a project with all the plugins into a provided directory.

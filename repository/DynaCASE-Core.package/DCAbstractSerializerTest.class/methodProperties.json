@@ -1,0 +1,8 @@
+{
+	"class" : {
+		"isAbstract" : "PeterUhnak 5/27/2016 23:59" },
+	"instance" : {
+		"serializerClass" : "PeterUhnak 5/27/2016 23:53",
+		"setUp" : "PeterUhnak 5/27/2016 23:57",
+		"testLoadMemento" : "PeterUhnak 5/28/2016 00:01",
+		"testSaveMemento" : "PeterUhnak 5/27/2016 23:59" } }

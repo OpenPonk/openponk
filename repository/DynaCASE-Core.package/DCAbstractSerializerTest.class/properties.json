@@ -1,0 +1,16 @@
+{
+	"category" : "DynaCASE-Core-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"serializer",
+		"root",
+		"memento" ],
+	"name" : "DCAbstractSerializerTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

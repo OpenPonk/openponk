@@ -11,4 +11,4 @@ initializePresenter
 		autoAccept: true;
 		whenTextChanged: [ :newValue | createProjectButton enabled: newValue isNotEmpty ].
 	createProjectButton action: [ self createProject ].
-	openProjectButton action: [ self openProjectFromFile ]
+	openProjectButton action: [ self openProjectFromDirectory ]

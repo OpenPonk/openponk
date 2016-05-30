@@ -2,7 +2,8 @@
 	"class" : {
 		"isAbstract" : "PeterUhnak 5/27/2016 23:59" },
 	"instance" : {
+		"newMemento" : "PeterUhnak 5/30/2016 15:14",
 		"serializerClass" : "PeterUhnak 5/27/2016 23:53",
-		"setUp" : "PeterUhnak 5/27/2016 23:57",
+		"setUp" : "PeterUhnak 5/30/2016 15:14",
 		"testLoadMemento" : "PeterUhnak 5/28/2016 00:01",
 		"testSaveMemento" : "PeterUhnak 5/27/2016 23:59" } }

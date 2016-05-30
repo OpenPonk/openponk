@@ -1,2 +1,2 @@
-(name 'DynaCASE-Core-PeterUhnak.14' message 'More tests.' id 'd1a04913-8fbb-420f-8c9a-5ef316b96f7e' date '28 May 2016' time '12:03:19.159402 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Core-PeterUhnak.13' message 'Lots of work on project persistence.
-' id 'ab27d1b6-9d23-561f-860f-5b3eb311f168' date '27 May 2016' time '11:48:29 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Core-PeterUhnak.15' message 'More dynamic tests.' id '1a9d7b92-a3a3-4ac3-99cd-73c1e3371da4' date '30 May 2016' time '3:23:52.166649 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Core-PeterUhnak.14' message 'More tests.
+' id 'b85b7c7f-93c5-5f2e-b48b-603a65534afa' date '28 May 2016' time '12:03:49 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

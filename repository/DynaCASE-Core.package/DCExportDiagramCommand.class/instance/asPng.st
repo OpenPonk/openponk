@@ -1,3 +1,0 @@
-accessing
-asPng
-	exporter asPNG

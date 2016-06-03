@@ -1,3 +1,0 @@
-accessing
-asJpeg
-	exporter asJPG

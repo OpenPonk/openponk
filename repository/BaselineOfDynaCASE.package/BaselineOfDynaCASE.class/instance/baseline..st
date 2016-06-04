@@ -3,25 +3,28 @@ baseline: spec
 	<baseline>
 	spec
 		for: #common
-		do:
-			[ spec
+		do: [ spec
 				baseline: 'DynaCASEModel'
 					with: [ spec repository: 'github://dynacase/dynacase-model/repository' ];
+				baseline: 'FileDialog'
+					with: [ spec repository: 'github://peteruhnak/file-dialog/repository' ];
 				project: 'Roassal2'
-					with:
-						[ spec
+					with: [ spec
 						className: #ConfigurationOfRoassal2;
 						versionString: #development;
 						repository: 'http://smalltalkhub.com/mc/ObjectProfile/Roassal2/main/' ];
+				project: 'Merlin'
+					with: [ spec
+						className: #ConfigurationOfMerlin;
+						versionString: #development;
+						repository: 'http://www.smalltalkhub.com/mc/Moose/Merlin/main' ];
 				project: 'Ston'
-					with:
-						[ spec
+					with: [ spec
 						className: #ConfigurationOfSton;
 						versionString: #stable;
 						repository: 'http://smalltalkhub.com/mc/SvenVanCaekenberghe/STON/main/' ];
 				project: 'PetitParser'
-					with:
-						[ spec
+					with: [ spec
 						className: #ConfigurationOfPetitParser;
 						versionString: #development;
 						loads: #('Parser');
@@ -30,7 +33,7 @@ baseline: spec
 					with: [ spec requires: #('DynaCASEModel' 'Roassal2' 'Ston' 'PetitParser') ];
 				package: 'DynaCASE-Trachel';
 				package: 'DynaCASE-Roassal2';
-				package: 'DynaCASE-Spec';
+				package: 'DynaCASE-Spec' with: #('Merlin' 'FileDialog');
 				package: 'DynaCASE-Plugins' with: [ spec postLoadDoIt: #postLoadPlugins ].
 			spec
 				group: 'default'

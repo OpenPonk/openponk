@@ -1,2 +1,2 @@
-(name 'DynaCASE-Spec-PeterUhnak.209' message 'PNG export now wizard.' id 'ea2225dd-ad85-4a4d-adc8-88920df69020' date '3 June 2016' time '12:33:53.48957 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.208' message 'Use folder-based projects.
-' id '06c9515a-73ff-50ec-8818-5b08f238d41b' date '28 May 2016' time '12:05:30 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Spec-PeterUhnak.210' message 'Use FileDialog for choosing files/folders.' id '372f62dc-9365-4151-80b1-e3ada25d0f43' date '5 June 2016' time '1:41:13.59462 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.209' message 'PNG export now wizard.
+' id '5ae5b941-c953-52a1-807a-fc4994a6509e' date '3 June 2016' time '12:34:24 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

@@ -1,6 +1,7 @@
 toolbar
 exportAsPng
-	DCExportDiagramWizard new
-		modelName: self editor diagramController model name;
-		view: roassalView;
+	FDSaveFileDialog new
+		whenSelected: [ :file | self exportCanvasTo: file ];
+		filteredExtensions: {'Images' -> #(png)};
+		defaultName: self editor diagramController model name asFileName , '.png';
 		open

@@ -1,2 +1,2 @@
-(name 'BaselineOfDynaCASE-PeterUhnak.44' message 'Added file-dialog dependency.' id 'c114f43c-1090-48de-a5a2-b489d05d7f24' date '5 June 2016' time '1:25:02.161668 am' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.43' message 'Two baselines in a single repository? Will it choke?
-' id '4d0bbd0d-6278-52e5-a06d-9a005c34afca' date '16 April 2016' time '12:48:36 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'BaselineOfDynaCASE-PeterUhnak.45' message 'Fixed baseline.' id 'c11ce2da-465f-4b42-885a-9873ee8b77c0' date '5 June 2016' time '11:51:32.595079 am' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.44' message 'Added file-dialog dependency.
+' id '65033e56-e78d-5173-b17e-fa6972f3e9f7' date '5 June 2016' time '1:25:33 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

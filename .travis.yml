@@ -10,6 +10,7 @@ addons:
   apt:
     packages:
       - libcairo2:i386 # install cairo for Roassal
+  ssh_known_hosts: ccmi.fit.cvut.cz
 
 # Select compatible Smalltalk image(s)
 smalltalk:
@@ -21,8 +22,10 @@ before_install:
   - eval $(ssh-agent -s)
   - ssh-add .ssh/id_dynacase_travis
 
-before_script:
-  - echo -e "Host ccmi.fit.cvut.cz\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: scripts/deploy.sh
 
 after_success:
   - ./scripts/deploy.sh

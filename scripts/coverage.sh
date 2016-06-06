@@ -5,7 +5,7 @@ set -o errexit
 
 # wherever you'll be ssh-ing into user@machine
 readonly TARGET_MACHINE="dynacase@ccmi.fit.cvut.cz"
-readonly TARGET_DIR="~/builds/"
+readonly TARGET_DIR="~/www/coverage/all-in-one"
 readonly COVERAGE_DIR=$(readlink -m $(dirname $SMALLTALK_CI_IMAGE))
 readonly COVERAGE_IMAGE=$COVERAGE_DIR/coverage.image
 readonly RESULT_FILE="coverage-${TRAVIS_BUILD_NUMBER}.json"

@@ -1,9 +1,9 @@
 {
 	"class" : {
-		"isAbstract" : "PeterUhnak 5/27/2016 23:59" },
+		"isAbstract" : "PeterUhnak 6/3/2016 12:33:06" },
 	"instance" : {
-		"newMemento" : "PeterUhnak 5/30/2016 15:14",
-		"serializerClass" : "PeterUhnak 5/27/2016 23:53",
-		"setUp" : "PeterUhnak 5/30/2016 15:14",
-		"testLoadMemento" : "PeterUhnak 5/28/2016 00:01",
-		"testSaveMemento" : "PeterUhnak 5/27/2016 23:59" } }
+		"newMemento" : "PeterUhnak 6/3/2016 12:33:06",
+		"serializerClass" : "PeterUhnak 6/3/2016 12:33:06",
+		"setUp" : "PeterUhnak 6/3/2016 12:33:06",
+		"testLoadMemento" : "PeterUhnak 6/3/2016 12:33:06",
+		"testSaveMemento" : "PeterUhnak 6/3/2016 12:33:06" } }

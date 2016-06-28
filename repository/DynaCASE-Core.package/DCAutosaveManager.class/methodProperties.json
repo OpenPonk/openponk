@@ -1,15 +1,15 @@
 {
 	"class" : {
-		"on:" : "PeterUhnak 4/25/2016 16:46:25" },
+		"on:" : "PeterUhnak 6/3/2016 12:33:06" },
 	"instance" : {
-		"autosaveFileFor:" : "PeterUhnak 4/25/2016 16:46:25",
-		"autosavePath" : "PeterUhnak 4/25/2016 16:46:25",
-		"futureIsEmpty" : "PeterUhnak 4/25/2016 16:46:25",
-		"historyIsEmpty" : "PeterUhnak 4/25/2016 16:46:25",
-		"initialize" : "PeterUhnak 4/25/2016 16:46:25",
-		"loadCurrent" : "PeterUhnak 4/25/2016 16:46:25",
-		"loadNext" : "PeterUhnak 4/25/2016 16:46:25",
-		"loadPrevious" : "PeterUhnak 4/25/2016 16:46:25",
-		"saveState:" : "PeterUhnak 4/25/2016 16:46:25",
-		"serializer" : "PeterUhnak 4/25/2016 16:46:25",
-		"serializer:" : "PeterUhnak 4/25/2016 16:46:25" } }
+		"autosaveFileFor:" : "PeterUhnak 6/3/2016 12:33:06",
+		"autosavePath" : "PeterUhnak 6/3/2016 12:33:06",
+		"futureIsEmpty" : "PeterUhnak 6/3/2016 12:33:06",
+		"historyIsEmpty" : "PeterUhnak 6/3/2016 12:33:06",
+		"initialize" : "PeterUhnak 6/3/2016 12:33:06",
+		"loadCurrent" : "PeterUhnak 6/3/2016 12:33:06",
+		"loadNext" : "PeterUhnak 6/3/2016 12:33:06",
+		"loadPrevious" : "PeterUhnak 6/3/2016 12:33:06",
+		"saveState:" : "PeterUhnak 6/3/2016 12:33:06",
+		"serializer" : "PeterUhnak 6/3/2016 12:33:06",
+		"serializer:" : "PeterUhnak 6/3/2016 12:33:06" } }

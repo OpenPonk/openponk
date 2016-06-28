@@ -1,14 +1,14 @@
 {
 	"class" : {
-		"default" : "PeterUhnak 4/25/2016 16:46:25",
-		"resetDefault" : "PeterUhnak 5/26/2016 12:00",
-		"setDefault:" : "PeterUhnak 5/26/2016 12:01",
-		"withAll" : "PeterUhnak 4/25/2016 16:46:25" },
+		"default" : "PeterUhnak 6/3/2016 12:33:06",
+		"resetDefault" : "PeterUhnak 6/3/2016 12:33:06",
+		"setDefault:" : "PeterUhnak 6/3/2016 12:33:06",
+		"withAll" : "PeterUhnak 6/3/2016 12:33:06" },
 	"instance" : {
-		"add:" : "PeterUhnak 5/26/2016 12:06",
-		"addAll" : "PeterUhnak 4/25/2016 16:46:25",
-		"initialize" : "PeterUhnak 4/25/2016 16:46:25",
-		"pluginFor:" : "PeterUhnak 4/25/2016 16:46:25",
-		"pluginForController:" : "PeterUhnak 4/25/2016 16:46:25",
-		"plugins" : "PeterUhnak 4/25/2016 16:46:25",
-		"pluginsDo:" : "PeterUhnak 4/25/2016 16:46:25" } }
+		"add:" : "PeterUhnak 6/3/2016 12:33:06",
+		"addAll" : "PeterUhnak 6/3/2016 12:33:06",
+		"initialize" : "PeterUhnak 6/3/2016 12:33:06",
+		"pluginFor:" : "PeterUhnak 6/3/2016 12:33:06",
+		"pluginForController:" : "PeterUhnak 6/3/2016 12:33:06",
+		"plugins" : "PeterUhnak 6/3/2016 12:33:06",
+		"pluginsDo:" : "PeterUhnak 6/3/2016 12:33:06" } }

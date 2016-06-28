@@ -1,2 +1,2 @@
-(name 'DynaCASE-Core-PeterUhnak.16' message 'Dead code.' id 'bb4f9410-e9ef-44c7-b875-43995f56e2a5' date '3 June 2016' time '12:32:34.368497 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Core-PeterUhnak.15' message 'More dynamic tests.
-' id '2c1fd512-3ce7-55e9-a147-e5df41bad5ae' date '30 May 2016' time '3:24:23 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Core-PeterUhnak.17' message 'Option to handle double click events.' id '13204112-2a28-4701-95e4-7b3325e2edcd' date '28 June 2016' time '12:33:57.078287 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Core-PeterUhnak.16' message 'Dead code.
+' id 'ba047413-ee8f-5158-9db4-75d5de3c4f04' date '3 June 2016' time '12:33:06 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

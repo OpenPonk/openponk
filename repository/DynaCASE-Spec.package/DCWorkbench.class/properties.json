@@ -12,7 +12,8 @@
 		"project",
 		"projectController",
 		"pluginRegistry",
-		"topToolbar" ],
+		"topToolbar",
+		"editors" ],
 	"name" : "DCWorkbench",
 	"pools" : [
 		 ],

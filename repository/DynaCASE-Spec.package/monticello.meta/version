@@ -1,2 +1,2 @@
-(name 'DynaCASE-Spec-PeterUhnak.212' message 'Fixed deprectaed method.' id '20fe76d6-cddc-4c5d-b5e5-d37cb493b731' date '13 July 2016' time '4:25:54.097783 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.211' message 'Option to handle double-click events.
-' id '4b86ac74-b2ef-58de-b4c4-e9189fff3350' date '28 June 2016' time '12:33:32 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Spec-PeterUhnak.213' message 'Opening an editor or trying to open it will always switch focus to it.' id '3d3cb486-554b-47fe-8014-11e92c6dd033' date '13 July 2016' time '5:07:20.395054 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.212' message 'Fixed deprectaed method.
+' id '93fc8f24-4276-590d-9600-de4c85f991fc' date '13 July 2016' time '4:26:17 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

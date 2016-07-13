@@ -1,2 +1,2 @@
-(name 'DynaCASE-Spec-PeterUhnak.211' message 'Option to handle double-click events.' id '4b34fea5-0f71-4577-aba2-1884d0fb05c6' date '28 June 2016' time '12:33:00.523311 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.210' message 'Use FileDialog for choosing files/folders.
-' id '6dbf0704-5bc6-5c55-abc2-1c7ae1604852' date '5 June 2016' time '1:41:42 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Spec-PeterUhnak.212' message 'Fixed deprectaed method.' id '20fe76d6-cddc-4c5d-b5e5-d37cb493b731' date '13 July 2016' time '4:25:54.097783 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.211' message 'Option to handle double-click events.
+' id '4b86ac74-b2ef-58de-b4c4-e9189fff3350' date '28 June 2016' time '12:33:32 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

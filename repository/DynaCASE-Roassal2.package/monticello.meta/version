@@ -1,2 +1,2 @@
-(name 'DynaCASE-Roassal2-PeterUhnak.205' message 'More visible feedback.' id 'e6776bae-e5fc-4abb-aa42-33f72e2361d6' date '2 April 2016' time '4:37:33.495522 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Roassal2-PeterUhnak.204' message 'RTLabel{l,}ed
-' id '689893f3-a717-5b55-8f63-050b1a9aed41' date '13 March 2016' time '12:46:23 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Roassal2-PeterUhnak.206' message 'Continuous -> Border attach point refactorings.' id '26f3fa69-d974-4969-8cb6-8aa3baacc76e' date '16 July 2016' time '5:36:50.420989 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Roassal2-PeterUhnak.205' message 'More visible feedback.
+' id 'e932dc79-c51e-5fd8-a30d-224d2e6fc3a8' date '2 April 2016' time '4:37:39 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

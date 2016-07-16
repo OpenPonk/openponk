@@ -1,3 +1,0 @@
-attach point
-circleAttachPoint
-	shape withContinuousCircleAttachPoint 

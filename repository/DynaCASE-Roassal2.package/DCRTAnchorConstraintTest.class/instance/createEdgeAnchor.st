@@ -1,7 +1,7 @@
 instance creation
 createEdgeAnchor
 	edge := RTLine new
-		attachPoint: RTRectangleAttachPoint new;
+		attachPoint: RTBorderAttachPoint new;
 		edgeFrom: source to: target.
 	edgeElement := RTBox new
 		width: 50;

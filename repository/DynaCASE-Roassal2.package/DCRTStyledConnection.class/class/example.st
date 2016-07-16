@@ -10,7 +10,7 @@ e := DCRTStyledConnection new
 			emptyDiamondTail;
 			filledArrowHead
 	];
-	withContinuousRectangleAttachPoint;
+	withBorderAttachPoint;
 	color: Color red;
 	edgeFrom: es first to: es second.
 	e shape addPoint: -50 @ 10.

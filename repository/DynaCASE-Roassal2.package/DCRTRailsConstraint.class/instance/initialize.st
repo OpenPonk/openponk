@@ -4,5 +4,5 @@ initialize
 		size: 0;
 		color: Color red.
 	(gripLine := RTLine new)
-		attachPoint: RTRectangleAttachPoint new;
+		attachPoint: RTBorderAttachPoint new;
 		color: Color black

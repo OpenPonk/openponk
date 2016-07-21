@@ -1,5 +1,6 @@
 hooks
-initializeElement: element
-	self assert: [ background isNotNil ] description: 'BorderDraggable requires background element to operate.'.
-
-	super initializeElement: element
+initializeElement: anElement
+	self
+		assert: [ background isNotNil ]
+		description: 'BorderDraggable requires background element to operate.'.
+	super initializeElement: anElement.

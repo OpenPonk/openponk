@@ -1,6 +1,6 @@
 event handling
 updateModel
-	| statements text |
+	| statements text toks |
 	model ifNil: [ model := self newModel ].
 	text := editor text.
 	text makeAllColor: Smalltalk ui theme textColor.
@@ -10,6 +10,7 @@ updateModel
 				overlappingPairsDo: [ :start :end | 
 					(statements position between: start and: end)
 						ifTrue: [ text makeColor: Color red from: (1 max: start) to: end ] ] ]
-		ifFalse: [ parser replaceModel: model withStatements: statements ].
+		ifFalse: [ parser replaceModel: model withStatements: statements.
+			self highlight: text ].
 	editor text: text.
 	model announcer announce: (DCModelContentReplaced model: model)

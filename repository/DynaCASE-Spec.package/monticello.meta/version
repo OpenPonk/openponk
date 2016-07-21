@@ -1,2 +1,2 @@
-(name 'DynaCASE-Spec-PeterUhnak.213' message 'Opening an editor or trying to open it will always switch focus to it.' id '3d3cb486-554b-47fe-8014-11e92c6dd033' date '13 July 2016' time '5:07:20.395054 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.212' message 'Fixed deprectaed method.
-' id '93fc8f24-4276-590d-9600-de4c85f991fc' date '13 July 2016' time '4:26:17 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Spec-PeterUhnak.214' message 'DSL editor can now maybe highlight code.' id 'f1424bdb-4014-410c-9e60-031a74e4e03a' date '21 July 2016' time '10:42:21.82799 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.213' message 'Opening an editor or trying to open it will always switch focus to it.
+' id 'b5292e8e-4bd5-5675-87dd-88b1b1a31b5e' date '13 July 2016' time '5:07:40 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

@@ -15,7 +15,8 @@
 		"exporter",
 		"errorAttribute",
 		"textAttribute",
-		"modelClass" ],
+		"modelClass",
+		"highlighter" ],
 	"name" : "DCDslEditor",
 	"pools" : [
 		 ],

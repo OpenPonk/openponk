@@ -2,12 +2,12 @@
 	"class" : {
 		 },
 	"instance" : {
-		"setUp" : "PeterUhnak 6/3/2016 12:33:06",
-		"tearDown" : "PeterUhnak 6/3/2016 12:33:06",
-		"testCreateFolderStructure" : "PeterUhnak 6/3/2016 12:33:06",
-		"testDeleteOldModels" : "PeterUhnak 6/3/2016 12:33:06",
-		"testModelReferences" : "PeterUhnak 6/3/2016 12:33:06",
-		"testNoDiagramOverride" : "PeterUhnak 6/3/2016 12:33:06",
-		"testNoModelReferences" : "PeterUhnak 6/3/2016 12:33:06",
-		"testProjectFile" : "PeterUhnak 6/3/2016 12:33:06",
-		"testWriteModel" : "PeterUhnak 6/3/2016 12:33:06" } }
+		"setUp" : "PeterUhnak 6/28/2016 12:34:20",
+		"tearDown" : "PeterUhnak 6/28/2016 12:34:20",
+		"testCreateFolderStructure" : "PeterUhnak 6/28/2016 12:34:20",
+		"testDeleteOldModels" : "PeterUhnak 6/28/2016 12:34:20",
+		"testModelReferences" : "PeterUhnak 6/28/2016 12:34:20",
+		"testNoDiagramOverride" : "PeterUhnak 6/28/2016 12:34:20",
+		"testNoModelReferences" : "PeterUhnak 6/28/2016 12:34:20",
+		"testProjectFile" : "PeterUhnak 6/28/2016 12:34:20",
+		"testWriteModel" : "PeterUhnak 6/28/2016 12:34:20" } }

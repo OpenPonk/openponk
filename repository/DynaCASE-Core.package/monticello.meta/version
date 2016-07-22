@@ -1,2 +1,2 @@
-(name 'DynaCASE-Core-PeterUhnak.17' message 'Option to handle double click events.' id '13204112-2a28-4701-95e4-7b3325e2edcd' date '28 June 2016' time '12:33:57.078287 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Core-PeterUhnak.16' message 'Dead code.
-' id 'ba047413-ee8f-5158-9db4-75d5de3c4f04' date '3 June 2016' time '12:33:06 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Core-PeterUhnak.18' message 'Controller is responsible for providing feedback.' id '67da15fd-3a8f-4188-8ec1-6c9e6c904b14' date '22 July 2016' time '10:48:43.489101 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Core-PeterUhnak.17' message 'Option to handle double click events.
+' id '573be630-a102-5bdc-9fd9-d68f25e7d956' date '28 June 2016' time '12:34:20 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

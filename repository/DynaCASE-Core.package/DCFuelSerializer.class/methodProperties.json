@@ -2,13 +2,13 @@
 	"class" : {
 		 },
 	"instance" : {
-		"diagramExtension" : "PeterUhnak 6/3/2016 12:33:06",
-		"fuelMaterialize:" : "PeterUhnak 6/3/2016 12:33:06",
-		"fuelSerialize:" : "PeterUhnak 6/3/2016 12:33:06",
-		"materializeDiagramFrom:" : "PeterUhnak 6/3/2016 12:33:06",
-		"materializeMementoFrom:" : "PeterUhnak 6/3/2016 12:33:06",
-		"materializeModelFrom:" : "PeterUhnak 6/3/2016 12:33:06",
-		"modelExtension" : "PeterUhnak 6/3/2016 12:33:06",
-		"serializeDiagram:" : "PeterUhnak 6/3/2016 12:33:06",
-		"serializeMemento:" : "PeterUhnak 6/3/2016 12:33:06",
-		"serializeModel:" : "PeterUhnak 6/3/2016 12:33:06" } }
+		"diagramExtension" : "PeterUhnak 6/28/2016 12:34:20",
+		"fuelMaterialize:" : "PeterUhnak 6/28/2016 12:34:20",
+		"fuelSerialize:" : "PeterUhnak 6/28/2016 12:34:20",
+		"materializeDiagramFrom:" : "PeterUhnak 6/28/2016 12:34:20",
+		"materializeMementoFrom:" : "PeterUhnak 6/28/2016 12:34:20",
+		"materializeModelFrom:" : "PeterUhnak 6/28/2016 12:34:20",
+		"modelExtension" : "PeterUhnak 6/28/2016 12:34:20",
+		"serializeDiagram:" : "PeterUhnak 6/28/2016 12:34:20",
+		"serializeMemento:" : "PeterUhnak 6/28/2016 12:34:20",
+		"serializeModel:" : "PeterUhnak 6/28/2016 12:34:20" } }

@@ -1,3 +1,0 @@
-testing
-hasFigures
-	^ figures isNotEmpty

@@ -1,3 +1,3 @@
 tests
 testCreateController
-	self assert: ctrl class = DCController
+	self assert: ctrl class = self controllerClass

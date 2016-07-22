@@ -1,2 +1,2 @@
-(name 'DynaCASE-Core-PeterUhnak.18' message 'Controller is responsible for providing feedback.' id '67da15fd-3a8f-4188-8ec1-6c9e6c904b14' date '22 July 2016' time '10:48:43.489101 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Core-PeterUhnak.17' message 'Option to handle double click events.
-' id '573be630-a102-5bdc-9fd9-d68f25e7d956' date '28 June 2016' time '12:34:20 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Core-PeterUhnak.19' message 'Removed DCFigure, deprecated by RTAbstractMultiElement.' id '8380961e-0075-4beb-960a-08a6173ab835' date '22 July 2016' time '11:32:16.739391 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Core-PeterUhnak.18' message 'Controller is responsible for providing feedback.
+' id '94990925-e2e5-5653-9a69-3f0ebcf97f9a' date '22 July 2016' time '10:48:46 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

@@ -1,3 +1,0 @@
-defaults
-defaultBackground
-	^ RTElement new

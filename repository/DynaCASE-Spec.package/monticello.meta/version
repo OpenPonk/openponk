@@ -1,2 +1,2 @@
-(name 'DynaCASE-Spec-PeterUhnak.216' message 'Handle also RTElemenet children.' id '7f54a8a1-b3a5-4b4d-b53a-33f4f69e109a' date '22 July 2016' time '9:59:32.631129 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.215' message 'Switch back to selection mode after creation, because that''s the most natural approach.
-' id 'b8c49715-7d7d-5d52-8cf5-12bd645b17c6' date '22 July 2016' time '9:18:18 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Spec-PeterUhnak.217' message 'Controller is responsible for providing feedback.' id '49b27dbe-67a2-47c5-8240-3a9a468f8c19' date '22 July 2016' time '10:48:57.588319 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.216' message 'Handle also RTElemenet children.
+' id '026d44bc-d438-56f0-ab68-5faba4cd8662' date '22 July 2016' time '9:59:35 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

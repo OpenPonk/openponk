@@ -3,8 +3,6 @@ targetSelected: aController
 	(aController canBeTargetFor: objectController)
 		ifFalse: [ ^ self ].
 	aController addAsTargetFor: objectController.
-	"	self palette deselectTool.
-	self palette selectedTool targetSelected: objectController."
-	self deselect.
-	self select.
-"	objectController := nil"
+	self palette deselectTool.
+	self palette selectedTool targetSelected: objectController.
+	objectController := nil

@@ -3,8 +3,6 @@ targetSelected: aController
 	(aController canBeTargetFor: connectionController)
 		ifFalse: [ ^ self ].
 	aController addAsTargetFor: connectionController.
-"	self palette deselectTool.
-	self palette selectedTool targetSelected: connectionController."
-"	connectionController := nil".
-	self deselect.
-	self select
+	self palette deselectTool.
+	self palette selectedTool targetSelected: connectionController.
+	connectionController := nil

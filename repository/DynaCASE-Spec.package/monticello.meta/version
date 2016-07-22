@@ -1,2 +1,2 @@
-(name 'DynaCASE-Spec-PeterUhnak.214' message 'DSL editor can now maybe highlight code.' id 'f1424bdb-4014-410c-9e60-031a74e4e03a' date '21 July 2016' time '10:42:21.82799 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.213' message 'Opening an editor or trying to open it will always switch focus to it.
-' id 'b5292e8e-4bd5-5675-87dd-88b1b1a31b5e' date '13 July 2016' time '5:07:40 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Spec-PeterUhnak.215' message 'Switch back to selection mode after creation, because that''s the most natural approach.' id '87664506-9784-4f62-bdd6-c743d6866a04' date '22 July 2016' time '9:18:14.099953 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.214' message 'DSL editor can now maybe highlight code.
+' id '72ee89f5-355c-52a3-97ae-b7c6553abe23' date '21 July 2016' time '10:42:24 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

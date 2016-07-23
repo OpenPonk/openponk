@@ -1,2 +1,2 @@
-(name 'DynaCASE-Spec-PeterUhnak.217' message 'Controller is responsible for providing feedback.' id '49b27dbe-67a2-47c5-8240-3a9a468f8c19' date '22 July 2016' time '10:48:57.588319 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.216' message 'Handle also RTElemenet children.
-' id '026d44bc-d438-56f0-ab68-5faba4cd8662' date '22 July 2016' time '9:59:35 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Spec-PeterUhnak.218' message 'It is now possible to select tools that are not part of a palette (useful for adornments).' id 'e324fe29-0204-470c-a668-479a59f9a693' date '23 July 2016' time '10:05:59.388152 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.217' message 'Controller is responsible for providing feedback.
+' id '125d4cd0-c740-5c99-b88b-ef34aab2ef74' date '22 July 2016' time '10:48:59 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

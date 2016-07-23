@@ -4,6 +4,8 @@
 	"instance" : {
 		"deselect" : "PeterUhnak 6/28/2016 12:33:32",
 		"factory:" : "PeterUhnak 6/28/2016 12:33:32",
+		"initialize" : "PeterUhnak 7/23/2016 23:49",
 		"select" : "PeterUhnak 6/28/2016 12:33:32",
 		"targetEntered:" : "PeterUhnak 7/22/2016 10:43",
-		"targetSelected:" : "PeterUhnak 7/22/2016 09:17" } }
+		"targetSelected:" : "PeterUhnak 7/23/2016 23:49",
+		"whenCompleted:" : "PeterUhnak 7/23/2016 23:49" } }

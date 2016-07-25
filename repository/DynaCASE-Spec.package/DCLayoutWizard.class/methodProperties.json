@@ -1,0 +1,22 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"addOptionsFor:to:" : "PeterUhnak 7/25/2016 14:15",
+		"addPane" : "PeterUhnak 7/25/2016 13:54",
+		"applyLayoutWith:" : "PeterUhnak 7/25/2016 14:28",
+		"controller" : "PeterUhnak 7/25/2016 14:19",
+		"controller:" : "PeterUhnak 7/25/2016 14:19",
+		"directedEdges" : "PeterUhnak 7/25/2016 13:33",
+		"directedEdges:" : "PeterUhnak 7/25/2016 13:33",
+		"edges" : "PeterUhnak 7/25/2016 13:34",
+		"elements" : "PeterUhnak 7/25/2016 14:18",
+		"elements:" : "PeterUhnak 7/25/2016 13:33",
+		"initialize" : "PeterUhnak 7/25/2016 14:08",
+		"layouts" : "PeterUhnak 7/25/2016 14:29",
+		"optionsForAbstractGraphLayoutTo:" : "PeterUhnak 7/25/2016 14:06",
+		"optionsForAbstractGridLayoutTo:" : "PeterUhnak 7/25/2016 14:06",
+		"optionsForAbstractRegularTreeLayoutTo:" : "PeterUhnak 7/25/2016 14:16",
+		"optionsForForceBasedLayoutTo:" : "PeterUhnak 7/25/2016 14:06",
+		"undirectedEdges" : "PeterUhnak 7/25/2016 13:33",
+		"undirectedEdges:" : "PeterUhnak 7/25/2016 13:33" } }

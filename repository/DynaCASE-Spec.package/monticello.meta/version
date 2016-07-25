@@ -1,2 +1,2 @@
-(name 'DynaCASE-Spec-PeterUhnak.219' message 'It is now possible to do extra stuff on creation tool completion.' id 'e33e084b-b23c-4437-8367-45b2fbce3717' date '24 July 2016' time '12:37:12.513098 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.218' message 'It is now possible to select tools that are not part of a palette (useful for adornments).
-' id '45de0e2c-1f77-55e3-a9b9-6e603693728c' date '23 July 2016' time '10:06:03 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Spec-PeterUhnak.220' message 'Wizard for layout.' id 'dd397353-13c7-4d59-b649-42005be1cf89' date '25 July 2016' time '2:31:07.865072 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.219' message 'It is now possible to do extra stuff on creation tool completion.
+' id '3e1db912-bd0e-5ae2-94e2-3f1d69392d37' date '24 July 2016' time '12:37:17 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

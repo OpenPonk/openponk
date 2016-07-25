@@ -1,0 +1,3 @@
+accessing
+undirectedEdges
+	^ undirectedEdges ifNil: [ #() ]

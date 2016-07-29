@@ -1,2 +1,2 @@
-(name 'BaselineOfDynaCASE-PeterUhnak.45' message 'Fixed baseline.' id 'c11ce2da-465f-4b42-885a-9873ee8b77c0' date '5 June 2016' time '11:51:32.595079 am' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.44' message 'Added file-dialog dependency.
-' id '65033e56-e78d-5173-b17e-fa6972f3e9f7' date '5 June 2016' time '1:25:33 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'BaselineOfDynaCASE-PeterUhnak.46' message 'Removed ston dependency.' id 'fe4e1307-1839-4de2-8460-b9056cee4803' date '29 July 2016' time '2:44:26.203609 pm' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.45' message 'Fixed baseline.
+' id 'd0923da6-eae3-59be-b744-de146327919f' date '5 June 2016' time '11:52:04 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

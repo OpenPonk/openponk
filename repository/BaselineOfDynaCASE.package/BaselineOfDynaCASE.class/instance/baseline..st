@@ -16,11 +16,6 @@ baseline: spec
 						className: #ConfigurationOfMerlin;
 						versionString: #development;
 						repository: 'http://www.smalltalkhub.com/mc/Moose/Merlin/main' ];
-				project: 'Ston'
-					with: [ spec
-						className: #ConfigurationOfSton;
-						versionString: #stable;
-						repository: 'http://smalltalkhub.com/mc/SvenVanCaekenberghe/STON/main/' ];
 				project: 'PetitParser'
 					with: [ spec
 						className: #ConfigurationOfPetitParser;

@@ -11,7 +11,8 @@
 		"fileName",
 		"layouts",
 		"models",
-		"storageFolder" ],
+		"storageFolder",
+		"state" ],
 	"name" : "DCProject",
 	"pools" : [
 		 ],

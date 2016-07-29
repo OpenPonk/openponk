@@ -1,2 +1,2 @@
-(name 'DynaCASE-Core-PeterUhnak.19' message 'Removed DCFigure, deprecated by RTAbstractMultiElement.' id '8380961e-0075-4beb-960a-08a6173ab835' date '22 July 2016' time '11:32:16.739391 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Core-PeterUhnak.18' message 'Controller is responsible for providing feedback.
-' id '94990925-e2e5-5653-9a69-3f0ebcf97f9a' date '22 July 2016' time '10:48:46 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Core-PeterUhnak.20' message 'Project will now inject itself into models if they support it.' id 'ecb46849-198d-4e7d-bd58-040d8b3fb1c2' date '29 July 2016' time '1:14:12.492746 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Core-PeterUhnak.19' message 'Removed DCFigure, deprecated by RTAbstractMultiElement.
+' id '254e783d-cac2-5e75-b701-2ca3661f8685' date '22 July 2016' time '11:32:19 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

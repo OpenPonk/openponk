@@ -1,2 +1,2 @@
-(name 'DynaCASE-Spec-PeterUhnak.221' message 'Added entity selection input based on Ancestry (effectively backporting SelectEntity).' id 'ae9772dd-8c46-435a-87f3-f6ce127296c1' date '29 July 2016' time '1:13:05.248794 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.220' message 'Wizard for layout.
-' id 'bbd2fd1c-ce4d-5dfc-a6a8-d8259eeb9e27' date '25 July 2016' time '2:31:11 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Spec-PeterUhnak.222' message 'Dead code.' id 'a0ad93cf-3aa1-4ded-a877-f513bf36711a' date '29 July 2016' time '1:13:42.709138 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.221' message 'Added entity selection input based on Ancestry (effectively backporting SelectEntity).
+' id '1a870f12-dbad-5198-b6f9-cd8161892405' date '29 July 2016' time '1:13:09 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

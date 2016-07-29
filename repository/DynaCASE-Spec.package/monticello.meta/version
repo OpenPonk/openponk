@@ -1,2 +1,2 @@
-(name 'DynaCASE-Spec-PeterUhnak.220' message 'Wizard for layout.' id 'dd397353-13c7-4d59-b649-42005be1cf89' date '25 July 2016' time '2:31:07.865072 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.219' message 'It is now possible to do extra stuff on creation tool completion.
-' id '3e1db912-bd0e-5ae2-94e2-3f1d69392d37' date '24 July 2016' time '12:37:17 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Spec-PeterUhnak.221' message 'Added entity selection input based on Ancestry (effectively backporting SelectEntity).' id 'ae9772dd-8c46-435a-87f3-f6ce127296c1' date '29 July 2016' time '1:13:05.248794 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.220' message 'Wizard for layout.
+' id 'bbd2fd1c-ce4d-5dfc-a6a8-d8259eeb9e27' date '25 July 2016' time '2:31:11 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

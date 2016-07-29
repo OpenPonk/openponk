@@ -1,2 +1,2 @@
-(name 'BaselineOfDynaCASE-PeterUhnak.46' message 'Removed ston dependency.' id 'fe4e1307-1839-4de2-8460-b9056cee4803' date '29 July 2016' time '2:44:26.203609 pm' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.45' message 'Fixed baseline.
-' id 'd0923da6-eae3-59be-b744-de146327919f' date '5 June 2016' time '11:52:04 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'BaselineOfDynaCASE-PeterUhnak.47' message 'Don''t reference ston.' id '4856d248-e1da-4fa2-ac08-b450979d7924' date '29 July 2016' time '2:52:49.269872 pm' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.46' message 'Removed ston dependency.
+' id 'b2be1e29-6347-53d7-b6e2-2f6b1c4d504e' date '29 July 2016' time '2:44:28 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

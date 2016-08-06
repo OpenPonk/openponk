@@ -11,7 +11,8 @@
 		"paletteModel",
 		"workbench",
 		"canvasMenuModel",
-		"plugin" ],
+		"plugin",
+		"zoomLabel" ],
 	"name" : "DCEditor",
 	"pools" : [
 		 ],

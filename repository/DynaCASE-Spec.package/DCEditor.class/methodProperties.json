@@ -1,6 +1,6 @@
 {
 	"class" : {
-		"defaultSpec" : "PeterUhnak 6/28/2016 12:33:32",
+		"defaultSpec" : "PeterUhnak 8/6/2016 18:22",
 		"toolbarMenu:" : "PeterUhnak 6/28/2016 12:33:32" },
 	"instance" : {
 		"applyLayoutFor:" : "PeterUhnak 6/28/2016 12:33:32",
@@ -8,7 +8,7 @@
 		"canvasModel" : "PeterUhnak 6/28/2016 12:33:32",
 		"diagramController" : "PeterUhnak 6/28/2016 12:33:32",
 		"initializePresenter" : "PeterUhnak 6/28/2016 12:33:32",
-		"initializeWidgets" : "PeterUhnak 6/28/2016 12:33:32",
+		"initializeWidgets" : "PeterUhnak 8/6/2016 18:23",
 		"newDiagramControllerFor:" : "PeterUhnak 6/28/2016 12:33:32",
 		"openModel:" : "PeterUhnak 6/28/2016 12:33:32",
 		"paletteModel" : "PeterUhnak 6/28/2016 12:33:32",
@@ -21,4 +21,5 @@
 		"tabDeleted" : "PeterUhnak 6/28/2016 12:33:32",
 		"updateUndoRedo" : "PeterUhnak 6/28/2016 12:33:32",
 		"workbench" : "PeterUhnak 6/28/2016 12:33:32",
-		"workbench:" : "PeterUhnak 6/28/2016 12:33:32" } }
+		"workbench:" : "PeterUhnak 6/28/2016 12:33:32",
+		"zoomLabel" : "PeterUhnak 8/6/2016 18:18" } }

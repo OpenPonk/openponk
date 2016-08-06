@@ -1,0 +1,3 @@
+accessing - spec
+zoomLabel
+	^ zoomLabel

@@ -1,2 +1,2 @@
-(name 'DynaCASE-Spec-PeterUhnak.223' message 'Project''s storage is no longer reset on saving.' id '455bf61f-080f-4619-88be-bd76c84e916e' date '6 August 2016' time '4:54:36.653897 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.222' message 'Dead code.
-' id 'c02ad4b8-0577-51be-88fc-baeb051f9b8e' date '29 July 2016' time '1:13:45 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Spec-PeterUhnak.224' message 'More saving fixes.Removed canvas menu.Zoom level is now in canvas toolbar.' id '4b6148d5-053d-41bf-bcb2-60b453fa27e9' date '6 August 2016' time '6:24:13.863541 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.223' message 'Project''s storage is no longer reset on saving.
+' id '9e82b2dc-ba22-51fa-8728-8a9becc3f483' date '6 August 2016' time '4:54:39 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

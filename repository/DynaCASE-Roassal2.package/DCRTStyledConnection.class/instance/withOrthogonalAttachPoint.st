@@ -1,3 +1,3 @@
 attach point
 withOrthogonalAttachPoint
-	self attachPoint: DCRTOrthogonalAttachPoint new
+	self attachPoint: (DCRTOrthogonalAttachPoint new offset: 20)

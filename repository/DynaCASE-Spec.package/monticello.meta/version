@@ -1,2 +1,2 @@
-(name 'DynaCASE-Spec-PeterUhnak.222' message 'Dead code.' id 'a0ad93cf-3aa1-4ded-a877-f513bf36711a' date '29 July 2016' time '1:13:42.709138 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.221' message 'Added entity selection input based on Ancestry (effectively backporting SelectEntity).
-' id '1a870f12-dbad-5198-b6f9-cd8161892405' date '29 July 2016' time '1:13:09 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Spec-PeterUhnak.223' message 'Project''s storage is no longer reset on saving.' id '455bf61f-080f-4619-88be-bd76c84e916e' date '6 August 2016' time '4:54:36.653897 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Spec-PeterUhnak.222' message 'Dead code.
+' id 'c02ad4b8-0577-51be-88fc-baeb051f9b8e' date '29 July 2016' time '1:13:45 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

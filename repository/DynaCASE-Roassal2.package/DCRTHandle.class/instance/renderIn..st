@@ -6,12 +6,15 @@ renderIn: aView
 	"element @ RTDraggableSnapToGrid center."
 	element @ DCRTRoundedDraggable.
 	element addConnectedEdge: edge.
-	element @ (RTMenuActivable new item: 'Remove' action: [ :e | self removePoint ]).
+	element
+		@
+			(RTMenuActivable new
+				item: 'Remove' action: [ :e | self removePoint ];
+				item: 'Straighten' action: [ :e | self straightenConnection ]).
 	element trachelShape
 		addCallback:
 			(TRTranslationCallback
-				block:
-					[ :shape :step | 
+				block: [ :shape :step | 
 					pointLink value: pointLink value + step.
 					edge announcer announce: DCRTHandleMoved new ]).
 	element when: TRMouseDragEnd do: [ self onDragEnd ]

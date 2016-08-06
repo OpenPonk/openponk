@@ -1,2 +1,2 @@
-(name 'DynaCASE-Roassal2-PeterUhnak.207' message 'Reformatting.' id '81a08445-35e5-4263-a1c5-3a7d7162edca' date '21 July 2016' time '7:28:49.345551 am' author 'PeterUhnak' ancestors ((name 'DynaCASE-Roassal2-PeterUhnak.206' message 'Continuous -> Border attach point refactorings.
-' id '81efcca3-2f36-52c7-b1a1-990856130dfc' date '16 July 2016' time '5:37:15 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Roassal2-PeterUhnak.208' message 'Added option to straighten a roassal connection.' id 'a09e5e9d-8160-4f92-8cdf-54981d96f37e' date '6 August 2016' time '12:02:29.334673 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Roassal2-PeterUhnak.207' message 'Reformatting.
+' id '46f59e62-d699-54a0-8e15-c75a1fc922c0' date '21 July 2016' time '7:28:53 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

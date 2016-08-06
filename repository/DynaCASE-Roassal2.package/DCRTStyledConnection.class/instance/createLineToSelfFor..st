@@ -9,7 +9,6 @@ createLineToSelfFor: anEdge
 	topRight := right x @ top y.
 	anEdge from
 		addCallback: (TRTranslationCallback block: [ :s :step | self translateBy: step for: anEdge ]).
-
 	self
 		addPoint: right;
 		addPoint: topRight;

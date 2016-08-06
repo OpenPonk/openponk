@@ -1,2 +1,2 @@
-(name 'DynaCASE-Roassal2-PeterUhnak.209' message 'Increased default spacing between connection.' id 'dc521630-94db-468f-bf48-5707242efe3a' date '6 August 2016' time '5:11:49.109932 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Roassal2-PeterUhnak.208' message 'Added option to straighten a roassal connection.
-' id '392615ac-b912-5107-bf80-90bedf5f2c3b' date '6 August 2016' time '12:02:33 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Roassal2-PeterUhnak.210' message 'Minor fixes.' id 'a06b39a7-f987-48c6-ab60-f1cdd4fd5476' date '6 August 2016' time '6:24:46.269178 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Roassal2-PeterUhnak.209' message 'Increased default spacing between connection.
+' id 'b30ad635-ffdf-5571-bbf7-cc071c9e0254' date '6 August 2016' time '5:11:51 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

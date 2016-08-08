@@ -1,4 +1,4 @@
-as yet unclassified
+project handling
 openProject: project
 	project saveInImage.
 	project open.

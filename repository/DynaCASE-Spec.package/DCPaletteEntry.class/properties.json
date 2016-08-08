@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Spec-Palettes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 8/8/2016 16:49",
+	"instvars" : [
+		"tool" ],
+	"name" : "DCPaletteEntry",
+	"pools" : [
+		 ],
+	"super" : "ButtonModel",
+	"type" : "normal" }

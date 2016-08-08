@@ -1,5 +1,5 @@
 menus
-addDiagramMenu
+addNewModelMenu
 	| menu |
 	menu := MenuModel new.
 	menu
@@ -11,5 +11,6 @@ addDiagramMenu
 							item
 								name: each name;
 								icon: each icon;
-								action: [ self project addModel: (each modelClass named: each name) ] ] ] ].
+								action: [ (UIManager default request: 'Model name' initialAnswer: each name)
+										ifNotNil: [ :name | self project addModel: (each modelClass named: name) ] ] ] ] ].
 	^ menu

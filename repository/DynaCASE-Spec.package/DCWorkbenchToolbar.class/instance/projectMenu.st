@@ -17,7 +17,7 @@ projectMenu
 		icon: Smalltalk ui icons tools
 		action: [ self workbench projectController project maEdit ].
 	builder
-		addItem: 'Add diagram'
+		addItem: 'Add new model'
 		icon: Smalltalk ui icons smallNewIcon
-		subMenu: self addDiagramMenu.
+		subMenu: self addNewModelMenu.
 	^ builder menu

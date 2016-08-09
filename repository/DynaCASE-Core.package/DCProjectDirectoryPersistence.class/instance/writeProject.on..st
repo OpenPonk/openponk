@@ -7,6 +7,7 @@ writeProject: aProject on: aStream
 				xml;
 				tag: 'project'
 					with: [ writer tag: 'name' with: aProject name.
+					writer tag: 'uuid' with: aProject uuid asString.
 					writer
 						tag: 'documentation'
 						with: [ writer

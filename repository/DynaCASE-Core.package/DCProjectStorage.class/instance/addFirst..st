@@ -1,4 +1,4 @@
 adding
 addFirst: aProject
-	projects remove: aProject ifAbsent: [  ].
+	self ensureRemove: aProject.
 	projects addFirst: aProject

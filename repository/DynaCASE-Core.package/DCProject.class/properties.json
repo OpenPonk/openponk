@@ -6,6 +6,7 @@
 		 ],
 	"commentStamp" : "PeterUhnak 10/21/2014 19:27",
 	"instvars" : [
+		"uuid",
 		"projectName",
 		"dirty",
 		"fileName",

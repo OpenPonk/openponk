@@ -1,2 +1,2 @@
-(name 'DynaCASE-Core-PeterUhnak.20' message 'Project will now inject itself into models if they support it.' id 'ecb46849-198d-4e7d-bd58-040d8b3fb1c2' date '29 July 2016' time '1:14:12.492746 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Core-PeterUhnak.19' message 'Removed DCFigure, deprecated by RTAbstractMultiElement.
-' id '254e783d-cac2-5e75-b701-2ca3661f8685' date '22 July 2016' time '11:32:19 am' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())
+(name 'DynaCASE-Core-PeterUhnak.21' message 'Fixed layout loading from file.' id '9f5d4cc2-c81b-45f1-a87f-16844a5490c3' date '9 August 2016' time '6:01:45.552351 pm' author 'PeterUhnak' ancestors ((name 'DynaCASE-Core-PeterUhnak.20' message 'Project will now inject itself into models if they support it.
+' id '40465b45-5f1a-533f-a73e-4a555c8d90f5' date '29 July 2016' time '1:14:14 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

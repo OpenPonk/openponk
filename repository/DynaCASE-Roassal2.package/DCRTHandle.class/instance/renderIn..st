@@ -3,8 +3,8 @@ renderIn: aView
 	element := self shape elementOn: edge.
 	aView add: element.
 	element translateTo: pointLink value.
-	"element @ RTDraggableSnapToGrid center."
-	element @ DCRTRoundedDraggable.
+	element @ RTDraggableSnapToGrid center.
+	"element @ DCRTRoundedDraggable."
 	element addConnectedEdge: edge.
 	element
 		@

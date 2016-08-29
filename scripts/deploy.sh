@@ -11,7 +11,7 @@ readonly TARGET_MACHINE="dynacase@ccmi.fit.cvut.cz"
 readonly TARGET_DIR="~/www/builds/all-in-one"
 
 # customize the name of the Pharo image you will be deploying
-readonly PROJECT_NAME="dynacase"
+readonly PROJECT_NAME="openponk"
 # customize the name of the build folder
 readonly ARTIFACT_DIR="${PROJECT_NAME}-image-${TRAVIS_BUILD_NUMBER}"
 

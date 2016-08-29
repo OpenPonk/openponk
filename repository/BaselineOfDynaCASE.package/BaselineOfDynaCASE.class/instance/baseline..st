@@ -5,7 +5,7 @@ baseline: spec
 		for: #common
 		do: [ spec
 				baseline: 'DynaCASEModel'
-					with: [ spec repository: 'github://openponk/dynacase-model/repository' ];
+					with: [ spec repository: 'github://openponk/openponk-model/repository' ];
 				baseline: 'FileDialog'
 					with: [ spec repository: 'github://peteruhnak/file-dialog/repository' ];
 				project: 'Roassal2'

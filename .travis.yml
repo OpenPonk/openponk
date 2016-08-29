@@ -16,16 +16,16 @@ addons:
 smalltalk:
   - Pharo-5.0
 
-#before_install:
-#  - openssl aes-256-cbc -K $encrypted_cacb30fd339e_key -iv $encrypted_cacb30fd339e_iv -in .ssh/id_dynacase_travis.enc -out .ssh/id_dynacase_travis -d
-#  - chmod 0400 .ssh/id_dynacase_travis
-#  - eval $(ssh-agent -s)
-#  - ssh-add .ssh/id_dynacase_travis
+before_install:
+  - openssl aes-256-cbc -K $encrypted_fefa832a4450_key -iv $encrypted_fefa832a4450_iv -in .ssh/id_openponk_travis.enc -out .ssh/id_openponk_travis -d
+  - chmod 0400 .ssh/id_dynacase_travis
+  - eval $(ssh-agent -s)
+  - ssh-add .ssh/id_dynacase_travis
 
-#deploy:
-#  provider: script
-#  skip_cleanup: true
-#  script: scripts/deploy.sh
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: scripts/deploy.sh
 
-#after_success:
-#  - ./scripts/coverage.sh
+after_success:
+  - ./scripts/coverage.sh

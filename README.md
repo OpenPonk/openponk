@@ -1,5 +1,5 @@
-# DynaCASE [![Build Status](https://travis-ci.org/dynacase/dynacase.svg?branch=master)](https://travis-ci.org/dynacase/dynacase)
+# OpenPonk [![Build Status](https://travis-ci.org/openponk/openponk.svg?branch=master)](https://travis-ci.org/openponk/openponk)
 
-DynaCASE framework base package
+OpenPonk modeling platform
 
-See https://dynacase.github.io/
+See https://openponk.github.io/

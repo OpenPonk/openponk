@@ -1,2 +1,0 @@
-(name 'BaselineOfDynaCASE-PeterUhnak.47' message 'Don''t reference ston.' id '4856d248-e1da-4fa2-ac08-b450979d7924' date '29 July 2016' time '2:52:49.269872 pm' author 'PeterUhnak' ancestors ((name 'BaselineOfDynaCASE-PeterUhnak.46' message 'Removed ston dependency.
-' id 'b2be1e29-6347-53d7-b6e2-2f6b1c4d504e' date '29 July 2016' time '2:44:28 pm' author 'PeterUhnak' ancestors () stepChildren ())) stepChildren ())

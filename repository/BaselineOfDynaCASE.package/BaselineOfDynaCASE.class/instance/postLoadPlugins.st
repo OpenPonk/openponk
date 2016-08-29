@@ -2,20 +2,21 @@ accessing
 postLoadPlugins
 	Metacello new
 		baseline: 'FsmEditor';
-		repository: 'github://dynacase/fsm-editor/repository';
+		repository: 'github://openponk/fsm-editor/repository';
 		onConflict: [ :ex | ex allow ];
 		load.
 	Metacello new
 		baseline: 'BormEditor';
-		repository: 'github://dynacase/borm-editor/repository';
+		repository: 'github://openponk/borm-editor/repository';
 		onConflict: [ :ex | ex allow ];
 		load.
 	Metacello new
 		baseline: 'ClassEditor';
-		repository: 'github://dynacase/class-editor/repository';
+		repository: 'github://openponk/class-editor/repository';
 		onConflict: [ :ex | ex allow ];
 		load.
-	Metacello new
+	"Not yet migrated"
+	"Metacello new
 		baseline: 'OntoUmlEditor';
 		repository: 'github://dynacase/ontouml/repository';
 		onConflict: [ :ex | ex allow ];
@@ -24,9 +25,9 @@ postLoadPlugins
 		baseline: 'OntoUmlInstancesEditor';
 		repository: 'github://dynacase/ontouml/repository';
 		onConflict: [ :ex | ex allow ];
-		load.
+		load."
 	Metacello new
 		baseline: 'DemoEditor';
-		repository: 'github://dynacase/demo-editor/repository';
+		repository: 'github://openponk/demo-editor/repository';
 		onConflict: [ :ex | ex allow ];
 		load

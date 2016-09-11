@@ -5,5 +5,6 @@ targetSelected: aController
 	aController addAsTargetFor: connectionController.
 	self palette deselectTool.
 	self palette selectedTool targetSelected: connectionController.
+	onComplete value: connectionController.
 	connectionController := nil.
 	self deselect

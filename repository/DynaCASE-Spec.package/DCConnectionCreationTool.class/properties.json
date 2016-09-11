@@ -9,7 +9,8 @@
 		"connectionController",
 		"factory",
 		"feedback",
-		"connectionFeedback" ],
+		"connectionFeedback",
+		"onComplete" ],
 	"name" : "DCConnectionCreationTool",
 	"pools" : [
 		 ],

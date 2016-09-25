@@ -1,4 +1,5 @@
 widget API
 childrenMapping
-	^ {(DCNamedElement -> [ #() ]).
-	(DCDiagram -> #elements)}
+	^ {DCNamedElement -> [ #() ].
+	DCDiagram -> #elements.
+	Object -> [ #() ]}

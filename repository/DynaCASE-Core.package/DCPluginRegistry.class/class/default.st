@@ -1,3 +1,3 @@
 singleton
 default
-	^ self withAll
+	^ Default ifNil: [ self withAll ]

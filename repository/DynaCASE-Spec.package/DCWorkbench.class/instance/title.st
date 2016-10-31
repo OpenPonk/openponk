@@ -7,4 +7,4 @@ title
 			project dirty
 				ifTrue: [ s := '* ' ].
 			s := s , project projectName , ' - ' ].
-	^ s , 'DynaCASE'
+	^ s , 'OpenPonk'

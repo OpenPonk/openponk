@@ -28,4 +28,5 @@ deploy:
   script: scripts/deploy.sh
 
 after_success:
+  - ./scripts/pre-deploy.sh
   - ./scripts/coverage.sh

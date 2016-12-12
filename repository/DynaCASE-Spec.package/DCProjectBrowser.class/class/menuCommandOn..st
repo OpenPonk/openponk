@@ -1,7 +1,7 @@
 world menu
 menuCommandOn: aBuilder
 	<worldMenu>
-	(aBuilder item: #DynaCASE)
+	(aBuilder item: #OpenPonk)
 		icon: DCIcons current dynacaseIcon;
 		parent: #MostUsedTools;
 		withSeparatorAfter;

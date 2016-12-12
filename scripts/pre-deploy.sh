@@ -14,7 +14,7 @@ before_deploy() {
 }
 
 main() {
-	before_deploy()
+	before_deploy
 	echo "Final preparations completed"
 }
 

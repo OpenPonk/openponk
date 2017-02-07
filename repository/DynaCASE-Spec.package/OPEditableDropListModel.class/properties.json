@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Spec-EditableDropList",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "OPEditableDropListModel",
+	"pools" : [
+		 ],
+	"super" : "DropListModel",
+	"type" : "normal" }

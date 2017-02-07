@@ -1,0 +1,21 @@
+{
+	"category" : "DynaCASE-Spec-Windows",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 10/29/2014 17:53",
+	"instvars" : [
+		"navigatorModel",
+		"tabManager",
+		"formModel",
+		"project",
+		"projectController",
+		"pluginRegistry",
+		"topToolbar",
+		"editors" ],
+	"name" : "OPWorkbench",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

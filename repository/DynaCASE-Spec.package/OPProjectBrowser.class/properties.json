@@ -1,0 +1,21 @@
+{
+	"category" : "DynaCASE-Spec-Windows",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"RecentProjects" ],
+	"commentStamp" : "PeterUhnak 12/6/2015 01:14",
+	"instvars" : [
+		"recentLabel",
+		"recentList",
+		"quickStartLabel",
+		"projectNameInput",
+		"pluginRegistry",
+		"diagramOptions",
+		"createProjectButton",
+		"openProjectButton" ],
+	"name" : "OPProjectBrowser",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

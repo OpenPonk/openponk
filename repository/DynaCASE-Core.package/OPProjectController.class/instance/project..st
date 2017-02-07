@@ -8,6 +8,6 @@ project: aProject
 			(lastSave at: #models)
 				valuesDo: [ :each | 
 					| dict |
-					dict := #DCFsmGraphML asClass new import: each.
+					dict := #OPFsmGraphML asClass new import: each.
 					project addModel: (dict at: #model).
 					project layout: (dict at: #layout) for: (dict at: #model) ] ]

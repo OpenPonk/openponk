@@ -9,5 +9,5 @@ autoSave: aMemento
 		put:
 			(Dictionary
 				with: #dateTime -> DateAndTime now truncated asString
-				with: #graph -> (#DCFsmGraphML asClass new export: aMemento model withLayout: aMemento layout)).
+				with: #graph -> (#OPFsmGraphML asClass new export: aMemento model withLayout: aMemento layout)).
 	self saveState: lastSave to: self project fileName

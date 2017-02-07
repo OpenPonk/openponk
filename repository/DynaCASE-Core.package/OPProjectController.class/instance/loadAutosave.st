@@ -15,7 +15,7 @@ loadAutosave
 						detect: [ :each | each model uuid asString = key ]
 						ifFound: [ :ctrl | 
 							| dict |
-							dict := #DCFsmGraphML asClass new import: (value at: #graph).
+							dict := #OPFsmGraphML asClass new import: (value at: #graph).
 							ctrl persistenceManager
 								saveState: (#DCFsmPersistenceMemento asClass model: (dict at: #model) layout: (dict at: #layout)).
 							ctrl loadState: ctrl persistenceManager loadCurrent ] ] ]

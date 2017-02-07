@@ -1,0 +1,14 @@
+{
+	"category" : "BaselineOfOpenPonk",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 2/19/2016 20:33",
+	"instvars" : [
+		 ],
+	"name" : "BaselineOfOpenPonk",
+	"pools" : [
+		 ],
+	"super" : "BaselineOf",
+	"type" : "normal" }

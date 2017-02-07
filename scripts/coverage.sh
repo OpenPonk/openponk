@@ -23,7 +23,7 @@ run_hapao() {
 	$SMALLTALK_VM --nodisplay $COVERAGE_IMAGE eval "
 |pkgs coverage totalCoverage|
 pkgs := RPackage organizer packages select: [ :each |
-	(each name beginsWith: 'DynaCASE') |
+	(each name beginsWith: 'OpenPonk') |
 	(each name beginsWith: 'UML') |
 	(each name beginsWith: 'Borm') |
 	(each name beginsWith: 'DEMO')

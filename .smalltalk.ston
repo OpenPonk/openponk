@@ -1,13 +1,13 @@
 SmalltalkCISpec {
 	#loading : [
 		SCIMetacelloLoadSpec {
-			#baseline : 'DynaCASE',
+			#baseline : 'OpenPonk',
 			#directory : 'repository',
 			#platforms : [ #pharo ],
 			#load : [ 'complete' ]
 		}
 	],
 	#testing : {
-		#packages : [ 'DynaCASE.*', 'Borm.*', 'UML.*' ]
+		#packages : [ 'OpenPonk.*', 'Borm.*', 'UML.*' ]
 	}
 }

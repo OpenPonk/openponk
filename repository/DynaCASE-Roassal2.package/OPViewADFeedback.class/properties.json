@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2-Builders",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "OPViewADFeedback",
+	"pools" : [
+		 ],
+	"super" : "OPAcceptDenyFeedbackBuilder",
+	"type" : "normal" }

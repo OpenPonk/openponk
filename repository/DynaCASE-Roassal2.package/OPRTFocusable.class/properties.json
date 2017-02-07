@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2-Interactivity",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 10/4/2015 22:34",
+	"instvars" : [
+		 ],
+	"name" : "OPRTFocusable",
+	"pools" : [
+		 ],
+	"super" : "RTAbstractHighlightable",
+	"type" : "normal" }

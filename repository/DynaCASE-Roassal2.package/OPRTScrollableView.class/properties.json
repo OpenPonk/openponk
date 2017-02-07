@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2-Interactivity",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 10/4/2015 22:33",
+	"instvars" : [
+		 ],
+	"name" : "OPRTScrollableView",
+	"pools" : [
+		 ],
+	"super" : "RTInteraction",
+	"type" : "normal" }

@@ -1,0 +1,20 @@
+{
+	"category" : "DynaCASE-Roassal2-Interactivity",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 10/4/2015 22:36",
+	"instvars" : [
+		"source",
+		"view",
+		"mouseBox",
+		"line",
+		"running",
+		"lineBuilder",
+		"moveSubscription" ],
+	"name" : "OPInteractiveLine",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

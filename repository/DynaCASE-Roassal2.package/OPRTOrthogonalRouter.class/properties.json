@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-Roassal2-Connection",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"points",
+		"handler" ],
+	"name" : "OPRTOrthogonalRouter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

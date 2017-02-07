@@ -1,0 +1,17 @@
+{
+	"category" : "DynaCASE-Roassal2-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"from",
+		"to",
+		"edge",
+		"view" ],
+	"name" : "OPRTStyledConnectionTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

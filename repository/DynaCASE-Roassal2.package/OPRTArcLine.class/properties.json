@@ -1,0 +1,16 @@
+{
+	"category" : "DynaCASE-Roassal2-Shapes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 10/4/2015 22:30",
+	"instvars" : [
+		"head",
+		"tail",
+		"radius" ],
+	"name" : "OPRTArcLine",
+	"pools" : [
+		 ],
+	"super" : "RTAbstractLine",
+	"type" : "normal" }

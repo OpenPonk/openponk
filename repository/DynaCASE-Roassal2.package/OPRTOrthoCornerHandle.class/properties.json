@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2-Connection",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 12/3/2015 08:13",
+	"instvars" : [
+		 ],
+	"name" : "OPRTOrthoCornerHandle",
+	"pools" : [
+		 ],
+	"super" : "OPRTOrthoHandle",
+	"type" : "normal" }

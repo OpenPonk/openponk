@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Roassal2-Connection",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 9/20/2015 14:35",
+	"instvars" : [
+		"decorations" ],
+	"name" : "OPRTStyledConnection",
+	"pools" : [
+		 ],
+	"super" : "OPRTConnection",
+	"type" : "normal" }

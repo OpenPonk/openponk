@@ -1,0 +1,19 @@
+{
+	"category" : "DynaCASE-Roassal2-Connection",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 9/16/2015 07:28",
+	"instvars" : [
+		"from",
+		"to",
+		"edge",
+		"index",
+		"element",
+		"pointLink" ],
+	"name" : "OPRTHandle",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

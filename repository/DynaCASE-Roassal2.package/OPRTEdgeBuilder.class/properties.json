@@ -1,0 +1,16 @@
+{
+	"category" : "DynaCASE-Roassal2-Builders",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"shape",
+		"labels",
+		"constraints" ],
+	"name" : "OPRTEdgeBuilder",
+	"pools" : [
+		 ],
+	"super" : "RTObject",
+	"type" : "normal" }

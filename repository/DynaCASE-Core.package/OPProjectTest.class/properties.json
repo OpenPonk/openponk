@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Core-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "OPProjectTest",
+	"pools" : [
+		 ],
+	"super" : "OPTestCase",
+	"type" : "normal" }

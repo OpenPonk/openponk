@@ -1,0 +1,14 @@
+{
+	"category" : "DynaCASE-Core-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "OPFuelSerializerTest",
+	"pools" : [
+		 ],
+	"super" : "OPAbstractSerializerTest",
+	"type" : "normal" }

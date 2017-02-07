@@ -1,0 +1,15 @@
+{
+	"category" : "DynaCASE-Core-Controllers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 10/11/2014 22:41",
+	"instvars" : [
+		"source",
+		"target" ],
+	"name" : "OPRelationshipController",
+	"pools" : [
+		 ],
+	"super" : "OPElementController",
+	"type" : "normal" }

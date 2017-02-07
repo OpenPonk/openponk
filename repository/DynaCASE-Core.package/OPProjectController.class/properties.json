@@ -1,0 +1,19 @@
+{
+	"category" : "DynaCASE-Core-Controllers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 9/18/2015 01:51",
+	"instvars" : [
+		"workbench",
+		"project",
+		"controllers",
+		"lastSave",
+		"disableAutosave",
+		"persistenceManager" ],
+	"name" : "OPProjectController",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

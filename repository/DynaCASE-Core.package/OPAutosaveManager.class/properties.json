@@ -1,0 +1,17 @@
+{
+	"category" : "DynaCASE-Core-Persistence",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 4/2/2016 23:01",
+	"instvars" : [
+		"history",
+		"current",
+		"future",
+		"serializer" ],
+	"name" : "OPAutosaveManager",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

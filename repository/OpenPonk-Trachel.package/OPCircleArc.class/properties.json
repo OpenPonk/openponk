@@ -1,0 +1,16 @@
+{
+	"category" : "OpenPonk-Trachel-Primitives",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"from",
+		"to",
+		"circle" ],
+	"name" : "OPCircleArc",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

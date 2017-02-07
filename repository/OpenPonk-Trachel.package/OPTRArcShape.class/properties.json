@@ -1,0 +1,17 @@
+{
+	"category" : "OpenPonk-Trachel-Shapes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"from",
+		"to",
+		"radius",
+		"width" ],
+	"name" : "OPTRArcShape",
+	"pools" : [
+		 ],
+	"super" : "TRAbstractLineShape",
+	"type" : "normal" }

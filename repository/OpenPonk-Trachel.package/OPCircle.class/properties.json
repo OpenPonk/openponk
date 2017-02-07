@@ -1,0 +1,15 @@
+{
+	"category" : "OpenPonk-Trachel-Primitives",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"radius",
+		"center" ],
+	"name" : "OPCircle",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

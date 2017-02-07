@@ -1,0 +1,14 @@
+{
+	"category" : "OpenPonk-Trachel-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "bliznjan 2/16/2015 09:30",
+	"instvars" : [
+		 ],
+	"name" : "OPTRUnfocused",
+	"pools" : [
+		 ],
+	"super" : "OPTRAbstractFocusing",
+	"type" : "normal" }

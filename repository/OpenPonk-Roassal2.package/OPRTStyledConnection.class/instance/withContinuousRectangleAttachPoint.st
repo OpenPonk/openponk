@@ -1,0 +1,3 @@
+attach point
+withContinuousRectangleAttachPoint
+	self attachPoint: RTBorderAttachPoint new

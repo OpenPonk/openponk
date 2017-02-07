@@ -1,0 +1,15 @@
+{
+	"category" : "OpenPonk-Roassal2-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"conformingShape",
+		"originShape" ],
+	"name" : "OPRTElementsConstraintTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

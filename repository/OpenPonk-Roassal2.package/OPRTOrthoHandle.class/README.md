@@ -1,0 +1,1 @@
+I am a base class for orthogonal connection handles.

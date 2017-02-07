@@ -1,0 +1,1 @@
+I am an interaction that constraints element dragging in horizontal (left/right) direction.

@@ -1,0 +1,3 @@
+private
+newLabel
+	^ self newLabel: ''

@@ -1,0 +1,14 @@
+{
+	"category" : "OpenPonk-Roassal2-Builders",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"noBorder" ],
+	"name" : "OPElementADFeedback",
+	"pools" : [
+		 ],
+	"super" : "OPAcceptDenyFeedbackBuilder",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+A DCRTEdgeEndConstraint is a utility class that contains methods to position elements against any point on edge

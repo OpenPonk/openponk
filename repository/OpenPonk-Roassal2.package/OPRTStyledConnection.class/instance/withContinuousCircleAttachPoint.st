@@ -1,0 +1,3 @@
+attach point
+withContinuousCircleAttachPoint
+	self attachPoint: RTBorderAttachPoint new

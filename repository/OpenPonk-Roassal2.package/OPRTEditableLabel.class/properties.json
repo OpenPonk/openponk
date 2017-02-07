@@ -1,0 +1,14 @@
+{
+	"category" : "OpenPonk-Roassal2-Shapes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 4/26/2015 10:47",
+	"instvars" : [
+		"rawEvents" ],
+	"name" : "OPRTEditableLabel",
+	"pools" : [
+		 ],
+	"super" : "RTEditableLabel",
+	"type" : "normal" }

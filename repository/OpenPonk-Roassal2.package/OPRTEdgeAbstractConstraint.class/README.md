@@ -1,0 +1,1 @@
+A DCRTEdgeConstraint are utility classes that contain methods to position elements against edges

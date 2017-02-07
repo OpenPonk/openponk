@@ -1,0 +1,1 @@
+I am a non-draggable handle at the end points of an orthogonal connection. I primarily manage creation of new polyline segments.

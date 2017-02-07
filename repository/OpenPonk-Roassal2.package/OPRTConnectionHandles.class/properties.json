@@ -1,0 +1,17 @@
+{
+	"category" : "OpenPonk-Roassal2-Connection",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 9/16/2015 07:29",
+	"instvars" : [
+		"edge",
+		"handles",
+		"midpointHandles",
+		"isActive" ],
+	"name" : "OPRTConnectionHandles",
+	"pools" : [
+		 ],
+	"super" : "RTInteraction",
+	"type" : "normal" }

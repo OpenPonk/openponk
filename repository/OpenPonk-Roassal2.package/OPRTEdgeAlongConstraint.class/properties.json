@@ -1,0 +1,14 @@
+{
+	"category" : "OpenPonk-Roassal2-Constraints",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "bliznjan 11/25/2014 23:10",
+	"instvars" : [
+		"balance" ],
+	"name" : "OPRTEdgeAlongConstraint",
+	"pools" : [
+		 ],
+	"super" : "OPRTEdgeAbstractConstraint",
+	"type" : "normal" }

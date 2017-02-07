@@ -1,0 +1,3 @@
+accessing
+points
+	^ router points

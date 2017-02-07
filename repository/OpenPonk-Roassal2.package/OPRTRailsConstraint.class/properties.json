@@ -1,0 +1,21 @@
+{
+	"category" : "OpenPonk-Roassal2-Constraints",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 10/4/2015 22:38",
+	"instvars" : [
+		"element",
+		"connection",
+		"segmentsRetriever",
+		"gripElement",
+		"gripLine",
+		"gripShape",
+		"gripEdge",
+		"distance" ],
+	"name" : "OPRTRailsConstraint",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

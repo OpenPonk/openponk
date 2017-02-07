@@ -1,0 +1,3 @@
+heads
+emptyCircleHead
+	shape emptyCircleHead

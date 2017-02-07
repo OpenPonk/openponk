@@ -5,4 +5,6 @@ loadPrevious
 	future addLast: current.
 	current := history removeLast.
 	import := OPFsmGraphML new import: current.
-	^ DCFsmPersistenceMemento model: (import at: #model) layout: (import at: #layout)
+	^ OPFsmPersistenceMemento
+		model: (import at: #model)
+		layout: (import at: #layout)

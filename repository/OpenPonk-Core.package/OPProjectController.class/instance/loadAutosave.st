@@ -17,5 +17,5 @@ loadAutosave
 							| dict |
 							dict := #OPFsmGraphML asClass new import: (value at: #graph).
 							ctrl persistenceManager
-								saveState: (#DCFsmPersistenceMemento asClass model: (dict at: #model) layout: (dict at: #layout)).
+								saveState: (#OPFsmPersistenceMemento asClass model: (dict at: #model) layout: (dict at: #layout)).
 							ctrl loadState: ctrl persistenceManager loadCurrent ] ] ]

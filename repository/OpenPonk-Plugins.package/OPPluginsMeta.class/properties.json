@@ -1,0 +1,14 @@
+{
+	"category" : "OpenPonk-Plugins",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 2/16/2016 10:45",
+	"instvars" : [
+		 ],
+	"name" : "OPPluginsMeta",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

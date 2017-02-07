@@ -1,0 +1,1 @@
+I am a hack to build all-in-one packages and workaround issues in Metacello. Don't change this package (don't add stuff, remove stuff, ...) unless you know what you're doing.

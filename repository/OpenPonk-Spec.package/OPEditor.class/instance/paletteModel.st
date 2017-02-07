@@ -1,0 +1,3 @@
+accessing - spec
+paletteModel
+	^ paletteModel

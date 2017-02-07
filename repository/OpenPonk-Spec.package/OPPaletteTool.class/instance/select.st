@@ -1,0 +1,3 @@
+protocol
+select
+	^ self subclassResponsibility

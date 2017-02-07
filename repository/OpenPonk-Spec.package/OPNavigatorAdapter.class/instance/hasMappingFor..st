@@ -1,0 +1,3 @@
+testing
+hasMappingFor: anObject
+	^ true

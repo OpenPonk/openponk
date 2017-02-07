@@ -1,0 +1,3 @@
+accessing - spec
+quickStartLabel
+	^ quickStartLabel

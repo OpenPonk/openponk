@@ -1,0 +1,1 @@
+I am a modified PragmaMenuBuilder that ensures that only menus for a particular plugin are retrieved.

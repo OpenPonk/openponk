@@ -1,0 +1,3 @@
+private
+deselectTool
+	self selectSelectionTool

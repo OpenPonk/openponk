@@ -1,0 +1,3 @@
+initialization
+initializePresenter
+	menuModel applyTo: self

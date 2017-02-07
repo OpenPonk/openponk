@@ -1,0 +1,3 @@
+accessing
+diagramController
+	^ palette diagramController

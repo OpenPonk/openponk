@@ -1,0 +1,14 @@
+{
+	"category" : "OpenPonk-Spec-EditableDropList",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "OPMorphicEditableDropListAdapter",
+	"pools" : [
+		 ],
+	"super" : "MorphicDropListAdapter",
+	"type" : "normal" }

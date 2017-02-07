@@ -6,10 +6,9 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"from",
-		"to",
-		"circle" ],
-	"name" : "DCCircleArc",
+		"radius",
+		"center" ],
+	"name" : "OPCircle",
 	"pools" : [
 		 ],
 	"super" : "Object",

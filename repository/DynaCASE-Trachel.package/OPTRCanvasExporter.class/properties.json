@@ -13,7 +13,7 @@
 		"oversize",
 		"margin",
 		"finalized" ],
-	"name" : "DCTRCanvasExporter",
+	"name" : "OPTRCanvasExporter",
 	"pools" : [
 		 ],
 	"super" : "Object",

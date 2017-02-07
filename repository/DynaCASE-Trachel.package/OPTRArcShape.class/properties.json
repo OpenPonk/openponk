@@ -10,7 +10,7 @@
 		"to",
 		"radius",
 		"width" ],
-	"name" : "DCTRArcShape",
+	"name" : "OPTRArcShape",
 	"pools" : [
 		 ],
 	"super" : "TRAbstractLineShape",

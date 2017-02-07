@@ -4,11 +4,11 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "bliznjan 11/26/2014 00:26",
+	"commentStamp" : "bliznjan 2/16/2015 09:30",
 	"instvars" : [
 		 ],
-	"name" : "DCTRAbstractFocusing",
+	"name" : "OPTRUnfocused",
 	"pools" : [
 		 ],
-	"super" : "TRShapeEvent",
+	"super" : "OPTRAbstractFocusing",
 	"type" : "normal" }

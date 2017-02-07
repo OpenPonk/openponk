@@ -1,14 +1,16 @@
 {
-	"category" : "DynaCASE-Trachel-Shapes",
+	"category" : "DynaCASE-Trachel-Primitives",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		 ],
-	"name" : "DCTRGridShape",
+		"from",
+		"to",
+		"circle" ],
+	"name" : "OPCircleArc",
 	"pools" : [
 		 ],
-	"super" : "TRShape",
+	"super" : "Object",
 	"type" : "normal" }

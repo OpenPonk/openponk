@@ -1,0 +1,16 @@
+{
+	"category" : "OpenPonk-Core-Controllers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 10/11/2014 22:42",
+	"instvars" : [
+		"model",
+		"selectionHolder",
+		"diagramController" ],
+	"name" : "OPController",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "OpenPonk-Core-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"controller",
+		"project" ],
+	"name" : "OPProjectControllerTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

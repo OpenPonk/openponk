@@ -1,0 +1,14 @@
+{
+	"category" : "OpenPonk-Core-Persistence",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 4/3/2016 01:01",
+	"instvars" : [
+		 ],
+	"name" : "OPNullSerializer",
+	"pools" : [
+		 ],
+	"super" : "OPAbstractSerializer",
+	"type" : "normal" }

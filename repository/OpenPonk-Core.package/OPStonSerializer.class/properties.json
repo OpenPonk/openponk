@@ -1,0 +1,14 @@
+{
+	"category" : "OpenPonk-Core-Persistence",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 4/3/2016 15:03",
+	"instvars" : [
+		 ],
+	"name" : "OPStonSerializer",
+	"pools" : [
+		 ],
+	"super" : "OPAbstractSerializer",
+	"type" : "normal" }

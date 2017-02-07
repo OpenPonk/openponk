@@ -1,0 +1,3 @@
+testing
+futureIsEmpty
+	^ future isEmpty

@@ -1,0 +1,3 @@
+accessing
+modelExtension
+	^ self subclassResponsibility

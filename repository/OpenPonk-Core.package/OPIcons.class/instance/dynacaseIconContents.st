@@ -1,0 +1,12 @@
+private - contents
+dynacaseIconContents
+	"Private - Method generated with the content of the file File @ /home/peter/prog/dynacase/icons/dynacase.png"
+	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAA
+CXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AwMDzs1NOuPvQAAAVNJREFUOMulUrFKA0EU
+nHnr5gxK4oFNAoKnVtpop4hNGhFs0tmnkvhLsbFJY2EntsZgJdgoKNiLYEjAwIF7z+YOLhtN
+kEw5s29m5+0C4wgA1El2AQwBDEneA6in2kTsA1AAKiI9a203CIKOiHxkfHrmV9QAKEmtVCp7
+vhhF0QrJ79Sk5uvlbDiKovCvBGstSSapSTmvNUm+F4vF82kdwzA8FZEvAE0AYMo/iMhOkiRE
+o60THVonJKmq+ghgW1J6C/8AyRjAJgBkBs+qo8GlebucT81rqmoAvPg70Gq1uj7i0mirX+nu
+6kLShZ+NvYIxpjfNwBjzmn+FrEKf5KFzbklELid0bznnNkgeA+gDwFyu1w2AgyRJbkkOVLXk
+DX+qamiMOXLOXWe8eCEdY8yCtfZpzfsohUJhYIxZzA+P3CCDc27onNt98/g4jld/qyWYETMb
+/AAzUHGPQIgWEgAAAABJRU5ErkJggg=='

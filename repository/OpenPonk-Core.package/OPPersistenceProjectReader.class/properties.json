@@ -1,0 +1,14 @@
+{
+	"category" : "OpenPonk-Core-Persistence",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 5/27/2016 12:48",
+	"instvars" : [
+		 ],
+	"name" : "OPPersistenceProjectReader",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

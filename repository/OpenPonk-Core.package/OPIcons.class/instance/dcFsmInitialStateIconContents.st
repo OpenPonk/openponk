@@ -1,0 +1,7 @@
+private - contents
+dcFsmInitialStateIconContents
+	"Private - Method generated with the content of the file File @ /home/peter/prog/dynacase/icons/dcFsmInitialState.png"
+	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAA
+CXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gwREQgUBlKdNgAAABl0RVh0Q29tbWVudABD
+cmVhdGVkIHdpdGggR0lNUFeBDhcAAAA0SURBVDjLY2AYBYQADxSTBSIZGBj+Q3EkJZpJNoQH
+i2YYxvAOE60CjyIvUCUQqRKNIwUAAFRhFQHiIcRQAAAAAElFTkSuQmCC'

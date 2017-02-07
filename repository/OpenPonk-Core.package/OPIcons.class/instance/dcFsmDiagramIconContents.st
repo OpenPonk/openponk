@@ -1,0 +1,8 @@
+private - contents
+dcFsmDiagramIconContents
+	"Private - Method generated with the content of the file File @ /home/peter/prog/dynacase/icons/dcFsmDiagram.png"
+	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAA
+CXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gwRERYhhKBmygAAABl0RVh0Q29tbWVudABD
+cmVhdGVkIHdpdGggR0lNUFeBDhcAAABvSURBVDjLzZKxDcAgDAQvzMJMdEzAoGQGlvk0jmRF
+iBCRgpeuMfrHxsBOikA1Yuc8Ac1IvYAKyKgds4BiqBfyDJCjmfFWsRrBFTNwGhk4HMuaGmEm
+ZPiIb9LKLVqZU7MtNmeUX9VI4c+vvMeqPusCWs8vzPVQRpYAAAAASUVORK5CYII='

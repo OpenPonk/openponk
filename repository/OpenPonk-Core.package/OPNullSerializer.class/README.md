@@ -1,0 +1,1 @@
+I am the default serializer and do nothing at all.

@@ -8,7 +8,7 @@ rightClickMenu: menu
 	menuBuilder addItem: 'Rename' action: [ self renameCommand: el ].
 	menuBuilder addItem: 'Inspect' action: [ self inspectCommand: el ].
 	(el isKindOf: OPNamedElement) & (el isKindOf: OPDiagram) not
-		& (el className = #DCFsm) not
+		& (el className = #OPFsm) not
 		ifTrue:
 			[ menuBuilder addItem: 'Delete' action: [ self deleteElementCommand: el ] ]
 	"menuBuilder addItem: 'Edit' action: [ self editElementCommand: el ]."

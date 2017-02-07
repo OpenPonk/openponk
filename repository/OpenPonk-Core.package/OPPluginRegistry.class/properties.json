@@ -1,0 +1,14 @@
+{
+	"category" : "OpenPonk-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Default" ],
+	"commentStamp" : "PeterUhnak 7/2/2015 00:51",
+	"instvars" : [
+		"plugins" ],
+	"name" : "OPPluginRegistry",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,3 +1,0 @@
-*DynaCASE-Spec
-popUpOwner
-	^ nil

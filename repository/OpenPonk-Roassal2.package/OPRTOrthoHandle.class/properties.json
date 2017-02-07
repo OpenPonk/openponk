@@ -1,0 +1,16 @@
+{
+	"category" : "OpenPonk-Roassal2-Connection",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 12/3/2015 08:12",
+	"instvars" : [
+		"element",
+		"edge",
+		"positionLink" ],
+	"name" : "OPRTOrthoHandle",
+	"pools" : [
+		 ],
+	"super" : "DoubleLink",
+	"type" : "normal" }

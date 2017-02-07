@@ -1,0 +1,15 @@
+{
+	"category" : "OpenPonk-Roassal2-Interactivity",
+	"classinstvars" : [
+		"cornerDirections",
+		"oppositeCorners" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 7/23/2015 21:41",
+	"instvars" : [
+		 ],
+	"name" : "OPRTRectangle",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

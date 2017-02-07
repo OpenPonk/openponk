@@ -1,0 +1,14 @@
+{
+	"category" : "OpenPonk-Core-Models",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Default" ],
+	"commentStamp" : "PeterUhnak 12/6/2015 01:18",
+	"instvars" : [
+		"projects" ],
+	"name" : "OPProjectStorage",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

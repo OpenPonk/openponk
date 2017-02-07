@@ -1,0 +1,16 @@
+{
+	"category" : "OpenPonk-Spec-Windows",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Icons" ],
+	"commentStamp" : "PeterUhnak 7/13/2015 23:08",
+	"instvars" : [
+		"tree",
+		"project",
+		"adapters" ],
+	"name" : "OPNavigator",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

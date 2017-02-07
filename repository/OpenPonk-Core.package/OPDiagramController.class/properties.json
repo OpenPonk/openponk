@@ -1,0 +1,22 @@
+{
+	"category" : "OpenPonk-Core-Controllers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 10/11/2014 22:42",
+	"instvars" : [
+		"view",
+		"controllers",
+		"editor",
+		"hoverHolder",
+		"figureAdded",
+		"deselectionHolder",
+		"modelToControllerMapping",
+		"plugin",
+		"autosaveManager" ],
+	"name" : "OPDiagramController",
+	"pools" : [
+		 ],
+	"super" : "OPController",
+	"type" : "normal" }

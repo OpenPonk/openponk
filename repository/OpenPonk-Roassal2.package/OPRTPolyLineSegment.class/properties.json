@@ -1,0 +1,14 @@
+{
+	"category" : "OpenPonk-Roassal2-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 10/12/2015 12:48",
+	"instvars" : [
+		"segments" ],
+	"name" : "OPRTPolyLineSegment",
+	"pools" : [
+		 ],
+	"super" : "RTObject",
+	"type" : "normal" }

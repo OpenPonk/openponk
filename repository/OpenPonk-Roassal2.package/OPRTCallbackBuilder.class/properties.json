@@ -1,0 +1,14 @@
+{
+	"category" : "OpenPonk-Roassal2-Builders",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 10/4/2015 22:41",
+	"instvars" : [
+		"block" ],
+	"name" : "OPRTCallbackBuilder",
+	"pools" : [
+		 ],
+	"super" : "RTBuilder",
+	"type" : "normal" }

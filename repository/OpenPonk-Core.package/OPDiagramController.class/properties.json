@@ -14,7 +14,9 @@
 		"deselectionHolder",
 		"modelToControllerMapping",
 		"plugin",
-		"autosaveManager" ],
+		"autosaveManager",
+		"figureToControllerCache",
+		"modelToControllerCache" ],
 	"name" : "OPDiagramController",
 	"pools" : [
 		 ],

@@ -2,4 +2,5 @@ accessing
 controllerForModel: aModel
 	aModel = model
 		ifTrue: [ ^ self ].
-	^ self controllers detect: [ :ctrl | ctrl model = aModel ]
+	^ self cachedControllerForModel: aModel
+"	^ self controllers detect: [ :ctrl | ctrl model = aModel ]"

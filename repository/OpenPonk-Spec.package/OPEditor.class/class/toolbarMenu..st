@@ -1,6 +1,6 @@
 toolbar
 toolbarMenu: aBuilder
-	<dcEditorToolbarMenu>
+	<opEditorToolbarMenu>
 	| editor |
 	editor := aBuilder model.
 	(aBuilder item: 'Inspect Controller...') action: [ editor diagramController inspect ].

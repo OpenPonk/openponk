@@ -1,11 +1,11 @@
 project handling
 openProject: aProject
-	self assert: [ aProject isKindOf: OPProject ].
 	project := aProject.
-	(projectController := OPProjectController new)
+	(projectController := aProject controllerClass new)
 		project: project;
 		workbench: self.
 	self updateTitle.
+	topToolbar updateProjectMenu.
 	project whenChanged: [ self updateTitle ].
 	navigatorModel openOn: project.
 	project beClean.

@@ -1,4 +1,4 @@
-project handling
+instance creation
 openProject: aProject
 	^ self open
 		openProject: aProject;

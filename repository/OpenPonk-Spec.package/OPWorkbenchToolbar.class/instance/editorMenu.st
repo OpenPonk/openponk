@@ -1,11 +1,11 @@
-menus
+menus for editor
 editorMenu
 	| menu |
 	menu := self instantiate: MenuModel.
 	menu
-		fromSpec: (PragmaMenuBuilder pragmaKeyword: #dcEditorToolbarMenu model: activeEditor) menuSpec.
+		fromSpec: (PragmaMenuBuilder pragmaKeyword: #opEditorToolbarMenu model: activeEditor) menuSpec.
 	menu
 		fromSpec:
-			(OPPragmaPluginMenuBuilder pragmaKeyword: #dcEditorToolbarMenu: model: activeEditor)
+			(OPPragmaPluginMenuBuilder pragmaKeyword: #opEditorToolbarMenu: model: activeEditor)
 				menuSpec.
 	^ menu

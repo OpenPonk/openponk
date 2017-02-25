@@ -1,4 +1,4 @@
 initialization
 resetCanvasMenuModel
 	canvasMenuModel
-		fromSpec: (OPPragmaPluginMenuBuilder pragmaKeyword: #dcCanvasToolbar: model: canvasModel) menuSpec
+		fromSpec: (OPPragmaPluginMenuBuilder pragmaKeyword: #opCanvasToolbar: model: canvasModel) menuSpec

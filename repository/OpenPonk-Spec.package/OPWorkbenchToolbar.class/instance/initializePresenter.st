@@ -1,6 +1,7 @@
 initialization
 initializePresenter
 	toolbar
+		autoRefresh: true;
 		addGroup: [ :group | 
 			group
 				addItem: [ :item | 

@@ -1,4 +1,4 @@
-menus
+menus for editor
 addEditorMenu
 	self removeEditorMenu.
 	toolbar

@@ -1,7 +1,7 @@
 initialization
 initializeWidgets
 	topToolbar := self instantiate: OPWorkbenchToolbar.
-	navigatorModel := self instantiate: OPNavigator.
+	navigatorModel := self instantiate: OPModelNavigator.
 	tabManager := self newTabManager.
 	formModel := self instantiate: OPDynamicForm.
 

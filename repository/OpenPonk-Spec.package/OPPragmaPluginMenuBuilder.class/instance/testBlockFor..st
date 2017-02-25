@@ -8,5 +8,10 @@ testBlockFor: anObject
 		with: OPEditor -> [ :prg | prg arguments first = self model plugin className ]
 		with:
 			OPWorkbenchToolbar
-				-> [ :prg | prg arguments first = self model projectController project className ].
+				->
+					[ :prg | prg arguments first = self model projectController project className ]
+		with:
+			OPModelNavigator
+				->
+					[ :prg | prg arguments first = self model projectController project className ].
 	^ blocks at: anObject class

@@ -9,7 +9,7 @@
 		"tree",
 		"project",
 		"adapters" ],
-	"name" : "OPNavigator",
+	"name" : "OPModelNavigator",
 	"pools" : [
 		 ],
 	"super" : "ComposableModel",

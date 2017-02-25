@@ -3,7 +3,7 @@ initializeTree
 	tree
 		roots: project models;
 		doubleClick: [ self doubleClick ];
-		menu: [ :menu | self rightClickMenu: menu ];
+		menu: [ :menu | self contextMenu: menu ];
 		displayBlock: [ :anObject | self displayFor: anObject ];
 		childrenBlock: [ :anObject | self childrenFor: anObject ];
 		iconBlock: [ :anObject | self iconFor: anObject ].

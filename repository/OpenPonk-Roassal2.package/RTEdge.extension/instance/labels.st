@@ -1,3 +1,3 @@
 *OpenPonk-Roassal2
 labels
-	^ self attributeAt: #DCLabels ifAbsentPut: [ Dictionary new ]
+	^ self attributeAt: #OPRTLabels ifAbsentPut: [ Dictionary new ]

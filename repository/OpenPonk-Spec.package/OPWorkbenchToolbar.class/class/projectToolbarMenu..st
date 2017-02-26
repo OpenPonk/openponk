@@ -12,15 +12,13 @@ projectToolbarMenu: aBuilder
 				action: [ OPProjectBrowser open ].
 			(aBuilder item: 'Open...')
 				icon: Smalltalk ui icons smallOpen;
-				action: [  ].
+				action: [ workbenchToolbar projectController openProject ].
 			(aBuilder item: 'Save')
 				icon: Smalltalk ui icons smallSave;
-				action: [ OPSaveProjectWindow new
-						projectController: workbenchToolbar projectController;
-						open ].
+				action: [ workbenchToolbar projectController saveProject ].
 			(aBuilder item: 'Save as...')
 				icon: Smalltalk ui icons smallSaveAs;
-				action: [  ].
+				action: [ workbenchToolbar projectController saveAsProject ].
 			(aBuilder item: 'Close Project')
 				icon: Smalltalk ui icons windowClose;
 				action: [  ] ];

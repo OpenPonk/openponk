@@ -6,7 +6,7 @@ SMALLTALK_VM="$(find $SMALLTALK_CI_VMS -name pharo -type f -executable | head -n
 
 use_logo() {
 	$SMALLTALK_VM --nodisplay $SMALLTALK_CI_IMAGE eval --save "PolymorphSystemSettings showDesktopLogo: true.
-PolymorphSystemSettings setDesktopLogoWith: (ImageMorph withForm: DCIcons current logo)."
+PolymorphSystemSettings setDesktopLogoWith: (ImageMorph withForm: OPIcons current logo)."
 }
 
 before_deploy() {

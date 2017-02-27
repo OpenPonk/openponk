@@ -6,6 +6,7 @@ initializeWidgets
 	formModel := self instantiate: OPDynamicForm.
 
 	self focusOrder
+		add: topToolbar;
 		add: navigatorModel;
-		add: tabManager;
-		add: formModel
+		add: formModel;
+		add: tabManager

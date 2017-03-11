@@ -8,6 +8,11 @@ initializeView: aView
 		addCallback:
 			(TRCameraScaleCallback
 				block: [ :newScale | 
+					onZoomChange
+						value:
+							(newScale < 1
+								ifTrue: [ '   ' ]
+								ifFalse: [ '' ]) , (newScale * 100) rounded asString , '%'.
 					self editor zoomLabel
 						label:
 							(newScale < 1

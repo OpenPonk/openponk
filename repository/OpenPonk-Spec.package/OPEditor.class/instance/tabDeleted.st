@@ -1,4 +1,4 @@
-as yet unclassified
+updating
 tabDeleted
 	self workbench projectController removeDiagramController: diagramController.
 	diagramController remove

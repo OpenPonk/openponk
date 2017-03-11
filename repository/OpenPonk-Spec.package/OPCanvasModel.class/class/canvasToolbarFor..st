@@ -1,4 +1,4 @@
-as yet unclassified
+toolbar
 canvasToolbarFor: aBuilder
 	<dcCanvasTolbar>
 	| canvas |

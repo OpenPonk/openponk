@@ -7,8 +7,8 @@ defaultSpec
 			row
 				newColumn: [ :col | col add: #navigatorModel ] width: 240;
 				addSplitter;
-				newColumn: [ :col | col add: #tabManager ];
+				newColumn: [ :col | col add: #tabManager ]";
 				addSplitter;
-				newColumn: [ :col | col add: #formModel ] width: 180 ]
+				newColumn: [ :col | col add: #formModel ] width: 180" ]
 			top: self toolbarHeight;
 		yourself

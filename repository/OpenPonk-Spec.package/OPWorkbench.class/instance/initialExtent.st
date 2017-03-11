@@ -1,3 +1,3 @@
 protocol
 initialExtent
-	^ 1200 @ 700
+	^ World extent * (0.65 @ 0.7)

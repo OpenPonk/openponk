@@ -1,4 +1,4 @@
-protocol
+updating
 rebuildWidget
 	diagramController ifNotNil: [ paletteModel createPaletteFor: diagramController ].
 	canvasModel needRebuild: false.

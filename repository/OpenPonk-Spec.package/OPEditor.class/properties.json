@@ -7,12 +7,13 @@
 	"commentStamp" : "PeterUhnak 10/29/2014 17:55",
 	"instvars" : [
 		"canvasModel",
-		"diagramController",
 		"paletteModel",
 		"workbench",
 		"canvasMenuModel",
-		"plugin",
-		"zoomLabel" ],
+		"formModel",
+		"zoomLabel",
+		"diagramController",
+		"plugin" ],
 	"name" : "OPEditor",
 	"pools" : [
 		 ],

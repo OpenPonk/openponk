@@ -1,4 +1,4 @@
-as yet unclassified
+updating
 updateUndoRedo
 	| items |
 	items := canvasMenuModel menuGroups flatCollect: #menuItems.

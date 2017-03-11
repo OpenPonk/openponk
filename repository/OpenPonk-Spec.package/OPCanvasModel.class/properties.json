@@ -8,7 +8,8 @@
 	"instvars" : [
 		"roassalView",
 		"diagramController",
-		"lastClickPosition" ],
+		"lastClickPosition",
+		"onZoomChange" ],
 	"name" : "OPCanvasModel",
 	"pools" : [
 		 ],

@@ -13,5 +13,10 @@ defaultSpec
 								add: #zoomLabel width: 35 ]
 							height: self toolbarHeight - 1 ];
 				addSplitter;
-				newColumn: [ :col | col add: #paletteModel ] width: 150 ];
+				newColumn: [ :col | 
+					col
+						add: #paletteModel;
+"						addSplitter;"
+						add: #formModel ]
+					width: 200 ];
 		yourself

@@ -12,7 +12,8 @@ openEditorOn: aModel
 	widget := editor buildWithSpec asWidget.
 	editor owner: tab.
 	editor openModel: aModel.
-	aModel whenChanged: [ tab label: aModel name ].
+	(aModel respondsTo: #whenChanged:)
+		ifTrue: [ aModel whenChanged: [ tab label: aModel name ] ].
 	editor paletteModel rebuildWidget.
 	tab
 		label: aModel name;

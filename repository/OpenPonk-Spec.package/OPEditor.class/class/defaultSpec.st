@@ -15,8 +15,8 @@ defaultSpec
 				addSplitter;
 				newColumn: [ :col | 
 					col
-						add: #paletteModel;
+						add: #paletteModel
 "						addSplitter;"
-						add: #formModel ]
+"						add: #formModel" ]
 					width: 200 ];
 		yourself

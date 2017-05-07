@@ -1,4 +1,4 @@
-accessing
+controllers management
 controllerForModel: aModel
 	aModel = model
 		ifTrue: [ ^ self ].

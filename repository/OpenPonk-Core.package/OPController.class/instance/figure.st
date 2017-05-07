@@ -1,3 +1,3 @@
-accessing
+figures
 figure
 	^ self subclassResponsibility

@@ -1,5 +1,5 @@
 controllers management
-createController: aModel
+newControllerFor: aModel
 	| controller |
 	controller := (self controllerNameFor: aModel) new.
 	controller model: aModel.

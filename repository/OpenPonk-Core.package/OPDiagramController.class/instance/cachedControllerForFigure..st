@@ -1,4 +1,4 @@
-accessing
+controllers management
 cachedControllerForFigure: aFigure
 	| ctrl |
 	figureToControllerCache

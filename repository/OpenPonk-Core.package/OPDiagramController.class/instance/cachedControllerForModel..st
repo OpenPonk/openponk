@@ -1,4 +1,4 @@
-accessing
+controllers management
 cachedControllerForModel: aModel
 	| ctrl |
 	modelToControllerCache

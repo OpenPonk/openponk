@@ -1,3 +1,3 @@
 accessing
 pluginFor: aModel
-	^ plugins detect: [ :each | each modelClass = aModel class ]
+	^ plugins detect: [ :each | each isPluginFor: aModel ]

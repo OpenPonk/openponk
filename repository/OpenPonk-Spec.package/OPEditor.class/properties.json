@@ -1,10 +1,10 @@
 {
-	"category" : "OpenPonk-Spec-Windows",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 10/29/2014 17:55",
+	"super" : "ComposableModel",
+	"category" : "OpenPonk-Spec-Windows",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"canvasModel",
 		"paletteModel",
@@ -13,9 +13,8 @@
 		"formModel",
 		"zoomLabel",
 		"diagramController",
-		"plugin" ],
+		"plugin"
+	],
 	"name" : "OPEditor",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

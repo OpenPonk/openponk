@@ -1,14 +1,13 @@
 {
-	"category" : "OpenPonk-Spec-Palettes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 1/30/2015 23:16",
-	"instvars" : [
-		"selectedController" ],
-	"name" : "OPSelectionTool",
-	"pools" : [
-		 ],
 	"super" : "OPPaletteTool",
-	"type" : "normal" }
+	"category" : "OpenPonk-Spec-Palettes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"selectedController"
+	],
+	"name" : "OPSelectionTool",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "OpenPonk-Core-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"registry" ],
-	"name" : "OPPluginRegistryTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "OpenPonk-Core-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"registry"
+	],
+	"name" : "OPPluginRegistryTest",
+	"type" : "normal"
+}

@@ -1,10 +1,12 @@
 {
-	"category" : "OpenPonk-Spec-Windows",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"RecentProjects" ],
 	"commentStamp" : "PeterUhnak 12/6/2015 01:14",
+	"super" : "ComposableModel",
+	"category" : "OpenPonk-Spec-Windows",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"RecentProjects"
+	],
 	"instvars" : [
 		"recentLabel",
 		"recentList",
@@ -13,9 +15,8 @@
 		"pluginRegistry",
 		"diagramOptions",
 		"createProjectButton",
-		"openProjectButton" ],
+		"openProjectButton"
+	],
 	"name" : "OPProjectBrowser",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "OpenPonk-Spec-Palettes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "OPPaletteNullController",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "OpenPonk-Spec-Palettes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OPPaletteNullController",
+	"type" : "normal"
+}

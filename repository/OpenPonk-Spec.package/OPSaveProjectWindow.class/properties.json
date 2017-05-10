@@ -1,10 +1,10 @@
 {
-	"category" : "OpenPonk-Spec-Windows",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 4/21/2016 15:51",
+	"super" : "ComposableModel",
+	"category" : "OpenPonk-Spec-Windows",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"projectNameLabel",
 		"projectNameInput",
@@ -12,9 +12,8 @@
 		"projectFolderInput",
 		"projectFolderButton",
 		"selectedFolder",
-		"projectController" ],
+		"projectController"
+	],
 	"name" : "OPSaveProjectWindow",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

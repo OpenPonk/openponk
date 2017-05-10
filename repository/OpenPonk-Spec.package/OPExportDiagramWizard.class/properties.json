@@ -1,15 +1,14 @@
 {
-	"category" : "OpenPonk-Spec-Wizards",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 6/1/2016 13:41",
+	"super" : "WizardControl",
+	"category" : "OpenPonk-Spec-Wizards",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"modelName",
-		"view" ],
+		"view"
+	],
 	"name" : "OPExportDiagramWizard",
-	"pools" : [
-		 ],
-	"super" : "WizardControl",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,16 +1,15 @@
 {
-	"category" : "OpenPonk-Spec-Windows",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 6/3/2015 02:30",
+	"super" : "DynamicComposableModel",
+	"category" : "OpenPonk-Spec-Windows",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"components",
 		"heights",
-		"whenAccepted" ],
+		"whenAccepted"
+	],
 	"name" : "OPDynamicForm",
-	"pools" : [
-		 ],
-	"super" : "DynamicComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,17 +1,16 @@
 {
-	"category" : "OpenPonk-Core-Persistence",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 4/2/2016 23:01",
+	"super" : "Object",
+	"category" : "OpenPonk-Core-Persistence",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"history",
 		"current",
 		"future",
-		"serializer" ],
+		"serializer"
+	],
 	"name" : "OPAutosaveManager",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

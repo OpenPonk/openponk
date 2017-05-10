@@ -1,15 +1,14 @@
 {
-	"category" : "OpenPonk-Core-Controllers",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 10/11/2014 22:41",
+	"super" : "OPElementController",
+	"category" : "OpenPonk-Core-Controllers",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"source",
-		"target" ],
+		"target"
+	],
 	"name" : "OPRelationshipController",
-	"pools" : [
-		 ],
-	"super" : "OPElementController",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "OpenPonk-Core-Controllers",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 10/11/2014 22:42",
+	"super" : "OPController",
+	"category" : "OpenPonk-Core-Controllers",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"view",
 		"controllers",
@@ -16,9 +16,8 @@
 		"plugin",
 		"autosaveManager",
 		"figureToControllerCache",
-		"modelToControllerCache" ],
+		"modelToControllerCache"
+	],
 	"name" : "OPDiagramController",
-	"pools" : [
-		 ],
-	"super" : "OPController",
-	"type" : "normal" }
+	"type" : "normal"
+}

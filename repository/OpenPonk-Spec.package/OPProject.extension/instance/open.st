@@ -1,3 +1,3 @@
 *OpenPonk-Spec
 open
-	OPWorkbench openProject: self
+	^ OPWorkbench openProject: self

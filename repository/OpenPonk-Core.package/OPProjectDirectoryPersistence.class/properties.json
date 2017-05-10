@@ -1,14 +1,13 @@
 {
-	"category" : "OpenPonk-Core-Persistence",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 5/25/2016 16:23",
-	"instvars" : [
-		"projectController" ],
-	"name" : "OPProjectDirectoryPersistence",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "OpenPonk-Core-Persistence",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"projectController"
+	],
+	"name" : "OPProjectDirectoryPersistence",
+	"type" : "normal"
+}

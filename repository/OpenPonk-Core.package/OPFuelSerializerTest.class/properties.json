@@ -1,14 +1,11 @@
 {
-	"category" : "OpenPonk-Core-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "OPFuelSerializerTest",
-	"pools" : [
-		 ],
 	"super" : "OPAbstractSerializerTest",
-	"type" : "normal" }
+	"category" : "OpenPonk-Core-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OPFuelSerializerTest",
+	"type" : "normal"
+}

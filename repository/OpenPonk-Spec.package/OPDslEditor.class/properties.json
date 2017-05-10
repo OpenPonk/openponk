@@ -1,10 +1,10 @@
 {
-	"category" : "OpenPonk-Spec-Windows",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 3/4/2016 15:33",
+	"super" : "ComposableModel",
+	"category" : "OpenPonk-Spec-Windows",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"editor",
 		"autoUpdate",
@@ -16,9 +16,8 @@
 		"errorAttribute",
 		"textAttribute",
 		"modelClass",
-		"highlighter" ],
+		"highlighter"
+	],
 	"name" : "OPDslEditor",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

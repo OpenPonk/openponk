@@ -1,14 +1,13 @@
 {
-	"category" : "OpenPonk-Core-UICommands",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 6/18/2015 06:59",
-	"instvars" : [
-		"object" ],
-	"name" : "OPUICommand",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "OpenPonk-Core-UICommands",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"object"
+	],
+	"name" : "OPUICommand",
+	"type" : "normal"
+}

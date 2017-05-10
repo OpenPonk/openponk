@@ -1,18 +1,17 @@
 {
-	"category" : "OpenPonk-Spec-Wizards",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "WizardControl",
+	"category" : "OpenPonk-Spec-Wizards",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"controller",
 		"elements",
 		"undirectedEdges",
 		"directedEdges",
-		"toNumberBlock" ],
+		"toNumberBlock"
+	],
 	"name" : "OPLayoutWizard",
-	"pools" : [
-		 ],
-	"super" : "WizardControl",
-	"type" : "normal" }
+	"type" : "normal"
+}

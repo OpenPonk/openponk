@@ -1,16 +1,15 @@
 {
-	"category" : "OpenPonk-Spec-Toolbars",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 6/18/2015 05:36",
+	"super" : "ComposableModel",
+	"category" : "OpenPonk-Spec-Toolbars",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"menu",
 		"menuModel",
-		"groupModel" ],
+		"groupModel"
+	],
 	"name" : "OPToolbar",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

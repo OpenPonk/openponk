@@ -1,15 +1,14 @@
 {
-	"category" : "OpenPonk-Core-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "OPTestCase",
+	"category" : "OpenPonk-Core-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"view",
-		"ctrl" ],
+		"ctrl"
+	],
 	"name" : "OPControllerTest",
-	"pools" : [
-		 ],
-	"super" : "OPTestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

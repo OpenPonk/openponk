@@ -1,14 +1,13 @@
 {
-	"category" : "OpenPonk-Spec-Utils",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 2/25/2017 12:36",
-	"instvars" : [
-		"testBlock" ],
-	"name" : "OPPragmaPluginMenuBuilder",
-	"pools" : [
-		 ],
 	"super" : "PragmaMenuBuilder",
-	"type" : "normal" }
+	"category" : "OpenPonk-Spec-Utils",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"testBlock"
+	],
+	"name" : "OPPragmaPluginMenuBuilder",
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "OpenPonk-Spec-Windows",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 10/29/2014 17:53",
+	"super" : "ComposableModel",
+	"category" : "OpenPonk-Spec-Windows",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"navigatorModel",
 		"tabManager",
@@ -13,9 +13,8 @@
 		"projectController",
 		"pluginRegistry",
 		"topToolbar",
-		"editors" ],
+		"editors"
+	],
 	"name" : "OPWorkbench",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

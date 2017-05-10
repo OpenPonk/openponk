@@ -1,15 +1,14 @@
 {
-	"category" : "OpenPonk-Core-Persistence",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 4/2/2016 23:11",
+	"super" : "Object",
+	"category" : "OpenPonk-Core-Persistence",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"model",
-		"diagram" ],
+		"diagram"
+	],
 	"name" : "OPAutosaveMemento",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

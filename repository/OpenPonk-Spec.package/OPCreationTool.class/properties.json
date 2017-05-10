@@ -1,17 +1,16 @@
 {
-	"category" : "OpenPonk-Spec-Palettes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 1/30/2015 23:15",
+	"super" : "OPPaletteTool",
+	"category" : "OpenPonk-Spec-Palettes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"factory",
 		"objectController",
 		"feedback",
-		"onComplete" ],
+		"onComplete"
+	],
 	"name" : "OPCreationTool",
-	"pools" : [
-		 ],
-	"super" : "OPPaletteTool",
-	"type" : "normal" }
+	"type" : "normal"
+}

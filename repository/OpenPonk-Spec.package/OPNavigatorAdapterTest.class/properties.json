@@ -1,17 +1,16 @@
 {
-	"category" : "OpenPonk-Spec-Utils",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "OPTestCase",
+	"category" : "OpenPonk-Spec-Utils",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"adapter",
 		"diagram",
 		"element",
-		"edge" ],
+		"edge"
+	],
 	"name" : "OPNavigatorAdapterTest",
-	"pools" : [
-		 ],
-	"super" : "OPTestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

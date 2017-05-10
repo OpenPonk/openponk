@@ -1,14 +1,11 @@
 {
-	"category" : "OpenPonk-Core-Persistence",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 4/3/2016 14:35",
-	"instvars" : [
-		 ],
-	"name" : "OPFuelSerializer",
-	"pools" : [
-		 ],
 	"super" : "OPAbstractSerializer",
-	"type" : "normal" }
+	"category" : "OpenPonk-Core-Persistence",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OPFuelSerializer",
+	"type" : "normal"
+}

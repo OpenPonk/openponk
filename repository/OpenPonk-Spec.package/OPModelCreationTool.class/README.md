@@ -1,0 +1,1 @@
+I am a creation tool specific for model-only creation. The attachment of controller and/or creation of view is decided by the controller.

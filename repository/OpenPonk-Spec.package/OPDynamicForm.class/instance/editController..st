@@ -1,7 +1,8 @@
 public
 editController: aController
 	components ifNotEmpty: [ self reset ].
-	aController ifNotNil: [ aController buildEditorForm: self ].
+	controller := aController.
+	controller ifNotNil: [ controller buildEditorForm: self ].
 	self
 		rebuildWidget;
 		takeKeyboardFocus

@@ -1,13 +1,28 @@
 SmalltalkCISpec {
 	#loading : [
 		SCIMetacelloLoadSpec {
+			#platforms : [
+				#pharo
+			],
 			#baseline : 'OpenPonk',
 			#directory : 'repository',
-			#platforms : [ #pharo ],
 			#load : [ 'complete' ]
 		}
 	],
 	#testing : {
-		#packages : [ 'OpenPonk.*', 'Borm.*', 'UML.*' ]
+		#coverage : {
+			#packages : [
+				'OpenPonk.*',
+				'Borm.*',
+				'UML.*',
+				'OP.*'
+			]
+		},
+		#packages : [
+			'OpenPonk.*',
+			'Borm.*',
+			'UML.*',
+			'OP.*'
+		]
 	}
 }

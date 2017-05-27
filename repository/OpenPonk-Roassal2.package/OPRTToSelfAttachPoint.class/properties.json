@@ -1,14 +1,13 @@
 {
-	"category" : "OpenPonk-Roassal2-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "bliznjan 2/16/2015 12:42",
-	"instvars" : [
-		"distance" ],
-	"name" : "OPRTToSelfAttachPoint",
-	"pools" : [
-		 ],
 	"super" : "RTAttachPoint",
-	"type" : "normal" }
+	"category" : "OpenPonk-Roassal2-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"distance"
+	],
+	"name" : "OPRTToSelfAttachPoint",
+	"type" : "normal"
+}

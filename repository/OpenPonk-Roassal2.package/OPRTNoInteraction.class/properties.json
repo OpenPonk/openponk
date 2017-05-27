@@ -1,14 +1,11 @@
 {
-	"category" : "OpenPonk-Roassal2-Interactivity",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 8/17/2015 23:24",
-	"instvars" : [
-		 ],
-	"name" : "OPRTNoInteraction",
-	"pools" : [
-		 ],
 	"super" : "RTInteraction",
-	"type" : "normal" }
+	"category" : "OpenPonk-Roassal2-Interactivity",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OPRTNoInteraction",
+	"type" : "normal"
+}

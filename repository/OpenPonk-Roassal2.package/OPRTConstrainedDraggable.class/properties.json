@@ -1,14 +1,13 @@
 {
-	"category" : "OpenPonk-Roassal2-Interactivity",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"constraint" ],
-	"name" : "OPRTConstrainedDraggable",
-	"pools" : [
-		 ],
 	"super" : "RTAbstractDraggable",
-	"type" : "normal" }
+	"category" : "OpenPonk-Roassal2-Interactivity",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"constraint"
+	],
+	"name" : "OPRTConstrainedDraggable",
+	"type" : "normal"
+}

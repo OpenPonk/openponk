@@ -1,7 +1,6 @@
-# The OpenPonk Modeling Platform
-[![Build Status](https://travis-ci.org/OpenPonk/openponk.svg?branch=master)](https://travis-ci.org/OpenPonk/openponk) [![Coverage Status](https://coveralls.io/repos/github/OpenPonk/openponk/badge.svg?branch=master)](https://coveralls.io/github/OpenPonk/openponk?branch=master)
+# The OpenPonk Modeling Platform [![Build Status](https://travis-ci.org/OpenPonk/openponk.svg?branch=master)](https://travis-ci.org/OpenPonk/openponk)
 
-OpenPonk is a metamodeling platform and a modeling workbench implemented in the dynamic environment [Pharo](https://pharo.org) aimed at supporting activities surrounding software and business engineering such as modeling, execution, simulation, source code generation, etc.
+OpenPonk (formerly known as DynaCASE) is a metamodeling platform and a modeling workbench implemented in the dynamic environment [Pharo](https://pharo.org) aimed at supporting activities surrounding software and business engineering such as modeling, execution, simulation, source code generation, etc.
 
 Showcase video
 

@@ -1,14 +1,11 @@
 {
-	"category" : "OpenPonk-Roassal2-Constraints",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "lariover 2/15/2015 11:40",
-	"instvars" : [
-		 ],
-	"name" : "OPRTElementsConstraint",
-	"pools" : [
-		 ],
 	"super" : "OPRTAbstractConstraint",
-	"type" : "normal" }
+	"category" : "OpenPonk-Roassal2-Constraints",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OPRTElementsConstraint",
+	"type" : "normal"
+}

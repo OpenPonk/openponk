@@ -1,16 +1,15 @@
 {
-	"category" : "OpenPonk-Roassal2-Builders",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "RTObject",
+	"category" : "OpenPonk-Roassal2-Builders",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"shape",
 		"labels",
-		"constraints" ],
+		"constraints"
+	],
 	"name" : "OPRTEdgeBuilder",
-	"pools" : [
-		 ],
-	"super" : "RTObject",
-	"type" : "normal" }
+	"type" : "normal"
+}

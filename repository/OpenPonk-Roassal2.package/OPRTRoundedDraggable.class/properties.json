@@ -1,14 +1,11 @@
 {
-	"category" : "OpenPonk-Roassal2-Interactivity",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 12/4/2015 16:07",
-	"instvars" : [
-		 ],
-	"name" : "OPRTRoundedDraggable",
-	"pools" : [
-		 ],
 	"super" : "RTDraggable",
-	"type" : "normal" }
+	"category" : "OpenPonk-Roassal2-Interactivity",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OPRTRoundedDraggable",
+	"type" : "normal"
+}

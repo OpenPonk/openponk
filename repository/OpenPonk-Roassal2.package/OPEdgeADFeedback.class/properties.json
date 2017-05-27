@@ -1,14 +1,11 @@
 {
-	"category" : "OpenPonk-Roassal2-Builders",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "OPEdgeADFeedback",
-	"pools" : [
-		 ],
 	"super" : "OPAcceptDenyFeedbackBuilder",
-	"type" : "normal" }
+	"category" : "OpenPonk-Roassal2-Builders",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OPEdgeADFeedback",
+	"type" : "normal"
+}

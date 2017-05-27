@@ -1,16 +1,15 @@
 {
-	"category" : "OpenPonk-Roassal2-Shapes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 10/4/2015 22:30",
+	"super" : "RTAbstractLine",
+	"category" : "OpenPonk-Roassal2-Shapes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"head",
 		"tail",
-		"radius" ],
+		"radius"
+	],
 	"name" : "OPRTArcLine",
-	"pools" : [
-		 ],
-	"super" : "RTAbstractLine",
-	"type" : "normal" }
+	"type" : "normal"
+}

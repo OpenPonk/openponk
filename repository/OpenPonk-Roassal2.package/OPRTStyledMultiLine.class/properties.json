@@ -1,14 +1,11 @@
 {
-	"category" : "OpenPonk-Roassal2-Shapes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 10/4/2015 22:29",
-	"instvars" : [
-		 ],
-	"name" : "OPRTStyledMultiLine",
-	"pools" : [
-		 ],
 	"super" : "RTStyledMultiLine",
-	"type" : "normal" }
+	"category" : "OpenPonk-Roassal2-Shapes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OPRTStyledMultiLine",
+	"type" : "normal"
+}

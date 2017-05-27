@@ -1,19 +1,18 @@
 {
-	"category" : "OpenPonk-Roassal2-Connection",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 9/16/2015 07:29",
+	"super" : "Object",
+	"category" : "OpenPonk-Roassal2-Connection",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"from",
 		"to",
 		"element",
 		"edge",
 		"nearStart",
-		"nearEnd" ],
+		"nearEnd"
+	],
 	"name" : "OPRTMidpointHandle",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

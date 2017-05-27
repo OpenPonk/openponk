@@ -1,10 +1,10 @@
 {
-	"category" : "OpenPonk-Roassal2-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "OpenPonk-Roassal2-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"source",
 		"target",
@@ -16,9 +16,8 @@
 		"connectionAnchor",
 		"view",
 		"segment",
-		"expected" ],
+		"expected"
+	],
 	"name" : "OPRTAnchorConstraintTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

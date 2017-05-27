@@ -1,14 +1,13 @@
 {
-	"category" : "OpenPonk-Roassal2-Builders",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"feedback" ],
-	"name" : "OPAcceptDenyFeedbackBuilder",
-	"pools" : [
-		 ],
 	"super" : "RTBuilder",
-	"type" : "normal" }
+	"category" : "OpenPonk-Roassal2-Builders",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"feedback"
+	],
+	"name" : "OPAcceptDenyFeedbackBuilder",
+	"type" : "normal"
+}

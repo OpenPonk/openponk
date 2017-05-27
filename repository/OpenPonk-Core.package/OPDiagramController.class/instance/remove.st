@@ -1,4 +1,4 @@
 actions
 remove
 	super remove.
-	self controllers do: [ :each | each remove ]
+	[ self controllers isNotEmpty ] whileTrue: [ self controllers last remove ]

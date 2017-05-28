@@ -25,7 +25,7 @@ before_script:
 
 after_success:
   - ./scripts/pre-deploy.sh
-  - - wget -O- https://raw.githubusercontent.com/peteruhnak/hapao-coverage/master/hapao-coverage.sh | bash
+  - wget -O- https://raw.githubusercontent.com/peteruhnak/hapao-coverage/master/hapao-coverage.sh | bash
 
 deploy:
   - provider: script

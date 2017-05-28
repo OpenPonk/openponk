@@ -15,14 +15,20 @@ SmalltalkCISpec {
 				'OpenPonk.*',
 				'Borm.*',
 				'UML.*',
-				'OP.*'
+				'OP-UML-BootstrapGenerator',
+				'OP-UML-Meta',
+				'OP-XMI',
+				'OP-XMI-GTExtensions'
 			]
 		},
 		#packages : [
 			'OpenPonk.*',
 			'Borm.*',
 			'UML.*',
-			'OP.*'
+			'OP-UML-BootstrapGenerator',
+			'OP-UML-Meta',
+			'OP-XMI',
+			'OP-XMI-GTExtensions'
 		]
 	}
 }

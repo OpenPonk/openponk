@@ -1,7 +1,7 @@
 protocol
 newCreationTool: aFactoryBlock
 	| item tool |
-	item := self addItem.
+	item := self addEntry.
 	(tool := OPCreationTool new)
 		palette: self;
 		factory: aFactoryBlock.

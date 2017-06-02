@@ -1,7 +1,7 @@
 private
 newSelectionTool
 	| item tool |
-	item := self addItem.
+	item := self addEntry.
 	(tool := OPSelectionTool new) palette: self.
 	item
 		label: 'Select';

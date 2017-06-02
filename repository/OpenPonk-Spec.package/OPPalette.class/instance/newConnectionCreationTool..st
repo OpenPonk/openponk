@@ -1,7 +1,7 @@
 protocol
 newConnectionCreationTool: aFactoryBlock
 	| item tool |
-	item := self addItem.
+	item := self addEntry.
 	(tool := OPConnectionCreationTool new)
 		palette: self;
 		factory: aFactoryBlock.

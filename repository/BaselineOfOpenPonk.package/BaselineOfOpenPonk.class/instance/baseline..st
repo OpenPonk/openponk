@@ -5,30 +5,41 @@ baseline: spec
 		for: #common
 		do: [ spec
 				baseline: 'OpenPonkModel'
-					with: [ spec repository: 'github://openponk/openponk-model/repository' ];
+				with: [ spec repository: 'github://openponk/openponk-model/repository' ].
+			spec
 				baseline: 'FileDialog'
-					with: [ spec repository: 'github://peteruhnak/file-dialog/repository' ];
+				with: [ spec repository: 'github://peteruhnak/file-dialog/repository' ].
+			spec
 				project: 'Roassal2'
-					with: [ spec
+				with: [ spec
 						className: #ConfigurationOfRoassal2;
 						versionString: #development;
-						repository: 'http://smalltalkhub.com/mc/ObjectProfile/Roassal2/main/' ];
+						repository: 'http://smalltalkhub.com/mc/ObjectProfile/Roassal2/main/' ].
+			spec
+				project: 'Magritte'
+				with: [ spec
+						className: #ConfigurationOfMagritte3;
+						versionString: #stable;
+						repository: 'http://smalltalkhub.com/mc/Magritte/Magritte3/main/' ].
+			spec
 				project: 'Merlin'
-					with: [ spec
+				with: [ spec
 						className: #ConfigurationOfMerlin;
 						versionString: #development;
-						repository: 'http://www.smalltalkhub.com/mc/Moose/Merlin/main' ];
+						repository: 'http://www.smalltalkhub.com/mc/Moose/Merlin/main' ].
+			spec
 				project: 'PetitParser'
-					with: [ spec
+				with: [ spec
 						className: #ConfigurationOfPetitParser;
 						versionString: #development;
 						loads: #('Parser');
-						repository: 'http://smalltalkhub.com/mc/Moose/PetitParser/main/' ];
+						repository: 'http://smalltalkhub.com/mc/Moose/PetitParser/main/' ].
+			spec
 				package: 'OpenPonk-Core'
 					with: [ spec requires: #('OpenPonkModel' 'Roassal2' 'PetitParser') ];
 				package: 'OpenPonk-Trachel';
 				package: 'OpenPonk-Roassal2';
-				package: 'OpenPonk-Spec' with: [ spec requires: #('Merlin' 'FileDialog') ];
+				package: 'OpenPonk-Spec' with: [ spec requires: #('Merlin' 'FileDialog' 'Magritte') ];
 				package: 'OpenPonk-Plugins' with: [ spec postLoadDoIt: #postLoadPlugins ].
 			spec
 				group: 'default'

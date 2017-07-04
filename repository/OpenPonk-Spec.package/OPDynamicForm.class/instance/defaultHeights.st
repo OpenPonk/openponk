@@ -1,10 +1,11 @@
 initialization
 defaultHeights
 	| lineHeight |
-	lineHeight := self class inputTextHeight - 4.
+"	lineHeight := self class inputTextHeight - 4."
+	lineHeight := 20.
 	^ {OPSelectEntity -> lineHeight.
 	LabelModel -> (lineHeight - 5).
-	TextInputFieldModel -> lineHeight.
+	TextInputFieldModel -> (lineHeight + 1).
 	TextModel -> (lineHeight * 4).
 	OPEditableDropListModel -> (lineHeight * 1.1).
 	DropListModel -> lineHeight.

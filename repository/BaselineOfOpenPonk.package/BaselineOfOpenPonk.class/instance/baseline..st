@@ -10,6 +10,12 @@ baseline: spec
 						versionString: #stable;
 						repository: 'http://smalltalkhub.com/mc/PharoExtras/XMLParser/main/' ].
 			spec
+				project: 'XPath'
+				with: [ spec
+						className: #ConfigurationOfXPath;
+						versionString: #stable;
+						repository: 'http://smalltalkhub.com/mc/PharoExtras/XPath/main/' ].
+			spec
 				baseline: 'OpenPonkModel'
 				with: [ spec repository: 'github://openponk/openponk-model/repository' ].
 			spec
@@ -42,7 +48,7 @@ baseline: spec
 						repository: 'http://smalltalkhub.com/mc/Moose/PetitParser/main/' ].
 			spec
 				package: 'OpenPonk-Core'
-					with: [ spec requires: #('OpenPonkModel' 'Roassal2' 'PetitParser' 'XMLParser') ];
+					with: [ spec requires: #('OpenPonkModel' 'Roassal2' 'PetitParser' 'XMLParser' 'XPath') ];
 				package: 'OpenPonk-Trachel';
 				package: 'OpenPonk-Roassal2';
 				package: 'OpenPonk-Spec'

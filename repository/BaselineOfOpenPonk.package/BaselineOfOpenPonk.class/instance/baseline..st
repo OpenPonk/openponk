@@ -4,6 +4,12 @@ baseline: spec
 	spec
 		for: #common
 		do: [ spec
+				project: 'XMLParser'
+				with: [ spec
+						className: #ConfigurationOfXMLParser;
+						versionString: #stable;
+						repository: 'http://smalltalkhub.com/mc/PharoExtras/XMLParser/main/' ].
+			spec
 				baseline: 'OpenPonkModel'
 				with: [ spec repository: 'github://openponk/openponk-model/repository' ].
 			spec
@@ -36,10 +42,11 @@ baseline: spec
 						repository: 'http://smalltalkhub.com/mc/Moose/PetitParser/main/' ].
 			spec
 				package: 'OpenPonk-Core'
-					with: [ spec requires: #('OpenPonkModel' 'Roassal2' 'PetitParser') ];
+					with: [ spec requires: #('OpenPonkModel' 'Roassal2' 'PetitParser' 'XMLParser') ];
 				package: 'OpenPonk-Trachel';
 				package: 'OpenPonk-Roassal2';
-				package: 'OpenPonk-Spec' with: [ spec requires: #('Merlin' 'FileDialog' 'Magritte') ];
+				package: 'OpenPonk-Spec'
+					with: [ spec requires: #('Merlin' 'FileDialog' 'Magritte') ];
 				package: 'OpenPonk-Plugins' with: [ spec postLoadDoIt: #postLoadPlugins ].
 			spec
 				group: 'default'

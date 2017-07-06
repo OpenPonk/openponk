@@ -1,14 +1,14 @@
 {
-	"commentStamp" : "PeterUhnak 5/24/2017 18:57",
-	"super" : "DynamicComposableModel",
+	"commentStamp" : "PeterUhnak 7/6/2017 10:07",
+	"super" : "ComposableModel",
 	"category" : "OpenPonk-Spec-Form",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
 		"form",
-		"controller"
+		"scrollPane"
 	],
-	"name" : "OPDynamicFormMagritteVisitor",
+	"name" : "OPScrollableForm",
 	"type" : "normal"
 }

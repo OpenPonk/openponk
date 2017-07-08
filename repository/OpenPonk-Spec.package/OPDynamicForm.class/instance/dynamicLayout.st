@@ -7,7 +7,6 @@ dynamicLayout
 			keys
 				do: [ :key | 
 					height := self heightFor: (self perform: key).
-					self logCr: height.
 					"	((self perform: key) isKindOf: DCSelectEntity)
 						ifTrue: [ c newRow: [ :row | row add: key withSpec: #specLayout ] height: height ]"
 					"	ifFalse: ["

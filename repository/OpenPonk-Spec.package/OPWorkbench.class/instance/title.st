@@ -3,8 +3,7 @@ title
 	| s |
 	s := ''.
 	project
-		ifNotNil: [ 
-			project dirty
+		ifNotNil: [ project dirty
 				ifTrue: [ s := '* ' ].
-			s := s , project projectName , ' - ' ].
+			s := s , project name , ' - ' ].
 	^ s , 'OpenPonk'

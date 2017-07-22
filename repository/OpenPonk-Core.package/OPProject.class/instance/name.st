@@ -1,3 +1,3 @@
 accessing
 name
-	^ self projectName
+	^ name value

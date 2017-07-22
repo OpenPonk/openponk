@@ -7,13 +7,13 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"uuid",
-		"projectName",
 		"dirty",
 		"fileName",
 		"layouts",
 		"models",
 		"storageFolder",
-		"state"
+		"state",
+		"name"
 	],
 	"name" : "OPProject",
 	"type" : "normal"

@@ -1,5 +1,5 @@
 instance creation
 name: aString
 	^ self new
-		projectName: aString;
+		name: aString;
 		yourself

@@ -8,5 +8,4 @@ openProject: aProject
 	topToolbar updateProjectMenu.
 	project whenChanged: [ self updateTitle ].
 	navigatorModel openOn: project.
-	project beClean.
 	projectController openFirstDiagram

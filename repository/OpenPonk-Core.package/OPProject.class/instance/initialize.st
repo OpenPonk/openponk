@@ -6,5 +6,5 @@ initialize
 	layouts := Dictionary new.
 	name := NewValueHolder value: 'Unnamed project'.
 	dirty := false asValueHolder.
-	models whenChangedDo: [ self beDirty ].
-	name whenChangedDo: [ self beDirty ]
+	models whenChangedDo: [ dirty value: true ].
+	name whenChangedDo: [ dirty value: true ]

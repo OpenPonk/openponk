@@ -1,4 +1,4 @@
-as yet unclassified
+project menu
 projectToolbarMenu: aBuilder
 	<opProjectSubmenu>
 	| workbenchToolbar |
@@ -15,13 +15,7 @@ projectToolbarMenu: aBuilder
 				action: [ workbenchToolbar projectController openProject ].
 			(aBuilder item: 'Save')
 				icon: Smalltalk ui icons smallSave;
-				action: [ workbenchToolbar projectController saveProject ].
-			(aBuilder item: 'Save as...')
-				icon: Smalltalk ui icons smallSaveAs;
-				action: [ workbenchToolbar projectController saveAsProject ].
-			(aBuilder item: 'Close Project')
-				icon: Smalltalk ui icons windowClose;
-				action: [  ] ];
+				action: [ workbenchToolbar projectController saveProject ] ];
 		withSeparatorAfter.
 	(aBuilder group: #ProjectOptions)
 		order: 1000;

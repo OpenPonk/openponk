@@ -1,6 +1,6 @@
 specs
 defaultSpec
-	^ SpecLayout composed
+	^ SpecColumnLayout composed
 		newRow: [ :row | 
 			row
 				newColumn: [ :col | 
@@ -18,5 +18,5 @@ defaultSpec
 						add: #paletteModel
 "						addSplitter;"
 "						add: #formModel" ]
-					width: 200 ];
+					width: 150 ];
 		yourself

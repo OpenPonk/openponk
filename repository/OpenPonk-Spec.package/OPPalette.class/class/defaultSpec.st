@@ -1,3 +1,5 @@
 specs
 defaultSpec
-	^ SpecLayout composed
+	^ SpecRowLayout composed
+		newColumn: [ :c | c newRow: [ :r |  ] ];
+		yourself

@@ -5,10 +5,10 @@ defaultSpec
 			height: self toolbarHeight;
 		newRow: [ :row | 
 			row
-				newColumn: [ :col | col add: #navigatorModel ] width: 240;
+				newColumn: [ :col | col add: #navigatorModel ] width: 200;
 				addSplitter;
 				newColumn: [ :col | col add: #tabManager ];
 				addSplitter;
-				newColumn: [ :col | col add: #formModel ] width: 180 ]
+				newColumn: [ :col | col add: #formModel ] width: 150 ]
 			top: self toolbarHeight;
 		yourself

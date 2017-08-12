@@ -1,7 +1,6 @@
 *OpenPonk-Spec
 openOnModel: aModel
-	| project |
-	project := self new.
-	project name: aModel name.
-	project addModel: aModel.
-	project open
+	^ self new
+		name: aModel name;
+		addModel: aModel;
+		open

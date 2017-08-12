@@ -1,7 +1,7 @@
 initialization
 initializeWidgets
 	recentLabel := self newLabel label: 'Recent Projects'.
-	recentList := self instantiate: NewListModel.
+	recentList := self instantiate: FastTableModel.
 	quickStartLabel := self newLabel label: 'Quick Start'.
 	projectNameInput := self newTextInput text: 'New Project'.
 	createProjectButton := self newButton label: 'Create Project'.

@@ -1,3 +1,5 @@
 accessing
 model: aModel
-	model := aModel
+	model ifNotNil: [ :m | self internalUnsubscribeFrom: m ].
+	model := aModel.
+	model ifNotNil: [ :m | self internalSubscribeTo: m ]

@@ -1,3 +1,3 @@
 accessing
-on: anObject
-	object := anObject
+on: aModel
+	model := aModel

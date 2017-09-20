@@ -1,0 +1,1 @@
+I am fired by RenameElementCommand after a model element has been renamed.

@@ -24,9 +24,6 @@ before_install:
   - eval $(ssh-agent -s)
   - ssh-add .ssh/id_openponk_travis
 
-before_script:
-  - wget -O- https://raw.githubusercontent.com/peteruhnak/hapao-coverage/master/package-cache.sh | bash
-
 after_success:
   - ./scripts/pre-deploy.sh
 #  - wget -O- https://raw.githubusercontent.com/peteruhnak/hapao-coverage/master/hapao-coverage.sh | bash

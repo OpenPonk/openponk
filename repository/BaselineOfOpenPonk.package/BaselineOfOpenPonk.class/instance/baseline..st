@@ -8,12 +8,14 @@ baseline: spec
 				with: [ spec
 						className: #ConfigurationOfXMLParser;
 						versionString: #stable;
+						loads: #(CoreWithWriting);
 						repository: 'http://smalltalkhub.com/mc/PharoExtras/XMLParser/main/' ].
 			spec
 				project: 'XPath'
 				with: [ spec
 						className: #ConfigurationOfXPath;
 						versionString: #stable;
+						loads: #(Core);
 						repository: 'http://smalltalkhub.com/mc/PharoExtras/XPath/main/' ].
 			spec
 				baseline: 'OpenPonkModel'
@@ -26,6 +28,7 @@ baseline: spec
 				with: [ spec
 						className: #ConfigurationOfRoassal2;
 						versionString: #development;
+						loads: #(Roassal2 Roassal2Spec Roassal2GT);
 						repository: 'http://smalltalkhub.com/mc/ObjectProfile/Roassal2/main/' ].
 			spec
 				project: 'Magritte'
@@ -38,6 +41,7 @@ baseline: spec
 				with: [ spec
 						className: #ConfigurationOfMerlin;
 						versionString: #development;
+						loads: #(Core);
 						repository: 'http://www.smalltalkhub.com/mc/Moose/Merlin/main' ].
 			spec
 				project: 'PetitParser'

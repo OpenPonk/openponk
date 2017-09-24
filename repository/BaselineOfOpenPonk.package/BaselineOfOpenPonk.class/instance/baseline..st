@@ -41,7 +41,6 @@ baseline: spec
 				with: [ spec
 						className: #ConfigurationOfMerlin;
 						versionString: #development;
-						loads: #(Core);
 						repository: 'http://www.smalltalkhub.com/mc/Moose/Merlin/main' ].
 			spec
 				project: 'PetitParser'

@@ -24,8 +24,9 @@ smalltalk:
 #  - eval $(ssh-agent -s)
 #  - ssh-add .ssh/id_openponk_travis
 
-#after_success:
-#  - ./scripts/pre-deploy.sh
+after_success:
+  - $SMALLTALK_VM $SMALLTALK_CI_IMAGE save openponk
+  - ./scripts/mark-image.sh
 #  - wget -O- https://raw.githubusercontent.com/peteruhnak/hapao-coverage/master/hapao-coverage.sh | bash
 
 #deploy:

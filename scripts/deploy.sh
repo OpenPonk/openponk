@@ -22,7 +22,7 @@ deploy-scp() {
 	zip -qr "$build_zip" "$directory"
 	scp -rp "$build_zip" "$TARGET_MACHINE:$TARGET_DIR"
 	# I have a server-side post-processing script that bundles VMs into the build
-	ssh "$TARGET_MACHINE" "~/scripts/process-openponk-build.sh ${TRAVIS_BUILD_NUMBER}"
+	ssh "$TARGET_MACHINE" "~/scripts/process-core-build.sh ${TRAVIS_BUILD_NUMBER}"
 }
 
 main() {

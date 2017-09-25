@@ -32,10 +32,10 @@ after_success:
   - ./scripts/mark-image.sh $ARTIFACT_DIR/openponk
 #  - wget -O- https://raw.githubusercontent.com/peteruhnak/hapao-coverage/master/hapao-coverage.sh | bash
 
-#deploy:
-#  - provider: script
-#    skip_cleanup: true
-#    script: scripts/deploy.sh
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: scripts/deploy.sh
 #  - provider: s3
 #    access_key_id:
 #      secure: "i8g4cc8Dd17oKqiBHDmfXO56T9gIjIg8l6xyf5MgvhlOiYN9eyLy6HALlhnN2F6Gd6jHDoJ41vHm0aQUxn2IYkLFYgW8o888JtdrAfofnYeaQWNJQnrL8m2wX+viU2pI3t94IZo1AeeFZhJS9OegTCcdnGjLOcJCt1KhdOXhZxGyyj6Mysjri2MtXVLT6+89J3sPp5VeDlOGzpaLogiVWXxiKo5lb9wGj9YpqOMKc0+0zffACcm/k57GdgSTZ9rFCeTU8KtrpwOotZmFu+SVJkch122Z3rDI6evY4nIsYifr8Og5SenZEQQJIkWdHx7j4BjxVwbFShhiFl56DhDtcOllHQ5fYgbl/HrLD+GrcQYehiqP810FaWKIa4Tct/XoH1v1nhpA6/s+H/i369khxFiQoj0pAER/fU4yveDoYGHiJV5BM9DjKSfBLzAe3aLP2B13HXfMLf967AMvYk02vIVBvN4ssN0SwOqQjNIuHtG+F8sPddSHwTEfrt1Z5M9HPpkvsvZlxSQfeb00X/iUOzg9S8ySIz5FTAMB5QEgwvWpCkigBIoAtjIsOrcl5hs1byugoCufMJW2Zudfhv4SXgjB1LDzkZresNX4cOlTb1U6/uhkB5VW224TvaDI136HxVWVn1SEfVsR9belbasF9/1+xKoYZYEi0MIX7gUKgps="

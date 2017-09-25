@@ -2,12 +2,12 @@
 
 set -eu
 
-#SMALLTALK_VM=${SMALLTALK_VM:-$(find $SMALLTALK_CI_VMS -name pharo -type f -executable | head -n 1)}
-readonly IMAGE="openponk.image"
+SMALLTALK_VM=${SMALLTALK_VM:-$(find $SMALLTALK_CI_VMS -name pharo -type f -executable | head -n 1)}
+readonly IMAGE="$1"
 
 run_script() {
 	local script=$1
-	"$SMALLTALK_VM" "$IMAGE" --no-default-preferences eval "$script"
+	"$SMALLTALK_VM" --nodisplay "$IMAGE" --no-default-preferences eval --save "$script"
 }
 
 use_openponk_logo() {

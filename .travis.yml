@@ -7,6 +7,9 @@ os:
 #addons:
 #  ssh_known_hosts: ccmi.fit.cvut.cz
 
+env:
+  - ARTIFACT_DIR=openponk-image-$TRAVIS_BUILD_NUMBER
+
 cache:
   directories:
     - $SMALLTALK_CI_BUILD_BASE/pharo-local/package-cache
@@ -25,8 +28,8 @@ smalltalk:
 #  - ssh-add .ssh/id_openponk_travis
 
 after_success:
-  - $SMALLTALK_VM $SMALLTALK_CI_IMAGE save openponk
-  - ./scripts/mark-image.sh
+  - ./scripts/copy-image $SMALLTALK_CI_IMAGE $ARTIFACT_DIR/openponk
+  - ./scripts/mark-image.sh $ARTIFACT_DIR/openponk
 #  - wget -O- https://raw.githubusercontent.com/peteruhnak/hapao-coverage/master/hapao-coverage.sh | bash
 
 #deploy:

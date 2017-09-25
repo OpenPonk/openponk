@@ -6,29 +6,17 @@ SmalltalkCISpec {
 			],
 			#baseline : 'OpenPonk',
 			#directory : 'repository',
-			#load : [ 'complete' ]
+			#load : [ 'default' ]
 		}
 	],
 	#testing : {
 		#coverage : {
 			#packages : [
-				'OpenPonk.*',
-				'Borm.*',
-				'UML.*',
-				'OP-UML-BootstrapGenerator',
-				'OP-UML-Meta',
-				'OP-XMI',
-				'OP-XMI-GTExtensions'
+				'OpenPonk.*'
 			]
 		},
 		#packages : [
-			'OpenPonk.*',
-			'Borm.*',
-			'UML.*',
-			'OP-UML-BootstrapGenerator',
-			'OP-UML-Meta',
-			'OP-XMI',
-			'OP-XMI-GTExtensions'
+			'OpenPonk.*'
 		]
 	}
 }

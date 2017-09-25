@@ -8,7 +8,7 @@ IFS=$'\n\t'
 # wherever you'll be ssh-ing into user@machine
 readonly TARGET_MACHINE="openponk@ccmi.fit.cvut.cz"
 # target dir on the target machine
-readonly TARGET_DIR="~/builds/openponk"
+readonly TARGET_DIR="~/uploads/openponk"
 
 # customize the name of the Pharo image you will be deploying
 readonly PROJECT_NAME="openponk"

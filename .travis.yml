@@ -4,8 +4,8 @@ sudo: false
 os:
   - linux
 
-#addons:
-#  ssh_known_hosts: ccmi.fit.cvut.cz
+addons:
+  ssh_known_hosts: ccmi.fit.cvut.cz
 
 env:
   - ARTIFACT_DIR=openponk-image-$TRAVIS_BUILD_NUMBER

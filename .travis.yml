@@ -28,7 +28,7 @@ smalltalk:
 #  - ssh-add .ssh/id_openponk_travis
 
 after_success:
-  - ./scripts/copy-image $SMALLTALK_CI_IMAGE $ARTIFACT_DIR/openponk
+  - ./scripts/copy-image.sh $SMALLTALK_CI_IMAGE $ARTIFACT_DIR/openponk
   - ./scripts/mark-image.sh $ARTIFACT_DIR/openponk
 #  - wget -O- https://raw.githubusercontent.com/peteruhnak/hapao-coverage/master/hapao-coverage.sh | bash
 

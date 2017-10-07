@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "PeterUhnak 10/7/2017 10:50",
+	"super" : "RTAbstractExample",
+	"category" : "OpenPonk-Roassal2-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OPRTExamples",
+	"type" : "normal"
+}

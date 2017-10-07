@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "PeterUhnak 10/7/2017 10:49",
+	"super" : "RTInteraction",
+	"category" : "OpenPonk-Roassal2-Interactivity",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"adornments"
+	],
+	"name" : "OPRTAdornments",
+	"type" : "normal"
+}

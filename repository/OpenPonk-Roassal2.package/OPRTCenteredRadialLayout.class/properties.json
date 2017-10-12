@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "PeterUhnak 10/12/2017 15:48",
+	"super" : "Object",
+	"category" : "OpenPonk-Roassal2-Layouts",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"radius",
+		"focus",
+		"nodes",
+		"edges"
+	],
+	"name" : "OPRTCenteredRadialLayout",
+	"type" : "normal"
+}

@@ -13,7 +13,8 @@
 		"formModel",
 		"zoomLabel",
 		"diagramController",
-		"plugin"
+		"plugin",
+		"shortcuts"
 	],
 	"name" : "OPEditor",
 	"type" : "normal"

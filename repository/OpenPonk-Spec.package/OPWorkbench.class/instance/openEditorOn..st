@@ -4,9 +4,10 @@ openEditorOn: aModel
 	(self projectController hasDiagram: aModel)
 		ifTrue: [ self focusEditorOf: aModel.
 			^ self ].
-	(editor := OPEditor new) workbench: self.
+	editor := OPEditor new.
 	plugin := pluginRegistry pluginFor: aModel.
 	editor plugin: plugin.
+	editor workbench: self.
 	tab := self newTab.
 	editors at: aModel put: (Array with: editor with: tab).
 	widget := editor buildWithSpec asWidget.

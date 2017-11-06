@@ -5,5 +5,6 @@ SystemOrganization addCategory: 'OpenPonk-Roassal2-Constraints'!
 SystemOrganization addCategory: 'OpenPonk-Roassal2-Core'!
 SystemOrganization addCategory: 'OpenPonk-Roassal2-Examples'!
 SystemOrganization addCategory: 'OpenPonk-Roassal2-Interactivity'!
+SystemOrganization addCategory: 'OpenPonk-Roassal2-Layouts'!
 SystemOrganization addCategory: 'OpenPonk-Roassal2-Shapes'!
 SystemOrganization addCategory: 'OpenPonk-Roassal2-Tests'!

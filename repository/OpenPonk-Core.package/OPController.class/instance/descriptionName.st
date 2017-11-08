@@ -5,5 +5,4 @@ descriptionName
 		accessor: #name;
 		label: 'name';
 		priority: 1;
-		beXmlAttribute;
 		yourself

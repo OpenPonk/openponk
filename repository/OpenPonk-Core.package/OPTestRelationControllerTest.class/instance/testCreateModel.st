@@ -1,5 +1,12 @@
 tests - construction
 testCreateModel
-	controller createModelIn: diagramController model.
+	| sourceController targetController |
+	sourceController := diagramController newControllerFor: OPTestEntityModel new.
+	sourceController showInDiagram: diagramController.
+	targetController := diagramController newControllerFor: OPTestEntityModel new.
+	targetController showInDiagram: diagramController.
+	controller sourceController: sourceController.
+	controller createModelIn: targetController model.
 	self assert: controller model isNotNil.
-	self assert: diagramController model entities asArray equals: {controller model}
+	self assert: controller model source equals: sourceController model.
+	self assert: controller model target equals: targetController model

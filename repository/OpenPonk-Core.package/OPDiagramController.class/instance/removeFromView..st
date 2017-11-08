@@ -1,5 +1,7 @@
 removing
 removeFromView: aFigure
-	"Remove a model object represented by aFigure from the model."
-
-	self removeFromModel: (self controllerForFigure: aFigure) model
+	"Right now we remove also from the model, but this is done by an explicit call here."
+	
+	(self controllerForFigure: aFigure)
+		removeModel;
+		removeController

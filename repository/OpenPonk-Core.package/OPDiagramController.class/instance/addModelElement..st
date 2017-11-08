@@ -1,7 +1,8 @@
-adding
+deprecated
 addModelElement: aModelElement
 	| controller figure |
-	self controllers detect: [ :ctrl | ctrl model = aModelElement ] ifFound: [ ^ self ].
+	self deprecated: 'Use createModel:showInDiagram: instead.'.
+"	self controllers detect: [ :ctrl | ctrl model = aModelElement ] ifFound: [ ^ self ].
 	(self model has: aModelElement)
 		ifFalse: [ self model add: aModelElement ].
 	controller := self createController: aModelElement.
@@ -21,4 +22,4 @@ addModelElement: aModelElement
 	figure := controller figure.
 	figure view ifNil: [ figure renderIn: self view ].
 	self diagramController figureAdded: figure.
-	^ controller
+	^ controller"

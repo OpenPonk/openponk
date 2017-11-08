@@ -1,0 +1,3 @@
+accessing
+controllerClass
+	^ self subclassResponsibility

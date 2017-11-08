@@ -1,4 +1,5 @@
-events - registering
+deprecated
 registerModelEvents: aModel
-	super registerModelEvents: aModel.
-	aModel announcer when: OPElementChanged do: [ :evt | self saveState ]
+	self deprecated: 'Use #model: and #internalSubscribeTo: instead'.
+	"super registerModelEvents: aModel.
+	aModel announcer when: OPElementChanged do: [ :evt | self saveState ]"

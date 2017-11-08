@@ -1,0 +1,1 @@
+I am a mock representing an entity connecting two other entities.

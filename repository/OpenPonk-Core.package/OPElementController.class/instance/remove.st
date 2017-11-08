@@ -1,4 +1,5 @@
-actions
+deprecated
 remove
-	super remove.
-	self removeFigure
+	self deprecated: 'Use #removeController instead.'
+"	super remove.
+	self removeFigure"

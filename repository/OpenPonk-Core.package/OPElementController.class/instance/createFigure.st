@@ -1,3 +1,5 @@
-figures
+deprecated
 createFigure
-	^ OPRTCallbackBuilder block: [ :view | self createFigureInView: view ]
+	self deprecated: 'Use renderFigureIn: instead.'.
+
+"	^ OPRTCallbackBuilder block: [ :view | self createFigureInView: view ]"

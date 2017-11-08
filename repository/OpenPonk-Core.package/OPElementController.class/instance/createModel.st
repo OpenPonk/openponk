@@ -1,3 +1,4 @@
-hooks
+deprecated
 createModel
-	^ self model ifNil: [ self modelClass new ]
+	self deprecated: 'Use createModelIn: instead.'
+"	^ self model ifNil: [ self modelClass new ]"

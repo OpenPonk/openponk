@@ -1,0 +1,1 @@
+I am a mock controller for model entities representing relationships.

@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "PeterUhnak 11/8/2017 08:15",
+	"super" : "OPDiagramController",
+	"category" : "OpenPonk-Core-Controllers - Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OPTestDiagramController",
+	"type" : "normal"
+}

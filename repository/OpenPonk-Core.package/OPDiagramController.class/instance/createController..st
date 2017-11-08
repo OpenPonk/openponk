@@ -1,6 +1,7 @@
-controllers management
+deprecated
 createController: aModel
-	| controller |
-	controller := (self controllerNameFor: aModel) new.
-	controller model: aModel.
-	^ controller
+	self
+		deprecated: 'Use newControllerFor: instead'
+		on: '8 November 2017'
+		in: 'Pharo-6.0-60519-'.
+	^ self newControllerFor: aModel

@@ -1,3 +1,3 @@
-testing
+connecting
 canBeTargetFor: aController
 	^ false

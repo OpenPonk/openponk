@@ -1,5 +1,5 @@
-adding
+connecting
 addAsSourceFor: aController
 	(self canBeSourceFor: aController)
-		ifTrue: [ self subclassResponsibility ]
-		ifFalse: [ self error: self class asString , ' cannot be source for ' , aController class asString ]
+		ifFalse: [ self error: self class asString , ' cannot be source for ' , aController class asString ].
+	aController sourceController: self

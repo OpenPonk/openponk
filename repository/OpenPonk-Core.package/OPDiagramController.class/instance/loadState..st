@@ -1,6 +1,6 @@
 undo/redo
 loadState: aMemento
-	| oldModel |
+"	| oldModel |
 	aMemento ifNil: [ ^ self ].
 	oldModel := self model.
 	model := aMemento model.
@@ -8,4 +8,4 @@ loadState: aMemento
 	self rebuild.
 	self diagram: aMemento diagram.
 	self logCr: aMemento diagram.
-	self editor updateUndoRedo
+	self editor updateUndoRedo"

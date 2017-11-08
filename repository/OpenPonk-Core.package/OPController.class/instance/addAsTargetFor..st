@@ -1,5 +1,5 @@
-adding
+connecting
 addAsTargetFor: aController
 	(self canBeTargetFor: aController)
-		ifTrue: [ self subclassResponsibility ]
-		ifFalse: [ self error: self class asString , ' cannot be target for ' , aController class asString ]
+		ifFalse: [ self error: self class asString , ' cannot be target for ' , aController class asString ].
+	aController createModelIn: self model andShowInDiagram: self diagramController

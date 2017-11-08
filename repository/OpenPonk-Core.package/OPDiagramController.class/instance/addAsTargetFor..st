@@ -1,6 +1,7 @@
-adding
+connecting
 addAsTargetFor: aController
-	| newModel |
+	super addAsTargetFor: aController.
+"	| newModel |
 	self assert: (self canBeTargetFor: aController).
 	newModel := aController createModel.
 	aController
@@ -9,4 +10,4 @@ addAsTargetFor: aController
 	self controllers add: aController.
 	aController attach.
 	self model add: newModel.
-	self view signalUpdate
+	self view signalUpdate"

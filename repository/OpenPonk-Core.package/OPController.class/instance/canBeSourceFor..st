@@ -1,3 +1,3 @@
-testing
+connecting
 canBeSourceFor: aController
 	^ false

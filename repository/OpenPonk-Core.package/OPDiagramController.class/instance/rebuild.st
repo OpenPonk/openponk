@@ -2,4 +2,4 @@ rebuilding
 rebuild
 	controllers := nil.
 	self cleanView.
-	self addAllElements
+	self showInDiagram: self

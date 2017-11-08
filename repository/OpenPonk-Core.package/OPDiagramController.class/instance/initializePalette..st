@@ -1,3 +1,3 @@
-ui hooks
+ui interaction
 initializePalette: aPalette
 	self subclassResponsibility

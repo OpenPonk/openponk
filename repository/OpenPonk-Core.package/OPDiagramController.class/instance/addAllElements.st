@@ -1,3 +1,4 @@
-rebuilding
+deprecated
 addAllElements
-	model elements do: [ :each | self addModelElement: each ]
+	self deprecated: 'Use #showAllElements instead.'.
+"	model elements do: [ :each | self addModelElement: each ]"

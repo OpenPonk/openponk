@@ -1,3 +1,3 @@
-actions
+ui interaction
 openInForm: aController
-	self editor workbench formModel editController: aController
+	self formPresenter editController: aController

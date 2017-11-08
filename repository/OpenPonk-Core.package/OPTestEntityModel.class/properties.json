@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "PeterUhnak 11/8/2017 08:33",
+	"super" : "Model",
+	"category" : "OpenPonk-Core-Controllers - Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OPTestEntityModel",
+	"type" : "normal"
+}

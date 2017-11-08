@@ -1,3 +1,4 @@
-controllers management
+deprecated
 controllerNameFor: aModel
-	^ modelToControllerMapping at: aModel class
+	self deprecated: 'no replacement'
+"	^ modelToControllerMapping at: aModel class"

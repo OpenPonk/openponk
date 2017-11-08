@@ -1,4 +1,5 @@
-hooks
+deprecated
 loadModel
-	self model ifNil: [ self model: self createModel ].
-	^ self model
+	self deprecated: 'Method will be removed without replacement.'
+"	self model ifNil: [ self model: self createModel ].
+	^ self model"

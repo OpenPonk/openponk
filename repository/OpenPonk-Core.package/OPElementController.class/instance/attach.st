@@ -1,4 +1,5 @@
-events - registering
+deprecated
 attach
-	self registerModelEvents: model.
-	self attachFigure
+	self deprecated: 'Use createInModel:andShowInDiagram: instead.'.
+"	self registerModelEvents: model.
+	self attachFigure"

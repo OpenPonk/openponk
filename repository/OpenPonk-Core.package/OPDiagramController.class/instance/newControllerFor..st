@@ -1,6 +1,6 @@
 controllers management
 newControllerFor: aModel
 	| controller |
-	controller := (self controllerNameFor: aModel) new.
+	controller := (modelToControllerMapping at: aModel class) new.
 	controller model: aModel.
 	^ controller

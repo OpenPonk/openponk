@@ -1,5 +1,6 @@
-events - registering
+deprecated
 registerModelEvents: aModel
+	self deprecated: 'use model: and internalSubscribeTo: instead'.
 	aModel announcer
 		when: OPElementRemoved
 		do: [ :event | 

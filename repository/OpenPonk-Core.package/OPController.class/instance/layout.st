@@ -1,3 +1,3 @@
 accessing
 layout
-	^ self subclassResponsibility
+	^ nil

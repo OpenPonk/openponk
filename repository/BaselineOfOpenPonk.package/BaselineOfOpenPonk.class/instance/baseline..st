@@ -43,6 +43,9 @@ baseline: spec
 						versionString: #development;
 						repository: 'http://www.smalltalkhub.com/mc/Moose/Merlin/main' ].
 			spec
+				baseline: 'Mocketry'
+				with: [ spec repository: 'github://dionisiydk/Mocketry:v4.0.x' ].
+			spec
 				project: 'PetitParser'
 				with: [ spec
 						className: #ConfigurationOfPetitParser;
@@ -51,7 +54,7 @@ baseline: spec
 						repository: 'http://smalltalkhub.com/mc/Moose/PetitParser/main/' ].
 			spec
 				package: 'OpenPonk-Core'
-					with: [ spec requires: #('OpenPonkModel' 'Roassal2' 'PetitParser' 'XMLParser' 'XPath') ];
+					with: [ spec requires: #('OpenPonkModel' 'Mocketry' 'Roassal2' 'PetitParser' 'XMLParser' 'XPath') ];
 				package: 'OpenPonk-Trachel';
 				package: 'OpenPonk-Roassal2';
 				package: 'OpenPonk-Spec'

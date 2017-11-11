@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "PeterUhnak 11/11/2017 20:24",
+	"super" : "Announcement",
+	"category" : "OpenPonk-Core-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"model"
+	],
+	"name" : "OPOpenEditorAnnouncement",
+	"type" : "normal"
+}

@@ -4,4 +4,6 @@ visitStringDescription: aStringDescription
 		ifTrue: [ ^ self visitLabelDescription: aStringDescription ].
 	(form addTextInput: aStringDescription label)
 		text: (aStringDescription accessor read: controller);
-		whenTextIsAccepted: [ :newValue | aStringDescription accessor write: newValue to: controller ]
+		whenTextIsAccepted: [ :newValue | aStringDescription accessor write: newValue to: controller ];
+		in:
+				[ :input | aStringDescription accessor opWhenUpdated: [ :newValue | input text: newValue ] ]

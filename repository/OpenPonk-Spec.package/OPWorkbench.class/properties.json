@@ -13,7 +13,8 @@
 		"projectController",
 		"pluginRegistry",
 		"topToolbar",
-		"editors"
+		"editors",
+		"focusedEditor"
 	],
 	"name" : "OPWorkbench",
 	"type" : "normal"

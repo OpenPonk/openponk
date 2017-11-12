@@ -16,7 +16,8 @@
 		"plugin",
 		"autosaveManager",
 		"figureToControllerCache",
-		"modelToControllerCache"
+		"modelToControllerCache",
+		"workbenchAnnouncer"
 	],
 	"name" : "OPDiagramController",
 	"type" : "normal"

@@ -1,0 +1,1 @@
+I am fired when an editor was focused (tab switched to this editor).

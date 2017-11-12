@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "PeterUhnak 11/12/2017 17:10",
+	"super" : "Object",
+	"category" : "OpenPonk-Spec-Form",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OPDynamicFormExamples",
+	"type" : "normal"
+}

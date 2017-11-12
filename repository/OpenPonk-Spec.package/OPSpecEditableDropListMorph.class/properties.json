@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "EditableDropListMorph",
+	"category" : "OpenPonk-Spec-EditableDropList",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"currentIcon"
+	],
+	"name" : "OPSpecEditableDropListMorph",
+	"type" : "normal"
+}

@@ -1,15 +1,12 @@
 factory
 buildWidget
-	^ (EditableDropListMorph
+	^ OPSpecEditableDropListMorph new
+		wrapSelector: #wrapItem:index:;
 		on: self
-		list: #getList
-		selected: #getIndex
-		changeSelected: #setIndex:
-		useIndex: true
-		addToList: #addToList:
-		class: String
-		getEnabled: nil
-		default: '')
+			list: #getList
+			selected: #getIndex
+			changeSelected: #setIndex:;
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
+		addToListSel: #addToList:;
 		yourself

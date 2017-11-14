@@ -8,7 +8,9 @@ addons:
   ssh_known_hosts: ccmi.fit.cvut.cz
 
 env:
-  - ARTIFACT_DIR=openponk-image-$TRAVIS_BUILD_NUMBER
+  global:
+    - ARTIFACT_DIR=openponk-image-$TRAVIS_BUILD_NUMBER
+    - KEY=.ssh/id_openponk_travis
 
 cache:
   directories:
@@ -22,29 +24,16 @@ smalltalk:
   - Pharo-6.1
 
 before_install:
-  - openssl aes-256-cbc -K $encrypted_f0e30254a656_key -iv $encrypted_f0e30254a656_iv -in .ssh/id_openponk_travis.enc -out .ssh/id_openponk_travis -d
-  - chmod 0400 .ssh/id_openponk_travis
+  - openssl aes-256-cbc -K $encrypted_f0e30254a656_key -iv $encrypted_f0e30254a656_iv -in $KEY.enc -out $KEY -d
+  - chmod 0400 $KEY
   - eval $(ssh-agent -s)
-  - ssh-add .ssh/id_openponk_travis
+  - ssh-add $KEY
 
 after_success:
   - ./scripts/copy-image.sh $SMALLTALK_CI_IMAGE $ARTIFACT_DIR/openponk
   - ./scripts/mark-image.sh $ARTIFACT_DIR/openponk
-#  - wget -O- https://raw.githubusercontent.com/peteruhnak/hapao-coverage/master/hapao-coverage.sh | bash
 
 deploy:
   - provider: script
     skip_cleanup: true
     script: scripts/deploy.sh
-#  - provider: s3
-#    access_key_id:
-#      secure: "i8g4cc8Dd17oKqiBHDmfXO56T9gIjIg8l6xyf5MgvhlOiYN9eyLy6HALlhnN2F6Gd6jHDoJ41vHm0aQUxn2IYkLFYgW8o888JtdrAfofnYeaQWNJQnrL8m2wX+viU2pI3t94IZo1AeeFZhJS9OegTCcdnGjLOcJCt1KhdOXhZxGyyj6Mysjri2MtXVLT6+89J3sPp5VeDlOGzpaLogiVWXxiKo5lb9wGj9YpqOMKc0+0zffACcm/k57GdgSTZ9rFCeTU8KtrpwOotZmFu+SVJkch122Z3rDI6evY4nIsYifr8Og5SenZEQQJIkWdHx7j4BjxVwbFShhiFl56DhDtcOllHQ5fYgbl/HrLD+GrcQYehiqP810FaWKIa4Tct/XoH1v1nhpA6/s+H/i369khxFiQoj0pAER/fU4yveDoYGHiJV5BM9DjKSfBLzAe3aLP2B13HXfMLf967AMvYk02vIVBvN4ssN0SwOqQjNIuHtG+F8sPddSHwTEfrt1Z5M9HPpkvsvZlxSQfeb00X/iUOzg9S8ySIz5FTAMB5QEgwvWpCkigBIoAtjIsOrcl5hs1byugoCufMJW2Zudfhv4SXgjB1LDzkZresNX4cOlTb1U6/uhkB5VW224TvaDI136HxVWVn1SEfVsR9belbasF9/1+xKoYZYEi0MIX7gUKgps="
-#    secret_access_key:
-#      secure: "M2a8mVi5hLiKd0SqWdBF7fsOMAv1fzGgvipvs23TaRRmqpIp6+UapKovves08pdnXRLyi5Z3lnz3ggOweivxEb1B5BwlZD7iDxyAnXK9hZPLTvFMw7WI5oej7/pvokAyoBoOUCGRM9U+4GSmkoVNRg/IIbaqZWMylBXDx62Mi07+lWD9RcXdRPKKx6B4+F+tDsV6O+WF61JSjQlDxxQY3Gw28HMmcBhEa7AqmS+hofN74snwQkBcmX+s9fVJK9iuUFxVzNhHQzMRDi0wnJtV+LNQiYO/3/q6onWr4O0kNwEjubqqlUAgkDeRVoLVX4RpcfKGQu33e+92dprkEtrhMKCbvEusy5qqJ3kW4MM+jDq9VBnurAud+wZ9PJHfDriufwEQeSc0FDRDtb1chczzJ6pdgoDUD8KORWj6XhWFDmxTsDB8Il3vDqVTJOecG620QelxszcLMC1JxSpPIMFNO43pPGb+iWtiXCe44t6nRRuclUwjp16QQG2NNM0KoNA2pGrWw0V+By67VCmr9hD6SPKPPwrTa/d3i07Nx8KawbWR/4GprhtCP4TUZvfo8eBFv8JZmcfrbNFLkcH6K7j4kXMg7UfoOEevJp4b05+MClv0pHV6QlE377mokDn/IbTPZC2SAbHUo3KmJKLjjvayZVJ24mh9fTvsJEY4uAGZyuE="
-#    bucket: 'gh-coverage-peteruhnak-com'
-#    region: eu-central-1
-#    local_dir: coverage-result
-#    upload-dir: $TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER
-#    skip-cleanup: true
-#    on:
-#      branch: master

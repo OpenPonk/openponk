@@ -2,7 +2,7 @@ initialization
 initializeWidgets
 	canvasMenuModel := self instantiate: MenuModel.
 	canvasModel := self instantiate: OPCanvasModel.
-	paletteModel := self instantiate: OPPalette.
+	paletteModel := self instantiate: OPScrollablePalette.
 	formModel := self instantiate: OPDynamicForm.
 	(zoomLabel := self newLabel) label: '100%'.
 	self focusOrder

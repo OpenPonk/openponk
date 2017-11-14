@@ -1,3 +1,3 @@
-as yet unclassified
-items: aCollection
-	listHolder value: aCollection asOrderedCollection
+api
+items: aList
+	super items: aList asOrderedCollection

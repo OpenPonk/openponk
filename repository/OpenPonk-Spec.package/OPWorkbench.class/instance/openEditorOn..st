@@ -2,8 +2,7 @@ opening
 openEditorOn: aModel
 	| editor tab plugin widget |
 	(self projectController hasDiagram: aModel)
-		ifTrue: [ self focusEditorOf: aModel.
-			^ self ].
+		ifTrue: [ ^ self focusEditorOf: aModel ].
 	editor := OPEditor new.
 	plugin := pluginRegistry pluginFor: aModel.
 	editor plugin: plugin.
@@ -20,13 +19,9 @@ openEditorOn: aModel
 		label: aModel name;
 		icon: plugin icon;
 		retrievingBlock: [ widget ];
-		whenTabSelected: [ topToolbar activeEditor: editor ];
 		whenBuiltDo: [ :w | 
 			w widget when: #tabDeleted send: #tabDeleted to: editor.
-			w widget
-				when: #tabDeleted
-				evaluate: [ :t | 
-					topToolbar activeEditor: nil.
-					editors removeKey: aModel ] ].
+			w widget when: #tabDeleted evaluate: [ :t | self closeEditor: editor ] ].
+	self announce: (OPEditorCreated on: editor).
 	tabManager addTab: tab.
 	self focusEditorOf: aModel

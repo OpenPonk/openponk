@@ -1,4 +1,5 @@
 SystemOrganization addCategory: #'OpenPonk-Core'!
+SystemOrganization addCategory: 'OpenPonk-Core-Announcements'!
 SystemOrganization addCategory: 'OpenPonk-Core-Controllers'!
 SystemOrganization addCategory: 'OpenPonk-Core-Controllers - Tests'!
 SystemOrganization addCategory: 'OpenPonk-Core-Figures'!

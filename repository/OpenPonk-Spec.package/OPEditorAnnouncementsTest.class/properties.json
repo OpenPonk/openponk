@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "OpenPonk-Spec-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"workbench",
+		"editor",
+		"announcer",
+		"plugin"
+	],
+	"name" : "OPEditorAnnouncementsTest",
+	"type" : "normal"
+}

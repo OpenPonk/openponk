@@ -1,0 +1,1 @@
+I am fired when an Editor lost focus (because it was closed, or because another Editor became focused).

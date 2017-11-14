@@ -24,7 +24,7 @@ smalltalk:
   - Pharo-6.1
 
 before_install:
-  - openssl aes-256-cbc -K $encrypted_f0e30254a656_key -iv $encrypted_f0e30254a656_iv -in $KEY.enc -out $KEY -d
+  - openssl aes-256-cbc -K $encrypted_be80011f599c_key -iv $encrypted_be80011f599c_iv -in $KEY.enc -out $KEY -d
   - chmod 0400 $KEY
   - eval $(ssh-agent -s)
   - ssh-add $KEY

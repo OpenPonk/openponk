@@ -1,12 +1,12 @@
 reading
 readModelReferences: aRootFolder
-	| dom |
-	dom := XMLDOMParser parse: aRootFolder / 'models.xml'.
-	^ dom root elements
+	| references |
+	references := STON fromString: (aRootFolder / 'models.json') readStream.
+	^ references
 		collect: [ :each | 
-			(self modelIdFrom: (each attributeAt: #id))
-				->
-					(self
-						readModelReference: (each attributeAt: #id)
-						plugin: (each attributeAt: #plugin)
-						pluginVersion: (each attributeAt: #pluginVersion)) ]
+			| uuid model |
+			uuid := self modelIdFrom: (each at: 'uuid').
+			model := self
+				pluginForName: (each at: 'plugin')
+				pluginVersion: (each at: 'pluginVersion').
+			uuid -> model ]

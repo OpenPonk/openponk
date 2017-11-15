@@ -1,7 +1,7 @@
 opening
 openEditorOn: aModel
 	| editor tab plugin widget |
-	(self projectController hasDiagram: aModel)
+	(self projectController hasModel: aModel)
 		ifTrue: [ ^ self focusEditorOf: aModel ].
 	editor := OPEditor new.
 	plugin := pluginRegistry pluginFor: aModel.

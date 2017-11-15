@@ -11,7 +11,7 @@ registerShortcut: newShortcut
 		toAction: [ :target :morph :event | 
 			| shouldIgnoreEvent |
 			shouldIgnoreEvent := false.
-			receiver model formModel focusOrder
+			receiver model formModel form focusOrder
 				detect: [ :each | each widget widget hasKeyboardFocus ]
 				ifFound: [ :each | 
 					(each isKindOf: TextModel)

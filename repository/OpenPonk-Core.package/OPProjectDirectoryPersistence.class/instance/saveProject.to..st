@@ -3,9 +3,9 @@ saveProject: aProject to: aFolder
 	aFolder ensureCreateDirectory.
 	(aFolder / 'models') ensureCreateDirectory.
 	(aFolder / '.history' / 'models') ensureCreateDirectory.
-	(aFolder / 'project.xml')
+	(aFolder / 'project.json')
 		ensureDelete;
-		writeStreamDo: [ :stream | self writeProject: aProject on: stream ].
-	(aFolder / 'models.xml')
+		writeStreamDo: [ :stream | stream << (self projectToJson: aProject) ].
+	(aFolder / 'models.json')
 		ensureDelete;
-		writeStreamDo: [ :stream | self writeModelReferences: aProject models on: stream ]
+		writeStreamDo: [ :stream | stream << (self modelReferencesToJson: aProject models) ]

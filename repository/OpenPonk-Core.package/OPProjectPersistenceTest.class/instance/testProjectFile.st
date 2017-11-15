@@ -1,24 +1,26 @@
 tests
 testProjectFile
-	| result |
-	result := String
+	| result resultString |
+	resultString := String
 		streamContents: [ :stream | 
-			persistence
-				writeProject:
-					(OPProject new
-						name: 'My Project';
-						uuid: (UUID fromString: '7f5ee44a-1655-4061-a78e-db9578a2226c'))
-				on: stream ].
+			stream
+				<<
+					(persistence
+						projectToJson:
+							(OPProject new
+								name: 'My Project';
+								uuid: (UUID fromString: '7f5ee44a-1655-4061-a78e-db9578a2226c'))) ].
+	result := STON fromString: resultString.
+	(result at: 'exporter') at: 'timestamp' put: '0'.
 	self
-		assert: (result copyWithRegex: '<timestamp>.*<\/timestamp>' matchesReplacedWith: 'TIMESTAMP')
+		assert: result
 		equals:
-			'<?xml version="1.0"?>
-<project>
-    <name>My Project</name>
-    <uuid>7f5ee44a-1655-4061-a78e-db9578a2226c</uuid>
-    <documentation>
-        <exporter>DynaCASE</exporter>
-        <exporterVersion>0.0.0</exporterVersion>
-        TIMESTAMP
-    </documentation>
-</project>'
+			{'project'
+				->
+					{'name' -> 'My Project'.
+					'uuid' -> '7f5ee44a-1655-4061-a78e-db9578a2226c'} asDictionary.
+			'exporter'
+				->
+					{'exporter' -> 'OpenPonk'.
+					'exporterVersion' -> '0.0.0'.
+					'timestamp' -> '0'} asDictionary} asDictionary

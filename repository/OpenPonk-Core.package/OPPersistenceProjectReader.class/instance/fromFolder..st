@@ -1,7 +1,7 @@
 public
 fromFolder: aFolder
 	| project |
-	project := self readProjectFrom: aFolder / 'project.xml'.
+	project := self readProjectFrom: aFolder / 'project.json'.
 	(self readAllMementosFrom: aFolder)
 		do: [ :each | 
 			project addModel: each model.

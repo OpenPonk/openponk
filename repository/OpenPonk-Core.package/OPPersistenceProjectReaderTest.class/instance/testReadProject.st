@@ -1,6 +1,6 @@
 tests
 testReadProject
-	project := reader readProjectFrom: root / 'project.xml'.
+	project := reader readProjectFrom: root / 'project.json'.
 	self assert: project name equals: 'Test Project'.
 	self
 		assert: project uuid

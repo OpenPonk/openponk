@@ -1,3 +1,3 @@
 running
 testSetUp
-	self assert: (root / 'project.xml') exists
+	self assert: (root / 'project.json') exists

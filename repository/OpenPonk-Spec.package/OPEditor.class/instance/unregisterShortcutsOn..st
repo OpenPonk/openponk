@@ -1,3 +1,4 @@
 shortcuts
 unregisterShortcutsOn: aPresenter
-	shortcuts do: [ :pair | aPresenter removeKeyCombination: pair key ]
+	shortcuts
+		ifNotNil: [ shortcuts do: [ :pair | aPresenter removeKeyCombination: pair key ] ]

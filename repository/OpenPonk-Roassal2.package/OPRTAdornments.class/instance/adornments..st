@@ -1,3 +1,3 @@
 accessing
-adornments: aList
-	adornments := aList
+adornments: aListOrBlock
+	adornments := aListOrBlock

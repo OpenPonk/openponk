@@ -1,4 +1,4 @@
-public
+public - reading
 fromFolder: aFolder
 	| project |
 	project := self readProjectFrom: aFolder / 'project.json'.

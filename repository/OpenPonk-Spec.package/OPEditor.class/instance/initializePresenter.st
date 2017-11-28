@@ -1,4 +1,4 @@
 initialization
 initializePresenter
 	canvasMenuModel
-		fromSpec: (PragmaMenuBuilder pragmaKeyword: #dcCanvasTolbar model: canvasModel) menuSpec
+		fromSpec: (PragmaMenuBuilder pragmaKeyword: #opCanvasTolbar model: canvasModel) menuSpec

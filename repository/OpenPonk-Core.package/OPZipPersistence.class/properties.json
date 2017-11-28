@@ -1,11 +1,11 @@
 {
-	"commentStamp" : "PeterUhnak 5/25/2016 16:23",
+	"commentStamp" : "PeterUhnak 11/15/2017 14:23",
 	"super" : "Object",
 	"category" : "OpenPonk-Core-Persistence",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "OPProjectDirectoryPersistence",
+	"name" : "OPZipPersistence",
 	"type" : "normal"
 }

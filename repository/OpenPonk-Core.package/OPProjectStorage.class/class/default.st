@@ -1,4 +1,4 @@
 accessing
 default
-	"self default inspect"
+	<script: 'self default inspect'>
 	^ Default ifNil: [ Default := self new ]

@@ -1,5 +1,5 @@
 as yet unclassified
-openProject
+openProjectFromFile
 	FDOpenFileDialog new
 		whenSelected: [ :file | self openProjectFromFile: file ];
 		extensionFilters:

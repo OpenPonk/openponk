@@ -1,3 +1,3 @@
 removing
 ensureRemove: aProject
-	projects removeAllSuchThat: [ :each | each uuid = aProject uuid ]
+	projects removeAllSuchThat: [ :each | each storageFile = aProject storageFile ]

@@ -2,4 +2,5 @@ widget API
 childrenMapping
 	^ {OPNamedElement -> [ #() ].
 	OPDiagram -> #elements.
-	Object -> [ #() ]}
+	Object -> [ #() ].
+	OPProject -> #models}

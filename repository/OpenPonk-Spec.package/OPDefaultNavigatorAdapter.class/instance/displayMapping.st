@@ -1,4 +1,5 @@
 widget API
 displayMapping
 	^ {OPModelObject -> #className.
-	Object -> #className}
+	OPProject -> 'Project'.
+	Object -> #className.}

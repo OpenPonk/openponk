@@ -1,6 +1,6 @@
 toolbar
 canvasToolbarFor: aBuilder
-	<dcCanvasTolbar>
+	<opCanvasTolbar>
 	| canvas |
 	canvas := aBuilder model.
 	(aBuilder item: 'Zoom out')

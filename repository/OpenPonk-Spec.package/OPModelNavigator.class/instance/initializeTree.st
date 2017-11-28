@@ -1,7 +1,7 @@
 initialization
 initializeTree
 	tree
-		roots: project models;
+		roots: {project};
 		doubleClick: [ self doubleClick ];
 		menu: [ :menu | self contextMenu: menu ];
 		displayBlock: [ :anObject | self displayFor: anObject ];

@@ -1,3 +1,3 @@
 accessing - spec
 title
-	^ 'DynaCASE Project Browser'
+	^ 'OpenPonk Project Browser'

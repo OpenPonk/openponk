@@ -9,8 +9,8 @@
 		"iconMapping",
 		"childrenMapping",
 		"actionMapping",
-		"menuMapping",
-		"displayMapping"
+		"displayMapping",
+		"contextMenuMapping"
 	],
 	"name" : "OPNavigatorAdapter",
 	"type" : "normal"

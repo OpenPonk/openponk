@@ -1,10 +1,11 @@
 tests
 testSaveProjectWithModel
-	| root |
+	| memoryRoot root |
 	project addModel: OPNamedElement new.
-	root := FileSystem memory / 'project'.
-	self deny: root exists.
-	controller saveProjectTo: root.
+	memoryRoot := FileSystem memory / 'project'.
+	self deny: memoryRoot exists.
+	controller saveProjectTo: memoryRoot.
+	root := (FileSystem zip: memoryRoot) open root.
 	self assert: (root / 'project.json') exists.
 	self
 		assert: ((root / 'models') children collect: #basename)

@@ -1,8 +1,9 @@
 tests
 testSaveProjectEmpty
-	| root |
-	root := FileSystem memory / 'project'.
+	| root store |
+	root := FileSystem memory / 'project.opp'.
 	self deny: root exists.
 	controller saveProjectTo: root.
-	self assert: (root / 'project.json') exists.
-	self assert: (root / 'models') children equals: #()
+	self assert: root exists.
+	store := (FileSystem zip: root) open.
+	self assert: (store / 'project.json') exists

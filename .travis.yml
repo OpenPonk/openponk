@@ -16,9 +16,9 @@ cache:
   directories:
     - $SMALLTALK_CI_BUILD_BASE/pharo-local/package-cache
 
-smalltalk_edge:
-  source: peteruhnak/smalltalkCI
-  branch: iceberg-loading
+#smalltalk_edge:
+#  source: peteruhnak/smalltalkCI
+#  branch: iceberg-loading
 
 smalltalk:
   - Pharo-6.1

@@ -15,8 +15,18 @@ use_openponk_logo() {
 PolymorphSystemSettings setDesktopLogoWith: (ImageMorph withForm: OPIcons current logo)."
 }
 
+close_pharo_help() {
+	run_script "World submorphs select: [ :each | (each isKindOf: SystemWindow) and: [ each label = WelcomeHelp bookName ] ] thenDo: #delete."
+}
+
+set_version() {
+	run_script "OPVersion gitCommit: '${TRAVIS_COMMIT}'"
+}
+
 main() {
 	use_openponk_logo
+	close_pharo_help
+	set_version
 }
 
 main

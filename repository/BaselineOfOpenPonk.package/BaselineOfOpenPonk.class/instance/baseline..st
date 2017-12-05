@@ -54,13 +54,17 @@ baseline: spec
 						repository: 'http://smalltalkhub.com/mc/Moose/PetitParser/main/' ].
 			spec
 				package: 'OpenPonk-Core'
-					with: [ spec requires: #('OpenPonkModel' 'Magritte' 'Mocketry' 'Roassal2' 'PetitParser' 'XMLParser' 'XPath') ];
+					with: [ spec
+						requires: #('OpenPonkModel' 'Magritte' 'Mocketry' 'Roassal2' 'PetitParser' 'XMLParser' 'XPath') ];
 				package: 'OpenPonk-Trachel';
 				package: 'OpenPonk-Roassal2';
+				package: 'OpenPonk-Telemetry';
+				package: 'OpenPonk-Help';
 				package: 'OpenPonk-Spec'
 					with: [ spec requires: #('Merlin' 'FileDialog' 'Magritte') ];
 				package: 'OpenPonk-Plugins' with: [ spec postLoadDoIt: #postLoadPlugins ].
 			spec
 				group: 'default'
-				with: #('OpenPonk-Core' 'OpenPonk-Trachel' 'OpenPonk-Roassal2' 'OpenPonk-Spec').
+				with:
+					#('OpenPonk-Core' 'OpenPonk-Trachel' 'OpenPonk-Roassal2' 'OpenPonk-Spec' 'OpenPonk-Telemetry' 'OpenPonk-Help').
 			spec group: 'complete' with: #('default' 'OpenPonk-Plugins') ]

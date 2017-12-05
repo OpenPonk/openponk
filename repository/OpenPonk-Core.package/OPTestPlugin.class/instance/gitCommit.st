@@ -1,0 +1,3 @@
+accessing
+gitCommit
+	^ OPVersion gitCommit

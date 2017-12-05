@@ -6,5 +6,4 @@ newSelectionTool
 	item
 		label: 'Select';
 		action: [ self selectItem: item tool: tool ];
-		shortcut: Character escape asKeyCombination;
 		icon: OPIcons current dcSelectIcon

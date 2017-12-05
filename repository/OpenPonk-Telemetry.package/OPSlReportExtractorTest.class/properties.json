@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "OpenPonk-Telemetry-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"extractor",
+		"registry"
+	],
+	"name" : "OPSlReportExtractorTest",
+	"type" : "normal"
+}

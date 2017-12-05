@@ -22,5 +22,5 @@ testProjectFile
 			'exporter'
 				->
 					{'exporter' -> 'OpenPonk'.
-					'exporterVersion' -> '0.0.0'.
+					'exporterVersion' -> OPVersion version.
 					'timestamp' -> '0'} asDictionary} asDictionary

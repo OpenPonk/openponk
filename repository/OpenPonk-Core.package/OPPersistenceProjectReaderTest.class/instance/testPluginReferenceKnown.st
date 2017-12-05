@@ -1,5 +1,5 @@
 tests
 testPluginReferenceKnown
 	self
-		assert: {(reader pluginForName: #OPTestPlugin pluginVersion: '0.0.0')}
+		assert: {reader pluginForName: #OPTestPlugin pluginVersion: OPTestPlugin new version}
 		equals: OPPluginRegistry default plugins asArray

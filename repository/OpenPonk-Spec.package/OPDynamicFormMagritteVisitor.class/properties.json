@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "PeterUhnak 5/24/2017 18:57",
-	"super" : "DynamicComposableModel",
+	"super" : "Object",
 	"category" : "OpenPonk-Spec-Form",
 	"classinstvars" : [ ],
 	"pools" : [ ],

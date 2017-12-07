@@ -1,14 +1,11 @@
 {
-	"commentStamp" : "PeterUhnak 12/5/2017 19:46",
+	"commentStamp" : "",
 	"super" : "Object",
 	"category" : "OpenPonk-Telemetry",
-	"classinstvars" : [
-		"uuid",
-		"reports"
-	],
+	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "OPTelemetry",
+	"name" : "OPTelemetryExtractor",
 	"type" : "normal"
 }

@@ -4,6 +4,7 @@
 	"category" : "OpenPonk-Spec-Windows",
 	"classinstvars" : [
 		"layoutStyle",
+		"enableDevelopmentMode",
 		"isDevelopmentMode"
 	],
 	"pools" : [ ],

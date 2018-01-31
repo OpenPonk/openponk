@@ -9,7 +9,8 @@
 		"components",
 		"heights",
 		"whenAccepted",
-		"controller"
+		"controller",
+		"heading"
 	],
 	"name" : "OPDynamicForm",
 	"type" : "normal"

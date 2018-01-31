@@ -4,6 +4,8 @@ dynamicLayout
 	keys := self widgets keys.
 	^ SpecLayout composed
 		newColumn: [ :c | 
+			keys ifNotEmpty: [ 
+			c add: #heading height: self class toolbarHeight ].
 			keys
 				do: [ :key | 
 					height := self heightFor: (self perform: key).

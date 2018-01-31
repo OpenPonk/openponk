@@ -1,6 +1,5 @@
 opening
 openFormOn: aController
-"	editors values
-		detect: [ :tuple | tuple second selectedHolder value ]
-		ifFound: [ :tuple | tuple first openFormOn: aController ]."
-	formModel editController: aController
+	self class layoutStyle = #combined
+		ifTrue: [ focusedEditor openFormOn: aController ]
+		ifFalse: [ formModel editController: aController ]

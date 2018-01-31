@@ -9,7 +9,8 @@
 		"items",
 		"selectedTool",
 		"selectedItem",
-		"diagramController"
+		"diagramController",
+		"heading"
 	],
 	"name" : "OPPalette",
 	"type" : "normal"

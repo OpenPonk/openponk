@@ -2,7 +2,9 @@
 	"commentStamp" : "PeterUhnak 10/29/2014 17:53",
 	"super" : "ComposableModel",
 	"category" : "OpenPonk-Spec-Windows",
-	"classinstvars" : [ ],
+	"classinstvars" : [
+		"layoutStyle"
+	],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [

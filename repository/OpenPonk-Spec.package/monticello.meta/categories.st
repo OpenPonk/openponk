@@ -1,4 +1,5 @@
 SystemOrganization addCategory: #'OpenPonk-Spec'!
+SystemOrganization addCategory: 'OpenPonk-Spec-Dialogs'!
 SystemOrganization addCategory: 'OpenPonk-Spec-EditableDropList'!
 SystemOrganization addCategory: 'OpenPonk-Spec-Form'!
 SystemOrganization addCategory: 'OpenPonk-Spec-Palettes'!

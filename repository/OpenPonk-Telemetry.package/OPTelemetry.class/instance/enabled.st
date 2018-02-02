@@ -1,3 +1,3 @@
 accessing
 enabled
-	^ SlReporter enabled & SlReporter autoSubmit
+	^ Sentry enabled & Sentry autoSubmit

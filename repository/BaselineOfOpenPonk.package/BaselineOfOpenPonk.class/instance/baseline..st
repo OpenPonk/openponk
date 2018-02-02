@@ -53,6 +53,9 @@ baseline: spec
 						loads: #('Parser');
 						repository: 'http://smalltalkhub.com/mc/Moose/PetitParser/main/' ].
 			spec
+				baseline: 'Sentry'
+				with: [ spec repository: 'github://peteruhnak/pharo-sentry/repository' ].
+			spec
 				package: 'OpenPonk-Core'
 					with: [ spec
 						requires: #('OpenPonkModel' 'Magritte' 'Mocketry' 'Roassal2' 'PetitParser' 'XMLParser' 'XPath') ];
@@ -60,8 +63,7 @@ baseline: spec
 				package: 'OpenPonk-Roassal2';
 				package: 'OpenPonk-Telemetry';
 				package: 'OpenPonk-Help';
-				package: 'OpenPonk-Spec'
-					with: [ spec requires: #('Merlin' 'FileDialog' 'Magritte') ];
+				package: 'OpenPonk-Spec' with: [ spec requires: #('Merlin' 'FileDialog' 'Magritte') ];
 				package: 'OpenPonk-Plugins' with: [ spec postLoadDoIt: #postLoadPlugins ].
 			spec
 				group: 'default'

@@ -61,7 +61,7 @@ baseline: spec
 						requires: #('OpenPonkModel' 'Magritte' 'Mocketry' 'Roassal2' 'PetitParser' 'XMLParser' 'XPath') ];
 				package: 'OpenPonk-Trachel';
 				package: 'OpenPonk-Roassal2';
-				package: 'OpenPonk-Telemetry';
+				package: 'OpenPonk-Telemetry' with: [ spec requires: #('Sentry') ];
 				package: 'OpenPonk-Help';
 				package: 'OpenPonk-Spec' with: [ spec requires: #('Merlin' 'FileDialog' 'Magritte') ];
 				package: 'OpenPonk-Plugins' with: [ spec postLoadDoIt: #postLoadPlugins ].

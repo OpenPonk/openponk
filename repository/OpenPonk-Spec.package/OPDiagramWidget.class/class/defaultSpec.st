@@ -2,5 +2,5 @@ specs
 defaultSpec
 	^ SpecColumnLayout composed
 		add: #heading height: self toolbarHeight;
-		add: #tree;
+		add: #list;
 		yourself

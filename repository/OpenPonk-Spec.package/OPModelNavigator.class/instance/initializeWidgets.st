@@ -1,4 +1,5 @@
 initialization
 initializeWidgets
 	tree := self newTree.
-	self focusOrder add: tree
+	self focusOrder add: tree.
+	self newWidgetHeading

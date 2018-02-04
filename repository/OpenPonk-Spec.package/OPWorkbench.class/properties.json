@@ -18,7 +18,8 @@
 		"pluginRegistry",
 		"topToolbar",
 		"editors",
-		"focusedEditor"
+		"focusedEditor",
+		"diagramWidget"
 	],
 	"name" : "OPWorkbench",
 	"type" : "normal"

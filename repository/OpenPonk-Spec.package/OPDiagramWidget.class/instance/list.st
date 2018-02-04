@@ -1,3 +1,3 @@
 accessing - spec
-tree
-	^ tree
+list
+	^ list

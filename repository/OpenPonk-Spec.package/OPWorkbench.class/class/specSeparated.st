@@ -5,7 +5,11 @@ specSeparated
 			height: self toolbarHeight;
 		newRow: [ :row | 
 			row
-				newColumn: [ :col | col add: #navigatorModel ] width: 200;
+				newColumn: [ :col | 
+					col
+						add: #diagramWidget;
+						add: #navigatorModel ]
+					width: 200;
 				addSplitter;
 				newColumn: [ :col | col add: #tabManager ];
 				addSplitter;

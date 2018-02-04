@@ -1,5 +1,5 @@
 {
-	"commentStamp" : "PeterUhnak 7/13/2015 23:08",
+	"commentStamp" : "PeterUhnak 2/4/2018 11:17",
 	"super" : "ComposableModel",
 	"category" : "OpenPonk-Spec-Windows",
 	"classinstvars" : [ ],
@@ -8,11 +8,11 @@
 		"Icons"
 	],
 	"instvars" : [
-		"tree",
+		"list",
+		"heading",
 		"project",
-		"adapters",
-		"heading"
+		"adapters"
 	],
-	"name" : "OPModelNavigator",
+	"name" : "OPDiagramWidget",
 	"type" : "normal"
 }

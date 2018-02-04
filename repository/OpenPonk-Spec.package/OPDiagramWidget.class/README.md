@@ -1,0 +1,1 @@
+I show a list of available diagrams for editing.

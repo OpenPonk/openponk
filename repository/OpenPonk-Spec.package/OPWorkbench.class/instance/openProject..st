@@ -7,5 +7,6 @@ openProject: aProject
 	self updateTitle.
 	topToolbar updateProjectMenu.
 	project whenChanged: [ self updateTitle ].
+	diagramWidget project: project.
 	navigatorModel openOn: project.
 	projectController openFirstDiagram

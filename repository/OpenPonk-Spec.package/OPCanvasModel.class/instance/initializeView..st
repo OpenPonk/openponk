@@ -1,6 +1,7 @@
 initialization
 initializeView: aView
 	aView when: TRMouseLeftClick do: [ :event | self viewClicked: event ].
+	aView when: TRMouseRightClick do: [ :event | self viewContextClicked: event ].
 	aView canvas theme: TRWhiteTheme new.
 	aView @ RTDraggableView.
 	aView @ (RTZoomableView new min: 0.25 max: 4).

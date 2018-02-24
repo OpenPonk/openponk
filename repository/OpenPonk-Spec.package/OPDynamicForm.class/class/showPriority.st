@@ -1,0 +1,3 @@
+specs
+showPriority
+	^ self isLinkInstalled

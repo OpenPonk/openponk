@@ -54,7 +54,7 @@ baseline: spec
 						repository: 'http://smalltalkhub.com/mc/Moose/PetitParser/main/' ].
 			spec
 				baseline: 'Sentry'
-				with: [ spec repository: 'github://peteruhnak/pharo-sentry/repository' ].
+				with: [ spec repository: 'github://peteruhnak/pharo-sentry:v0.1.1/repository' ].
 			spec
 				package: 'OpenPonk-Core'
 					with: [ spec

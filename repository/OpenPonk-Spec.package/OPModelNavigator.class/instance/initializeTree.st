@@ -3,10 +3,12 @@ initializeTree
 	tree
 		roots: {project};
 		doubleClick: [ self doubleClick ];
-		menu: [ :menu | self contextMenu: menu ];
-		displayBlock: [ :anObject | self displayFor: anObject ];
-		childrenBlock: [ :anObject | self childrenFor: anObject ];
-		iconBlock: [ :anObject | self iconFor: anObject ].
+		menu: [ :menu | 
+			tree hasSelectedItem
+				ifTrue: [ adapters contextMenuFor: self selectedItem in: menu ] ];
+		displayBlock: [ :anObject | adapters displayFor: anObject ];
+		childrenBlock: [ :anObject | adapters childrenFor: anObject ];
+		iconBlock: [ :anObject | adapters iconFor: anObject ].
 	tree
 		expandRoots;
 		autoDeselection: false.

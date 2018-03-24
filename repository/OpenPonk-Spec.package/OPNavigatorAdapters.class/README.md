@@ -1,0 +1,1 @@
+I hold a collection of navigator adapters applicable to a concrete editor.

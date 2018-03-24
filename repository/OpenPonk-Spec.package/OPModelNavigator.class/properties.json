@@ -11,8 +11,7 @@
 		"tree",
 		"project",
 		"adapters",
-		"heading",
-		"childrenMap"
+		"heading"
 	],
 	"name" : "OPModelNavigator",
 	"type" : "normal"

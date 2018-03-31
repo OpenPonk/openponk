@@ -1,4 +1,4 @@
-toolbar
+accessing
 contextMenuFor: anObject in: aMenu
 	| builder |
 	builder := OPMenuBuilder new.

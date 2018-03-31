@@ -1,4 +1,4 @@
 initialization
 initialize
 	super initialize.
-	adapters := OPNavigatorAdapters new
+	adapters := self allAdapters collect: #new

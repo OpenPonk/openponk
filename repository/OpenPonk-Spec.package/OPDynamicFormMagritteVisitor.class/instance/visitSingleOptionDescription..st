@@ -4,6 +4,7 @@ visitSingleOptionDescription: aSingleOptionDescription
 		ifTrue: [ form addEditableDroplist: aSingleOptionDescription label ]
 		ifFalse: [ form addDroplist: aSingleOptionDescription label ])
 		items: aSingleOptionDescription options;
+		enabled: aSingleOptionDescription isReadonly not;
 		displayBlock: [ :each | aSingleOptionDescription labelForOption: each ];
 		iconHolder: [ :each :item | aSingleOptionDescription iconForOption: each ];
 		setSelectedItem: (aSingleOptionDescription accessor read: controller);

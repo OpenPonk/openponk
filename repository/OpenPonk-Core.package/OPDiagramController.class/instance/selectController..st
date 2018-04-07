@@ -1,0 +1,3 @@
+ui interaction
+selectController: aController
+	self editor paletteModel selectSelectionTool selectedTool targetSelected: aController

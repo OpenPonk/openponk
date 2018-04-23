@@ -1,1 +1,1 @@
-I am top menu toolbar for DCWorkbench.
+I am top menu toolbar for Workbench.

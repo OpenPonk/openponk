@@ -1,5 +1,6 @@
 specs
 specCombined
+	<spec: #combined>
 	^ SpecColumnLayout composed
 		newRow: [ :row | 
 			row

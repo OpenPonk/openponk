@@ -1,3 +1,3 @@
 opening
 open
-	self openWithSpec
+	self openWithSpec: self class layoutStyle

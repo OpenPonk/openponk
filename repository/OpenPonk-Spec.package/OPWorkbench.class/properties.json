@@ -1,13 +1,5 @@
 {
-	"commentStamp" : "PeterUhnak 10/29/2014 17:53",
-	"super" : "ComposableModel",
-	"category" : "OpenPonk-Spec-Windows",
-	"classinstvars" : [
-		"layoutStyle",
-		"enableDevelopmentMode",
-		"isDevelopmentMode"
-	],
-	"pools" : [ ],
+	"classtraitcomposition" : "TOPSpecRetriever classTrait",
 	"classvars" : [ ],
 	"instvars" : [
 		"navigatorModel",
@@ -22,5 +14,14 @@
 		"diagramWidget"
 	],
 	"name" : "OPWorkbench",
-	"type" : "normal"
+	"commentStamp" : "PeterUhnak 4/23/2018 13:31",
+	"super" : "ComposableModel",
+	"traitcomposition" : "TOPSpecRetriever",
+	"type" : "normal",
+	"classinstvars" : [
+		"isDevelopmentMode",
+		"layoutStyle"
+	],
+	"pools" : [ ],
+	"category" : "OpenPonk-Spec-Windows"
 }

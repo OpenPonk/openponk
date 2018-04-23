@@ -1,5 +1,6 @@
 specs
 specSeparated
+	<spec: #separated>
 	^ SpecColumnLayout composed
 		newRow: [ :row | 
 			row

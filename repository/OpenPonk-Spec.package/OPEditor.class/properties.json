@@ -1,9 +1,5 @@
 {
-	"commentStamp" : "PeterUhnak 10/29/2014 17:55",
-	"super" : "ComposableModel",
-	"category" : "OpenPonk-Spec-Windows",
-	"classinstvars" : [ ],
-	"pools" : [ ],
+	"classtraitcomposition" : "TOPSpecRetriever classTrait",
 	"classvars" : [ ],
 	"instvars" : [
 		"canvasModel",
@@ -17,5 +13,11 @@
 		"shortcuts"
 	],
 	"name" : "OPEditor",
-	"type" : "normal"
+	"commentStamp" : "PeterUhnak 10/29/2014 17:55",
+	"super" : "ComposableModel",
+	"traitcomposition" : "TOPSpecRetriever",
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "OpenPonk-Spec-Windows"
 }

@@ -1,1 +1,1 @@
-I am topmost window of DynaCASE
+I am the topmost window of an opened Project.

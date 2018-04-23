@@ -1,5 +1,5 @@
 opening
 openFormOn: aController
-	self class layoutStyle = #combined
+	useEditorForm
 		ifTrue: [ focusedEditor openFormOn: aController ]
 		ifFalse: [ formModel editController: aController ]

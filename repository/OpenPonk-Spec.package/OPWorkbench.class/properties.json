@@ -11,7 +11,8 @@
 		"topToolbar",
 		"editors",
 		"focusedEditor",
-		"diagramWidget"
+		"diagramWidget",
+		"useEditorForm"
 	],
 	"name" : "OPWorkbench",
 	"commentStamp" : "PeterUhnak 4/23/2018 13:31",

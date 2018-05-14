@@ -8,4 +8,6 @@ editorMenu
 		fromSpec:
 			(OPPragmaPluginMenuBuilder pragmaKeyword: #opEditorToolbarMenu: model: activeEditor)
 				menuSpec.
+	"MenuModel is stupid and will crash when provided with an empty subMenu"
+	menu menuGroups ifEmpty: [ ^nil ].
 	^ menu

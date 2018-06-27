@@ -1,3 +1,5 @@
 testing
 hasSupportForModel: aModel
-	^ modelToControllerMapping includesKey: aModel class
+	modelToControllerMapping isDictionary
+		ifTrue: [ ^ modelToControllerMapping includesKey: aModel class ].
+	^ modelToControllerMapping hasControllerFor: aModel

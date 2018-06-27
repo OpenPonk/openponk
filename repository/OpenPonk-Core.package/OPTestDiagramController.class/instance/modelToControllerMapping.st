@@ -1,5 +1,5 @@
 accessing
 modelToControllerMapping
-	^ Dictionary
-		with: OPTestEntityModel -> OPTestEntityController
-		with: OPTestRelationModel -> OPTestRelationController
+	^ OPControllerFactory new
+		register: OPTestEntityController forModel: OPTestEntityModel;
+		register: OPTestRelationController forModel: OPTestRelationModel

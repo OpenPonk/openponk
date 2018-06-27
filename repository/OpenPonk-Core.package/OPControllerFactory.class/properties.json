@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "PeterUhnak 6/27/2018 17:01",
+	"super" : "Object",
+	"category" : "OpenPonk-Core-Controllers",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"registrations"
+	],
+	"name" : "OPControllerFactory",
+	"type" : "normal"
+}

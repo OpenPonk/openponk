@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "OpenPonk-Core-Controllers",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"controllerClass",
+		"modelClass",
+		"condition"
+	],
+	"name" : "OPControllerFactoryRegistration",
+	"type" : "normal"
+}

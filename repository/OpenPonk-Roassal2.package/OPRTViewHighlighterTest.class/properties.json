@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "OPRTHighlighterTest",
+	"category" : "OpenPonk-Roassal2-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OPRTViewHighlighterTest",
+	"type" : "normal"
+}

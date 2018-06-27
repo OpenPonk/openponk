@@ -1,0 +1,3 @@
+testing
+isFor: anElement
+	^ false

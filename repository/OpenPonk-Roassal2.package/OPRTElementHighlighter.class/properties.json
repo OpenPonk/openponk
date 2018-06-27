@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "OPRTHighlighter",
+	"category" : "OpenPonk-Roassal2-Builders",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"noBorder"
+	],
+	"name" : "OPRTElementHighlighter",
+	"type" : "normal"
+}

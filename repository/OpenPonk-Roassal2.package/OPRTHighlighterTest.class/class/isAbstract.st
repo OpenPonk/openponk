@@ -1,0 +1,3 @@
+running
+isAbstract
+	^ self = OPRTHighlighterTest

@@ -1,0 +1,3 @@
+running
+setUpModel
+	^ self subclassResponsibility

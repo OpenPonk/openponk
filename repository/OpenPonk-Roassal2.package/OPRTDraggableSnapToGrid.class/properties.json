@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "PeterUhnak 7/5/2018 17:18",
+	"super" : "RTAbstractDraggable",
+	"category" : "OpenPonk-Roassal2-Interactivity",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"strategy",
+		"gridSize",
+		"totalDistance"
+	],
+	"name" : "OPRTDraggableSnapToGrid",
+	"type" : "normal"
+}

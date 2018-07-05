@@ -1,0 +1,3 @@
+configuration
+topLeft
+	strategy := #topLeft

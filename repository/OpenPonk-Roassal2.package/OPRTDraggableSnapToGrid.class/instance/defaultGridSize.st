@@ -1,0 +1,3 @@
+accessing
+defaultGridSize
+	^ 10

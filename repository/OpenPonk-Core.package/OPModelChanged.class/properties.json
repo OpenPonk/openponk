@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "PeterUhnak 7/5/2018 14:54",
+	"super" : "OPModelAnnouncement",
+	"category" : "OpenPonk-Core-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OPModelChanged",
+	"type" : "normal"
+}

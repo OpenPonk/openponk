@@ -1,5 +1,5 @@
 controllers management
 newControllerFor: aModel
 	modelToControllerMapping isDictionary
-		ifTrue: [ ^ self newControllerFor: aModel ].
+		ifTrue: [ ^ self newControllerForOld: aModel ].
 	^ modelToControllerMapping newControllerFor: aModel

@@ -1,0 +1,3 @@
+configuration
+disableCache
+	useCache := false

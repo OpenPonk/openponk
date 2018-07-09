@@ -59,6 +59,7 @@ baseline: spec
 				package: 'OpenPonk-Core'
 					with: [ spec
 						requires: #('OpenPonkModel' 'Magritte' 'Mocketry' 'Roassal2' 'PetitParser' 'XMLParser' 'XPath') ];
+				package: 'OpenPonk-Perf';
 				package: 'OpenPonk-Trachel';
 				package: 'OpenPonk-Roassal2';
 				package: 'OpenPonk-Telemetry' with: [ spec requires: #('Sentry') ];
@@ -68,5 +69,5 @@ baseline: spec
 			spec
 				group: 'default'
 				with:
-					#('OpenPonk-Core' 'OpenPonk-Trachel' 'OpenPonk-Roassal2' 'OpenPonk-Spec' 'OpenPonk-Telemetry' 'OpenPonk-Help').
+					#('OpenPonk-Core' 'OpenPonk-Perf' 'OpenPonk-Trachel' 'OpenPonk-Roassal2' 'OpenPonk-Spec' 'OpenPonk-Telemetry' 'OpenPonk-Help').
 			spec group: 'complete' with: #('default' 'OpenPonk-Plugins') ]

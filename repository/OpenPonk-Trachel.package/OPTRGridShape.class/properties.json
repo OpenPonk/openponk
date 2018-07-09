@@ -1,14 +1,11 @@
 {
-	"category" : "OpenPonk-Trachel-Shapes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "OPTRGridShape",
-	"pools" : [
-		 ],
 	"super" : "TRShape",
-	"type" : "normal" }
+	"category" : "OpenPonk-Trachel-Shapes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OPTRGridShape",
+	"type" : "normal"
+}

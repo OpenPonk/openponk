@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "PragmaMenuBuilder",
+	"category" : "OpenPonk-Spec-Utils",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OPPragmaMenuBuilder",
+	"type" : "normal"
+}

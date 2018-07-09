@@ -4,7 +4,7 @@ openModel: aModel
 	self workbench projectController addDiagramController: diagramController.
 	canvasModel attachController: diagramController.
 	canvasMenuModel
-		fromSpec: (OPPragmaPluginMenuBuilder pragmaKeyword: #opCanvasToolbar: model: canvasModel) menuSpec.
+		fromSpec: (OPPragmaPluginMenuBuilder cachedPragmaKeyword: #opCanvasToolbar: model: canvasModel) menuSpec.
 	self rebuildWidget.
 	canvasModel reloadView.
 	self applyLayoutFor: aModel.

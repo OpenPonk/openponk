@@ -3,8 +3,8 @@ projectMenu
 	| menu builder |
 	menu := self instantiate: MenuModel.
 	builder := self workbench
-		ifNil: [ PragmaMenuBuilder pragmaKeyword: #opProjectSubmenu model: self ]
+		ifNil: [ PragmaMenuBuilder cachedPragmaKeyword: #opProjectSubmenu model: self ]
 		ifNotNil:
-			[ OPPragmaPluginMenuBuilder pragmaMultiKeyword: #opProjectSubmenu model: self ].
+			[ OPPragmaPluginMenuBuilder cachedPragmaKeyword: #opProjectSubmenu model: self ].
 	menu fromSpec: builder menuSpec.
 	^ menu

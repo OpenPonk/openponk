@@ -1,4 +1,4 @@
 selection handling
 viewContextClicked: anEvent
-	(OPPragmaPluginMenuBuilder pragmaKeyword: #opCanvasContextMenu: model: self) menuSpec
+	(OPPragmaPluginMenuBuilder cachedPragmaKeyword: #opCanvasContextMenu: model: self) menuSpec
 		asMenuMorph popUpInWorld

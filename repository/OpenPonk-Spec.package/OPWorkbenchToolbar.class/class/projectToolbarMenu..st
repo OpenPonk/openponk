@@ -12,9 +12,11 @@ projectToolbarMenu: aBuilder
 				action: [ OPProjectBrowser open ].
 			(aBuilder item: 'Open...')
 				icon: Smalltalk ui icons smallOpen;
+				order: 5;
 				action: [ workbenchToolbar projectController openProject ].
 			(aBuilder item: 'Save')
 				icon: Smalltalk ui icons smallSave;
+				order: 10;
 				action: [ workbenchToolbar projectController saveProject ] ];
 		withSeparatorAfter.
 	(aBuilder group: #ProjectOptions)

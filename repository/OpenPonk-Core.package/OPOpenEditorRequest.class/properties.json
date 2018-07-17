@@ -8,6 +8,6 @@
 	"instvars" : [
 		"model"
 	],
-	"name" : "OPOpenEditorAnnouncement",
+	"name" : "OPOpenEditorRequest",
 	"type" : "normal"
 }

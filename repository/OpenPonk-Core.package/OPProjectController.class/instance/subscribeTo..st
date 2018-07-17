@@ -1,7 +1,7 @@
 announcements
 subscribeTo: aDiagramController
 	aDiagramController model announcer
-		when: OPOpenEditorAnnouncement
+		when: OPOpenEditorRequest
 		do: [ :ann | workbench openEditorOn: ann model ].
 	aDiagramController model announcer
 		when: OPCloseEditorAnnouncement

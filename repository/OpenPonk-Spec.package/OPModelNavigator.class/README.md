@@ -1,10 +1,4 @@
-I am a tree view of a project. To define model-specific mappings subclass DCNavigatorAdapter.
+I am a tree view of a model.
 
-!! Responsibility
-
-Display project in a tree view.
-
-!! Collaborators
-
-DCNavigatorAdapter allSubclasses
+To define model-specific mappings subclass OPNavigatorAdapter.
 

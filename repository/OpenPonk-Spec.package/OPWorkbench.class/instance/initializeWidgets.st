@@ -2,7 +2,10 @@ initialization
 initializeWidgets
 	topToolbar := self instantiate: OPWorkbenchToolbar.
 	diagramWidget := self instantiate: OPDiagramWidget.
-	navigatorModel := self instantiate: OPModelNavigator.
+	modelTree := self newTabManager.
+	self initializeModelTree.
+	modelTreeWidget := self instantiate: OPModelNavigator.
+	navigatorModel := self instantiate: OPProjectNavigator.
 	tabManager := self newTabManager.
 	formModel := self instantiate: OPScrollableForm.
 	self focusOrder

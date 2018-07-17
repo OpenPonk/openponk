@@ -1,5 +1,5 @@
 {
-	"commentStamp" : "PeterUhnak 7/17/2018 11:27",
+	"commentStamp" : "PeterUhnak 7/17/2018 11:26",
 	"super" : "ComposableModel",
 	"category" : "OpenPonk-Spec-Windows",
 	"classinstvars" : [ ],
@@ -13,6 +13,6 @@
 		"adapters",
 		"heading"
 	],
-	"name" : "OPModelNavigator",
+	"name" : "OPProjectNavigator",
 	"type" : "normal"
 }

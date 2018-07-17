@@ -1,7 +1,6 @@
 initialization
 initializeTree
 	tree
-		roots: {};
 		doubleClick: [ self doubleClick ];
 		menu: [ :menu | 
 			tree hasSelectedItem

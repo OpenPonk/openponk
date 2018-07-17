@@ -9,7 +9,7 @@ specCombined
 				newColumn: [ :col | 
 					col
 						add: #diagramWidget height: 200;
-						add: #navigatorModel ]
+						add: #modelTree ]
 					width: 200;
 				addSplitter;
 				newColumn: [ :col | col add: #tabManager ] ]

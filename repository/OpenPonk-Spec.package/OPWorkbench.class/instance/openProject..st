@@ -9,4 +9,5 @@ openProject: aProject
 	project whenChanged: [ self updateTitle ].
 	diagramWidget project: project.
 	navigatorModel openOn: project.
+	modelTreeWidget openOn: project.
 	projectController openFirstDiagram

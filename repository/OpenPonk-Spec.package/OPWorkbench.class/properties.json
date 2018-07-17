@@ -3,6 +3,7 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"navigatorModel",
+		"modelTreeWidget",
 		"tabManager",
 		"formModel",
 		"project",
@@ -12,7 +13,8 @@
 		"editors",
 		"focusedEditor",
 		"diagramWidget",
-		"useEditorForm"
+		"useEditorForm",
+		"modelTree"
 	],
 	"name" : "OPWorkbench",
 	"commentStamp" : "PeterUhnak 4/23/2018 13:31",
@@ -20,8 +22,8 @@
 	"traitcomposition" : "TOPSpecRetriever",
 	"type" : "normal",
 	"classinstvars" : [
-		"isDevelopmentMode",
-		"layoutStyle"
+		"layoutStyle",
+		"isDevelopmentMode"
 	],
 	"pools" : [ ],
 	"category" : "OpenPonk-Spec-Windows"

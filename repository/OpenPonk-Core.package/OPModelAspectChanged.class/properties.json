@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "PeterUhnak 7/18/2018 15:18",
+	"super" : "OPModelChanged",
+	"category" : "OpenPonk-Core-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"aspect",
+		"oldValue",
+		"newValue"
+	],
+	"name" : "OPModelAspectChanged",
+	"type" : "normal"
+}

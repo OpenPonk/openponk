@@ -1,0 +1,18 @@
+{
+	"commentStamp" : "PeterUhnak 7/18/2018 10:16",
+	"super" : "ComposableModel",
+	"category" : "OpenPonk-Spec-Windows",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Icons"
+	],
+	"instvars" : [
+		"tree",
+		"project",
+		"adapters",
+		"heading"
+	],
+	"name" : "OPModelTreeWidget",
+	"type" : "normal"
+}

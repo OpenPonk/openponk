@@ -1,7 +1,7 @@
 tests
 testSaveProjectWithModel
 	| memoryRoot root |
-	project addModel: OPNamedElement new.
+	project addModel: OPTestContainerModel new.
 	memoryRoot := FileSystem memory / 'project'.
 	self deny: memoryRoot exists.
 	controller saveProjectTo: memoryRoot.

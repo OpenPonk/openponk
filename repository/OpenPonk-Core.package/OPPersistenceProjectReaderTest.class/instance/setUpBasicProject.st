@@ -4,7 +4,7 @@ setUpBasicProject
 		name: 'Test Project';
 		uuid: (UUID fromString: '7f5ee44a-1655-4061-a78e-db9578a2226c').
 	memoryRoot := FileSystem memory / 'test-project'.
-	project addModel: OPNamedElement new.
+	project addModel: OPTestContainerModel new.
 	OPProjectController new
 		project: project;
 		saveProjectTo: memoryRoot.

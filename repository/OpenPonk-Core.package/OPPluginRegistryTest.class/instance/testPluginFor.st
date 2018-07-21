@@ -1,3 +1,3 @@
 initialization
 testPluginFor
-	self assert: (registry pluginFor: OPNamedElement new) class equals: OPTestPlugin
+	self assert: (registry pluginFor: OPTestContainerModel new) class equals: OPTestPlugin

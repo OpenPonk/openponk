@@ -1,0 +1,3 @@
+activation
+canBeExecutedInContext: aToolContext
+	^ OPWorkbench isDevelopmentMode

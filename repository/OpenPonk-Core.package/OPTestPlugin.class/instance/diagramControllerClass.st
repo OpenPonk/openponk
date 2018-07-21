@@ -1,3 +1,3 @@
 accessing
 diagramControllerClass
-	^ nil
+	^ OPTestDiagramController

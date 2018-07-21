@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "CmdToolContext",
+	"category" : "OpenPonk-Spec-Diagram-Commands",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"figure"
+	],
+	"name" : "OPDiagramFigureContext",
+	"type" : "normal"
+}

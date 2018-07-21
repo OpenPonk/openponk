@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "",
+	"super" : "CmdCommand",
+	"category" : "OpenPonk-Spec-Diagram-Commands",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"figure",
+		"view",
+		"diagramController"
+	],
+	"name" : "OPDiagramFigureCommand",
+	"type" : "normal"
+}

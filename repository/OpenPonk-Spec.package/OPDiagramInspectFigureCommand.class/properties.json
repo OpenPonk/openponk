@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "OPDiagramFigureDevCommand",
+	"category" : "OpenPonk-Spec-Diagram-Commands",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OPDiagramInspectFigureCommand",
+	"type" : "normal"
+}

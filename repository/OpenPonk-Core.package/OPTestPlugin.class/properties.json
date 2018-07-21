@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "PeterUhnak 5/26/2016 12:03",
-	"super" : "Object",
+	"super" : "OPPlugin",
 	"category" : "OpenPonk-Core-Tests",
 	"classinstvars" : [ ],
 	"pools" : [ ],

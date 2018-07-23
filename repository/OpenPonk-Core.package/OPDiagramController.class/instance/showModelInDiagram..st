@@ -1,5 +1,6 @@
-construction
+figures
 showModelInDiagram: aModel
-	| controller |
-	controller := self newControllerFor: aModel.
-	controller showInDiagram: self
+	self controllerForModel: aModel ifFound: [ :ctrl | ^ ctrl ].
+	^ (self newControllerFor: aModel)
+		showInDiagram: self;
+		yourself

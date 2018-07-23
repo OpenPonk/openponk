@@ -6,7 +6,8 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"figure"
+		"figure",
+		"model"
 	],
 	"name" : "OPDiagramFigureContext",
 	"type" : "normal"

@@ -4,10 +4,8 @@
 	"category" : "OpenPonk-Core-Icons",
 	"classinstvars" : [ ],
 	"pools" : [ ],
-	"classvars" : [
-		"icons"
-	],
+	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "OPIdeaGraphIcons",
+	"name" : "OPIdeaIcons",
 	"type" : "normal"
 }

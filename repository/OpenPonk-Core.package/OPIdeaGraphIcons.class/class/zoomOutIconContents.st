@@ -1,0 +1,8 @@
+private - contents
+zoomOutIconContents
+	"Private - Method generated with the content of the file File @ D:\OpenPonk\icons\idea\zoomOut.png"
+	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA1UlEQVR42rWTMQ6CQBBFqaBR
+Yu+FrPcYJuI9SCTE89hvQYEdxtobYCGN6x/z12xwUCKxeGQz8+eRZZfIORdN4fnI89wTgwxY
+0BLLWhzkVMES1MANUDOjCuJg+AwMSIlhTXpHkGiCDQMnsFjtD6+ArKXGnmP2TWDZNDLQF1Bi
+mLGaoGMzRdhpoDdj5jZV0P5lC/4jNh8+YsNMFt4HL0h4RP4k5G1zYoITuIBSE4y5SDJ857rQ
+BP5CbUEFrqRirewJC03wjaIvGfXHDUhkO+tfBMJOhmX9AGrrWDyXpM9CAAAAAElFTkSuQmCC'

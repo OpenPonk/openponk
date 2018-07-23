@@ -1,0 +1,8 @@
+private - contents
+zoomInIconContents
+	"Private - Method generated with the content of the file File @ D:\OpenPonk\icons\idea\zoomIn.png"
+	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA1UlEQVR42rWTPQ6CQBCFqbBR
+Qu+FrPcYJuI9SCTE89hvQYEdxtobYKGN6xvzNllwUCKx+Mhm58232R8i51w0hdcnz3NPDDJg
+QUss5+IgpwqWoAZugJoZVRAHzWdgQEIM56R2BDNNsGHgBNLV/hABR6SesuaYfRNYFg2bOwJK
+DDNWE9xZTILGDqjNmblNFbR/2YI/xObDITbMZOF78IIZr8jfhKy2ICa4gQsoNcGYhyTND44L
+TeAf1BZU4EoqzpU9YaEJvlH0JaP+uAGJbGf9i0DYSbOMn9sDVPxgE0dlAAAAAElFTkSuQmCC'

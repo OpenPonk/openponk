@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "PeterUhnak 7/23/2018 14:48",
+	"super" : "CmdCommand",
+	"category" : "OpenPonk-Spec-Diagram-Toolbar-Commands",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"diagramPresenter"
+	],
+	"name" : "OPDiagramToolbarCommand",
+	"type" : "normal"
+}

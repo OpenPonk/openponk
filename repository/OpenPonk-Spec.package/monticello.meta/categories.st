@@ -1,5 +1,7 @@
 SystemOrganization addCategory: #'OpenPonk-Spec'!
-SystemOrganization addCategory: 'OpenPonk-Spec-Diagram-Commands'!
+SystemOrganization addCategory: 'OpenPonk-Spec-Diagram'!
+SystemOrganization addCategory: 'OpenPonk-Spec-Diagram-Figure-Commands'!
+SystemOrganization addCategory: 'OpenPonk-Spec-Diagram-Toolbar-Commands'!
 SystemOrganization addCategory: 'OpenPonk-Spec-Dialogs'!
 SystemOrganization addCategory: 'OpenPonk-Spec-EditableDropList'!
 SystemOrganization addCategory: 'OpenPonk-Spec-Form'!

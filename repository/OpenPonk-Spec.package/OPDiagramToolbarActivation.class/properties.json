@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "PeterUhnak 7/23/2018 15:01",
+	"super" : "CmdMenuCommandActivationStrategy",
+	"category" : "OpenPonk-Spec-Diagram-Toolbar-Commands",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OPDiagramToolbarActivation",
+	"type" : "normal"
+}

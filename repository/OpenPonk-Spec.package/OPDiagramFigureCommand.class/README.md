@@ -1,0 +1,1 @@
+I am command for figure context menu.

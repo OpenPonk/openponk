@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "",
 	"super" : "CmdToolContext",
-	"category" : "OpenPonk-Spec-Diagram-Commands",
+	"category" : "OpenPonk-Spec-Diagram-Figure-Commands",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

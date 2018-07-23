@@ -1,0 +1,9 @@
+private - contents
+actualZoomIconContents
+	"Private - Method generated with the content of the file File @ D:\OpenPonk\icons\idea\actualZoom.png"
+	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA20lEQVR42sWTMQrCMBSGg9i6
+OLh7A6+hqLPeQrAeQeeCpXge9w4d6qa46g3q4GT8I39LGhMiOjh8kP68fuT1vQoppfgFEcex
+TggikIGSZMxCvbYWTHf7Fwj7oADSQcGadwGCFhiCOZiwMAAdMABnSg7MGoINkETJAkvWAydK
+lrYW6mKwNjNee0ZB5hNIh6BLwd0nEB5B+ZcW1Ec8UhDp+6CPccQxjjnGtjbGagJXkDYE2oNv
+kS7gwXNiE1SrvAI5uJGcWWoIE5vAR2JKPvrjHBLVzuIbgWKrXlbnJ91wOP9wZ6i6AAAAAElF
+TkSuQmCC'

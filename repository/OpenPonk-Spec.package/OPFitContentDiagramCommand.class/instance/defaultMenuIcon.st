@@ -1,0 +1,3 @@
+execution
+defaultMenuIcon
+	^ OPIdeaGraphIcons fitContentIcon

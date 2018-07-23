@@ -4,8 +4,9 @@ apply
 	center := focus position.
 	opened := OrderedCollection new.
 	opened add: focus.
-	translator := RTSmoothLayoutTranslator new.
-	translator nbCycles: 1.
+	translator := duration asSeconds = 0
+		ifTrue: [ RTDirectLayoutTranslator new ]
+		ifFalse: [ RTSmoothLayoutTranslator new nbCycles: self duration asSeconds ].
 	focus attributeAt: #layer put: 0.
 	focus attributeAt: #parent put: nil.
 	closed := OrderedCollection new.

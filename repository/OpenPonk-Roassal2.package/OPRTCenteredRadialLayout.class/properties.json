@@ -9,7 +9,8 @@
 		"radius",
 		"focus",
 		"nodes",
-		"edges"
+		"edges",
+		"duration"
 	],
 	"name" : "OPRTCenteredRadialLayout",
 	"type" : "normal"

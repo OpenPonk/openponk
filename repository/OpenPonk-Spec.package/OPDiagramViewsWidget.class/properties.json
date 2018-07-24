@@ -1,0 +1,18 @@
+{
+	"commentStamp" : "",
+	"super" : "ComposableModel",
+	"category" : "OpenPonk-Spec-Windows",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Icons"
+	],
+	"instvars" : [
+		"list",
+		"heading",
+		"project",
+		"adapters"
+	],
+	"name" : "OPDiagramViewsWidget",
+	"type" : "normal"
+}

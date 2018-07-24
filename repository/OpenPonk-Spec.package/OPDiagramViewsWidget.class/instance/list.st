@@ -1,0 +1,3 @@
+accessing - spec
+list
+	^ list

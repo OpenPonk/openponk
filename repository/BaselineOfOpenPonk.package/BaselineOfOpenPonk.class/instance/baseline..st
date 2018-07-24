@@ -16,9 +16,10 @@ baseline: spec
 				package: 'OpenPonk-Help';
 				package: 'OpenPonk-Spec'
 					with: [ spec requires: #('Merlin' 'FileDialog' 'Magritte') ];
+				package: 'OpenPonk-UI';
 				package: 'OpenPonk-Plugins'
 					with: [ spec postLoadDoIt: #postLoadPlugins ].
 			spec
 				group: 'default'
-				with: #('OpenPonk-Core' 'OpenPonk-Perf' 'OpenPonk-Trachel' 'OpenPonk-Roassal2' 'OpenPonk-Spec' 'OpenPonk-Telemetry' 'OpenPonk-Help').
+				with: #('OpenPonk-Core' 'OpenPonk-Perf' 'OpenPonk-Trachel' 'OpenPonk-Roassal2' 'OpenPonk-Spec' 'OpenPonk-UI' 'OpenPonk-Telemetry' 'OpenPonk-Help').
 			spec group: 'complete' with: #('default' 'OpenPonk-Plugins') ]

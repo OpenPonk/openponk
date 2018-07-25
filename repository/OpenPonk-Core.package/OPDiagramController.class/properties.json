@@ -17,7 +17,8 @@
 		"autosaveManager",
 		"figureToControllerCache",
 		"modelToControllerCache",
-		"workbenchAnnouncer"
+		"workbenchAnnouncer",
+		"diagramView"
 	],
 	"name" : "OPDiagramController",
 	"type" : "normal"

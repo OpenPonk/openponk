@@ -1,7 +1,8 @@
 views
 applyView: aView
-	aView view
-		ifNotNil: [ :conf | 
-			view canvas camera translateTo: (conf at: 'offset').
-			view canvas camera scale: (conf at: 'zoom') ].
-	aView layout ifNotNil: [ self layout: aView layout ]
+	aView camera
+		ifNotNil: [ :camera | 
+			view canvas camera translateTo: camera offset.
+			view canvas camera scale: camera zoom ].
+	aView layout ifNotNil: [ self layout: aView layout ].
+	diagramView := aView

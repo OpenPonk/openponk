@@ -15,7 +15,7 @@ baseline: spec
 					with: [ spec requires: #('Sentry') ];
 				package: 'OpenPonk-Help';
 				package: 'OpenPonk-Spec'
-					with: [ spec requires: #('Merlin' 'FileDialog' 'Magritte') ];
+					with: [ spec requires: #('Merlin' 'FileDialog' 'Magritte' 'Commander') ];
 				package: 'OpenPonk-UI';
 				package: 'OpenPonk-Plugins'
 					with: [ spec postLoadDoIt: #postLoadPlugins ].

@@ -1,7 +1,10 @@
 adding
 addMenuFor: aFigure
-	| menu |
-	menu := CmdContextMenuActivation
-		buildContextMenuFor: self
-		inContext: (OPDiagramFigureContext for: self of: aFigure).
-	aFigure when: TRMouseRightClick do: [ :event | menu popUpInWorld ]
+	aFigure
+		when: TRMouseRightClick
+		do: [ :event | 
+			| menu |
+			menu := CmdContextMenuActivation
+				buildContextMenuFor: self
+				inContext: (OPDiagramFigureContext for: self of: aFigure).
+			menu popUpInWorld ]

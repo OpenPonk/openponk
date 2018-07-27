@@ -1,3 +1,3 @@
 accessing
 viewsIn: aProject
-	^ aProject views sorted: #modelType descending , #modelName ascending , #name descending
+	^ aProject views sorted: #modelType ascending , #modelName ascending , #name descending

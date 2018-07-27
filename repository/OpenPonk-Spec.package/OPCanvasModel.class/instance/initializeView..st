@@ -4,7 +4,7 @@ initializeView: aView
 	aView when: TRMouseRightClick do: [ :event | self viewContextClicked: event ].
 	aView canvas theme: TRWhiteTheme new.
 	aView @ RTDraggableView.
-	aView @ (RTZoomableView new min: 0.25 max: 4).
+	aView @ (RTZoomableView new min: 0.05 max: 4).
 	aView @ (RTGridView new gridSize: 20).
 	^ aView canvas camera
 		addCallback:

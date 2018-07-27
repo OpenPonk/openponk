@@ -11,7 +11,7 @@ openEditorOnView: aView model: aModel
 	editors at: aModel put: (Array with: editor with: tab).
 	widget := editor buildWithSpec asWidget.
 	editor owner: tab.
-	editor openView: aView model: aModel.
+	editor openModel: aModel.
 	(aModel respondsTo: #whenChanged:)
 		ifTrue: [ aModel whenChanged: [ tab label: aModel name ] ].
 	editor paletteModel rebuildWidget.
@@ -24,4 +24,5 @@ openEditorOnView: aView model: aModel
 			w widget when: #tabDeleted evaluate: [ :t | self closeEditor: editor ] ].
 	self announce: (OPEditorCreated on: editor).
 	tabManager addTab: tab.
-	self focusEditorOf: aModel
+	self focusEditorOf: aModel.
+	editor applyView: aView

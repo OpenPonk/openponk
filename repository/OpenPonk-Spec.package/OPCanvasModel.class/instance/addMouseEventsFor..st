@@ -9,7 +9,8 @@ addMouseEventsFor: aFigure
 		when: TRMouseLeftClick
 		do: [ :event | 
 			self lastClickPosition: event position.
-			self diagramController selectFigure: event element ].
+			self diagramController selectFigure: event element.
+			self lastSelectedFigure: event element ].
 	aFigure
 		when: TRMouseEnter
 		do: [ :event | 

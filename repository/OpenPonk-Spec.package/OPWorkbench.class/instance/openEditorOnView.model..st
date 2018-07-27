@@ -3,9 +3,8 @@ openEditorOnView: aView model: aModel
 	| editor tab plugin widget |
 	(self projectController hasModel: aModel)
 		ifTrue: [ ^ self focusEditorOf: aModel ].
-	editor := OPEditor new.
 	plugin := pluginRegistry pluginFor: aModel.
-	editor plugin: plugin.
+	editor := OPEditor on: plugin.	
 	editor workbench: self.
 	tab := self newTab.
 	editors at: aModel put: (Array with: editor with: tab).

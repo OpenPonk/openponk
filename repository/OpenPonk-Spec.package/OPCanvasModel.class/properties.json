@@ -9,7 +9,8 @@
 		"roassalView",
 		"diagramController",
 		"lastClickPosition",
-		"onZoomChange"
+		"onZoomChange",
+		"lastSelectedFigure"
 	],
 	"name" : "OPCanvasModel",
 	"type" : "normal"

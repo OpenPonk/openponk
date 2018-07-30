@@ -1,5 +1,5 @@
 figures
 hideAllElements
-	controllers := nil.
+	[ controllers isNotEmpty ] whileTrue: [ controllers anyOne removeController ].
 	self cleanView.
 	self view signalUpdate

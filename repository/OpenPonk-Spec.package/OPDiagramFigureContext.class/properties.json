@@ -7,7 +7,9 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"figure",
-		"model"
+		"model",
+		"figures",
+		"controllers"
 	],
 	"name" : "OPDiagramFigureContext",
 	"type" : "normal"

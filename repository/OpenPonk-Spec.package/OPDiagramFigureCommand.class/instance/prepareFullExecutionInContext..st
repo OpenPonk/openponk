@@ -3,4 +3,7 @@ prepareFullExecutionInContext: aToolContext
 	super prepareFullExecutionInContext: aToolContext.
 	diagramController := aToolContext diagramController.
 	view := diagramController view.
-	figure := aToolContext figure
+	figures := aToolContext figures.
+	figure := aToolContext figure.
+	models := aToolContext models.
+	controllers := aToolContext controllers

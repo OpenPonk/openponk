@@ -3,7 +3,7 @@ initializeView: aView
 	aView when: TRMouseLeftClick do: [ :event | self viewClicked: event ].
 	aView when: TRMouseRightClick do: [ :event | self viewContextClicked: event ].
 	aView canvas theme: TRWhiteTheme new.
-	aView @ RTDraggableView.
+	aView @ (OPRTSelectableView new candidatesBlock: [ diagramController selectableFigures ]).
 	aView @ (RTZoomableView new min: 0.05 max: 4).
 	aView @ (RTGridView new gridSize: 20).
 	^ aView canvas camera

@@ -12,6 +12,12 @@ addMouseEventsFor: aFigure
 			self diagramController selectFigure: event element.
 			self lastSelectedFigure: event element ].
 	aFigure
+		when: TRMouseRightClick
+		do: [ :event | 
+			self lastClickPosition: event position.
+			self diagramController selectFigure: event element.
+			self lastSelectedFigure: event element ].
+	aFigure
 		when: TRMouseEnter
 		do: [ :event | 
 			self lastClickPosition: event position.
@@ -20,9 +26,4 @@ addMouseEventsFor: aFigure
 		when: TRMouseLeave
 		do: [ :event | 
 			self lastClickPosition: event position.
-			self diagramController hoverView ].
-	aFigure
-		when: TRMouseRightClick
-		do: [ :event | 
-			self lastClickPosition: event position.
-			self diagramController selectFigure: event element ]
+			self diagramController hoverView ]

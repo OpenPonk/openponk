@@ -1,3 +1,3 @@
 accessing
 figure
-	^ figure
+	^ figures first

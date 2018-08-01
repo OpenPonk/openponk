@@ -1,3 +1,3 @@
 instance creation
-for: aPresenter of: aFigure
-	^ (self for: aPresenter) figure: aFigure
+for: aPresenter of: figures
+	^ (self for: aPresenter) figures: figures

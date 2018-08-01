@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "PeterUhnak 8/1/2018 09:14",
+	"super" : "RTSelectableView",
+	"category" : "OpenPonk-Roassal2-Interactivity",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"candidatesBlock"
+	],
+	"name" : "OPRTSelectableView",
+	"type" : "normal"
+}

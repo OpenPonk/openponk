@@ -1,4 +1,4 @@
 testing
 representsModel: aModelClass
-	figure ifNil: [ ^ false ].
-	^ self model isKindOf: aModelClass
+	figures ifEmpty: [ ^ false ].
+	^ self models allSatisfy: [ :each | each isKindOf: aModelClass ]

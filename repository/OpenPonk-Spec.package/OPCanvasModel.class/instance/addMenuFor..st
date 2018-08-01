@@ -6,5 +6,5 @@ addMenuFor: aFigure
 			| menu |
 			menu := CmdContextMenuActivation
 				buildContextMenuFor: self
-				inContext: (OPDiagramFigureContext for: self of: aFigure).
+				inContext: (OPDiagramFigureContext for: self of: self selectedElements).
 			menu popUpInWorld ]

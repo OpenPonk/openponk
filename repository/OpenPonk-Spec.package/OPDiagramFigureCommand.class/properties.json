@@ -8,7 +8,10 @@
 	"instvars" : [
 		"figure",
 		"view",
-		"diagramController"
+		"diagramController",
+		"figures",
+		"models",
+		"controllers"
 	],
 	"name" : "OPDiagramFigureCommand",
 	"type" : "normal"

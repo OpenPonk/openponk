@@ -1,3 +1,6 @@
 execution
 execute
-	(diagramController controllerForFigure: figure) model inspect
+	models ifEmpty: [ ^ self ].
+	models size = 1
+		ifTrue: [ models first inspect ]
+		ifFalse: [ models inspect ]

@@ -1,3 +1,3 @@
 execution
 defaultMenuItemName
-	^ 'Show All'
+	^ 'Fit All'

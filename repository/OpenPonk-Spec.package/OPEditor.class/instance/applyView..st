@@ -1,3 +1,4 @@
 diagram handling
 applyView: aView
-	diagramController applyView: aView
+	diagramController diagramView: aView.
+	diagramController rebuild

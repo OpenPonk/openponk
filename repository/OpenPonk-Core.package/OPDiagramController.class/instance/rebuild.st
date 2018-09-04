@@ -2,4 +2,8 @@ rebuilding
 rebuild
 	controllers := nil.
 	self cleanView.
-	self showAllElements
+	diagramView camera
+		ifNotNil: [ :camera | 
+			view canvas camera translateTo: camera offset.
+			view canvas camera scale: camera zoom ].
+	self showElements

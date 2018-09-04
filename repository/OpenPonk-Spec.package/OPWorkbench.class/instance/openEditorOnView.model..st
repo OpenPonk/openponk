@@ -10,7 +10,7 @@ openEditorOnView: aView model: aModel
 	editors at: aModel put: (Array with: editor with: tab).
 	widget := editor buildWithSpec asWidget.
 	editor owner: tab.
-	editor openModel: aModel.
+	editor openEmptyModel: aModel.
 	(aModel respondsTo: #whenChanged:)
 		ifTrue: [ aModel whenChanged: [ tab label: aModel name ] ].
 	editor paletteModel rebuildWidget.

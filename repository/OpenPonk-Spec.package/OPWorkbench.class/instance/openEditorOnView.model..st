@@ -1,13 +1,13 @@
 opening
 openEditorOnView: aView model: aModel
 	| editor tab plugin widget |
-	(self projectController hasModel: aModel)
-		ifTrue: [ ^ self focusEditorOf: aModel ].
+	(self projectController hasView: aView)
+		ifTrue: [ ^ self focusEditorOf: aView ].
 	plugin := pluginRegistry pluginFor: aModel.
-	editor := OPEditor on: plugin.	
+	editor := OPEditor on: plugin.
 	editor workbench: self.
 	tab := self newTab.
-	editors at: aModel put: (Array with: editor with: tab).
+	editors at: aView put: (Array with: editor with: tab).
 	widget := editor buildWithSpec asWidget.
 	editor owner: tab.
 	editor openEmptyModel: aModel.
@@ -15,7 +15,7 @@ openEditorOnView: aView model: aModel
 		ifTrue: [ aModel whenChanged: [ tab label: aModel name ] ].
 	editor paletteModel rebuildWidget.
 	tab
-		label: aModel name;
+		label: aView name , '/' , aModel name;
 		icon: plugin icon;
 		retrievingBlock: [ widget ];
 		whenBuiltDo: [ :w | 
@@ -23,5 +23,5 @@ openEditorOnView: aView model: aModel
 			w widget when: #tabDeleted evaluate: [ :t | self closeEditor: editor ] ].
 	self announce: (OPEditorCreated on: editor).
 	tabManager addTab: tab.
-	self focusEditorOf: aModel.
+	self focusEditorOf: aView.
 	editor applyView: aView

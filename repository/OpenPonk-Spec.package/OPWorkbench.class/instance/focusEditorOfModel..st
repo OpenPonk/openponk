@@ -1,10 +1,10 @@
 opening
-focusEditorOf: aView
+focusEditorOfModel: aModel
 	| editorTabPair |
-	(focusedEditor isNotNil and: [ focusedEditor diagramController diagramView = aView ])
+	(focusedEditor isNotNil and: [ focusedEditor diagramController model = aModel ])
 		ifTrue: [ ^ self ].
 	focusedEditor ifNotNil: [ self announce: (OPEditorUnfocused on: focusedEditor) ].
-	editorTabPair := editors at: aView.
+	editorTabPair := editors at: aModel.
 	focusedEditor := editorTabPair first.
 	editorTabPair second selected: true.
 	self announce: (OPEditorFocused on: focusedEditor).

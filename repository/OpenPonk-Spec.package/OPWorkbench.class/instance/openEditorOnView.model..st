@@ -15,7 +15,7 @@ openEditorOnView: aView model: aModel
 		ifTrue: [ aModel whenChanged: [ tab label: aModel name ] ].
 	editor paletteModel rebuildWidget.
 	tab
-		label: aView name , '/' , aModel name;
+		label: '[', aView name , '] ' , aModel name;
 		icon: plugin icon;
 		retrievingBlock: [ widget ];
 		whenBuiltDo: [ :w | 

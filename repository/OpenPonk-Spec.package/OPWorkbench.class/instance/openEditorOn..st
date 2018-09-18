@@ -1,6 +1,7 @@
 opening
 openEditorOn: aModel
 	| editor tab plugin widget |
+	self deprecated: 'use openEditorOnView: instead.'.
 	(self projectController hasModel: aModel)
 		ifTrue: [ ^ self focusEditorOf: aModel ].
 	editor := OPEditor new.

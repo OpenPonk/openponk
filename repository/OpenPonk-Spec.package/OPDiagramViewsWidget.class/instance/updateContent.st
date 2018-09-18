@@ -1,3 +1,6 @@
 actions
 updateContent
-	list items: (self viewsIn: project)
+	| views |
+	views := self viewsIn: project.
+	list items: views.
+	views detect: #isSelected ifFound: [ :view | list setSelectedItem: view ]

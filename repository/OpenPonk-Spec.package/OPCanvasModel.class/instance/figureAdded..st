@@ -1,8 +1,8 @@
 adding
 figureAdded: aFigure
-	"Or rather things that can be #translateTo:-ed"
-	(aFigure isKindOf: RTElement)
+	"Only elements can be translated, not edges."
+	(aFigure isElement)
 		ifTrue: [ aFigure translateTo: self lastClickPosition ].
-	self addMenuFor: aFigure.
 	self addMouseEventsFor: aFigure.
+	self addMenuFor: aFigure.
 	self signalUpdate

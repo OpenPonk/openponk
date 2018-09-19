@@ -1,0 +1,3 @@
+testing
+isEnabled
+	^ enabledCondition value

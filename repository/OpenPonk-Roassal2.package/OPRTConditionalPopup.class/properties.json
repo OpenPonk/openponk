@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "PeterUhnak 9/19/2018 07:44",
+	"super" : "RTPopup",
+	"category" : "OpenPonk-Roassal2-Interactivity",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"enabledCondition"
+	],
+	"name" : "OPRTConditionalPopup",
+	"type" : "normal"
+}

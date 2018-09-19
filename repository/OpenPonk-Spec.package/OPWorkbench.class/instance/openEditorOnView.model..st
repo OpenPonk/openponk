@@ -12,10 +12,10 @@ openEditorOnView: aView model: aModel
 	editor owner: tab.
 	editor openEmptyModel: aModel.
 	(aModel respondsTo: #whenChanged:)
-		ifTrue: [ aModel whenChanged: [ tab label: aModel name ] ].
+		ifTrue: [ aModel whenChanged: [ tab label: '[' , aView name , '] ' , aModel name ] ].
 	editor paletteModel rebuildWidget.
 	tab
-		label: '[', aView name , '] ' , aModel name;
+		label: '[' , aView name , '] ' , aModel name;
 		icon: plugin icon;
 		retrievingBlock: [ widget ];
 		whenBuiltDo: [ :w | 

@@ -1,0 +1,19 @@
+{
+	"commentStamp" : "PeterUhnak 7/25/2018 12:28",
+	"super" : "Object",
+	"category" : "OpenPonk-Core-Views",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"modelName",
+		"modelType",
+		"modelVersion",
+		"viewName",
+		"isOpen",
+		"isSelected",
+		"order"
+	],
+	"name" : "OPDiagramViewInfo",
+	"type" : "normal"
+}

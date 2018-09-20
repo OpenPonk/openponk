@@ -1,0 +1,28 @@
+{
+	"commentStamp" : "PeterUhnak 7/24/2018 14:19",
+	"super" : "Object",
+	"category" : "OpenPonk-Core-Views",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"project",
+		"name",
+		"isOpen",
+		"filters",
+		"layout",
+		"notes",
+		"modelName",
+		"modelType",
+		"order",
+		"modelVersion",
+		"isSelected",
+		"camera",
+		"version",
+		"visibleElements",
+		"model",
+		"options"
+	],
+	"name" : "OPDiagramView",
+	"type" : "normal"
+}

@@ -8,3 +8,4 @@ SystemOrganization addCategory: 'OpenPonk-Core-Models'!
 SystemOrganization addCategory: 'OpenPonk-Core-Persistence'!
 SystemOrganization addCategory: 'OpenPonk-Core-Tests'!
 SystemOrganization addCategory: 'OpenPonk-Core-UICommands'!
+SystemOrganization addCategory: 'OpenPonk-Core-Views'!

@@ -1,0 +1,2 @@
+I represent a view of a model. The content of the model can be filtered, explicitly shown, or explicitly hidden.
+Further I contain the layout of the entities in the view, and layout/configuration of the view itself.

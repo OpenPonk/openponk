@@ -52,4 +52,7 @@ projectsBaseline: spec
 				repository: 'http://smalltalkhub.com/mc/Moose/PetitParser/main/' ].
 	spec
 		baseline: 'Sentry'
-		with: [ spec repository: 'github://peteruhnak/pharo-sentry/repository' ]
+		with: [ spec repository: 'github://peteruhnak/pharo-sentry/repository' ].
+	spec
+		baseline: 'SynchronizedLinks'
+		with: [ spec repository: 'github://openponk/synchronized-links/repository' ]

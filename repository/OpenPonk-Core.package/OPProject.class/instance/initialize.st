@@ -7,4 +7,5 @@ initialize
 	name := NewValueHolder value: 'Unnamed project'.
 	dirty := false asValueHolder.
 	models whenChangedDo: [ dirty value: true ].
-	name whenChangedDo: [ dirty value: true ]
+	name whenChangedDo: [ dirty value: true ].
+	views := SRToManyLink on: self slot: #views oppositeSlot: #project

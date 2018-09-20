@@ -1,4 +1,4 @@
-as yet unclassified
+opening
 openProject
 	FDOpenFileDialog new
 		whenSelected: [ :file | self openProjectFromFile: file ];

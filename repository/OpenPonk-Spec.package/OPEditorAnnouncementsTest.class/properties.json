@@ -9,7 +9,8 @@
 		"workbench",
 		"editor",
 		"announcer",
-		"plugin"
+		"plugin",
+		"project"
 	],
 	"name" : "OPEditorAnnouncementsTest",
 	"type" : "normal"

@@ -14,7 +14,8 @@
 		"storageFolder",
 		"storageFile",
 		"state",
-		"name"
+		"name",
+		"views"
 	],
 	"name" : "OPProject",
 	"type" : "normal"

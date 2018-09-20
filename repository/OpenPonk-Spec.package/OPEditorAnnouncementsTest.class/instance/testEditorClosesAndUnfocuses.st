@@ -1,7 +1,7 @@
 tests
 testEditorClosesAndUnfocuses
 	| unfocusedAnn closedAnn oldModel |
-	oldModel := OPTestContainerModel new.
+	oldModel := project models first.
 	announcer when: OPEditorClosed do: [ :ann | closedAnn := ann ].
 	announcer when: OPEditorUnfocused do: [ :ann | unfocusedAnn := ann ].
 	workbench openEditorOn: oldModel.

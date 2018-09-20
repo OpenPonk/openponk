@@ -1,4 +1,4 @@
-as yet unclassified
+opening
 openProjectFromFolder: aFolder
 	| reader newProject |
 	reader := OPPersistenceProjectReader new.

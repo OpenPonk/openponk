@@ -10,4 +10,4 @@ openProject: aProject
 	diagramWidget project: project.
 	navigatorModel openOn: project.
 	modelTreeWidget openOn: project.
-	projectController openFirstDiagram
+	projectController openViews

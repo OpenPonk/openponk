@@ -1,4 +1,4 @@
-as yet unclassified
+opening
 openProjectFromFile: aFile
 	| reader newProject store |
 	store := OPZipPersistence new loadFrom: aFile.

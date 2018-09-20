@@ -1,7 +1,7 @@
 tests
 testEditorCreatedAndFocused
 	| createdAnn focusedAnn model |
-	model := OPTestContainerModel new.
+	model := project models second.
 	announcer when: OPEditorCreated do: [ :ann | createdAnn := ann ].
 	announcer when: OPEditorFocused do: [ :ann | focusedAnn := ann ].
 	workbench openEditorOn: model.

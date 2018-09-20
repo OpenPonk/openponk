@@ -1,8 +1,8 @@
 tests
 testTabSwitchRefocuses
 	| unfocusedAnn focusedAnn oldModel newModel |
-	oldModel := OPTestContainerModel new.
-	newModel := OPTestContainerModel new.
+	oldModel := project models first.
+	newModel := project models second.
 	workbench openEditorOn: oldModel.
 	workbench openEditorOn: newModel.
 	workbench tabManager tabs first buildWithSpec.

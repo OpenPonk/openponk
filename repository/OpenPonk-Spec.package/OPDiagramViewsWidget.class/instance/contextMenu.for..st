@@ -1,5 +1,6 @@
 retrieving
 contextMenu: aMenuMorph for: aView
+	aView ifNil: [ ^ aMenuMorph ].
 	aMenuMorph
 		add: 'Open view'
 		target: self

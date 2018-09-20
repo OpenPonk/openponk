@@ -3,11 +3,12 @@ baseline: spec
 	<baseline>
 	spec
 		for: #common
-		do: [ self projectsBaseline: spec.
+		do: [ self externalProjectsBaseline: spec.
+			self internalProjectsBaseline: spec.
 			spec
 				package: 'OpenPonk-Core'
 					with: [ spec
-						requires: #('OpenPonkModel' 'Magritte' 'Mocketry' 'Roassal2' 'PetitParser' 'XMLParser' 'XPath') ];
+						requires: #('OpenPonkModel' 'Magritte' 'Mocketry' 'Roassal2' 'PetitParser' 'XMLParser' 'XPath' 'NeoJSON') ];
 				package: 'OpenPonk-Perf';
 				package: 'OpenPonk-Trachel';
 				package: 'OpenPonk-Roassal2';

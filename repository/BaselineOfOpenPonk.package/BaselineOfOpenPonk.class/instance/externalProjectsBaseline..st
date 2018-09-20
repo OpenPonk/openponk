@@ -1,5 +1,5 @@
 accessing
-projectsBaseline: spec
+externalProjectsBaseline: spec
 	spec baseline: 'Commander' with: [ spec repository: 'github://dionisiydk/Commander' ].
 	spec
 		project: 'XMLParser'
@@ -15,12 +15,6 @@ projectsBaseline: spec
 				versionString: #stable;
 				loads: #(Core);
 				repository: 'http://smalltalkhub.com/mc/PharoExtras/XPath/main/' ].
-	spec
-		baseline: 'OpenPonkModel'
-		with: [ spec repository: 'github://openponk/openponk-model/repository' ].
-	spec
-		baseline: 'FileDialog'
-		with: [ spec repository: 'github://peteruhnak/file-dialog/repository' ].
 	spec
 		project: 'Roassal2'
 		with: [ spec
@@ -51,8 +45,7 @@ projectsBaseline: spec
 				loads: #('Parser');
 				repository: 'http://smalltalkhub.com/mc/Moose/PetitParser/main/' ].
 	spec
-		baseline: 'Sentry'
-		with: [ spec repository: 'github://peteruhnak/pharo-sentry/repository' ].
-	spec
-		baseline: 'SynchronizedLinks'
-		with: [ spec repository: 'github://openponk/synchronized-links/repository' ]
+		configuration: 'NeoJSON'
+		with: [ spec
+				version: #stable;
+				repository: 'http://smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main/' ]

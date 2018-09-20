@@ -2,6 +2,6 @@ serializing
 asJson
 	^ String
 		<< [ :stream | 
-			(NSPJsonWriter on: stream)
+			(OPJsonWriter on: stream)
 				mapInstVarsFor: self class;
 				nextPut: self ]

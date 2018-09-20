@@ -2,7 +2,7 @@ serializing
 asJson
 	^ String
 		<< [ :stream | 
-			(NSPJsonWriter on: stream)
+			(OPJsonWriter on: stream)
 				for: OPDiagramView
 					do: [ :mapping | 
 					mapping

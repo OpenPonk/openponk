@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "PeterUhnak 9/20/2018 14:35",
+	"super" : "NeoJSONWriter",
+	"category" : "OpenPonk-Core-Persistence",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OPJsonWriter",
+	"type" : "normal"
+}

@@ -1,1 +1,0 @@
-I provide basic scaffolding and utility functions to ease the testing of controllers.

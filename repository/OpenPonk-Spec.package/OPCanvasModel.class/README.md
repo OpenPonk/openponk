@@ -1,1 +1,0 @@
-I am Spec model to embed Roassal2 into DCEditor.

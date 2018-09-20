@@ -1,3 +1,0 @@
-specs
-showPriority
-	^ self isLinkInstalled

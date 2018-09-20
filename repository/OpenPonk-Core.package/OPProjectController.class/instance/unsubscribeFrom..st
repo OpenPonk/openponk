@@ -1,3 +1,0 @@
-announcements
-unsubscribeFrom: aDiagramController
-	aDiagramController model announcer unsubscribe: self

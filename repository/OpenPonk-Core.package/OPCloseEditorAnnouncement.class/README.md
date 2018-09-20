@@ -1,1 +1,0 @@
-Fire me on any DiagramController's MODEL and the Editor operating on the model will be closed. If it doesn't exist then nothing will happen.

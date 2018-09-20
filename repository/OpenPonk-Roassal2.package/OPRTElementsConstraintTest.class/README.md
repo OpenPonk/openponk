@@ -1,1 +1,0 @@
-A DCTRConstraintTest is a test class for testing the behavior of DCTRConstraint

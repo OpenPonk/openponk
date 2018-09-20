@@ -1,1 +1,0 @@
-Basic vertex ordering for undirected graphs.

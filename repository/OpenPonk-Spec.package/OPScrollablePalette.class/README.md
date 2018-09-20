@@ -1,1 +1,0 @@
-I am a scrolling wrapper around Palette.

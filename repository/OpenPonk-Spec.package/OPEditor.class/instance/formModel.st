@@ -1,3 +1,0 @@
-accessing - spec
-formModel
-	^ formModel

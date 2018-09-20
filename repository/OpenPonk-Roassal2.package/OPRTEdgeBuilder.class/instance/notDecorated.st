@@ -1,3 +1,0 @@
-heads
-notDecorated
-	shape notDecorated

@@ -1,2 +1,0 @@
-I solve minimal cost assignment problem as described in 
-MUNKRES, J. Algorithms for the assignment and transportation problems. Journal of the Society for Industrial and Applied Mathematics 5, 1 (March 1957), 32–38

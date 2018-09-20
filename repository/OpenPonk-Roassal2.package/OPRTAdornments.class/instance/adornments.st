@@ -1,3 +1,0 @@
-accessing
-adornments
-	^ adornments value

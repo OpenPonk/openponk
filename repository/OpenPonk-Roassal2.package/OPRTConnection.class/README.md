@@ -1,1 +1,0 @@
-I am a connection between two points. This connection can be straight line or a sequence of line segments.

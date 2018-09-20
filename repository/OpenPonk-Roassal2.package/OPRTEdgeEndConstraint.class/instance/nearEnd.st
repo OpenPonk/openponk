@@ -1,3 +1,0 @@
-accessing
-nearEnd
-	origin := #end

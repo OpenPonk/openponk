@@ -1,3 +1,0 @@
-accessing
-gitCommit
-	^ gitCommit ifNil: ''

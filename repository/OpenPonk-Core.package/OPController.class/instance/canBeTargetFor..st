@@ -1,3 +1,0 @@
-connecting
-canBeTargetFor: aController
-	^ false

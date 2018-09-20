@@ -1,3 +1,0 @@
-accessing
-exporterVersion
-	^ OPVersion version

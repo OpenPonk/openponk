@@ -1,3 +1,0 @@
-serialize/materialize
-materializeDiagramFrom: aString
-	self shouldNotImplement

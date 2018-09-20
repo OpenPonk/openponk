@@ -1,3 +1,0 @@
-testing
-historyIsEmpty
-	^ history isEmpty

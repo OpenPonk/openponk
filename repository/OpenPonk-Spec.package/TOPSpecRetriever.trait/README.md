@@ -1,1 +1,0 @@
-I provide a way to access Spec Layouts by their pragma names.

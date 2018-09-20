@@ -1,3 +1,0 @@
-accessing - spec
-heading
-	^ heading

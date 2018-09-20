@@ -1,3 +1,0 @@
-accessing
-edge
-	^ edge

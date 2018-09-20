@@ -1,3 +1,0 @@
-heads
-filledArrowHead
-	shape filledArrowHead

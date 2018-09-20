@@ -1,1 +1,0 @@
-I contain some examples for shapes and utilities available in this package.

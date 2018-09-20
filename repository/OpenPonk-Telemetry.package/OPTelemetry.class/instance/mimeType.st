@@ -1,3 +1,0 @@
-accessing
-mimeType
-	^ ZnMimeType applicationJson

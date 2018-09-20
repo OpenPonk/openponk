@@ -1,1 +1,0 @@
-My job is to store a project with all the plugins into a provided directory.

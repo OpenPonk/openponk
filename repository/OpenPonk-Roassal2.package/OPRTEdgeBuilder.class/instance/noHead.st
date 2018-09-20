@@ -1,3 +1,0 @@
-heads
-noHead
-	shape noHead

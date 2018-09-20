@@ -1,3 +1,0 @@
-destruction
-removeModel
-	^ self subclassResponsibility

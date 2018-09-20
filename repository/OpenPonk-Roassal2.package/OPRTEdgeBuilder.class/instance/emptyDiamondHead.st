@@ -1,3 +1,0 @@
-heads
-emptyDiamondHead
-	shape emptyDiamondHead

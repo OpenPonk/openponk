@@ -1,3 +1,0 @@
-accessing
-figure
-	^ self view

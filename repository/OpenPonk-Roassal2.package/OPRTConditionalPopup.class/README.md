@@ -1,1 +1,0 @@
-I am a popup that is activated only if the provided condition is met.

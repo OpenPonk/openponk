@@ -1,3 +1,0 @@
-heads
-emptyNarrowArrowHead
-	shape emptyNarrowArrowHead

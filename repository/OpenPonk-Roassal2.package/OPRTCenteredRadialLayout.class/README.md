@@ -1,1 +1,0 @@
-I am a simple layout that arranges elements around the focused one in a radial layout based on BFS traversal of neighbors.

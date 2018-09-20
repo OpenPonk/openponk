@@ -1,3 +1,0 @@
-accessing
-acceptColor
-	^ Color green

@@ -1,3 +1,0 @@
-accessing
-serializerClass
-	^ self subclassResponsibility

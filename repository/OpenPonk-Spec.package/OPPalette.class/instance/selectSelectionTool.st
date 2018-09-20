@@ -1,3 +1,0 @@
-private
-selectSelectionTool
-	items first performAction

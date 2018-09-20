@@ -1,3 +1,0 @@
-accessing
-head
-	^ decorations head

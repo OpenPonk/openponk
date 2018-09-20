@@ -1,3 +1,0 @@
-private
-newLabel
-	^ self newLabel: ''

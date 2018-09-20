@@ -1,1 +1,0 @@
-I store a snapshot of a model/diagram.

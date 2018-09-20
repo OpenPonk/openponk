@@ -1,3 +1,0 @@
-accessing
-selectedItem
-	^ list selectedItem

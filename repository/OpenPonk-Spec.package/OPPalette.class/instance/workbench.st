@@ -1,3 +1,0 @@
-accessing
-workbench
-	^ owner workbench

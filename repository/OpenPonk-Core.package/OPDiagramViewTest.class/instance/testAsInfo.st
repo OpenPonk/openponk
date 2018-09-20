@@ -3,10 +3,7 @@ testAsInfo
 	| info |
 	view := OPDiagramView new
 		name: 'default';
-		model:
-			(NSMComponent new
-				name: 'testComp';
-				version: '1.0');
+		model: OPTestContainerModel new;
 		isOpen: true;
 		isSelected: false;
 		order: 7.

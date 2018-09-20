@@ -1,18 +1,16 @@
 tests
 testNewCopy
-	| comp project newView |
-	comp := NSMComponent new
-		name: 'testComp';
-		version: '1.0'.
-	project := NSPProject new.
-	project addModel: comp.
+	| model project newView |
+	model := OPTestContainerModel new.
+	project := OPProject new.
+	project addModel: model.
 	view := OPDiagramView new
 		name: 'original';
 		camera:
 			(OPDiagramViewCamera new
 				offset: 20 @ 30;
 				zoom: 1.2);
-		model: comp;
+		model: model;
 		project: project;
 		isOpen: true;
 		isSelected: false;
@@ -21,7 +19,7 @@ testNewCopy
 	self deny: newView = view.
 	self assert: newView name equals: 'copy of original'.
 	self assert: newView project equals: project.
-	self assert: newView model equals: comp.
+	self assert: newView model equals: model.
 	self
 		assert: (project views includes: newView)
 		description: [ 'Opposite test, because clone bypasses Synchronized Links' ].

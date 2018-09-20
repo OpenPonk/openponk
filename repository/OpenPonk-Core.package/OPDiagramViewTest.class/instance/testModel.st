@@ -1,14 +1,11 @@
 tests
 testModel
-	| comp project |
-	comp := NSMComponent new
-		name: 'testComp';
-		version: '1.0'.
-	project := NSPProject new.
-	project addModel: comp.
+	| model project |
+	model := OPTestContainerModel new.
+	project := OPProject new.
+	project addModel: model.
 	view := OPDiagramView new
-		modelName: 'testComp';
-		modelVersion: '1.0';
-		modelType: 'Component';
+		modelName: 'container';
+		modelType: 'OPTestContainerModel';
 		project: project.
-	self assert: view model equals: comp
+	self assert: view model equals: model

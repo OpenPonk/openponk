@@ -5,7 +5,7 @@ testAsJsonComplex
 			(OPDiagramViewCamera new
 				offset: 20 @ 30;
 				zoom: 1.2);
-		project: NSPProject new;
+		project: OPProject new;
 		layout: {'Person' -> (27 @ 23)} asDictionary;
 		options: {'key' -> 'value'} asDictionary.
 	self

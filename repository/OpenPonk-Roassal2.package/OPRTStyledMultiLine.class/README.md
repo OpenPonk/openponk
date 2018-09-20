@@ -1,1 +1,0 @@
-I am a styled multiline that will loop if the source and target is the same element.

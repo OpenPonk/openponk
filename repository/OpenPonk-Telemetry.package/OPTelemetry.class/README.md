@@ -1,1 +1,0 @@
-I collect information about errors and such and send it to remove server.

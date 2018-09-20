@@ -1,3 +1,0 @@
-heads
-emptyCircleTail
-	shape emptyCircleTail

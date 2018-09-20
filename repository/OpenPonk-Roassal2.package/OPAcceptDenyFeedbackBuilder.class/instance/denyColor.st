@@ -1,3 +1,0 @@
-accessing
-denyColor
-	^ Color red

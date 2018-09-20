@@ -1,3 +1,0 @@
-accessing
-anchorShape
-	^ anchorShape

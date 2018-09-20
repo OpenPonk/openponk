@@ -1,3 +1,0 @@
-running
-setUpModel
-	model := view

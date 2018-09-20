@@ -1,1 +1,0 @@
-I am a wizard for exporting the diagram (Roassal canvas) to an image file.

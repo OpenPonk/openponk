@@ -1,1 +1,0 @@
-I handle storing in-image snapshots (mementos) and I pass the memento also onto Plugin Exporter (or ask Importer to retrieve it).

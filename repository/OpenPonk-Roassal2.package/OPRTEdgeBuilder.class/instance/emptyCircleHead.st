@@ -1,3 +1,0 @@
-heads
-emptyCircleHead
-	shape emptyCircleHead

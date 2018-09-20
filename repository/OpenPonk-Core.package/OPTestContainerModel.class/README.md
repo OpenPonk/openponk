@@ -1,1 +1,0 @@
-I am a mock representing a tree inner node entity.

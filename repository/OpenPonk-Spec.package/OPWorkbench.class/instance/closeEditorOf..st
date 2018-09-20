@@ -1,7 +1,0 @@
-opening
-closeEditorOf: aView
-	editors
-		at: aView
-		ifPresent: [ :pair | 
-			tabManager removeTab: pair second.
-			self announce: (OPEditorClosed on: pair first) ]

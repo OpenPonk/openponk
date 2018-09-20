@@ -1,1 +1,0 @@
-I am command for diagram toolbar.

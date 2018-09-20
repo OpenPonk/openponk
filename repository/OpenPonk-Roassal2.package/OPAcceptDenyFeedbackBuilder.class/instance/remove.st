@@ -1,3 +1,0 @@
-protocol
-remove
-	^ self subclassResponsibility

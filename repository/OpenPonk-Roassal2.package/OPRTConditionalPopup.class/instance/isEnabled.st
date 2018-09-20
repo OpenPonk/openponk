@@ -1,3 +1,0 @@
-testing
-isEnabled
-	^ enabledCondition value

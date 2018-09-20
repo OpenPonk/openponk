@@ -1,3 +1,0 @@
-connecting
-canBeSourceFor: aController
-	^ false

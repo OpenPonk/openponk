@@ -1,3 +1,0 @@
-private
-deselectTool
-	self selectSelectionTool

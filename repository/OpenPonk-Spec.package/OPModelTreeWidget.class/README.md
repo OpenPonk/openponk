@@ -1,1 +1,0 @@
-I present model entities in a hierarchical tree-like structure.

@@ -1,3 +1,0 @@
-construction
-showInDiagram: aDiagramController
-	self subclassResponsibility

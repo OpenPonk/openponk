@@ -1,1 +1,0 @@
-I am fired when an Editor was closed.

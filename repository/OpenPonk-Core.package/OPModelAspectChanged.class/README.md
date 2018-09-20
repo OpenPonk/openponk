@@ -1,1 +1,0 @@
-I provide more detailed information on what aspect has changed and how.

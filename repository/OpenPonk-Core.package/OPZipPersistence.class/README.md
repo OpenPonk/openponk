@@ -1,1 +1,0 @@
-I store a MemoryStore into a specified zip file and vice versa.

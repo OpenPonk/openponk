@@ -1,3 +1,0 @@
-heads
-emptyArrowTail
-	shape emptyArrowTail

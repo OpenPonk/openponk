@@ -1,2 +1,0 @@
-serialize/materialize
-serializeDiagram: aDiagramMemento

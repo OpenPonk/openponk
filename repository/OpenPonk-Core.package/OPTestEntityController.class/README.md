@@ -1,1 +1,0 @@
-I am a mock class for testing "regular" model controllers.

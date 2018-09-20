@@ -1,3 +1,0 @@
-running
-isAbstract
-	^ self = OPRTHighlighterTest

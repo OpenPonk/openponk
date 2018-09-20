@@ -1,3 +1,0 @@
-accessing
-directedEdges
-	^ directedEdges ifNil: [ #() ]

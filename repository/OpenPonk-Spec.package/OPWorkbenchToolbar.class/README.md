@@ -1,1 +1,0 @@
-I am top menu toolbar for Workbench.

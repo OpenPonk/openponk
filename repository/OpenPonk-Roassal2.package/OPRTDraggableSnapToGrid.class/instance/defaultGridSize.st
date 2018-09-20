@@ -1,3 +1,0 @@
-accessing
-defaultGridSize
-	^ 10

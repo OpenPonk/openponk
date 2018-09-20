@@ -1,1 +1,0 @@
-I represent camera positioning over the view.

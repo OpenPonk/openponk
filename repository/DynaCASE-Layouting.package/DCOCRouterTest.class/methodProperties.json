@@ -1,8 +1,0 @@
-{
-	"class" : {
-		 },
-	"instance" : {
-		"routeVisualization" : "PeterUhnak 12/16/2015 12:12",
-		"setUp" : "PeterUhnak 12/14/2015 23:52",
-		"testCollinearizeRoute" : "PeterUhnak 1/11/2016 21:45",
-		"testInterestingPoint" : "PeterUhnak 12/16/2015 12:47" } }

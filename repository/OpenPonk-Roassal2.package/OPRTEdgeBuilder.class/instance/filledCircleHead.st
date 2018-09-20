@@ -1,3 +1,0 @@
-heads
-filledCircleHead
-	shape filledCircleHead

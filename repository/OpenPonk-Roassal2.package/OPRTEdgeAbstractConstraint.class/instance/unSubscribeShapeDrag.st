@@ -1,3 +1,0 @@
-private
-unSubscribeShapeDrag
-	shape announcer removeSubscription: subscription

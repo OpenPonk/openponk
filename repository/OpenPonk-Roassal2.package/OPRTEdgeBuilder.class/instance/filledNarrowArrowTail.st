@@ -1,3 +1,0 @@
-heads
-filledNarrowArrowTail
-	shape filledNarrowArrowTail

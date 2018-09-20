@@ -1,1 +1,0 @@
-I am a form for saving a project --- a way to specify the project name and it's storage folder.

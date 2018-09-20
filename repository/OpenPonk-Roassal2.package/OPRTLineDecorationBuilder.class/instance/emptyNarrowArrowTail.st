@@ -1,3 +1,0 @@
-decorators
-emptyNarrowArrowTail
-	self tail: RTEmptyNarrowArrow

@@ -1,3 +1,0 @@
-ui interaction
-initializePalette: aPalette
-	self subclassResponsibility

@@ -1,3 +1,0 @@
-heads
-filledDiamondTail
-	shape filledDiamondTail

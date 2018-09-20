@@ -1,3 +1,0 @@
-loading
-loadMementoFrom: aFolder
-	^ nil

@@ -1,3 +1,0 @@
-accessing
-palette
-	^ self owner

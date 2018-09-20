@@ -1,3 +1,0 @@
-configuration
-center
-	strategy := #center

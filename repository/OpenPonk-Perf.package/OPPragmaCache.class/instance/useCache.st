@@ -1,3 +1,0 @@
-configuration
-useCache
-	useCache := true

@@ -1,1 +1,0 @@
-I am base class for all UI - centric commands such as rename or export

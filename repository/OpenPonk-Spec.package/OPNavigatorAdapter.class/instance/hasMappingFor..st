@@ -1,3 +1,0 @@
-testing
-hasMappingFor: anObject
-	^ true

@@ -1,3 +1,0 @@
-*OpenPonk-Spec
-popUpOwner
-	^ nil

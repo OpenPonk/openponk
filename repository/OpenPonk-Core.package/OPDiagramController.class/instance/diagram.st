@@ -1,3 +1,0 @@
-accessing
-diagram
-	^ self layout

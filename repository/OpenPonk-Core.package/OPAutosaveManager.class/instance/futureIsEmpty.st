@@ -1,3 +1,0 @@
-testing
-futureIsEmpty
-	^ future isEmpty

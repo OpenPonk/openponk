@@ -9,7 +9,7 @@ testFromJsonComplex
 		"visibleElements" : [ "Person" ]	 }'.
 	self assert: view camera offset equals: 20 @ 30.
 	self assert: view camera zoom equals: 1.2.
-	self assert: view filters species equals: OrderedCollection.
+	self assert: view filters species equals: Array.
 	self assert: view layout equals: {'Person' -> (27 @ 23)} asDictionary.
 	self assert: view visibleElements equals: #('Person').
 	self assert: view project isNil.

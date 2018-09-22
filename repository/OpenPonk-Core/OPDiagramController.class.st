@@ -87,7 +87,6 @@ OPDiagramController >> applyView: aView [
 		ifNotNil: [ :camera | 
 			view canvas camera translateTo: camera offset.
 			view canvas camera scale: camera zoom ].
-	aView filters ifNotNil: [ :filters | filters do: [ :each | each applyOn: self ] ].
 	aView isDefault & aView visibleElements isEmpty
 		ifTrue: [ self showAllElements ]
 		ifFalse: [ self visibleElements: aView visibleElements ].
@@ -540,8 +539,8 @@ OPDiagramController >> showAllElements [
 OPDiagramController >> showElements [
 	self showAllElements.
 	diagramView
-		ifNotNil: [ diagramView filters ifNotNil: [ :filters | filters do: [ :each | each applyOn: self ] ].
-			diagramView visibleElements ifNotEmpty: [ :elements | self visibleElements: elements ] ]
+		ifNotNil:
+			[ diagramView visibleElements ifNotEmpty: [ :elements | self visibleElements: elements ] ]
 ]
 
 { #category : #construction }

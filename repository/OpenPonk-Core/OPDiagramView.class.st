@@ -77,11 +77,10 @@ OPDiagramView >> asJson [
 				for: OPDiagramView
 					do: [ :mapping | 
 					mapping
-						mapInstVars: mapping identifier instVarNames \ #(project model modelName modelType modelVersion filters).
-					#(modelName modelVersion modelType) do: [ :each | mapping mapAccessor: each ].
-					(mapping mapInstVar: #filters) valueSchema: #ListOfFilters ];
-				for: #ListOfFilters customDo: [ :mapping | mapping listOfElementSchema: #Filter ];
-				for: #Filter customDo: [ :mapping | mapping encoder: #encode ];
+						mapInstVars:
+							mapping identifier instVarNames
+								\ #(project model modelName modelType modelVersion).
+					#(modelName modelVersion modelType) do: [ :each | mapping mapAccessor: each ] ];
 				mapInstVarsFor: OPDiagramViewCamera;
 				mapInstVarsFor: Point;
 				nextPut: self ]
@@ -95,18 +94,6 @@ OPDiagramView >> camera [
 { #category : #accessing }
 OPDiagramView >> camera: aCameraSettings [
 	camera := aCameraSettings
-]
-
-{ #category : #accessing }
-OPDiagramView >> filterOfType: aFilterClass [
-	^ self filters
-		detect: [ :each | each name = aFilterClass filterName ]
-		ifNone: [ self filters add: aFilterClass new ]
-]
-
-{ #category : #accessing }
-OPDiagramView >> filters [
-	^ filters
 ]
 
 { #category : #initialization }

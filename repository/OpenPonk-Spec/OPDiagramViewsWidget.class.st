@@ -10,12 +10,15 @@ Class {
 		'list',
 		'heading',
 		'project',
-		'adapters'
+		'adapters',
+		'toolbar',
+		'editButton',
+		'deleteButton'
 	],
 	#classVars : [
 		'Icons'
 	],
-	#category : 'OpenPonk-Spec-Windows'
+	#category : #'OpenPonk-Spec-Windows'
 }
 
 { #category : #specs }
@@ -23,40 +26,58 @@ OPDiagramViewsWidget class >> defaultSpec [
 	^ SpecColumnLayout composed
 		add: #heading height: self toolbarHeight;
 		add: #list;
+		add: #toolbar height: self toolbarHeight;
 		yourself
 ]
 
-{ #category : #retrieving }
-OPDiagramViewsWidget >> contextMenu: aMenuMorph for: aView [
-	aView ifNil: [ ^ aMenuMorph ].
-	aMenuMorph
-		add: 'Open view'
-		target: self
-		selector: #openView:
-		argument: aView.
-	aMenuMorph
-		add: 'Clone view ...'
-		target: self
-		selector: #copyView:
-		argument: aView.
-	aView isDefault
-		ifFalse: [ aMenuMorph
-				add: 'Remove view'
-				target: self
-				selector: #removeView:
-				argument: aView ].
-	^ aMenuMorph
-]
-
 { #category : #actions }
-OPDiagramViewsWidget >> copyView: aView [
+OPDiagramViewsWidget >> cloneView: aView [
 	| name newView |
-	[ name := UIManager default request: 'View name' initialAnswer: aView name ]
+	[ name := UIManager default request: 'View name' initialAnswer: aView model name ]
 		doWhileTrue: [ name isNotNil and: [ name = aView name ] ].
 	name ifNil: [ ^ self ].
 	newView := aView newCopy.
 	newView name: name.
 	self workbench openEditorOnView: newView
+]
+
+{ #category : #retrieving }
+OPDiagramViewsWidget >> contextMenu: aMenuMorph for: aView [
+	aView ifNil: [ ^ aMenuMorph ].
+	(aMenuMorph
+		add: 'Open view'
+		target: self
+		selector: #openView:
+		argument: aView) icon: (self iconNamed: #glamorousOpen).
+	(aMenuMorph
+		add: 'Clone view ...'
+		target: self
+		selector: #cloneView:
+		argument: aView) icon: (self iconNamed: #smallRemoteOpen).
+	aView isDefault
+		ifFalse: [ (aMenuMorph
+				add: 'Rename view'
+				target: self
+				selector: #renameView:
+				argument: aView) icon: (self iconNamed: #glamorousEdit) ].
+	aView isDefault
+		ifFalse: [ aMenuMorph addLine.
+			(aMenuMorph
+				add: 'Delete view'
+				target: self
+				selector: #deleteView:
+				argument: aView) icon: (self iconNamed: #glamorousTrash) ].
+	^ aMenuMorph
+]
+
+{ #category : #actions }
+OPDiagramViewsWidget >> deleteView: aView [
+	(UIManager default
+		confirm: 'Are you sure you want to remove view ' , (self displayFor: aView) , '?')
+		ifFalse: [ ^ self ].
+	self workbench closeEditorOf: aView.
+	aView project: nil.
+	self updateContent
 ]
 
 { #category : #retrieving }
@@ -82,14 +103,46 @@ OPDiagramViewsWidget >> initializePresenter [
 		displayBlock: [ :aView | self displayFor: aView ];
 		icons: [ :aView | adapters iconFor: aView model ];
 		doubleClickAction: [ list selectedItem ifNotNil: [ :aView | self openView: aView ] ];
+		whenSelectedItemChanged: [ :item | self selectionChanged: item ];
 		menu: [ :menu | self contextMenu: menu for: list selectedItem ]
 ]
 
 { #category : #initialization }
+OPDiagramViewsWidget >> initializeToolbar [
+	toolbar
+		addGroup: [ :group | 
+			group
+				addItem: [ :item | 
+					item
+						icon: (self iconNamed: #glamorousOpen);
+						description: 'Open view';
+						action: [ self selectedItem ifNotNil: [ :i | self openView: i ] ] ].
+			group
+				addItem: [ :item | 
+					item
+						icon: (self iconNamed: #smallRemoteOpen);
+						description: 'Clone view';
+						action: [ self selectedItem ifNotNil: [ :i | self cloneView: i ] ] ].
+			group
+				addItem: [ :item | 
+					editButton := item
+						icon: (self iconNamed: #glamorousEdit);
+						description: 'Rename view';
+						action: [ self selectedItem ifNotNil: [ :i | self renameView: i ] ] ].
+			group
+				addItem: [ :item | 
+					deleteButton := item
+						icon: (self iconNamed: #glamorousTrash);
+						description: 'Delete view';
+						action: [ self selectedItem ifNotNil: [ :i | self deleteView: i ] ] ] ]
+]
+
+{ #category : #initialization }
 OPDiagramViewsWidget >> initializeWidgets [
-	(list := self instantiate: FastTableModel)
-		handlesDoubleClick: true.
-	self newWidgetHeading
+	(list := self instantiate: FastTableModel) handlesDoubleClick: true.
+	self newWidgetHeading.
+	toolbar := self instantiate: MenuModel.
+	self initializeToolbar
 ]
 
 { #category : #'accessing - spec' }
@@ -122,13 +175,12 @@ OPDiagramViewsWidget >> project: aProject [
 ]
 
 { #category : #actions }
-OPDiagramViewsWidget >> removeView: aView [
-	(UIManager default
-		confirm: 'Are you sure you want to remove view ' , (self displayFor: aView) , '?')
-		ifFalse: [ ^ self ].
-	self workbench closeEditorOf: aView.
-	aView project: nil.
-	self updateContent
+OPDiagramViewsWidget >> renameView: aView [
+	| name |
+	[ name := UIManager default request: 'View name' initialAnswer: aView name ]
+		doWhileTrue: [ name isNotNil and: [ name = aView name ] ].
+	name ifNil: [ ^ self ].
+	aView name: name
 ]
 
 { #category : #accessing }
@@ -136,9 +188,24 @@ OPDiagramViewsWidget >> selectedItem [
 	^ list selectedItem
 ]
 
+{ #category : #actions }
+OPDiagramViewsWidget >> selectionChanged: anItem [
+	| enableModification |
+	enableModification := anItem isNotNil and: [ anItem isDefault not ].
+	editButton enabled: enableModification.
+	deleteButton enabled: enableModification.
+	editButton changed: #enabled.
+	deleteButton changed: #enabled
+]
+
 { #category : #api }
 OPDiagramViewsWidget >> title [
 	^ 'Diagram Views'
+]
+
+{ #category : #'accessing - spec' }
+OPDiagramViewsWidget >> toolbar [
+	^ toolbar
 ]
 
 { #category : #actions }

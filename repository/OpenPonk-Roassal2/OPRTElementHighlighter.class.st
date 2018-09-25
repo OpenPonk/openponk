@@ -19,7 +19,7 @@ OPRTElementHighlighter class >> isFor: anElement [
 
 { #category : #private }
 OPRTElementHighlighter >> highlight: anElement color: aColor [
-	| shape overlay |
+	| shape overlay originalCallbacks newCallbacks |
 	self hasStore
 		ifTrue: [ ^ self ].
 	model := anElement.
@@ -35,9 +35,11 @@ OPRTElementHighlighter >> highlight: anElement color: aColor [
 	noBorder
 		ifTrue: [ overlay trachelShape strokeWidth: 0.
 			overlay trachelShape strokePaint: Color red ].
+	originalCallbacks := model trachelShape callbacks copy.
 	OPRTElementsConstraint keepExtentOf: overlay like: model plus: 3 @ 3.
 	TRConstraint stick: overlay onTheCenterOf: model.
-	self store: overlay.
+	newCallbacks := model trachelShape callbacks \ originalCallbacks.
+	self store: (Array with: overlay with: newCallbacks).
 	model view add: overlay.
 	model view signalUpdate
 ]
@@ -55,11 +57,13 @@ OPRTElementHighlighter >> noBorder [
 
 { #category : #protocol }
 OPRTElementHighlighter >> remove [
-	| overlay |
+	| overlayAndCallbacks |
 	self hasStore
 		ifFalse: [ ^ self ].
-	overlay := self load.
+	overlayAndCallbacks := self load.
+	overlayAndCallbacks second
+		do: [ :each | model trachelShape removeCallback: each ifAbsent: [  ] ].
 	self clearStore.
-	overlay remove.
+	overlayAndCallbacks first remove.
 	model view signalUpdate
 ]

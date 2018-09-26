@@ -75,7 +75,7 @@ OPDiagramViewsWidget >> deleteView: aView [
 	(UIManager default
 		confirm: 'Are you sure you want to remove view ' , (self displayFor: aView) , '?')
 		ifFalse: [ ^ self ].
-	self workbench closeEditorOf: aView.
+	self workbench closeEditorOfView: aView.
 	aView project: nil.
 	self updateContent
 ]

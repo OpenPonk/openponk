@@ -294,7 +294,7 @@ OPProjectController >> subscribeTo: aDiagramController [
 		when: OPOpenEditorRequest
 		do: [ :ann | workbench openEditorOn: ann model ].
 	aDiagramController model announcer
-		when: OPCloseEditorAnnouncement
+		when: OPCloseEditorRequest
 		do: [ :ann | workbench closeEditorOf: ann model ]
 ]
 

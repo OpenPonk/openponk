@@ -41,6 +41,7 @@ OPProject >> addDefaultViewFor: aModel [
 { #category : #adding }
 OPProject >> addModel: aModel [
 	models add: aModel.
+	self addDefaultViewFor: aModel.
 	(aModel respondsTo: #project:)
 		ifTrue: [ aModel project: self ]
 ]
@@ -151,10 +152,16 @@ OPProject >> removeFromImage [
 
 { #category : #removing }
 OPProject >> removeModel: aModel [
+	self removeViewsOf: aModel.
 	models remove: aModel.
 	aModel announcer unsubscribe: self.
 	(aModel respondsTo: #project:)
 		ifTrue: [ aModel project: nil ]
+]
+
+{ #category : #removing }
+OPProject >> removeViewsOf: aModel [
+	views removeAllSuchThat: [ :each | each model = aModel ]
 ]
 
 { #category : #persistence }

@@ -158,6 +158,15 @@ OPWorkbench >> closeEditorOf: aView [
 			self announce: (OPEditorClosed on: pair first) ]
 ]
 
+{ #category : #opening }
+OPWorkbench >> closeEditorOfView: aView [
+	editors
+		at: aView
+		ifPresent: [ :pair | 
+			tabManager removeTab: pair second.
+			self announce: (OPEditorClosed on: pair first) ]
+]
+
 { #category : #'accessing - spec' }
 OPWorkbench >> diagramWidget [
 	^ diagramWidget

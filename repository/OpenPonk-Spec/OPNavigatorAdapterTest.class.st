@@ -1,13 +1,13 @@
 Class {
 	#name : #OPNavigatorAdapterTest,
-	#superclass : #OPTestCase,
+	#superclass : #TestCase,
 	#instVars : [
 		'adapter',
 		'diagram',
 		'element',
 		'edge'
 	],
-	#category : 'OpenPonk-Spec-Utils'
+	#category : #'OpenPonk-Spec-Utils'
 }
 
 { #category : #accessing }

@@ -13,7 +13,9 @@ Class {
 		'adapters',
 		'toolbar',
 		'editButton',
-		'deleteButton'
+		'deleteButton',
+		'openButton',
+		'cloneButton'
 	],
 	#classVars : [
 		'Icons'
@@ -49,11 +51,13 @@ OPDiagramViewsWidget >> contextMenu: aMenuMorph for: aView [
 		target: self
 		selector: #openView:
 		argument: aView) icon: (self iconNamed: #glamorousOpen).
-	(aMenuMorph
-		add: 'Clone view ...'
-		target: self
-		selector: #cloneView:
-		argument: aView) icon: (self iconNamed: #smallRemoteOpen).
+	self flag: #nsmHack.
+	aView modelType = #FlowModel
+		ifFalse: [ (aMenuMorph
+				add: 'Clone view ...'
+				target: self
+				selector: #cloneView:
+				argument: aView) icon: (self iconNamed: #smallRemoteOpen) ].
 	aView isDefault
 		ifFalse: [ (aMenuMorph
 				add: 'Rename view'
@@ -113,13 +117,13 @@ OPDiagramViewsWidget >> initializeToolbar [
 		addGroup: [ :group | 
 			group
 				addItem: [ :item | 
-					item
+					openButton := item
 						icon: (self iconNamed: #glamorousOpen);
 						description: 'Open view';
 						action: [ self selectedItem ifNotNil: [ :i | self openView: i ] ] ].
 			group
 				addItem: [ :item | 
-					item
+					cloneButton := item
 						icon: (self iconNamed: #smallRemoteOpen);
 						description: 'Clone view';
 						action: [ self selectedItem ifNotNil: [ :i | self cloneView: i ] ] ].
@@ -189,13 +193,18 @@ OPDiagramViewsWidget >> selectedItem [
 ]
 
 { #category : #actions }
-OPDiagramViewsWidget >> selectionChanged: anItem [
+OPDiagramViewsWidget >> selectionChanged: aView [
 	| enableModification |
-	enableModification := anItem isNotNil and: [ anItem isDefault not ].
+	enableModification := aView isNotNil and: [ aView isDefault not ].
 	editButton enabled: enableModification.
 	deleteButton enabled: enableModification.
 	editButton changed: #enabled.
-	deleteButton changed: #enabled
+	deleteButton changed: #enabled.
+	self flag: #nsmHack.
+	(aView isNotNil and: [ aView modelType = #FlowModel ])
+		ifTrue: [ cloneButton enabled: false ]
+		ifFalse: [ cloneButton enabled: true ].
+	cloneButton changed: #enabled
 ]
 
 { #category : #api }

@@ -7,7 +7,7 @@ Class {
 { #category : #testing }
 OPDiagramRemoveFigureCommand class >> canvasShortcutActivation [
 	<classAnnotation>
-	^ CmdShortcutActivation by: Character delete shift for: OPCanvasModel
+	^ CmdShortcutActivation by: Character delete meta for: OPCanvasModel
 ]
 
 { #category : #accessing }

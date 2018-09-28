@@ -182,13 +182,15 @@ OPProjectController >> openProjectFromFolder: aFolder [
 
 { #category : #opening }
 OPProjectController >> openViews [
+	| selected |
 	self ensureViewsLoaded.
+	selected := project views
+		detect: [ :each | each isOpen & each isSelected ]
+		ifNone: [ nil ].
 	(project views sorted: #order ascending)
 		select: #isOpen
 		thenDo: [ :each | workbench openEditorOnView: each ].
-	(project views select: #isOpen)
-		detect: #isSelected
-		ifFound: [ :view | workbench openEditorOnView: view ].
+	selected ifNotNil: [ workbench openEditorOnView: selected ].
 	(project views isNotEmpty and: [ project views noneSatisfy: #isOpen ])
 		ifTrue: [ workbench openEditorOnView: project views first ]
 ]

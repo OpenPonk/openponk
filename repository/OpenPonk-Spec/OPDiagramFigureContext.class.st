@@ -43,8 +43,8 @@ OPDiagramFigureContext >> figures [
 { #category : #accessing }
 OPDiagramFigureContext >> figures: aCollection [
 	figures := aCollection.
-	controllers := figures
-		collect: [ :each | self diagramController controllerForFigure: each ]
+	controllers := self diagramController controllers
+		select: [ :each | figures includes: each figure ]
 ]
 
 { #category : #accessing }

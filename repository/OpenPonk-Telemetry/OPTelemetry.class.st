@@ -6,14 +6,25 @@ Class {
 	#superclass : #Object,
 	#classInstVars : [
 		'uuid',
-		'reports'
+		'reports',
+		'enableMetrics'
 	],
-	#category : 'OpenPonk-Telemetry'
+	#category : #'OpenPonk-Telemetry'
 }
 
 { #category : #accessing }
 OPTelemetry class >> current [
 	^ self new
+]
+
+{ #category : #accessing }
+OPTelemetry class >> enableMetrics [
+	^ enableMetrics ifNil: [ enableMetrics := false ]
+]
+
+{ #category : #accessing }
+OPTelemetry class >> enableMetrics: aBoolean [
+	enableMetrics := aBoolean
 ]
 
 { #category : #accessing }

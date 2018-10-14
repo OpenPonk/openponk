@@ -152,16 +152,6 @@ OPController >> refreshFigure [
 ]
 
 { #category : #deprecated }
-OPController >> registerModelEvents: aModel [
-	self deprecated: 'use model: and internalSubscribeTo: instead'.
-	aModel announcer
-		when: OPElementRemoved
-		do: [ :event | 
-			self diagramController removeControllerOf: event element.
-			self diagramController updateView ]
-]
-
-{ #category : #deprecated }
 OPController >> remove [
 	self deprecated: 'Use removeController instead.'.
 	model ifNotNil: [ model announcer unsubscribe: self ]

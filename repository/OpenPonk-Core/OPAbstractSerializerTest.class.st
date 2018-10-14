@@ -16,7 +16,7 @@ OPAbstractSerializerTest class >> isAbstract [
 
 { #category : #'instance creation' }
 OPAbstractSerializerTest >> newMemento [
-	^ OPPersistenceMemento model: OPNamedElement new diagram: {('1' -> '2')} asDictionary
+	^ OPPersistenceMemento model: OPTestEntityModel new diagram: {('1' -> '2')} asDictionary
 ]
 
 { #category : #accessing }

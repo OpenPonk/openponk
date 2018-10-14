@@ -1,7 +1,7 @@
 Class {
 	#name : #OPFuelSerializerTest,
-	#superclass : #OPAbstractSerializerTest,
-	#category : 'OpenPonk-Core-Tests'
+	#superclass : #Object,
+	#category : #'OpenPonk-Core-Tests'
 }
 
 { #category : #accessing }

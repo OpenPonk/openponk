@@ -369,6 +369,12 @@ OPRTAnchorConstraint >> moveElement [
 		ifTrue: [ self moveAwayFrom: to via: segment vector negated ]
 ]
 
+{ #category : #removing }
+OPRTAnchorConstraint >> remove [
+	anchorElement view ifNotNil: [ anchorElement remove ].
+	guideEdge view ifNotNil: [ guideEdge remove ]
+]
+
 { #category : #accessing }
 OPRTAnchorConstraint >> segments [
 	(edge shape isKindOf: OPRTConnection)

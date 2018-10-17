@@ -35,8 +35,10 @@ OPDiagramViewsWidget class >> defaultSpec [
 { #category : #actions }
 OPDiagramViewsWidget >> cloneView: aView [
 	| name newView |
-	[ name := UIManager default request: 'View name' initialAnswer: aView model name ]
-		doWhileTrue: [ name isNotNil and: [ name = aView name ] ].
+	[ name := UIManager default
+		request: 'Clone view "' , (self displayFor: aView) , '". New name: '
+		initialAnswer: aView name
+		title: 'Clone' ] doWhileTrue: [ name isNotNil and: [ name = aView name ] ].
 	name ifNil: [ ^ self ].
 	newView := aView newCopy.
 	newView name: name.
@@ -77,7 +79,8 @@ OPDiagramViewsWidget >> contextMenu: aMenuMorph for: aView [
 { #category : #actions }
 OPDiagramViewsWidget >> deleteView: aView [
 	(UIManager default
-		confirm: 'Are you sure you want to remove view ' , (self displayFor: aView) , '?')
+		confirm: 'Delete view "' , (self displayFor: aView) , '"?'
+		label: 'Delete')
 		ifFalse: [ ^ self ].
 	self workbench closeEditorOfView: aView.
 	aView project: nil.
@@ -181,7 +184,7 @@ OPDiagramViewsWidget >> project: aProject [
 { #category : #actions }
 OPDiagramViewsWidget >> renameView: aView [
 	| name |
-	[ name := UIManager default request: 'View name' initialAnswer: aView name ]
+	[ name := UIManager default request: 'Rename view "', (self displayFor: aView), '"' initialAnswer: aView name title: 'Rename' ]
 		doWhileTrue: [ name isNotNil and: [ name = aView name ] ].
 	name ifNil: [ ^ self ].
 	aView name: name

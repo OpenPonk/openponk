@@ -51,7 +51,7 @@ OPModelNavigator >> openOn: aProject [
 		do: [ :event | 
 			project ifNotNil: [ project announcer unsubscribe: self ].
 			project := event diagramController model.
-			project ifNotNil: [ project when: OPModelChanged do: [ tree updateTree ] ].
+			project ifNotNil: [ project announcer when: OPModelChanged do: [ tree updateTree ] ].
 			tree
 				roots: {project};
 				expandRoots ].

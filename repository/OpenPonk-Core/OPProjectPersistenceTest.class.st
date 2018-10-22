@@ -1,10 +1,10 @@
 Class {
 	#name : #OPProjectPersistenceTest,
-	#superclass : #TestCase,
+	#superclass : #Object,
 	#instVars : [
 		'persistence'
 	],
-	#category : 'OpenPonk-Core-Tests'
+	#category : #'OpenPonk-Core-Tests'
 }
 
 { #category : #running }
@@ -35,8 +35,8 @@ OPProjectPersistenceTest >> testCreateFolderStructure [
 OPProjectPersistenceTest >> testDeleteOldModels [
 	| models folder |
 	folder := FileSystem memory root / 'models'.
-	models := {(OPNamedElement named: 'first').
-	(OPNamedElement named: 'second')}.
+	models := {OPTestEntityModel new.
+	OPTestEntityModel new}.
 	persistence
 		saveMemento: (OPPersistenceMemento model: models first diagram: nil)
 		to: folder
@@ -70,7 +70,7 @@ OPProjectPersistenceTest >> testModelReferences [
 OPProjectPersistenceTest >> testNoDiagramOverride [
 	| model folder memento contents |
 	folder := FileSystem memory root / 'models'.
-	model := OPNamedElement new.
+	model := OPTestEntityModel new.
 	memento := OPPersistenceMemento model: model diagram: {(#Item -> 1)} asDictionary.
 	persistence saveMemento: memento to: folder with: OPStonSerializer new.
 	contents := (folder / memento uuid asString / 'diagram.ston') contents.
@@ -121,8 +121,8 @@ OPProjectPersistenceTest >> testWriteModel [
 	folder := FileSystem memory root / 'models'.
 	folder ensureCreateDirectory.
 	memento := OPPersistenceMemento
-		model: (OPNamedElement named: 'Item')
-		diagram: {(#Item -> 1)} asDictionary.
+		model: OPTestEntityModel new
+		diagram: {#Item -> 1} asDictionary.
 	persistence saveMemento: memento to: folder with: OPStonSerializer new.
 	self assert: (folder / memento uuid asString) isDirectory.
 	self

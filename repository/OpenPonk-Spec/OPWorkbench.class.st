@@ -99,6 +99,11 @@ OPWorkbench class >> settingsOn: aBuilder [
 ]
 
 { #category : #specs }
+OPWorkbench class >> shouldUseEditorForm [
+	^ (self layoutStyle = #separated) not
+]
+
+{ #category : #specs }
 OPWorkbench class >> specCombined [
 	<spec: #combined>
 	^ SpecLayout composed
@@ -120,7 +125,6 @@ OPWorkbench class >> specCombined [
 { #category : #specs }
 OPWorkbench class >> specSeparated [
 	<spec: #separated>
-	<useEditorForm>
 	^ SpecLayout composed
 		newRow: [ :row | row newColumn: [ :col | col add: #topToolbar height: self toolbarHeight ] ]
 			height: self toolbarHeight;
@@ -270,7 +274,7 @@ OPWorkbench >> navigatorModel [
 
 { #category : #opening }
 OPWorkbench >> open [
-	useEditorForm := self shouldUseEditorFormFor: self class layoutStyle.
+	useEditorForm := self class shouldUseEditorForm.
 	self openWithSpec: self class layoutStyle
 ]
 
@@ -344,19 +348,6 @@ OPWorkbench >> pluginRegistry [
 { #category : #accessing }
 OPWorkbench >> projectController [
 	^ projectController
-]
-
-{ #category : #opening }
-OPWorkbench >> shouldUseEditorFormFor: aLayoutStyle [
-	((SpecPragmaCollector behavior: self class class)
-		filter: [ :pragma | pragma keyword = #spec: and: [ pragma arguments first = aLayoutStyle ] ];
-		reset;
-		collected)
-		ifNotEmpty: [ :pragmas | 
-			pragmas first method pragmas
-				detect: [ :pragma | pragma keyword = #useEditorForm ]
-				ifFound: [ ^ true ] ].
-	^ false
 ]
 
 { #category : #'accessing - spec' }

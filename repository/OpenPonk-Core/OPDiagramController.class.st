@@ -530,6 +530,11 @@ OPDiagramController >> selectView [
 	selectionHolder value: self
 ]
 
+{ #category : #figures }
+OPDiagramController >> selectableFigures [
+	^ #()
+]
+
 { #category : #rebuilding }
 OPDiagramController >> showAllElements [
 	self showInDiagram: self

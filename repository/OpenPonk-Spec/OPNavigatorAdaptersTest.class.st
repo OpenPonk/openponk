@@ -29,7 +29,7 @@ OPNavigatorAdaptersTest >> testChildrenForProject [
 
 { #category : #running }
 OPNavigatorAdaptersTest >> testDisplayForObject [
-	self assert: (adapters displayFor: Object new) equals: 'an Object'
+	self assert: (adapters displayFor: Object new) equals: 'an Object (Object)'
 ]
 
 { #category : #running }

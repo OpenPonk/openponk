@@ -20,9 +20,7 @@ OPDefaultNavigatorAdapter class >> registerAdapter: aNavigator [
 
 { #category : #'widget API' }
 OPDefaultNavigatorAdapter >> childrenMapping [
-	^ {OPNamedElement -> [ #() ].
-	OPDiagram -> #elements.
-	Object -> [ #() ].
+	^ {Object -> [ #() ].
 	OPProject -> #models}
 ]
 
@@ -33,15 +31,12 @@ OPDefaultNavigatorAdapter >> contextMenuMapping [
 
 { #category : #'widget API' }
 OPDefaultNavigatorAdapter >> displayMapping [
-	^ {OPModelObject -> #className.
+	^ {Object -> #className.
 	OPProject -> 'Project'}
 ]
 
 { #category : #'widget API' }
 OPDefaultNavigatorAdapter >> iconMapping [
-	^ {OPDiagram -> OPIcons current dcFsmDiagramIcon.
-	OPNamedElement -> OPIcons current dcFsmRegularStateIcon.
-	OPEdge -> OPIcons current dcFsmTransitionIcon.
-	OPProject -> OPIcons current openponkIcon.
+	^ {OPProject -> OPIcons current openponkIcon.
 	Object -> #blank asIcon}
 ]

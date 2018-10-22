@@ -100,7 +100,7 @@ OPNavigatorAdapter >> hasMappingFor: anObject [
 
 { #category : #private }
 OPNavigatorAdapter >> hierarchyFor: anObject [
-	^ (anObject allSuperclassesIncluding: OPModelObject)
+	^ (anObject allSuperclassesIncluding: Object)
 		addFirst: anObject;
 		yourself
 ]

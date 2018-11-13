@@ -68,7 +68,7 @@ OPWorkbenchToolbar >> addEditorMenu [
 				addItem: [ :item | 
 					item
 						name: 'Editor';
-						icon: Smalltalk ui icons packageIcon;
+						icon: (self iconNamed: #packageIcon);
 						subMenu: self editorMenu ] ]
 ]
 
@@ -83,7 +83,7 @@ OPWorkbenchToolbar >> editorMenu [
 			(OPPragmaPluginMenuBuilder cachedPragmaKeyword: #opEditorToolbarMenu: model: activeEditor)
 				menuSpec.
 	"MenuModel is stupid and will crash when provided with an empty subMenu"
-	menu menuGroups ifEmpty: [ ^nil ].
+	menu menuGroups ifEmpty: [ ^ nil ].
 	^ menu
 ]
 
@@ -96,7 +96,7 @@ OPWorkbenchToolbar >> initializePresenter [
 				addItem: [ :item | 
 					item
 						name: 'Project';
-						icon: Smalltalk ui icons openIcon;
+						icon: (self iconNamed: #openIcon);
 						subMenu: self projectMenu ] ].
 	toolbar applyTo: self
 ]
@@ -113,12 +113,10 @@ OPWorkbenchToolbar >> projectController [
 
 { #category : #'menus for project' }
 OPWorkbenchToolbar >> projectMenu [
-	| menu builder |
+	| menu cmdMenu |
 	menu := self instantiate: MenuModel.
-	builder := self workbench
-		ifNil: [ PragmaMenuBuilder cachedPragmaKeyword: #opProjectSubmenu model: self ]
-		ifNotNil: [ OPPragmaPluginMenuBuilder cachedPragmaKeyword: #opProjectSubmenu model: self ].
-	menu fromSpec: builder menuSpec.
+	cmdMenu := OPWorkbenchActivation buildMenuInContext: (CmdSimpleToolContext for: self).
+	cmdMenu buildSpecMenuOn: menu.
 	^ menu
 ]
 

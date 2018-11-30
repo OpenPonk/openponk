@@ -9,7 +9,7 @@ OPTRCanvasGridShape >> computePath [
 	| width height |
 	width := self canvas extent x / canvas camera scale roundUpTo: spacing.
 	height := self canvas extent y / canvas camera scale roundUpTo: spacing.
-	canvas camera scale < 0.5 ifTrue: [ ^nil ].
+	canvas camera scale < 0.7 ifTrue: [ ^nil ].
 	path := self athensCanvas
 		createPath:
 			[ :builder | 

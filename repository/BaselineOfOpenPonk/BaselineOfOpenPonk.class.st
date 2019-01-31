@@ -94,7 +94,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 	spec
 		baseline: 'FileDialog'
-		with: [ spec repository: 'github://peteruhnak/file-dialog:v1.x/repository' ].
+		with: [ spec repository: 'github://peteruhnak/file-dialog/repository' ].
 	spec
 		baseline: 'Sentry'
 		with: [ spec repository: 'github://peteruhnak/pharo-sentry:v1.x/repository' ].

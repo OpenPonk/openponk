@@ -43,10 +43,12 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 		baseline: 'Commander'
 		with: [ spec repository: 'github://pharo-ide/Commander/src' ].
 	spec
-		baseline: 'XMLParser'
+		project: 'XMLParser'
 		with: [ spec
-				loads: 'gt';
-				repository: 'github://svenvc/XML-Support-Pharo' ].
+				className: 'ConfigurationOfXMLParser';
+				versionString: #stable;
+				loads: #('Core');
+				repository: 'http://smalltalkhub.com/mc/PharoExtras/XMLParser/main' ].
 	spec
 		project: 'XPath'
 		with: [ spec

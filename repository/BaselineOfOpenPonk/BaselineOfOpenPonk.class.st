@@ -39,14 +39,14 @@ BaselineOfOpenPonk >> baseline: spec [
 
 { #category : #accessing }
 BaselineOfOpenPonk >> externalProjectsBaseline: spec [
-	spec baseline: 'Commander' with: [ spec repository: 'github://pharo-ide/Commander/src' ].
 	spec
-		project: 'XMLParser'
+		baseline: 'Commander'
+		with: [ spec repository: 'github://pharo-ide/Commander/src' ].
+	spec
+		baseline: 'XMLParser'
 		with: [ spec
-				className: #ConfigurationOfXMLParser;
-				versionString: #stable;
-				loads: #(CoreWithWriting);
-				repository: 'http://smalltalkhub.com/mc/PharoExtras/XMLParser/main/' ].
+				loads: 'gt';
+				repository: 'github://svenvc/XML-Support-Pharo' ].
 	spec
 		project: 'XPath'
 		with: [ spec
@@ -55,12 +55,8 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 				loads: #(Core);
 				repository: 'http://smalltalkhub.com/mc/PharoExtras/XPath/main/' ].
 	spec
-		project: 'Roassal2'
-		with: [ spec
-				className: #ConfigurationOfRoassal2;
-				versionString: '1.59';
-				loads: #(Roassal2 Roassal2Spec Roassal2GT);
-				repository: 'http://smalltalkhub.com/mc/ObjectProfile/Roassal2/main/' ].
+		baseline: 'Roassal2'
+		with: [ spec repository: 'github://ObjectProfile/Roassal2/src' ].
 	spec
 		project: 'Magritte'
 		with: [ spec
@@ -77,17 +73,13 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 		baseline: 'Mocketry'
 		with: [ spec repository: 'github://dionisiydk/Mocketry:v4.0.x' ].
 	spec
-		project: 'PetitParser'
+		baseline: 'PetitParser'
 		with: [ spec
-				className: #ConfigurationOfPetitParser;
-				versionString: #development;
-				loads: #('Parser');
-				repository: 'http://smalltalkhub.com/mc/Moose/PetitParser/main/' ].
+				loads: 'ParserCore';
+				repository: 'github://moosetechnology/PetitParser/src' ].
 	spec
-		configuration: 'NeoJSON'
-		with: [ spec
-				version: #stable;
-				repository: 'http://smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main/' ]
+		baseline: 'NeoJSON'
+		with: [ spec repository: 'github://svenvc/NeoJSON/repository' ]
 ]
 
 { #category : #accessing }

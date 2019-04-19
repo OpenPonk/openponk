@@ -13,7 +13,7 @@ OPIdeaGraphIcons class >> actualZoomIcon [
 	^ self icons
 		at: #actualZoomIcon
 		ifAbsentPut: [ Form
-				fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self actualZoomIconContents readStream) ]
+				fromBinaryStream: (self actualZoomIconContents base64Decoded readStream) ]
 ]
 
 { #category : #'private - contents' }
@@ -33,7 +33,7 @@ OPIdeaGraphIcons class >> exportIcon [
 	^ self icons
 		at: #exportIcon
 		ifAbsentPut: [ Form
-				fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self exportIconContents readStream) ]
+				fromBinaryStream: (self exportIconContents base64Decoded readStream) ]
 ]
 
 { #category : #'private - contents' }
@@ -54,7 +54,7 @@ OPIdeaGraphIcons class >> fitContentIcon [
 	^ self icons
 		at: #fitContentIcon
 		ifAbsentPut: [ Form
-				fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self fitContentIconContents readStream) ]
+				fromBinaryStream: (self fitContentIconContents base64Decoded readStream) ]
 ]
 
 { #category : #'private - contents' }
@@ -89,7 +89,7 @@ OPIdeaGraphIcons class >> layoutIcon [
 	^ self icons
 		at: #layoutIcon
 		ifAbsentPut: [ Form
-				fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self layoutIconContents readStream) ]
+				fromBinaryStream: (self layoutIconContents base64Decoded readStream) ]
 ]
 
 { #category : #'private - contents' }
@@ -115,7 +115,7 @@ OPIdeaGraphIcons class >> zoomInIcon [
 	^ self icons
 		at: #zoomInIcon
 		ifAbsentPut: [ Form
-				fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self zoomInIconContents readStream) ]
+				fromBinaryStream: (self zoomInIconContents base64Decoded readStream) ]
 ]
 
 { #category : #'private - contents' }
@@ -134,7 +134,7 @@ OPIdeaGraphIcons class >> zoomOutIcon [
 	^ self icons
 		at: #zoomOutIcon
 		ifAbsentPut: [ Form
-				fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self zoomOutIconContents readStream) ]
+				fromBinaryStream: (self zoomOutIconContents base64Decoded readStream) ]
 ]
 
 { #category : #'private - contents' }

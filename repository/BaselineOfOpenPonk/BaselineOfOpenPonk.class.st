@@ -76,9 +76,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 		with: [ spec repository: 'github://dionisiydk/Mocketry:v4.0.x' ].
 	spec
 		baseline: 'PetitParser'
-		with: [ spec
-				loads: 'ParserCore';
-				repository: 'github://moosetechnology/PetitParser/src' ].
+		with: [ spec repository: 'github://moosetechnology/PetitParser/src' ].
 	spec
 		baseline: 'NeoJSON'
 		with: [ spec repository: 'github://svenvc/NeoJSON/repository' ]

@@ -4,8 +4,7 @@ Class {
 	#instVars : [
 		'from',
 		'to',
-		'radius',
-		'width'
+		'radius'
 	],
 	#category : 'OpenPonk-Trachel-Shapes'
 }
@@ -88,14 +87,4 @@ OPTRArcShape >> translateBy: aPoint [
 	from := from + aPoint.
 	to := to + aPoint.
 	self resetPath.
-]
-
-{ #category : #accessing }
-OPTRArcShape >> width [
-	^ width
-]
-
-{ #category : #accessing }
-OPTRArcShape >> width: anObject [
-	width := anObject
 ]

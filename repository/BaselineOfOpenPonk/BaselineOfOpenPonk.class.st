@@ -107,7 +107,7 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 BaselineOfOpenPonk >> postLoadPlugins [
 	Metacello new
 		baseline: 'BormEditor';
-		repository: 'github://openponk/borm-editor:v1.x/repository';
+		repository: 'github://openponk/borm-editor:v0.9.0/repository';
 		onConflict: [ :ex | ex allow ];
 		load.
 	Metacello new

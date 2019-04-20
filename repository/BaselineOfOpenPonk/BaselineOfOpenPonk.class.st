@@ -104,7 +104,7 @@ BaselineOfOpenPonk >> postLoadPlugins [
 		load.
 	Metacello new
 		baseline: 'ClassEditor';
-		repository: 'github://openponk/class-editor:v1.x/repository';
+		repository: 'github://openponk/class-editor:pharo7-tmp/repository';
 		onConflict: [ :ex | ex allow ];
 		load
 ]

@@ -39,7 +39,9 @@ BaselineOfOpenPonk >> baseline: spec [
 
 { #category : #accessing }
 BaselineOfOpenPonk >> externalProjectsBaseline: spec [
-	spec baseline: 'Commander' with: [ spec repository: 'github://pharo-ide/Commander/src' ].
+	spec
+		baseline: 'Commander'
+		with: [ spec repository: 'github://pharo-ide/Commander:v0.7.0/src' ].
 	spec
 		project: 'XMLParser'
 		with: [ spec

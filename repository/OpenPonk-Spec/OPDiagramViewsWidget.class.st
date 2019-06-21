@@ -92,6 +92,24 @@ OPDiagramViewsWidget >> displayFor: aDiagramView [
 	^ '[' , aDiagramView name , '] ' , (adapters displayFor: aDiagramView model)
 ]
 
+{ #category : #initialization }
+OPDiagramViewsWidget >> displayRowFor: aView [
+	| name nameMorph modelMorph container |
+	name := aView name.
+	aView isDefault
+		ifTrue: [ name := aView modelName asText allBold ].
+	nameMorph := name asTextMorph lock.
+	modelMorph := GLMMorphic
+		togglingButtonLabelled: aView modelName
+		pressed: false
+		style: #grayRoundedButton.
+	container := OrderedCollection new.
+	container
+		add: nameMorph;
+		add: modelMorph.
+	^ Smalltalk ui theme newRowIn: World for: container
+]
+
 { #category : #'accessing - spec' }
 OPDiagramViewsWidget >> heading [
 	^ heading
@@ -104,14 +122,19 @@ OPDiagramViewsWidget >> initialize [
 ]
 
 { #category : #initialization }
-OPDiagramViewsWidget >> initializePresenter [
-	super initializePresenter.
+OPDiagramViewsWidget >> initializeList [
 	list
-		displayBlock: [ :aView | self displayFor: aView ];
+		displayBlock: [ :aView | self displayRowFor: aView ];
 		icons: [ :aView | adapters iconFor: aView model ];
 		doubleClickAction: [ list selectedItem ifNotNil: [ :aView | self openView: aView ] ];
 		whenSelectedItemChanged: [ :item | self selectionChanged: item ];
 		menu: [ :menu | self contextMenu: menu for: list selectedItem ]
+]
+
+{ #category : #initialization }
+OPDiagramViewsWidget >> initializePresenter [
+	super initializePresenter.
+	self initializeList
 ]
 
 { #category : #initialization }
@@ -147,6 +170,7 @@ OPDiagramViewsWidget >> initializeToolbar [
 { #category : #initialization }
 OPDiagramViewsWidget >> initializeWidgets [
 	(list := self instantiate: FastTableModel) handlesDoubleClick: true.
+	list whenBuiltDo: [ :widget | widget widget disableFunction ].
 	self newWidgetHeading.
 	toolbar := self instantiate: MenuModel.
 	self initializeToolbar
@@ -230,7 +254,10 @@ OPDiagramViewsWidget >> updateContent [
 
 { #category : #accessing }
 OPDiagramViewsWidget >> viewsIn: aProject [
-	^ aProject views sorted: #modelType ascending , #modelName ascending , #name descending
+	^ aProject views
+		sorted:
+			#modelType ascending , #modelName ascending , [ :each | each isDefault asBit ] descending
+				, #name descending
 ]
 
 { #category : #'accessing - spec' }

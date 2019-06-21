@@ -22,8 +22,8 @@ BaselineOfOpenPonk >> baseline: spec [
 				package: 'OpenPonk-Perf';
 				package: 'OpenPonk-Trachel';
 				package: 'OpenPonk-Roassal2';
-				package: 'OpenPonk-Morphic';"
-				package: 'OpenPonk-Telemetry'
+				package: 'OpenPonk-Morphic';
+				"package: 'OpenPonk-Telemetry'
 					with: [ spec requires: #('Sentry') ];"
 				package: 'OpenPonk-Help';
 				package: 'OpenPonk-Spec'
@@ -41,14 +41,14 @@ BaselineOfOpenPonk >> baseline: spec [
 BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 	spec
 		baseline: 'Commander'
-		with: [ spec repository: 'github://pharo-ide/Commander/src' ].
+		with: [ spec repository: 'github://pharo-ide/Commander:v0.7.0/src' ].
 	spec
 		project: 'XMLParser'
 		with: [ spec
-				className: 'ConfigurationOfXMLParser';
+				className: #ConfigurationOfXMLParser;
 				versionString: #stable;
-				loads: #('Core');
-				repository: 'http://smalltalkhub.com/mc/PharoExtras/XMLParser/main' ].
+				loads: #('CoreWithWriting');
+				repository: 'http://smalltalkhub.com/mc/PharoExtras/XMLParser/main/' ].
 	spec
 		project: 'XPath'
 		with: [ spec
@@ -86,8 +86,8 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 	spec
 		baseline: 'FileDialog'
-		with: [ spec repository: 'github://peteruhnak/file-dialog:v1.x/repository' ]."
-	spec
+		with: [ spec repository: 'github://peteruhnak/file-dialog:v1.x/repository' ].
+	"spec
 		baseline: 'Sentry'
 		with: [ spec repository: 'github://peteruhnak/pharo-sentry:v1.x/repository' ]."
 	spec

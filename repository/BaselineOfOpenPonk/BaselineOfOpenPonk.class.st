@@ -39,7 +39,9 @@ BaselineOfOpenPonk >> baseline: spec [
 
 { #category : #accessing }
 BaselineOfOpenPonk >> externalProjectsBaseline: spec [
-	spec baseline: 'Commander' with: [ spec repository: 'github://pharo-ide/Commander/src' ].
+	spec
+		baseline: 'Commander'
+		with: [ spec repository: 'github://pharo-ide/Commander:v0.7.0/src' ].
 	spec
 		project: 'XMLParser'
 		with: [ spec
@@ -58,7 +60,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 		project: 'Roassal2'
 		with: [ spec
 				className: #ConfigurationOfRoassal2;
-				versionString: #stable;
+				versionString: '1.59';
 				loads: #(Roassal2 Roassal2Spec Roassal2GT);
 				repository: 'http://smalltalkhub.com/mc/ObjectProfile/Roassal2/main/' ].
 	spec
@@ -107,7 +109,7 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 BaselineOfOpenPonk >> postLoadPlugins [
 	Metacello new
 		baseline: 'BormEditor';
-		repository: 'github://openponk/borm-editor:v1.x/repository';
+		repository: 'github://openponk/borm-editor:v0.9.0/repository';
 		onConflict: [ :ex | ex allow ];
 		load.
 	Metacello new

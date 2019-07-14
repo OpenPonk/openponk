@@ -32,7 +32,7 @@ OPIcons class >> current [
 { #category : #'accessing - icons' }
 OPIcons >> dcFsmDiagramIcon [
 	"Private - Generated method"
-	^Form fromBinaryStream: (self dcFsmDiagramIconContents base64Decoded readStream)
+	^Form fromBinaryStream: (self dcFsmDiagramIconContents base64Decoded asByteArray readStream)
 ]
 
 { #category : #'private - contents' }
@@ -48,7 +48,7 @@ ZPiIb9LKLVqZU7MtNmeUX9VI4c+vvMeqPusCWs8vzPVQRpYAAAAASUVORK5CYII='
 { #category : #'accessing - icons' }
 OPIcons >> dcFsmFinalStateIcon [
 	"Private - Generated method"
-	^Form fromBinaryStream: (self dcFsmFinalStateIconContents base64Decoded readStream)
+	^Form fromBinaryStream: (self dcFsmFinalStateIconContents base64Decoded asByteArray readStream)
 ]
 
 { #category : #'private - contents' }
@@ -65,7 +65,7 @@ UMCk9cDxYAKGnzA8xOE1Dh/SlFOe8pn++s4v54Jh4eRQWrEAAAAASUVORK5CYII='
 { #category : #'accessing - icons' }
 OPIcons >> dcFsmInitialStateIcon [
 	"Private - Generated method"
-	^Form fromBinaryStream: (self dcFsmInitialStateIconContents base64Decoded readStream)
+	^Form fromBinaryStream: (self dcFsmInitialStateIconContents base64Decoded asByteArray readStream)
 ]
 
 { #category : #'private - contents' }
@@ -80,7 +80,7 @@ i2YYxvAOE60CjyIvUCUQqRKNIwUAAFRhFQHiIcRQAAAAAElFTkSuQmCC'
 { #category : #'accessing - icons' }
 OPIcons >> dcFsmRegularStateIcon [
 	"Private - Generated method"
-	^Form fromBinaryStream: (self dcFsmRegularStateIconContents base64Decoded readStream)
+	^Form fromBinaryStream: (self dcFsmRegularStateIconContents base64Decoded asByteArray readStream)
 ]
 
 { #category : #'private - contents' }
@@ -97,7 +97,7 @@ yrsc06pzfgKTTTJXZ7zJ7gAAAABJRU5ErkJggg=='
 { #category : #'accessing - icons' }
 OPIcons >> dcFsmTransitionIcon [
 	"Private - Generated method"
-	^Form fromBinaryStream: (self dcFsmTransitionIconContents base64Decoded readStream)
+	^Form fromBinaryStream: (self dcFsmTransitionIconContents base64Decoded asByteArray readStream)
 ]
 
 { #category : #'private - contents' }
@@ -113,7 +113,7 @@ LkyAhQTNdxgYGJ7gixFCQGc0NWMHAKweDmH+UsOrAAAAAElFTkSuQmCC'
 { #category : #'accessing - icons' }
 OPIcons >> dcOmlBoxIcon [
 	"Private - Generated method"
-	^Form fromBinaryStream: (self dcOmlBoxIconContents base64Decoded readStream)
+	^Form fromBinaryStream: (self dcOmlBoxIconContents base64Decoded asByteArray readStream)
 ]
 
 { #category : #'private - contents' }
@@ -129,7 +129,7 @@ RK5CYII='
 { #category : #'accessing - icons' }
 OPIcons >> dcOmlDiagramIcon [
 	"Private - Generated method"
-	^Form fromBinaryStream: (self dcOmlDiagramIconContents base64Decoded readStream)
+	^Form fromBinaryStream: (self dcOmlDiagramIconContents base64Decoded asByteArray readStream)
 ]
 
 { #category : #'private - contents' }
@@ -145,7 +145,7 @@ QmCC'
 { #category : #'accessing - icons' }
 OPIcons >> dcSelectIcon [
 	"Private - Generated method"
-	^Form fromBinaryStream: (self dcSelectIconContents base64Decoded readStream)
+	^Form fromBinaryStream: (self dcSelectIconContents base64Decoded asByteArray readStream)
 ]
 
 { #category : #'private - contents' }
@@ -165,7 +165,7 @@ v/dmQSaCxb50u11+8hs/gG99/Qf21bg5RlgkZQAAAABJRU5ErkJggg=='
 { #category : #'accessing - icons' }
 OPIcons >> dcZoomIcon [
 	"Private - Generated method"
-	^Form fromBinaryStream: (self dcZoomIconContents base64Decoded readStream)
+	^Form fromBinaryStream: (self dcZoomIconContents base64Decoded asByteArray readStream)
 ]
 
 { #category : #'private - contents' }
@@ -189,7 +189,7 @@ zxVFG2v/CwAMnguF80oLe8p27cQh+fnpPV/fTc95S6piXQDAw7a9YbWkezZXFbAwMx/xPFXb
 { #category : #'accessing - icons' }
 OPIcons >> dcZoomInIcon [
 	"Private - Generated method"
-	^Form fromBinaryStream: (self dcZoomInIconContents base64Decoded readStream)
+	^Form fromBinaryStream: (self dcZoomInIconContents base64Decoded asByteArray readStream)
 ]
 
 { #category : #'private - contents' }
@@ -214,7 +214,7 @@ WsTLYvtUEo5c3nkYDtkOwpfNR/B1KwTvlnsh1lYlRVuOFf8m+Bvz16rNK0Pn4f36MAhvpuED
 { #category : #'accessing - icons' }
 OPIcons >> dcZoomOutIcon [
 	"Private - Generated method"
-	^Form fromBinaryStream: (self dcZoomOutIconContents base64Decoded readStream)
+	^Form fromBinaryStream: (self dcZoomOutIconContents base64Decoded asByteArray readStream)
 ]
 
 { #category : #'private - contents' }
@@ -239,7 +239,7 @@ TkSuQmCC'
 { #category : #'accessing - icons' }
 OPIcons >> dynacaseIcon [
 	"Private - Generated method"
-	^Form fromBinaryStream: (self dynacaseIconContents base64Decoded readStream)
+	^Form fromBinaryStream: (self dynacaseIconContents base64Decoded asByteArray readStream)
 ]
 
 { #category : #'private - contents' }
@@ -290,7 +290,7 @@ OPIcons >> initializeIcons [
 { #category : #'accessing - icons' }
 OPIcons >> logo [
 	"Private - Generated method"
-	^Form fromBinaryStream: (self logoContents base64Decoded readStream)
+	^Form fromBinaryStream: (self logoContents base64Decoded asByteArray readStream)
 ]
 
 { #category : #'private - contents' }
@@ -1088,7 +1088,7 @@ GiiFhmfVQENJNdBAAw008J8QjYxhAw000EAD/27x/wCGSAjyqcKbJQAAAABJRU5ErkJggg=='
 { #category : #'accessing - icons' }
 OPIcons >> openponkIcon [
 	"Private - Generated method"
-	^Form fromBinaryStream: (self dynacaseIconContents base64Decoded readStream)
+	^Form fromBinaryStream: (self dynacaseIconContents base64Decoded asByteArray readStream)
 ]
 
 { #category : #'private - contents' }

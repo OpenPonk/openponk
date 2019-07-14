@@ -30,7 +30,7 @@ OPIdeaActionsIcons class >> propertiesIcon [
 	^ self icons
 		at: #propertiesIcon
 		ifAbsentPut: [ Form
-				fromBinaryStream: (self propertiesIconContents base64Decoded readStream) ]
+				fromBinaryStream: (self propertiesIconContents base64Decoded asByteArray readStream) ]
 ]
 
 { #category : #'private - contents' }

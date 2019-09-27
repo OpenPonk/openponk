@@ -205,6 +205,8 @@ OPWorkbench >> formModel [
 
 { #category : #protocol }
 OPWorkbench >> initialExtent [
+	World extent x > 3000
+		ifTrue: [ ^ 1200 @ 800 ].
 	^ World extent * (0.65 @ 0.7)
 ]
 

@@ -209,7 +209,7 @@ OPDiagramView >> name: aName [
 	name := aName
 ]
 
-{ #category : #actions }
+{ #category : #copying }
 OPDiagramView >> newCopy [
 	| newView |
 	newView := self class fromJson: self asJson.

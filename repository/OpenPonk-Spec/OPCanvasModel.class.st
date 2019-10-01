@@ -172,7 +172,7 @@ OPCanvasModel >> initializeView: aView [
 	aView canvas theme: TRWhiteTheme new.
 	aView @ (OPRTSelectableView new candidatesBlock: [ diagramController selectableFigures ]).
 	aView @ (RTZoomableView new min: 0.05 max: 4).
-	aView @ (RTGridView new gridSize: 20).
+	aView @ (OPRTGridView2 new gridSize: 20).
 	^ aView canvas camera
 		addCallback:
 			(TRCameraScaleCallback

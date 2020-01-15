@@ -5,7 +5,7 @@ https://dynacase.github.io/
 Class {
 	#name : #BaselineOfOpenPonk,
 	#superclass : #BaselineOf,
-	#category : 'BaselineOfOpenPonk'
+	#category : #BaselineOfOpenPonk
 }
 
 { #category : #accessing }
@@ -18,7 +18,7 @@ BaselineOfOpenPonk >> baseline: spec [
 			spec
 				package: 'OpenPonk-Core'
 					with: [ spec
-						requires: #('Magritte' 'Mocketry' 'Roassal2' 'PetitParser' 'XMLParser' 'XPath' 'NeoJSON') ];
+						requires: #('Magritte' 'Mocketry' 'Roassal2' 'XMLParser' 'XPath' 'NeoJSON') ];
 				package: 'OpenPonk-Perf';
 				package: 'OpenPonk-Trachel';
 				package: 'OpenPonk-Roassal2';
@@ -44,27 +44,31 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 		with: [ spec repository: 'github://pharo-ide/Commander:v0.7.0/src' ].
 	spec
 		baseline: 'XMLParser'
-		with: [ spec repository: 'github://pharo-contributions/XML-XMLParser:3.5.x/src' ].
+		with: [ spec
+				repository: 'github://pharo-contributions/XML-XMLParser:3.5.x/src' ].
 	spec
 		baseline: 'XPath'
-		with: [ spec repository: 'github://pharo-contributions/XML-XPath:2.2.0/src' ].
+		with:
+			[ spec repository: 'github://pharo-contributions/XML-XPath:2.2.0/src' ].
 	spec
 		baseline: 'Roassal2'
-		with: [ spec repository: 'github://ObjectProfile/Roassal2:pharo7/src' ].
-	spec 
-		baseline: 'Magritte' 
-		with: [ spec repository: 'github://magritte-metamodel/magritte:v3.5.4/source'; 
-             loads: #(Core) ].
-	spec 
-		baseline: 'Moose' 
-		with: [ spec repository: 'github://moosetechnology/Moose:v7.x.x/src'; 
-             loads: #(Merlin) ].
+		with: [ spec
+				repository:
+					'github://ObjectProfile/Roassal2:004ab6f3dfd41cf06526c57115ee42cc921e7668/src';
+				postLoadDoIt: #loadPetitParser ].
+	spec
+		baseline: 'Magritte'
+		with: [ spec
+				repository: 'github://magritte-metamodel/magritte:v3.6/source';
+				loads: #(Core) ].
+	spec
+		baseline: 'Moose'
+		with: [ spec
+				repository: 'github://moosetechnology/Moose:24a33d7/src';
+				loads: #(Merlin) ].
 	spec
 		baseline: 'Mocketry'
 		with: [ spec repository: 'github://dionisiydk/Mocketry:v6.0.0' ].
-	spec
-		baseline: 'PetitParser'
-		with: [ spec repository: 'github://moosetechnology/PetitParser:v2.2.x/src' ].
 	spec
 		baseline: 'NeoJSON'
 		with: [ spec repository: 'github://svenvc/NeoJSON/repository' ]
@@ -81,6 +85,17 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 	spec
 		baseline: 'SynchronizedLinks'
 		with: [ spec repository: 'github://openponk/synchronized-links:v1.x/repository' ]
+]
+
+{ #category : #accessing }
+BaselineOfOpenPonk >> loadPetitParser [
+	"this is solved separatedly by direct loading code because PetitParser does not specify Roassal2 version, which causes conflicts and this is probably only way to use onConflict:"
+	
+	Metacello new
+		baseline: 'PetitParser';
+		repository: 'github://moosetechnology/PetitParser:v2.x.x/src';
+		onConflict: [ :err | err useLoaded ];
+		load
 ]
 
 { #category : #accessing }

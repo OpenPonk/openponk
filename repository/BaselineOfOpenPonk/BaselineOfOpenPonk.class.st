@@ -15,6 +15,7 @@ BaselineOfOpenPonk >> baseline: spec [
 		for: #common
 		do: [ self externalProjectsBaseline: spec.
 			self internalProjectsBaseline: spec.
+			self pluginsBaseline: spec.
 			spec
 				package: 'OpenPonk-Core'
 					with: [ spec
@@ -27,14 +28,15 @@ BaselineOfOpenPonk >> baseline: spec [
 					with: [ spec requires: #('Sentry') ];"
 				package: 'OpenPonk-Help';
 				package: 'OpenPonk-Spec'
-					with: [ spec requires: #('Moose' 'FileDialog' 'Magritte' 'Commander' 'SynchronizedLinks' 'OpenPonk-Morphic') ];
-				package: 'OpenPonk-UI';
-				package: 'OpenPonk-Plugins'
-					with: [ spec postLoadDoIt: #postLoadPlugins ].
+					with: [ spec
+						requires:
+							#('Moose' 'FileDialog' 'Magritte' 'Commander' 'SynchronizedLinks' 'OpenPonk-Morphic') ];
+				package: 'OpenPonk-UI'.
 			spec
 				group: 'default'
-				with: #('OpenPonk-Core' 'OpenPonk-Perf' 'OpenPonk-Trachel' 'OpenPonk-Roassal2' 'OpenPonk-Morphic' 'OpenPonk-Spec' 'OpenPonk-UI' "'OpenPonk-Telemetry'" 'OpenPonk-Help').
-			spec group: 'complete' with: #('default' 'OpenPonk-Plugins') ]
+				with:
+					#('OpenPonk-Core' 'OpenPonk-Perf' 'OpenPonk-Trachel' 'OpenPonk-Roassal2' 'OpenPonk-Morphic' 'OpenPonk-Spec' 'OpenPonk-UI' 'OpenPonk-Help'	"'OpenPonk-Telemetry'").
+			spec group: 'complete' with: #('default' 'plugins') ]
 ]
 
 { #category : #accessing }
@@ -99,15 +101,12 @@ BaselineOfOpenPonk >> loadPetitParser [
 ]
 
 { #category : #accessing }
-BaselineOfOpenPonk >> postLoadPlugins [
-	Metacello new
-		baseline: 'BormEditor';
-		repository: 'github://openponk/borm-editor/repository';
-		onConflict: [ :ex | ex allow ];
-		load.
-	Metacello new
-		baseline: 'ClassEditor';
-		repository: 'github://openponk/class-editor/repository';
-		onConflict: [ :ex | ex allow ];
-		load
+BaselineOfOpenPonk >> pluginsBaseline: spec [
+	spec
+		baseline: 'ClassEditor'
+		with: [ spec repository: 'github://openponk/class-editor/repository' ].
+	spec
+		baseline: 'BormEditor'
+		with: [ spec repository: 'github://openponk/borm-editor/repository' ].
+	spec group: 'plugins' with: #('ClassEditor BormEditor')
 ]

@@ -23,8 +23,8 @@ BaselineOfOpenPonk >> baseline: spec [
 				package: 'OpenPonk-Trachel';
 				package: 'OpenPonk-Roassal2';
 				package: 'OpenPonk-Morphic';
-				package: 'OpenPonk-Telemetry'
-					with: [ spec requires: #('Sentry') ];
+				"package: 'OpenPonk-Telemetry'
+					with: [ spec requires: #('Sentry') ];"
 				package: 'OpenPonk-Help';
 				package: 'OpenPonk-Spec'
 					with: [ spec requires: #('Moose' 'FileDialog' 'Magritte' 'Commander' 'SynchronizedLinks' 'OpenPonk-Morphic') ];
@@ -33,7 +33,7 @@ BaselineOfOpenPonk >> baseline: spec [
 					with: [ spec postLoadDoIt: #postLoadPlugins ].
 			spec
 				group: 'default'
-				with: #('OpenPonk-Core' 'OpenPonk-Perf' 'OpenPonk-Trachel' 'OpenPonk-Roassal2' 'OpenPonk-Morphic' 'OpenPonk-Spec' 'OpenPonk-UI' 'OpenPonk-Telemetry' 'OpenPonk-Help').
+				with: #('OpenPonk-Core' 'OpenPonk-Perf' 'OpenPonk-Trachel' 'OpenPonk-Roassal2' 'OpenPonk-Morphic' 'OpenPonk-Spec' 'OpenPonk-UI' "'OpenPonk-Telemetry'" 'OpenPonk-Help').
 			spec group: 'complete' with: #('default' 'OpenPonk-Plugins') ]
 ]
 
@@ -75,9 +75,9 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 	spec
 		baseline: 'FileDialog'
 		with: [ spec repository: 'github://peteruhnak/file-dialog:v1.x/repository' ].
-	spec
+	"spec
 		baseline: 'Sentry'
-		with: [ spec repository: 'github://peteruhnak/pharo-sentry:v1.x/repository' ].
+		with: [ spec repository: 'github://peteruhnak/pharo-sentry:v1.x/repository' ]."
 	spec
 		baseline: 'SynchronizedLinks'
 		with: [ spec repository: 'github://openponk/synchronized-links:v1.x/repository' ]

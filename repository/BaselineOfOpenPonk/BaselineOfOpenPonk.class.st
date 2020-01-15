@@ -22,9 +22,9 @@ BaselineOfOpenPonk >> baseline: spec [
 				package: 'OpenPonk-Perf';
 				package: 'OpenPonk-Trachel';
 				package: 'OpenPonk-Roassal2';
-				package: 'OpenPonk-Morphic';"
+				package: 'OpenPonk-Morphic';
 				package: 'OpenPonk-Telemetry'
-					with: [ spec requires: #('Sentry') ];"
+					with: [ spec requires: #('Sentry') ];
 				package: 'OpenPonk-Help';
 				package: 'OpenPonk-Spec'
 					with: [ spec requires: #('Merlin' 'FileDialog' 'Magritte' 'Commander' 'SynchronizedLinks' 'OpenPonk-Morphic') ];
@@ -33,7 +33,7 @@ BaselineOfOpenPonk >> baseline: spec [
 					with: [ spec postLoadDoIt: #postLoadPlugins ].
 			spec
 				group: 'default'
-				with: #('OpenPonk-Core' 'OpenPonk-Perf' 'OpenPonk-Trachel' 'OpenPonk-Roassal2' 'OpenPonk-Morphic' 'OpenPonk-Spec' 'OpenPonk-UI'" 'OpenPonk-Telemetry'" 'OpenPonk-Help').
+				with: #('OpenPonk-Core' 'OpenPonk-Perf' 'OpenPonk-Trachel' 'OpenPonk-Roassal2' 'OpenPonk-Morphic' 'OpenPonk-Spec' 'OpenPonk-UI' 'OpenPonk-Telemetry' 'OpenPonk-Help').
 			spec group: 'complete' with: #('default' 'OpenPonk-Plugins') ]
 ]
 
@@ -47,7 +47,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 		with: [ spec
 				className: #ConfigurationOfXMLParser;
 				versionString: #stable;
-				loads: #(CoreWithWriting);
+				loads: #('CoreWithWriting');
 				repository: 'http://smalltalkhub.com/mc/PharoExtras/XMLParser/main/' ].
 	spec
 		project: 'XPath'
@@ -86,10 +86,10 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 	spec
 		baseline: 'FileDialog'
-		with: [ spec repository: 'github://peteruhnak/file-dialog:v1.x/repository' ]."
+		with: [ spec repository: 'github://peteruhnak/file-dialog:v1.x/repository' ].
 	spec
 		baseline: 'Sentry'
-		with: [ spec repository: 'github://peteruhnak/pharo-sentry:v1.x/repository' ]."
+		with: [ spec repository: 'github://peteruhnak/pharo-sentry:v1.x/repository' ].
 	spec
 		baseline: 'SynchronizedLinks'
 		with: [ spec repository: 'github://openponk/synchronized-links:v1.x/repository' ]
@@ -104,7 +104,7 @@ BaselineOfOpenPonk >> postLoadPlugins [
 		load.
 	Metacello new
 		baseline: 'ClassEditor';
-		repository: 'github://openponk/class-editor:v1.x/repository';
+		repository: 'github://openponk/class-editor/repository';
 		onConflict: [ :ex | ex allow ];
 		load
 ]

@@ -21,19 +21,21 @@ cache:
 #  branch: iceberg-loading
 
 smalltalk:
-  - Pharo-6.1
+  - Pharo32-6.1
+  - Pharo32-7.0
+  - Pharo64-7.0
 
-before_install:
-  - openssl aes-256-cbc -K $encrypted_be80011f599c_key -iv $encrypted_be80011f599c_iv -in $KEY.enc -out $KEY -d
-  - chmod 0400 $KEY
-  - eval $(ssh-agent -s)
-  - ssh-add $KEY
+#before_install:
+#  - openssl aes-256-cbc -K $encrypted_be80011f599c_key -iv $encrypted_be80011f599c_iv -in $KEY.enc -out $KEY -d
+#  - chmod 0400 $KEY
+#  - eval $(ssh-agent -s)
+#  - ssh-add $KEY
 
-after_success:
-  - ./scripts/copy-image.sh $SMALLTALK_CI_IMAGE $ARTIFACT_DIR/openponk
-  - ./scripts/mark-image.sh $ARTIFACT_DIR/openponk
+#after_success:
+#  - ./scripts/copy-image.sh $SMALLTALK_CI_IMAGE $ARTIFACT_DIR/openponk
+#  - ./scripts/mark-image.sh $ARTIFACT_DIR/openponk
 
-deploy:
-  - provider: script
-    skip_cleanup: true
-    script: scripts/deploy.sh
+#deploy:
+#  - provider: script
+#    skip_cleanup: true
+#    script: scripts/deploy.sh

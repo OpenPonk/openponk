@@ -13,7 +13,7 @@ OPIdeaWelcomeIcons class >> createNewProjectIcon [
 	^ self icons
 		at: #createNewProjectIcon
 		ifAbsentPut: [ Form
-				fromBinaryStream: (self createNewProjectIconContents base64Decoded readStream) ]
+				fromBinaryStream: (self createNewProjectIconContents base64Decoded asByteArray readStream) ]
 ]
 
 { #category : #'private - contents' }
@@ -48,7 +48,7 @@ OPIdeaWelcomeIcons class >> importProjectIcon [
 	^ self icons
 		at: #importProjectIcon
 		ifAbsentPut: [ Form
-				fromBinaryStream: (self importProjectIconContents base64Decoded readStream) ]
+				fromBinaryStream: (self importProjectIconContents base64Decoded asByteArray readStream) ]
 ]
 
 { #category : #'private - contents' }
@@ -65,7 +65,7 @@ OPIdeaWelcomeIcons class >> openProjectIcon [
 	^ self icons
 		at: #openProjectIcon
 		ifAbsentPut: [ Form
-				fromBinaryStream: (self openProjectIconContents base64Decoded readStream) ]
+				fromBinaryStream: (self openProjectIconContents base64Decoded asByteArray readStream) ]
 ]
 
 { #category : #'private - contents' }

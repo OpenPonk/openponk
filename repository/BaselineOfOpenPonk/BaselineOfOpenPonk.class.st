@@ -27,7 +27,7 @@ BaselineOfOpenPonk >> baseline: spec [
 					with: [ spec requires: #('Sentry') ];
 				package: 'OpenPonk-Help';
 				package: 'OpenPonk-Spec'
-					with: [ spec requires: #('Merlin' 'FileDialog' 'Magritte' 'Commander' 'SynchronizedLinks' 'OpenPonk-Morphic') ];
+					with: [ spec requires: #('Moose' 'FileDialog' 'Magritte' 'Commander' 'SynchronizedLinks' 'OpenPonk-Morphic') ];
 				package: 'OpenPonk-UI';
 				package: 'OpenPonk-Plugins'
 					with: [ spec postLoadDoIt: #postLoadPlugins ].
@@ -44,27 +44,27 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 		with: [ spec repository: 'github://pharo-ide/Commander:v0.7.0/src' ].
 	spec
 		baseline: 'XMLParser'
-		with: [ spec repository: 'github://pharo-contributions/XML-XMLParser/src' ].
+		with: [ spec repository: 'github://pharo-contributions/XML-XMLParser:3.5.x/src' ].
 	spec
 		baseline: 'XPath'
-		with: [ spec repository: 'github://pharo-contributions/XML-XPath/src' ].
+		with: [ spec repository: 'github://pharo-contributions/XML-XPath:2.2.0/src' ].
 	spec
 		baseline: 'Roassal2'
-		with: [ spec repository: 'github://ObjectProfile/Roassal2/src' ].
+		with: [ spec repository: 'github://ObjectProfile/Roassal2:pharo7/src' ].
 	spec 
 		baseline: 'Magritte' 
-		with: [ spec repository: 'github://magritte-metamodel/magritte'; 
+		with: [ spec repository: 'github://magritte-metamodel/magritte:v3.5.4/source'; 
              loads: #(Core) ].
 	spec 
-		baseline: 'Merlin' 
-		with: [ spec repository: 'github://moosetechnology/Moose/src'; 
+		baseline: 'Moose' 
+		with: [ spec repository: 'github://moosetechnology/Moose:v7.x.x/src'; 
              loads: #(Merlin) ].
 	spec
 		baseline: 'Mocketry'
-		with: [ spec repository: 'github://dionisiydk/Mocketry' ].
+		with: [ spec repository: 'github://dionisiydk/Mocketry:v6.0.0' ].
 	spec
 		baseline: 'PetitParser'
-		with: [ spec repository: 'github://moosetechnology/PetitParser/src' ].
+		with: [ spec repository: 'github://moosetechnology/PetitParser:v2.2.x/src' ].
 	spec
 		baseline: 'NeoJSON'
 		with: [ spec repository: 'github://svenvc/NeoJSON/repository' ]

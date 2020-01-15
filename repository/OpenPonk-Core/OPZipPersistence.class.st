@@ -26,6 +26,6 @@ OPZipPersistence >> save: aRoot to: aZipFile [
 						readStreamDo: [ :readStream | archive addString: readStream contents as: each fullName ] ] ].
 	aZipFile
 		ensureDelete;
-		writeStreamDo: [ :stream | archive writeTo: stream ].
+		binaryWriteStreamDo: [ :stream | archive writeTo: stream ].
 	archive close
 ]

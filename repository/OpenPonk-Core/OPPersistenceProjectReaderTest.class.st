@@ -44,7 +44,7 @@ OPPersistenceProjectReaderTest >> testExporterVersion [
 
 { #category : #tests }
 OPPersistenceProjectReaderTest >> testMissingProject [
-	self should: [ reader fromFolder: FileSystem memory root ] raise: FileDoesNotExist
+	self should: [ reader fromFolder: FileSystem memory root ] raise: FileDoesNotExistException
 ]
 
 { #category : #tests }

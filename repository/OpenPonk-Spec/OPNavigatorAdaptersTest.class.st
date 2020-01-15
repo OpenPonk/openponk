@@ -29,7 +29,7 @@ OPNavigatorAdaptersTest >> testChildrenForProject [
 
 { #category : #running }
 OPNavigatorAdaptersTest >> testDisplayForObject [
-	self assert: (adapters displayFor: Object new) equals: 'an Object (Object)'
+	self assert: (adapters displayFor: OPNavigatorAdaptersTestObjectMockup new) equals: 'an OPNavigatorAdaptersTestObjectMockup (OPNavigatorAdaptersTestObjectMockup)'
 ]
 
 { #category : #running }
@@ -41,7 +41,10 @@ OPNavigatorAdaptersTest >> testDisplayForProject [
 
 { #category : #running }
 OPNavigatorAdaptersTest >> testIconForObject [
-	self assert: (adapters iconFor: Object new) equals: #blank asIcon
+	self
+		assert: (adapters iconFor: Object new)
+		equals:
+			(self iconNamed: #blank)
 ]
 
 { #category : #running }

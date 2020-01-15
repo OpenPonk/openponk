@@ -66,7 +66,8 @@ OPPersistenceProjectReader >> readMementoFrom: aFolder with: aSerializer [
 { #category : #reading }
 OPPersistenceProjectReader >> readModelReferences: aRootFolder [
 	| references |
-	references := STON fromString: (aRootFolder / 'models.json') readStream.
+	references := STON
+		fromStream: (aRootFolder / 'models.json') readStream.
 	^ references
 		collect: [ :each | 
 			| uuid model |

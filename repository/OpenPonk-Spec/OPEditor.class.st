@@ -19,7 +19,7 @@ Class {
 		'plugin',
 		'shortcuts'
 	],
-	#category : 'OpenPonk-Spec-Windows'
+	#category : #'OpenPonk-Spec-Windows'
 }
 
 { #category : #toolbar }
@@ -114,10 +114,12 @@ OPEditor >> canvasModel [
 { #category : #shortcuts }
 OPEditor >> collectShortcuts [
 	^ ((PragmaCollector
-		filter:
-			[ :prg | prg keyword = #opEditorShortcut: and: [ prg arguments first = self plugin class name ] ])
+		filter: [ :prg | 
+	prg selector = #opEditorShortcut:
+		and: [ prg arguments first = self plugin class name ] ])
 		reset;
-		collect: [ :prg | prg methodClass theNonMetaClass perform: prg methodSelector with: self ])
+		collect:
+				[ :prg | prg methodClass theNonMetaClass perform: prg methodSelector with: self ])
 		flattened
 ]
 

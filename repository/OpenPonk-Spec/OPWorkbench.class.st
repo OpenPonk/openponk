@@ -25,13 +25,13 @@ Class {
 		'layoutStyle',
 		'isDevelopmentMode'
 	],
-	#category : 'OpenPonk-Spec-Windows'
+	#category : #'OpenPonk-Spec-Windows'
 }
 
 { #category : #settings }
 OPWorkbench class >> availableLayoutStyles [
 	^ ((SpecPragmaCollector behavior: self class)
-		filter: [ :pragma | pragma keyword = #spec: ];
+		filter: [ :pragma | pragma selector = #spec: ];
 		reset;
 		collected) collect: [ :pragma | pragma arguments first ]
 ]

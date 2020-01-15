@@ -31,7 +31,7 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : 'OpenPonk-Perf'
+	#category : #'OpenPonk-Perf'
 }
 
 { #category : #accessing }
@@ -72,7 +72,8 @@ OPPragmaCache >> initialize [
 { #category : #initialization }
 OPPragmaCache >> newCollectorForKeyword: aKeyword [
 	^ (PragmaCollector
-		filter: [ :prg | prg keyword = aKeyword and: [ prg methodSelector numArgs = 1 ] ])
+		filter:
+			[ :prg | prg selector = aKeyword and: [ prg methodSelector numArgs = 1 ] ])
 		reset;
 		yourself
 ]

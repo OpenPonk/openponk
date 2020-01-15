@@ -43,37 +43,25 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 		baseline: 'Commander'
 		with: [ spec repository: 'github://pharo-ide/Commander:v0.7.0/src' ].
 	spec
-		project: 'XMLParser'
-		with: [ spec
-				className: #ConfigurationOfXMLParser;
-				versionString: #stable;
-				loads: #('CoreWithWriting');
-				repository: 'http://smalltalkhub.com/mc/PharoExtras/XMLParser/main/' ].
+		baseline: 'XMLParser'
+		with: [ spec repository: 'github://pharo-contributions/XML-XMLParser/src' ].
 	spec
-		project: 'XPath'
-		with: [ spec
-				className: #ConfigurationOfXPath;
-				versionString: #stable;
-				loads: #(Core);
-				repository: 'http://smalltalkhub.com/mc/PharoExtras/XPath/main/' ].
+		baseline: 'XPath'
+		with: [ spec repository: 'github://pharo-contributions/XML-XPath/src' ].
 	spec
 		baseline: 'Roassal2'
 		with: [ spec repository: 'github://ObjectProfile/Roassal2/src' ].
-	spec
-		project: 'Magritte'
-		with: [ spec
-				className: #ConfigurationOfMagritte3;
-				versionString: #stable;
-				repository: 'http://smalltalkhub.com/mc/Magritte/Magritte3/main/' ].
-	spec
-		project: 'Merlin'
-		with: [ spec
-				className: #ConfigurationOfMerlin;
-				versionString: #development;
-				repository: 'http://www.smalltalkhub.com/mc/Moose/Merlin/main' ].
+	spec 
+		baseline: 'Magritte' 
+		with: [ spec repository: 'github://magritte-metamodel/magritte'; 
+             loads: #(Core) ].
+	spec 
+		baseline: 'Merlin' 
+		with: [ spec repository: 'github://moosetechnology/Moose/src'; 
+             loads: #(Merlin) ].
 	spec
 		baseline: 'Mocketry'
-		with: [ spec repository: 'github://dionisiydk/Mocketry:v4.0.x' ].
+		with: [ spec repository: 'github://dionisiydk/Mocketry' ].
 	spec
 		baseline: 'PetitParser'
 		with: [ spec repository: 'github://moosetechnology/PetitParser/src' ].
@@ -99,7 +87,7 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 BaselineOfOpenPonk >> postLoadPlugins [
 	Metacello new
 		baseline: 'BormEditor';
-		repository: 'github://openponk/borm-editor:v0.9.0/repository';
+		repository: 'github://openponk/borm-editor/repository';
 		onConflict: [ :ex | ex allow ];
 		load.
 	Metacello new

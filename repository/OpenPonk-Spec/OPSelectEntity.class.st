@@ -18,7 +18,7 @@ Class {
 		'ghostText',
 		'selectDialog'
 	],
-	#category : 'OpenPonk-Spec-Windows'
+	#category : #'OpenPonk-Spec-Windows'
 }
 
 { #category : #specs }

@@ -18,7 +18,7 @@ Class {
 	#instVars : [
 		'testBlock'
 	],
-	#category : 'OpenPonk-Spec-Utils'
+	#category : #'OpenPonk-Spec-Utils'
 }
 
 { #category : #'instance creation' }
@@ -38,13 +38,13 @@ OPPragmaPluginMenuBuilder >> collectRegistrations [
 
 	| menu |
 	menu := PragmaMenuAndShortcutRegistration model: self model.
-	(self pragmaCollector select: [ :each | self hasCorrectArguments: each ])
+	(self pragmaCollector
+		select: [ :each | self hasCorrectArguments: each ])
 		do: [ :prg | 
 			self
 				currentRoot: self
-				while: [ prg methodClass theNonMetaClass
-						perform: prg methodSelector
-						with: menu ] ].
+				while:
+					[ prg methodClass instanceSide perform: prg methodSelector with: menu ] ].
 	self interpretRegistration: menu
 ]
 
@@ -63,7 +63,7 @@ OPPragmaPluginMenuBuilder >> model: anObject [
 OPPragmaPluginMenuBuilder >> testBlockFor: aModel [
 	| blocks |
 	blocks := Dictionary
-		with: OPCanvasModel -> [ :prg | prg arguments first = aModel editor plugin className ]
+		with: OPCanvasPresenter -> [ :prg | prg arguments first = aModel editor plugin className ]
 		with: OPEditor -> [ :prg | prg arguments first = aModel plugin className ]
 		with:
 			OPWorkbenchToolbar

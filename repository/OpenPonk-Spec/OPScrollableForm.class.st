@@ -8,7 +8,7 @@ Class {
 		'form',
 		'scrollPane'
 	],
-	#category : 'OpenPonk-Spec-Form'
+	#category : #'OpenPonk-Spec-Form'
 }
 
 { #category : #specs }

@@ -21,7 +21,7 @@ Class {
 	#classVars : [
 		'RecentProjects'
 	],
-	#category : 'OpenPonk-Spec-Windows'
+	#category : #'OpenPonk-Spec-Windows'
 }
 
 { #category : #specs }

@@ -1,7 +1,7 @@
 Class {
 	#name : #OPPragmaMenuBuilder,
 	#superclass : #PragmaMenuBuilder,
-	#category : 'OpenPonk-Spec-Utils'
+	#category : #'OpenPonk-Spec-Utils'
 }
 
 { #category : #'instance creation' }

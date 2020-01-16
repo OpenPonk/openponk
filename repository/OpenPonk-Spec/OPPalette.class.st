@@ -15,7 +15,7 @@ DCEditor
 "
 Class {
 	#name : #OPPalette,
-	#superclass : #DynamicComposableModel,
+	#superclass : #DynamicComposablePresenter,
 	#instVars : [
 		'items',
 		'selectedTool',
@@ -23,7 +23,7 @@ Class {
 		'diagramController',
 		'heading'
 	],
-	#category : 'OpenPonk-Spec-Palettes'
+	#category : #'OpenPonk-Spec-Palettes'
 }
 
 { #category : #specs }

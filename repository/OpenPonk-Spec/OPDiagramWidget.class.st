@@ -13,7 +13,7 @@ Class {
 	#classVars : [
 		'Icons'
 	],
-	#category : 'OpenPonk-Spec-Windows'
+	#category : #'OpenPonk-Spec-Windows'
 }
 
 { #category : #specs }

@@ -1,7 +1,7 @@
 Class {
 	#name : #OPMorphicEditableDropListAdapter,
 	#superclass : #MorphicDropListAdapter,
-	#category : 'OpenPonk-Spec-EditableDropList'
+	#category : #'OpenPonk-Spec-EditableDropList'
 }
 
 { #category : #factory }

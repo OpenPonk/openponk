@@ -5,11 +5,11 @@ You can configure both the underlying button and the palette tool through me.
 "
 Class {
 	#name : #OPPaletteEntry,
-	#superclass : #ButtonModel,
+	#superclass : #ButtonPresenter,
 	#instVars : [
 		'tool'
 	],
-	#category : 'OpenPonk-Spec-Palettes'
+	#category : #'OpenPonk-Spec-Palettes'
 }
 
 { #category : #protocol }

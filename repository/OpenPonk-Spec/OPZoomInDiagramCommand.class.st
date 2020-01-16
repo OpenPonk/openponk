@@ -1,7 +1,7 @@
 Class {
 	#name : #OPZoomInDiagramCommand,
 	#superclass : #OPDiagramToolbarCommand,
-	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands'
+	#category : #'OpenPonk-Spec-Diagram-Toolbar-Commands'
 }
 
 { #category : #activation }
@@ -10,7 +10,7 @@ OPZoomInDiagramCommand class >> toolbarMenuActivation [
 	^ OPDiagramToolbarActivation
 		byItemOf: OPDiagramToolbarBasicMenuGroup
 		order: 1
-		for: OPCanvasModel
+		for: OPCanvasPresenter
 ]
 
 { #category : #execution }

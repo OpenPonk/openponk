@@ -8,7 +8,7 @@ Class {
 		'form',
 		'controller'
 	],
-	#category : 'OpenPonk-Spec-Form'
+	#category : #'OpenPonk-Spec-Form'
 }
 
 { #category : #accessing }

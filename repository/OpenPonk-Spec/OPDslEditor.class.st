@@ -17,7 +17,7 @@ Class {
 		'modelClass',
 		'highlighter'
 	],
-	#category : 'OpenPonk-Spec-Windows'
+	#category : #'OpenPonk-Spec-Windows'
 }
 
 { #category : #specs }

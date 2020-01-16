@@ -12,13 +12,13 @@ Class {
 		'models',
 		'controllers'
 	],
-	#category : 'OpenPonk-Spec-Diagram-Figure-Commands'
+	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
 }
 
 { #category : #activation }
 OPDiagramFigureCommand class >> contextMenuActivation [
 	<classAnnotation>
-	^ CmdContextMenuActivation byRootGroupItemFor: OPCanvasModel
+	^ CmdContextMenuActivation byRootGroupItemFor: OPCanvasPresenter
 ]
 
 { #category : #example }
@@ -34,7 +34,7 @@ OPDiagramFigureCommand class >> example [
 { #category : #example }
 OPDiagramFigureCommand class >> example2 [
 	| c a |
-	c := OPCanvasModel new.
+	c := OPCanvasPresenter new.
 	a := CmdContextMenuActivation
 		buildContextMenuFor: c
 		inContext: (OPDiagramFigureContext for: c).

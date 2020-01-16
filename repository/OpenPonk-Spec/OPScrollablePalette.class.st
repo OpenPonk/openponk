@@ -8,7 +8,7 @@ Class {
 		'palette',
 		'scrollPane'
 	],
-	#category : 'OpenPonk-Spec-Palettes'
+	#category : #'OpenPonk-Spec-Palettes'
 }
 
 { #category : #specs }

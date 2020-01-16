@@ -1,7 +1,7 @@
 Class {
 	#name : #OPPaletteNullController,
 	#superclass : #Object,
-	#category : 'OpenPonk-Spec-Palettes'
+	#category : #'OpenPonk-Spec-Palettes'
 }
 
 { #category : #'as yet unclassified' }

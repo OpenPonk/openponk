@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'menu'
 	],
-	#category : 'OpenPonk-Spec-Utils'
+	#category : #'OpenPonk-Spec-Utils'
 }
 
 { #category : #adding }

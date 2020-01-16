@@ -1,7 +1,7 @@
 Class {
 	#name : #OPWidgetHeading,
 	#superclass : #Object,
-	#category : 'OpenPonk-Spec-Utils'
+	#category : #'OpenPonk-Spec-Utils'
 }
 
 { #category : #'instance creation' }

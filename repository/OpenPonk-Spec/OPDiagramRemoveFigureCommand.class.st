@@ -1,13 +1,13 @@
 Class {
 	#name : #OPDiagramRemoveFigureCommand,
 	#superclass : #OPDiagramFigureCommand,
-	#category : 'OpenPonk-Spec-Diagram-Figure-Commands'
+	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
 }
 
 { #category : #testing }
 OPDiagramRemoveFigureCommand class >> canvasShortcutActivation [
 	<classAnnotation>
-	^ CmdShortcutActivation by: Character delete meta for: OPCanvasModel
+	^ CmdShortcutActivation by: Character delete meta for: OPCanvasPresenter
 ]
 
 { #category : #accessing }

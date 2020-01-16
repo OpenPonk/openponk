@@ -163,7 +163,7 @@ OPEditor >> initializePresenter [
 { #category : #initialization }
 OPEditor >> initializeWidgets [
 	canvasMenuModel := self instantiate: MenuModel.
-	canvasModel := self instantiate: OPCanvasModel.
+	canvasModel := self instantiate: OPCanvasPresenter.
 	paletteModel := self instantiate: OPScrollablePalette.
 	formModel := self instantiate: OPScrollableForm.
 	(zoomLabel := self newLabel) label: '100%'.

@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'selectedController'
 	],
-	#category : 'OpenPonk-Spec-Palettes'
+	#category : #'OpenPonk-Spec-Palettes'
 }
 
 { #category : #protocol }

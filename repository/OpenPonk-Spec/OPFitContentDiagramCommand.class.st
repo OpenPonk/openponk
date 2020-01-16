@@ -1,7 +1,7 @@
 Class {
 	#name : #OPFitContentDiagramCommand,
 	#superclass : #OPDiagramToolbarCommand,
-	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands'
+	#category : #'OpenPonk-Spec-Diagram-Toolbar-Commands'
 }
 
 { #category : #activation }
@@ -10,7 +10,7 @@ OPFitContentDiagramCommand class >> toolbarMenuActivation [
 	^ OPDiagramToolbarActivation
 		byItemOf: OPDiagramToolbarBasicMenuGroup
 		order: 4
-		for: OPCanvasModel
+		for: OPCanvasPresenter
 ]
 
 { #category : #execution }

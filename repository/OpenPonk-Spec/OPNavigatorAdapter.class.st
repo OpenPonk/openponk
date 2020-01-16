@@ -26,7 +26,7 @@ Class {
 		'displayMapping',
 		'contextMenuMapping'
 	],
-	#category : 'OpenPonk-Spec-Utils'
+	#category : #'OpenPonk-Spec-Utils'
 }
 
 { #category : #testing }

@@ -1,7 +1,7 @@
 Class {
 	#name : #OPZoomOutDiagramCommand,
 	#superclass : #OPDiagramToolbarCommand,
-	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands'
+	#category : #'OpenPonk-Spec-Diagram-Toolbar-Commands'
 }
 
 { #category : #activation }
@@ -10,7 +10,7 @@ OPZoomOutDiagramCommand class >> toolbarMenuActivation [
 	^ OPDiagramToolbarActivation
 		byItemOf: OPDiagramToolbarBasicMenuGroup
 		order: 2
-		for: OPCanvasModel
+		for: OPCanvasPresenter
 ]
 
 { #category : #execution }

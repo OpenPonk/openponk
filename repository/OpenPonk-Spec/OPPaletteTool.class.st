@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'palette'
 	],
-	#category : 'OpenPonk-Spec-Palettes'
+	#category : #'OpenPonk-Spec-Palettes'
 }
 
 { #category : #protocol }

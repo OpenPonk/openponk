@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'adapters'
 	],
-	#category : 'OpenPonk-Spec-Utils'
+	#category : #'OpenPonk-Spec-Utils'
 }
 
 { #category : #accessing }

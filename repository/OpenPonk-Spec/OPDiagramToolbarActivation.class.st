@@ -4,7 +4,7 @@ I represent commands that are shown at a side of a diagram canvas as a toolbar w
 Class {
 	#name : #OPDiagramToolbarActivation,
 	#superclass : #CmdMenuCommandActivationStrategy,
-	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands'
+	#category : #'OpenPonk-Spec-Diagram-Toolbar-Commands'
 }
 
 { #category : #accessing }

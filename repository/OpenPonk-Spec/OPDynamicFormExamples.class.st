@@ -4,7 +4,7 @@ A bunch of examples demonstrating Form options.
 Class {
 	#name : #OPDynamicFormExamples,
 	#superclass : #Object,
-	#category : 'OpenPonk-Spec-Form'
+	#category : #'OpenPonk-Spec-Form'
 }
 
 { #category : #examples }

@@ -25,7 +25,7 @@ Class {
 		'menuModel',
 		'groupModel'
 	],
-	#category : 'OpenPonk-Spec-Toolbars'
+	#category : #'OpenPonk-Spec-Toolbars'
 }
 
 { #category : #specs }

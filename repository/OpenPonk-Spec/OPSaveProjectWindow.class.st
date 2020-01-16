@@ -13,7 +13,7 @@ Class {
 		'selectedFolder',
 		'projectController'
 	],
-	#category : 'OpenPonk-Spec-Windows'
+	#category : #'OpenPonk-Spec-Windows'
 }
 
 { #category : #specs }

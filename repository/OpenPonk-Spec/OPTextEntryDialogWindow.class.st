@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'validation'
 	],
-	#category : 'OpenPonk-Spec-Dialogs'
+	#category : #'OpenPonk-Spec-Dialogs'
 }
 
 { #category : #'instance creation' }

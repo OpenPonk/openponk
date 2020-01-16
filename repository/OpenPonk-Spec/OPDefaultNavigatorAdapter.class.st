@@ -8,7 +8,7 @@ DCNavigator
 Class {
 	#name : #OPDefaultNavigatorAdapter,
 	#superclass : #OPNavigatorAdapter,
-	#category : 'OpenPonk-Spec-Utils'
+	#category : #'OpenPonk-Spec-Utils'
 }
 
 { #category : #registering }

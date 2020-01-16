@@ -8,7 +8,7 @@ Class {
 		'modelName',
 		'view'
 	],
-	#category : 'OpenPonk-Spec-Wizards'
+	#category : #'OpenPonk-Spec-Wizards'
 }
 
 { #category : #adding }

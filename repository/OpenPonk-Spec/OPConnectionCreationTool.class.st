@@ -14,7 +14,7 @@ Class {
 		'connectionFeedback',
 		'onComplete'
 	],
-	#category : 'OpenPonk-Spec-Palettes'
+	#category : #'OpenPonk-Spec-Palettes'
 }
 
 { #category : #protocol }

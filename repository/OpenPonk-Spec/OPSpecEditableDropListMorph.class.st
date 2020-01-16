@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'currentIcon'
 	],
-	#category : 'OpenPonk-Spec-EditableDropList'
+	#category : #'OpenPonk-Spec-EditableDropList'
 }
 
 { #category : #private }

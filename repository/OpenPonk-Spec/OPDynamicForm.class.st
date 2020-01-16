@@ -9,7 +9,7 @@ Creating form controls (text boxes, checkboxes, etc) for editing a controller's 
 "
 Class {
 	#name : #OPDynamicForm,
-	#superclass : #DynamicComposableModel,
+	#superclass : #DynamicComposablePresenter,
 	#instVars : [
 		'components',
 		'heights',
@@ -17,7 +17,7 @@ Class {
 		'controller',
 		'heading'
 	],
-	#category : 'OpenPonk-Spec-Form'
+	#category : #'OpenPonk-Spec-Form'
 }
 
 { #category : #specs }
@@ -119,7 +119,7 @@ OPDynamicForm >> addDroplist: aName [
 OPDynamicForm >> addEditableDroplist: aName [
 	| control |
 	self addLabel: aName.
-	control := self instantiate: OPEditableDropListModel.
+	control := self instantiate: OPEditableDropListPresenter.
 	self addControl: control.
 	^ control
 ]
@@ -184,13 +184,13 @@ OPDynamicForm >> defaultHeights [
 	| lineHeight |
 	lineHeight := 20.
 	^ {OPSelectEntity -> lineHeight.
-	LabelModel -> (lineHeight - 5).
-	TextInputFieldModel -> (lineHeight + 2).
-	TextModel -> (lineHeight * 4).
-	OPEditableDropListModel -> lineHeight.
-	DropListModel -> lineHeight.
-	CheckBoxModel -> (lineHeight * 1).
-	ButtonModel -> (lineHeight * 1.2)} asDictionary
+	LabelPresenter -> (lineHeight - 5).
+	TextInputFieldPresenter -> (lineHeight + 2).
+	TextPresenter -> (lineHeight * 4).
+	OPEditableDropListPresenter -> lineHeight.
+	DropListPresenter -> lineHeight.
+	CheckBoxPresenter -> (lineHeight * 1).
+	ButtonPresenter -> (lineHeight * 1.2)} asDictionary
 ]
 
 { #category : #'private - building widgets' }
@@ -199,16 +199,14 @@ OPDynamicForm >> dynamicLayout [
 	keys := self widgets keys.
 	^ SpecLayout composed
 		newColumn: [ :c | 
-			keys ifNotEmpty: [ 
-			c add: #heading height: self class toolbarHeight ].
+			keys ifNotEmpty: [ c add: #heading height: self class toolbarHeight ].
 			keys
 				do: [ :key | 
 					height := self heightFor: (self perform: key).
-					"	((self perform: key) isKindOf: DCSelectEntity)
-						ifTrue: [ c newRow: [ :row | row add: key withSpec: #specLayout ] height: height ]"
-					"	ifFalse: ["
-					height ifNil: [ c add: key ] ifNotNil: [ "]" c add: key height: height ] ].
-			c newRow: [ :r | "last row is emtpy to take up all the remaining available space" ] ];
+					height
+						ifNil: [ c add: key ]
+						ifNotNil: [ c add: key height: height ] ].
+			c newRow: [ :r | "last element stretches to fill rest of the form" ] height: 0 ];
 		yourself
 ]
 

@@ -1,7 +1,7 @@
 Class {
 	#name : #OPDiagramToolbarBasicMenuGroup,
 	#superclass : #CmdMenuGroup,
-	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands'
+	#category : #'OpenPonk-Spec-Diagram-Toolbar-Commands'
 }
 
 { #category : #testing }

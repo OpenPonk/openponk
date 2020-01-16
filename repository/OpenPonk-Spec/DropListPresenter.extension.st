@@ -1,7 +1,7 @@
-Extension { #name : #DropListModel }
+Extension { #name : #DropListPresenter }
 
 { #category : #'*OpenPonk-Spec' }
-DropListModel >> addSilentlyItemLabeled: aString do: aBlock [
+DropListPresenter >> addSilentlyItemLabeled: aString do: aBlock [
 
 	| item |
 	item := DropListItem named: aString do: aBlock.

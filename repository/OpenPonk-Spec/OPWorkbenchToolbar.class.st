@@ -3,12 +3,12 @@ I am top menu toolbar for Workbench.
 "
 Class {
 	#name : #OPWorkbenchToolbar,
-	#superclass : #DynamicComposableModel,
+	#superclass : #DynamicComposablePresenter,
 	#instVars : [
 		'toolbar',
 		'activeEditor'
 	],
-	#category : 'OpenPonk-Spec-Windows'
+	#category : #'OpenPonk-Spec-Windows'
 }
 
 { #category : #specs }

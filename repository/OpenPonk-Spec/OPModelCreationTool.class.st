@@ -4,7 +4,7 @@ I am a creation tool specific for model-only creation. The attachment of control
 Class {
 	#name : #OPModelCreationTool,
 	#superclass : #OPCreationTool,
-	#category : 'OpenPonk-Spec-Palettes'
+	#category : #'OpenPonk-Spec-Palettes'
 }
 
 { #category : #callbacks }

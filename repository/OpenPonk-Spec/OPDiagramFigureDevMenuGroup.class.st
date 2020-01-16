@@ -1,7 +1,7 @@
 Class {
 	#name : #OPDiagramFigureDevMenuGroup,
 	#superclass : #CmdMenuGroup,
-	#category : 'OpenPonk-Spec-Diagram-Figure-Commands'
+	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
 }
 
 { #category : #accessing }

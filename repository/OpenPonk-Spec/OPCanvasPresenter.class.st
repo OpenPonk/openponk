@@ -2,7 +2,7 @@
 I am Spec model to embed Roassal2 into DCEditor.
 "
 Class {
-	#name : #OPCanvasModel,
+	#name : #OPCanvasPresenter,
 	#superclass : #RoassalModel,
 	#instVars : [
 		'roassalView',
@@ -11,11 +11,11 @@ Class {
 		'onZoomChange',
 		'lastSelectedFigure'
 	],
-	#category : 'OpenPonk-Spec-Windows'
+	#category : #'OpenPonk-Spec-Windows'
 }
 
 { #category : #adding }
-OPCanvasModel >> addMenuFor: aFigure [
+OPCanvasPresenter >> addMenuFor: aFigure [
 	aFigure
 		when: TRMouseRightClick
 		do: [ :event | 
@@ -30,7 +30,7 @@ OPCanvasModel >> addMenuFor: aFigure [
 ]
 
 { #category : #adding }
-OPCanvasModel >> addMouseEventsFor: aFigure [
+OPCanvasPresenter >> addMouseEventsFor: aFigure [
 	aFigure
 		when: TRMouseDoubleLeftClick
 		do: [ :event | 
@@ -61,14 +61,14 @@ OPCanvasModel >> addMouseEventsFor: aFigure [
 ]
 
 { #category : #accessing }
-OPCanvasModel >> attachController: aDiagramController [
+OPCanvasPresenter >> attachController: aDiagramController [
 	(diagramController := aDiagramController)
 		view: roassalView;
 		whenFigureAdded: [ :figure | self figureAdded: figure ]
 ]
 
 { #category : #private }
-OPCanvasModel >> cleanView [
+OPCanvasPresenter >> cleanView [
 	"roassalView cleanAll is unusable because it breaks (maybe) misused TRRemoveCallbacks"
 
 	roassalView edges copy do: #remove.
@@ -80,14 +80,14 @@ OPCanvasModel >> cleanView [
 ]
 
 { #category : #'private-focus' }
-OPCanvasModel >> createCommandContext [
+OPCanvasPresenter >> createCommandContext [
 	"Subclases should override it if they provide any selection"
 
 	^ self createCommandContextForSelection: self selectedElements
 ]
 
 { #category : #'private-focus' }
-OPCanvasModel >> createCommandContextForSelection: selectedItems [
+OPCanvasPresenter >> createCommandContextForSelection: selectedItems [
 	"simple context has no information about selected items"
 
 	^ OPDiagramFigureContext for: self of: selectedItems
@@ -95,29 +95,29 @@ OPCanvasModel >> createCommandContextForSelection: selectedItems [
 ]
 
 { #category : #accessing }
-OPCanvasModel >> diagramController [
+OPCanvasPresenter >> diagramController [
 	^ diagramController
 ]
 
 { #category : #accessing }
-OPCanvasModel >> editor [
+OPCanvasPresenter >> editor [
 	^ self owner
 ]
 
 { #category : #'private-focus' }
-OPCanvasModel >> enableCommanderShortcutsIn: aWidget [
+OPCanvasPresenter >> enableCommanderShortcutsIn: aWidget [
 
 	^ CmdKMDispatcher attachedTo: aWidget withCommandsFrom: self
 ]
 
 { #category : #'private-focus' }
-OPCanvasModel >> ensureKeyBindingsFor: aWidget [
+OPCanvasPresenter >> ensureKeyBindingsFor: aWidget [
 	super ensureKeyBindingsFor: aWidget.
 	^self enableCommanderShortcutsIn: aWidget
 ]
 
 { #category : #toolbar }
-OPCanvasModel >> exportAsPng [
+OPCanvasPresenter >> exportAsPng [
 	FDSaveFileDialog new
 		whenSelected: [ :file | self exportCanvasTo: file ];
 		extensionFilters: {'Images' -> #(png)};
@@ -126,7 +126,7 @@ OPCanvasModel >> exportAsPng [
 ]
 
 { #category : #toolbar }
-OPCanvasModel >> exportCanvasTo: aFile [
+OPCanvasPresenter >> exportCanvasTo: aFile [
 	| gridShape gridColor |
 	gridShape := roassalView canvas shapes
 		detect: [ :each | each isKindOf: TRCanvasGridShape ].
@@ -146,7 +146,7 @@ OPCanvasModel >> exportCanvasTo: aFile [
 ]
 
 { #category : #adding }
-OPCanvasModel >> figureAdded: aFigure [
+OPCanvasPresenter >> figureAdded: aFigure [
 	"Only elements can be translated, not edges."
 	(aFigure isElement)
 		ifTrue: [ aFigure translateTo: self lastClickPosition ].
@@ -156,7 +156,7 @@ OPCanvasModel >> figureAdded: aFigure [
 ]
 
 { #category : #initialization }
-OPCanvasModel >> initialize [
+OPCanvasPresenter >> initialize [
 	super initialize.
 	onZoomChange := [ :value |  ].
 	self
@@ -166,7 +166,7 @@ OPCanvasModel >> initialize [
 ]
 
 { #category : #initialization }
-OPCanvasModel >> initializeView: aView [
+OPCanvasPresenter >> initializeView: aView [
 	aView when: TRMouseLeftClick do: [ :event | self viewClicked: event ].
 	aView when: TRMouseRightClick do: [ :event | self viewContextClicked: event ].
 	aView canvas theme: TRWhiteTheme new.
@@ -190,27 +190,27 @@ OPCanvasModel >> initializeView: aView [
 ]
 
 { #category : #events }
-OPCanvasModel >> lastClickPosition [
+OPCanvasPresenter >> lastClickPosition [
 	^ lastClickPosition ifNil: [ 0 @ 0 ]
 ]
 
 { #category : #events }
-OPCanvasModel >> lastClickPosition: aPoint [
+OPCanvasPresenter >> lastClickPosition: aPoint [
 	lastClickPosition := aPoint
 ]
 
 { #category : #accessing }
-OPCanvasModel >> lastSelectedFigure [
+OPCanvasPresenter >> lastSelectedFigure [
 	^ lastSelectedFigure
 ]
 
 { #category : #accessing }
-OPCanvasModel >> lastSelectedFigure: aFigure [
+OPCanvasPresenter >> lastSelectedFigure: aFigure [
 	lastSelectedFigure := aFigure
 ]
 
 { #category : #private }
-OPCanvasModel >> loadElementsFromController [
+OPCanvasPresenter >> loadElementsFromController [
 	self deprecated: 'Control reloading from Controller, not Canvas'.
 	[ World activeHand showTemporaryCursor: Cursor wait.
 	World doOneCycle.
@@ -220,7 +220,7 @@ OPCanvasModel >> loadElementsFromController [
 ]
 
 { #category : #signalling }
-OPCanvasModel >> reloadView [
+OPCanvasPresenter >> reloadView [
 	self deprecated: 'Control reloading from Controller, not Canvas'.
 	self cleanView.
 	diagramController ifNotNil: [ self loadElementsFromController ].
@@ -228,12 +228,12 @@ OPCanvasModel >> reloadView [
 ]
 
 { #category : #accessing }
-OPCanvasModel >> roassalView [
+OPCanvasPresenter >> roassalView [
 	^ roassalView
 ]
 
 { #category : #accessing }
-OPCanvasModel >> selectedElements [
+OPCanvasPresenter >> selectedElements [
 	roassalView attributes
 		at: OPRTSelectableView
 		ifPresent: [ :els | els ifNotEmpty: [ ^ els ] ].
@@ -241,39 +241,39 @@ OPCanvasModel >> selectedElements [
 ]
 
 { #category : #'as yet unclassified' }
-OPCanvasModel >> showAllFigures [
+OPCanvasPresenter >> showAllFigures [
 	roassalView canvas focusOnCenterScaled
 ]
 
 { #category : #signalling }
-OPCanvasModel >> signalUpdate [
+OPCanvasPresenter >> signalUpdate [
 	roassalView signalUpdate
 ]
 
 { #category : #'selection handling' }
-OPCanvasModel >> viewClicked: anEvent [
+OPCanvasPresenter >> viewClicked: anEvent [
 	self lastClickPosition: anEvent position.
 	self diagramController selectView
 ]
 
 { #category : #'selection handling' }
-OPCanvasModel >> viewContextClicked: anEvent [
+OPCanvasPresenter >> viewContextClicked: anEvent [
 	(OPPragmaPluginMenuBuilder cachedPragmaKeyword: #opCanvasContextMenu: model: self) menuSpec
 		asMenuMorph popUpInWorld
 ]
 
 { #category : #accessing }
-OPCanvasModel >> whenZoomChanged: aOneArgBlock [
+OPCanvasPresenter >> whenZoomChanged: aOneArgBlock [
 	onZoomChange := aOneArgBlock
 ]
 
 { #category : #accessing }
-OPCanvasModel >> workbench [
+OPCanvasPresenter >> workbench [
 	^ self editor workbench
 ]
 
 { #category : #accessing }
-OPCanvasModel >> zoom [
+OPCanvasPresenter >> zoom [
 	"1: default zoom (it should be 1.0001, but who cares)
 	2: zoomed in to 200%"
 
@@ -281,7 +281,7 @@ OPCanvasModel >> zoom [
 ]
 
 { #category : #accessing }
-OPCanvasModel >> zoom: aScale [
+OPCanvasPresenter >> zoom: aScale [
 	"1: default zoom (it should be 1.0001, but who cares)
 	2: zoomed in to 200%"
 

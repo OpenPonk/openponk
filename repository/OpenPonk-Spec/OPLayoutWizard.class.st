@@ -8,7 +8,7 @@ Class {
 		'directedEdges',
 		'toNumberBlock'
 	],
-	#category : 'OpenPonk-Spec-Wizards'
+	#category : #'OpenPonk-Spec-Wizards'
 }
 
 { #category : #options }

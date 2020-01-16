@@ -1,13 +1,13 @@
 Class {
 	#name : #OPDiagramInspectModelFigureCommand,
 	#superclass : #OPDiagramFigureCommand,
-	#category : 'OpenPonk-Spec-Diagram-Figure-Commands'
+	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
 }
 
 { #category : #testing }
 OPDiagramInspectModelFigureCommand class >> canvasShortcutActivation [
 	<classAnnotation>
-	^ CmdShortcutActivation by: $i meta for: OPCanvasModel
+	^ CmdShortcutActivation by: $i meta for: OPCanvasPresenter
 ]
 
 { #category : #execution }

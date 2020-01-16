@@ -1,7 +1,7 @@
 Class {
 	#name : #OPDiagramFigureDevCommand,
 	#superclass : #OPDiagramFigureCommand,
-	#category : 'OpenPonk-Spec-Diagram-Figure-Commands'
+	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
 }
 
 { #category : #activation }
@@ -12,5 +12,5 @@ OPDiagramFigureDevCommand class >> canBeExecutedInContext: aToolContext [
 { #category : #activation }
 OPDiagramFigureDevCommand class >> contextMenuActivation [
 	<classAnnotation>
-	^ CmdContextMenuActivation byItemOf: OPDiagramFigureDevMenuGroup for: OPCanvasModel
+	^ CmdContextMenuActivation byItemOf: OPDiagramFigureDevMenuGroup for: OPCanvasPresenter
 ]

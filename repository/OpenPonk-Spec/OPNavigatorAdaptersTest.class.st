@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'adapters'
 	],
-	#category : 'OpenPonk-Spec-Tests'
+	#category : #'OpenPonk-Spec-Tests'
 }
 
 { #category : #running }

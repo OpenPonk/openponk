@@ -1,14 +1,14 @@
-Extension { #name : #AbstractWidgetModel }
+Extension { #name : #AbstractWidgetPresenter }
 
 { #category : #'*OpenPonk-Spec' }
-AbstractWidgetModel >> eventKeyStrokesForNextFocus [
+AbstractWidgetPresenter >> eventKeyStrokesForNextFocus [
 	"String describing the keystroke to perform to jump to the next widget"
 	
 	^ { Character tab asKeyCombination}
 ]
 
 { #category : #'*OpenPonk-Spec' }
-AbstractWidgetModel >> eventKeyStrokesForPreviousFocus [
+AbstractWidgetPresenter >> eventKeyStrokesForPreviousFocus [
 	"String describing the keystroke to perform to jump to the next widget"
 	
 	^ { Character tab shift asKeyCombination}

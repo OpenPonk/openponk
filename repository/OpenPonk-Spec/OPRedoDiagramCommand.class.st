@@ -1,7 +1,7 @@
 Class {
 	#name : #OPRedoDiagramCommand,
 	#superclass : #OPDiagramToolbarCommand,
-	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands'
+	#category : #'OpenPonk-Spec-Diagram-Toolbar-Commands'
 }
 
 { #category : #activation }

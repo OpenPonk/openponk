@@ -70,7 +70,7 @@ OPDynamicForm class >> showPriority: aBoolean [
 
 { #category : #specs }
 OPDynamicForm class >> uninstallLink [
-	self visitAst links ifNotNil: [ :links | links do: #uninstall ]
+	self visitAst links ifNotNil: [ :links | links asSet do: #uninstall ]
 ]
 
 { #category : #specs }

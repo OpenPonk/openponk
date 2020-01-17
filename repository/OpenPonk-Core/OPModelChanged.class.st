@@ -6,5 +6,5 @@ A subscriber to this event should presume that any aspect has changed.
 Class {
 	#name : #OPModelChanged,
 	#superclass : #OPModelAnnouncement,
-	#category : 'OpenPonk-Core-Announcements'
+	#category : #'OpenPonk-Core-Announcements'
 }

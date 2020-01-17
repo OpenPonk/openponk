@@ -4,7 +4,7 @@ I store a MemoryStore into a specified zip file and vice versa.
 Class {
 	#name : #OPZipPersistence,
 	#superclass : #Object,
-	#category : 'OpenPonk-Core-Persistence'
+	#category : #'OpenPonk-Core-Persistence'
 }
 
 { #category : #'load and saving' }

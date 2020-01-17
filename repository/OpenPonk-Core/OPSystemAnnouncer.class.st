@@ -9,7 +9,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : 'OpenPonk-Core-Announcements'
+	#category : #'OpenPonk-Core-Announcements'
 }
 
 { #category : #initialization }

@@ -14,7 +14,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : 'OpenPonk-Core-Icons'
+	#category : #'OpenPonk-Core-Icons'
 }
 
 { #category : #'instance creation' }

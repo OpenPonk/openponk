@@ -14,7 +14,7 @@ Class {
 		'future',
 		'serializer'
 	],
-	#category : 'OpenPonk-Core-Persistence'
+	#category : #'OpenPonk-Core-Persistence'
 }
 
 { #category : #'instance creation' }

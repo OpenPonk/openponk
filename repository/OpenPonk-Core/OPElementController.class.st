@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'figure'
 	],
-	#category : 'OpenPonk-Core-Controllers'
+	#category : #'OpenPonk-Core-Controllers'
 }
 
 { #category : #deprecated }

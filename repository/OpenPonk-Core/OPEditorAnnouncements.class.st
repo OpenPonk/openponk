@@ -9,7 +9,7 @@ Class {
 		'editor',
 		'diagramController'
 	],
-	#category : 'OpenPonk-Core-Announcements'
+	#category : #'OpenPonk-Core-Announcements'
 }
 
 { #category : #'instance creation' }

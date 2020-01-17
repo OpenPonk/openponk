@@ -23,7 +23,7 @@ Class {
 		'model',
 		'options'
 	],
-	#category : 'OpenPonk-Core-Views'
+	#category : #'OpenPonk-Core-Views'
 }
 
 { #category : #'instance creation' }

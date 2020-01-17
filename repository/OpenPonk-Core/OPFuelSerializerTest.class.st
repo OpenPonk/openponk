@@ -1,6 +1,6 @@
 Class {
 	#name : #OPFuelSerializerTest,
-	#superclass : #Object,
+	#superclass : #OPAbstractSerializerTest,
 	#category : #'OpenPonk-Core-Tests'
 }
 

@@ -4,7 +4,7 @@ I am a mock class for testing ""regular"" model controllers.
 Class {
 	#name : #OPTestEntityController,
 	#superclass : #OPElementController,
-	#category : 'OpenPonk-Core-Controllers - Tests'
+	#category : #'OpenPonk-Core-Controllers - Tests'
 }
 
 { #category : #testing }

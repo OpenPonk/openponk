@@ -4,7 +4,7 @@ I am a serialization interface for undo/redo and persistence.
 Class {
 	#name : #OPAbstractSerializer,
 	#superclass : #Object,
-	#category : 'OpenPonk-Core-Persistence'
+	#category : #'OpenPonk-Core-Persistence'
 }
 
 { #category : #accessing }

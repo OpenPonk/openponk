@@ -5,7 +5,7 @@ Class {
 		'controller',
 		'project'
 	],
-	#category : 'OpenPonk-Core-Tests'
+	#category : #'OpenPonk-Core-Tests'
 }
 
 { #category : #running }

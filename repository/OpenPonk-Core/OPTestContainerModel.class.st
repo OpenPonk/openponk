@@ -9,7 +9,7 @@ Class {
 		'uuid',
 		'name'
 	],
-	#category : 'OpenPonk-Core-Controllers - Tests'
+	#category : #'OpenPonk-Core-Controllers - Tests'
 }
 
 { #category : #accessing }

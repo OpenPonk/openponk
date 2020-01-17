@@ -4,7 +4,7 @@ My job is to store a project with all the plugins into a provided directory.
 Class {
 	#name : #OPProjectDirectoryPersistence,
 	#superclass : #Object,
-	#category : 'OpenPonk-Core-Persistence'
+	#category : #'OpenPonk-Core-Persistence'
 }
 
 { #category : #accessing }

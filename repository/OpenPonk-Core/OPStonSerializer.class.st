@@ -8,7 +8,7 @@ If your model relies on Announements to propagate updates between elements, the 
 Class {
 	#name : #OPStonSerializer,
 	#superclass : #OPAbstractSerializer,
-	#category : 'OpenPonk-Core-Persistence'
+	#category : #'OpenPonk-Core-Persistence'
 }
 
 { #category : #accessing }

@@ -10,7 +10,7 @@ DCFigure
 Class {
 	#name : #OPRTNullLayout,
 	#superclass : #RTLayout,
-	#category : 'OpenPonk-Core-Figures'
+	#category : #'OpenPonk-Core-Figures'
 }
 
 { #category : #hook }

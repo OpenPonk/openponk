@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'sourceController'
 	],
-	#category : 'OpenPonk-Core-Controllers - Tests'
+	#category : #'OpenPonk-Core-Controllers - Tests'
 }
 
 { #category : #construction }

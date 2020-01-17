@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'registrations'
 	],
-	#category : 'OpenPonk-Core-Controllers'
+	#category : #'OpenPonk-Core-Controllers'
 }
 
 { #category : #'accessing - defaults' }

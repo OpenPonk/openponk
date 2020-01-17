@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'model'
 	],
-	#category : 'OpenPonk-Core-Announcements'
+	#category : #'OpenPonk-Core-Announcements'
 }
 
 { #category : #accessing }

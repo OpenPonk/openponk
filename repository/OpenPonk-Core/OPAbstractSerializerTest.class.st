@@ -4,9 +4,10 @@ Class {
 	#instVars : [
 		'serializer',
 		'root',
-		'memento'
+		'memento',
+		'model'
 	],
-	#category : 'OpenPonk-Core-Tests'
+	#category : #'OpenPonk-Core-Tests'
 }
 
 { #category : #testing }
@@ -15,8 +16,15 @@ OPAbstractSerializerTest class >> isAbstract [
 ]
 
 { #category : #'instance creation' }
-OPAbstractSerializerTest >> newMemento [
-	^ OPPersistenceMemento model: OPTestEntityModel new diagram: {('1' -> '2')} asDictionary
+OPAbstractSerializerTest >> newMementoWithModel: aModel [
+	^ OPPersistenceMemento
+		model: aModel
+		diagram: {('1' -> '2')} asDictionary
+]
+
+{ #category : #'instance creation' }
+OPAbstractSerializerTest >> newModel [
+	^ OPTestEntityModel new
 ]
 
 { #category : #accessing }
@@ -29,7 +37,8 @@ OPAbstractSerializerTest >> setUp [
 	super setUp.
 	serializer := self serializerClass new.
 	root := FileSystem memory.
-	memento := self newMemento
+	model := self newModel.
+	memento := self newMementoWithModel: model
 ]
 
 { #category : #running }
@@ -40,6 +49,15 @@ OPAbstractSerializerTest >> testLoadMemento [
 	self deny: newMemento == memento.
 	self assert: newMemento uuid equals: memento uuid.
 	self assert: newMemento diagram equals: memento diagram
+]
+
+{ #category : #tests }
+OPAbstractSerializerTest >> testRoundtrip [
+	| originalModel loadedModel serialization |
+	originalModel := self newModel.
+	serialization := serializer serializeModel: originalModel.
+	loadedModel := serializer materializeModelFrom: serialization.
+	self assert: originalModel equals: loadedModel
 ]
 
 { #category : #running }

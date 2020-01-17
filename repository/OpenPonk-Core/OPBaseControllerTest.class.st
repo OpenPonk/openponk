@@ -9,7 +9,7 @@ Class {
 		'diagramController',
 		'model'
 	],
-	#category : 'OpenPonk-Core-Controllers - Tests'
+	#category : #'OpenPonk-Core-Controllers - Tests'
 }
 
 { #category : #testing }

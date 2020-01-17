@@ -4,7 +4,7 @@ Class {
 	#classVars : [
 		'icons'
 	],
-	#category : 'OpenPonk-Core-Icons'
+	#category : #'OpenPonk-Core-Icons'
 }
 
 { #category : #'accessing - icons' }

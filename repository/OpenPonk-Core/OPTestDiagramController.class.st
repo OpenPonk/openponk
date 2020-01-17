@@ -4,7 +4,7 @@ I am a mock class for testing ""diagram"" model controllers.
 Class {
 	#name : #OPTestDiagramController,
 	#superclass : #OPDiagramController,
-	#category : 'OpenPonk-Core-Controllers - Tests'
+	#category : #'OpenPonk-Core-Controllers - Tests'
 }
 
 { #category : #accessing }

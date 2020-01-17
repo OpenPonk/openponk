@@ -10,7 +10,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : 'OpenPonk-Core-Models'
+	#category : #'OpenPonk-Core-Models'
 }
 
 { #category : #accessing }

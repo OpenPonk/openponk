@@ -4,7 +4,7 @@ I am the default serializer and do nothing at all.
 Class {
 	#name : #OPNullSerializer,
 	#superclass : #OPAbstractSerializer,
-	#category : 'OpenPonk-Core-Persistence'
+	#category : #'OpenPonk-Core-Persistence'
 }
 
 { #category : #accessing }

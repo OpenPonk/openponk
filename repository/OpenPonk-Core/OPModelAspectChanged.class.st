@@ -9,7 +9,7 @@ Class {
 		'oldValue',
 		'newValue'
 	],
-	#category : 'OpenPonk-Core-Announcements'
+	#category : #'OpenPonk-Core-Announcements'
 }
 
 { #category : #'instance creation' }

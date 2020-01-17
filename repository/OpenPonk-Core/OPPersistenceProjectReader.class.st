@@ -4,7 +4,7 @@ I take a folder and try to materialize a project from it.
 Class {
 	#name : #OPPersistenceProjectReader,
 	#superclass : #Object,
-	#category : 'OpenPonk-Core-Persistence'
+	#category : #'OpenPonk-Core-Persistence'
 }
 
 { #category : #accessing }

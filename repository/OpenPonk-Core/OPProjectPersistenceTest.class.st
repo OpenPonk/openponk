@@ -1,6 +1,6 @@
 Class {
 	#name : #OPProjectPersistenceTest,
-	#superclass : #Object,
+	#superclass : #TestCase,
 	#instVars : [
 		'persistence'
 	],
@@ -35,7 +35,7 @@ OPProjectPersistenceTest >> testCreateFolderStructure [
 OPProjectPersistenceTest >> testDeleteOldModels [
 	| models folder |
 	folder := FileSystem memory root / 'models'.
-	models := {OPTestEntityModel new.
+	models := {(OPTestEntityModel new uuid: UUID new).
 	OPTestEntityModel new}.
 	persistence
 		saveMemento: (OPPersistenceMemento model: models first diagram: nil)
@@ -48,7 +48,9 @@ OPProjectPersistenceTest >> testDeleteOldModels [
 	self assert: folder children size equals: 2.
 	persistence removeModelsNotIn: models allButLast from: folder.
 	self assert: folder children size equals: 1.
-	self assert: folder children anyOne basename equals: models first uuid asString
+	self
+		assert: folder children anyOne basename
+		equals: models first uuid asString
 ]
 
 { #category : #tests }
@@ -116,7 +118,7 @@ OPProjectPersistenceTest >> testProjectFile [
 ]
 
 { #category : #tests }
-OPProjectPersistenceTest >> testWriteModel [
+OPProjectPersistenceTest >> testRoundtrip [
 	| folder memento |
 	folder := FileSystem memory root / 'models'.
 	folder ensureCreateDirectory.

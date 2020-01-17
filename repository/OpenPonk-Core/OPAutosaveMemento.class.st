@@ -8,7 +8,7 @@ Class {
 		'model',
 		'diagram'
 	],
-	#category : 'OpenPonk-Core-Persistence'
+	#category : #'OpenPonk-Core-Persistence'
 }
 
 { #category : #'instance creation' }

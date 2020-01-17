@@ -8,7 +8,7 @@ Class {
 		'source',
 		'target'
 	],
-	#category : 'OpenPonk-Core-Controllers'
+	#category : #'OpenPonk-Core-Controllers'
 }
 
 { #category : #hooks }

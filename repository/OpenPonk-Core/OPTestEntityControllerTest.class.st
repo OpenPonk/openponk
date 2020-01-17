@@ -1,7 +1,7 @@
 Class {
 	#name : #OPTestEntityControllerTest,
 	#superclass : #OPBaseControllerTest,
-	#category : 'OpenPonk-Core-Controllers - Tests'
+	#category : #'OpenPonk-Core-Controllers - Tests'
 }
 
 { #category : #accessing }

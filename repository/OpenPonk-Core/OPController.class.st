@@ -9,7 +9,7 @@ Class {
 		'selectionHolder',
 		'diagramController'
 	],
-	#category : 'OpenPonk-Core-Controllers'
+	#category : #'OpenPonk-Core-Controllers'
 }
 
 { #category : #accessing }

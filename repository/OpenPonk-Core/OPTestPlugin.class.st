@@ -7,7 +7,7 @@ Instead set & reset the default of DCPluginRegistry.
 Class {
 	#name : #OPTestPlugin,
 	#superclass : #Object,
-	#category : 'OpenPonk-Core-Tests'
+	#category : #'OpenPonk-Core-Tests'
 }
 
 { #category : #accessing }

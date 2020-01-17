@@ -19,7 +19,7 @@ Class {
 		'workbenchAnnouncer',
 		'diagramView'
 	],
-	#category : 'OpenPonk-Core-Controllers'
+	#category : #'OpenPonk-Core-Controllers'
 }
 
 { #category : #deprecated }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'model'
 	],
-	#category : 'OpenPonk-Core-UICommands'
+	#category : #'OpenPonk-Core-UICommands'
 }
 
 { #category : #public }

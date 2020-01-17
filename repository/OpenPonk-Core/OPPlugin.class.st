@@ -12,7 +12,7 @@ DCPluginRegistry
 Class {
 	#name : #OPPlugin,
 	#superclass : #Object,
-	#category : 'OpenPonk-Core'
+	#category : #'OpenPonk-Core'
 }
 
 { #category : #accessing }

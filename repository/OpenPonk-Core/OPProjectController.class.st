@@ -12,7 +12,7 @@ Class {
 		'disableAutosave',
 		'persistenceManager'
 	],
-	#category : 'OpenPonk-Core-Controllers'
+	#category : #'OpenPonk-Core-Controllers'
 }
 
 { #category : #adding }

@@ -8,7 +8,7 @@ unlike my parent, by default I
 Class {
 	#name : #OPJsonWriter,
 	#superclass : #NeoJSONWriter,
-	#category : 'OpenPonk-Core-Persistence'
+	#category : #'OpenPonk-Core-Persistence'
 }
 
 { #category : #initialization }

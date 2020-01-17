@@ -5,7 +5,7 @@ Class {
 		'factory',
 		'registration'
 	],
-	#category : 'OpenPonk-Core-Controllers - Tests'
+	#category : #'OpenPonk-Core-Controllers - Tests'
 }
 
 { #category : #running }

@@ -14,7 +14,7 @@ DCNavigator
 Class {
 	#name : #OPRenameElementCommand,
 	#superclass : #OPUICommand,
-	#category : 'OpenPonk-Core-UICommands'
+	#category : #'OpenPonk-Core-UICommands'
 }
 
 { #category : #execute }

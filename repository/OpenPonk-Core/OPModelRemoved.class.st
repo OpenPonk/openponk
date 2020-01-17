@@ -6,5 +6,5 @@ Typically a diagram would react by removing a related view & controller for this
 Class {
 	#name : #OPModelRemoved,
 	#superclass : #OPModelAnnouncement,
-	#category : 'OpenPonk-Core-Announcements'
+	#category : #'OpenPonk-Core-Announcements'
 }

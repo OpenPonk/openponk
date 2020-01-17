@@ -7,7 +7,7 @@ https://plugins.jetbrains.com/plugin/10777-legacy-icon-pack-for-intellij-2018-2-
 Class {
 	#name : #OPIdeaIcons,
 	#superclass : #Object,
-	#category : 'OpenPonk-Core-Icons'
+	#category : #'OpenPonk-Core-Icons'
 }
 
 { #category : #accessing }

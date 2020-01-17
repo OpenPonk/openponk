@@ -1,7 +1,7 @@
 Class {
 	#name : #OPNullSerializerTest,
 	#superclass : #OPAbstractSerializerTest,
-	#category : 'OpenPonk-Core-Tests'
+	#category : #'OpenPonk-Core-Tests'
 }
 
 { #category : #accessing }
@@ -12,6 +12,11 @@ OPNullSerializerTest >> serializerClass [
 { #category : #running }
 OPNullSerializerTest >> testLoadMemento [
 	self assert: (serializer loadMementoFrom: root) equals: nil
+]
+
+{ #category : #tests }
+OPNullSerializerTest >> testRoundtrip [
+	"do nothing"
 ]
 
 { #category : #running }

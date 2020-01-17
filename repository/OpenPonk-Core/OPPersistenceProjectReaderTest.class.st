@@ -7,7 +7,7 @@ Class {
 		'project',
 		'memoryRoot'
 	],
-	#category : 'OpenPonk-Core-Tests'
+	#category : #'OpenPonk-Core-Tests'
 }
 
 { #category : #running }

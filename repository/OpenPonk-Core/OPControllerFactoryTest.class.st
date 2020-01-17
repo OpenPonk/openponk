@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'factory'
 	],
-	#category : 'OpenPonk-Core-Controllers - Tests'
+	#category : #'OpenPonk-Core-Controllers - Tests'
 }
 
 { #category : #running }

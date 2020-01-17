@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'registry'
 	],
-	#category : 'OpenPonk-Core-Tests'
+	#category : #'OpenPonk-Core-Tests'
 }
 
 { #category : #initialization }

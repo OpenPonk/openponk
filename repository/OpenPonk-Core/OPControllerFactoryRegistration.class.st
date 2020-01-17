@@ -6,7 +6,7 @@ Class {
 		'modelClass',
 		'condition'
 	],
-	#category : 'OpenPonk-Core-Controllers'
+	#category : #'OpenPonk-Core-Controllers'
 }
 
 { #category : #accessing }

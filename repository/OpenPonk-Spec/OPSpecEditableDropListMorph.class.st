@@ -21,7 +21,6 @@ OPSpecEditableDropListMorph >> newContentMorph [
 	pt := super newContentMorph.
 	pt vResizing: #spaceFill.
 	pt textMorph
-		autoFit: true;
 		wrapFlag: false;
 		margins:
 			(Margin

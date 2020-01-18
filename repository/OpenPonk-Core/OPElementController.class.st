@@ -148,7 +148,5 @@ OPElementController >> showInDiagram: aDiagramController [
 
 { #category : #'canvas actions' }
 OPElementController >> showSelectionFeedback [
-	self figure announce: OPTRFocused.
-	self diagramController view
-	"self figure view signalUpdate"
+	self figure announce: OPTRFocused
 ]

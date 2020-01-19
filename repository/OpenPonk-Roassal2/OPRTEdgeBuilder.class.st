@@ -6,8 +6,13 @@ Class {
 		'labels',
 		'constraints'
 	],
-	#category : 'OpenPonk-Roassal2-Builders'
+	#category : #'OpenPonk-Roassal2-Builders'
 }
+
+{ #category : #testing }
+OPRTEdgeBuilder class >> isDeprecated [
+	^ true
+]
 
 { #category : #labels }
 OPRTEdgeBuilder >> addLabel: aSymbol [

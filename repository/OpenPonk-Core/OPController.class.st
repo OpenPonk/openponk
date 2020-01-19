@@ -32,7 +32,7 @@ OPController >> addAsTargetFor: aController [
 ]
 
 { #category : #accessing }
-OPController >> allOwnedElementsInModel: aModel [
+OPController >> allOwnedElementsInModel [
 	^ #()
 ]
 
@@ -193,7 +193,7 @@ OPController >> removeModelElement: aModelElement [
 
 { #category : #destruction }
 OPController >> removeOwnedControllers [
-	(self allOwnedElementsInModel: self model)
+	self allOwnedElementsInModel
 		do: [ :each | 
 			self diagramController controllers
 				detect: [ :ctrl | ctrl model = each ]

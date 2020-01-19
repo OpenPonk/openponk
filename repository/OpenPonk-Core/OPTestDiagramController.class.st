@@ -8,8 +8,8 @@ Class {
 }
 
 { #category : #accessing }
-OPTestDiagramController >> allOwnedElementsInModel: aModel [
-	^ aModel entities
+OPTestDiagramController >> allOwnedElementsInModel [
+	^ model entities
 ]
 
 { #category : #testing }

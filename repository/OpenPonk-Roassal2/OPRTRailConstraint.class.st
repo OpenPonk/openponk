@@ -28,7 +28,7 @@ Class {
 		'relativePosition',
 		'position'
 	],
-	#category : 'OpenPonk-Roassal2-Constraints'
+	#category : #'OpenPonk-Roassal2-Constraints'
 }
 
 { #category : #public }
@@ -212,9 +212,10 @@ OPRTRailConstraint >> segmentsForConnection: aConnection [
 { #category : #'private - layout' }
 OPRTRailConstraint >> updateParameters [
 	| segmentsWithDistances closestSegment sum |
+	self connectionLength isZero
+		ifTrue: [ ^ self segments first first ].
 	segmentsWithDistances := self segments
-		withIndexCollect:
-			[ :each :i | 
+		withIndexCollect: [ :each :i | 
 			Array
 				with: i
 				with: each first
@@ -227,9 +228,7 @@ OPRTRailConstraint >> updateParameters [
 		into: [ :s :next | s + (next first dist: next second) ].
 	sum := sum + (closestSegment second dist: closestSegment fourth).
 	gripElement trachelShape
-		doWithoutCallbacks:
-			[ 
-			position := sum / self connectionLength.
+		doWithoutCallbacks: [ position := sum / self connectionLength.
 			distance := element position dist: closestSegment fourth.
 			(self
 				windingOrder: element position

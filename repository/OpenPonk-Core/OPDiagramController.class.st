@@ -220,6 +220,11 @@ OPDiagramController >> diagramController [
 ]
 
 { #category : #accessing }
+OPDiagramController >> diagramController: aController [
+	self error: 'Cannot assign diagramController to diagramController'
+]
+
+{ #category : #accessing }
 OPDiagramController >> diagramView [
 	^ diagramView
 ]
@@ -324,7 +329,8 @@ OPDiagramController >> initialize [
 	deselectionHolder := [  ].
 	hoverHolder := [  ].
 	figureAdded := [ :figure |  ].
-	modelToControllerMapping := self modelToControllerMapping
+	modelToControllerMapping := self modelToControllerMapping.
+	diagramController := self
 ]
 
 { #category : #'ui interaction' }
@@ -544,17 +550,14 @@ OPDiagramController >> showAllElements [
 OPDiagramController >> showElements [
 	self showAllElements.
 	diagramView
-		ifNotNil:
-			[ diagramView visibleElements ifNotEmpty: [ :elements | self visibleElements: elements ] ]
+		ifNotNil: [ diagramView visibleElements
+				ifNotEmpty: [ :elements | self visibleElements: elements ] ]
 ]
 
 { #category : #construction }
 OPDiagramController >> showInDiagram: aDiagramController [
-	(self allOwnedElementsInModel: self model)
-		do: [ :each | 
-			| subCtrl |
-			subCtrl := aDiagramController newControllerFor: each.
-			subCtrl showInDiagram: aDiagramController ]
+	self allOwnedElementsInModel
+		do: [ :each | aDiagramController showModelInDiagram: each ]
 ]
 
 { #category : #figures }

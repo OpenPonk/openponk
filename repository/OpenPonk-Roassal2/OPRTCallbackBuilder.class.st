@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'block'
 	],
-	#category : 'OpenPonk-Roassal2-Builders'
+	#category : #'OpenPonk-Roassal2-Builders'
 }
 
 { #category : #'instance creation' }
@@ -19,6 +19,11 @@ OPRTCallbackBuilder class >> block: aBlock [
 	^ self new
 		block: aBlock;
 		yourself
+]
+
+{ #category : #testing }
+OPRTCallbackBuilder class >> isDeprecated [
+	^ true
 ]
 
 { #category : #accessing }

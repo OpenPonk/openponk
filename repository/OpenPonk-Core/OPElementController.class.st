@@ -49,11 +49,6 @@ OPElementController >> createFigure [
 "	^ OPRTCallbackBuilder block: [ :view | self createFigureInView: view ]"
 ]
 
-{ #category : #figures }
-OPElementController >> createFigureInView: aView [
-	^ self subclassResponsibility
-]
-
 { #category : #deprecated }
 OPElementController >> createModel [
 	self deprecated: 'Use createModelIn: instead.'
@@ -139,11 +134,10 @@ OPElementController >> reselect [
 OPElementController >> showInDiagram: aDiagramController [
 	aDiagramController addController: self.
 	self renderFigureIn: aDiagramController view.
-	(self allOwnedElementsInModel: self model)
+	self allOwnedElementsInModel
 		do: [ :each | 
-			| subCtrl |
-			subCtrl := aDiagramController newControllerFor: each.
-			subCtrl showInDiagram: aDiagramController ]
+			(aDiagramController newControllerFor: each)
+				showInDiagram: aDiagramController ]
 ]
 
 { #category : #'canvas actions' }

@@ -61,9 +61,9 @@ OPProjectBrowser class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #OpenPonk)
 		icon: OPIcons current dynacaseIcon;
-		parent: #MostUsedTools;
+		action: [ self open ];
 		withSeparatorAfter;
-		action: [ self open ]
+		order: 25.700
 ]
 
 { #category : #'instance creation' }

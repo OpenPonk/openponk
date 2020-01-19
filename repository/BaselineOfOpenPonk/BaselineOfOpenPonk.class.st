@@ -138,6 +138,7 @@ BaselineOfOpenPonk >> loadClassEditor [
 
 { #category : #plugins }
 BaselineOfOpenPonk >> loadDemoEditor [
+	self notify: 'OpenPonk DEMO project is abandoned - it is not working'.
 	Metacello new
 		baseline: 'DemoEditor';
 		repository: 'github://openponk/demo-editor/repository';
@@ -176,7 +177,7 @@ BaselineOfOpenPonk >> loadPlugins [
 	self
 		loadBormEditor;
 		loadClassEditor;
-		loadDemoEditor;
+		"loadDemoEditor;" "OpenPonk DEMO project is abandoned - it is not working"
 		loadFsmEditor;
 		loadPetriNets
 ]

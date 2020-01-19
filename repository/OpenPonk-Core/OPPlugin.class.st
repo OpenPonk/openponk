@@ -17,7 +17,10 @@ Class {
 
 { #category : #accessing }
 OPPlugin >> diagramClass [
-	^ self deprecated: 'Use #modelClass'
+	self
+		deprecated: 'Use #modelClass'
+		transformWith: '`@receiver diagramClass' -> '`@receiver modelClass'.
+	^ self modelClass
 ]
 
 { #category : #accessing }
@@ -42,8 +45,6 @@ OPPlugin >> isPluginFor: aModel [
 
 { #category : #accessing }
 OPPlugin >> modelClass [
-	(self class includesSelector: #diagramClass)
-		ifTrue: [ ^ self diagramClass ].
 	^ self subclassResponsibility
 ]
 

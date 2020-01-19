@@ -8,6 +8,36 @@ Class {
 	#category : #BaselineOfOpenPonk
 }
 
+{ #category : #plugins }
+BaselineOfOpenPonk class >> loadBormEditor [
+	self new loadBormEditor
+]
+
+{ #category : #plugins }
+BaselineOfOpenPonk class >> loadClassEditor [
+	self new loadClassEditor
+]
+
+{ #category : #plugins }
+BaselineOfOpenPonk class >> loadDemoEditor [
+	self new loadDemoEditor
+]
+
+{ #category : #plugins }
+BaselineOfOpenPonk class >> loadFsmEditor [
+	self new loadFsmEditor
+]
+
+{ #category : #plugins }
+BaselineOfOpenPonk class >> loadPetriNets [
+	self new loadPetriNets
+]
+
+{ #category : #plugins }
+BaselineOfOpenPonk class >> loadPlugins [
+	self new loadPlugins
+]
+
 { #category : #accessing }
 BaselineOfOpenPonk >> baseline: spec [
 	<baseline>
@@ -32,7 +62,7 @@ BaselineOfOpenPonk >> baseline: spec [
 							#('Moose' 'FileDialog' 'Magritte' 'Commander' 'SynchronizedLinks' 'OpenPonk-Morphic') ];
 				package: 'OpenPonk-UI';
 				package: 'OpenPonk-Plugins'
-					with: [ spec postLoadDoIt: #postLoadPlugins ].
+					with: [ spec postLoadDoIt: #loadPlugins ].
 			spec
 				group: 'default'
 				with:
@@ -90,6 +120,38 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 		with: [ spec repository: 'github://openponk/synchronized-links:v1.x/repository' ]
 ]
 
+{ #category : #plugins }
+BaselineOfOpenPonk >> loadBormEditor [
+	Metacello new
+		baseline: 'BormEditor';
+		repository: 'github://openponk/borm-editor/repository';
+		load
+]
+
+{ #category : #plugins }
+BaselineOfOpenPonk >> loadClassEditor [
+	Metacello new
+		baseline: 'ClassEditor';
+		repository: 'github://openponk/class-editor/repository';
+		load
+]
+
+{ #category : #plugins }
+BaselineOfOpenPonk >> loadDemoEditor [
+	Metacello new
+		baseline: 'DemoEditor';
+		repository: 'github://openponk/demo-editor/repository';
+		load
+]
+
+{ #category : #plugins }
+BaselineOfOpenPonk >> loadFsmEditor [
+	Metacello new
+		baseline: 'FsmEditor';
+		repository: 'github://openponk/fsm-editor/repository';
+		load
+]
+
 { #category : #accessing }
 BaselineOfOpenPonk >> loadPetitParser [
 	"this is solved separatedly by direct loading code because PetitParser does not specify Roassal2 version, which causes conflicts and this is probably only way to use onConflict:"
@@ -101,22 +163,20 @@ BaselineOfOpenPonk >> loadPetitParser [
 		load
 ]
 
-{ #category : #accessing }
-BaselineOfOpenPonk >> postLoadPlugins [
-	Metacello new
-		baseline: 'BormEditor';
-		repository: 'github://openponk/borm-editor/repository';
-		load.
-	Metacello new
-		baseline: 'ClassEditor';
-		repository: 'github://openponk/class-editor/repository';
-		load.
-	Metacello new
-		baseline: 'FsmEditor';
-		repository: 'github://openponk/fsm-editor/repository';
-		load.
+{ #category : #plugins }
+BaselineOfOpenPonk >> loadPetriNets [
 	Metacello new
 		baseline: 'PetriNets';
 		repository: 'github://openponk/petrinets/repository';
 		load
+]
+
+{ #category : #plugins }
+BaselineOfOpenPonk >> loadPlugins [
+	self
+		loadBormEditor;
+		loadClassEditor;
+		loadDemoEditor;
+		loadFsmEditor;
+		loadPetriNets
 ]

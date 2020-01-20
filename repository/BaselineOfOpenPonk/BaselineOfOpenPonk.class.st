@@ -187,26 +187,18 @@ BaselineOfOpenPonk >> loadPlugins [
 { #category : #accessing }
 BaselineOfOpenPonk >> pluginsBaseline: spec [
 	spec
-		package: 'BormEditor'
-		with: [ spec
-				requires: 'default';
-				postLoadDoIt: #loadBormEditor ].
+		baseline: 'BormEditor'
+		with: [ spec repository: 'github://openponk/borm-editor/repository' ].
 	spec
-		package: 'ClassEditor'
-		with: [ spec
-				requires: 'default';
-				postLoadDoIt: #loadClassEditor ].
+		baseline: 'ClassEditor'
+		with: [ spec repository: 'github://openponk/class-editor/repository' ].
 	spec
-		package: 'FsmEditor'
-		with: [ spec
-				requires: 'default';
-				postLoadDoIt: #loadFsmEditor ].
+		baseline: 'FsmEditor'
+		with: [ spec repository: 'github://openponk/fsm-editor/repository' ].
 	spec
-		package: 'PetriNets'
-		with: [ spec
-				requires: 'default';
-				postLoadDoIt: #loadPetriNets ].
+		baseline: 'PetriNets'
+		with: [ spec repository: 'github://openponk/petrines/repository' ].
 	spec
-		package: 'plugins'
-		with: [ spec requires: #(BormEditor ClassEditor FsmEditor PetriNets) ]
+		group: 'plugins'
+		with: #(BormEditor ClassEditor FsmEditor PetriNets)
 ]

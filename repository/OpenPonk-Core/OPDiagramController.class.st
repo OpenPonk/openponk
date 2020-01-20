@@ -117,18 +117,10 @@ OPDiagramController >> cachedControllerForFigure: aFigure [
 
 { #category : #'controllers management' }
 OPDiagramController >> cachedControllerForModel: aModel [
-	| ctrl |
-	modelToControllerCache
-		ifNil: [ modelToControllerCache := Dictionary new.
-			self controllers do: [ :each | modelToControllerCache at: each model put: each ] ].
-	ctrl := modelToControllerCache at: aModel ifPresent: #yourself.
-	(self controllers includes: ctrl)
-		ifTrue: [ ^ ctrl ].
-	ctrl := self controllers
-		detect: [ :fresh | fresh model = aModel ]
-		ifNone: [ self controllers errorNotFound: 'Controller for ' , aModel printString ].
-	modelToControllerCache at: aModel put: ctrl.
-	^ ctrl
+	^ self
+		cachedControllerForModel: aModel
+		ifNone: [ self controllers
+				errorNotFound: 'Controller for ' , aModel printString ]
 ]
 
 { #category : #'controllers management' }
@@ -136,7 +128,8 @@ OPDiagramController >> cachedControllerForModel: aModel ifFound: aFoundBlock [
 	| ctrl |
 	modelToControllerCache
 		ifNil: [ modelToControllerCache := Dictionary new.
-			self controllers do: [ :each | modelToControllerCache at: each model put: each ] ].
+			self controllers
+				do: [ :each | modelToControllerCache at: each model put: each ] ].
 	ctrl := modelToControllerCache at: aModel ifPresent: #yourself.
 	(self controllers includes: ctrl)
 		ifTrue: [ ^ aFoundBlock value: ctrl ].
@@ -145,6 +138,23 @@ OPDiagramController >> cachedControllerForModel: aModel ifFound: aFoundBlock [
 		ifFound: [ :found | 
 			modelToControllerCache at: aModel put: found.
 			aFoundBlock value: found ]
+]
+
+{ #category : #'controllers management' }
+OPDiagramController >> cachedControllerForModel: aModel ifNone: aNoneBlock [
+	| ctrl |
+	modelToControllerCache
+		ifNil: [ modelToControllerCache := Dictionary new.
+			self controllers
+				do: [ :each | modelToControllerCache at: each model put: each ] ].
+	ctrl := modelToControllerCache at: aModel ifPresent: #yourself.
+	(self controllers includes: ctrl)
+		ifTrue: [ ^ ctrl ].
+	ctrl := self controllers
+		detect: [ :fresh | fresh model = aModel ]
+		ifNone: [ ^ aNoneBlock value ].
+	modelToControllerCache at: aModel put: ctrl.
+	^ ctrl
 ]
 
 { #category : #rebuilding }
@@ -168,7 +178,6 @@ OPDiagramController >> controllerForModel: aModel [
 	aModel = model
 		ifTrue: [ ^ self ].
 	^ self cachedControllerForModel: aModel
-"	^ self controllers detect: [ :ctrl | ctrl model = aModel ]"
 ]
 
 { #category : #'controllers management' }
@@ -176,7 +185,13 @@ OPDiagramController >> controllerForModel: aModel ifFound: aFoundBlock [
 	aModel = model
 		ifTrue: [ ^ self ].
 	^ self cachedControllerForModel: aModel ifFound: aFoundBlock
-"	^ self controllers detect: [ :ctrl | ctrl model = aModel ]"
+]
+
+{ #category : #'controllers management' }
+OPDiagramController >> controllerForModel: aModel ifNone: aFoundBlock [
+	aModel = model
+		ifTrue: [ ^ self ].
+	^ self cachedControllerForModel: aModel ifNone: aFoundBlock
 ]
 
 { #category : #deprecated }
@@ -467,7 +482,6 @@ OPDiagramController >> removeAllControllers [
 
 { #category : #'controllers management' }
 OPDiagramController >> removeController: aController [
-	aController diagramController: nil.
 	self controllers remove: aController
 ]
 

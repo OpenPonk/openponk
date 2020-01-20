@@ -160,10 +160,10 @@ OPController >> remove [
 { #category : #destruction }
 OPController >> removeController [
 	self diagramController ifNil: [ ^ self ].
-	self removeOwnedControllers.
 	self removeFigure.
 	self model: nil.
-	self diagramController removeController: self
+	self diagramController removeController: self.
+	self diagramController: nil
 ]
 
 { #category : #destruction }
@@ -174,8 +174,9 @@ OPController >> removeFigure [
 
 { #category : #destruction }
 OPController >> removeFull [
+	self removeOwnedControllers.
 	self removeModel.
-	self removeController.
+	self removeController
 ]
 
 { #category : #destruction }

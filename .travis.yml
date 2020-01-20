@@ -1,41 +1,18 @@
 language: smalltalk
-sudo: false
 
 os:
   - linux
 
-addons:
-  ssh_known_hosts: ccmi.fit.cvut.cz
-
 env:
   global:
     - ARTIFACT_DIR=openponk-image-$TRAVIS_BUILD_NUMBER
-    - KEY=.ssh/id_openponk_travis
+    
+smalltalk:
+  - Pharo64-7.0
+  - Pharo32-8.0
+  - Pharo64-8.0
+  - Pharo64-9.0
 
 cache:
   directories:
     - $SMALLTALK_CI_BUILD_BASE/pharo-local/package-cache
-
-#smalltalk_edge:
-#  source: peteruhnak/smalltalkCI
-#  branch: iceberg-loading
-
-smalltalk:
-  - Pharo32-7.0
-  - Pharo64-7.0
-  - Pharo64-8.0
-
-#before_install:
-#  - openssl aes-256-cbc -K $encrypted_be80011f599c_key -iv $encrypted_be80011f599c_iv -in $KEY.enc -out $KEY -d
-#  - chmod 0400 $KEY
-#  - eval $(ssh-agent -s)
-#  - ssh-add $KEY
-
-#after_success:
-#  - ./scripts/copy-image.sh $SMALLTALK_CI_IMAGE $ARTIFACT_DIR/openponk
-#  - ./scripts/mark-image.sh $ARTIFACT_DIR/openponk
-
-#deploy:
-#  - provider: script
-#    skip_cleanup: true
-#    script: scripts/deploy.sh

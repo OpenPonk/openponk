@@ -45,29 +45,29 @@ BaselineOfOpenPonk >> baseline: spec [
 		for: #common
 		do: [ self externalProjectsBaseline: spec.
 			self internalProjectsBaseline: spec.
-			self pluginsBaseline: spec.
 			spec
 				package: 'OpenPonk-Core'
 					with: [ spec
 						requires: #('Magritte' 'Mocketry' 'Roassal2' 'XMLParser' 'XPath' 'NeoJSON') ];
 				package: 'OpenPonk-Perf';
 				package: 'OpenPonk-Trachel';
-				package: 'OpenPonk-Roassal2'
-					with: [ spec requires: 'OpenPonk-Trachel' ];
+				package: 'OpenPonk-Roassal2';
 				package: 'OpenPonk-Morphic';
 				"package: 'OpenPonk-Telemetry'
 					with: [ spec requires: #('Sentry') ];"
-				package: 'OpenPonk-Help';
+					package: 'OpenPonk-Help';
 				package: 'OpenPonk-Spec'
 					with: [ spec
 						requires:
 							#('Moose' 'FileDialog' 'Magritte' 'Commander' 'SynchronizedLinks' 'OpenPonk-Morphic') ];
-				package: 'OpenPonk-UI'.
+				package: 'OpenPonk-UI';
+				package: 'OpenPonk-Plugins'
+					with: [ spec postLoadDoIt: #loadPlugins ].
 			spec
 				group: 'default'
 				with:
-					#('OpenPonk-Core' 'OpenPonk-Perf' 'OpenPonk-Roassal2' 'OpenPonk-Morphic' 'OpenPonk-Spec' 'OpenPonk-UI' 'OpenPonk-Help' "'OpenPonk-Telemetry'").	
-			spec group: 'complete' with: #('default' 'plugins') ]
+					#('OpenPonk-Core' 'OpenPonk-Perf' 'OpenPonk-Trachel' 'OpenPonk-Roassal2' 'OpenPonk-Morphic' 'OpenPonk-Spec' 'OpenPonk-UI' 'OpenPonk-Help'	"'OpenPonk-Telemetry'").
+			spec group: 'complete' with: #('default' 'OpenPonk-Plugins') ]
 ]
 
 { #category : #accessing }
@@ -138,9 +138,7 @@ BaselineOfOpenPonk >> loadClassEditor [
 
 { #category : #plugins }
 BaselineOfOpenPonk >> loadDemoEditor [
-	self
-		notify:
-			'OpenPonk DEMO project is no longer updated. It does not work with current version of OpenPonk'.
+	self notify: 'OpenPonk DEMO project is abandoned - it is not working'.
 	Metacello new
 		baseline: 'DemoEditor';
 		repository: 'github://openponk/demo-editor/repository';
@@ -182,23 +180,4 @@ BaselineOfOpenPonk >> loadPlugins [
 		"loadDemoEditor;" "OpenPonk DEMO project is abandoned - it is not working"
 		loadFsmEditor;
 		loadPetriNets
-]
-
-{ #category : #accessing }
-BaselineOfOpenPonk >> pluginsBaseline: spec [
-	spec
-		baseline: 'BormEditor'
-		with: [ spec repository: 'github://openponk/borm-editor/repository' ].
-	spec
-		baseline: 'ClassEditor'
-		with: [ spec repository: 'github://openponk/class-editor/repository' ].
-	spec
-		baseline: 'FsmEditor'
-		with: [ spec repository: 'github://openponk/fsm-editor/repository' ].
-	spec
-		baseline: 'PetriNets'
-		with: [ spec repository: 'github://openponk/petrinets/repository' ].
-	spec
-		group: 'plugins'
-		with: #(BormEditor ClassEditor FsmEditor PetriNets)
 ]

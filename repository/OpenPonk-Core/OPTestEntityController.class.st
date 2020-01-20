@@ -19,7 +19,7 @@ OPTestEntityController >> canBeTargetFor: aController [
 
 { #category : #construction }
 OPTestEntityController >> createModelIn: aParentModel [
-	model := self modelClass new.
+	self model: self modelClass new.
 	aParentModel entities add: model
 ]
 

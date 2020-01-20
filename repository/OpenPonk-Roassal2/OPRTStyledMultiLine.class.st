@@ -4,7 +4,7 @@ I am a styled multiline that will loop if the source and target is the same elem
 Class {
 	#name : #OPRTStyledMultiLine,
 	#superclass : #RTStyledMultiLine,
-	#category : 'OpenPonk-Roassal2-Shapes'
+	#category : #'OpenPonk-Roassal2-Shapes'
 }
 
 { #category : #private }
@@ -19,8 +19,7 @@ OPRTStyledMultiLine >> createLineToSelf [
 
 	self attachPoint: OPRTOrthogonalSelfAttachPoint new.
 	(blockProducingPath value: 0 @ 0 value: 0 @ 0) size = 2
-		ifTrue: [ 
-			self
+		ifTrue: [ self
 				block: [ :fromPoint :toPoint | 
 					| rectangle |
 					rectangle := Rectangle

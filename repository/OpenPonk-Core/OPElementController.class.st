@@ -57,7 +57,10 @@ OPElementController >> createModel [
 
 { #category : #construction }
 OPElementController >> createModelIn: aParentModel [
-	^ self subclassResponsibility
+	self model: self modelClass new.
+	model source: self source model.
+	model target: self target model.
+	^ model
 ]
 
 { #category : #construction }

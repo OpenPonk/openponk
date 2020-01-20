@@ -4,7 +4,7 @@ A DCRTElementsConstraint is a utility class that contains methods to change elem
 Class {
 	#name : #OPRTElementsConstraint,
 	#superclass : #OPRTAbstractConstraint,
-	#category : 'OpenPonk-Roassal2-Constraints'
+	#category : #'OpenPonk-Roassal2-Constraints'
 }
 
 { #category : #'as yet unclassified' }
@@ -23,24 +23,26 @@ OPRTElementsConstraint class >> keepExtentOf: conformingShape like: originShape 
 ]
 
 { #category : #'public - visualization' }
-OPRTElementsConstraint class >> whenDragging: aShape drawLineToPoint: aBlock [
+OPRTElementsConstraint class >> whenDragging: anElement drawLineToPoint: aBlock [
 	| lineTargetBox dynamicLine |
-	aShape
+	anElement
 		when: TRMouseDragStart
-			do: [ 
-					(lineTargetBox := RTBox new
-						size: 0;
-						color: Color transparent;
-						element) translateTo: aBlock value.
-					aShape view
-						add: lineTargetBox;
-						add: (dynamicLine := (RTLine new color: Color veryLightGray) edgeFrom: lineTargetBox to: aShape);
-						signalUpdate ];
-		when: TRMouseDragging do: [ lineTargetBox translateTo: aBlock value ];
+			do: [ (lineTargetBox := RTBox new
+				size: 0;
+				color: Color transparent;
+				element) translateTo: aBlock value.
+			anElement view
+				add: lineTargetBox;
+				add:
+					(dynamicLine := (RTLine new color: Color veryLightGray)
+						edgeFrom: lineTargetBox
+						to: anElement);
+				signalUpdate ];
+		when: TRMouseDragging
+			do: [ lineTargetBox translateTo: aBlock value ];
 		when: TRMouseDragEnd
-			do: [ 
-					dynamicLine remove.
-					lineTargetBox remove.
-					dynamicLine := lineTargetBox := nil.
-					aShape view signalUpdate ]
+			do: [ dynamicLine remove.
+			lineTargetBox remove.
+			dynamicLine := lineTargetBox := nil.
+			anElement view signalUpdate ]
 ]

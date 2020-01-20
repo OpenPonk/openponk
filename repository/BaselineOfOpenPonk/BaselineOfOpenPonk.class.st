@@ -197,7 +197,7 @@ BaselineOfOpenPonk >> pluginsBaseline: spec [
 		with: [ spec repository: 'github://openponk/fsm-editor/repository' ].
 	spec
 		baseline: 'PetriNets'
-		with: [ spec repository: 'github://openponk/petrines/repository' ].
+		with: [ spec repository: 'github://openponk/petrinets/repository' ].
 	spec
 		group: 'plugins'
 		with: #(BormEditor ClassEditor FsmEditor PetriNets)

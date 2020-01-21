@@ -1,0 +1,1 @@
+PharoLightTheme beCurrent.

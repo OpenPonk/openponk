@@ -58,8 +58,7 @@ OPElementController >> createModel [
 { #category : #construction }
 OPElementController >> createModelIn: aParentModel [
 	self model: self modelClass new.
-	model source: self source model.
-	model target: self target model.
+	aParentModel add: model.
 	^ model
 ]
 
@@ -146,4 +145,11 @@ OPElementController >> showInDiagram: aDiagramController [
 { #category : #'canvas actions' }
 OPElementController >> showSelectionFeedback [
 	self figure announce: OPTRFocused
+]
+
+{ #category : #accessing }
+OPElementController >> target: aController [
+	"do nothing"
+
+	
 ]

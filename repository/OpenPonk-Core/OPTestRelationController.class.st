@@ -3,20 +3,12 @@ I am a mock controller for model entities representing relationships.
 "
 Class {
 	#name : #OPTestRelationController,
-	#superclass : #OPElementController,
+	#superclass : #OPDirectionalRelationshipController,
 	#instVars : [
 		'sourceController'
 	],
 	#category : #'OpenPonk-Core-Controllers - Tests'
 }
-
-{ #category : #construction }
-OPTestRelationController >> createModelIn: aParentModel [
-	self model: self modelClass new.
-	model source: sourceController model.
-	model target: aParentModel.
-	sourceController diagramController model entities add: model
-]
 
 { #category : #accessing }
 OPTestRelationController >> modelClass [
@@ -40,9 +32,4 @@ OPTestRelationController >> renderFigureIn: aView [
 { #category : #accessing }
 OPTestRelationController >> sourceController [
 	^ sourceController
-]
-
-{ #category : #accessing }
-OPTestRelationController >> sourceController: aSourceController [
-	sourceController := aSourceController
 ]

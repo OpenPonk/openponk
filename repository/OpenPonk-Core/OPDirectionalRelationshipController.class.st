@@ -24,10 +24,13 @@ OPDirectionalRelationshipController >> createEdgeFrom: fromElement to: toElement
 	^ self subclassResponsibility
 ]
 
-{ #category : #hooks }
-OPDirectionalRelationshipController >> createModel [
-	self model ifNotNil: [ ^ self model ].
-	^ self modelClass from: source model to: target model
+{ #category : #construction }
+OPDirectionalRelationshipController >> createModelIn: aParentModel [
+	self model: self modelClass new.
+	model source: self source model.
+	model target: self target model.
+	aParentModel add: model.
+	^ model
 ]
 
 { #category : #hooks }
@@ -100,7 +103,8 @@ OPDirectionalRelationshipController >> source: aSourceController [
 { #category : #accessing }
 OPDirectionalRelationshipController >> target [
 	^ target
-		ifNil: [ diagramController controllerForModel: self modelTarget ]
+		ifNil: [ (diagramController ifNil: [ self source diagramController ])
+				controllerForModel: self modelTarget ]
 ]
 
 { #category : #accessing }

@@ -35,27 +35,36 @@ OPTestRelationControllerTest >> testAddController [
 { #category : #'tests - construction' }
 OPTestRelationControllerTest >> testCreateAndShow [
 	| subModel sourceController targetController |
-	sourceController := diagramController newControllerFor: OPTestEntityModel new.
+	sourceController := diagramController
+		newControllerFor: OPTestEntityModel new.
 	sourceController showInDiagram: diagramController.
-	targetController := diagramController newControllerFor: OPTestEntityModel new.
+	targetController := diagramController
+		newControllerFor: OPTestEntityModel new.
 	targetController showInDiagram: diagramController.
-	controller sourceController: sourceController.
-	controller createModelIn: diagramController model andShowInDiagram: diagramController.
+	controller source: sourceController.
+	controller target: targetController.
+	controller
+		createModelIn: diagramController model
+		andShowInDiagram: diagramController.
 	self assert: diagramController model entities isNotEmpty.
 	subModel := diagramController model entities first.
 	self assert: (diagramController controllers includes: controller).
-	self assert: (diagramController view elements includes: controller figure)
+	self
+		assert: (diagramController view elements includes: controller figure)
 ]
 
 { #category : #'tests - construction' }
 OPTestRelationControllerTest >> testCreateModel [
 	| sourceController targetController |
-	sourceController := diagramController newControllerFor: OPTestEntityModel new.
+	sourceController := diagramController
+		newControllerFor: OPTestEntityModel new.
 	sourceController showInDiagram: diagramController.
-	targetController := diagramController newControllerFor: OPTestEntityModel new.
+	targetController := diagramController
+		newControllerFor: OPTestEntityModel new.
 	targetController showInDiagram: diagramController.
-	controller sourceController: sourceController.
-	controller createModelIn: targetController model.
+	controller source: sourceController.
+	controller target: targetController.
+	controller createModelIn: diagramController model.
 	self assert: controller model isNotNil.
 	self assert: controller model source equals: sourceController model.
 	self assert: controller model target equals: targetController model

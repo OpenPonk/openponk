@@ -20,15 +20,24 @@ OPController class >> modelClass [
 { #category : #connecting }
 OPController >> addAsSourceFor: aController [
 	(self canBeSourceFor: aController)
-		ifFalse: [ self error: self class asString , ' cannot be source for ' , aController class asString ].
-	aController sourceController: self
+		ifFalse: [ self
+				error:
+					self class asString , ' cannot be source for '
+						, aController class asString ].
+	aController source: self
 ]
 
 { #category : #connecting }
 OPController >> addAsTargetFor: aController [
 	(self canBeTargetFor: aController)
-		ifFalse: [ self error: self class asString , ' cannot be target for ' , aController class asString ].
-	aController createModelIn: self model andShowInDiagram: self diagramController
+		ifFalse: [ self
+				error:
+					self class asString , ' cannot be target for '
+						, aController class asString ].
+	aController target: self.
+	aController
+		createModelIn: self modelAsParent
+		andShowInDiagram: self diagramController
 ]
 
 { #category : #accessing }
@@ -133,6 +142,11 @@ OPController >> model: aModel [
 	model ifNotNil: [ :m | self internalUnsubscribeFrom: m ].
 	model := aModel.
 	model ifNotNil: [ :m | self internalSubscribeTo: m ]
+]
+
+{ #category : #connecting }
+OPController >> modelAsParent [
+	^ model
 ]
 
 { #category : #announcements }

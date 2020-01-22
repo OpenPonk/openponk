@@ -13,6 +13,11 @@ Class {
 }
 
 { #category : #accessing }
+OPTestContainerModel >> add: anEntity [
+	^ entities add: anEntity
+]
+
+{ #category : #accessing }
 OPTestContainerModel >> entities [
 	^ entities
 ]

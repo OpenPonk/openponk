@@ -29,15 +29,19 @@ OPTestEntityControllerTest >> testAddAsSourceAndTargetForRelation [
 	| sourceModel targetModel relationController relationModel |
 	sourceModel := self newModel.
 	targetModel := self newModel.
-	diagramController model entities
+	diagramController model
 		add: sourceModel;
 		add: targetModel.
 	diagramController showAllElements.
-	relationController := diagramController newControllerFor: OPTestRelationModel new.
-	(diagramController controllerForModel: sourceModel) addAsSourceFor: relationController.
-	(diagramController controllerForModel: targetModel) addAsTargetFor: relationController.
+	relationController := diagramController
+		newControllerFor: OPTestRelationModel new.
+	(diagramController controllerForModel: sourceModel)
+		addAsSourceFor: relationController.
+	(diagramController controllerForModel: targetModel)
+		addAsTargetFor: relationController.
 	relationModel := relationController model.
-	self assert: (diagramController controllers includes: relationController).
+	self
+		assert: (diagramController controllers includes: relationController).
 	self
 		assert: diagramController model entities asArray
 		equals: (Array with: sourceModel with: targetModel with: relationModel).
@@ -49,9 +53,10 @@ OPTestEntityControllerTest >> testAddAsSourceAndTargetForRelation [
 OPTestEntityControllerTest >> testAddAsSourceAndTargetForRelationToSelf [
 	| relationController relationModel |
 	controller model: model.
-	diagramController model entities add: model.
+	diagramController model add: model.
 	controller showInDiagram: diagramController.
-	relationController := diagramController newControllerFor: OPTestRelationModel new.
+	relationController := diagramController
+		newControllerFor: OPTestRelationModel new.
 	controller addAsSourceFor: relationController.
 	controller addAsTargetFor: relationController.
 	relationModel := relationController model.
@@ -72,10 +77,11 @@ OPTestEntityControllerTest >> testAddAsSourceAndTargetForRelationToSelf [
 { #category : #'tests - connecting' }
 OPTestEntityControllerTest >> testAddAsSourceForRelation [
 	| relationController |
-	relationController := diagramController newControllerFor: OPTestRelationModel new.
+	relationController := diagramController
+		newControllerFor: OPTestRelationModel new.
 	controller addAsSourceFor: relationController.
 	self assert: diagramController controllers asArray equals: {}.
-	self assert: relationController sourceController equals: controller.
+	self assert: relationController source equals: controller
 ]
 
 { #category : #'tests - controllers' }

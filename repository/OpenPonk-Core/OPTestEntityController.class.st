@@ -17,10 +17,9 @@ OPTestEntityController >> canBeTargetFor: aController [
 	^ aController modelClass = OPTestRelationModel
 ]
 
-{ #category : #construction }
-OPTestEntityController >> createModelIn: aParentModel [
-	self model: self modelClass new.
-	aParentModel entities add: model
+{ #category : #connecting }
+OPTestEntityController >> modelAsParent [
+	^ self diagramController model
 ]
 
 { #category : #accessing }

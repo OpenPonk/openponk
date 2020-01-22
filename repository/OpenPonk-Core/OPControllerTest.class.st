@@ -26,8 +26,9 @@ OPControllerTest >> modelClass [
 
 { #category : #tests }
 OPControllerTest >> testCannotConnectByDefault [
+	controller model: model.
 	self deny: (controller canBeSourceFor: nil).
-	self deny: (controller canBeTargetFor: nil).
+	self deny: (controller canBeTargetFor: nil)
 ]
 
 { #category : #tests }

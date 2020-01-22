@@ -51,8 +51,8 @@ upload() {
 	mv "$zip" "$latest_zip"
 
 	set +x
-		echo "curl -k -v -u DEPLOY_KEY --upload-file $latest-zip https://nexus.openponk.ccmi.fit.cvut.cz/repository/$repository/${PROJECT_NAME}/${latest_zip}"
-		curl -k -v -u "${DEPLOY_KEY}" --upload-file $latest-zip https://nexus.openponk.ccmi.fit.cvut.cz/repository/$repository/"${PROJECT_NAME}"/"${latest_zip}"
+		echo "curl -k -v -u DEPLOY_KEY --upload-file $latest_zip https://nexus.openponk.ccmi.fit.cvut.cz/repository/$repository/${PROJECT_NAME}/${latest_zip}"
+		curl -k -v -u "${DEPLOY_KEY}" --upload-file $latest_zip https://nexus.openponk.ccmi.fit.cvut.cz/repository/$repository/"${PROJECT_NAME}"/"${latest_zip}"
 	set -x
 }
 

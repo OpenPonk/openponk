@@ -7,7 +7,7 @@ prepare_directory() {
 	local platform=$1
 	local full_platform=$platform$PHARO_BITS_NAME
 	local package_dir_name="openponk-$PROJECT_NAME-$full_platform"
-	local working_dir="$package_dir_name-$BUILD_NAME"
+	local working_dir="$package_dir_name-$BUILD_VERSION"
 	local package_dir="$working_dir/$package_dir_name"
 
 	mkdir -p "$package_dir"
@@ -36,23 +36,15 @@ upload() {
 	local platform=$1
 	local full_platform=$platform$PHARO_BITS_NAME
 	local package_dir_name="openponk-$PROJECT_NAME-$full_platform"
-	local working_dir="$package_dir_name-$BUILD_NAME"
-	local zip="$package_dir_name-$BUILD_NAME.zip"
-	local latest_zip="$package_dir_name-latest.zip"
+	local working_dir="$package_dir_name-$BUILD_VERSION"
+	local zip="$package_dir_name-latest.zip"
 
 	cd $working_dir
 	zip -qr "$zip" "${package_dir_name}"
 
 	set +x
-		echo "curl -k -v -u DEPLOY_KEY --upload-file $zip https://nexus.openponk.ccmi.fit.cvut.cz/repository/$repository/${PROJECT_NAME}/$BUILD_NAME/${zip}"
-		curl -k -v -u "${DEPLOY_KEY}" --upload-file $zip https://nexus.openponk.ccmi.fit.cvut.cz/repository/$repository/"${PROJECT_NAME}"/"$BUILD_NAME"/"${zip}"
-	set -x
-
-	mv "$zip" "$latest_zip"
-
-	set +x
-		echo "curl -k -v -u DEPLOY_KEY --upload-file $latest_zip https://nexus.openponk.ccmi.fit.cvut.cz/repository/$repository/${PROJECT_NAME}/${latest_zip}"
-		curl -k -v -u "${DEPLOY_KEY}" --upload-file $latest_zip https://nexus.openponk.ccmi.fit.cvut.cz/repository/$repository/"${PROJECT_NAME}"/"${latest_zip}"
+		echo "curl -v -T $zip -ujanbliznicenko:BINTRAY_KEY https://api.bintray.com/content/openponk/builds/packages/1/${PROJECT_NAME}/$BUILD_VERSION/${zip}?publish=1"
+		curl -v -T $zip -ujanbliznicenko:"${BINTRAY_KEY}" https://api.bintray.com/content/openponk/builds/packages/1/"${PROJECT_NAME}"/"${BUILD_VERSION}"/"${zip}"?publish=1
 	set -x
 }
 
@@ -62,7 +54,7 @@ deploy_linux() {
 
 	local full_platform=$platform$PHARO_BITS_NAME
 	local package_dir_name="openponk-$PROJECT_NAME-$full_platform"
-	local working_dir="$package_dir_name-$BUILD_NAME"
+	local working_dir="$package_dir_name-$BUILD_VERSION"
 	local package_dir="$working_dir/$package_dir_name"
 	local vm_dir="$package_dir"
 
@@ -86,7 +78,7 @@ deploy_windows() {
 
 	local full_platform=$platform$PHARO_BITS_NAME
 	local package_dir_name="openponk-$PROJECT_NAME-$full_platform"
-	local working_dir="$package_dir_name-$BUILD_NAME"
+	local working_dir="$package_dir_name-$BUILD_VERSION"
 	local package_dir="$working_dir/$package_dir_name"
 	local vm_dir="$package_dir"
 
@@ -103,11 +95,11 @@ deploy_windows() {
 
 deploy_image() {
 	
-	local platform="image"
+	local platform="pharo$PHARO_VERSION-image"
 
 	local full_platform=$platform$PHARO_BITS_NAME
 	local package_dir_name="openponk-$PROJECT_NAME-$full_platform"
-	local working_dir="$package_dir_name-$BUILD_NAME"
+	local working_dir="$package_dir_name-$BUILD_VERSION"
 	local package_dir="$working_dir/$package_dir_name"
 
 	prepare_directory $platform
@@ -127,17 +119,13 @@ main() {
 	deploy_windows
 }
 
-export TRAVIS_BUILD_NUMBER=`printf "%04d\n" $TRAVIS_BUILD_NUMBER`
-
 if [[ "$TRAVIS_BRANCH" == "master" ]]; then
-	export BUILD_NAME="build$TRAVIS_BUILD_NUMBER"
-	export repository="builds"
+	export BUILD_VERSION="latest"
 	main
 fi
 
 if [[ -n "$TRAVIS_TAG" ]]; then
-	export BUILD_NAME="$TRAVIS_TAG"
-	export repository="releases"
+	export BUILD_VERSION="$TRAVIS_TAG"
 	main
 fi
 

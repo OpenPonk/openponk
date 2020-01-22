@@ -37,17 +37,22 @@ upload() {
 	local full_platform=$platform$PHARO_BITS_NAME
 	local package_dir_name="openponk-$PROJECT_NAME-$full_platform"
 	local working_dir="$package_dir_name-$BUILD_NAME"
-	local package_dir="$working_dir/$package_dir_name"
-	local zip="$working_dir.zip"
+	local zip="$package_dir_name-$BUILD_NAME.zip"
+	local latest_zip="$package_dir_name-latest.zip"
 
 	cd $working_dir
 	zip -qr "$zip" "${package_dir_name}"
 
 	set +x
-		echo "curl -k -v -u DEPLOY_KEY --upload-file $zip https://nexus.openponk.ccmi.fit.cvut.cz/repository/$repository/byplatform/${full_platform}/${PROJECT_NAME}/${zip}"
-		curl -k -v -u "${DEPLOY_KEY}" --upload-file $zip https://nexus.openponk.ccmi.fit.cvut.cz/repository/$repository/byplatform/"${full_platform}"/"${PROJECT_NAME}"/${zip}
-		echo "curl -k -v -u DEPLOY_KEY --upload-file $zip https://nexus.openponk.ccmi.fit.cvut.cz/repository/$repository/byversion/${PROJECT_NAME}/$BUILD_NAME/${zip}"
-		curl -k -v -u "${DEPLOY_KEY}" --upload-file $zip https://nexus.openponk.ccmi.fit.cvut.cz/repository/$repository/byversion/"${PROJECT_NAME}"/"$BUILD_NAME"/${zip}
+		echo "curl -k -v -u DEPLOY_KEY --upload-file $zip https://nexus.openponk.ccmi.fit.cvut.cz/repository/$repository/${PROJECT_NAME}/$BUILD_NAME/${zip}"
+		curl -k -v -u "${DEPLOY_KEY}" --upload-file $zip https://nexus.openponk.ccmi.fit.cvut.cz/repository/$repository/"${PROJECT_NAME}"/"$BUILD_NAME"/"${zip}"
+	set -x
+
+	mv "$zip" "$latest_zip"
+
+	set +x
+		echo "curl -k -v -u DEPLOY_KEY --upload-file $latest-zip https://nexus.openponk.ccmi.fit.cvut.cz/repository/$repository/${PROJECT_NAME}/${latest_zip}"
+		curl -k -v -u "${DEPLOY_KEY}" --upload-file $latest-zip https://nexus.openponk.ccmi.fit.cvut.cz/repository/$repository/"${PROJECT_NAME}"/"${latest_zip}"
 	set -x
 }
 

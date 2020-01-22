@@ -36,9 +36,11 @@ before_install:
 deploy:
   - provider: script
     on:
-      condition: $PHARO_VERSION = 8.0
+      smalltalk: Pharo64-8.0
     skip_cleanup: true
-    script: scripts/deploy.sh
+    script: 
+      ./scripts/deploy.sh
+      ./scripts/trigged_dependent.sh "class-editor" "borm-editor" "fsm-editor" "petrinets" "all-in-one"      
 cache:
   directories:
   - "$SMALLTALK_CI_BUILD_BASE/pharo-local/package-cache"

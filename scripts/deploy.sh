@@ -5,7 +5,10 @@ set -euxo pipefail
 prepare_directory() {
 
 	local platform=$1
-	local package_dir=$2
+	local full_platform=$platform$PHARO_BITS_NAME
+	local package_dir_name="openponk-$PROJECT_NAME-$full_platform"
+	local working_dir="$package_dir_name-$BUILD_NAME"
+	local package_dir="$working_dir/$package_dir_name"
 
 	mkdir -p "$package_dir"
 
@@ -31,8 +34,9 @@ download_vm() {
 upload() {	
 
 	local platform=$1
-	local package_dir_name=$2
-	local working_dir="$package_dir_name-$PHARO_FULL_VERSION-build$TRAVIS_BUILD_NUMBER"
+	local full_platform=$platform$PHARO_BITS_NAME
+	local package_dir_name="openponk-$PROJECT_NAME-$full_platform"
+	local working_dir="$package_dir_name-$BUILD_NAME"
 	local package_dir="$working_dir/$package_dir_name"
 	local zip="$working_dir.zip"
 
@@ -40,7 +44,9 @@ upload() {
 	zip -qr "$zip" "${package_dir_name}"
 
 	set +x
-		curl -k -v -u "${DEPLOY_KEY}" --upload-file $zip https://nexus.openponk.ccmi.fit.cvut.cz/repository/$repository/byplatform/"${PHARO_FULL_VERSION}"/"${platform}"/"${PROJECT_NAME}"/${zip}
+		echo "curl -k -v -u DEPLOY_KEY --upload-file $zip https://nexus.openponk.ccmi.fit.cvut.cz/repository/$repository/byplatform/${full_platform}/${PROJECT_NAME}/${zip}"
+		curl -k -v -u "${DEPLOY_KEY}" --upload-file $zip https://nexus.openponk.ccmi.fit.cvut.cz/repository/$repository/byplatform/"${full_platform}"/"${PROJECT_NAME}"/${zip}
+		echo "curl -k -v -u DEPLOY_KEY --upload-file $zip https://nexus.openponk.ccmi.fit.cvut.cz/repository/$repository/byversion/${PROJECT_NAME}/$BUILD_NAME/${zip}"
 		curl -k -v -u "${DEPLOY_KEY}" --upload-file $zip https://nexus.openponk.ccmi.fit.cvut.cz/repository/$repository/byversion/"${PROJECT_NAME}"/"$BUILD_NAME"/${zip}
 	set -x
 }
@@ -49,12 +55,13 @@ deploy_linux() {
 
 	local platform="linux"
 
-	local package_dir_name="openponk-$PROJECT_NAME-$platform"
-	local working_dir="$package_dir_name-$PHARO_FULL_VERSION-build$TRAVIS_BUILD_NUMBER"
+	local full_platform=$platform$PHARO_BITS_NAME
+	local package_dir_name="openponk-$PROJECT_NAME-$full_platform"
+	local working_dir="$package_dir_name-$BUILD_NAME"
 	local package_dir="$working_dir/$package_dir_name"
 	local vm_dir="$package_dir"
 
-	prepare_directory $platform $package_dir
+	prepare_directory $platform
 	download_vm "$platform-threaded" $vm_dir
 
 	rm $vm_dir/pharo
@@ -64,7 +71,7 @@ deploy_linux() {
 EOF
 	chmod a+rx $vm_dir/openponk-$PROJECT_NAME
 
-	upload $platform "$package_dir_name"
+	upload $platform
 
 }
 
@@ -72,19 +79,20 @@ deploy_windows() {
 
 	local platform="win"
 
-	local package_dir_name="openponk-$PROJECT_NAME-$platform"
-	local working_dir="$package_dir_name-$PHARO_FULL_VERSION-build$TRAVIS_BUILD_NUMBER"
+	local full_platform=$platform$PHARO_BITS_NAME
+	local package_dir_name="openponk-$PROJECT_NAME-$full_platform"
+	local working_dir="$package_dir_name-$BUILD_NAME"
 	local package_dir="$working_dir/$package_dir_name"
 	local vm_dir="$package_dir"
 
-	prepare_directory $platform $package_dir
+	prepare_directory $platform
 	download_vm $platform $vm_dir
 	
 	mv $vm_dir/*haro.exe $vm_dir/openponk-$PROJECT_NAME.exe
 	rm $vm_dir/*haroConsole.exe
 	rm $vm_dir/*Zone.Identifier || true
 
-	upload $platform "$package_dir_name"
+	upload $platform
 
 }
 
@@ -92,20 +100,22 @@ deploy_image() {
 	
 	local platform="image"
 
-	local package_dir_name="openponk-$PROJECT_NAME-$platform"
-	local working_dir="$package_dir_name-$PHARO_FULL_VERSION-build$TRAVIS_BUILD_NUMBER"
+	local full_platform=$platform$PHARO_BITS_NAME
+	local package_dir_name="openponk-$PROJECT_NAME-$full_platform"
+	local working_dir="$package_dir_name-$BUILD_NAME"
 	local package_dir="$working_dir/$package_dir_name"
 
-	prepare_directory $platform $package_dir
+	prepare_directory $platform
 
-	upload $platform "$package_dir_name"
+	upload $platform
 
 }
 
 main() {
 
 	export PHARO_VERSION_SIMPLE="${PHARO_VERSION//.}"
-	export PHARO_FULL_VERSION="pharo$PHARO_VERSION-${PHARO_BITS}b"
+	export PHARO_BITS_NAME="${PHARO_BITS}b"
+	export PHARO_FULL_VERSION="pharo$PHARO_VERSION-$PHARO_BITS_NAME"
 
 	deploy_image
 	deploy_linux

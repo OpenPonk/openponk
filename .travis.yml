@@ -40,7 +40,6 @@ deploy:
       smalltalk: Pharo64-8.0
     skip_cleanup: true
     script: 
-      bash scripts/deploy.sh;
       bash scripts/trigger_dependent.sh "class-editor" "borm-editor" "fsm-editor" "petrinets" "all-in-one"      
 cache:
   directories:

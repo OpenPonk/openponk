@@ -7,14 +7,11 @@ Class {
 	#instVars : [
 		'uuid',
 		'dirty',
-		'fileName',
-		'layouts',
 		'models',
 		'storageFolder',
 		'storageFile',
-		'state',
 		'name',
-		'views'
+		'diagrams'
 	],
 	#category : #'OpenPonk-Core-Models'
 }
@@ -33,15 +30,16 @@ OPProject class >> named: aString [
 		yourself
 ]
 
-{ #category : #accessing }
-OPProject >> addDefaultViewFor: aModel [
-	self views add: (OPDiagramView defaultViewFor: aModel)
+{ #category : #adding }
+OPProject >> addDefaultDiagramFor: aModel [
+	self diagrams
+		add: ((OPDiagram defaultDiagramFor: aModel) project: self)
 ]
 
 { #category : #adding }
 OPProject >> addModel: aModel [
 	models add: aModel.
-	self addDefaultViewFor: aModel.
+	self addDefaultDiagramFor: aModel.
 	(aModel respondsTo: #project:)
 		ifTrue: [ aModel project: self ]
 ]
@@ -67,46 +65,26 @@ OPProject >> descriptionName [
 ]
 
 { #category : #accessing }
-OPProject >> fileName [
-	^ fileName
+OPProject >> diagrams [
+	^ diagrams
 ]
 
 { #category : #accessing }
-OPProject >> fileName: aFileName [
-	fileName := aFileName
+OPProject >> diagrams: aCollection [
+	diagrams
+		removeAll;
+		addAll: aCollection
 ]
 
 { #category : #initialization }
 OPProject >> initialize [
 	uuid := UUID new.
 	models := OrderedCollection new asValueHolder.
-	state := Dictionary new.
-	layouts := Dictionary new.
+	diagrams := OrderedCollection new.
 	name := NewValueHolder value: 'Unnamed project'.
 	dirty := false asValueHolder.
 	models whenChangedDo: [ dirty value: true ].
 	name whenChangedDo: [ dirty value: true ].
-	views := SRToManyLink on: self slot: #views oppositeSlot: #project
-]
-
-{ #category : #accessing }
-OPProject >> layout: aLayout for: aModel [
-	^ layouts at: aModel uuid asString put: aLayout
-]
-
-{ #category : #accessing }
-OPProject >> layoutFor: aModel [
-	^ layouts at: aModel uuid asString ifAbsent: [ Dictionary new ]
-]
-
-{ #category : #accessing }
-OPProject >> layouts [
-	^ layouts copy
-]
-
-{ #category : #accessing }
-OPProject >> layouts: aLayoutDictionary [
-	layouts := aLayoutDictionary copy
 ]
 
 { #category : #accessing }
@@ -124,25 +102,9 @@ OPProject >> name: aString [
 	name := aString
 ]
 
-{ #category : #accessing }
-OPProject >> projectName [
-	self 
-		deprecated: 'Use name instead'
-		on: 	'22 July 2017' 
-		in: 'Pharo-6.0-60508-'
-		transformWith: '`@receiver projectName' 
-						-> '`@receiver name'.
-	^ self name
-]
-
-{ #category : #accessing }
-OPProject >> projectName: aString [
-	self
-		deprecated: 'Use name: instead'
-		on: '22 July 2017'
-		in: 'Pharo-6.0-60508-'
-		transformWith: '`@receiver projectName: `@arg' -> '`@receiver name: `@arg'.
-	^ self name: aString
+{ #category : #removing }
+OPProject >> removeDiagramsOf: aModel [
+	diagrams removeAllSuchThat: [ :each | each model = aModel ]
 ]
 
 { #category : #persistence }
@@ -152,16 +114,11 @@ OPProject >> removeFromImage [
 
 { #category : #removing }
 OPProject >> removeModel: aModel [
-	self removeViewsOf: aModel.
+	self removeDiagramsOf: aModel.
 	models remove: aModel.
 	aModel announcer unsubscribe: self.
 	(aModel respondsTo: #project:)
 		ifTrue: [ aModel project: nil ]
-]
-
-{ #category : #removing }
-OPProject >> removeViewsOf: aModel [
-	views removeAllSuchThat: [ :each | each model = aModel ]
 ]
 
 { #category : #persistence }
@@ -199,18 +156,6 @@ OPProject >> uuid [
 { #category : #accessing }
 OPProject >> uuid: aUUID [
 	uuid := aUUID
-]
-
-{ #category : #accessing }
-OPProject >> views [
-	^ views
-]
-
-{ #category : #accessing }
-OPProject >> views: aCollection [
-	views
-		removeAll;
-		addAll: aCollection
 ]
 
 { #category : #announcements }

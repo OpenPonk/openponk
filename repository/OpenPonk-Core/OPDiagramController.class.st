@@ -5,7 +5,6 @@ Class {
 	#name : #OPDiagramController,
 	#superclass : #OPController,
 	#instVars : [
-		'view',
 		'controllers',
 		'editor',
 		'hoverHolder',
@@ -17,7 +16,8 @@ Class {
 		'figureToControllerCache',
 		'modelToControllerCache',
 		'workbenchAnnouncer',
-		'diagramView'
+		'diagram',
+		'view'
 	],
 	#category : #'OpenPonk-Core-Controllers'
 }
@@ -76,22 +76,28 @@ OPDiagramController >> addModelElement: aModelElement [
 	^ controller"
 ]
 
+{ #category : #accessing }
+OPDiagramController >> allElementsInModel [
+	^ self controllers
+		collect: [ :controller | controller allElementsInModel ]
+]
+
 { #category : #userinterface }
 OPDiagramController >> applyDefaultLayout [
 	"do nothing by default"
 ]
 
 { #category : #views }
-OPDiagramController >> applyView: aView [
-	aView camera
+OPDiagramController >> applyView: aDiagram [
+	aDiagram camera
 		ifNotNil: [ :camera | 
 			view canvas camera translateTo: camera offset.
 			view canvas camera scale: camera zoom ].
-	aView isDefault & aView visibleElements isEmpty
+	aDiagram isDefault & aDiagram visibleElements isEmpty
 		ifTrue: [ self showAllElements ]
-		ifFalse: [ self visibleElements: aView visibleElements ].
-	aView layout ifNil: [ self applyDefaultLayout ] ifNotNil: [ self layout: aView layout ].
-	diagramView := aView
+		ifFalse: [ self visibleElements: aDiagram visibleElements ].
+	aDiagram layout ifNil: [ self applyDefaultLayout ] ifNotNil: [ self layout: aDiagram layout ].
+	diagram := aDiagram
 ]
 
 { #category : #accessing }
@@ -221,12 +227,12 @@ OPDiagramController >> deselectAll [
 
 { #category : #accessing }
 OPDiagramController >> diagram [
-	^ self layout
+	^ diagram
 ]
 
 { #category : #accessing }
 OPDiagramController >> diagram: aDiagram [
-	self layout: aDiagram
+	diagram := aDiagram
 ]
 
 { #category : #accessing }
@@ -237,16 +243,6 @@ OPDiagramController >> diagramController [
 { #category : #accessing }
 OPDiagramController >> diagramController: aController [
 	self error: 'Cannot assign diagramController to diagramController'
-]
-
-{ #category : #accessing }
-OPDiagramController >> diagramView [
-	^ diagramView
-]
-
-{ #category : #views }
-OPDiagramController >> diagramView: aDiagramView [
-	diagramView := aDiagramView
 ]
 
 { #category : #'protocol-canvas' }
@@ -296,6 +292,13 @@ OPDiagramController >> formPresenter [
 	^ self editor workbench formModel
 ]
 
+{ #category : #'controllers management' }
+OPDiagramController >> hasControllerForModel: aModel [
+	^ aModel = model
+		or: [ self cachedControllerForModel: aModel ifNone: [ ^ false ].
+			true ]
+]
+
 { #category : #testing }
 OPDiagramController >> hasRedo [
 	^ self autosaveManager futureIsEmpty not
@@ -323,6 +326,13 @@ OPDiagramController >> hideAllElements [
 { #category : #figures }
 OPDiagramController >> hideModelFromDiagram: aModel [
 	self controllerForModel: aModel ifFound: [ :ctrl | ctrl removeController ]
+]
+
+{ #category : #'as yet unclassified' }
+OPDiagramController >> hideableElements [
+	"Should return all elements that could be directly hidden on diagram"
+
+	^ #()
 ]
 
 { #category : #'protocol-canvas' }
@@ -355,23 +365,7 @@ OPDiagramController >> initializePalette: aPalette [
 
 { #category : #testing }
 OPDiagramController >> isVisibleInDiagram: aModel [
-	self controllerForModel: aModel ifFound: [ :ctrl | ^ true ].
-	^ false
-]
-
-{ #category : #accessing }
-OPDiagramController >> layout [
-	^ (self controllers collect: [ :each | each model uuid -> each layout ]) asDictionary
-]
-
-{ #category : #accessing }
-OPDiagramController >> layout: aLayout [
-	aLayout
-		keysAndValuesDo: [ :key :value | 
-			self controllers
-				detect: [ :ctrl | ctrl model uuid = key ]
-				ifFound: [ :ctrl | ctrl layout: value ] ].
-	self updateView
+	^ self hasControllerForModel: aModel
 ]
 
 { #category : #'undo/redo' }
@@ -389,7 +383,7 @@ OPDiagramController >> loadState: aMemento [
 
 { #category : #persistence }
 OPDiagramController >> memento [
-	^ OPPersistenceMemento model: self model diagram: self diagram
+	^ OPPersistenceMemento model: self model diagrams: self diagram
 ]
 
 { #category : #accessing }
@@ -446,8 +440,8 @@ OPDiagramController >> plugin [
 OPDiagramController >> rebuild [
 	controllers := nil.
 	self cleanView.
-	diagramView
-		ifNotNil: [ diagramView camera
+	diagram
+		ifNotNil: [ diagram camera
 				ifNotNil: [ :camera | 
 					view canvas camera translateTo: camera offset.
 					view canvas camera scale: camera zoom ] ].
@@ -563,8 +557,8 @@ OPDiagramController >> showAllElements [
 { #category : #rebuilding }
 OPDiagramController >> showElements [
 	self showAllElements.
-	diagramView
-		ifNotNil: [ diagramView visibleElements
+	diagram
+		ifNotNil: [ diagram visibleElements
 				ifNotEmpty: [ :elements | self visibleElements: elements ] ]
 ]
 
@@ -601,6 +595,22 @@ OPDiagramController >> view [
 { #category : #accessing }
 OPDiagramController >> view: aView [
 	view := aView
+]
+
+{ #category : #accessing }
+OPDiagramController >> visibleElements [
+	^ self hideableElements select: [ :el | self isVisibleInDiagram: el ]
+]
+
+{ #category : #accessing }
+OPDiagramController >> visibleElements: aCollection [
+	| executor |
+	aCollection ifEmpty: [ ^ self ].
+	executor := OPShowHideFacade on: self.
+	executor hideAll.
+	executor
+		showElements:
+			(self hideableElements select: [ :each | aCollection includes: each ])
 ]
 
 { #category : #'protocol-events' }

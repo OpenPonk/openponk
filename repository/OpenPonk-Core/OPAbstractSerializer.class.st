@@ -23,12 +23,19 @@ OPAbstractSerializer >> loadDiagramFrom: aFolder [
 OPAbstractSerializer >> loadMementoFrom: aFolder [
 	^ OPPersistenceMemento
 		model: (self loadModelFrom: aFolder)
-		diagram: (self loadDiagramFrom: aFolder)
+		diagrams: (self loadViewsFrom: aFolder)
 ]
 
 { #category : #loading }
 OPAbstractSerializer >> loadModelFrom: aFolder [
 	^ self materializeModelFrom: (aFolder / 'model' , self modelExtension) contents
+]
+
+{ #category : #loading }
+OPAbstractSerializer >> loadViewsFrom: aFolder [
+	(aFolder / 'views') exists
+		ifFalse: [ ^ nil ].
+	^ self loadViewsFrom: aFolder / 'views'
 ]
 
 { #category : #'serialize/materialize' }
@@ -45,12 +52,17 @@ OPAbstractSerializer >> materializeMementoFrom: aString [
 		on: aString readStream) next.
 	^ OPPersistenceMemento
 		model: (self materializeModelFrom: (unwrapped at: #model))
-		diagram: (self materializeDiagramFrom: (unwrapped at: #diagram))
+		diagrams: (self materializeViewsFrom: (unwrapped at: #diagrams))
 ]
 
 { #category : #'serialize/materialize' }
 OPAbstractSerializer >> materializeModelFrom: aString [
 	"materialize aString into a model instance"
+	^ self subclassResponsibility
+]
+
+{ #category : #'serialize/materialize' }
+OPAbstractSerializer >> materializeViewFrom: aString [
 	^ self subclassResponsibility
 ]
 
@@ -72,7 +84,7 @@ OPAbstractSerializer >> saveDiagram: aMemento to: aFolder [
 { #category : #saving }
 OPAbstractSerializer >> saveMemento: aMemento to: aFolder [
 	self saveModel: aMemento to: aFolder.
-	self saveDiagram: aMemento to: aFolder
+	self saveViewsOf: aMemento to: aFolder
 ]
 
 { #category : #saving }
@@ -100,5 +112,10 @@ OPAbstractSerializer >> serializeMemento: aMemento [
 { #category : #'serialize/materialize' }
 OPAbstractSerializer >> serializeModel: aModel [
 	"serialize your model into a string"
+	^ self subclassResponsibility
+]
+
+{ #category : #'serialize/materialize' }
+OPAbstractSerializer >> serializeView: aDiagramView [
 	^ self subclassResponsibility
 ]

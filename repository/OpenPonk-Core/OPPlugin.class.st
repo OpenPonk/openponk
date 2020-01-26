@@ -58,6 +58,11 @@ OPPlugin >> serializerClass [
 	^ OPNullSerializer
 ]
 
+{ #category : #'as yet unclassified' }
+OPPlugin >> supportsHidingElements [
+	^ false
+]
+
 { #category : #accessing }
 OPPlugin >> version [
 	^ '0.0.0+unknown'

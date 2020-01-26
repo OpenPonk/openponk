@@ -21,7 +21,7 @@ Class {
 OPIcons class >> checkboxIconFor: aBoolean [
 	^ aBoolean
 		ifTrue: [ #checkboxSelected asIcon ]
-		ifFalse: [ #checkboxUnselected asIcon ]
+		ifFalse: [ self iconNamed: #checkboxUnselected ]
 ]
 
 { #category : #'instance creation' }

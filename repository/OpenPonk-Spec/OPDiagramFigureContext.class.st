@@ -63,6 +63,13 @@ OPDiagramFigureContext >> plugin [
 ]
 
 { #category : #testing }
+OPDiagramFigureContext >> representsControllers: aCollection [
+	figures ifEmpty: [ ^ false ].
+	^ self controllers
+		allSatisfy: [ :each | aCollection anySatisfy: [ :cls | each isKindOf: cls ] ]
+]
+
+{ #category : #testing }
 OPDiagramFigureContext >> representsModel: aModelClass [
 	figures ifEmpty: [ ^ false ].
 	^ self models allSatisfy: [ :each | each isKindOf: aModelClass ]

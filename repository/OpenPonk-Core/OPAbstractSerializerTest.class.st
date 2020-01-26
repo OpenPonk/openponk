@@ -19,7 +19,7 @@ OPAbstractSerializerTest class >> isAbstract [
 OPAbstractSerializerTest >> newMementoWithModel: aModel [
 	^ OPPersistenceMemento
 		model: aModel
-		diagram: {('1' -> '2')} asDictionary
+		diagrams: {(OPDiagram defaultDiagramFor: aModel)}
 ]
 
 { #category : #'instance creation' }

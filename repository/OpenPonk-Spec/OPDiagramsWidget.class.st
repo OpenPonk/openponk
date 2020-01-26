@@ -4,7 +4,7 @@ I show a list of available diagram views for editing.
 Right-clicking on a view shows additional options.
 "
 Class {
-	#name : #OPDiagramViewsWidget,
+	#name : #OPDiagramsWidget,
 	#superclass : #ComposableModel,
 	#instVars : [
 		'list',
@@ -24,7 +24,7 @@ Class {
 }
 
 { #category : #specs }
-OPDiagramViewsWidget class >> defaultSpec [
+OPDiagramsWidget class >> defaultSpec [
 	^ SpecColumnLayout composed
 		add: #heading height: self toolbarHeight;
 		add: #list;
@@ -33,7 +33,7 @@ OPDiagramViewsWidget class >> defaultSpec [
 ]
 
 { #category : #actions }
-OPDiagramViewsWidget >> cloneView: aView [
+OPDiagramsWidget >> cloneView: aView [
 	| name newView |
 	[ name := UIManager default
 		request: 'Clone view "' , (self displayFor: aView) , '". New name: '
@@ -42,11 +42,11 @@ OPDiagramViewsWidget >> cloneView: aView [
 	name ifNil: [ ^ self ].
 	newView := aView newCopy.
 	newView name: name.
-	self workbench openEditorOnView: newView
+	self workbench openEditorOnDiagram: newView
 ]
 
 { #category : #retrieving }
-OPDiagramViewsWidget >> contextMenu: aMenuMorph for: aView [
+OPDiagramsWidget >> contextMenu: aMenuMorph for: aView [
 	aView ifNil: [ ^ aMenuMorph ].
 	(aMenuMorph
 		add: 'Open view'
@@ -77,7 +77,7 @@ OPDiagramViewsWidget >> contextMenu: aMenuMorph for: aView [
 ]
 
 { #category : #actions }
-OPDiagramViewsWidget >> deleteView: aView [
+OPDiagramsWidget >> deleteView: aView [
 	(UIManager default
 		confirm: 'Delete view "' , (self displayFor: aView) , '"?'
 		label: 'Delete')
@@ -88,12 +88,12 @@ OPDiagramViewsWidget >> deleteView: aView [
 ]
 
 { #category : #retrieving }
-OPDiagramViewsWidget >> displayFor: aDiagramView [
+OPDiagramsWidget >> displayFor: aDiagramView [
 	^ '[' , aDiagramView name , '] ' , (adapters displayFor: aDiagramView model)
 ]
 
 { #category : #initialization }
-OPDiagramViewsWidget >> displayRowFor: aView [
+OPDiagramsWidget >> displayRowFor: aView [
 	| name nameMorph modelMorph container |
 	name := aView name.
 	aView isDefault
@@ -111,18 +111,18 @@ OPDiagramViewsWidget >> displayRowFor: aView [
 ]
 
 { #category : #'accessing - spec' }
-OPDiagramViewsWidget >> heading [
+OPDiagramsWidget >> heading [
 	^ heading
 ]
 
 { #category : #initialization }
-OPDiagramViewsWidget >> initialize [
+OPDiagramsWidget >> initialize [
 	super initialize.
 	adapters := OPNavigatorAdapters new
 ]
 
 { #category : #initialization }
-OPDiagramViewsWidget >> initializeList [
+OPDiagramsWidget >> initializeList [
 	list
 		displayBlock: [ :aView | self displayRowFor: aView ];
 		icons: [ :aView | adapters iconFor: aView model ];
@@ -132,13 +132,13 @@ OPDiagramViewsWidget >> initializeList [
 ]
 
 { #category : #initialization }
-OPDiagramViewsWidget >> initializePresenter [
+OPDiagramsWidget >> initializePresenter [
 	super initializePresenter.
 	self initializeList
 ]
 
 { #category : #initialization }
-OPDiagramViewsWidget >> initializeToolbar [
+OPDiagramsWidget >> initializeToolbar [
 	toolbar
 		addGroup: [ :group | 
 			group
@@ -168,7 +168,7 @@ OPDiagramViewsWidget >> initializeToolbar [
 ]
 
 { #category : #initialization }
-OPDiagramViewsWidget >> initializeWidgets [
+OPDiagramsWidget >> initializeWidgets [
 	(list := self instantiate: FastTableModel) handlesDoubleClick: true.
 	list whenBuiltDo: [ :widget | widget widget disableFunction ].
 	self newWidgetHeading.
@@ -177,27 +177,27 @@ OPDiagramViewsWidget >> initializeWidgets [
 ]
 
 { #category : #'accessing - spec' }
-OPDiagramViewsWidget >> list [
+OPDiagramsWidget >> list [
 	^ list
 ]
 
 { #category : #initialization }
-OPDiagramViewsWidget >> newWidgetHeading [
+OPDiagramsWidget >> newWidgetHeading [
 	heading := OPWidgetHeading forLabel: self title
 ]
 
 { #category : #actions }
-OPDiagramViewsWidget >> openView: aView [
-	World showWaitCursorWhile: [ self workbench openEditorOnView: aView ]
+OPDiagramsWidget >> openView: aView [
+	World showWaitCursorWhile: [ self workbench openEditorOnDiagram: aView ]
 ]
 
 { #category : #accessing }
-OPDiagramViewsWidget >> project [
+OPDiagramsWidget >> project [
 	^ project
 ]
 
 { #category : #accessing }
-OPDiagramViewsWidget >> project: aProject [
+OPDiagramsWidget >> project: aProject [
 	project := aProject.
 	project whenChanged: [ self updateContent ].
 	self updateContent.
@@ -206,7 +206,7 @@ OPDiagramViewsWidget >> project: aProject [
 ]
 
 { #category : #actions }
-OPDiagramViewsWidget >> renameView: aView [
+OPDiagramsWidget >> renameView: aView [
 	| name |
 	[ name := UIManager default request: 'Rename view "', (self displayFor: aView), '"' initialAnswer: aView name title: 'Rename' ]
 		doWhileTrue: [ name isNotNil and: [ name = aView name ] ].
@@ -215,12 +215,12 @@ OPDiagramViewsWidget >> renameView: aView [
 ]
 
 { #category : #accessing }
-OPDiagramViewsWidget >> selectedItem [
+OPDiagramsWidget >> selectedItem [
 	^ list selectedItem
 ]
 
 { #category : #actions }
-OPDiagramViewsWidget >> selectionChanged: aView [
+OPDiagramsWidget >> selectionChanged: aView [
 	| enableModification |
 	enableModification := aView isNotNil and: [ aView isDefault not ].
 	editButton enabled: enableModification.
@@ -235,17 +235,17 @@ OPDiagramViewsWidget >> selectionChanged: aView [
 ]
 
 { #category : #api }
-OPDiagramViewsWidget >> title [
+OPDiagramsWidget >> title [
 	^ 'Diagram Views'
 ]
 
 { #category : #'accessing - spec' }
-OPDiagramViewsWidget >> toolbar [
+OPDiagramsWidget >> toolbar [
 	^ toolbar
 ]
 
 { #category : #actions }
-OPDiagramViewsWidget >> updateContent [
+OPDiagramsWidget >> updateContent [
 	| views |
 	views := self viewsIn: project.
 	list items: views.
@@ -253,14 +253,14 @@ OPDiagramViewsWidget >> updateContent [
 ]
 
 { #category : #accessing }
-OPDiagramViewsWidget >> viewsIn: aProject [
-	^ aProject views
+OPDiagramsWidget >> viewsIn: aProject [
+	^ aProject diagrams
 		sorted:
 			#modelType ascending , #modelName ascending , [ :each | each isDefault asBit ] descending
 				, #name descending
 ]
 
 { #category : #'accessing - spec' }
-OPDiagramViewsWidget >> workbench [
+OPDiagramsWidget >> workbench [
 	^ owner workbench
 ]

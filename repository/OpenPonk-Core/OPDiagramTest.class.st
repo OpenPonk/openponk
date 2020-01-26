@@ -1,23 +1,23 @@
 Class {
-	#name : #OPDiagramViewTest,
+	#name : #OPDiagramTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'view'
 	],
-	#category : #'OpenPonk-Core-Views'
+	#category : #'OpenPonk-Core-Diagrams'
 }
 
 { #category : #tests }
-OPDiagramViewTest >> testAsInfo [
+OPDiagramTest >> testAsInfo [
 	| info |
-	view := OPDiagramView new
+	view := OPDiagram new
 		name: 'default';
 		model: OPTestContainerModel new;
 		isOpen: true;
 		isSelected: false;
 		order: 7.
 	info := view asInfo.
-	self assert: info viewName equals: view name.
+	self assert: info diagramName equals: view name.
 	self assert: info modelName equals: view modelName.
 	self assert: info modelVersion equals: view modelVersion.
 	self assert: info modelType equals: view modelType.
@@ -27,10 +27,10 @@ OPDiagramViewTest >> testAsInfo [
 ]
 
 { #category : #tests }
-OPDiagramViewTest >> testAsJsonComplex [
-	view := OPDiagramView new
+OPDiagramTest >> testAsJsonComplex [
+	view := OPDiagram new
 		camera:
-			(OPDiagramViewCamera new
+			(OPDiagramCamera new
 				offset: 20 @ 30;
 				zoom: 1.2);
 		project: OPProject new;
@@ -49,8 +49,8 @@ OPDiagramViewTest >> testAsJsonComplex [
 ]
 
 { #category : #tests }
-OPDiagramViewTest >> testAsJsonModel [
-	view := OPDiagramView new
+OPDiagramTest >> testAsJsonModel [
+	view := OPDiagram new
 		modelName: 'testComp';
 		modelType: 'Component';
 		modelVersion: '1.0'.
@@ -67,8 +67,8 @@ OPDiagramViewTest >> testAsJsonModel [
 ]
 
 { #category : #tests }
-OPDiagramViewTest >> testAsJsonModel2 [
-	view := OPDiagramView new model: OPTestContainerModel new.
+OPDiagramTest >> testAsJsonModel2 [
+	view := OPDiagram new model: OPTestContainerModel new.
 	self
 		assert: (STON fromString: view asJson)
 		equals:
@@ -81,8 +81,8 @@ OPDiagramViewTest >> testAsJsonModel2 [
 ]
 
 { #category : #tests }
-OPDiagramViewTest >> testFromJsonComplex [
-	view := OPDiagramView
+OPDiagramTest >> testFromJsonComplex [
+	view := OPDiagram
 		fromJson:
 			'{ 	"camera" : { "offset" : { "x" : 20, "y" : 30 }, "zoom" : 1.2 },
 		"layout" : { "Person" : { "x" : 27, "y" : 23 } },
@@ -97,12 +97,12 @@ OPDiagramViewTest >> testFromJsonComplex [
 ]
 
 { #category : #tests }
-OPDiagramViewTest >> testModel [
+OPDiagramTest >> testModel [
 	| model project |
 	model := OPTestContainerModel new.
 	project := OPProject new.
 	project addModel: model.
-	view := OPDiagramView new
+	view := OPDiagram new
 		modelName: 'container';
 		modelType: 'OPTestContainerModel';
 		project: project.
@@ -110,21 +110,21 @@ OPDiagramViewTest >> testModel [
 ]
 
 { #category : #tests }
-OPDiagramViewTest >> testModelDetached [
-	view := OPDiagramView new.
+OPDiagramTest >> testModelDetached [
+	view := OPDiagram new.
 	self should: [ view model ] raise: AssertionFailure
 ]
 
 { #category : #tests }
-OPDiagramViewTest >> testNewCopy [
+OPDiagramTest >> testNewCopy [
 	| model project newView |
 	model := OPTestContainerModel new.
 	project := OPProject new.
 	project addModel: model.
-	view := OPDiagramView new
+	view := OPDiagram new
 		name: 'original';
 		camera:
-			(OPDiagramViewCamera new
+			(OPDiagramCamera new
 				offset: 20 @ 30;
 				zoom: 1.2);
 		model: model;
@@ -138,28 +138,28 @@ OPDiagramViewTest >> testNewCopy [
 	self assert: newView project equals: project.
 	self assert: newView model equals: model.
 	self
-		assert: (project views includes: newView)
+		assert: (project diagrams includes: newView)
 		description: [ 'Opposite test, because clone bypasses Synchronized Links' ].
 	view
 ]
 
 { #category : #tests }
-OPDiagramViewTest >> testUpdateFromInfo [
+OPDiagramTest >> testUpdateFromInfo [
 	| info |
-	info := OPDiagramViewInfo new
+	info := OPDiagramInfo new
 		isOpen: true;
 		isSelected: false;
 		order: 7.
-	view := OPDiagramView new updateFromInfo: info.
+	view := OPDiagram new updateFromInfo: info.
 	self assert: info isOpen equals: view isOpen.
 	self assert: info isSelected equals: view isSelected.
 	self assert: info order equals: view order
 ]
 
 { #category : #tests }
-OPDiagramViewTest >> testUpdateFromRoassalView [
+OPDiagramTest >> testUpdateFromRoassalView [
 	| roassalView |
-	view := OPDiagramView new.
+	view := OPDiagram new.
 	roassalView := RTView new.
 	roassalView canvas camera
 		translateTo: 200 @ 27;

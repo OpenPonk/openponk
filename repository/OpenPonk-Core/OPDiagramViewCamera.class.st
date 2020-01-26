@@ -1,32 +1,12 @@
-"
-I represent camera positioning over the view.
-"
 Class {
 	#name : #OPDiagramViewCamera,
-	#superclass : #Object,
-	#instVars : [
-		'offset',
-		'zoom'
-	],
-	#category : #'OpenPonk-Core-Views'
+	#superclass : #OPDiagramCamera,
+	#category : #'OpenPonk-Core-Diagrams'
 }
 
-{ #category : #accessing }
-OPDiagramViewCamera >> offset [
-	^ offset
-]
+{ #category : #testing }
+OPDiagramViewCamera class >> isDeprecated [
+	"renamed to OPDiagramCamera"
 
-{ #category : #accessing }
-OPDiagramViewCamera >> offset: anObject [
-	offset := anObject
-]
-
-{ #category : #accessing }
-OPDiagramViewCamera >> zoom [
-	^ zoom
-]
-
-{ #category : #accessing }
-OPDiagramViewCamera >> zoom: anObject [
-	zoom := anObject
+	^ true
 ]

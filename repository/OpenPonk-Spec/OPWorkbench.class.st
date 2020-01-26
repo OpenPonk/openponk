@@ -79,6 +79,17 @@ OPWorkbench class >> open [
 ]
 
 { #category : #'instance creation' }
+OPWorkbench class >> openModel: aModel [
+	| project |
+	project := OPProject new.
+	project name: 'Click Project'.
+	project addModel: aModel.
+	^ self open
+		openProject: project;
+		yourself
+]
+
+{ #category : #'instance creation' }
 OPWorkbench class >> openProject: aProject [
 	^ self open
 		openProject: aProject;
@@ -146,7 +157,7 @@ OPWorkbench class >> specSeparated [
 { #category : #opening }
 OPWorkbench >> closeEditor: anEditor [
 	topToolbar activeEditor: nil.
-	editors removeKey: anEditor diagramController diagramView.
+	editors removeKey: anEditor diagramController diagram.
 	focusedEditor = anEditor
 		ifTrue: [ focusedEditor := nil.
 			self announce: (OPEditorUnfocused on: anEditor) ].
@@ -177,17 +188,18 @@ OPWorkbench >> diagramWidget [
 ]
 
 { #category : #opening }
-OPWorkbench >> focusEditorOf: aView [
+OPWorkbench >> focusEditorOf: aDiagram [
 	| editorTabPair |
-	(focusedEditor isNotNil and: [ focusedEditor diagramController diagramView = aView ])
+	(focusedEditor isNotNil
+		and: [ focusedEditor diagramController diagram = aDiagram ])
 		ifTrue: [ ^ self ].
 	focusedEditor
-		ifNotNil: [ focusedEditor diagramController diagramView
-				ifNotNil: [ :oldView | oldView isSelected: false ].
+		ifNotNil: [ focusedEditor diagramController diagram
+				ifNotNil: [ :oldDiagram | oldDiagram isSelected: false ].
 			self announce: (OPEditorUnfocused on: focusedEditor) ].
-	editorTabPair := editors at: aView.
+	editorTabPair := editors at: aDiagram.
 	focusedEditor := editorTabPair first.
-	aView isSelected: true.
+	aDiagram isSelected: true.
 	editorTabPair second selected: true.
 	self announce: (OPEditorFocused on: focusedEditor).
 	topToolbar activeEditor: focusedEditor
@@ -244,7 +256,7 @@ OPWorkbench >> initializePresenter [
 { #category : #initialization }
 OPWorkbench >> initializeWidgets [
 	topToolbar := self instantiate: OPWorkbenchToolbar.
-	diagramWidget := self instantiate: OPDiagramViewsWidget.
+	diagramWidget := self instantiate: OPDiagramsWidget.
 	modelTree := self newTabManager.
 	self initializeModelTree.
 	modelTreeWidget := self instantiate: OPModelNavigator.
@@ -283,41 +295,44 @@ OPWorkbench >> open [
 { #category : #opening }
 OPWorkbench >> openEditorOn: aModel [
 	self
-		openEditorOnView: (project views detect: [ :each | each model = aModel & each isDefault ])
+		openEditorOnDiagram: (project diagrams detect: [ :each | each model = aModel & each isDefault ])
 ]
 
 { #category : #opening }
-OPWorkbench >> openEditorOnView: aView [
-	^ self openEditorOnView: aView model: aView model
+OPWorkbench >> openEditorOnDiagram: aDiagram [
+	^ self openEditorOnDiagram: aDiagram model: aDiagram model
 ]
 
 { #category : #opening }
-OPWorkbench >> openEditorOnView: aView model: aModel [
+OPWorkbench >> openEditorOnDiagram: aDiagram model: aModel [
 	| editor tab plugin widget |
-	(self projectController hasView: aView)
-		ifTrue: [ ^ self focusEditorOf: aView ].
+	(self projectController hasDiagram: aDiagram)
+		ifTrue: [ ^ self focusEditorOf: aDiagram ].
 	plugin := pluginRegistry pluginFor: aModel.
 	editor := OPEditor on: plugin.
 	editor workbench: self.
 	tab := self newTab.
-	editors at: aView put: (Array with: editor with: tab).
+	editors at: aDiagram put: (Array with: editor with: tab).
 	widget := editor buildWithSpec asWidget.
 	editor owner: tab.
 	editor openEmptyModel: aModel.
 	(aModel respondsTo: #whenChanged:)
-		ifTrue: [ aModel whenChanged: [ tab label: '[' , aView name , '] ' , aModel name ] ].
+		ifTrue: [ aModel
+				whenChanged: [ tab label: '[' , aDiagram name , '] ' , aModel name ] ].
 	editor paletteModel rebuildWidget.
 	tab
-		label: '[' , aView name , '] ' , aModel name;
+		label: '[' , aDiagram name , '] ' , aModel name;
 		icon: plugin icon;
 		retrievingBlock: [ widget ];
 		whenBuiltDo: [ :w | 
 			w widget when: #tabDeleted send: #tabDeleted to: editor.
-			w widget when: #tabDeleted evaluate: [ :t | self closeEditor: editor ] ].
+			w widget
+				when: #tabDeleted
+				evaluate: [ :t | self closeEditor: editor ] ].
 	self announce: (OPEditorCreated on: editor).
 	tabManager addTab: tab.
-	self focusEditorOf: aView.
-	editor applyView: aView
+	self focusEditorOf: aDiagram.
+	editor applyView: aDiagram
 ]
 
 { #category : #opening }
@@ -339,7 +354,7 @@ OPWorkbench >> openProject: aProject [
 	diagramWidget project: project.
 	navigatorModel openOn: project.
 	modelTreeWidget openOn: project.
-	projectController openViews
+	projectController openDiagrams
 ]
 
 { #category : #accessing }

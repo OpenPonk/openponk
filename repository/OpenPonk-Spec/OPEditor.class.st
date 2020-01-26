@@ -5,7 +5,7 @@ I am bound with a diagram package and cannot live without it.
 "
 Class {
 	#name : #OPEditor,
-	#superclass : #ComposableModel,
+	#superclass : #ComposablePresenter,
 	#traits : 'TOPSpecRetriever',
 	#classTraits : 'TOPSpecRetriever classTrait',
 	#instVars : [
@@ -84,15 +84,8 @@ OPEditor class >> specSeparated [
 ]
 
 { #category : #'diagram handling' }
-OPEditor >> applyLayoutFor: aModel [
-	| layout |
-	layout := self workbench projectController layoutFor: aModel.
-	layout ifNotNil: [ diagramController layout: layout ]
-]
-
-{ #category : #'diagram handling' }
-OPEditor >> applyView: aView [
-	diagramController diagramView: aView.
+OPEditor >> applyView: aDiagram [
+	diagramController diagram: aDiagram.
 	diagramController rebuild
 ]
 
@@ -194,18 +187,6 @@ OPEditor >> openEmptyModel: aModel [
 { #category : #'as yet unclassified' }
 OPEditor >> openFormOn: aController [
 	formModel editController: aController
-]
-
-{ #category : #'diagram handling' }
-OPEditor >> openModel: aModel [
-	self deprecated: 'use openView:model: instead.'.
-	diagramController := self newDiagramControllerFor: aModel.
-	self workbench projectController addDiagramController: diagramController.
-	canvasModel attachController: diagramController.
-	self rebuildWidget.
-	canvasModel reloadView.
-	self applyLayoutFor: aModel.
-	diagramController saveState
 ]
 
 { #category : #'accessing - spec' }

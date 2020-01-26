@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 OPProjectPersistenceTest >> setUp [
 	super setUp.
-	persistence := OPProjectDirectoryPersistence new.
+	persistence := OPProjectPersistence new.
 	OPPluginRegistry setDefault: (OPPluginRegistry new add: OPTestPlugin new)
 ]
 

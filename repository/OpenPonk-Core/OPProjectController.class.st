@@ -12,6 +12,9 @@ Class {
 		'disableAutosave',
 		'persistenceManager'
 	],
+	#classVars : [
+		'RecentProjects'
+	],
 	#category : #'OpenPonk-Core-Controllers'
 }
 
@@ -19,21 +22,6 @@ Class {
 OPProjectController >> addDiagramController: aController [
 	self subscribeTo: aController.
 	controllers add: aController
-]
-
-{ #category : #saving }
-OPProjectController >> autoSave: aMemento [
-	disableAutosave
-		ifTrue: [ ^ self ].
-	lastSave ifNil: [ ^ self ].
-	self project fileName ifNil: [ ^ self ].
-	(lastSave at: #autosave)
-		at: aMemento id asString
-		put:
-			(Dictionary
-				with: #dateTime -> DateAndTime now truncated asString
-				with: #graph -> (#OPFsmGraphML asClass new export: aMemento model withLayout: aMemento layout)).
-	self saveState: lastSave to: self project fileName
 ]
 
 { #category : #accessing }
@@ -47,11 +35,14 @@ OPProjectController >> enabledPlugins [
 ]
 
 { #category : #opening }
-OPProjectController >> ensureViewsLoaded [
-	(project models isNotEmpty and: [ project views isEmpty ])
-		ifTrue: [ | views |
-			views := project models collect: [ :each | OPDiagramView defaultViewFor: each ].
-			project views: views ]
+OPProjectController >> ensureDiagramsLoaded [
+	(project models isNotEmpty and: [ project diagrams isEmpty ])
+		ifTrue: [ OPDiagramsReader new loadDiagramsOn: project ]
+]
+
+{ #category : #testing }
+OPProjectController >> hasDiagram: aDiagram [
+	^ controllers anySatisfy: [ :each | each diagram = aDiagram ]
 ]
 
 { #category : #adding }
@@ -60,14 +51,9 @@ OPProjectController >> hasModel: aModel [
 ]
 
 { #category : #adding }
-OPProjectController >> hasModel: aModel view: aDiagramView [
+OPProjectController >> hasModel: aModel diagram: aDiagram [
 	^ controllers
-		anySatisfy: [ :each | each model = aModel and: [ each diagramView = aDiagramView ] ]
-]
-
-{ #category : #testing }
-OPProjectController >> hasView: aDiagramView [
-	^ controllers anySatisfy: [ :each | each diagramView = aDiagramView ]
+		anySatisfy: [ :each | each model = aModel and: [ each diagram = aDiagram ] ]
 ]
 
 { #category : #initialization }
@@ -86,34 +72,6 @@ OPProjectController >> lastSave [
 	^ lastSave
 ]
 
-{ #category : #accessing }
-OPProjectController >> layoutFor: aDiagram [
-	^ project layoutFor: aDiagram
-]
-
-{ #category : #loading }
-OPProjectController >> loadAutosave [
-	| data save askForAutoSave |
-	self project fileName ifNil: [ ^ self ].
-	data := self loadStateFrom: self project fileName.
-	save := DateAndTime fromString: (data at: #dateTime).
-	askForAutoSave := (data at: #autosave)
-		anySatisfy: [ :each | save < (DateAndTime fromString: (each value at: #dateTime)) ].
-	(askForAutoSave
-		and: [ UIManager default
-				confirm: 'Newer autosaved version of diagram detected.' , String cr , 'Load?' ])
-		ifTrue: [ (data at: #autosave)
-				keysAndValuesDo: [ :key :value | 
-					controllers
-						detect: [ :each | each model uuid asString = key ]
-						ifFound: [ :ctrl | 
-							| dict |
-							dict := #OPFsmGraphML asClass new import: (value at: #graph).
-							ctrl persistenceManager
-								saveState: (#OPFsmPersistenceMemento asClass model: (dict at: #model) layout: (dict at: #layout)).
-							ctrl loadState: ctrl persistenceManager loadCurrent ] ] ]
-]
-
 { #category : #loading }
 OPProjectController >> loadStateFrom: aFile [
 	^ STON fromStream: aFile readStream
@@ -121,10 +79,13 @@ OPProjectController >> loadStateFrom: aFile [
 
 { #category : #saving }
 OPProjectController >> modelMementoFor: aModel [
-	^ controllers
-		detect: [ :each | each model = aModel ]
-		ifFound: #memento
-		ifNone: [ OPPersistenceMemento model: aModel diagram: nil ]
+	^ OPPersistenceMemento
+		model: aModel
+		diagrams:
+			((controllers
+				select: [ :each | each model = aModel ]
+				thenCollect: [ :each | each diagram ])
+				ifEmpty: [ OPDiagram defaultDiagramFor: aModel ])
 ]
 
 { #category : #saving }
@@ -132,22 +93,19 @@ OPProjectController >> modelMementos [
 	^ self project models collect: [ :each | self modelMementoFor: each ]
 ]
 
-{ #category : #saving }
-OPProjectController >> newSaveData [
-	lastSave := Dictionary
-		with: #dateTime -> DateAndTime now truncated asString
-		with: #project -> (Dictionary with: #name -> self project name)
-		with: #autosave -> Dictionary new
-		with: #diagrams -> self serializedDiagrams.
-	^ lastSave
-]
-
-{ #category : #actions }
-OPProjectController >> openFirstDiagram [
-	disableAutosave := true.
-	project models ifNotEmpty: [ workbench openEditorOn: project models first ].
-	self loadAutosave.
-	disableAutosave := false
+{ #category : #opening }
+OPProjectController >> openDiagrams [
+	| selected |
+	self ensureDiagramsLoaded.
+	selected := project diagrams
+		detect: [ :each | each isOpen & each isSelected ]
+		ifNone: [ nil ].
+	(project diagrams sorted: #order ascending)
+		select: #isOpen
+		thenDo: [ :each | workbench openEditorOnDiagram: each ].
+	selected ifNotNil: [ workbench openEditorOnDiagram: selected ].
+	(project diagrams isNotEmpty and: [ project diagrams noneSatisfy: #isOpen ])
+		ifTrue: [ workbench openEditorOnDiagram: project diagrams first ]
 ]
 
 { #category : #opening }
@@ -174,35 +132,14 @@ OPProjectController >> openProjectFromFile: aFile [
 
 { #category : #opening }
 OPProjectController >> openProjectFromFolder: aFolder [
-	| reader newProject |
-	reader := OPPersistenceProjectReader new.
-	newProject := reader fromFolder: aFolder.
-	newProject open
-]
-
-{ #category : #opening }
-OPProjectController >> openViews [
-	| selected |
-	self ensureViewsLoaded.
-	selected := project views
-		detect: [ :each | each isOpen & each isSelected ]
-		ifNone: [ nil ].
-	(project views sorted: #order ascending)
-		select: #isOpen
-		thenDo: [ :each | workbench openEditorOnView: each ].
-	selected ifNotNil: [ workbench openEditorOnView: selected ].
-	(project views isNotEmpty and: [ project views noneSatisfy: #isOpen ])
-		ifTrue: [ workbench openEditorOnView: project views first ]
-]
-
-{ #category : #accessing }
-OPProjectController >> persistLayouts [
-	controllers do: [ :each | project layout: each layout for: each model ]
+	| newProject |
+	newProject := OPPersistenceProjectReader new fromFolder: aFolder.
+	^ newProject open
 ]
 
 { #category : #accessing }
 OPProjectController >> persistenceManager [
-	^ persistenceManager ifNil: [ persistenceManager := OPProjectDirectoryPersistence new ]
+	^ persistenceManager ifNil: [ persistenceManager := OPProjectPersistence new ]
 ]
 
 { #category : #accessing }
@@ -212,17 +149,7 @@ OPProjectController >> project [
 
 { #category : #accessing }
 OPProjectController >> project: aProject [
-	project := aProject.
-	project fileName
-		ifNotNil: [ lastSave := self loadStateFrom: project fileName.
-			[ project models isNotEmpty ]
-				whileTrue: [ project removeModel: project models anyOne ].
-			(lastSave at: #models)
-				valuesDo: [ :each | 
-					| dict |
-					dict := #OPFsmGraphML asClass new import: each.
-					project addModel: (dict at: #model).
-					project layout: (dict at: #layout) for: (dict at: #model) ] ]
+	project := aProject
 ]
 
 { #category : #accessing }
@@ -247,6 +174,11 @@ OPProjectController >> projectFolder [
 	^ self project storageFolder
 ]
 
+{ #category : #accessing }
+OPProjectController >> recentProjects [
+	^ RecentProjects ifNil: [ RecentProjects := OrderedDictionary new ]
+]
+
 { #category : #removing }
 OPProjectController >> removeDiagramController: aController [
 	project layout: aController layout for: aController model.
@@ -266,6 +198,8 @@ OPProjectController >> saveProject [
 OPProjectController >> saveProjectTo: aFile [
 	| store |
 	store := FileSystem memory root.
+	self recentProjects at: self project uuid put: aFile.
+	self updateViews.
 	self persistenceManager
 		saveProject: self project
 		withMementos: self modelMementos
@@ -280,14 +214,19 @@ OPProjectController >> saveState: saveData to: aFile [
 		writeStreamDo: [ :stream | stream nextPutAll: (STON toJsonStringPretty: saveData) ]
 ]
 
-{ #category : #saving }
-OPProjectController >> serializedDiagrams [
-	^ (controllers
-		select: [ :each | each className = #OPFsmController ]
-		thenCollect: [ :each | 
-			each model uuid asString
-				-> (#OPFsmGraphML asClass new export: each model withLayout: each layout) ])
-		asDictionary
+{ #category : #'diagram selecting' }
+OPProjectController >> selectInDiagram: aModelElement [
+	controllers
+		do: [ :dctrl | 
+			dctrl controllers
+				do: [ :ctrl | 
+					ctrl model = aModelElement
+						ifTrue: [ | palette |
+							palette := dctrl editor paletteModel.
+							palette selectSelectionTool selectedTool targetSelected: ctrl.
+							dctrl editor canvasModel roassalView canvas camera
+								translateTo: ctrl figure position.
+							^ self ] ] ]
 ]
 
 { #category : #announcements }
@@ -297,7 +236,10 @@ OPProjectController >> subscribeTo: aDiagramController [
 		do: [ :ann | workbench openEditorOn: ann model ].
 	aDiagramController model announcer
 		when: OPCloseEditorRequest
-		do: [ :ann | workbench closeEditorOf: ann model ]
+		do: [ :ann | workbench closeEditorOf: ann model ].
+	aDiagramController model announcer
+		when: OPSelectDiagramElement
+		do: [ :ann | self selectInDiagram: ann model ]
 ]
 
 { #category : #announcements }
@@ -310,19 +252,19 @@ OPProjectController >> updateViews [
 	| focusedController |
 	focusedController := workbench focusedEditor
 		ifNotNil: [ :editor | editor diagramController ].
-	self project views
-		do: [ :view | 
-			view modelName: view model name.
+	self project diagrams
+		do: [ :eachDiagram | 
+			eachDiagram modelName: eachDiagram model name.
 			controllers
-				detect: [ :ctrl | ctrl diagramView = view ]
+				detect: [ :ctrl | ctrl diagram = eachDiagram ]
 				ifFound: [ :ctrl | 
-					view isOpen: true.
-					view layout: ctrl layout.
-					view visibleElements: ctrl visibleElements.
-					view updateFromRoassalView: ctrl view.
-					view order: (controllers indexOf: ctrl).
-					view isSelected: ctrl = focusedController ]
-				ifNone: [ view
+					eachDiagram isOpen: true.
+					eachDiagram layout: ctrl layout.
+					eachDiagram visibleElements: ctrl visibleElements.
+					eachDiagram updateFromRoassalView: ctrl view.
+					eachDiagram order: (controllers indexOf: ctrl).
+					eachDiagram isSelected: ctrl = focusedController ]
+				ifNone: [ eachDiagram
 						isOpen: false;
 						order: -1;
 						isSelected: false ] ]

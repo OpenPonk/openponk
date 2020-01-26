@@ -41,6 +41,11 @@ OPController >> addAsTargetFor: aController [
 ]
 
 { #category : #accessing }
+OPController >> allElementsInModel [
+	^ {self model} asSet , self allOwnedElementsInModel
+]
+
+{ #category : #accessing }
 OPController >> allOwnedElementsInModel [
 	^ #()
 ]
@@ -120,6 +125,11 @@ OPController >> internalSubscribeTo: aModel [
 { #category : #announcements }
 OPController >> internalUnsubscribeFrom: aModel [
 	aModel announcer unsubscribe: self
+]
+
+{ #category : #testing }
+OPController >> isHideable [
+	^ false
 ]
 
 { #category : #accessing }

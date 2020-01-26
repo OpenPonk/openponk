@@ -82,6 +82,20 @@ OPDiagramController >> allElementsInModel [
 		collect: [ :controller | controller allElementsInModel ]
 ]
 
+{ #category : #'as yet unclassified' }
+OPDiagramController >> allShowableElements [
+	"Should return all elements that could be directly hidden on diagram"
+
+	^ self subclassResponsibility
+]
+
+{ #category : #'as yet unclassified' }
+OPDiagramController >> allVisibleShowableElements [
+	"Should return all elements that could be directly hidden on diagram but are currently shown"
+
+	^ self controllers collect: [ :each | each model ]
+]
+
 { #category : #userinterface }
 OPDiagramController >> applyDefaultLayout [
 	"do nothing by default"
@@ -211,6 +225,13 @@ OPDiagramController >> controllers [
 	^ controllers ifNil: [ controllers := OrderedCollection new ]
 ]
 
+{ #category : #testing }
+OPDiagramController >> controllersOfVisibleElements: aCollectionOfModelObject [
+	^ aCollectionOfModelObject
+		collect: [ :each | self controllerForModel: each ifNone: [ nil ] ]
+		thenSelect: [ :each | each isNotNil ]
+]
+
 { #category : #deprecated }
 OPDiagramController >> createController: aModel [
 	self
@@ -245,6 +266,11 @@ OPDiagramController >> diagramController: aController [
 	self error: 'Cannot assign diagramController to diagramController'
 ]
 
+{ #category : #userinterface }
+OPDiagramController >> disableRefresh [
+	self flag: #todo
+]
+
 { #category : #'protocol-canvas' }
 OPDiagramController >> doubleClickFigure: aFigure [
 	| controller |
@@ -260,6 +286,11 @@ OPDiagramController >> editor [
 { #category : #'ui interaction' }
 OPDiagramController >> editor: anEditor [
 	editor := anEditor
+]
+
+{ #category : #userinterface }
+OPDiagramController >> enableRefresh [
+	self flag: #todo
 ]
 
 { #category : #accessing }
@@ -325,14 +356,9 @@ OPDiagramController >> hideAllElements [
 
 { #category : #figures }
 OPDiagramController >> hideModelFromDiagram: aModel [
-	self controllerForModel: aModel ifFound: [ :ctrl | ctrl removeController ]
-]
-
-{ #category : #'as yet unclassified' }
-OPDiagramController >> hideableElements [
-	"Should return all elements that could be directly hidden on diagram"
-
-	^ #()
+	self
+		controllerForModel: aModel
+		ifFound: [ :ctrl | ctrl removeController ]
 ]
 
 { #category : #'protocol-canvas' }
@@ -599,7 +625,7 @@ OPDiagramController >> view: aView [
 
 { #category : #accessing }
 OPDiagramController >> visibleElements [
-	^ self hideableElements select: [ :el | self isVisibleInDiagram: el ]
+	^ self allShowableElements select: [ :el | self isVisibleInDiagram: el ]
 ]
 
 { #category : #accessing }
@@ -610,7 +636,7 @@ OPDiagramController >> visibleElements: aCollection [
 	executor hideAll.
 	executor
 		showElements:
-			(self hideableElements select: [ :each | aCollection includes: each ])
+			(self allShowableElements select: [ :each | aCollection includes: each ])
 ]
 
 { #category : #'protocol-events' }

@@ -123,6 +123,11 @@ OPNavigatorAdapter >> mappingFor: anObject in: aDictionary [
 	^ nil
 ]
 
+{ #category : #'as yet unclassified' }
+OPNavigatorAdapter >> modelNameOf: aModelObject [
+	^ self subclassResponsibility
+]
+
 { #category : #private }
 OPNavigatorAdapter >> retrieveActionMapping [
 	^ actionMapping ifNil: [ actionMapping := self actionMapping asDictionary ]

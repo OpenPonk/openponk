@@ -40,10 +40,10 @@ OPToggleFigureCommand >> defaultMenuItemName [
 
 { #category : #execution }
 OPToggleFigureCommand >> execute [
-	| oldView newView |
-	oldView := diagramController viewState.
+	"| oldView newView |
+	oldView := diagramController viewState."
 	self basicExecute.
-	newView := diagramController viewState.
+	"newView := diagramController viewState.
 	diagramController undoManager
 		redoArray:
 			{diagramController.
@@ -52,7 +52,7 @@ OPToggleFigureCommand >> execute [
 		undoArray:
 			{diagramController.
 			#viewState:.
-			{oldView}}
+			{oldView}}"
 ]
 
 { #category : #accessing }

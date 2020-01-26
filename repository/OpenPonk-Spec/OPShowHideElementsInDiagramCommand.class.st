@@ -21,5 +21,6 @@ OPShowHideElementsInDiagramCommand >> defaultMenuItemName [
 
 { #category : #execution }
 OPShowHideElementsInDiagramCommand >> execute [
-	OPShowHideElementsBrowser new openOn: diagramPresenter diagramController
+	OPShowHideElementsBrowser new
+		openOn: diagramPresenter diagramController
 ]

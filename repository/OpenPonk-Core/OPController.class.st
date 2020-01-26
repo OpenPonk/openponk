@@ -169,6 +169,12 @@ OPController >> modelClass [
 	^ self subclassResponsibility
 ]
 
+{ #category : #'as yet unclassified' }
+OPController >> nameOfType [
+	^ (((self model className withoutPrefix: 'OP') splitOnCapitals
+		collect: #asLowercase) joinUsing: ' ') capitalized
+]
+
 { #category : #figures }
 OPController >> refreshFigure [
 	self figure trachelShape triggerCallbacksForStep: 0 @ 0.

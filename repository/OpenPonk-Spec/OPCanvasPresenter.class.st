@@ -219,6 +219,11 @@ OPCanvasPresenter >> loadElementsFromController [
 		ensure: [ World activeHand showTemporaryCursor: nil ]
 ]
 
+{ #category : #accessing }
+OPCanvasPresenter >> model [
+	^ diagramController model
+]
+
 { #category : #signalling }
 OPCanvasPresenter >> reloadView [
 	self deprecated: 'Control reloading from Controller, not Canvas'.

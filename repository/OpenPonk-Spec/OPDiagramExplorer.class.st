@@ -2,7 +2,8 @@ Class {
 	#name : #OPDiagramExplorer,
 	#superclass : #Object,
 	#instVars : [
-		'diagramController'
+		'diagramController',
+		'adapters'
 	],
 	#category : #'OpenPonk-Spec-Dialogs'
 }
@@ -41,25 +42,16 @@ OPDiagramExplorer >> hideAllElements [
 ]
 
 { #category : #actions }
-OPDiagramExplorer >> hideElement: aDataElement [
-	diagramController deselectAll.
-	diagramController hideModelFromDiagram: aDataElement
-]
-
-{ #category : #actions }
 OPDiagramExplorer >> hideElements: dataElements [
 	diagramController deselectAll.
-	dataElements do: [ :each | diagramController hideModelFromDiagram: each ]
+	dataElements
+		do: [ :each | diagramController hideModelFromDiagram: each ].
+	diagramController view signalUpdate
 ]
 
 { #category : #actions }
 OPDiagramExplorer >> hideNeighborsOf: aDataElement [
 	self hideElements: (self neighborsOf: aDataElement)
-]
-
-{ #category : #actions }
-OPDiagramExplorer >> hideTargetOf: aLinkField [
-	self hideElement: aLinkField targetElement
 ]
 
 { #category : #accessing }
@@ -69,9 +61,15 @@ OPDiagramExplorer >> incomingSourcesOf: aDataElement [
 			[ :each | each fields anySatisfy: [ :f | f isLinkField and: [ f targetElement = aDataElement ] ] ]
 ]
 
+{ #category : #initialization }
+OPDiagramExplorer >> initialize [
+	super initialize.
+	adapters := OPNavigatorAdapters new
+]
+
 { #category : #accessing }
-OPDiagramExplorer >> neighborsOf: aDataElement [
-	^ (self outgoingTargetsOf: aDataElement) , (self incomingSourcesOf: aDataElement)
+OPDiagramExplorer >> neighborsOf: aModelObject [
+	^ adapters childrenFor: aModelObject
 ]
 
 { #category : #accessing }
@@ -92,16 +90,16 @@ OPDiagramExplorer >> showAllElements [
 ]
 
 { #category : #actions }
-OPDiagramExplorer >> showElements: dataElements [
+OPDiagramExplorer >> showElements: aCollectionOfModelObjects [
 	| ctrls existingCtrls |
-	dataElements ifEmpty: [ ^ self ].
+	aCollectionOfModelObjects ifEmpty: [ ^ self ].
 	self diagramController deselectAll.
 	diagramController disableRefresh.
-	existingCtrls := OrderedCollection new.
-	dataElements
-		do:
-			[ :each | diagramController controllerForModel: each ifFound: [ :ctrl | existingCtrls add: ctrl ] ].
-	ctrls := dataElements collect: [ :each | diagramController showModelInDiagram: each ].
+	existingCtrls := aCollectionOfModelObjects
+		collect: [ :each | diagramController controllerForModel: each ifNone: [ nil ] ]
+		thenSelect: [ :each | each isNotNil ].
+	ctrls := aCollectionOfModelObjects
+		collect: [ :each | diagramController showModelInDiagram: each ].
 	diagramController enableRefresh.
 	ctrls \ existingCtrls do: #refreshFigure
 ]
@@ -166,7 +164,7 @@ OPDiagramExplorer >> showLinks: links [
 
 { #category : #actions }
 OPDiagramExplorer >> showNeighborsOf: aDataElement [
-	self showElements: (self neighborsOf: aDataElement) of: aDataElement
+	self showElements: (self neighborsOf: aDataElement)
 ]
 
 { #category : #actions }

@@ -11,8 +11,7 @@ Class {
 
 { #category : #running }
 OPShowHideElementsBrowserTest >> setUp [
-	component := NSMComponent new.
-	diagramController := NSPERDiagramController new.
+	diagramController := OPDiagramController new.
 	diagramController view: RTView new.
 	diagramController model: component.
 	diagramController diagram: OPDiagram new.

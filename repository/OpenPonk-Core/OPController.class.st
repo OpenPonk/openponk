@@ -40,11 +40,6 @@ OPController >> addAsTargetFor: aController [
 		andShowInDiagram: self diagramController
 ]
 
-{ #category : #accessing }
-OPController >> allOwnedElementsInModel [
-	^ #()
-]
-
 { #category : #forms }
 OPController >> buildEditorForm: aForm [
 	aForm fromMagritteDescriptions: self magritteDescription
@@ -58,6 +53,19 @@ OPController >> canBeSourceFor: aController [
 { #category : #connecting }
 OPController >> canBeTargetFor: aController [
 	^ false
+]
+
+{ #category : #accessing }
+OPController >> dependentControllers [
+	^ self dependentElements
+		collect:
+			[ :each | self diagramController controllerForModel: each ifNone: [ nil ] ]
+		thenSelect: #isNotNil
+]
+
+{ #category : #accessing }
+OPController >> dependentElements [
+	^ self elementsToShowInside
 ]
 
 { #category : #forms }
@@ -93,6 +101,11 @@ OPController >> diagramController [
 { #category : #accessing }
 OPController >> diagramController: aDiagramController [
 	diagramController := aDiagramController
+]
+
+{ #category : #accessing }
+OPController >> elementsToShowInside [
+	^ #()
 ]
 
 { #category : #figures }
@@ -184,11 +197,21 @@ OPController >> remove [
 
 { #category : #destruction }
 OPController >> removeController [
+	model ifNotNil: [ self removeDependentControllers ].
 	self diagramController ifNil: [ ^ self ].
 	self removeFigure.
 	self model: nil.
 	self diagramController removeController: self.
 	self diagramController: nil
+]
+
+{ #category : #destruction }
+OPController >> removeDependentControllers [
+	self dependentControllers
+		do: [ :each | 
+			self diagramController controllers
+				detect: [ :ctrl | ctrl model = each model ]
+				ifFound: #removeController ]
 ]
 
 { #category : #destruction }
@@ -199,7 +222,7 @@ OPController >> removeFigure [
 
 { #category : #destruction }
 OPController >> removeFull [
-	self removeOwnedControllers.
+	self removeDependentControllers.
 	self removeModel.
 	self removeController
 ]
@@ -215,15 +238,6 @@ OPController >> removeModelElement: aModelElement [
 	self deprecated: 'use #removeModel on the proper controller instead.'.
 
 	self subclassResponsibility
-]
-
-{ #category : #destruction }
-OPController >> removeOwnedControllers [
-	self allOwnedElementsInModel
-		do: [ :each | 
-			self diagramController controllers
-				detect: [ :ctrl | ctrl model = each ]
-				ifFound: #removeController ]
 ]
 
 { #category : #construction }
@@ -260,4 +274,9 @@ OPController >> showSelectionFeedback [
 	"by default do nothing"
 
 	
+]
+
+{ #category : #construction }
+OPController >> showWithDependentInDiagram: aDiagramController [
+	^ self showInDiagram: aDiagramController
 ]

@@ -98,8 +98,9 @@ OPDiagramExplorer >> showElements: aCollectionOfModelObjects [
 	existingCtrls := aCollectionOfModelObjects
 		collect: [ :each | diagramController controllerForModel: each ifNone: [ nil ] ]
 		thenSelect: [ :each | each isNotNil ].
-	ctrls := aCollectionOfModelObjects
-		collect: [ :each | diagramController showModelInDiagram: each ].
+	ctrls := (aCollectionOfModelObjects
+		sorted: [ :a :b | (adapters childrenFor: a) includes: b ])
+		collect: [ :each | diagramController showInDiagramModel: each ].
 	diagramController enableRefresh.
 	ctrls \ existingCtrls do: #refreshFigure
 ]
@@ -115,8 +116,8 @@ OPDiagramExplorer >> showElements: dataElements of: aCentralElement [
 	dataElements , (links collect: #linkField)
 		do:
 			[ :each | diagramController controllerForModel: each ifFound: [ :ctrl | existingCtrls add: ctrl ] ].
-	ctrls1 := dataElements collect: [ :each | diagramController showModelInDiagram: each ].
-	ctrls2 := links collect: [ :each | diagramController showModelInDiagram: each linkField ].
+	ctrls1 := dataElements collect: [ :each | diagramController showInDiagramModel: each ].
+	ctrls2 := links collect: [ :each | diagramController showInDiagramModel: each linkField ].
 	diagramController enableRefresh.
 	(ctrls1 , ctrls2) \ existingCtrls do: #refreshFigure.
 	self
@@ -125,39 +126,11 @@ OPDiagramExplorer >> showElements: dataElements of: aCentralElement [
 ]
 
 { #category : #actions }
-OPDiagramExplorer >> showLinkFields: aCollection [
-	| newElements links ctrls |
-	aCollection ifEmpty: [ ^ self ].
-	self diagramController deselectAll.
-	newElements := OrderedCollection new.
-	aCollection
-		do: [ :each | 
-			(diagramController isVisibleInDiagram: each dataElement)
-				ifFalse: [ newElements add: each dataElement ].
-			(diagramController isVisibleInDiagram: each targetElement)
-				ifFalse: [ newElements add: each targetElement ] ].
-	self showElements: newElements.
-	links := aCollection
-		flatCollect: [ :each | 
-			diagramController
-				selectUnifiedRelationshipsInCollection:
-					{each dataElement.
-					each targetElement} ].
-	diagramController
-		refreshDisabledDuring: [ ctrls := links
-				collect: [ :each | 
-					diagramController showModelInDiagram: each.
-					each opposite ifNotNil: [ :op | diagramController showModelInDiagram: op ].
-					diagramController showModelInDiagram: each linkField ] ]
-		afterDo: [ ctrls do: #refreshFigure ]
-]
-
-{ #category : #actions }
 OPDiagramExplorer >> showLinks: links [
 	| ctrls |
 	links ifEmpty: [ ^ self ].
 	self diagramController deselectAll.
-	ctrls := links collect: [ :each | diagramController showModelInDiagram: each ].
+	ctrls := links collect: [ :each | diagramController showInDiagramModel: each ].
 	diagramController enableRefresh.
 	ctrls do: #refreshFigure
 ]

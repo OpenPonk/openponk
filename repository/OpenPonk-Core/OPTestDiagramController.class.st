@@ -7,14 +7,14 @@ Class {
 	#category : #'OpenPonk-Core-Controllers - Tests'
 }
 
-{ #category : #accessing }
-OPTestDiagramController >> allOwnedElementsInModel [
-	^ model entities
-]
-
 { #category : #testing }
 OPTestDiagramController >> canBeTargetFor: aController [
 	^ aController class = OPTestEntityController
+]
+
+{ #category : #accessing }
+OPTestDiagramController >> elementsToShowInside [
+	^ model entities
 ]
 
 { #category : #destruction }

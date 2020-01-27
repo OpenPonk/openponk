@@ -247,7 +247,9 @@ OPCanvasPresenter >> selectedElements [
 
 { #category : #'as yet unclassified' }
 OPCanvasPresenter >> showAllFigures [
-	roassalView canvas focusOnCenterScaled
+	roassalView elements size = 0
+		ifTrue: [ roassalView canvas camera scale: 1 ]
+		ifFalse: [ roassalView canvas focusOnCenterScaled ]
 ]
 
 { #category : #signalling }

@@ -52,7 +52,7 @@ OPNavigatorAdapter >> actionMapping [
 
 { #category : #'widget API' }
 OPNavigatorAdapter >> childrenFor: anObject [
-	^ self mappingFor: anObject in: self retrieveDependentMapping
+	^ self mappingFor: anObject in: self retrieveChildrenMapping
 ]
 
 { #category : #'widget API' }
@@ -80,16 +80,6 @@ OPNavigatorAdapter >> cull: aSomething with: anObject [
 	^ (aSomething isKindOf: Symbol) | (aSomething isKindOf: BlockClosure)
 		ifTrue: [ aSomething cull: anObject ]
 		ifFalse: [ aSomething ]
-]
-
-{ #category : #'widget API' }
-OPNavigatorAdapter >> dependentFor: anObject [
-	^ self mappingFor: anObject in: self retrieveChildrenMapping
-]
-
-{ #category : #'widget API' }
-OPNavigatorAdapter >> dependentMapping [
-	^ self childrenMapping
 ]
 
 { #category : #'widget API' }
@@ -146,7 +136,6 @@ OPNavigatorAdapter >> retrieveActionMapping [
 
 { #category : #private }
 OPNavigatorAdapter >> retrieveChildrenMapping [
-	self halt.
 	^ childrenMapping
 		ifNil: [ childrenMapping := self childrenMapping asDictionary ]
 ]
@@ -154,12 +143,6 @@ OPNavigatorAdapter >> retrieveChildrenMapping [
 { #category : #private }
 OPNavigatorAdapter >> retrieveContextMenuMapping [
 	^ contextMenuMapping ifNil: [ contextMenuMapping := self contextMenuMapping asDictionary ]
-]
-
-{ #category : #private }
-OPNavigatorAdapter >> retrieveDependentMapping [
-	^ dependentMapping
-		ifNil: [ dependentMapping := self dependentMapping asDictionary ]
 ]
 
 { #category : #private }

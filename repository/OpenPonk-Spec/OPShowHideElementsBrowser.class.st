@@ -71,7 +71,7 @@ OPShowHideElementsBrowser >> pickChanged: aSet [
 	added := aSet intersection: hidden.
 	executor := OPDiagramExplorer on: diagramController.
 	executor hideElements: removed.
-	executor showElements: added.
+	executor showElements: added
 	"
 	linksPick := aSet select: [ :each | each isKindOf: NSMField ].
 	actions := (visible flatCollect: #fields)

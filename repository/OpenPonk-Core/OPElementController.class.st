@@ -136,7 +136,7 @@ OPElementController >> reselect [
 OPElementController >> showInDiagram: aDiagramController [
 	aDiagramController addController: self.
 	self renderFigureIn: aDiagramController view.
-	self allOwnedElementsInModel
+	self elementsToShowInside
 		do: [ :each | 
 			(aDiagramController newControllerFor: each)
 				showInDiagram: aDiagramController ]
@@ -145,6 +145,16 @@ OPElementController >> showInDiagram: aDiagramController [
 { #category : #'canvas actions' }
 OPElementController >> showSelectionFeedback [
 	self figure announce: OPTRFocused
+]
+
+{ #category : #construction }
+OPElementController >> showWithDependentInDiagram: aDiagramController [
+	aDiagramController addController: self.
+	self renderFigureIn: aDiagramController view.
+	self dependentElements
+		do: [ :each | 
+			(aDiagramController newControllerFor: each)
+				showWithDependentInDiagram: aDiagramController ]
 ]
 
 { #category : #accessing }

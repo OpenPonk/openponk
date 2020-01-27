@@ -80,7 +80,7 @@ OPDiagramController >> addModelElement: aModelElement [
 OPDiagramController >> allShowableElements [
 	"Should return all elements that could be directly hidden on diagram"
 
-	^ (Set with: model) , self allOwnedElementsInModel
+	^ (Set with: model) , self elementsToShowInside
 ]
 
 { #category : #'as yet unclassified' }
@@ -589,15 +589,23 @@ OPDiagramController >> showElements [
 
 { #category : #construction }
 OPDiagramController >> showInDiagram: aDiagramController [
-	self allOwnedElementsInModel
-		do: [ :each | aDiagramController showModelInDiagram: each ]
+	self dependentElements
+		do: [ :each | aDiagramController showWithDependentInDiagramModel: each ]
 ]
 
 { #category : #figures }
-OPDiagramController >> showModelInDiagram: aModel [
+OPDiagramController >> showInDiagramModel: aModel [
 	self controllerForModel: aModel ifFound: [ :ctrl | ^ ctrl ].
 	^ (self newControllerFor: aModel)
 		showInDiagram: self;
+		yourself
+]
+
+{ #category : #figures }
+OPDiagramController >> showWithDependentInDiagramModel: aModel [
+	self controllerForModel: aModel ifFound: [ :ctrl | ^ ctrl ].
+	^ (self newControllerFor: aModel)
+		showWithDependentInDiagram: self;
 		yourself
 ]
 

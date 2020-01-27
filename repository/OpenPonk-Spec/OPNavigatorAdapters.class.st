@@ -47,11 +47,6 @@ OPNavigatorAdapters >> contextMenuFor: anObject in: aMenu [
 ]
 
 { #category : #accessing }
-OPNavigatorAdapters >> dependentFor: anObject [
-	^ self adaptersFor: anObject detect: #dependentFor:
-]
-
-{ #category : #accessing }
 OPNavigatorAdapters >> displayFor: anObject [
 	^ self adaptersFor: anObject detect: #displayFor:
 ]

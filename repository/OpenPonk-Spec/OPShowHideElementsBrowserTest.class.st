@@ -44,7 +44,7 @@ OPShowHideElementsBrowserTest >> testDataElementTypesSelectionPrimaryOnly [
 		do: [ :each | 
 			component dataElements
 				add: (NSMDataElement new type: (NSMDataElementType perform: each uncapitalized asSymbol)) ].
-	diagramController showModelInDiagram: (component dataElements detect: #isPrimary).
+	diagramController showInDiagramModel: (component dataElements detect: #isPrimary).
 	selection := browser dataElementTypesSelection.
 	self assert: selection equals: #(Primary)
 ]

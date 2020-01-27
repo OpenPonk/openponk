@@ -36,7 +36,7 @@ OPTestDiagramControllerTest >> testAddAsTargetForEntity [
 { #category : #'tests - ui interaction' }
 OPTestDiagramControllerTest >> testAttachEditor [
 	| editor workbench |
-	editor := OPEditor new.
+	editor := OPEditor on: OPPlugin new.
 	workbench := OPWorkbench new.
 	editor stub workbench willReturn: workbench.
 	diagramController editor: editor.

@@ -136,10 +136,10 @@ OPDiagramTest >> testNewCopy [
 	self deny: newView = view.
 	self assert: newView name equals: 'copy of original'.
 	self assert: newView project equals: project.
-	self assert: newView model equals: model.
+	self assert: newView model equals: model.	"
 	self
 		assert: (project diagrams includes: newView)
-		description: [ 'Opposite test, because clone bypasses Synchronized Links' ].
+		description: [ 'Opposite test, because clone bypasses Synchronized Links' ]."
 	view
 ]
 

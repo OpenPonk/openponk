@@ -23,13 +23,3 @@ OPGLMCherryPickTreePresentation >> renderGlamorouslyOn: aRenderer [
 	self registerAnnouncements.
 	^ aRenderer renderOPCherryPickTreePresentation: self
 ]
-
-{ #category : #accessing }
-OPGLMCherryPickTreePresentation >> selectionCascade [
-	^ selectionCascade
-]
-
-{ #category : #accessing }
-OPGLMCherryPickTreePresentation >> selectionCascade: aOneArgBlock [
-	selectionCascade := aOneArgBlock
-]

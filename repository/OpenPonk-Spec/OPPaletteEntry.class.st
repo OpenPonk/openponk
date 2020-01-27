@@ -52,7 +52,7 @@ OPPaletteEntry >> registerShortcut: newShortcut [
 			receiver model formModel form focusOrder
 				detect: [ :each | each widget widget hasKeyboardFocus ]
 				ifFound: [ :each | 
-					(each isKindOf: TextModel)
+					(each isKindOf: TextPresenter)
 						ifTrue: [ shouldIgnoreEvent := true ] ].
 			shouldIgnoreEvent
 				ifTrue: [ event wasHandled: false ]

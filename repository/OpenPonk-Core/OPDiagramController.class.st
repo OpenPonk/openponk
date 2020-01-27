@@ -76,17 +76,11 @@ OPDiagramController >> addModelElement: aModelElement [
 	^ controller"
 ]
 
-{ #category : #accessing }
-OPDiagramController >> allElementsInModel [
-	^ self controllers
-		collect: [ :controller | controller allElementsInModel ]
-]
-
 { #category : #'as yet unclassified' }
 OPDiagramController >> allShowableElements [
 	"Should return all elements that could be directly hidden on diagram"
 
-	^ self subclassResponsibility
+	^ (Set with: model) , self allOwnedElementsInModel
 ]
 
 { #category : #'as yet unclassified' }
@@ -577,7 +571,12 @@ OPDiagramController >> selectableFigures [
 
 { #category : #rebuilding }
 OPDiagramController >> showAllElements [
-	self showInDiagram: self
+	self disableRefresh.
+	self showInDiagram: self.
+	self enableRefresh.
+	self controllers
+		select: [ :each | each isKindOf: OPController ]
+		thenDo: #refreshFigure
 ]
 
 { #category : #rebuilding }

@@ -41,11 +41,6 @@ OPController >> addAsTargetFor: aController [
 ]
 
 { #category : #accessing }
-OPController >> allElementsInModel [
-	^ {self model} asSet , self allOwnedElementsInModel
-]
-
-{ #category : #accessing }
 OPController >> allOwnedElementsInModel [
 	^ #()
 ]

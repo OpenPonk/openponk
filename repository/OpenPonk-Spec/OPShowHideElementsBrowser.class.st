@@ -92,7 +92,6 @@ OPShowHideElementsBrowser >> pickerIn: aComposite [
 		children: [ :item | self childrenFor: item ];
 		format: [ :item | self nameFor: item ];
 		icon: [ :item | self iconFor: item ];
-		"selectionCascade: [ :item | self selectionCascadeFor: item ];"
 		onChangeOfCherryPick: [ :it | self pickChanged: it cherryPick ];
 		initialPick: self initialPick;
 		enableFilter;

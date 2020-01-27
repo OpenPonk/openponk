@@ -36,6 +36,7 @@ OPShowHideElementsBrowser >> iconFor: aModelObject [
 { #category : #accessing }
 OPShowHideElementsBrowser >> initialPick [
 	^ diagramController allVisibleShowableElements
+		, {diagramController model}
 ]
 
 { #category : #initialization }
@@ -61,7 +62,7 @@ OPShowHideElementsBrowser >> openOn: aDiagramController [
 
 { #category : #actions }
 OPShowHideElementsBrowser >> pickChanged: aSet [
-	| all visible added removed hidden executor addedLinks actions removedLinks linksPick |
+	| all visible added removed hidden executor |
 	all := diagramController allShowableElements asArray.
 	visible := all
 		select: [ :each | diagramController isVisibleInDiagram: each ].

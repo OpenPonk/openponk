@@ -25,7 +25,7 @@ OPShowHideElementsBrowser >> buildBrowser [
 
 { #category : #accessing }
 OPShowHideElementsBrowser >> childrenFor: aModelObject [
-	^ adapters childrenFor: aModelObject
+	^ adapters dependentFor: aModelObject in: diagramController model
 ]
 
 { #category : #accessing }

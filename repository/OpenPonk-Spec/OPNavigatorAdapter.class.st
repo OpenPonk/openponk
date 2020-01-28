@@ -82,6 +82,26 @@ OPNavigatorAdapter >> cull: aSomething with: anObject [
 		ifFalse: [ aSomething ]
 ]
 
+{ #category : #private }
+OPNavigatorAdapter >> cull: aSomething with: anObject with: aRootModel [
+	^ (aSomething isKindOf: Symbol) | (aSomething isKindOf: BlockClosure)
+		ifTrue: [ aSomething cull: anObject cull: aRootModel ]
+		ifFalse: [ aSomething ]
+]
+
+{ #category : #'widget API' }
+OPNavigatorAdapter >> dependentFor: anObject in: aRootModel [
+	^ self
+		mappingFor: anObject
+		inModel: aRootModel
+		in: self retrieveDependentMapping
+]
+
+{ #category : #private }
+OPNavigatorAdapter >> dependentMapping [
+	^ self retrieveChildrenMapping
+]
+
 { #category : #'widget API' }
 OPNavigatorAdapter >> displayFor: anObject [
 	^ (self mappingFor: anObject in: self retrieveDisplayMapping)
@@ -124,6 +144,18 @@ OPNavigatorAdapter >> mappingFor: anObject in: aDictionary [
 	^ nil
 ]
 
+{ #category : #private }
+OPNavigatorAdapter >> mappingFor: anObject inModel: aRootModel in: aDictionary [
+	| h |
+	h := self hierarchyFor: anObject class.
+	h
+		do: [ :each | 
+			aDictionary
+				at: each
+				ifPresent: [ :value | ^ self cull: value with: anObject with: aRootModel ] ].
+	^ nil
+]
+
 { #category : #'as yet unclassified' }
 OPNavigatorAdapter >> modelNameOf: aModelObject [
 	^ self subclassResponsibility
@@ -143,6 +175,12 @@ OPNavigatorAdapter >> retrieveChildrenMapping [
 { #category : #private }
 OPNavigatorAdapter >> retrieveContextMenuMapping [
 	^ contextMenuMapping ifNil: [ contextMenuMapping := self contextMenuMapping asDictionary ]
+]
+
+{ #category : #private }
+OPNavigatorAdapter >> retrieveDependentMapping [
+	^ dependentMapping
+		ifNil: [ dependentMapping := self dependentMapping asDictionary ]
 ]
 
 { #category : #private }

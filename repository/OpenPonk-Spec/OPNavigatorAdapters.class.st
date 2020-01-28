@@ -23,6 +23,15 @@ OPNavigatorAdapters >> adaptersFor: anObject detect: aOneArgSymbol [
 				ifTrue: [ (each perform: aOneArgSymbol with: anObject) ifNotNil: [ :v | ^ v ] ] ]
 ]
 
+{ #category : #'accessing - private' }
+OPNavigatorAdapters >> adaptersFor: anObject in: aRootModel detect: aTwoArgSymbol [
+	adapters
+		do: [ :each | 
+			(each hasMappingFor: anObject)
+				ifTrue: [ (each perform: aTwoArgSymbol with: anObject with: aRootModel)
+						ifNotNil: [ :v | ^ v ] ] ]
+]
+
 { #category : #initialization }
 OPNavigatorAdapters >> allAdapters [
 	"Return default navigator last, because it has the lowest priority."
@@ -44,6 +53,11 @@ OPNavigatorAdapters >> contextMenuFor: anObject in: aMenu [
 	((adapters select: [ :each | each hasMappingFor: anObject ])
 		collect: [ :each | each contextMenuFor: anObject ]) flattened
 		do: [ :pair | builder addItem: pair key action: [ pair value value: anObject ] ]
+]
+
+{ #category : #accessing }
+OPNavigatorAdapters >> dependentFor: anObject in: aRootModel [
+	^ self adaptersFor: anObject in: aRootModel detect: #dependentFor:in:
 ]
 
 { #category : #accessing }

@@ -72,17 +72,6 @@ OPShowHideElementsBrowser >> pickChanged: aSet [
 	executor := OPDiagramExplorer on: diagramController.
 	executor hideElements: removed.
 	executor showElements: added
-	"
-	linksPick := aSet select: [ :each | each isKindOf: NSMField ].
-	actions := (visible flatCollect: #fields)
-		select: [ :each | each isLinkField and: [ each linkField isLocalLink ] ].
-	addedLinks := linksPick \ all
-		reject: [ :each | 
-			(removed includes: each dataElement)
-				| (removed includes: each targetElement) ].
-	removedLinks := actions \ linksPick.
-	executor showLinkFields: addedLinks.
-	executor hideElements: (removedLinks collect: #linkField)"
 ]
 
 { #category : #presentations }

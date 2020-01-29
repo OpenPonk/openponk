@@ -95,19 +95,6 @@ OPDiagramController >> applyDefaultLayout [
 	"do nothing by default"
 ]
 
-{ #category : #views }
-OPDiagramController >> applyView: aDiagram [
-	aDiagram camera
-		ifNotNil: [ :camera | 
-			view canvas camera translateTo: camera offset.
-			view canvas camera scale: camera zoom ].
-	aDiagram isDefault & aDiagram visibleElements isEmpty
-		ifTrue: [ self showAllElements ]
-		ifFalse: [ self visibleElements: aDiagram visibleElements ].
-	aDiagram layout ifNil: [ self applyDefaultLayout ] ifNotNil: [ self layout: aDiagram layout ].
-	diagram := aDiagram
-]
-
 { #category : #accessing }
 OPDiagramController >> autosaveManager [
 	^ autosaveManager
@@ -577,6 +564,19 @@ OPDiagramController >> showAllElements [
 	self controllers
 		select: [ :each | each isKindOf: OPController ]
 		thenDo: #refreshFigure
+]
+
+{ #category : #views }
+OPDiagramController >> showDiagram: aDiagram [
+	aDiagram camera
+		ifNotNil: [ :camera | 
+			view canvas camera translateTo: camera offset.
+			view canvas camera scale: camera zoom ].
+	aDiagram isDefault & aDiagram visibleElements isEmpty
+		ifTrue: [ self showAllElements ]
+		ifFalse: [ self visibleElements: aDiagram visibleElements ].
+	aDiagram layout ifNil: [ self applyDefaultLayout ] ifNotNil: [ self layout: aDiagram layout ].
+	diagram := aDiagram
 ]
 
 { #category : #rebuilding }

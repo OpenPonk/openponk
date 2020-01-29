@@ -83,12 +83,6 @@ OPEditor class >> specSeparated [
 		yourself
 ]
 
-{ #category : #'diagram handling' }
-OPEditor >> applyView: aDiagram [
-	diagramController diagram: aDiagram.
-	diagramController rebuild
-]
-
 { #category : #api }
 OPEditor >> buildWithSpec [
 	^ self buildWithSpec: OPWorkbench layoutStyle
@@ -222,6 +216,12 @@ OPEditor >> registerShortcutsOn: aPresenter [
 OPEditor >> setModelBeforeInitialization: aPlugin [
 	self plugin: aPlugin
 	
+]
+
+{ #category : #'diagram handling' }
+OPEditor >> showDiagram: aDiagram [
+	diagramController diagram: aDiagram.
+	diagramController rebuild
 ]
 
 { #category : #updating }

@@ -332,7 +332,7 @@ OPWorkbench >> openEditorOnDiagram: aDiagram model: aModel [
 	self announce: (OPEditorCreated on: editor).
 	tabManager addTab: tab.
 	self focusEditorOf: aDiagram.
-	editor applyView: aDiagram
+	editor showDiagram: aDiagram
 ]
 
 { #category : #opening }

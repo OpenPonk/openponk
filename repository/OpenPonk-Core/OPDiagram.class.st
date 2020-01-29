@@ -42,17 +42,16 @@ OPDiagram class >> fromJson: aString [
 		for: self
 			do: [ :mapping | 
 			(mapping mapInstVar: #camera) valueSchema: OPDiagramCamera.
-			(mapping mapInstVar: #layout) valueSchema: #MapOfPoints".
-			(mapping mapInstVar: #filters) valueSchema: #ListOfFilters" ];
+			(mapping mapInstVar: #layout) valueSchema: #MapOfPoints ];
 		mapInstVarsFor: OPDiagramCamera;
 		for: OPDiagramCamera
 			do: [ :mapping | (mapping mapInstVar: #offset) valueSchema: Point ];
 		mapInstVarsFor: Point;
-		for: #MapOfPoints customDo: [ :mapping | mapping mapWithValueSchema: Point ];
+		for: #MapOfPoints
+			customDo: [ :mapping | mapping mapWithValueSchema: Point ];
 		for: #ListOfFilters
-			customDo: [ :mapping | mapping listOfType: OrderedCollection andElementSchema: #Filter ];
-"		for: #Filter
-			customDo: [ :mapping | mapping decoder: [ :data | NSPDiagramViewFilter decodeFrom: data ] ];"
+			customDo:
+				[ :mapping | mapping listOfType: OrderedCollection andElementSchema: #Filter ];
 		nextAs: self
 ]
 

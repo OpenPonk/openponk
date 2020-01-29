@@ -152,7 +152,14 @@ OPNavigatorAdapter >> mappingFor: anObject inModel: aRootModel in: aDictionary [
 		do: [ :each | 
 			aDictionary
 				at: each
-				ifPresent: [ :value | ^ self cull: value with: anObject with: aRootModel ] ].
+				ifPresent: [ :value | 
+					^ self
+						cull:
+							(value isSymbol
+								ifTrue: [ [ :o | value cull: o ] ]
+								ifFalse: [ value ])
+						with: anObject
+						with: aRootModel ] ].
 	^ nil
 ]
 

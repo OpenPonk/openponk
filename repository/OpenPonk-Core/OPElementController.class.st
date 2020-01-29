@@ -137,9 +137,7 @@ OPElementController >> showInDiagram: aDiagramController [
 	aDiagramController addController: self.
 	self renderFigureIn: aDiagramController view.
 	self elementsToShowInside
-		do: [ :each | 
-			(aDiagramController newControllerFor: each)
-				showInDiagram: aDiagramController ]
+		do: [ :each | aDiagramController showInDiagramModel: each ]
 ]
 
 { #category : #'canvas actions' }
@@ -152,9 +150,8 @@ OPElementController >> showWithDependentInDiagram: aDiagramController [
 	aDiagramController addController: self.
 	self renderFigureIn: aDiagramController view.
 	self dependentElements
-		do: [ :each | 
-			(aDiagramController newControllerFor: each)
-				showWithDependentInDiagram: aDiagramController ]
+		do:
+			[ :each | aDiagramController showWithDependentInDiagramModel: each ]
 ]
 
 { #category : #accessing }

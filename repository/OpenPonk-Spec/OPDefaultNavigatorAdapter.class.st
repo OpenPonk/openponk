@@ -20,8 +20,8 @@ OPDefaultNavigatorAdapter class >> registerAdapter: aNavigator [
 
 { #category : #'widget API' }
 OPDefaultNavigatorAdapter >> childrenMapping [
-	^ {Object -> [ #() ].
-	OPProject -> #models}
+	^ {(Object -> #()).
+	(OPProject -> #models)}
 ]
 
 { #category : #'widget API' }

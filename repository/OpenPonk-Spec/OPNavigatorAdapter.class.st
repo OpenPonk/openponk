@@ -160,7 +160,7 @@ OPNavigatorAdapter >> mappingFor: anObject inModel: aRootModel in: aDictionary [
 								ifFalse: [ value ])
 						with: anObject
 						with: aRootModel ] ].
-	^ nil
+	^ #()
 ]
 
 { #category : #'as yet unclassified' }

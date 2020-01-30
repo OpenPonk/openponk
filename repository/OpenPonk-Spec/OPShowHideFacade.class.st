@@ -16,11 +16,6 @@ OPShowHideFacade class >> on: aDiagramController [
 ]
 
 { #category : #showing }
-OPShowHideFacade >> connectToVisible: aCollection [
-	aCollection do: [ :each | executor connectToNeighborsOf: each ]
-]
-
-{ #category : #showing }
 OPShowHideFacade >> hide: aCollection [
 	executor hideElements: aCollection
 ]

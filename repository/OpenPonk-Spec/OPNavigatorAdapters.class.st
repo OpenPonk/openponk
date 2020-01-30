@@ -5,10 +5,28 @@ Class {
 	#name : #OPNavigatorAdapters,
 	#superclass : #Object,
 	#instVars : [
-		'adapters'
+		'adapters',
+		'modelToAdapterMapping'
+	],
+	#classInstVars : [
+		'default'
 	],
 	#category : #'OpenPonk-Spec-Utils'
 }
+
+{ #category : #accessing }
+OPNavigatorAdapters class >> default [
+	^ default ifNil: [ default := self new ]
+]
+
+{ #category : #'accessing - private' }
+OPNavigatorAdapters >> adapterFor: aModelObject [
+	^ modelToAdapterMapping
+		at: aModelObject
+		ifAbsentPut: [ adapters
+				detect: [ :each | each hasMappingFor: aModelObject ]
+				ifNone: [ self error: 'No adapter found for ' , aModelObject printString ] ]
+]
 
 { #category : #accessing }
 OPNavigatorAdapters >> adapters: aCollection [
@@ -42,7 +60,7 @@ OPNavigatorAdapters >> allAdapters [
 
 { #category : #accessing }
 OPNavigatorAdapters >> childrenFor: anObject [
-	^ self adaptersFor: anObject detect: #childrenFor:
+	^ (self adapterFor: anObject) childrenFor: anObject
 ]
 
 { #category : #accessing }
@@ -57,21 +75,22 @@ OPNavigatorAdapters >> contextMenuFor: anObject in: aMenu [
 
 { #category : #accessing }
 OPNavigatorAdapters >> dependentFor: anObject in: aRootModel [
-	^ self adaptersFor: anObject in: aRootModel detect: #dependentFor:in:
+	^ (self adapterFor: anObject) dependentFor: anObject in: aRootModel
 ]
 
 { #category : #accessing }
 OPNavigatorAdapters >> displayFor: anObject [
-	^ self adaptersFor: anObject detect: #displayFor:
+	^ (self adapterFor: anObject) displayFor: anObject
 ]
 
 { #category : #accessing }
 OPNavigatorAdapters >> iconFor: anObject [
-	^ self adaptersFor: anObject detect: #iconFor:
+	^ (self adapterFor: anObject) iconFor: anObject
 ]
 
 { #category : #initialization }
 OPNavigatorAdapters >> initialize [
 	super initialize.
-	adapters := self allAdapters collect: #new
+	adapters := self allAdapters collect: #new.
+	modelToAdapterMapping := Dictionary new
 ]

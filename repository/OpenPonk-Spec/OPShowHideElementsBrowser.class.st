@@ -42,12 +42,12 @@ OPShowHideElementsBrowser >> initialPick [
 { #category : #initialization }
 OPShowHideElementsBrowser >> initialize [
 	super initialize.
-	adapters := OPNavigatorAdapters new
+	adapters := OPNavigatorAdapters default
 ]
 
 { #category : #accessing }
-OPShowHideElementsBrowser >> nameFor: aModel [
-	^ adapters adaptersFor: aModel detect: #displayFor:
+OPShowHideElementsBrowser >> nameFor: anObject [
+	^ adapters displayFor: anObject
 ]
 
 { #category : #opening }

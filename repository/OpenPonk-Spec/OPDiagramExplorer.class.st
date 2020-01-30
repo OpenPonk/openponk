@@ -26,9 +26,9 @@ OPDiagramExplorer >> applyLayoutCenter: aCentralFigure neighbors: neighbors [
 		hideGuides"
 ]
 
-{ #category : #actions }
-OPDiagramExplorer >> connectToNeighborsOf: aDataElement [
-	self showElements: (self visibleNeighborsOf: aDataElement) of: aDataElement
+{ #category : #accessing }
+OPDiagramExplorer >> dependentFor: aModelObject [
+	^ adapters dependentFor: aModelObject in: diagramController model
 ]
 
 { #category : #accessing }
@@ -42,16 +42,16 @@ OPDiagramExplorer >> hideAllElements [
 ]
 
 { #category : #actions }
+OPDiagramExplorer >> hideDependentFor: aDataElement [
+	self hideElements: (self dependentFor: aDataElement)
+]
+
+{ #category : #actions }
 OPDiagramExplorer >> hideElements: dataElements [
 	diagramController deselectAll.
 	dataElements
 		do: [ :each | diagramController hideModelFromDiagram: each ].
 	diagramController view signalUpdate
-]
-
-{ #category : #actions }
-OPDiagramExplorer >> hideNeighborsOf: aDataElement [
-	self hideElements: (self neighborsOf: aDataElement)
 ]
 
 { #category : #accessing }
@@ -64,12 +64,7 @@ OPDiagramExplorer >> incomingSourcesOf: aDataElement [
 { #category : #initialization }
 OPDiagramExplorer >> initialize [
 	super initialize.
-	adapters := OPNavigatorAdapters new
-]
-
-{ #category : #accessing }
-OPDiagramExplorer >> neighborsOf: aModelObject [
-	^ adapters childrenFor: aModelObject
+	adapters := OPNavigatorAdapters default
 ]
 
 { #category : #accessing }
@@ -87,6 +82,11 @@ OPDiagramExplorer >> setDiagramController: aDiagramController [
 { #category : #actions }
 OPDiagramExplorer >> showAllElements [
 	diagramController rebuild
+]
+
+{ #category : #actions }
+OPDiagramExplorer >> showDependentFor: aModelObject [
+	self showElements: (self dependentFor: aModelObject)
 ]
 
 { #category : #actions }
@@ -137,11 +137,6 @@ OPDiagramExplorer >> showLinks: links [
 ]
 
 { #category : #actions }
-OPDiagramExplorer >> showNeighborsOf: aDataElement [
-	self showElements: (self neighborsOf: aDataElement)
-]
-
-{ #category : #actions }
 OPDiagramExplorer >> showOutgoingNeighborsOf: aDataElement [
 	self showElements: (self outgoingTargetsOf: aDataElement) of: aDataElement
 ]
@@ -153,10 +148,4 @@ OPDiagramExplorer >> showTargetOf: aLinkField [
 			{aLinkField targetElement.
 			aLinkField dataElement}
 		of: aLinkField dataElement
-]
-
-{ #category : #accessing }
-OPDiagramExplorer >> visibleNeighborsOf: aDataElement [
-	^ (self neighborsOf: aDataElement)
-		select: [ :each | diagramController isVisibleInDiagram: each ]
 ]

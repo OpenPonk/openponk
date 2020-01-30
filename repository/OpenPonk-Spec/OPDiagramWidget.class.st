@@ -41,7 +41,7 @@ OPDiagramWidget >> heading [
 { #category : #initialization }
 OPDiagramWidget >> initialize [
 	super initialize.
-	adapters := OPNavigatorAdapters new
+	adapters := OPNavigatorAdapters default
 ]
 
 { #category : #initialization }

@@ -89,7 +89,7 @@ OPModelTreeWidget >> initialExtent [
 { #category : #initialization }
 OPModelTreeWidget >> initialize [
 	super initialize.
-	adapters := OPNavigatorAdapters new
+	adapters := OPNavigatorAdapters default
 ]
 
 { #category : #initialization }

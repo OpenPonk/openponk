@@ -17,7 +17,8 @@ Class {
 		'modelToControllerCache',
 		'workbenchAnnouncer',
 		'diagram',
-		'view'
+		'view',
+		'layouter'
 	],
 	#category : #'OpenPonk-Core-Controllers'
 }
@@ -92,7 +93,7 @@ OPDiagramController >> allVisibleShowableElements [
 
 { #category : #userinterface }
 OPDiagramController >> applyDefaultLayout [
-	"do nothing by default"
+	self layouter defaultLayout
 ]
 
 { #category : #accessing }
@@ -375,6 +376,12 @@ OPDiagramController >> isVisibleInDiagram: aModel [
 	^ self hasControllerForModel: aModel
 ]
 
+{ #category : #accessing }
+OPDiagramController >> layouter [
+	^ layouter
+		ifNil: [ layouter := self plugin layouterClass new diagramController: self ]
+]
+
 { #category : #'undo/redo' }
 OPDiagramController >> loadState: aMemento [
 "	| oldModel |
@@ -452,7 +459,8 @@ OPDiagramController >> rebuild [
 				ifNotNil: [ :camera | 
 					view canvas camera translateTo: camera offset.
 					view canvas camera scale: camera zoom ] ].
-	self showElements
+	self showElements.
+	self applyDefaultLayout
 ]
 
 { #category : #'undo/redo' }

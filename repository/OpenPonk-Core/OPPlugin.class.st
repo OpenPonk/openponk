@@ -12,7 +12,10 @@ DCPluginRegistry
 Class {
 	#name : #OPPlugin,
 	#superclass : #Object,
-	#category : #'OpenPonk-Core'
+	#instVars : [
+		'layouter'
+	],
+	#category : #'OpenPonk-Core-Plugin'
 }
 
 { #category : #accessing }
@@ -41,6 +44,13 @@ OPPlugin >> icon [
 { #category : #testing }
 OPPlugin >> isPluginFor: aModel [
 	^ self modelClass = aModel class
+]
+
+{ #category : #'as yet unclassified' }
+OPPlugin >> layouterClass [
+	"Create your own subclass of OPLayouter or use OPNoLayouter which does nothing"
+
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }

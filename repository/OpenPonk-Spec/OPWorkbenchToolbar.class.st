@@ -75,7 +75,7 @@ OPWorkbenchToolbar >> addEditorMenu [
 { #category : #'menus for editor' }
 OPWorkbenchToolbar >> editorMenu [
 	| menu |
-	menu := self instantiate: MenuModel.
+	menu := self instantiate: MenuPresenter.
 	menu
 		fromSpec: (PragmaMenuBuilder cachedPragmaKeyword: #opEditorToolbarMenu model: activeEditor) menuSpec.
 	menu

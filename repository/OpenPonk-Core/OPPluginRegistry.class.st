@@ -14,7 +14,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #'OpenPonk-Core'
+	#category : #'OpenPonk-Core-Plugin'
 }
 
 { #category : #singleton }

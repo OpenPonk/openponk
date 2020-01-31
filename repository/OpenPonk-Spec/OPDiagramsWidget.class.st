@@ -5,7 +5,7 @@ Right-clicking on a view shows additional options.
 "
 Class {
 	#name : #OPDiagramsWidget,
-	#superclass : #ComposableModel,
+	#superclass : #ComposablePresenter,
 	#instVars : [
 		'list',
 		'heading',
@@ -85,6 +85,14 @@ OPDiagramsWidget >> deleteView: aView [
 	self workbench closeEditorOfView: aView.
 	aView project: nil.
 	self updateContent
+]
+
+{ #category : #accessing }
+OPDiagramsWidget >> diagramsIn: aProject [
+	^ aProject diagrams
+		sorted:
+			#modelType ascending , #modelName ascending , [ :each | each isDefault asBit ] descending
+				, #name descending
 ]
 
 { #category : #retrieving }
@@ -227,10 +235,7 @@ OPDiagramsWidget >> selectionChanged: aView [
 	deleteButton enabled: enableModification.
 	editButton changed: #enabled.
 	deleteButton changed: #enabled.
-	self flag: #nsmHack.
-	(aView isNotNil and: [ aView modelType = #FlowModel ])
-		ifTrue: [ cloneButton enabled: false ]
-		ifFalse: [ cloneButton enabled: true ].
+	cloneButton enabled: true.
 	cloneButton changed: #enabled
 ]
 
@@ -246,18 +251,12 @@ OPDiagramsWidget >> toolbar [
 
 { #category : #actions }
 OPDiagramsWidget >> updateContent [
-	| views |
-	views := self viewsIn: project.
-	list items: views.
-	views detect: #isSelected ifFound: [ :view | list setSelectedItem: view ]
-]
-
-{ #category : #accessing }
-OPDiagramsWidget >> viewsIn: aProject [
-	^ aProject diagrams
-		sorted:
-			#modelType ascending , #modelName ascending , [ :each | each isDefault asBit ] descending
-				, #name descending
+	| diagrams |
+	diagrams := self diagramsIn: project.
+	list items: diagrams.
+	diagrams
+		detect: #isSelected
+		ifFound: [ :view | list setSelectedItem: view ]
 ]
 
 { #category : #'accessing - spec' }

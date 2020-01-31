@@ -38,13 +38,13 @@ OPProjectPersistenceTest >> testDeleteOldModels [
 	models := {(OPTestEntityModel new uuid: UUID new).
 	OPTestEntityModel new}.
 	persistence
-		saveMemento: (OPPersistenceMemento model: models first diagram: nil)
+		saveMemento: (OPPersistenceMemento model: models first diagrams: #())
 		to: folder
-		with: OPStonSerializer new.
+		with: OPStonModelSerializer new.
 	persistence
-		saveMemento: (OPPersistenceMemento model: models second diagram: nil)
+		saveMemento: (OPPersistenceMemento model: models second diagrams: #())
 		to: folder
-		with: OPStonSerializer new.
+		with: OPStonModelSerializer new.
 	self assert: folder children size equals: 2.
 	persistence removeModelsNotIn: models allButLast from: folder.
 	self assert: folder children size equals: 1.
@@ -66,19 +66,6 @@ OPProjectPersistenceTest >> testModelReferences [
 	result := STON fromString: (String streamContents: [ :stream | stream << (persistence modelReferencesToJson: models) ]).
 	self assert: result size equals: models size.
 	self assert: (result collect: [ :each | each at: #plugin ]) asSet equals: (OPPluginRegistry default plugins collect: #className) asSet
-]
-
-{ #category : #tests }
-OPProjectPersistenceTest >> testNoDiagramOverride [
-	| model folder memento contents |
-	folder := FileSystem memory root / 'models'.
-	model := OPTestEntityModel new.
-	memento := OPPersistenceMemento model: model diagram: {(#Item -> 1)} asDictionary.
-	persistence saveMemento: memento to: folder with: OPStonSerializer new.
-	contents := (folder / memento uuid asString / 'diagram.ston') contents.
-	memento := OPPersistenceMemento model: model diagram: nil.
-	persistence saveMemento: memento to: folder with: OPStonSerializer new.
-	self assert: (folder / memento uuid asString / 'diagram.ston') contents equals: contents
 ]
 
 { #category : #tests }
@@ -115,22 +102,4 @@ OPProjectPersistenceTest >> testProjectFile [
 					{'exporter' -> 'OpenPonk'.
 					'exporterVersion' -> OPVersion version.
 					'timestamp' -> '0'} asDictionary} asDictionary
-]
-
-{ #category : #tests }
-OPProjectPersistenceTest >> testRoundtrip [
-	| folder memento |
-	folder := FileSystem memory root / 'models'.
-	folder ensureCreateDirectory.
-	memento := OPPersistenceMemento
-		model: OPTestEntityModel new
-		diagram: {#Item -> 1} asDictionary.
-	persistence saveMemento: memento to: folder with: OPStonSerializer new.
-	self assert: (folder / memento uuid asString) isDirectory.
-	self
-		assert: (folder / memento uuid asString / 'model.ston') contents
-		equals: (STON toStringPretty: memento model).
-	self
-		assert: (folder / memento uuid asString / 'diagram.ston') contents
-		equals: (STON toStringPretty: memento diagram)
 ]

@@ -31,13 +31,13 @@ OPTestPlugin >> modelClass [
 ]
 
 { #category : #accessing }
-OPTestPlugin >> name [
-	^ 'Plugin for testing'
+OPTestPlugin >> modelSerializerClass [
+	^ OPStonModelSerializer
 ]
 
 { #category : #accessing }
-OPTestPlugin >> serializerClass [
-	^ OPStonSerializer
+OPTestPlugin >> name [
+	^ 'Plugin for testing'
 ]
 
 { #category : #accessing }

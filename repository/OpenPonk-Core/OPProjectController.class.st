@@ -85,7 +85,7 @@ OPProjectController >> modelMementoFor: aModel [
 			((controllers
 				select: [ :each | each model = aModel ]
 				thenCollect: [ :each | each diagram ])
-				ifEmpty: [ OPDiagram defaultDiagramFor: aModel ])
+				ifEmpty: [ (OPDiagram defaultDiagramFor: aModel) project: project ])
 ]
 
 { #category : #saving }
@@ -139,7 +139,7 @@ OPProjectController >> openProjectFromFolder: aFolder [
 
 { #category : #accessing }
 OPProjectController >> persistenceManager [
-	^ persistenceManager ifNil: [ persistenceManager := OPProjectPersistence new ]
+	^ persistenceManager ifNil: [ persistenceManager := OPProjectDirectoryPersistence new ]
 ]
 
 { #category : #accessing }

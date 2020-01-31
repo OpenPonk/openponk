@@ -140,13 +140,10 @@ OPDiagram >> layout: aCollection [
 
 { #category : #accessing }
 OPDiagram >> model [
-	self
-		assert: [ self project isNotNil ]
-		description: 'Cannot retrieve model of a detached view.'.
-	model ifNotNil: [ ^ model ].
-	^ self project models
-		detect:
-			[ :each | each class name = self modelType and: [ each name = self modelName ] ]
+	^ model
+		"ifNil: [ self project models
+				detect:
+					[ :each | each class name = self modelType and: [ each name = self modelName ] ] ]"
 ]
 
 { #category : #accessing }
@@ -253,7 +250,12 @@ OPDiagram >> project [
 
 { #category : #accessing }
 OPDiagram >> project: aProject [
-	project := aProject
+	project := SRToOneLink
+		on: self
+		slot: #project
+		oppositeSlot: #diagrams
+		updateFrom: project
+		to: aProject
 ]
 
 { #category : #converting }

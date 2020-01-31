@@ -80,11 +80,14 @@ OPProject >> diagrams: aCollection [
 OPProject >> initialize [
 	uuid := UUID new.
 	models := OrderedCollection new asValueHolder.
-	diagrams := OrderedCollection new.
+	diagrams := SRToManyLink
+		on: self
+		slot: #diagrams
+		oppositeSlot: #project.
 	name := NewValueHolder value: 'Unnamed project'.
 	dirty := false asValueHolder.
 	models whenChangedDo: [ dirty value: true ].
-	name whenChangedDo: [ dirty value: true ].
+	name whenChangedDo: [ dirty value: true ]
 ]
 
 { #category : #accessing }

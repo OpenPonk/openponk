@@ -15,6 +15,11 @@ OPAbstractSerializerTest class >> isAbstract [
 	^ self = OPAbstractSerializerTest
 ]
 
+{ #category : #accessing }
+OPAbstractSerializerTest >> modelSerializerClass [
+	^ self subclassResponsibility
+]
+
 { #category : #'instance creation' }
 OPAbstractSerializerTest >> newMementoWithModel: aModel [
 	^ OPPersistenceMemento
@@ -27,15 +32,10 @@ OPAbstractSerializerTest >> newModel [
 	^ OPTestEntityModel new
 ]
 
-{ #category : #accessing }
-OPAbstractSerializerTest >> serializerClass [
-	^ self subclassResponsibility
-]
-
 { #category : #running }
 OPAbstractSerializerTest >> setUp [
 	super setUp.
-	serializer := self serializerClass new.
+	serializer := self modelSerializerClass new.
 	root := FileSystem memory.
 	model := self newModel.
 	memento := self newMementoWithModel: model
@@ -64,5 +64,5 @@ OPAbstractSerializerTest >> testRoundtrip [
 OPAbstractSerializerTest >> testSaveMemento [
 	serializer saveMemento: memento to: root.
 	self assert: (root / 'model' , serializer modelExtension) exists.
-	self assert: (root / 'diagram' , serializer diagramExtension) exists
+	self assert: (root / 'diagram' , serializer formatName) exists
 ]

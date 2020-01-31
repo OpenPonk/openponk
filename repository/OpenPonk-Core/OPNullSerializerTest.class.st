@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #accessing }
-OPNullSerializerTest >> serializerClass [
+OPNullSerializerTest >> modelSerializerClass [
 	^ OPNullSerializer
 ]
 
@@ -23,5 +23,5 @@ OPNullSerializerTest >> testRoundtrip [
 OPNullSerializerTest >> testSaveMemento [
 	serializer saveMemento: memento to: root.
 	self deny: (root / 'model' , serializer modelExtension) exists.
-	self deny: (root / 'diagram' , serializer diagramExtension) exists
+	self deny: (root / 'diagram' , serializer formatName) exists
 ]

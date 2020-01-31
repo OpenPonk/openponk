@@ -54,7 +54,7 @@ OPPersistenceProjectReader >> readAllMementosFrom: aRootFolder [
 		collect: [ :pair | 
 			self
 				readMementoFrom: aRootFolder / 'models' / pair key asString
-				with: pair value serializerClass new ]
+				with: pair value serializer ]
 ]
 
 { #category : #reading }

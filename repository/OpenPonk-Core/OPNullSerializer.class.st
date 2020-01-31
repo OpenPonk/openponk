@@ -3,14 +3,9 @@ I am the default serializer and do nothing at all.
 "
 Class {
 	#name : #OPNullSerializer,
-	#superclass : #OPAbstractSerializer,
+	#superclass : #OPSerializer,
 	#category : #'OpenPonk-Core-Persistence'
 }
-
-{ #category : #accessing }
-OPNullSerializer >> diagramExtension [
-	^ ''
-]
 
 { #category : #loading }
 OPNullSerializer >> loadMementoFrom: aFolder [
@@ -25,11 +20,6 @@ OPNullSerializer >> materializeDiagramFrom: aString [
 { #category : #'serialize/materialize' }
 OPNullSerializer >> materializeModelFrom: aString [
 	self shouldNotImplement
-]
-
-{ #category : #accessing }
-OPNullSerializer >> modelExtension [
-	^ ''
 ]
 
 { #category : #saving }

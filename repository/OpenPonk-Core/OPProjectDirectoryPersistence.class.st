@@ -71,7 +71,7 @@ OPProjectDirectoryPersistence >> saveMementos: aCollection to: aFolder [
 			self
 				saveMemento: each
 				to: aFolder / 'models'
-				with: (OPPluginRegistry default pluginFor: each model) serializerClass new ]
+				with: (OPPluginRegistry default pluginFor: each model) serializer ]
 ]
 
 { #category : #saving }
@@ -90,6 +90,6 @@ OPProjectDirectoryPersistence >> saveProject: aProject to: aFolder [
 { #category : #'public - saving' }
 OPProjectDirectoryPersistence >> saveProject: aProject withMementos: aCollection to: aFolder [
 	self saveProject: aProject to: aFolder asFileReference.
-	self removeModelsNotIn: aCollection from: aFolder / 'models'.
-	self saveMementos: aCollection to: aFolder asFileReference
+	self saveMementos: aCollection to: aFolder asFileReference.
+	self removeModelsNotIn: aCollection from: aFolder / 'models'
 ]

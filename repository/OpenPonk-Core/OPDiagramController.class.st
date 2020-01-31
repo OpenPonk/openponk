@@ -99,7 +99,8 @@ OPDiagramController >> applyDefaultLayout [
 { #category : #accessing }
 OPDiagramController >> autosaveManager [
 	^ autosaveManager
-		ifNil: [ autosaveManager := OPAutosaveManager on: self plugin serializerClass new ]
+		ifNil: [ autosaveManager := OPAutosaveManager
+				on: self plugin singleStringSerializer ]
 ]
 
 { #category : #'controllers management' }
@@ -393,11 +394,6 @@ OPDiagramController >> loadState: aMemento [
 	self diagram: aMemento diagram.
 	self logCr: aMemento diagram.
 	self editor updateUndoRedo"
-]
-
-{ #category : #persistence }
-OPDiagramController >> memento [
-	^ OPPersistenceMemento model: self model diagrams: self diagram
 ]
 
 { #category : #accessing }

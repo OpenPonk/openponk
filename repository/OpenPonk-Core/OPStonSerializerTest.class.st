@@ -5,6 +5,6 @@ Class {
 }
 
 { #category : #accessing }
-OPStonSerializerTest >> serializerClass [
-	^ OPStonSerializer
+OPStonSerializerTest >> modelSerializerClass [
+	^ OPStonModelSerializer
 ]

@@ -32,6 +32,11 @@ OPPlugin >> diagramControllerClass [
 ]
 
 { #category : #accessing }
+OPPlugin >> diagramSerializerClass [
+	^ OPStonDiagramSerializer
+]
+
+{ #category : #accessing }
 OPPlugin >> gitCommit [
 	^ ''
 ]
@@ -46,7 +51,7 @@ OPPlugin >> isPluginFor: aModel [
 	^ self modelClass = aModel class
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 OPPlugin >> layouterClass [
 	"Create your own subclass of OPLayouter or use OPNoLayouter which does nothing"
 
@@ -59,16 +64,28 @@ OPPlugin >> modelClass [
 ]
 
 { #category : #accessing }
+OPPlugin >> modelSerializerClass [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
 OPPlugin >> name [
 	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
-OPPlugin >> serializerClass [
-	^ OPNullSerializer
+OPPlugin >> serializer [
+	^ OPDirectorySerializer
+		withModelSerializer: self modelSerializerClass new
+		diagramsSerializer: self diagramSerializerClass new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+OPPlugin >> singleStringSerializer [
+	^ self serializer
+]
+
+{ #category : #testing }
 OPPlugin >> supportsHidingElements [
 	^ false
 ]

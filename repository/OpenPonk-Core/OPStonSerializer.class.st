@@ -11,18 +11,20 @@ OPStonSerializer >> formatName [
 
 { #category : #convenience }
 OPStonSerializer >> materializeMementoFrom: aString [
-	| unwrapped |
+	| unwrapped model |
 	unwrapped := (STON reader
 		allowComplexMapKeys: true;
 		on: aString readStream) next.
+	model := OPStonModelSerializer new
+		materializeModelFrom: (unwrapped at: #model).
 	^ OPPersistenceMemento
-		model:
-			(OPStonModelSerializer new
-				materializeModelFrom: (unwrapped at: #model))
+		model: model
 		diagrams:
 			((unwrapped at: #diagrams)
-				collect:
-					[ :each | OPStonDiagramSerializer new materializeDiagramFromString: each ])
+				collect: [ :each | 
+					OPStonDiagramSerializer new
+						materializeDiagramOf: model
+						from: each readStream ])
 ]
 
 { #category : #convenience }

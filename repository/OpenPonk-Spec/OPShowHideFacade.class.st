@@ -42,11 +42,6 @@ OPShowHideFacade >> showAll [
 ]
 
 { #category : #showing }
-OPShowHideFacade >> showDisconnected: aCollection [
+OPShowHideFacade >> showElements: aCollection [
 	executor showElements: aCollection
-]
-
-{ #category : #showing }
-OPShowHideFacade >> showLinks: aCollection [
-	executor showLinks: aCollection
 ]

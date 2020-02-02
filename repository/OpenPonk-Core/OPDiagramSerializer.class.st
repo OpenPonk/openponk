@@ -10,17 +10,10 @@ OPDiagramSerializer >> formatName [
 ]
 
 { #category : #'serialize/materialize' }
-OPDiagramSerializer >> materializeDiagramFrom: aStream [
+OPDiagramSerializer >> materializeDiagramOf: aModel from: aStream [
 	"materialize aStream into a diagram that will be consumed by your controller"
 
 	^ self subclassResponsibility
-]
-
-{ #category : #'serialize/materialize' }
-OPDiagramSerializer >> materializeDiagramFromString: aString [
-	"materialize aString into a diagram that will be consumed by your controller"
-
-	^ self materializeDiagramFrom: aString readStream
 ]
 
 { #category : #'serialize/materialize' }

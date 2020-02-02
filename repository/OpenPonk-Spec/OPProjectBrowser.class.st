@@ -180,7 +180,7 @@ OPProjectBrowser >> openProjectFromFile: aFile [
 	| reader newProject store |
 	store := OPZipPersistence new loadFrom: aFile.
 	reader := OPPersistenceProjectReader new.
-	newProject := reader fromFolder: store.
+	newProject := reader fromFolder: store / 'project'.
 	newProject storageFile: aFile.
 	newProject saveInImage.
 	newProject open.

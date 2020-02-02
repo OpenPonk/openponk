@@ -2,6 +2,7 @@ Class {
 	#name : #OPDirectorySerializer,
 	#superclass : #OPSerializer,
 	#instVars : [
+		'rootFolder',
 		'modelSerializer',
 		'diagramSerializer'
 	],
@@ -27,23 +28,27 @@ OPDirectorySerializer >> formatName [
 ]
 
 { #category : #loading }
-OPDirectorySerializer >> loadDiagramFrom: aFile [
-	^ diagramSerializer materializeDiagramFrom: aFile readStream
+OPDirectorySerializer >> loadDiagramOf: aModel from: aFile [
+	^ diagramSerializer
+		materializeDiagramOf: aModel
+		from: aFile readStream
 ]
 
 { #category : #loading }
-OPDirectorySerializer >> loadDiagramsFrom: aFolder [
+OPDirectorySerializer >> loadDiagramsOf: aModel from: aFolder [
 	aFolder exists
 		ifFalse: [ ^ #() ].
 	^ (aFolder filesMatching: '*.' , diagramSerializer formatName)
-		collect: [ :eachFile | self loadDiagramFrom: eachFile ]
+		collect: [ :eachFile | self loadDiagramOf: aModel from: eachFile ]
 ]
 
 { #category : #loading }
 OPDirectorySerializer >> loadMementoFrom: aFolder [
+	| model |
+	model := self loadModelFrom: aFolder.
 	^ OPPersistenceMemento
-		model: (self loadModelFrom: aFolder)
-		diagrams: (self loadDiagramsFrom: aFolder)
+		model: model
+		diagrams: (self loadDiagramsOf: model from: aFolder / 'diagrams')
 ]
 
 { #category : #loading }

@@ -10,8 +10,8 @@ OPStonDiagramSerializer >> formatName [
 ]
 
 { #category : #'serialize/materialize' }
-OPStonDiagramSerializer >> materializeDiagramFrom: aString [
-	^ self stonMaterialize: aString
+OPStonDiagramSerializer >> materializeDiagramOf: aModel from: aStream [
+	^ self stonMaterialize: aStream
 ]
 
 { #category : #'serialize/materialize' }

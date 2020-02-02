@@ -20,8 +20,8 @@ OPFuelDiagramSerializer >> fuelSerialize: anObject [
 ]
 
 { #category : #'serialize/materialize' }
-OPFuelDiagramSerializer >> materializeDiagramFrom: aString [
-	^ self fuelMaterialize: aString
+OPFuelDiagramSerializer >> materializeDiagramOf: aModel from: aStream [
+	^ self fuelMaterialize: aStream
 ]
 
 { #category : #'serialize/materialize' }

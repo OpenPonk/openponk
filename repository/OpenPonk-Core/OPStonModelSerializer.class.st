@@ -16,38 +16,24 @@ OPStonModelSerializer >> formatName [
 	^ 'ston'
 ]
 
-{ #category : #convenience }
-OPStonModelSerializer >> materializeMementoFrom: aString [
-	| memento |
-	memento := self stonMaterialize: aString.
-	self flag: 'STON has broken Dictionary materialization for referenced keys, so rehash it manually for now'.
-	memento diagram rehash.
-	^ memento
+{ #category : #'serialize/materialize' }
+OPStonModelSerializer >> materializeModelFrom: aStream [
+	^ self stonMaterialize: aStream
 ]
 
 { #category : #'serialize/materialize' }
-OPStonModelSerializer >> materializeModelFrom: aString [
-	^ self stonMaterialize: aString
-]
-
-{ #category : #convenience }
-OPStonModelSerializer >> serializeMemento: aMemento [
-	^ self stonSerialize: aMemento
-]
-
-{ #category : #'serialize/materialize' }
-OPStonModelSerializer >> serializeModel: aModel [
-	^ self stonSerialize: aModel
+OPStonModelSerializer >> serializeModel: aModel to: aStream [
+	^ self stonSerialize: aModel to: aStream
 ]
 
 { #category : #'ston - serialize/materialize' }
-OPStonModelSerializer >> stonMaterialize: aString [
+OPStonModelSerializer >> stonMaterialize: aStream [
 	^ (STON reader
 		allowComplexMapKeys: true;
-		on: aString readStream) next
+		on: aStream) next
 ]
 
 { #category : #'ston - serialize/materialize' }
-OPStonModelSerializer >> stonSerialize: anObject [
-	^ STON toStringPretty: anObject
+OPStonModelSerializer >> stonSerialize: anObject to: aStream [
+	^ STON put: anObject onStreamPretty: aStream
 ]

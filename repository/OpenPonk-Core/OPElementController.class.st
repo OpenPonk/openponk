@@ -127,6 +127,11 @@ OPElementController >> remove [
 	self removeFigure"
 ]
 
+{ #category : #construction }
+OPElementController >> renderFigureIn: aView [
+	^ self subclassResponsibility
+]
+
 { #category : #'ui interaction' }
 OPElementController >> reselect [
 	self diagramController ifNotNil: [ self diagramController selectController: self ]

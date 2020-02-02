@@ -300,7 +300,35 @@ OPWorkbench >> openEditorOn: aModel [
 
 { #category : #opening }
 OPWorkbench >> openEditorOnDiagram: aDiagram [
-	^ self openEditorOnDiagram: aDiagram model: aDiagram model
+	| editor tab plugin widget model |
+	(self projectController hasDiagram: aDiagram)
+		ifTrue: [ ^ self focusEditorOf: aDiagram ].
+	model := aDiagram model.
+	plugin := pluginRegistry pluginFor: model.
+	editor := OPEditor on: plugin.
+	editor workbench: self.
+	tab := self newTab.
+	editors at: aDiagram put: (Array with: editor with: tab).
+	widget := editor buildWithSpec asWidget.
+	editor owner: tab.
+	editor openEmptyModel: model.
+	(model respondsTo: #whenChanged:)
+		ifTrue: [ model
+				whenChanged: [ tab label: '[' , aDiagram name , '] ' , model name ] ].
+	editor paletteModel rebuildWidget.
+	tab
+		label: '[' , aDiagram name , '] ' , model name;
+		icon: plugin icon;
+		retrievingBlock: [ widget ];
+		whenBuiltDo: [ :w | 
+			w widget when: #tabDeleted send: #tabDeleted to: editor.
+			w widget
+				when: #tabDeleted
+				evaluate: [ :t | self closeEditor: editor ] ].
+	self announce: (OPEditorCreated on: editor).
+	tabManager addTab: tab.
+	self focusEditorOf: aDiagram.
+	editor showDiagram: aDiagram
 ]
 
 { #category : #opening }

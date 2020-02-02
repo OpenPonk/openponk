@@ -12,6 +12,16 @@ Class {
 }
 
 { #category : #accessing }
+OPDiagramCamera class >> neoJsonMapping: mapper [
+	mapper
+		for: self
+			do: [ :mapping | 
+			mapping mapInstVars.
+			(mapping mapInstVar: #offset) valueSchema: Point ];
+		mapInstVarsFor: Point
+]
+
+{ #category : #accessing }
 OPDiagramCamera >> offset [
 	^ offset
 ]

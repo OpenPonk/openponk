@@ -186,7 +186,7 @@ OPDiagramController >> controllerForModel: aModel [
 { #category : #'controllers management' }
 OPDiagramController >> controllerForModel: aModel ifFound: aFoundBlock [
 	aModel = model
-		ifTrue: [ ^ self ].
+		ifTrue: [ ^ aFoundBlock value: self ].
 	^ self cachedControllerForModel: aModel ifFound: aFoundBlock
 ]
 
@@ -378,6 +378,22 @@ OPDiagramController >> isVisibleInDiagram: aModel [
 ]
 
 { #category : #accessing }
+OPDiagramController >> layout [
+	^ (controllers collect: [ :ctrl | ctrl model uuid -> ctrl layout ])
+		asDictionary
+]
+
+{ #category : #accessing }
+OPDiagramController >> layout: aLayout [
+	aLayout
+		keysAndValuesDo: [ :key :value | 
+			self controllers
+				detect: [ :ctrl | ctrl model uuid = key ]
+				ifFound: [ :ctrl | ctrl layout: value ] ].
+	self updateView
+]
+
+{ #category : #accessing }
 OPDiagramController >> layouter [
 	^ layouter
 		ifNil: [ layouter := self plugin layouterClass new diagramController: self ]
@@ -456,7 +472,9 @@ OPDiagramController >> rebuild [
 					view canvas camera translateTo: camera offset.
 					view canvas camera scale: camera zoom ] ].
 	self showElements.
-	self applyDefaultLayout
+	diagram layout
+		ifNil: [ self applyDefaultLayout ]
+		ifNotNil: [ self layout: diagram layout ]
 ]
 
 { #category : #'undo/redo' }
@@ -572,6 +590,7 @@ OPDiagramController >> showAllElements [
 
 { #category : #views }
 OPDiagramController >> showDiagram: aDiagram [
+	self halt.
 	aDiagram camera
 		ifNotNil: [ :camera | 
 			view canvas camera translateTo: camera offset.
@@ -579,7 +598,9 @@ OPDiagramController >> showDiagram: aDiagram [
 	aDiagram isDefault & aDiagram visibleElements isEmpty
 		ifTrue: [ self showAllElements ]
 		ifFalse: [ self visibleElements: aDiagram visibleElements ].
-	aDiagram layout ifNil: [ self applyDefaultLayout ] ifNotNil: [ self layout: aDiagram layout ].
+	aDiagram layout
+		ifNil: [ self applyDefaultLayout ]
+		ifNotNil: [ self layout: aDiagram layout ].
 	diagram := aDiagram
 ]
 
@@ -647,7 +668,8 @@ OPDiagramController >> visibleElements: aCollection [
 	executor hideAll.
 	executor
 		showElements:
-			(self allShowableElements select: [ :each | aCollection includes: each ])
+			(self allShowableElements
+				select: [ :each | aCollection anySatisfy: [ :any | any = each ] ])
 ]
 
 { #category : #'protocol-events' }

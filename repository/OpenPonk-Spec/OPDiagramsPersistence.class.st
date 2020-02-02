@@ -24,17 +24,17 @@ OPDiagramsPersistence >> applicationViewsFileFor: aProject [
 		/ aProject rootApplication shortName asFileName / 'views' / 'views.json'
 ]
 
+{ #category : #accessing }
+OPDiagramsPersistence >> diagramClass [
+	^ OPDiagram
+]
+
 { #category : #'accessing - filesystem' }
 OPDiagramsPersistence >> fileNameForView: aView sourceBase: aSourceBase [
 	| modelFolder |
 	modelFolder := self viewFolderForModel: aView model sourceBase: aSourceBase.
 	modelFolder ensureCreateDirectory.
 	^ modelFolder / aView name asFileName , 'json'
-]
-
-{ #category : #accessing }
-OPDiagramsPersistence >> viewClass [
-	^ OPDiagram
 ]
 
 { #category : #'accessing - filesystem' }

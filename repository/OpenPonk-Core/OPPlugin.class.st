@@ -33,7 +33,7 @@ OPPlugin >> diagramControllerClass [
 
 { #category : #accessing }
 OPPlugin >> diagramSerializerClass [
-	^ OPStonDiagramSerializer
+	^ OPJsonDiagramSerializer
 ]
 
 { #category : #accessing }

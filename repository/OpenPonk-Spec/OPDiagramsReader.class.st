@@ -6,7 +6,7 @@ Class {
 
 { #category : #reading }
 OPDiagramsReader >> defaultDiagramFor: aModel [
-	^ self viewClass defaultDiagramFor: aModel
+	^ self diagramClass defaultDiagramFor: aModel
 ]
 
 { #category : #writing }
@@ -16,7 +16,7 @@ OPDiagramsReader >> diagramsForModel: aModel project: aProject [
 	views := {}.
 	viewsDir isDirectory
 		ifTrue: [ views := (viewsDir files select: [ :each | each extension = 'json' ])
-				collect: [ :each | self viewClass fromJson: each contents ] ].
+				collect: [ :each | self diagramClass fromJsonString: each contents ] ].
 	views := views
 		select:
 			[ :each | each modelType = aModel typeName & (each modelName = aModel name) & (each modelVersion = aModel version) ].
@@ -35,12 +35,15 @@ OPDiagramsReader >> loadDefaultDiagramsOn: aProject [
 { #category : #reading }
 OPDiagramsReader >> loadDiagramsOn: aProject [
 	| views viewsInfo |
-	aProject storage ifNil: [ ^ self loadDefaultDiagramsOn: aProject ].
-	views := aProject models flatCollect: [ :each | self diagramsForModel: each project: aProject ].
-	viewsInfo := self readDiagramsInfoFromFile: (self applicationViewsFileFor: aProject).
+	views := aProject models
+		flatCollect: [ :each | self diagramsForModel: each project: aProject ].
+	viewsInfo := self
+		readDiagramsInfoFromFile: (self applicationViewsFileFor: aProject).
 	viewsInfo
-		do:
-			[ :info | views detect: [ :view | info isForDiagram: view ] ifFound: [ :view | view updateFromInfo: info ] ].
+		do: [ :info | 
+			views
+				detect: [ :view | info isForDiagram: view ]
+				ifFound: [ :view | view updateFromInfo: info ] ].
 	aProject views: views.
 	^ views
 ]

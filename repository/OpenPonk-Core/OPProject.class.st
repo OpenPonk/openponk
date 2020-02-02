@@ -30,16 +30,15 @@ OPProject class >> named: aString [
 		yourself
 ]
 
-{ #category : #adding }
-OPProject >> addDefaultDiagramFor: aModel [
-	self diagrams
-		add: ((OPDiagram defaultDiagramFor: aModel) project: self)
+{ #category : #accessing }
+OPProject >> addDiagrams: aCollection [
+	diagrams addAll: aCollection
 ]
 
 { #category : #adding }
 OPProject >> addModel: aModel [
 	models add: aModel.
-	self addDefaultDiagramFor: aModel.
+	"self addDefaultDiagramFor: aModel."
 	(aModel respondsTo: #project:)
 		ifTrue: [ aModel project: self ]
 ]
@@ -52,6 +51,14 @@ OPProject >> changed [
 { #category : #accessing }
 OPProject >> controllerClass [
 	^ OPProjectController
+]
+
+{ #category : #adding }
+OPProject >> copyDiagram: aDiagram [
+	| newDiagram |
+	newDiagram := aDiagram newCopy.
+	self diagrams add: newDiagram.
+	^ newDiagram
 ]
 
 { #category : #descriptions }
@@ -71,19 +78,28 @@ OPProject >> diagrams [
 
 { #category : #accessing }
 OPProject >> diagrams: aCollection [
-	diagrams
-		removeAll;
-		addAll: aCollection
+	diagrams removeAll.
+	self addDiagrams: aCollection
+]
+
+{ #category : #adding }
+OPProject >> ensureModelsHaveDiagrams [
+	self
+		addDiagrams:
+			(self models
+				select:
+					[ :eachModel | self diagrams noneSatisfy: [ :any | any model = eachModel ] ]
+				thenCollect: [ :eachModel | OPDiagram defaultDiagramFor: eachModel ])
 ]
 
 { #category : #initialization }
 OPProject >> initialize [
 	uuid := UUID new.
 	models := OrderedCollection new asValueHolder.
-	diagrams := SRToManyLink
+	diagrams := "SRToManyLink
 		on: self
 		slot: #diagrams
-		oppositeSlot: #project.
+		oppositeSlot: #project." OrderedCollection new.
 	name := NewValueHolder value: 'Unnamed project'.
 	dirty := false asValueHolder.
 	models whenChangedDo: [ dirty value: true ].

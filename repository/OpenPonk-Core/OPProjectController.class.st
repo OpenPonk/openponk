@@ -34,12 +34,6 @@ OPProjectController >> enabledPlugins [
 	^ OPPluginRegistry default plugins
 ]
 
-{ #category : #opening }
-OPProjectController >> ensureDiagramsLoaded [
-	(project models isNotEmpty and: [ project diagrams isEmpty ])
-		ifTrue: [ OPDiagramsReader new loadDiagramsOn: project ]
-]
-
 { #category : #testing }
 OPProjectController >> hasDiagram: aDiagram [
 	^ controllers anySatisfy: [ :each | each diagram = aDiagram ]
@@ -82,10 +76,10 @@ OPProjectController >> modelMementoFor: aModel [
 	^ OPPersistenceMemento
 		model: aModel
 		diagrams:
-			((controllers
+			(controllers
 				select: [ :each | each model = aModel ]
-				thenCollect: [ :each | each diagram ])
-				ifEmpty: [ (OPDiagram defaultDiagramFor: aModel) project: project ])
+				thenCollect: [ :each | each diagram ]	"
+				ifEmpty: [ (OPDiagram defaultDiagramFor: aModel) project: project ]")
 ]
 
 { #category : #saving }
@@ -96,7 +90,7 @@ OPProjectController >> modelMementos [
 { #category : #opening }
 OPProjectController >> openDiagrams [
 	| selected |
-	self ensureDiagramsLoaded.
+	project ensureModelsHaveDiagrams.
 	selected := project diagrams
 		detect: [ :each | each isOpen & each isSelected ]
 		ifNone: [ nil ].
@@ -104,7 +98,8 @@ OPProjectController >> openDiagrams [
 		select: #isOpen
 		thenDo: [ :each | workbench openEditorOnDiagram: each ].
 	selected ifNotNil: [ workbench openEditorOnDiagram: selected ].
-	(project diagrams isNotEmpty and: [ project diagrams noneSatisfy: #isOpen ])
+	(project diagrams isNotEmpty
+		and: [ project diagrams noneSatisfy: #isOpen ])
 		ifTrue: [ workbench openEditorOnDiagram: project diagrams first ]
 ]
 
@@ -121,20 +116,20 @@ OPProjectController >> openProject [
 ]
 
 { #category : #opening }
+OPProjectController >> openProjectFromDirectory: aFolder [
+	| newProject |
+	newProject := OPPersistenceProjectReader new fromFolder: aFolder.
+	^ newProject open
+]
+
+{ #category : #opening }
 OPProjectController >> openProjectFromFile: aFile [
 	| reader newProject store |
 	store := OPZipPersistence new loadFrom: aFile.
 	reader := OPPersistenceProjectReader new.
-	newProject := reader fromFolder: store.
+	newProject := reader fromFolder: store / 'project'.
 	newProject storageFile: aFile.
 	newProject open
-]
-
-{ #category : #opening }
-OPProjectController >> openProjectFromFolder: aFolder [
-	| newProject |
-	newProject := OPPersistenceProjectReader new fromFolder: aFolder.
-	^ newProject open
 ]
 
 { #category : #accessing }
@@ -193,16 +188,30 @@ OPProjectController >> saveProject [
 	self inform: 'Project saved to ' , self project storageFile fullName
 ]
 
+{ #category : #accessing }
+OPProjectController >> saveProjectAs [
+	self project
+		storageFile:
+			(FDSaveFileDialog new
+				extensionFilters:
+					{('OpenPonk projects' -> #('opp')).
+					('All files' -> #())};
+				defaultFolder: FileLocator imageDirectory asFileReference;
+				openModal).
+	self saveProject
+]
+
 { #category : #saving }
 OPProjectController >> saveProjectTo: aFile [
 	| store |
 	store := FileSystem memory root.
+	(store / 'project') ensureCreateDirectory.
 	self recentProjects at: self project uuid put: aFile.
 	self updateViews.
 	self persistenceManager
 		saveProject: self project
 		withMementos: self modelMementos
-		to: store.
+		to: store / 'project'.
 	OPZipPersistence new save: store to: aFile
 ]
 
@@ -253,7 +262,6 @@ OPProjectController >> updateViews [
 		ifNotNil: [ :editor | editor diagramController ].
 	self project diagrams
 		do: [ :eachDiagram | 
-			eachDiagram modelName: eachDiagram model name.
 			controllers
 				detect: [ :ctrl | ctrl diagram = eachDiagram ]
 				ifFound: [ :ctrl | 

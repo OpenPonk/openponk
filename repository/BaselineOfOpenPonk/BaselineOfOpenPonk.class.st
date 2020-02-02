@@ -117,7 +117,7 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 		with: [ spec repository: 'github://peteruhnak/pharo-sentry:v1.x/repository' ]."
 	spec
 		baseline: 'SynchronizedLinks'
-		with: [ spec repository: 'github://openponk/synchronized-links:v1.x/repository' ]
+		with: [ spec repository: 'github://openponk/synchronized-links/repository' ]
 ]
 
 { #category : #plugins }

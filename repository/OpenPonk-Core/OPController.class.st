@@ -240,11 +240,6 @@ OPController >> removeModelElement: aModelElement [
 	self subclassResponsibility
 ]
 
-{ #category : #construction }
-OPController >> renderFigureIn: aView [
-	^ self subclassResponsibility
-]
-
 { #category : #figures }
 OPController >> saveStateOnDragEndFor: aFigure [
 	aFigure when: TRMouseDragEnd do: [ :evt | self diagramController saveState ]

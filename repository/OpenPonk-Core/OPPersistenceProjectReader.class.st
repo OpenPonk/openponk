@@ -24,7 +24,7 @@ OPPersistenceProjectReader >> fromFolder: aFolder [
 	(self readAllMementosFrom: aFolder)
 		do: [ :each | 
 			project addModel: each model.
-			project layout: each diagram for: each model ].
+			project addDiagrams: each diagrams ].
 	^ project
 ]
 
@@ -60,7 +60,8 @@ OPPersistenceProjectReader >> readAllMementosFrom: aRootFolder [
 { #category : #reading }
 OPPersistenceProjectReader >> readMementoFrom: aFolder with: aSerializer [
 	^ (aSerializer loadMementoFrom: aFolder)
-		ifNil: [ self error: 'Unable to deserialize memento from ' , aFolder asString ]
+		ifNil:
+			[ self error: 'Unable to deserialize memento from ' , aFolder asString ]
 ]
 
 { #category : #reading }

@@ -38,9 +38,10 @@ OPDiagramsWidget >> cloneView: aView [
 	[ name := UIManager default
 		request: 'Clone view "' , (self displayFor: aView) , '". New name: '
 		initialAnswer: aView name
-		title: 'Clone' ] doWhileTrue: [ name isNotNil and: [ name = aView name ] ].
+		title: 'Clone' ]
+		doWhileTrue: [ name isNotNil and: [ name = aView name ] ].
 	name ifNil: [ ^ self ].
-	newView := aView newCopy.
+	newView := project copyDiagram: aView.
 	newView name: name.
 	self workbench openEditorOnDiagram: newView
 ]
@@ -83,7 +84,7 @@ OPDiagramsWidget >> deleteView: aView [
 		label: 'Delete')
 		ifFalse: [ ^ self ].
 	self workbench closeEditorOfView: aView.
-	aView project: nil.
+	"aView project: nil."
 	self updateContent
 ]
 

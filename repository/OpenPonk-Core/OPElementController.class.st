@@ -140,9 +140,7 @@ OPElementController >> reselect [
 { #category : #construction }
 OPElementController >> showInDiagram: aDiagramController [
 	aDiagramController addController: self.
-	self renderFigureIn: aDiagramController view.
-	self elementsToShowInside
-		do: [ :each | aDiagramController showInDiagramModel: each ]
+	self renderFigureIn: aDiagramController view
 ]
 
 { #category : #'canvas actions' }

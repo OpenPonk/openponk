@@ -10,21 +10,21 @@ OPFuelDiagramSerializer >> formatName [
 ]
 
 { #category : #'fuel - serialize/materialize' }
-OPFuelDiagramSerializer >> fuelMaterialize: aString [
+OPFuelDiagramSerializer >> materialize: aString [
 	^ FLMaterializer materializeFromByteArray: aString base64Decoded
-]
-
-{ #category : #'fuel - serialize/materialize' }
-OPFuelDiagramSerializer >> fuelSerialize: anObject [
-	^ (FLSerializer serializeToByteArray: anObject) base64Encoded
 ]
 
 { #category : #'serialize/materialize' }
 OPFuelDiagramSerializer >> materializeDiagramOf: aModel from: aStream [
-	^ self fuelMaterialize: aStream
+	^ self materialize: aStream
+]
+
+{ #category : #'fuel - serialize/materialize' }
+OPFuelDiagramSerializer >> serialize: anObject [
+	^ (FLSerializer serializeToByteArray: anObject) base64Encoded
 ]
 
 { #category : #'serialize/materialize' }
 OPFuelDiagramSerializer >> serializeDiagram: aDiagramMemento [
-	^ self fuelSerialize: aDiagramMemento
+	^ self serialize: aDiagramMemento
 ]

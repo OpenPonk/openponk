@@ -14,9 +14,14 @@ OPStonDiagramSerializer >> materializeDiagramOf: aModel from: aStream [
 	^ self stonMaterialize: aStream
 ]
 
+{ #category : #'ston - serialize/materialize' }
+OPStonDiagramSerializer >> serialize: anObject [
+	^ STON toStringPretty: anObject
+]
+
 { #category : #'serialize/materialize' }
 OPStonDiagramSerializer >> serializeDiagram: aDiagramMemento [
-	^ self stonSerialize: aDiagramMemento
+	^ self serialize: aDiagramMemento
 ]
 
 { #category : #'ston - serialize/materialize' }
@@ -24,9 +29,4 @@ OPStonDiagramSerializer >> stonMaterialize: aString [
 	^ (STON reader
 		allowComplexMapKeys: true;
 		on: aString readStream) next
-]
-
-{ #category : #'ston - serialize/materialize' }
-OPStonDiagramSerializer >> stonSerialize: anObject [
-	^ STON toStringPretty: anObject
 ]

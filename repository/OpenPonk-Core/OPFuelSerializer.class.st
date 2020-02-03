@@ -7,7 +7,7 @@ If your model relies on Announements to propagate updates between elements, the 
 "
 Class {
 	#name : #OPFuelSerializer,
-	#superclass : #OPSerializer,
+	#superclass : #OPMementoFileSerializer,
 	#category : #'OpenPonk-Core-Persistence'
 }
 
@@ -17,21 +17,13 @@ OPFuelSerializer >> formatName [
 ]
 
 { #category : #'fuel - serialize/materialize' }
-OPFuelSerializer >> fuelMaterialize: aString [
-	^ FLMaterializer materializeFromByteArray: aString base64Decoded
+OPFuelSerializer >> materializeFrom: aStream [
+	^ FLMaterializer
+		materializeFromByteArray: aStream upToEnd base64Decoded
 ]
 
 { #category : #'fuel - serialize/materialize' }
-OPFuelSerializer >> fuelSerialize: anObject [
-	^ (FLSerializer serializeToByteArray: anObject) base64Encoded
-]
-
-{ #category : #convenience }
-OPFuelSerializer >> materializeMementoFrom: aString [
-	^ self fuelMaterialize: aString
-]
-
-{ #category : #convenience }
-OPFuelSerializer >> serializeMemento: aMemento [
-	^ self fuelSerialize: aMemento
+OPFuelSerializer >> serialize: anObject to: aStream [
+	aStream
+		<< (FLSerializer serializeToByteArray: anObject) base64Encoded
 ]

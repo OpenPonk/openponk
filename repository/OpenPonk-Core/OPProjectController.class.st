@@ -118,7 +118,7 @@ OPProjectController >> openProject [
 { #category : #opening }
 OPProjectController >> openProjectFromDirectory: aFolder [
 	| newProject |
-	newProject := OPPersistenceProjectReader new fromFolder: aFolder.
+	newProject := OPProjectDirectoryMaterializer new fromFolder: aFolder.
 	^ newProject open
 ]
 
@@ -126,7 +126,7 @@ OPProjectController >> openProjectFromDirectory: aFolder [
 OPProjectController >> openProjectFromFile: aFile [
 	| reader newProject store |
 	store := OPZipPersistence new loadFrom: aFile.
-	reader := OPPersistenceProjectReader new.
+	reader := OPProjectDirectoryMaterializer new.
 	newProject := reader fromFolder: store / 'project'.
 	newProject storageFile: aFile.
 	newProject open
@@ -134,7 +134,7 @@ OPProjectController >> openProjectFromFile: aFile [
 
 { #category : #accessing }
 OPProjectController >> persistenceManager [
-	^ persistenceManager ifNil: [ persistenceManager := OPProjectDirectoryPersistence new ]
+	^ persistenceManager ifNil: [ persistenceManager := OPProjectDirectorySerializer new ]
 ]
 
 { #category : #accessing }

@@ -7,11 +7,7 @@ Class {
 { #category : #tests }
 OPDiagramInfoTest >> testIsForView [
 	| info view |
-	view := OPDiagram new
-		name: 'default';
-		modelType: 'Component';
-		modelName: 'testComp';
-		modelVersion: '1.0'.
+	view := OPDiagram new name: 'xxx'.
 	info := view asInfo.
 	self assert: (info isForDiagram: view).
 	info := view asInfo diagramName: 'other'.
@@ -19,7 +15,5 @@ OPDiagramInfoTest >> testIsForView [
 	info := view asInfo modelType: 'Flow'.
 	self deny: (info isForDiagram: view).
 	info := view asInfo modelName: 'otherComp'.
-	self deny: (info isForDiagram: view).
-	info := view asInfo modelVersion: '1.1'.
 	self deny: (info isForDiagram: view)
 ]

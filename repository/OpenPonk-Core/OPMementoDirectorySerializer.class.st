@@ -1,6 +1,6 @@
 Class {
-	#name : #OPDirectorySerializer,
-	#superclass : #OPSerializer,
+	#name : #OPMementoDirectorySerializer,
+	#superclass : #OPMementoSerializer,
 	#instVars : [
 		'rootFolder',
 		'modelSerializer',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-OPDirectorySerializer class >> withModelSerializer: aModelSerializer diagramsSerializer: aDiagramsSerializer [
+OPMementoDirectorySerializer class >> withModelSerializer: aModelSerializer diagramsSerializer: aDiagramsSerializer [
 	^ self new
 		modelSerializer: aModelSerializer;
 		diagramSerializer: aDiagramsSerializer;
@@ -18,24 +18,19 @@ OPDirectorySerializer class >> withModelSerializer: aModelSerializer diagramsSer
 ]
 
 { #category : #accessing }
-OPDirectorySerializer >> diagramSerializer: aDiagramSerializer [
+OPMementoDirectorySerializer >> diagramSerializer: aDiagramSerializer [
 	diagramSerializer := aDiagramSerializer
 ]
 
-{ #category : #accessing }
-OPDirectorySerializer >> formatName [
-	^ self subclassResponsibility
-]
-
 { #category : #loading }
-OPDirectorySerializer >> loadDiagramOf: aModel from: aFile [
+OPMementoDirectorySerializer >> loadDiagramOf: aModel from: aFile [
 	^ diagramSerializer
 		materializeDiagramOf: aModel
 		from: aFile readStream
 ]
 
 { #category : #loading }
-OPDirectorySerializer >> loadDiagramsOf: aModel from: aFolder [
+OPMementoDirectorySerializer >> loadDiagramsOf: aModel from: aFolder [
 	aFolder exists
 		ifFalse: [ ^ #() ].
 	^ (aFolder filesMatching: '*.' , diagramSerializer formatName)
@@ -43,7 +38,7 @@ OPDirectorySerializer >> loadDiagramsOf: aModel from: aFolder [
 ]
 
 { #category : #loading }
-OPDirectorySerializer >> loadMementoFrom: aFolder [
+OPMementoDirectorySerializer >> loadMementoFrom: aFolder [
 	| model |
 	model := self loadModelFrom: aFolder.
 	^ OPPersistenceMemento
@@ -52,7 +47,7 @@ OPDirectorySerializer >> loadMementoFrom: aFolder [
 ]
 
 { #category : #loading }
-OPDirectorySerializer >> loadModelFrom: aFolder [
+OPMementoDirectorySerializer >> loadModelFrom: aFolder [
 	| modelFile |
 	modelFile := aFolder / 'model' , modelSerializer formatName.
 	modelFile exists
@@ -62,12 +57,12 @@ OPDirectorySerializer >> loadModelFrom: aFolder [
 ]
 
 { #category : #accessing }
-OPDirectorySerializer >> modelSerializer: aModelSerializer [
+OPMementoDirectorySerializer >> modelSerializer: aModelSerializer [
 	modelSerializer := aModelSerializer
 ]
 
 { #category : #saving }
-OPDirectorySerializer >> saveDiagram: aDiagram to: aFolder [
+OPMementoDirectorySerializer >> saveDiagram: aDiagram to: aFolder [
 	(aFolder
 		/
 		(aDiagram order asString , '-'
@@ -79,20 +74,20 @@ OPDirectorySerializer >> saveDiagram: aDiagram to: aFolder [
 ]
 
 { #category : #saving }
-OPDirectorySerializer >> saveDiagramsOf: aMemento to: aFolder [
+OPMementoDirectorySerializer >> saveDiagramsOf: aMemento to: aFolder [
 	aMemento diagrams ifEmpty: [ ^ self ].
 	aFolder ensureCreateDirectory.
 	aMemento diagrams do: [ :each | self saveDiagram: each to: aFolder ]
 ]
 
 { #category : #saving }
-OPDirectorySerializer >> saveMemento: aMemento to: aFolder [
+OPMementoDirectorySerializer >> saveMemento: aMemento to: aFolder [
 	self saveModelOf: aMemento to: aFolder.
 	self saveDiagramsOf: aMemento to: aFolder / 'diagrams'
 ]
 
 { #category : #saving }
-OPDirectorySerializer >> saveModelOf: aMemento to: aFolder [
+OPMementoDirectorySerializer >> saveModelOf: aMemento to: aFolder [
 	(aFolder / 'model' , modelSerializer formatName)
 		ensureDelete;
 		writeStreamDo:

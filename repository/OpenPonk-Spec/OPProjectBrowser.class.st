@@ -160,7 +160,7 @@ OPProjectBrowser >> openProjectFromDirectory [
 	| folder |
 	folder := UIManager default chooseDirectory: 'Choose directory containing the project'.
 	folder ifNil: [ ^ self ].
-	self openProject: (OPPersistenceProjectReader new fromFolder: folder)
+	self openProject: (OPProjectDirectoryMaterializer new fromFolder: folder)
 ]
 
 { #category : #'as yet unclassified' }
@@ -179,7 +179,7 @@ OPProjectBrowser >> openProjectFromFile [
 OPProjectBrowser >> openProjectFromFile: aFile [
 	| reader newProject store |
 	store := OPZipPersistence new loadFrom: aFile.
-	reader := OPPersistenceProjectReader new.
+	reader := OPProjectDirectoryMaterializer new.
 	newProject := reader fromFolder: store / 'project'.
 	newProject storageFile: aFile.
 	newProject saveInImage.

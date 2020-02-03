@@ -55,7 +55,8 @@ OPAutosaveManager >> initialize [
 { #category : #'save/load' }
 OPAutosaveManager >> loadCurrent [
 	current ifNil: [ ^ nil ].
-	^ self serializer materializeMementoFrom: current
+	^ current
+		readStreamDo: [ :stream | self serializer materializeFrom: stream ]
 ]
 
 { #category : #'save/load' }
@@ -63,7 +64,8 @@ OPAutosaveManager >> loadNext [
 	future ifEmpty: [ ^ nil ].
 	history addLast: current.
 	current := future removeLast.
-	^ self serializer materializeMementoFrom: current
+	^ current
+		readStreamDo: [ :stream | self serializer materializeFrom: stream ]
 ]
 
 { #category : #'save/load' }
@@ -71,14 +73,16 @@ OPAutosaveManager >> loadPrevious [
 	history ifEmpty: [ ^ nil ].
 	future addLast: current.
 	current := history removeLast.
-	^ self serializer materializeMementoFrom: current
+	^ current
+		readStreamDo: [ :stream | self serializer materializeFrom: stream ]
 ]
 
 { #category : #'save/load' }
 OPAutosaveManager >> saveState: aMemento [
 	future reset.
 	current ifNotNil: [ history addLast: current ].
-	current := self serializer serializeMemento: aMemento.
+	current := String
+		streamContents: [ :stream | self serializer saveMemento: aMemento to: stream ].
 	(self autosaveFileFor: aMemento uuid)
 		ensureDelete;
 		writeStreamDo: [ :stream | 

@@ -97,6 +97,8 @@ OPDiagram >> asInfo [
 		isOpen: self isOpen;
 		isSelected: self isSelected;
 		order: self order;
+		modelName: self modelName;
+		modelType: self modelType;
 		yourself
 ]
 
@@ -177,7 +179,9 @@ OPDiagram >> model: aModel [
 
 { #category : #accessing }
 OPDiagram >> modelName [
-	^ model name
+	^ (model respondsTo: #name)
+		ifTrue: [ model name ]
+		ifFalse: [ model className ]
 ]
 
 { #category : #accessing }

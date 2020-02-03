@@ -3,34 +3,26 @@ I am the default serializer and do nothing at all.
 "
 Class {
 	#name : #OPNullSerializer,
-	#superclass : #OPSerializer,
+	#superclass : #OPMementoFileSerializer,
 	#category : #'OpenPonk-Core-Persistence'
 }
 
-{ #category : #loading }
-OPNullSerializer >> loadMementoFrom: aFolder [
+{ #category : #saving }
+OPNullSerializer >> loadMementoFrom: aFile [
 	^ nil
 ]
 
-{ #category : #'serialize/materialize' }
-OPNullSerializer >> materializeDiagramFrom: aString [
-	self shouldNotImplement
-]
-
-{ #category : #'serialize/materialize' }
-OPNullSerializer >> materializeModelFrom: aString [
-	self shouldNotImplement
+{ #category : #saving }
+OPNullSerializer >> materializeFrom: aStream [
+	^ nil
 ]
 
 { #category : #saving }
-OPNullSerializer >> saveMemento: aMemento to: aFolder [
+OPNullSerializer >> saveMemento: aMemento to: aFile [
 	"do nothing"
 ]
 
-{ #category : #'serialize/materialize' }
-OPNullSerializer >> serializeDiagram: aDiagramMemento [
-]
-
-{ #category : #'serialize/materialize' }
-OPNullSerializer >> serializeModel: aModel [
+{ #category : #saving }
+OPNullSerializer >> serialize: anObject to: aStream [
+	"do nothing"
 ]

@@ -1,6 +1,6 @@
 Class {
 	#name : #OPNullSerializerTest,
-	#superclass : #OPAbstractSerializerTest,
+	#superclass : #OPMementoFileSerializerTest,
 	#category : #'OpenPonk-Core-Tests'
 }
 
@@ -11,7 +11,7 @@ OPNullSerializerTest >> modelSerializerClass [
 
 { #category : #running }
 OPNullSerializerTest >> testLoadMemento [
-	self assert: (serializer loadMementoFrom: root) equals: nil
+	self assert: (serializer loadMementoFrom: file) equals: nil
 ]
 
 { #category : #tests }
@@ -21,7 +21,6 @@ OPNullSerializerTest >> testRoundtrip [
 
 { #category : #running }
 OPNullSerializerTest >> testSaveMemento [
-	serializer saveMemento: memento to: root.
-	self deny: (root / 'model' , serializer modelExtension) exists.
-	self deny: (root / 'diagram' , serializer formatName) exists
+	serializer saveMemento: memento to: file.
+	self deny: file exists
 ]

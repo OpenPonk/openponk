@@ -19,7 +19,6 @@ OPDiagramTest >> testAsInfo [
 	info := view asInfo.
 	self assert: info diagramName equals: view name.
 	self assert: info modelName equals: view modelName.
-	self assert: info modelVersion equals: view modelVersion.
 	self assert: info modelType equals: view modelType.
 	self assert: info isOpen equals: view isOpen.
 	self assert: info isSelected equals: view isSelected.
@@ -33,7 +32,6 @@ OPDiagramTest >> testAsJsonComplex [
 			(OPDiagramCamera new
 				offset: 20 @ 30;
 				zoom: 1.2);
-		project: OPProject new;
 		layout: {'Person' -> (27 @ 23)} asDictionary;
 		options: {'key' -> 'value'} asDictionary.
 	self
@@ -42,7 +40,6 @@ OPDiagramTest >> testAsJsonComplex [
 			(STON
 				fromString:
 					'{ 	"camera" : { "offset" : { "x" : 20, "y" : 30 }, "zoom" : 1.2 }	,
-		"filters" : [  ],
 		"layout" : { "Person" : { "x" : 27, "y" : 23 } },
 		"options" : { "key" : "value" },
 		"visibleElements" : [  ] }')
@@ -50,20 +47,17 @@ OPDiagramTest >> testAsJsonComplex [
 
 { #category : #tests }
 OPDiagramTest >> testAsJsonModel [
-	view := OPDiagram new
-		modelName: 'testComp';
-		modelType: 'Component';
-		modelVersion: '1.0'.
+	| model |
+	model := Mock new.
+	model stub name willReturn: 'testComp'.
+	model stub typeName willReturn: 'Component'.
+	view := OPDiagram new model: model.
 	self
 		assert: (STON fromString: view asJson)
 		equals:
 			(STON
 				fromString:
-					'{"filters": [],"visibleElements" : [ ],"options": { },
-					"modelName" : "testComp",
-					"modelType" : "Component",
-					"modelVersion" : "1.0"
-}')
+					'{"visibleElements" : [ ],"options": { } }')
 ]
 
 { #category : #tests }
@@ -82,20 +76,24 @@ OPDiagramTest >> testAsJsonModel2 [
 
 { #category : #tests }
 OPDiagramTest >> testFromJsonComplex [
+	| personUUID personUUIDstring person |
+	personUUIDstring := '6b181c2c-135a-0d00-86ce-55e80f4cf59c'.
+	personUUID := UUID fromString: personUUIDstring.
+	person := Mock new.
+	person stub uuid willReturn: personUUID.
 	view := OPDiagram
-		ofModel: OPModelObject new
+		ofModel: Mock new
 		fromJsonString:
 			'{ 	"camera" : { "offset" : { "x" : 20, "y" : 30 }, "zoom" : 1.2 },
-		"layout" : { "Person" : { "x" : 27, "y" : 23 } },
+		"layout" : { "6b181c2c-135a-0d00-86ce-55e80f4cf59c" : { "x" : 27, "y" : 23 } },
 		"options" : { "key" : "value" },
-		"visibleElements" : [ "Person" ]	 }'.
+		"visibleElements" : [ "6b181c2c-135a-0d00-86ce-55e80f4cf59c" ]	 }'.
 	self assert: view camera offset equals: 20 @ 30.
 	self assert: view camera zoom equals: 1.2.
 	self
 		assert: view layout
-		equals: {('Person' -> (27 @ 23))} asDictionary.
-	self assert: view visibleElements equals: #('Person').
-	self assert: view project isNil.
+		equals: {(personUUID -> (27 @ 23))} asDictionary.
+	self assertCollection: view visibleElements equals: {person}.
 	self assert: view options equals: {('key' -> 'value')} asDictionary
 ]
 
@@ -103,12 +101,7 @@ OPDiagramTest >> testFromJsonComplex [
 OPDiagramTest >> testModel [
 	| model project |
 	model := OPTestContainerModel new.
-	project := OPProject new.
-	project addModel: model.
-	view := OPDiagram new
-		modelName: 'container';
-		modelType: 'OPTestContainerModel';
-		project: project.
+	view := OPDiagram new model: model.
 	self assert: view model equals: model
 ]
 
@@ -131,18 +124,13 @@ OPDiagramTest >> testNewCopy [
 				offset: 20 @ 30;
 				zoom: 1.2);
 		model: model;
-		project: project;
 		isOpen: true;
 		isSelected: false;
 		order: 7.
 	newView := view newCopy.
 	self deny: newView = view.
 	self assert: newView name equals: 'copy of original'.
-	self assert: newView project equals: project.
-	self assert: newView model equals: model.	"
-	self
-		assert: (project diagrams includes: newView)
-		description: [ 'Opposite test, because clone bypasses Synchronized Links' ]."
+	self assert: newView model equals: model.
 	view
 ]
 

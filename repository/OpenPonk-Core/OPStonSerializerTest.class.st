@@ -1,6 +1,6 @@
 Class {
 	#name : #OPStonSerializerTest,
-	#superclass : #OPAbstractSerializerTest,
+	#superclass : #OPMementoFileSerializerTest,
 	#category : #'OpenPonk-Core-Tests'
 }
 

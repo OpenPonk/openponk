@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'modelName',
 		'modelType',
-		'modelVersion',
 		'isOpen',
 		'isSelected',
 		'order',
@@ -39,7 +38,6 @@ OPDiagramInfo >> diagramName: anObject [
 OPDiagramInfo >> isForDiagram: aDiagram [
 	^ aDiagram modelType = self modelType
 		& (aDiagram modelName = self modelName)
-		& (aDiagram modelVersion = self modelVersion)
 		& (aDiagram name = self diagramName)
 ]
 
@@ -66,7 +64,7 @@ OPDiagramInfo >> isSelected: anObject [
 { #category : #accessing }
 OPDiagramInfo >> model [
 	self deprecated: 'We no longer have means to find the project'.
-	^ modelName
+	
 	"self
 		assert: [ self project isNotNil ]
 		description: 'Cannot retrieve model of a detached view.'.
@@ -98,16 +96,6 @@ OPDiagramInfo >> modelType: anObject [
 ]
 
 { #category : #accessing }
-OPDiagramInfo >> modelVersion [
-	^ modelVersion
-]
-
-{ #category : #accessing }
-OPDiagramInfo >> modelVersion: anObject [
-	modelVersion := anObject
-]
-
-{ #category : #accessing }
 OPDiagramInfo >> order [
 	^ order
 ]
@@ -120,6 +108,6 @@ OPDiagramInfo >> order: anObject [
 { #category : #printing }
 OPDiagramInfo >> printOn: aStream [
 	super printOn: aStream.
-	aStream << '(' << self diagramName printString << '@' << self modelName printString << '-'
-		<< self modelVersion printString << ')'
+	aStream << '(' << self diagramName printString << '@'
+		<< self modelName printString << '-' << ')'
 ]

@@ -10,21 +10,21 @@ OPFuelModelSerializer >> formatName [
 ]
 
 { #category : #'fuel - serialize/materialize' }
-OPFuelModelSerializer >> fuelMaterialize: aString [
+OPFuelModelSerializer >> materialize: aString [
 	^ FLMaterializer materializeFromByteArray: aString base64Decoded
-]
-
-{ #category : #'fuel - serialize/materialize' }
-OPFuelModelSerializer >> fuelSerialize: anObject [
-	^ (FLSerializer serializeToByteArray: anObject) base64Encoded
 ]
 
 { #category : #'serialize/materialize' }
 OPFuelModelSerializer >> materializeModelFrom: aString [
-	^ self fuelMaterialize: aString
+	^ self materialize: aString
+]
+
+{ #category : #'fuel - serialize/materialize' }
+OPFuelModelSerializer >> serialize: anObject [
+	^ (FLSerializer serializeToByteArray: anObject) base64Encoded
 ]
 
 { #category : #'serialize/materialize' }
 OPFuelModelSerializer >> serializeModel: aModel [
-	^ self fuelSerialize: aModel
+	^ self serialize: aModel
 ]

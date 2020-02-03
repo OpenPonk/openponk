@@ -1,5 +1,5 @@
 Class {
-	#name : #OPProjectPersistenceTest,
+	#name : #OPProjectDirectorySerializerTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'persistence'
@@ -8,19 +8,19 @@ Class {
 }
 
 { #category : #running }
-OPProjectPersistenceTest >> setUp [
+OPProjectDirectorySerializerTest >> setUp [
 	super setUp.
-	persistence := OPProjectPersistence new.
+	persistence := OPProjectDirectorySerializer new.
 	OPPluginRegistry setDefault: (OPPluginRegistry new add: OPTestPlugin new)
 ]
 
 { #category : #running }
-OPProjectPersistenceTest >> tearDown [
+OPProjectDirectorySerializerTest >> tearDown [
 	OPPluginRegistry resetDefault
 ]
 
 { #category : #tests }
-OPProjectPersistenceTest >> testCreateFolderStructure [
+OPProjectDirectorySerializerTest >> testCreateFolderStructure [
 	| root |
 	root := FileSystem memory root / 'project'.
 	persistence saveProject: OPProject new to: root.
@@ -32,7 +32,7 @@ OPProjectPersistenceTest >> testCreateFolderStructure [
 ]
 
 { #category : #tests }
-OPProjectPersistenceTest >> testDeleteOldModels [
+OPProjectDirectorySerializerTest >> testDeleteOldModels [
 	| models folder |
 	folder := FileSystem memory root / 'models'.
 	models := {(OPTestEntityModel new uuid: UUID new).
@@ -40,11 +40,11 @@ OPProjectPersistenceTest >> testDeleteOldModels [
 	persistence
 		saveMemento: (OPPersistenceMemento model: models first diagrams: #())
 		to: folder
-		with: OPStonModelSerializer new.
+		with: OPStonSerializer new.
 	persistence
 		saveMemento: (OPPersistenceMemento model: models second diagrams: #())
 		to: folder
-		with: OPStonModelSerializer new.
+		with: OPStonSerializer new.
 	self assert: folder children size equals: 2.
 	persistence removeModelsNotIn: models allButLast from: folder.
 	self assert: folder children size equals: 1.
@@ -54,13 +54,13 @@ OPProjectPersistenceTest >> testDeleteOldModels [
 ]
 
 { #category : #tests }
-OPProjectPersistenceTest >> testExporterVersion [
+OPProjectDirectorySerializerTest >> testExporterVersion [
 	self assert: persistence exporter equals: 'OpenPonk'.
 	self assert: persistence exporterVersion equals: OPVersion version
 ]
 
 { #category : #tests }
-OPProjectPersistenceTest >> testModelReferences [
+OPProjectDirectorySerializerTest >> testModelReferences [
 	| result models |
 	models := OPPluginRegistry default plugins collect: [ :each | each modelClass new ].
 	result := STON fromString: (String streamContents: [ :stream | stream << (persistence modelReferencesToJson: models) ]).
@@ -69,7 +69,7 @@ OPProjectPersistenceTest >> testModelReferences [
 ]
 
 { #category : #tests }
-OPProjectPersistenceTest >> testNoModelReferences [
+OPProjectDirectorySerializerTest >> testNoModelReferences [
 	| result |
 	result := String
 		streamContents: [ :stream | stream << (persistence modelReferencesToJson: #()) ].
@@ -77,7 +77,7 @@ OPProjectPersistenceTest >> testNoModelReferences [
 ]
 
 { #category : #tests }
-OPProjectPersistenceTest >> testProjectFile [
+OPProjectDirectorySerializerTest >> testProjectFile [
 	| result resultString |
 	resultString := String
 		streamContents: [ :stream | 

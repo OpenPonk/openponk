@@ -75,7 +75,7 @@ OPPlugin >> name [
 
 { #category : #accessing }
 OPPlugin >> serializer [
-	^ OPDirectorySerializer
+	^ OPMementoDirectorySerializer
 		withModelSerializer: self modelSerializerClass new
 		diagramsSerializer: self diagramSerializerClass new
 ]

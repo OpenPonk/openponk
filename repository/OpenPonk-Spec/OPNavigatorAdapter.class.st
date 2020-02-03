@@ -25,7 +25,8 @@ Class {
 		'actionMapping',
 		'displayMapping',
 		'contextMenuMapping',
-		'dependentMapping'
+		'dependentMapping',
+		'typesByDependency'
 	],
 	#category : #'OpenPonk-Spec-Utils'
 }
@@ -100,6 +101,16 @@ OPNavigatorAdapter >> dependentFor: anObject in: aRootModel [
 { #category : #private }
 OPNavigatorAdapter >> dependentMapping [
 	^ self retrieveChildrenMapping
+]
+
+{ #category : #'widget API' }
+OPNavigatorAdapter >> dependsTypeOf: firstObject on: secondObject in: aRootModel [
+	| indexOfFirst indexOfSecond |
+	indexOfFirst := self retrieveTypesByDependency
+		indexOf: firstObject class.
+	indexOfSecond := self retrieveTypesByDependency
+		indexOf: secondObject class.
+	^ indexOfFirst > indexOfSecond
 ]
 
 { #category : #'widget API' }
@@ -198,4 +209,16 @@ OPNavigatorAdapter >> retrieveDisplayMapping [
 { #category : #private }
 OPNavigatorAdapter >> retrieveIconMapping [
 	^ iconMapping ifNil: [ iconMapping := self iconMapping asDictionary ]
+]
+
+{ #category : #'as yet unclassified' }
+OPNavigatorAdapter >> retrieveTypesByDependency [
+	^ typesByDependency
+		ifNil: [ typesByDependency := self typesByDependency
+				flatCollect: [ :eachClass | eachClass withAllSubclasses ] ]
+]
+
+{ #category : #'widget API' }
+OPNavigatorAdapter >> typesByDependency [
+	^ self subclassResponsibility
 ]

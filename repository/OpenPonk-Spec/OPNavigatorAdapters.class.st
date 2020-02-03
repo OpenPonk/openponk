@@ -79,6 +79,14 @@ OPNavigatorAdapters >> dependentFor: anObject in: aRootModel [
 ]
 
 { #category : #accessing }
+OPNavigatorAdapters >> dependsTypeOf: firstObject on: secondObject in: aRootModel [
+	^ (self adapterFor: firstObject)
+		dependsTypeOf: firstObject
+		on: secondObject
+		in: aRootModel
+]
+
+{ #category : #accessing }
 OPNavigatorAdapters >> displayFor: anObject [
 	^ (self adapterFor: anObject) displayFor: anObject
 ]

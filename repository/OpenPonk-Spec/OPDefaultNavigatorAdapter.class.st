@@ -41,3 +41,8 @@ OPDefaultNavigatorAdapter >> iconMapping [
 	(Object ->
 		(self iconNamed: #blank))}
 ]
+
+{ #category : #'widget API' }
+OPDefaultNavigatorAdapter >> typesByDependency [
+	^ #()
+]

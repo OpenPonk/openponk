@@ -95,12 +95,11 @@ OPDiagramExplorer >> showElements: aCollectionOfModelObjects [
 	aCollectionOfModelObjects ifEmpty: [ ^ self ].
 	self diagramController deselectAll.
 	diagramController disableRefresh.
-	existingCtrls := aCollectionOfModelObjects
+	existingCtrls := aCollectionOfModelObjects asArray
 		collect: [ :each | diagramController controllerForModel: each ifNone: [ nil ] ]
 		thenSelect: [ :each | each isNotNil ].
 	ctrls := (aCollectionOfModelObjects
-		sorted:
-			[ :a :b | (adapters dependentFor: a in: diagramController model) includes: b ])
+		sorted: [ :a :b | adapters dependsTypeOf: b on: a in: diagramController model ])
 		collect: [ :each | diagramController showInDiagramModel: each ].
 	diagramController enableRefresh.
 	ctrls \ existingCtrls do: #refreshFigure

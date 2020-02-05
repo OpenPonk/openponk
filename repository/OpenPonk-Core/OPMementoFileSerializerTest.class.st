@@ -16,7 +16,7 @@ OPMementoFileSerializerTest class >> isAbstract [
 ]
 
 { #category : #accessing }
-OPMementoFileSerializerTest >> modelSerializerClass [
+OPMementoFileSerializerTest >> mementoSerializerClass [
 	^ self subclassResponsibility
 ]
 
@@ -35,7 +35,7 @@ OPMementoFileSerializerTest >> newModel [
 { #category : #running }
 OPMementoFileSerializerTest >> setUp [
 	super setUp.
-	serializer := self modelSerializerClass new.
+	serializer := self mementoSerializerClass new.
 	model := self newModel.
 	file := FileSystem memory / 'diagram'.
 	memento := self newMementoWithModel: model

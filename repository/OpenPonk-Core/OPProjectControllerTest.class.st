@@ -49,11 +49,12 @@ OPProjectControllerTest >> testRemoveController [
 OPProjectControllerTest >> testSaveProjectEmpty [
 	| root store |
 	root := FileSystem memory / 'project.opp'.
+	controller workbench: OPWorkbench new.
 	self deny: root exists.
 	controller saveProjectTo: root.
 	self assert: root exists.
 	store := (FileSystem zip: root) open.
-	self assert: (store / 'project.json') exists
+	self assert: (store / 'project' / 'project.json') exists
 ]
 
 { #category : #tests }
@@ -61,14 +62,15 @@ OPProjectControllerTest >> testSaveProjectWithModel [
 	| memoryRoot root |
 	project addModel: OPTestContainerModel new.
 	memoryRoot := FileSystem memory / 'project'.
+	controller workbench: OPWorkbench new.
 	self deny: memoryRoot exists.
 	controller saveProjectTo: memoryRoot.
 	root := (FileSystem zip: memoryRoot) open root.
-	self assert: (root / 'project.json') exists.
+	self assert: (root / 'project' / 'project.json') exists.
 	self
-		assert: ((root / 'models') children collect: #basename)
+		assert: ((root / 'project' / 'models') children collect: #basename)
 		equals: {project models first uuid asString}.
 	self
-		assert: ((root / 'models') children anyOne children collect: #basename)
+		assert: ((root / 'project' / 'models') children anyOne children collect: #basename)
 		equals: (Array with: 'model.ston')
 ]

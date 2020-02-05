@@ -50,7 +50,7 @@ OPProjectDirectorySerializerTest >> testDeleteOldModels [
 	self assert: folder children size equals: 1.
 	self
 		assert: folder children anyOne basename
-		equals: models first uuid asString
+		equals: models first uuid asString , '.ston'
 ]
 
 { #category : #tests }

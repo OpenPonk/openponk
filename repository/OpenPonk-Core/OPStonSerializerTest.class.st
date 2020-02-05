@@ -5,6 +5,6 @@ Class {
 }
 
 { #category : #accessing }
-OPStonSerializerTest >> modelSerializerClass [
-	^ OPStonModelSerializer
+OPStonSerializerTest >> mementoSerializerClass [
+	^ OPStonSerializer
 ]

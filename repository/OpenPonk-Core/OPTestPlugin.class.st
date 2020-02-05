@@ -16,6 +16,11 @@ OPTestPlugin >> diagramControllerClass [
 ]
 
 { #category : #accessing }
+OPTestPlugin >> diagramSerializerClass [
+	^ OPJsonDiagramSerializer
+]
+
+{ #category : #accessing }
 OPTestPlugin >> gitCommit [
 	^ OPVersion gitCommit
 ]
@@ -38,6 +43,13 @@ OPTestPlugin >> modelSerializerClass [
 { #category : #accessing }
 OPTestPlugin >> name [
 	^ 'Plugin for testing'
+]
+
+{ #category : #accessing }
+OPTestPlugin >> serializer [
+	^ OPMementoDirectorySerializer
+		withModelSerializer: self modelSerializerClass new
+		diagramsSerializer: self diagramSerializerClass new
 ]
 
 { #category : #accessing }

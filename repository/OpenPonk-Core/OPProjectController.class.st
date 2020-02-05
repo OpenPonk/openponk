@@ -118,7 +118,7 @@ OPProjectController >> openProject [
 { #category : #opening }
 OPProjectController >> openProjectFromDirectory: aFolder [
 	| newProject |
-	newProject := OPProjectDirectoryMaterializer new fromFolder: aFolder.
+	newProject := OPProjectDirectoryMaterializer new loadProjectFrom: aFolder.
 	^ newProject open
 ]
 
@@ -127,7 +127,7 @@ OPProjectController >> openProjectFromFile: aFile [
 	| reader newProject store |
 	store := OPZipPersistence new loadFrom: aFile.
 	reader := OPProjectDirectoryMaterializer new.
-	newProject := reader fromFolder: store / 'project'.
+	newProject := reader loadProjectFrom: store / 'project'.
 	newProject storageFile: aFile.
 	newProject open
 ]
@@ -207,7 +207,7 @@ OPProjectController >> saveProjectTo: aFile [
 	store := FileSystem memory root.
 	(store / 'project') ensureCreateDirectory.
 	self recentProjects at: self project uuid put: aFile.
-	self updateViews.
+	self updateDiagrams.
 	self persistenceManager
 		saveProject: self project
 		withMementos: self modelMementos
@@ -256,7 +256,7 @@ OPProjectController >> unsubscribeFrom: aDiagramController [
 ]
 
 { #category : #opening }
-OPProjectController >> updateViews [
+OPProjectController >> updateDiagrams [
 	| focusedController |
 	focusedController := workbench focusedEditor
 		ifNotNil: [ :editor | editor diagramController ].

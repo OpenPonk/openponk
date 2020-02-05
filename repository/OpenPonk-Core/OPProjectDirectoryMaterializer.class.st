@@ -18,9 +18,9 @@ OPProjectDirectoryMaterializer >> exporterVersion [
 ]
 
 { #category : #'public - reading' }
-OPProjectDirectoryMaterializer >> fromFolder: aFolder [
+OPProjectDirectoryMaterializer >> loadProjectFrom: aFolder [
 	| project |
-	project := self readProjectFrom: aFolder / 'project.json'.
+	project := self readProjectInfoFrom: aFolder / 'project.json'.
 	(self readAllMementosFrom: aFolder)
 		do: [ :each | 
 			project addModel: each model.
@@ -80,7 +80,7 @@ OPProjectDirectoryMaterializer >> readModelReferences: aRootFolder [
 ]
 
 { #category : #reading }
-OPProjectDirectoryMaterializer >> readProjectFrom: aFile [
+OPProjectDirectoryMaterializer >> readProjectInfoFrom: aFile [
 	| project json exporter exporterVersion |
 	json := STON fromStream: aFile readStream.
 	exporter := (json at: 'exporter') at: 'exporter'.

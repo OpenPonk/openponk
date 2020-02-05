@@ -27,8 +27,9 @@ OPProjectDirectoryMaterializerTest >> setUpBasicProject [
 	project addModel: OPTestContainerModel new.
 	OPProjectController new
 		project: project;
+		workbench: OPWorkbench new;
 		saveProjectTo: memoryRoot.
-	root := (FileSystem zip: memoryRoot) open
+	root := (FileSystem zip: memoryRoot) open / 'project'
 ]
 
 { #category : #running }
@@ -44,7 +45,7 @@ OPProjectDirectoryMaterializerTest >> testExporterVersion [
 
 { #category : #tests }
 OPProjectDirectoryMaterializerTest >> testMissingProject [
-	self should: [ reader fromFolder: FileSystem memory root ] raise: FileDoesNotExistException
+	self should: [ reader loadProjectFrom: FileSystem memory root ] raise: FileDoesNotExistException
 ]
 
 { #category : #tests }
@@ -63,7 +64,7 @@ OPProjectDirectoryMaterializerTest >> testPluginReferenceUnknown [
 
 { #category : #tests }
 OPProjectDirectoryMaterializerTest >> testRead [
-	self assert: (reader fromFolder: root) models size equals: 1
+	self assert: (reader loadProjectFrom: root) models size equals: 1
 ]
 
 { #category : #tests }
@@ -71,8 +72,13 @@ OPProjectDirectoryMaterializerTest >> testReadMemento [
 	| memento |
 	memento := reader
 		readMementoFrom: root / 'models' / project models first uuid asString
-		with: OPStonModelSerializer new.
-	self assert: memento model className equals: project models first className.
+		with:
+			(OPMementoDirectorySerializer
+				withModelSerializer: OPStonModelSerializer new
+				diagramsSerializer: OPJsonDiagramSerializer new).
+	self
+		assert: memento model className
+		equals: project models first className.
 	self assert: memento model name equals: project models first name.
 	self assert: memento model uuid equals: project models first uuid.
 	self assert: memento diagram equals: nil
@@ -94,7 +100,7 @@ OPProjectDirectoryMaterializerTest >> testReadModelReferences [
 
 { #category : #tests }
 OPProjectDirectoryMaterializerTest >> testReadProject [
-	project := reader readProjectFrom: root / 'project.json'.
+	project := reader readProjectInfoFrom: root / 'project.json'.
 	self assert: project name equals: 'Test Project'.
 	self
 		assert: project uuid

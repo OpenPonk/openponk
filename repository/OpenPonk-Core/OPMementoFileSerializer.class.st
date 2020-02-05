@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #formatting }
+OPMementoFileSerializer >> addFormatNameTo: aFileReference [
+	^ aFileReference , self formatName
+]
+
+{ #category : #formatting }
 OPMementoFileSerializer >> formatName [
 	^ 'opp'
 ]

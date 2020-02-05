@@ -26,13 +26,6 @@ OPDiagramsReader >> diagramsForModel: aModel project: aProject [
 ]
 
 { #category : #reading }
-OPDiagramsReader >> loadDefaultDiagramsOn: aProject [
-	| views |
-	views := aProject models collect: [ :each | self defaultDiagramFor: each ].
-	aProject views: views
-]
-
-{ #category : #reading }
 OPDiagramsReader >> loadDiagramsOn: aProject [
 	| views viewsInfo |
 	views := aProject models

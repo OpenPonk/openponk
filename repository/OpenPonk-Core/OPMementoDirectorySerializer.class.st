@@ -82,6 +82,7 @@ OPMementoDirectorySerializer >> saveDiagramsOf: aMemento to: aFolder [
 
 { #category : #saving }
 OPMementoDirectorySerializer >> saveMemento: aMemento to: aFolder [
+	aFolder ensureCreateDirectory.
 	self saveModelOf: aMemento to: aFolder.
 	self saveDiagramsOf: aMemento to: aFolder / 'diagrams'
 ]

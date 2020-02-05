@@ -90,6 +90,11 @@ OPDiagram class >> ofModel: aModel fromJsonString: aString [
 	^ self ofModel: aModel fromJson: aString readStream
 ]
 
+{ #category : #copying }
+OPDiagram >> = otherDiagram [
+	^ self asJson = otherDiagram asJson
+]
+
 { #category : #converting }
 OPDiagram >> asInfo [
 	^ OPDiagramInfo new

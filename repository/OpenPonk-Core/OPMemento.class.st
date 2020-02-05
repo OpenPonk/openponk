@@ -25,10 +25,17 @@ OPMemento class >> model: aModel diagrams: diagramsCollection [
 		yourself
 ]
 
+{ #category : #comparing }
+OPMemento >> = otherMemento [
+	^ self model = otherMemento model
+		and: [ self diagrams = otherMemento diagrams ]
+]
+
 { #category : #accessing }
 OPMemento >> diagram [
 	self
 		deprecated: 'OP no longer has one diagram per model, use diagrams instead'.
+	self diagrams ifEmpty: [ ^ nil ].
 	^ self diagrams first
 ]
 

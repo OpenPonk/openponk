@@ -35,8 +35,10 @@ OPTestDiagramControllerTest >> testAddAsTargetForEntity [
 
 { #category : #'tests - ui interaction' }
 OPTestDiagramControllerTest >> testAttachEditor [
-	| editor workbench |
-	editor := OPEditor on: OPPlugin new.
+	| editor workbench plugin |
+	plugin := OPPlugin new.
+	plugin stub layouterClass willReturn: OPLayouter.
+	editor := OPEditor on: plugin.
 	workbench := OPWorkbench new.
 	editor stub workbench willReturn: workbench.
 	diagramController editor: editor.
@@ -85,7 +87,9 @@ OPTestDiagramControllerTest >> testModelClass [
 
 { #category : #'tests - rebuilding' }
 OPTestDiagramControllerTest >> testRebuildEmpty [
-	diagramController rebuild.
+	diagramController
+		layouter: OPNoLayouter new;
+		rebuild.
 	self assert: diagramController controllers asArray equals: {}
 ]
 
@@ -94,12 +98,15 @@ OPTestDiagramControllerTest >> testRebuildNonEmpty [
 	| subModel subController |
 	subModel := OPTestEntityModel new.
 	diagramController model entities add: subModel.
-	diagramController rebuild.
+	diagramController
+		layouter: OPNoLayouter new;
+		rebuild.
 	self assert: diagramController controllers size > 0.
 	self
 		shouldnt: [ subController := diagramController controllerForModel: subModel ]
 		raise: NotFound.
-	self assert: (diagramController view elements includes: subController figure)
+	self
+		assert: (diagramController view elements includes: subController figure)
 ]
 
 { #category : #'tests - construction' }

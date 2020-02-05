@@ -399,6 +399,11 @@ OPDiagramController >> layouter [
 		ifNil: [ layouter := self plugin layouterClass new diagramController: self ]
 ]
 
+{ #category : #accessing }
+OPDiagramController >> layouter: aLayouter [
+	layouter := aLayouter
+]
+
 { #category : #'undo/redo' }
 OPDiagramController >> loadState: aMemento [
 "	| oldModel |
@@ -467,10 +472,13 @@ OPDiagramController >> rebuild [
 	controllers := nil.
 	self cleanView.
 	diagram
-		ifNotNil: [ diagram camera
-				ifNotNil: [ :camera | 
-					view canvas camera translateTo: camera offset.
-					view canvas camera scale: camera zoom ] ].
+		ifNil: [ ^ self
+				showElements;
+				applyDefaultLayout ].
+	diagram camera
+		ifNotNil: [ :camera | 
+			view canvas camera translateTo: camera offset.
+			view canvas camera scale: camera zoom ].
 	self showElements.
 	diagram layout
 		ifNil: [ self applyDefaultLayout ]

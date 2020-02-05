@@ -68,10 +68,7 @@ OPDiagramTest >> testAsJsonModel2 [
 		equals:
 			(STON
 				fromString:
-					'{"filters": [],"visibleElements" : [ ], "options" : {  },
-					"modelName" : "container",
-					"modelType" : "OPTestContainerModel"
-}')
+					'{ "visibleElements" : [ ], "options" : {  } }')
 ]
 
 { #category : #tests }
@@ -103,12 +100,6 @@ OPDiagramTest >> testModel [
 	model := OPTestContainerModel new.
 	view := OPDiagram new model: model.
 	self assert: view model equals: model
-]
-
-{ #category : #tests }
-OPDiagramTest >> testModelDetached [
-	view := OPDiagram new.
-	self should: [ view model ] raise: AssertionFailure
 ]
 
 { #category : #tests }

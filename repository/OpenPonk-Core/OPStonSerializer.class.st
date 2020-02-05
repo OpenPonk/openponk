@@ -6,7 +6,7 @@ Class {
 
 { #category : #formatting }
 OPStonSerializer >> formatName [
-	^ 'json'
+	^ 'ston'
 ]
 
 { #category : #saving }

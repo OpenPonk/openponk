@@ -5,6 +5,6 @@ Class {
 }
 
 { #category : #accessing }
-OPFuelSerializerTest >> modelSerializerClass [
+OPFuelSerializerTest >> mementoSerializerClass [
 	^ OPFuelSerializer
 ]

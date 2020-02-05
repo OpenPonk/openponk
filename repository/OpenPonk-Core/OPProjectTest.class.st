@@ -17,6 +17,7 @@ OPProjectTest >> testAddModel [
 	model := OPTestContainerModel new.
 	project addModel: model.
 	self assert: project models asArray equals: {model}.
+	project ensureModelsHaveDiagrams.
 	self assert: project diagrams size equals: 1.
 	view := project diagrams first.
 	self assert: view isDefault.
@@ -28,6 +29,7 @@ OPProjectTest >> testRemoveModel [
 	project := OPProject new.
 	model := OPTestContainerModel new.
 	project addModel: model.
+	project ensureModelsHaveDiagrams.
 	self assert: project diagrams size equals: 1.
 	project removeModel: model.
 	self assert: project models isEmpty.

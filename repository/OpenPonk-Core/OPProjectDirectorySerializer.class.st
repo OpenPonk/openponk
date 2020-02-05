@@ -49,19 +49,18 @@ OPProjectDirectorySerializer >> projectToJson: aProject [
 OPProjectDirectorySerializer >> removeModelsNotIn: aCollection from: aFolder [
 	| toDelete ids |
 	ids := aCollection collect: [ :each | each uuid asString ].
-	toDelete := aFolder children reject: [ :each | ids includes: each basename ].
-	toDelete
-		do: [ :each | 
-			each files do: #delete.
-			each delete ]
+	toDelete := aFolder children
+		reject: [ :each | ids includes: each basenameWithoutExtension ].
+	toDelete do: [ :each | each deleteAll ]
 ]
 
 { #category : #saving }
 OPProjectDirectorySerializer >> saveMemento: aMemento to: aRoot with: aSerializer [
-	| folder |
-	folder := aRoot / aMemento uuid asString.
-	folder ensureCreateDirectory.
-	aSerializer saveMemento: aMemento to: folder
+	| fileReference |
+	aRoot ensureCreateDirectory.
+	fileReference := aSerializer
+		addFormatNameTo: aRoot / aMemento uuid asString.
+	aSerializer saveMemento: aMemento to: fileReference
 ]
 
 { #category : #saving }

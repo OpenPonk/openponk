@@ -90,7 +90,8 @@ OPDiagramTest >> testFromJsonComplex [
 	self
 		assert: view layout
 		equals: {(personUUID -> (27 @ 23))} asDictionary.
-	self assertCollection: view visibleElements equals: {person}.
+	self assert: view visibleElements size equals: 1.
+	self assert: view visibleElements anyOne equals: person.
 	self assert: view options equals: {('key' -> 'value')} asDictionary
 ]
 

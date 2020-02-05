@@ -5,7 +5,6 @@ env:
   global:
   - PROJECT_NAME=openponk-core
   - FULL_PROJECT_NAME=$PROJECT_NAME
-
 matrix:
   include:
     - smalltalk: Pharo64-7.0

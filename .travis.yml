@@ -5,20 +5,22 @@ env:
   global:
   - PROJECT_NAME=openponk-core
   - FULL_PROJECT_NAME=$PROJECT_NAME
-smalltalk:
-smalltalk:
-  - Pharo64-7.0
-    - PHARO_VERSION="7.0"
-    - PHARO_BITS="64"
-  - Pharo32-8.0
-    - PHARO_VERSION="8.0"
-    - PHARO_BITS="32"
-  - Pharo64-8.0
-    - PHARO_VERSION="8.0"
-    - PHARO_BITS="64"
-  - Pharo64-9.0
-    - PHARO_VERSION="9.0"
-    - PHARO_BITS="64"
+
+matrix:
+  include:
+    - smalltalk: Pharo64-7.0
+      - PHARO_VERSION="7.0"
+      - PHARO_BITS="64"
+    - smalltalk: Pharo32-8.0
+      - PHARO_VERSION="8.0"
+      - PHARO_BITS="32"
+    - smalltalk: Pharo64-8.0
+      - PHARO_VERSION="8.0"
+      - PHARO_BITS="64"
+  allow_failures:
+    - smalltalk: Pharo64-9.0
+      - PHARO_VERSION="9.0"
+      - PHARO_BITS="64"
 before_install:
   - echo $PROJECT_NAME
   - echo $FULL_PROJECT_NAME
@@ -34,9 +36,6 @@ before_install:
   - echo $SMALLTALK_CI_CHANGES
   - echo $SMALLTALK_CI_VMS
   - echo $SMALLTALK_CI_VM
-jobs:
-  allow_failures:
-    - smalltalk: Pharo64-9.0
 deploy:
   - provider: script
     on:

@@ -3,18 +3,13 @@ I am a mock representing an entity connecting two other entities.
 "
 Class {
 	#name : #OPTestRelationModel,
-	#superclass : #Model,
+	#superclass : #OPTestModel,
 	#instVars : [
 		'source',
 		'target'
 	],
 	#category : #'OpenPonk-Core-Controllers - Tests'
 }
-
-{ #category : #accessing }
-OPTestRelationModel >> name [
-	^ 'container'
-]
 
 { #category : #accessing }
 OPTestRelationModel >> source [

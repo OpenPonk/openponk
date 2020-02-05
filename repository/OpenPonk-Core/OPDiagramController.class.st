@@ -205,7 +205,7 @@ OPDiagramController >> controllerNameFor: aModel [
 
 { #category : #'controllers management' }
 OPDiagramController >> controllers [
-	^ controllers ifNil: [ controllers := OrderedCollection new ]
+	^ controllers ifNil: [ controllers := Set new ]
 ]
 
 { #category : #testing }
@@ -589,7 +589,7 @@ OPDiagramController >> selectableFigures [
 { #category : #rebuilding }
 OPDiagramController >> showAllElements [
 	self disableRefresh.
-	self showInDiagram: self.
+	self showWithoutDependentInDiagram: self.
 	self enableRefresh.
 	self controllers
 		select: [ :each | each isKindOf: OPController ]
@@ -598,7 +598,6 @@ OPDiagramController >> showAllElements [
 
 { #category : #views }
 OPDiagramController >> showDiagram: aDiagram [
-	self halt.
 	aDiagram camera
 		ifNotNil: [ :camera | 
 			view canvas camera translateTo: camera offset.
@@ -620,12 +619,6 @@ OPDiagramController >> showElements [
 				ifNotEmpty: [ :elements | self visibleElements: elements ] ]
 ]
 
-{ #category : #construction }
-OPDiagramController >> showInDiagram: aDiagramController [
-	self dependentElements
-		do: [ :each | aDiagramController showWithDependentInDiagramModel: each ]
-]
-
 { #category : #figures }
 OPDiagramController >> showInDiagramModel: aModel [
 	self controllerForModel: aModel ifFound: [ :ctrl | ^ ctrl ].
@@ -634,11 +627,18 @@ OPDiagramController >> showInDiagramModel: aModel [
 		yourself
 ]
 
+{ #category : #construction }
+OPDiagramController >> showWithoutDependentInDiagram: aDiagramController [
+	"it is impossible to show diagram without dependent - dependent elements ARE the diagram"
+	self dependentElements
+		do: [ :each | aDiagramController showInDiagramModel: each ]
+]
+
 { #category : #figures }
-OPDiagramController >> showWithDependentInDiagramModel: aModel [
+OPDiagramController >> showWithoutDependentInDiagramModel: aModel [
 	self controllerForModel: aModel ifFound: [ :ctrl | ^ ctrl ].
 	^ (self newControllerFor: aModel)
-		showWithDependentInDiagram: self;
+		showWithoutDependentInDiagram: self;
 		yourself
 ]
 

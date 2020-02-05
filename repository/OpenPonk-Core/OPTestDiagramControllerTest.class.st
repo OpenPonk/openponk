@@ -113,13 +113,13 @@ OPTestDiagramControllerTest >> testRebuildNonEmpty [
 OPTestDiagramControllerTest >> testShowModelInDiagram [
 	| entity |
 	entity := OPTestEntityModel new.
-	diagramController showInDiagramModel: entity
+	diagramController showWithoutDependentInDiagramModel: entity
 ]
 
 { #category : #'tests - construction' }
 OPTestDiagramControllerTest >> testShowModelInDiagramAttachesController [
 	| entity |
 	entity := OPTestEntityModel new.
-	diagramController showInDiagramModel: entity.
+	diagramController showWithoutDependentInDiagramModel: entity.
 	self shouldnt: (diagramController controllerForModel: entity) raise: NotFound
 ]

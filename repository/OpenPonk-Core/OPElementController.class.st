@@ -65,7 +65,7 @@ OPElementController >> createModelIn: aParentModel [
 { #category : #construction }
 OPElementController >> createModelIn: aParentModel andShowInDiagram: aDiagramController [
 	self createModelIn: aParentModel.
-	self showInDiagram: aDiagramController
+	self showWithoutDependentInDiagram: aDiagramController
 ]
 
 { #category : #accessing }
@@ -122,9 +122,9 @@ OPElementController >> registerModelEvents: aModel [
 
 { #category : #deprecated }
 OPElementController >> remove [
-	self deprecated: 'Use #removeController instead.'
-"	super remove.
-	self removeFigure"
+	self deprecated: 'Use #removeController instead.'.
+	
+	self removeController.
 ]
 
 { #category : #construction }
@@ -140,7 +140,10 @@ OPElementController >> reselect [
 { #category : #construction }
 OPElementController >> showInDiagram: aDiagramController [
 	aDiagramController addController: self.
-	self renderFigureIn: aDiagramController view
+	self renderFigureIn: aDiagramController view.
+	self dependentElements
+		do:
+			[ :each | aDiagramController showInDiagramModel: each ]
 ]
 
 { #category : #'canvas actions' }
@@ -149,12 +152,9 @@ OPElementController >> showSelectionFeedback [
 ]
 
 { #category : #construction }
-OPElementController >> showWithDependentInDiagram: aDiagramController [
+OPElementController >> showWithoutDependentInDiagram: aDiagramController [
 	aDiagramController addController: self.
-	self renderFigureIn: aDiagramController view.
-	self dependentElements
-		do:
-			[ :each | aDiagramController showWithDependentInDiagramModel: each ]
+	self renderFigureIn: aDiagramController view
 ]
 
 { #category : #accessing }

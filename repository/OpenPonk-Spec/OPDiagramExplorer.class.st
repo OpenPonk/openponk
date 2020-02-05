@@ -100,7 +100,7 @@ OPDiagramExplorer >> showElements: aCollectionOfModelObjects [
 		thenSelect: [ :each | each isNotNil ].
 	ctrls := (aCollectionOfModelObjects
 		sorted: [ :a :b | adapters dependsTypeOf: b on: a in: diagramController model ])
-		collect: [ :each | diagramController showInDiagramModel: each ].
+		collect: [ :each | diagramController showWithoutDependentInDiagramModel: each ].
 	diagramController enableRefresh.
 	ctrls \ existingCtrls do: #refreshFigure
 ]
@@ -116,8 +116,8 @@ OPDiagramExplorer >> showElements: dataElements of: aCentralElement [
 	dataElements , (links collect: #linkField)
 		do:
 			[ :each | diagramController controllerForModel: each ifFound: [ :ctrl | existingCtrls add: ctrl ] ].
-	ctrls1 := dataElements collect: [ :each | diagramController showInDiagramModel: each ].
-	ctrls2 := links collect: [ :each | diagramController showInDiagramModel: each linkField ].
+	ctrls1 := dataElements collect: [ :each | diagramController showWithoutDependentInDiagramModel: each ].
+	ctrls2 := links collect: [ :each | diagramController showWithoutDependentInDiagramModel: each linkField ].
 	diagramController enableRefresh.
 	(ctrls1 , ctrls2) \ existingCtrls do: #refreshFigure.
 	self
@@ -130,7 +130,7 @@ OPDiagramExplorer >> showLinks: links [
 	| ctrls |
 	links ifEmpty: [ ^ self ].
 	self diagramController deselectAll.
-	ctrls := links collect: [ :each | diagramController showInDiagramModel: each ].
+	ctrls := links collect: [ :each | diagramController showWithoutDependentInDiagramModel: each ].
 	diagramController enableRefresh.
 	ctrls do: #refreshFigure
 ]

@@ -28,3 +28,8 @@ OPFuelModelSerializer >> serialize: anObject [
 OPFuelModelSerializer >> serializeModel: aModel [
 	^ self serialize: aModel
 ]
+
+{ #category : #accessing }
+OPFuelModelSerializer >> serializeModel: aModel to: aStream [
+	^ aStream << (self serializeModel: aModel)
+]

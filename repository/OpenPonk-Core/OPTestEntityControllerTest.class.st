@@ -54,22 +54,22 @@ OPTestEntityControllerTest >> testAddAsSourceAndTargetForRelationToSelf [
 	| relationController relationModel |
 	controller model: model.
 	diagramController model add: model.
-	controller showInDiagram: diagramController.
+	controller showWithoutDependentInDiagram: diagramController.
 	relationController := diagramController
 		newControllerFor: OPTestRelationModel new.
 	controller addAsSourceFor: relationController.
 	controller addAsTargetFor: relationController.
 	relationModel := relationController model.
 	self
-		assert: diagramController controllers asArray
+		assertCollection: diagramController controllers asSet
 		equals:
 			{controller.
-			relationController}.
+			relationController} asSet.
 	self
-		assert: diagramController model entities asArray
+		assertCollection: diagramController model entities asSet
 		equals:
 			{model.
-			relationModel}.
+			relationModel} asSet.
 	self assert: relationModel source equals: model.
 	self assert: relationModel target equals: model
 ]
@@ -128,21 +128,21 @@ OPTestEntityControllerTest >> testCreateModel [
 { #category : #'tests - controllers' }
 OPTestEntityControllerTest >> testFigureForModel [
 	controller model: model.
-	controller showInDiagram: diagramController.
+	controller showWithoutDependentInDiagram: diagramController.
 	self assert: (diagramController figureForModel: model) equals: controller figure
 ]
 
 { #category : #'tests - construction' }
 OPTestEntityControllerTest >> testFigureWasRendered [
 	controller model: model.
-	controller showInDiagram: diagramController.
+	controller showWithoutDependentInDiagram: diagramController.
 	self assert: (diagramController view elements includes: controller figure)
 ]
 
 { #category : #'tests - controllers' }
 OPTestEntityControllerTest >> testModelForFigure [
 	controller model: model.
-	controller showInDiagram: diagramController.
+	controller showWithoutDependentInDiagram: diagramController.
 	self assert: (diagramController modelForFigure: controller figure) equals: model
 ]
 
@@ -166,7 +166,7 @@ OPTestEntityControllerTest >> testOpenInForm [
 { #category : #'tests - destruction' }
 OPTestEntityControllerTest >> testRemoveController [
 	controller model: model.
-	controller showInDiagram: diagramController.
+	controller showWithoutDependentInDiagram: diagramController.
 	controller removeController.
 	self should: [ diagramController controllerForModel: model ] raise: NotFound.
 	self assert: diagramController view elements asArray equals: {}
@@ -176,7 +176,7 @@ OPTestEntityControllerTest >> testRemoveController [
 OPTestEntityControllerTest >> testRemoveFigureAndModel [
 	diagramController model entities add: model.
 	controller model: model.
-	controller showInDiagram: diagramController.
+	controller showWithoutDependentInDiagram: diagramController.
 	diagramController removeFromView: controller figure.
 	self assert: diagramController controllers asArray equals: {}.
 	self assert: diagramController model entities asArray equals: {}
@@ -185,6 +185,6 @@ OPTestEntityControllerTest >> testRemoveFigureAndModel [
 { #category : #'tests - construction' }
 OPTestEntityControllerTest >> testShowInDiagram [
 	controller model: model.
-	controller showInDiagram: diagramController.
+	controller showWithoutDependentInDiagram: diagramController.
 	self assert: (diagramController controllerForFigure: controller figure) equals: controller
 ]

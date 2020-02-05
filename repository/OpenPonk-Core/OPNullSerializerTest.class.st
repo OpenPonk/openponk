@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #accessing }
-OPNullSerializerTest >> mementoSerializerClass [
+OPNullSerializerTest >> serializerClass [
 	^ OPNullSerializer
 ]
 

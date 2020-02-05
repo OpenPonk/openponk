@@ -177,7 +177,7 @@ OPController >> modelClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 OPController >> nameOfType [
 	^ (((self model className withoutPrefix: 'OP') splitOnCapitals
 		collect: #asLowercase) joinUsing: ' ') capitalized
@@ -227,7 +227,7 @@ OPController >> removeFull [
 	self removeController
 ]
 
-{ #category : #destruction }
+{ #category : #private }
 OPController >> removeModel [
 	^ self subclassResponsibility
 ]
@@ -261,7 +261,7 @@ OPController >> showDenyFeedbackFor: aController [
 
 { #category : #construction }
 OPController >> showInDiagram: aDiagramController [
-	self subclassResponsibility
+	^ self showWithoutDependentInDiagram: aDiagramController
 ]
 
 { #category : #'canvas actions' }
@@ -272,6 +272,6 @@ OPController >> showSelectionFeedback [
 ]
 
 { #category : #construction }
-OPController >> showWithDependentInDiagram: aDiagramController [
-	^ self showInDiagram: aDiagramController
+OPController >> showWithoutDependentInDiagram: aDiagramController [
+	self subclassResponsibility
 ]

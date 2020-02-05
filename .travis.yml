@@ -34,6 +34,9 @@ before_install:
   - echo $SMALLTALK_CI_CHANGES
   - echo $SMALLTALK_CI_VMS
   - echo $SMALLTALK_CI_VM
+jobs:
+  allow_failures:
+    - smalltalk: Pharo64-9.0
 deploy:
   - provider: script
     on:

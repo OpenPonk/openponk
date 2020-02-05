@@ -5,8 +5,7 @@ set -euxo pipefail
 prepare_directory() {
 
 	local platform=$1
-	local full_platform=$platform$PHARO_BITS_NAME
-	local package_dir_name="openponk-$PROJECT_NAME-$full_platform"
+	local package_dir_name="openponk-$PROJECT_NAME-$platform"
 	local working_dir="$package_dir_name-$BUILD_VERSION"
 	local package_dir="$working_dir/$package_dir_name"
 
@@ -34,8 +33,7 @@ download_vm() {
 upload() {	
 
 	local platform=$1
-	local full_platform=$platform$PHARO_BITS_NAME
-	local package_dir_name="openponk-$PROJECT_NAME-$full_platform"
+	local package_dir_name="openponk-$PROJECT_NAME-$platform"
 	local working_dir="$package_dir_name-$BUILD_VERSION"
 	local zip="$package_dir_name-latest.zip"
 
@@ -52,8 +50,7 @@ deploy_linux() {
 
 	local platform="linux"
 
-	local full_platform=$platform$PHARO_BITS_NAME
-	local package_dir_name="openponk-$PROJECT_NAME-$full_platform"
+	local package_dir_name="openponk-$PROJECT_NAME-$platform"
 	local working_dir="$package_dir_name-$BUILD_VERSION"
 	local package_dir="$working_dir/$package_dir_name"
 	local vm_dir="$package_dir"
@@ -76,8 +73,7 @@ deploy_windows() {
 
 	local platform="win"
 
-	local full_platform=$platform$PHARO_BITS_NAME
-	local package_dir_name="openponk-$PROJECT_NAME-$full_platform"
+	local package_dir_name="openponk-$PROJECT_NAME-$platform"
 	local working_dir="$package_dir_name-$BUILD_VERSION"
 	local package_dir="$working_dir/$package_dir_name"
 	local vm_dir="$package_dir"
@@ -95,10 +91,9 @@ deploy_windows() {
 
 deploy_image() {
 	
-	local platform="pharo$PHARO_VERSION-image"
+	local platform="pharo-image"
 
-	local full_platform=$platform$PHARO_BITS_NAME
-	local package_dir_name="openponk-$PROJECT_NAME-$full_platform"
+	local package_dir_name="openponk-$PROJECT_NAME-$platform"
 	local working_dir="$package_dir_name-$BUILD_VERSION"
 	local package_dir="$working_dir/$package_dir_name"
 

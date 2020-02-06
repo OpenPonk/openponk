@@ -93,7 +93,8 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 		baseline: 'Magritte'
 		with: [ spec
 				repository: 'github://magritte-metamodel/magritte:v3.6/source';
-				loads: #(Core 'Magritte-Morph') ].
+				loads: #(Core 'Magritte-Morph');
+				postLoadDoIt: #removeGreaseWarnings ].
 	spec
 		baseline: 'Moose'
 		with: [ spec
@@ -180,4 +181,10 @@ BaselineOfOpenPonk >> loadPlugins [
 		"loadDemoEditor;" "OpenPonk DEMO project is abandoned - it is not working"
 		loadFsmEditor;
 		loadPetriNets
+]
+
+{ #category : #scripts }
+BaselineOfOpenPonk >> removeGreaseWarnings [
+	('Grease-Pharo40-Slime' asPackageIfAbsent: [ ^ self ])
+		removeFromSystem
 ]

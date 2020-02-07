@@ -127,7 +127,7 @@ OPNavigatorAdapter >> displayMapping [
 
 { #category : #testing }
 OPNavigatorAdapter >> hasMappingFor: anObject [
-	^ true
+	^ false
 ]
 
 { #category : #private }
@@ -151,8 +151,12 @@ OPNavigatorAdapter >> iconMapping [
 OPNavigatorAdapter >> mappingFor: anObject in: aDictionary [
 	| h |
 	h := self hierarchyFor: anObject class.
-	h do: [ :each | aDictionary at: each ifPresent: [ :value | ^ self cull: value with: anObject ] ].
-	^ nil
+	h
+		do: [ :each | 
+			aDictionary
+				at: each
+				ifPresent: [ :value | ^ self cull: value with: anObject ] ].
+	^ #()
 ]
 
 { #category : #private }

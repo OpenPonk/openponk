@@ -6,7 +6,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'adapters',
-		'modelToAdapterMapping'
+		'typeToAdapterMapping'
 	],
 	#classInstVars : [
 		'default'
@@ -21,8 +21,8 @@ OPNavigatorAdapters class >> default [
 
 { #category : #'accessing - private' }
 OPNavigatorAdapters >> adapterFor: aModelObject [
-	^ modelToAdapterMapping
-		at: aModelObject
+	^ typeToAdapterMapping
+		at: aModelObject class
 		ifAbsentPut: [ adapters
 				detect: [ :each | each hasMappingFor: aModelObject ]
 				ifNone: [ self error: 'No adapter found for ' , aModelObject printString ] ]
@@ -100,5 +100,5 @@ OPNavigatorAdapters >> iconFor: anObject [
 OPNavigatorAdapters >> initialize [
 	super initialize.
 	adapters := self allAdapters collect: #new.
-	modelToAdapterMapping := Dictionary new
+	typeToAdapterMapping := Dictionary new
 ]

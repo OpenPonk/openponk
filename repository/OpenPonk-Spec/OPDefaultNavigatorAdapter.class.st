@@ -36,6 +36,11 @@ OPDefaultNavigatorAdapter >> displayMapping [
 ]
 
 { #category : #'widget API' }
+OPDefaultNavigatorAdapter >> hasMappingFor: anObject [
+	^ anObject class = OPProject
+]
+
+{ #category : #'widget API' }
 OPDefaultNavigatorAdapter >> iconMapping [
 	^ {(OPProject -> OPIcons current openponkIcon).
 	(Object ->

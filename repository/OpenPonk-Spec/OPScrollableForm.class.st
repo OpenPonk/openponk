@@ -3,7 +3,7 @@ I am a scrolling wrapper around DynamicForm.
 "
 Class {
 	#name : #OPScrollableForm,
-	#superclass : #ComposableModel,
+	#superclass : #ComposablePresenter,
 	#instVars : [
 		'form',
 		'scrollPane'
@@ -16,6 +16,11 @@ OPScrollableForm class >> defaultSpec [
 	^ SpecLayout composed
 		add: #scrollPane;
 		yourself
+]
+
+{ #category : #'reflective operations' }
+OPScrollableForm >> doesNotUnderstand: aMessage [
+	^ aMessage sendTo: form
 ]
 
 { #category : #public }

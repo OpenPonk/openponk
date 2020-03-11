@@ -7,7 +7,7 @@ DCProjectBrowser open
 "
 Class {
 	#name : #OPProjectBrowser,
-	#superclass : #ComposableModel,
+	#superclass : #ComposablePresenter,
 	#instVars : [
 		'recentLabel',
 		'recentList',

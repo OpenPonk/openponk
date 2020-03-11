@@ -12,7 +12,6 @@ Class {
 	#superclass : #DynamicComposablePresenter,
 	#instVars : [
 		'components',
-		'heights',
 		'whenAccepted',
 		'controller',
 		'heading'
@@ -23,6 +22,8 @@ Class {
 { #category : #specs }
 OPDynamicForm class >> defaultSpec [
 	^ SpecLayout composed
+		newColumn: [ :c | c newRow: [ :r |  ] ];
+		yourself
 ]
 
 { #category : #specs }
@@ -236,8 +237,7 @@ OPDynamicForm >> heading [
 
 { #category : #private }
 OPDynamicForm >> heightFor: aModel [
-	^(self defaultHeights)
-"	^ heights" at: aModel class ifAbsent: nil
+	^ self defaultHeights at: aModel class ifAbsent: nil
 ]
 
 { #category : #initialization }
@@ -245,7 +245,6 @@ OPDynamicForm >> initialize [
 	self reset.
 	super initialize.
 	heading := OPWidgetHeading forLabel: 'Properties'.
-	heights := self defaultHeights.
 	whenAccepted := [  ]
 ]
 

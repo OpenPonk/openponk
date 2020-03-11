@@ -6,9 +6,6 @@ To define model-specific mappings subclass OPNavigatorAdapter.
 Class {
 	#name : #OPProjectNavigator,
 	#superclass : #OPModelTreeWidget,
-	#classVars : [
-		'Icons'
-	],
 	#category : #'OpenPonk-Spec-Windows'
 }
 

@@ -3,7 +3,7 @@ I am a scrolling wrapper around Palette.
 "
 Class {
 	#name : #OPScrollablePalette,
-	#superclass : #ComposableModel,
+	#superclass : #ComposablePresenter,
 	#instVars : [
 		'palette',
 		'scrollPane'

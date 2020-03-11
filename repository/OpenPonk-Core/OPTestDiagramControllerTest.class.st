@@ -67,7 +67,7 @@ OPTestDiagramControllerTest >> testCleanView [
 { #category : #'tests - ui interaction' }
 OPTestDiagramControllerTest >> testInitializePalette [
 	| palette |
-	palette := OPPalette new.
+	palette := OPScrollablePalette new.
 	self assert: palette entries size = 2.
 	diagramController initializePalette: palette.
 	self assert: palette entries size = 3

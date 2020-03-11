@@ -3,7 +3,7 @@ I am a form for saving a project --- a way to specify the project name and it's 
 "
 Class {
 	#name : #OPSaveProjectWindow,
-	#superclass : #ComposableModel,
+	#superclass : #ComposablePresenter,
 	#instVars : [
 		'projectNameLabel',
 		'projectNameInput',

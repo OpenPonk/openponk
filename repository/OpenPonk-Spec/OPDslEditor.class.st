@@ -3,7 +3,7 @@ I am an editor for UML DSL.
 "
 Class {
 	#name : #OPDslEditor,
-	#superclass : #ComposableModel,
+	#superclass : #ComposablePresenter,
 	#instVars : [
 		'editor',
 		'autoUpdate',

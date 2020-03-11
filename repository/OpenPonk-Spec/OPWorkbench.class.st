@@ -3,7 +3,7 @@ I am the topmost window of an opened Project.
 "
 Class {
 	#name : #OPWorkbench,
-	#superclass : #ComposableModel,
+	#superclass : #ComposablePresenter,
 	#traits : 'TOPSpecRetriever',
 	#classTraits : 'TOPSpecRetriever classTrait',
 	#instVars : [
@@ -111,20 +111,22 @@ OPWorkbench class >> settingsOn: aBuilder [
 
 { #category : #specs }
 OPWorkbench class >> shouldUseEditorForm [
-	^ (self layoutStyle = #separated) not
+	^ self layoutStyle ~= #separated
 ]
 
 { #category : #specs }
 OPWorkbench class >> specCombined [
 	<spec: #combined>
 	^ SpecLayout composed
-		newRow: [ :row | row newColumn: [ :col | col add: #topToolbar height: self toolbarHeight ] ]
+		newRow: [ :row | 
+			row
+				newColumn: [ :col | col add: #topToolbar height: self toolbarHeight ] ]
 			height: self toolbarHeight;
 		newRow: [ :row | 
 			row
 				newColumn: [ :col | 
 					col
-						add: #diagramWidget height: 200;
+						add: #diagramWidget;
 						add: #modelTree ]
 					width: 200;
 				addSplitter;
@@ -144,7 +146,7 @@ OPWorkbench class >> specSeparated [
 				newColumn: [ :col | 
 					col
 						add: #diagramWidget;
-						add: #navigatorModel ]
+						add: #modelTree ]
 					width: 200;
 				addSplitter;
 				newColumn: [ :col | col add: #tabManager ];

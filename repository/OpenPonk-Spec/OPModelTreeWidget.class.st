@@ -3,7 +3,7 @@ I present model entities in a hierarchical tree-like structure.
 "
 Class {
 	#name : #OPModelTreeWidget,
-	#superclass : #ComposableModel,
+	#superclass : #ComposablePresenter,
 	#instVars : [
 		'tree',
 		'project',

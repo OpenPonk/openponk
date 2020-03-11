@@ -21,24 +21,21 @@ OPDynamicFormExamples >> exampleAllWidgets [
 		whenChangedDo: [ :newValue | self inform: 'check: ' , newValue asString ].
 	(form addDroplist: 'With Icons')
 		items: #(announcement catalog class);
-		displayBlock: #asString;
-		iconHolder: [ :each :item | each asIcon ];
+		displayBlock: [ :each | each asString ];
+		iconHolder: [ :each :item | self iconNamed: each ];
 		setSelectedItem: #catalog;
 		whenSelectedItemChanged: [ :newValue | self inform: 'icon: ' , newValue asString ].
 	(form addEditableDroplist: 'Editable')
 		items: #(abstract collection comments);
-		displayBlock: #asString;
+		displayBlock: [ :each | each asString ];
 		setSelectedItem: #collection;
 		whenSelectedItemChanged: [ :newValue | self inform: 'editable icon: ' , newValue asString ].
 	form addSeparator.
 	form addLabel: 'There''s a separator above me and below me'.
 	form addSeparator.
-	(form addText: 'Enter Some Text')
-		text: 'poem required'.
-	(form addTextInput: 'Single Line With Ghost Text')
-		ghostText: 'wooo!'.
-	(form addTextInput: 'Line Without Ghosts')
-		text: 'no ghosts allowed'.
+	(form addText: 'Enter Some Text') text: 'poem required'.
+	(form addTextInput: 'Single Line With Ghost Text') ghostText: 'wooo!'.
+	(form addTextInput: 'Line Without Ghosts') text: 'no ghosts allowed'.
 	window := form openWithSpec.
 	window extent: 400 @ 600.
 	form rebuildWidget.

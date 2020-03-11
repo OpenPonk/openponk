@@ -7,7 +7,7 @@ This is a direct copy of SelectEntity from the Ancestry project. It is available
 "
 Class {
 	#name : #OPSelectEntity,
-	#superclass : #ComposableModel,
+	#superclass : #ComposablePresenter,
 	#instVars : [
 		'entity',
 		'selectEntity',

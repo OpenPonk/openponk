@@ -19,7 +19,7 @@ DCCanvasModel
 "
 Class {
 	#name : #OPToolbar,
-	#superclass : #ComposableModel,
+	#superclass : #ComposablePresenter,
 	#instVars : [
 		'menu',
 		'menuModel',

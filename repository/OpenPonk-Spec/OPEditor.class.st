@@ -52,7 +52,7 @@ OPEditor class >> specCombined [
 				addSplitter;
 				newColumn: [ :col | 
 					col
-						add: #paletteModel height: 220;
+						add: #paletteModel;
 						add: #formModel ]
 					width: 170 ];
 		yourself

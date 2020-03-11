@@ -18,40 +18,6 @@ OPWorkbenchToolbar class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #'project menu' }
-OPWorkbenchToolbar class >> projectToolbarMenu: aBuilder [
-	<opProjectSubmenu>
-	| workbenchToolbar |
-	workbenchToolbar := aBuilder model.
-	(aBuilder group: #ProjectOpening)
-		order: 0;
-		with: [ (aBuilder item: 'New')
-				icon: Smalltalk ui icons smallNew;
-				enabled: false;
-				order: 1;
-				action: [ OPProjectBrowser open ].
-			(aBuilder item: 'Open...')
-				icon: Smalltalk ui icons smallOpen;
-				order: 5;
-				action: [ workbenchToolbar projectController openProject ].
-			(aBuilder item: 'Save')
-				icon: Smalltalk ui icons smallSave;
-				order: 10;
-				action: [ workbenchToolbar projectController saveProject ] ];
-		withSeparatorAfter.
-	(aBuilder group: #ProjectOptions)
-		order: 1000;
-		with: [ (aBuilder item: 'Properties...')
-				icon: Smalltalk ui icons configuration;
-				action: [ workbenchToolbar projectController project maEdit ] ];
-		withSeparatorAfter.
-	(aBuilder group: #Quit)
-		order: 9999;
-		with: [ (aBuilder item: 'Exit')
-				icon: Smalltalk ui icons smallQuit;
-				action: [ workbenchToolbar workbench delete ] ]
-]
-
 { #category : #'menus for editor' }
 OPWorkbenchToolbar >> activeEditor: anEditor [
 	activeEditor := anEditor.
@@ -62,14 +28,12 @@ OPWorkbenchToolbar >> activeEditor: anEditor [
 { #category : #'menus for editor' }
 OPWorkbenchToolbar >> addEditorMenu [
 	self removeEditorMenu.
-	toolbar
-		addGroup: [ :group | 
-			group
-				addItem: [ :item | 
-					item
-						name: 'Editor';
-						icon: (self iconNamed: #packageIcon);
-						subMenu: self editorMenu ] ]
+	toolbar menuGroups first
+		addItem: [ :item | 
+			item
+				name: 'Diagram';
+				icon: (self iconNamed: #objects);
+				subMenu: self editorMenu ]
 ]
 
 { #category : #'menus for editor' }
@@ -77,11 +41,15 @@ OPWorkbenchToolbar >> editorMenu [
 	| menu |
 	menu := self instantiate: MenuPresenter.
 	menu
-		fromSpec: (PragmaMenuBuilder cachedPragmaKeyword: #opEditorToolbarMenu model: activeEditor) menuSpec.
+		fromSpec:
+			(PragmaMenuBuilder
+				cachedPragmaKeyword: #opEditorToolbarMenu
+				model: activeEditor) menuSpec.
 	menu
 		fromSpec:
-			(OPPragmaPluginMenuBuilder cachedPragmaKeyword: #opEditorToolbarMenu: model: activeEditor)
-				menuSpec.
+			(OPPragmaPluginMenuBuilder
+				cachedPragmaKeyword: #opEditorToolbarMenu:
+				model: activeEditor) menuSpec.
 	"MenuModel is stupid and will crash when provided with an empty subMenu"
 	menu menuGroups ifEmpty: [ ^ nil ].
 	^ menu
@@ -95,6 +63,11 @@ OPWorkbenchToolbar >> initializePresenter [
 			group
 				addItem: [ :item | 
 					item
+						name: 'OpenPonk';
+						icon: (self iconNamed: #home);
+						subMenu: self opMenu ];
+				addItem: [ :item | 
+					item
 						name: 'Project';
 						icon: (self iconNamed: #openIcon);
 						subMenu: self projectMenu ] ].
@@ -103,7 +76,34 @@ OPWorkbenchToolbar >> initializePresenter [
 
 { #category : #initialization }
 OPWorkbenchToolbar >> initializeWidgets [
-	toolbar := self instantiate: MenuModel
+	toolbar := self instantiate: MenuPresenter
+]
+
+{ #category : #'menus for project' }
+OPWorkbenchToolbar >> opMenu [
+	| menu browser path |
+	menu := self instantiate: MenuPresenter.
+	menu
+		addGroup: [ :group | 
+			group
+				addItem: [ :item | 
+					item
+						name: 'Settings';
+						icon: (self iconNamed: #configuration);
+						action: [ browser := SettingBrowser new
+								changePackageSet: {#'OpenPonk-Spec' asPackage};
+								yourself.
+							path := (browser open submorphs
+								detect: [ :each | each isKindOf: MorphTreeMorph ]) nodeList.
+							browser expandNodePath: path first contents first path ] ] ];
+		addGroup: [ :group | 
+			group
+				addItem: [ :item | 
+					item
+						name: 'Close OpenPonk';
+						icon: (self iconNamed: #smallQuit);
+						action: [ WorldState saveAndQuit ] ] ].
+	^ menu
 ]
 
 { #category : #accessing }
@@ -114,7 +114,7 @@ OPWorkbenchToolbar >> projectController [
 { #category : #'menus for project' }
 OPWorkbenchToolbar >> projectMenu [
 	| menu cmdMenu |
-	menu := self instantiate: MenuModel.
+	menu := self instantiate: MenuPresenter.
 	cmdMenu := OPWorkbenchActivation buildMenuInContext: (CmdSimpleToolContext for: self).
 	cmdMenu buildSpecMenuOn: menu.
 	^ menu
@@ -128,8 +128,8 @@ OPWorkbenchToolbar >> rebuildWidget [
 
 { #category : #'menus for editor' }
 OPWorkbenchToolbar >> removeEditorMenu [
-	toolbar menuGroups size = 2
-		ifTrue: [ toolbar menuGroups remove: toolbar menuGroups last ]
+	toolbar menuGroups first menuItems size > 2
+		ifTrue: [ toolbar menuGroups first menuItems removeLast ]
 ]
 
 { #category : #'accessing - spec' }
@@ -139,7 +139,7 @@ OPWorkbenchToolbar >> toolbar [
 
 { #category : #'menus for project' }
 OPWorkbenchToolbar >> updateProjectMenu [
-	toolbar menuGroups first menuItems first subMenu: self projectMenu.
+	toolbar menuGroups first menuItems second subMenu: self projectMenu.
 	self rebuildWidget
 ]
 

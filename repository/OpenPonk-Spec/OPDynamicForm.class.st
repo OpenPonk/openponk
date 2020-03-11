@@ -198,7 +198,7 @@ OPDynamicForm >> defaultHeights [
 OPDynamicForm >> dynamicLayout [
 	| keys height |
 	keys := self widgets keys.
-	^ SpecLayout composed
+	^ SpecRowLayout composed
 		newColumn: [ :c | 
 			keys ifNotEmpty: [ c add: #heading height: self class toolbarHeight ].
 			keys
@@ -207,7 +207,7 @@ OPDynamicForm >> dynamicLayout [
 					height
 						ifNil: [ c add: key ]
 						ifNotNil: [ c add: key height: height ] ].
-			c newRow: [ :r | "last element stretches to fill rest of the form" ] height: 0 ];
+			c newRow: [ :r |  ] ];
 		yourself
 ]
 

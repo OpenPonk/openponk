@@ -24,13 +24,10 @@ Class {
 
 { #category : #toolbar }
 OPEditor class >> developerToolbarMenu: aBuilder [
-	<opEditorToolbarMenu>
-	| editor |
 	OPWorkbench isDevelopmentMode
 		ifFalse: [ ^ self ].
-	editor := aBuilder model.
-	(aBuilder item: 'Inspect Controller...') action: [ editor diagramController inspect ].
-	(aBuilder item: 'Export as PNG...') action: [ editor canvasModel exportAsPng ].
+	(aBuilder item: 'Inspect Controller...')
+		action: [ aBuilder model diagramController inspect ].
 	aBuilder withSeparatorAfter
 ]
 
@@ -81,6 +78,14 @@ OPEditor class >> specSeparated [
 "						add: #formModel" ]
 					width: 150 ];
 		yourself
+]
+
+{ #category : #toolbar }
+OPEditor class >> toolbarMenu: aBuilder [
+	<opEditorToolbarMenu>
+	self developerToolbarMenu: aBuilder.
+	(aBuilder item: 'Export as PNG...')
+		action: [ aBuilder model canvasModel exportAsPng ]
 ]
 
 { #category : #api }

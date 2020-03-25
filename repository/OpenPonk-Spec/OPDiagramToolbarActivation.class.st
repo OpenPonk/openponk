@@ -6,8 +6,3 @@ Class {
 	#superclass : #CmdMenuCommandActivationStrategy,
 	#category : #'OpenPonk-Spec-Diagram-Toolbar-Commands'
 }
-
-{ #category : #accessing }
-OPDiagramToolbarActivation >> menuItemNameFor: aCommand [
-	^ menuItemName ifNil: [ aCommand defaultMenuItemName ]
-]

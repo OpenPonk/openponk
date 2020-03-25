@@ -6,8 +6,3 @@ Class {
 	#superclass : #CmdMenuCommandActivationStrategy,
 	#category : #'OpenPonk-Spec-Commands'
 }
-
-{ #category : #accessing }
-OPWorkbenchActivation >> menuItemNameFor: aCommand [
-	^ menuItemName ifNil: [ aCommand defaultMenuItemName ]
-]

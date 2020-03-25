@@ -59,7 +59,7 @@ BaselineOfOpenPonk >> baseline: spec [
 				package: 'OpenPonk-Spec'
 					with: [ spec
 						requires:
-							#('Moose' 'FileDialog' 'Magritte' 'Commander' 'SynchronizedLinks' 'OpenPonk-Morphic') ];
+							#('Moose' 'FileDialog' 'Magritte'" 'Commander'" 'SynchronizedLinks' 'OpenPonk-Morphic') ];
 				package: 'OpenPonk-UI';
 				package: 'OpenPonk-Plugins'
 					with: [ spec postLoadDoIt: #loadPlugins ].
@@ -72,9 +72,9 @@ BaselineOfOpenPonk >> baseline: spec [
 
 { #category : #accessing }
 BaselineOfOpenPonk >> externalProjectsBaseline: spec [
-	spec
+"	spec
 		baseline: 'Commander'
-		with: [ spec repository: 'github://pharo-ide/Commander:v0.7.0/src' ].
+		with: [ spec repository: 'github://pharo-ide/Commander:v0.7.0/src' ]."
 	spec
 		baseline: 'XMLParser'
 		with: [ spec
@@ -92,7 +92,8 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 	spec
 		baseline: 'Magritte'
 		with: [ spec
-				repository: 'github://magritte-metamodel/magritte:v3.6/source';
+				repository:
+					'github://magritte-metamodel/magritte:49781e985875315d06c5991f094c30d6f8c9f02d/source';
 				loads: #(Core 'Magritte-Morph');
 				postLoadDoIt: #removeGreaseWarnings ].
 	spec
@@ -126,7 +127,7 @@ BaselineOfOpenPonk >> loadBormEditor [
 	Metacello new
 		baseline: 'BormEditor';
 		repository: 'github://openponk/borm-editor/repository';
-		load
+		load: #(plugin)
 ]
 
 { #category : #plugins }
@@ -134,7 +135,7 @@ BaselineOfOpenPonk >> loadClassEditor [
 	Metacello new
 		baseline: 'ClassEditor';
 		repository: 'github://openponk/class-editor/repository';
-		load
+		load: #(plugin)
 ]
 
 { #category : #plugins }
@@ -143,7 +144,7 @@ BaselineOfOpenPonk >> loadDemoEditor [
 	Metacello new
 		baseline: 'DemoEditor';
 		repository: 'github://openponk/demo-editor/repository';
-		load
+		load: #(plugin)
 ]
 
 { #category : #plugins }
@@ -151,7 +152,7 @@ BaselineOfOpenPonk >> loadFsmEditor [
 	Metacello new
 		baseline: 'FsmEditor';
 		repository: 'github://openponk/fsm-editor/repository';
-		load
+		load: #(plugin)
 ]
 
 { #category : #accessing }
@@ -170,7 +171,7 @@ BaselineOfOpenPonk >> loadPetriNets [
 	Metacello new
 		baseline: 'PetriNets';
 		repository: 'github://openponk/petrinets/repository';
-		load
+		load: #(plugin)
 ]
 
 { #category : #plugins }
@@ -186,5 +187,6 @@ BaselineOfOpenPonk >> loadPlugins [
 { #category : #scripts }
 BaselineOfOpenPonk >> removeGreaseWarnings [
 	('Grease-Pharo40-Slime' asPackageIfAbsent: [ ^ self ])
-		removeFromSystem
+		removeFromSystem.
+	'Grease-Core' asPackage mcWorkingCopy modified: false
 ]

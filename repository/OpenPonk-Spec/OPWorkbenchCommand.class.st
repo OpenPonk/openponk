@@ -14,13 +14,8 @@ Class {
 
 { #category : #activation }
 OPWorkbenchCommand class >> toolbarMenuActivation [
-	<classAnnotation>
-	^ OPWorkbenchActivation byRootGroupItemOrder: 1 for: OPWorkbenchToolbar
-]
-
-{ #category : #accessing }
-OPWorkbenchCommand >> defaultMenuItemName [
-	^ nil
+	"<classAnnotation>
+	^ OPWorkbenchActivation byRootGroupItemOrder: 1 for: OPWorkbenchToolbar"
 ]
 
 { #category : #accessing }

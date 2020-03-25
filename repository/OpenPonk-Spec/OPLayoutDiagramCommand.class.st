@@ -21,11 +21,6 @@ OPLayoutDiagramCommand class >> toolbarMenuActivation [
 ]
 
 { #category : #accessing }
-OPLayoutDiagramCommand >> defaultMenuItemName [
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
 OPLayoutDiagramCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	layouter := diagramPresenter diagramController layouter

@@ -19,6 +19,6 @@ OPDiagramInspectModelFigureCommand >> defaultMenuItemName [
 OPDiagramInspectModelFigureCommand >> execute [
 	models ifEmpty: [ ^ self ].
 	models size = 1
-		ifTrue: [ models first inspect ]
+		ifTrue: [ models anyOne inspect ]
 		ifFalse: [ models inspect ]
 ]

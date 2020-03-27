@@ -9,13 +9,18 @@ OPZoomOutDiagramCommand class >> toolbarMenuActivation [
 	<classAnnotation>
 	^ OPDiagramToolbarActivation
 		byItemOf: OPDiagramToolbarBasicMenuGroup
-		order: 2
+		order: 3
 		for: OPCanvasPresenter
 ]
 
 { #category : #execution }
 OPZoomOutDiagramCommand >> defaultMenuIcon [
 	^ OPIdeaGraphIcons zoomOutIcon
+]
+
+{ #category : #accessing }
+OPZoomOutDiagramCommand >> defaultMenuItemName [
+	^ nil
 ]
 
 { #category : #execution }

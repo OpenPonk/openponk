@@ -41,6 +41,11 @@ OPDiagramFigureCommand class >> example2 [
 	a openInWindow
 ]
 
+{ #category : #testing }
+OPDiagramFigureCommand class >> isAbstract [
+	^ self = OPDiagramFigureCommand
+]
+
 { #category : #execution }
 OPDiagramFigureCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.

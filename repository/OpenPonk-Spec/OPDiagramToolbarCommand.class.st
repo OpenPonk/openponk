@@ -10,10 +10,29 @@ Class {
 	#category : #'OpenPonk-Spec-Diagram-Toolbar-Commands'
 }
 
+{ #category : #accessing }
+OPDiagramToolbarCommand class >> defaultMenuItemName [
+	| parts |
+	parts := self name splitOnCapitals allButLast: 2.
+	parts ifEmpty: [ ^ self name ].
+	^ String
+		streamContents: [ :s | 
+			s << parts first.
+			parts
+				allButFirstDo: [ :each | s << Character space << each asLowercase ] ]
+]
+
+{ #category : #testing }
+OPDiagramToolbarCommand class >> isAbstract [
+	^ self = OPDiagramToolbarCommand
+]
+
 { #category : #activation }
 OPDiagramToolbarCommand class >> toolbarMenuActivation [
-	"<classAnnotation>
-	^ OPDiagramToolbarActivation byRootGroupItemOrder: 100 for: OPCanvasPresenter"
+	<classAnnotation>
+	^ OPDiagramToolbarActivation
+		byRootGroupItemOrder: 100
+		for: OPCanvasPresenter
 ]
 
 { #category : #execution }

@@ -18,6 +18,11 @@ OPZoomInDiagramCommand >> defaultMenuIcon [
 	^ OPIdeaGraphIcons zoomInIcon
 ]
 
+{ #category : #accessing }
+OPZoomInDiagramCommand >> defaultMenuItemName [
+	^ nil
+]
+
 { #category : #execution }
 OPZoomInDiagramCommand >> execute [
 	diagramPresenter zoom: diagramPresenter zoom * 1.25

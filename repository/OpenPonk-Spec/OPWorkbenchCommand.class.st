@@ -12,10 +12,17 @@ Class {
 	#category : #'OpenPonk-Spec-Commands'
 }
 
+{ #category : #testing }
+OPWorkbenchCommand class >> isAbstract [
+	^ self = OPWorkbenchCommand
+]
+
 { #category : #activation }
 OPWorkbenchCommand class >> toolbarMenuActivation [
-	"<classAnnotation>
-	^ OPWorkbenchActivation byRootGroupItemOrder: 1 for: OPWorkbenchToolbar"
+	<classAnnotation>
+	^ OPWorkbenchActivation
+		byRootGroupItemOrder: 1
+		for: OPWorkbenchToolbar
 ]
 
 { #category : #accessing }

@@ -14,3 +14,8 @@ OPDiagramFigureDevCommand class >> contextMenuActivation [
 	<classAnnotation>
 	^ CmdContextMenuActivation byItemOf: OPDiagramFigureDevMenuGroup for: OPCanvasPresenter
 ]
+
+{ #category : #testing }
+OPDiagramFigureDevCommand class >> isAbstract [
+	^ self = OPDiagramFigureDevCommand
+]

@@ -9,13 +9,18 @@ OPZoomActualDiagramCommand class >> toolbarMenuActivation [
 	<classAnnotation>
 	^ OPDiagramToolbarActivation
 		byItemOf: OPDiagramToolbarBasicMenuGroup
-		order: 3
+		order: 2
 		for: OPCanvasPresenter
 ]
 
 { #category : #execution }
 OPZoomActualDiagramCommand >> defaultMenuIcon [
-	^ OPIdeaGraphIcons actualZoomIcon
+	^ nil "OPIdeaGraphIcons actualZoomIcon"
+]
+
+{ #category : #accessing }
+OPZoomActualDiagramCommand >> defaultMenuItemName [
+	^ '100%'
 ]
 
 { #category : #execution }

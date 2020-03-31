@@ -551,8 +551,10 @@ OPDiagramController >> removeModel [
 
 { #category : #deprecated }
 OPDiagramController >> removeModelElement: aModelElement [
-	self deprecated: 'Use removeModel on its controller instead.'
+	self deprecated: 'Use removeModel on its controller instead.'.
 "	model remove: aModelElement"
+
+	(self controllerForModel: aModelElement) removeModel
 ]
 
 { #category : #'undo/redo' }

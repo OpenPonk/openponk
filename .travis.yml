@@ -16,6 +16,8 @@ matrix:
     - smalltalk: Pharo64-9.0
       env: PHARO_VERSION="9.0" PHARO_BITS="64"
   allow_failures:
+    - smalltalk: Pharo64-7.0
+      env: PHARO_VERSION="7.0" PHARO_BITS="64"
     - smalltalk: Pharo64-9.0
       env: PHARO_VERSION="9.0" PHARO_BITS="64"
 before_install:

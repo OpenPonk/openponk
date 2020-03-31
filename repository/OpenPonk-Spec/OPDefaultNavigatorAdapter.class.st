@@ -25,11 +25,6 @@ OPDefaultNavigatorAdapter >> childrenMapping [
 ]
 
 { #category : #'widget API' }
-OPDefaultNavigatorAdapter >> contextMenuMapping [
-	^ {Object -> {'Inspect' -> [ :obj | obj inspect ]}}
-]
-
-{ #category : #'widget API' }
 OPDefaultNavigatorAdapter >> displayMapping [
 	^ {Object -> #className.
 	OPProject -> 'Project'}

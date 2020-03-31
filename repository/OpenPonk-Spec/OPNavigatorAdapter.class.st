@@ -71,9 +71,9 @@ OPNavigatorAdapter >> contextMenuFor: anObject [
 		thenCollect: #value
 ]
 
-{ #category : #'widget API' }
+{ #category : #accessing }
 OPNavigatorAdapter >> contextMenuMapping [
-	^ self subclassResponsibility
+	^ {(Object -> {('Inspect' -> [ :obj | obj inspect ])})}
 ]
 
 { #category : #private }

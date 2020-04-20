@@ -22,11 +22,8 @@ OPZipPersistence >> save: aRoot to: aZipFile [
 	aRoot allChildren
 		do: [ :each | 
 			each isFile
-				ifTrue: [ each
-						readStreamDo: [ :readStream | 
-							archive
-								addString: readStream contents
-								as: (each relativeTo: aRoot path) fullName ] ] ].
+				ifTrue:
+					[ archive addFile: each as: (each relativeTo: aRoot path) fullName ] ].
 	aZipFile
 		ensureDelete;
 		binaryWriteStreamDo: [ :stream | archive writeTo: stream ].

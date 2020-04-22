@@ -58,6 +58,12 @@ OPElementLayout class >> withPosition: aPoint extent: anExtentPoint [
 		yourself
 ]
 
+{ #category : #comparing }
+OPElementLayout >> = anOtherLayout [
+	^ position = anOtherLayout position
+		and: [ extent = anOtherLayout extent ]
+]
+
 { #category : #accessing }
 OPElementLayout >> extent [
 	^ extent
@@ -71,6 +77,11 @@ OPElementLayout >> extent: aPoint [
 { #category : #testing }
 OPElementLayout >> hasExtent [
 	^ extent isNotNil
+]
+
+{ #category : #comparing }
+OPElementLayout >> hash [
+	^ position hash bitXor: extent hash
 ]
 
 { #category : #testing }

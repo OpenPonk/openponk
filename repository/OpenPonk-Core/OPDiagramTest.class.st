@@ -32,15 +32,17 @@ OPDiagramTest >> testAsJsonComplex [
 			(OPDiagramCamera new
 				offset: 20 @ 30;
 				zoom: 1.2);
-		layout: {'Person' -> (27 @ 23)} asDictionary;
-		options: {'key' -> 'value'} asDictionary.
+		layout:
+			{('Person' -> (OPElementLayout withPosition: 27 @ 23 extent: 0 @ 0))}
+				asDictionary;
+		options: {('key' -> 'value')} asDictionary.
 	self
 		assert: (STON fromString: view asJson)
 		equals:
 			(STON
 				fromString:
 					'{ 	"camera" : { "offset" : { "x" : 20, "y" : 30 }, "zoom" : 1.2 }	,
-		"layout" : { "Person" : { "x" : 27, "y" : 23 } },
+		"layout" : { "Person" : { "position" : { "x" : 27, "y" : 23 }, "extent" : { "x" : 0, "y" : 0 } } },
 		"options" : { "key" : "value" },
 		"visibleElements" : [  ] }')
 ]
@@ -82,14 +84,14 @@ OPDiagramTest >> testFromJsonComplex [
 		ofModel: Mock new
 		fromJsonString:
 			'{ 	"camera" : { "offset" : { "x" : 20, "y" : 30 }, "zoom" : 1.2 },
-		"layout" : { "6b181c2c-135a-0d00-86ce-55e80f4cf59c" : { "x" : 27, "y" : 23 } },
+		"layout" : { "6b181c2c-135a-0d00-86ce-55e80f4cf59c" : { "position" : { "x" : 27, "y" : 23 } } },
 		"options" : { "key" : "value" },
 		"visibleElements" : [ "6b181c2c-135a-0d00-86ce-55e80f4cf59c" ]	 }'.
 	self assert: view camera offset equals: 20 @ 30.
 	self assert: view camera zoom equals: 1.2.
 	self
 		assert: view layout
-		equals: {(personUUID -> (27 @ 23))} asDictionary.
+		equals: {(personUUID -> (OPElementLayout withPosition: 27 @ 23))} asDictionary.
 	self assert: view visibleElements size equals: 1.
 	self assert: view visibleElements anyOne equals: person.
 	self assert: view options equals: {('key' -> 'value')} asDictionary

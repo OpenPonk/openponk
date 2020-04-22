@@ -63,19 +63,15 @@ OPDiagram class >> neoJsonMapping: mapper [
 					jsonReader
 						parseMapKeysDo: [ :key | 
 							| value |
-							value := jsonReader nextAs: Point.
+							value := jsonReader nextAs: OPElementLayout.
 							map at: (UUID fromString: key) put: value ].
 					map ];
 				writer: [ :jsonWriter :map | 
 					jsonWriter
 						writeMapStreamingDo: [ :mapWriter | 
 							map
-								keysAndValuesDo: [ :key :value | 
-									mapWriter
-										writeKey: key asString
-										value: (value ifNil: [ 0 @ 0 ])
-										as: Point ] ] ] ];
-		mapInstVarsFor: Point
+								keysAndValuesDo:
+									[ :key :value | mapWriter writeKey: key asString value: value as: OPElementLayout ] ] ] ]
 ]
 
 { #category : #'instance creation' }

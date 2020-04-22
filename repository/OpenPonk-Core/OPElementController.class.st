@@ -94,12 +94,12 @@ OPElementController >> hideSelectionFeedback [
 
 { #category : #accessing }
 OPElementController >> layout [
-	^ self figure position
+	^ OPElementLayout withPosition: self figure position
 ]
 
 { #category : #accessing }
-OPElementController >> layout: aPoint [
-	self figure translateTo: aPoint
+OPElementController >> layout: anElementLayout [
+	self figure translateTo: anElementLayout position
 ]
 
 { #category : #deprecated }

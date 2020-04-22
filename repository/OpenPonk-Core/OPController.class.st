@@ -142,12 +142,12 @@ OPController >> isHideable [
 
 { #category : #accessing }
 OPController >> layout [
-	^ nil
+	^ OPElementLayout none
 ]
 
 { #category : #accessing }
 OPController >> layout: anObject [
-	
+	"do nothing"
 ]
 
 { #category : #accessing }

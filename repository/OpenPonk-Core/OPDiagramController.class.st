@@ -379,8 +379,9 @@ OPDiagramController >> isVisibleInDiagram: aModel [
 
 { #category : #accessing }
 OPDiagramController >> layout [
-	^ (controllers collect: [ :ctrl | ctrl model uuid -> ctrl layout ])
-		asDictionary
+	^ (controllers
+		collect: [ :ctrl | ctrl model uuid -> ctrl layout ]
+		thenReject: [ :each | each value isNone ]) asDictionary
 ]
 
 { #category : #accessing }

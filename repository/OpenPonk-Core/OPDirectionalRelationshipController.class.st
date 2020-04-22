@@ -50,12 +50,12 @@ OPDirectionalRelationshipController >> hideSelectionFeedback [
 
 { #category : #accessing }
 OPDirectionalRelationshipController >> layout [
-	^ nil
+	^ OPElementLayout none
 ]
 
 { #category : #accessing }
 OPDirectionalRelationshipController >> layout: anObject [
-	"by default do nothing"
+	"do nothing"
 ]
 
 { #category : #accessing }

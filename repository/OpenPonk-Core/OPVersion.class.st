@@ -27,9 +27,10 @@ OPVersion class >> buildStorageUrl [
 		select: [ :any | any includesNumber ]
 		thenCollect: [ :each | ((each withoutPrefix: 'v') withoutSuffix: '/') -> each ])
 		asSortedCollection.
-	version := versions
-		ifEmpty: [ 'latest/' ]
-		ifNotEmpty: [ versions last value ].
+	version := (versions isEmpty
+		or: [ self current hasNumberedVersion not ])
+		ifTrue: [ 'latest/' ]
+		ifFalse: [ versions last value ].
 	^ 'https://dl.bintray.com/openponk/builds/'
 		, self current projectName , '/' , version , 'version-info.json'
 ]
@@ -51,7 +52,7 @@ OPVersion class >> currentFromJSON: aString [
 
 { #category : #'instance creation' }
 OPVersion class >> fromBuildStorage [
-	^ self fromJSON: (ZnEasy get: self buildStorageUrl)
+	^ self fromJSON: (ZnEasy get: self buildStorageUrl) entity string
 ]
 
 { #category : #'instance creation' }

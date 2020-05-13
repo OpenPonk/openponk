@@ -112,7 +112,10 @@ OPWorkbenchToolbar >> opMenu [
 										backgroundColor: Color yellow
 										labelColor: Color black ] ]
 								on: Error
-								do: [ GrowlMorph
+								do: [ :error | 
+									OPWorkbench isDevelopmentMode
+										ifTrue: [ error pass ].
+									GrowlMorph
 										openWithLabel: 'Failed to check version'
 										contents: 'There was an error trying to check for a new version'
 										backgroundColor: Color red

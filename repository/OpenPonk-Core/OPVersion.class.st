@@ -59,12 +59,12 @@ OPVersion class >> fromJSON: aString [
 	| dictionary |
 	dictionary := NeoJSONReader fromString: aString.
 	^ self new
-		buildNumber: (dictionary at: 'build-number');
+		buildNumber: (dictionary at: 'build_number');
 		buildTimestamp:
 			(DateAndTime
-				fromSeconds: (dictionary at: 'build-timestamp') asDateAndTime asSeconds);
+				fromSeconds: (dictionary at: 'build_timestamp') asDateAndTime asSeconds);
 		version: (dictionary at: 'version');
-		projectName: (dictionary at: 'project-name');
+		projectName: (dictionary at: 'project_name');
 		yourself
 ]
 

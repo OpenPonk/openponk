@@ -14,7 +14,7 @@ OPDiagramsPersistence class >> version [
 
 { #category : #versions }
 OPDiagramsPersistence class >> versionMap [
-	^ {'openponk' -> OPVersion fullVersion.
+	^ {'openponk' -> OPVersion current fullVersion.
 	'serializer' -> self version} asDictionary
 ]
 

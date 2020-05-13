@@ -56,7 +56,9 @@ OPProjectDirectorySerializerTest >> testDeleteOldModels [
 { #category : #tests }
 OPProjectDirectorySerializerTest >> testExporterVersion [
 	self assert: persistence exporter equals: 'OpenPonk'.
-	self assert: persistence exporterVersion equals: OPVersion version
+	self
+		assert: persistence exporterVersion
+		equals: OPVersion current fullVersion
 ]
 
 { #category : #tests }
@@ -93,13 +95,13 @@ OPProjectDirectorySerializerTest >> testProjectFile [
 	self
 		assert: result
 		equals:
-			{'project'
+			{('project'
 				->
-					{'name' -> 'My Project'.
-					'uuid' -> '7f5ee44a-1655-4061-a78e-db9578a2226c'} asDictionary.
-			'exporter'
+					{('name' -> 'My Project').
+					('uuid' -> '7f5ee44a-1655-4061-a78e-db9578a2226c')} asDictionary).
+			('exporter'
 				->
-					{'exporter' -> 'OpenPonk'.
-					'exporterVersion' -> OPVersion version.
-					'timestamp' -> '0'} asDictionary} asDictionary
+					{('exporter' -> 'OpenPonk').
+					('exporterVersion' -> OPVersion current fullVersion).
+					('timestamp' -> '0')} asDictionary)} asDictionary
 ]

@@ -205,7 +205,8 @@ OPEditor >> plugin: aPlugin [
 
 { #category : #updating }
 OPEditor >> rebuildWidget [
-	diagramController ifNotNil: [ paletteModel createPaletteFor: diagramController ].
+	diagramController
+		ifNotNil: [ paletteModel createPaletteFor: diagramController ].
 	canvasModel needRebuild: false.
 	self needRebuild: false.
 	self buildWithSpec

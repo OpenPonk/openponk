@@ -40,7 +40,7 @@ OPProjectDirectoryMaterializerTest >> tearDown [
 { #category : #tests }
 OPProjectDirectoryMaterializerTest >> testExporterVersion [
 	self assert: reader exporter equals: 'OpenPonk'.
-	self assert: reader exporterVersion equals: OPVersion version
+	self assert: reader exporterVersion equals: OPVersion current fullVersion
 ]
 
 { #category : #tests }

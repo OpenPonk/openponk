@@ -37,11 +37,6 @@ OPPlugin >> diagramSerializerClass [
 ]
 
 { #category : #accessing }
-OPPlugin >> gitCommit [
-	^ ''
-]
-
-{ #category : #accessing }
 OPPlugin >> icon [
 	^ OPIcons current dcFsmDiagramIcon
 ]

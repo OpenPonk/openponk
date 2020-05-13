@@ -21,11 +21,6 @@ OPTestPlugin >> diagramSerializerClass [
 ]
 
 { #category : #accessing }
-OPTestPlugin >> gitCommit [
-	^ OPVersion gitCommit
-]
-
-{ #category : #accessing }
 OPTestPlugin >> isPluginFor: aModel [
 	^ self modelClass = aModel class
 ]

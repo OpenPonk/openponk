@@ -85,10 +85,10 @@ OPVersion >> < aComparable [
 
 { #category : #comparing }
 OPVersion >> = aComparable [
-	^ (self hasNumberedVersion xor: [ aComparable hasNumberedVersion ])
-		not
+	^ self hasNumberedVersion = aComparable hasNumberedVersion
 		and: [ self version = aComparable version
-				or: [ self buildNumber = aComparable buildNumber ] ]
+				and: [ self hasNumberedVersion
+						or: [ self buildNumber = aComparable buildNumber ] ] ]
 ]
 
 { #category : #accessing }
@@ -133,7 +133,7 @@ OPVersion >> hash [
 
 { #category : #testing }
 OPVersion >> isMostRecent [
-	^ self class fromBuildStorage > self
+	^ self class fromBuildStorage = self
 ]
 
 { #category : #accessing }

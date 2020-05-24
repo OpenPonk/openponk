@@ -297,7 +297,7 @@ OPWorkbench >> open [
 { #category : #opening }
 OPWorkbench >> openEditorOn: aModel [
 	self
-		openEditorOnDiagram: (project diagrams detect: [ :each | each model = aModel & each isDefault ])
+		openEditorOnDiagram: (project diagrams detect: [ :each | each model = aModel ])
 ]
 
 { #category : #opening }

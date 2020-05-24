@@ -296,8 +296,21 @@ OPWorkbench >> open [
 
 { #category : #opening }
 OPWorkbench >> openEditorOn: aModel [
+| aModelDiagram  res |
+ 
+aModelDiagram  := (aModel project diagrams at: 1).
+aModelDiagram name: aModel name. "Change name of diagram to model's name"
+
+res := project diagrams includes: aModelDiagram.
+"Add diagram to the project if it's not yet added. Current projects which have been added to another project have only contained 1 diagram. That's why diagrams at: method has been used."
+res ifFalse: [ project diagrams add: aModelDiagram. 
+				   project models add: aModel.].
+"Change the name of diagram so it will be differentiated from other diagrams in json comparison."
+
 	self
-		openEditorOnDiagram: (project diagrams detect: [ :each | each model = aModel ])
+		openEditorOnDiagram:
+			(project diagrams
+				detect: [ :arg2 | arg2 model = aModel ])
 ]
 
 { #category : #opening }

@@ -74,6 +74,20 @@ OPDiagramTest >> testAsJsonModel2 [
 ]
 
 { #category : #tests }
+OPDiagramTest >> testDiagramNaming [
+"A test for naming of the diagram"
+	| diagram  diagramName |
+	diagram := OPDiagram new.
+	"In the beginning diagram does not have a name"
+	self assert: (diagram name) equals: nil.
+	diagram name: 'test'.
+	diagramName := diagram name.
+	self assert: diagramName equals: 'test'.
+	
+	
+]
+
+{ #category : #tests }
 OPDiagramTest >> testFromJsonComplex [
 	| personUUID personUUIDstring person |
 	personUUIDstring := '6b181c2c-135a-0d00-86ce-55e80f4cf59c'.

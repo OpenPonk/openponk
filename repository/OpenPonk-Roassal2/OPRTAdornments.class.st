@@ -7,9 +7,10 @@ Class {
 	#name : #OPRTAdornments,
 	#superclass : #RTInteraction,
 	#instVars : [
-		'adornments'
+		'adornments',
+		'shapesCache'
 	],
-	#category : 'OpenPonk-Roassal2-Interactivity'
+	#category : #'OpenPonk-Roassal2-Interactivity'
 }
 
 { #category : #accessing }
@@ -43,7 +44,6 @@ OPRTAdornments >> createAdornmentFrom: anAssociation position: aPosition on: anE
 	(RTConstraint on: icon background: box) stick.
 	box addCallback: (TRAddedCallback block: [ box view add: icon ]).
 	box addCallback: (TRRemoveCallback block: [ icon remove ]).
-	box when: TRMouseLeftClick do: [ :evt | anAssociation value value ].
 	^ box
 ]
 
@@ -51,9 +51,20 @@ OPRTAdornments >> createAdornmentFrom: anAssociation position: aPosition on: anE
 OPRTAdornments >> hideAdornmentsOn: anElement [
 	(anElement hasAttribute: self className)
 		ifFalse: [ ^ self ].
-	(anElement attributeAt: self className) do: #remove.
+	self halt.
+	(anElement attributeAt: self className)
+		do: [ :each | 
+			each announcer unsubscribe: each view.
+			each announcer unsubscribe: self.
+			each remove ].
 	anElement removeAttributeAt: self className.
 	anElement view signalUpdate
+]
+
+{ #category : #initialization }
+OPRTAdornments >> initialize [
+	super initialize.
+	shapesCache := Dictionary new
 ]
 
 { #category : #initialization }
@@ -63,10 +74,20 @@ OPRTAdornments >> initializeElement: anElement [
 ]
 
 { #category : #adornments }
+OPRTAdornments >> shapesCache [
+	^ shapesCache
+]
+
+{ #category : #adornments }
 OPRTAdornments >> showAdornmentsOn: anElement [
 	| boxes |
 	boxes := self adornments
-		withIndexCollect: [ :each :i | self createAdornmentFrom: each position: i on: anElement ].
+		withIndexCollect: [ :each :i | 
+			| box |
+			box := self shapesCache
+				at: each
+				ifAbsentPut: [ self createAdornmentFrom: each position: i on: anElement ].
+			box when: TRMouseLeftClick do: [ :evt | each value value ] ].
 	anElement attributeAt: self className put: boxes.
 	anElement view addAll: boxes.
 	anElement view signalUpdate

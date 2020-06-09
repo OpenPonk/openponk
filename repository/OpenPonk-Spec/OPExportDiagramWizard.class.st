@@ -42,7 +42,6 @@ OPExportDiagramWizard >> exportWith: aDictionary [
 	OPTRCanvasExporter new
 		asPNG;
 		canvas: view canvas;
-		withoutFixedShapes;
 		whole;
 		defaultScale;
 		oversizedBy: 20 @ 20;

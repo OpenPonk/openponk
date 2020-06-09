@@ -9,6 +9,7 @@ Class {
 		'editor',
 		'hoverHolder',
 		'figureAdded',
+		'selectionHolder',
 		'deselectionHolder',
 		'modelToControllerMapping',
 		'plugin',
@@ -77,7 +78,7 @@ OPDiagramController >> addModelElement: aModelElement [
 	^ controller"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 OPDiagramController >> allShowableElements [
 	"Should return all elements that could be directly hidden on diagram"
 
@@ -226,6 +227,7 @@ OPDiagramController >> createController: aModel [
 
 { #category : #'protocol-canvas' }
 OPDiagramController >> deselectAll [
+	view announce: TRResizeCanceled new.
 	deselectionHolder value
 ]
 

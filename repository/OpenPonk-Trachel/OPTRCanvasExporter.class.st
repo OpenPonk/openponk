@@ -23,7 +23,7 @@ Class {
 		'margin',
 		'finalized'
 	],
-	#category : 'OpenPonk-Trachel-Core'
+	#category : #'OpenPonk-Trachel-Core'
 }
 
 { #category : #initialization }
@@ -44,7 +44,6 @@ OPTRCanvasExporter class >> example01 [
 
 	view := b view.
 	(self canvas: view canvas)
-		withoutFixedShapes;
 		whole;
 		defaultScale;
 		oversizedBy: 20 @ 20;
@@ -126,11 +125,10 @@ OPTRCanvasExporter >> cameraScale: aScale [
 OPTRCanvasExporter >> canvas: aCanvas [
 	"sets canvas for export, resets all immediate settings"
 
-	canvas := aCanvas veryDeepCopy.
-	canvas morph
-		ifNil: [ 
-			canvas buildMorph.
-			self whole ].
+	canvas := aCanvas shallowCopy.
+	canvas camera: canvas camera shallowCopy.
+	canvas buildMorph.
+	self whole.
 	self initialize
 ]
 
@@ -284,5 +282,10 @@ OPTRCanvasExporter >> withoutFixedShapes [
 	"Irreversible setting applied immediately.
 	Removes shapes with fixed position (based on position in window/morph, not canvas)"
 
-	canvas camera doWithoutCallbacks: [ canvas fixedShapes do: [ :shape | shape doWithoutCallbacks: [ shape remove ] ] ]
+	self
+		notify:
+			'OPTRCanvasExporter>>#withoutFixedShapes removes all shapes even from original canvas'.
+	canvas camera
+		doWithoutCallbacks: [ canvas fixedShapes
+				do: [ :shape | shape doWithoutCallbacks: [ shape remove ] ] ]
 ]

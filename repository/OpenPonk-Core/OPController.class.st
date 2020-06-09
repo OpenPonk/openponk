@@ -6,7 +6,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'model',
-		'selectionHolder',
 		'diagramController'
 	],
 	#category : #'OpenPonk-Core-Controllers'

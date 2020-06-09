@@ -15,8 +15,8 @@ OPFuelModelSerializer >> materialize: aString [
 ]
 
 { #category : #'serialize/materialize' }
-OPFuelModelSerializer >> materializeModelFrom: aString [
-	^ self materialize: aString
+OPFuelModelSerializer >> materializeModelFrom: aStream [
+	^ self materialize: aStream
 ]
 
 { #category : #'fuel - serialize/materialize' }

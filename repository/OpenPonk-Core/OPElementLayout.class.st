@@ -34,7 +34,8 @@ OPElementLayout class >> neoJsonMapping: mapper [
 					jsonWriter
 						writeMapStreamingDo: [ :mapWriter | 
 							mapWriter writeKey: #position value: aLayout position as: Point.
-							mapWriter writeKey: #extent value: aLayout extent as: Point ] ] ];
+							aLayout extent
+								ifNotNil: [ mapWriter writeKey: #extent value: aLayout extent as: Point ] ] ] ];
 		mapInstVarsFor: Point
 ]
 

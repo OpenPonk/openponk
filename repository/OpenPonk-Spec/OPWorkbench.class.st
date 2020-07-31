@@ -7,8 +7,6 @@ Class {
 	#traits : 'TOPSpecRetriever',
 	#classTraits : 'TOPSpecRetriever classTrait',
 	#instVars : [
-		'navigatorModel',
-		'modelTreeWidget',
 		'tabManager',
 		'formModel',
 		'project',
@@ -232,22 +230,6 @@ OPWorkbench >> initialize [
 ]
 
 { #category : #initialization }
-OPWorkbench >> initializeModelTree [
-	| modelTreeTab projectTreeTab |
-	(modelTreeTab := self newTab)
-		label: 'Model Tree';
-		icon: nil;
-		retrievingBlock: [ (modelTreeWidget buildWithSpec: #withoutHeadingSpec) asWidget ].
-	(projectTreeTab := self newTab)
-		label: 'Project Tree';
-		icon: nil;
-		retrievingBlock: [ (navigatorModel buildWithSpec: #withoutHeadingSpec) asWidget ].
-	modelTree
-		addTab: modelTreeTab;
-		addTab: projectTreeTab
-]
-
-{ #category : #initialization }
 OPWorkbench >> initializePresenter [
 	super initializePresenter.
 	tabManager
@@ -259,16 +241,13 @@ OPWorkbench >> initializePresenter [
 OPWorkbench >> initializeWidgets [
 	topToolbar := self instantiate: OPWorkbenchToolbar.
 	diagramWidget := self instantiate: OPDiagramsWidget.
-	modelTree := self newTabManager.
-	self initializeModelTree.
-	modelTreeWidget := self instantiate: OPModelNavigator.
-	navigatorModel := self instantiate: OPProjectNavigator.
+	modelTree := self instantiate: OPModelNavigator.
 	tabManager := self newTabManager.
 	formModel := self instantiate: OPScrollableForm.
 	self focusOrder
 		add: topToolbar;
 		add: diagramWidget;
-		add: navigatorModel;
+		add: modelTree;
 		add: formModel;
 		add: tabManager
 ]
@@ -276,16 +255,6 @@ OPWorkbench >> initializeWidgets [
 { #category : #'accessing - spec' }
 OPWorkbench >> modelTree [
 	^ modelTree
-]
-
-{ #category : #'accessing - spec' }
-OPWorkbench >> modelTreeWidget [
-	^ modelTreeWidget
-]
-
-{ #category : #'accessing - spec' }
-OPWorkbench >> navigatorModel [
-	^ navigatorModel
 ]
 
 { #category : #opening }
@@ -382,8 +351,7 @@ OPWorkbench >> openProject: aProject [
 	topToolbar updateProjectMenu.
 	project whenChanged: [ self updateTitle ].
 	diagramWidget project: project.
-	navigatorModel openOn: project.
-	modelTreeWidget openOn: project.
+	modelTree openOn: project.
 	projectController openDiagrams
 ]
 

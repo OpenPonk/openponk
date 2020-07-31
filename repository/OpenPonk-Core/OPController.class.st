@@ -54,6 +54,11 @@ OPController >> canBeTargetFor: aController [
 	^ false
 ]
 
+{ #category : #'as yet unclassified' }
+OPController >> commonModelClassPrefix [
+	^ 'OP'
+]
+
 { #category : #accessing }
 OPController >> dependentControllers [
 	^ self dependentElements
@@ -178,8 +183,7 @@ OPController >> modelClass [
 
 { #category : #accessing }
 OPController >> nameOfType [
-	^ (((self model className withoutPrefix: 'OP') splitOnCapitals
-		collect: #asLowercase) joinUsing: ' ') capitalized
+	^ self diagramController nameOfTypeForModel: self model
 ]
 
 { #category : #figures }

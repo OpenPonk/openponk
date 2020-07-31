@@ -440,6 +440,12 @@ OPDiagramController >> modelToControllerMapping [
 	^ Dictionary new
 ]
 
+{ #category : #'as yet unclassified' }
+OPDiagramController >> nameOfTypeForModel: aModel [
+	^ (((aModel className withoutPrefix: self commonModelClassPrefix) splitOnCapitals
+		collect: #asLowercase) joinUsing: ' ') capitalized
+]
+
 { #category : #'controllers management' }
 OPDiagramController >> newControllerFor: aModel [
 	modelToControllerMapping isDictionary

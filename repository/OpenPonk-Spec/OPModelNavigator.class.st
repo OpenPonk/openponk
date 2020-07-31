@@ -11,29 +11,6 @@ Class {
 	#category : #'OpenPonk-Spec-Windows'
 }
 
-{ #category : #'as yet unclassified' }
-OPModelNavigator class >> contextMenu: aBuilder [
-	<opModelNavigatorContextMenu>
-	| navigator |
-	navigator := aBuilder model.
-	(aBuilder item: 'Inspect') action: [ navigator selectedItem inspect ]
-]
-
-{ #category : #specs }
-OPModelNavigator class >> defaultSpec [
-	^ SpecColumnLayout composed
-		add: #heading height: self toolbarHeight;
-		add: #tree;
-		yourself
-]
-
-{ #category : #'as yet unclassified' }
-OPModelNavigator class >> openOn: aProject [
-	^ self new
-		openOn: aProject;
-		openWithSpec
-]
-
 { #category : #specs }
 OPModelNavigator class >> withoutHeadingSpec [
 	^ SpecColumnLayout composed

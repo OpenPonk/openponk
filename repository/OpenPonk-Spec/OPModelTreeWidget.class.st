@@ -8,7 +8,8 @@ Class {
 		'tree',
 		'project',
 		'adapters',
-		'heading'
+		'heading',
+		'refreshButton'
 	],
 	#classVars : [
 		'Icons'
@@ -27,7 +28,11 @@ OPModelTreeWidget class >> contextMenu: aBuilder [
 { #category : #specs }
 OPModelTreeWidget class >> defaultSpec [
 	^ SpecColumnLayout composed
-		add: #heading height: self toolbarHeight;
+		newRow: [ :r | 
+			r
+				add: #heading;
+				add: #refreshButton width: 25 ]
+			height: self toolbarHeight;
 		add: #tree;
 		yourself
 ]
@@ -63,8 +68,6 @@ OPModelTreeWidget >> doubleClick [
 		ifFalse: [ ^ self ].
 	element := self selectedItem.
 	self flag: 'no registration mechanism for double click available at the moment'.
-	element class name = #NSMFlowElement
-		ifTrue: [ element := element flowModel ].
 	OPPluginRegistry default plugins
 		detect: [ :each | each modelClass = element class ]
 		ifFound: [ self openCommand: element ]
@@ -115,7 +118,11 @@ OPModelTreeWidget >> initializeWidgets [
 	tree := self newTree.
 	self initializeTree.
 	self focusOrder add: tree.
-	self newWidgetHeading
+	self newWidgetHeading.
+	refreshButton := self newButton.
+	refreshButton
+		icon: (self iconNamed: #glamorousRefresh);
+		action: [ self refresh ]
 ]
 
 { #category : #'menu commands' }
@@ -150,6 +157,16 @@ OPModelTreeWidget >> openOn: aProject [
 { #category : #accessing }
 OPModelTreeWidget >> projectController [
 	^ self workbench projectController
+]
+
+{ #category : #actions }
+OPModelTreeWidget >> refresh [
+	tree updateTree
+]
+
+{ #category : #'accessing - spec' }
+OPModelTreeWidget >> refreshButton [
+	^ refreshButton
 ]
 
 { #category : #'menu commands' }

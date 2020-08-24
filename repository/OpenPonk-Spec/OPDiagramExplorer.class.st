@@ -47,9 +47,9 @@ OPDiagramExplorer >> hideDependentFor: aDataElement [
 ]
 
 { #category : #actions }
-OPDiagramExplorer >> hideElements: dataElements [
+OPDiagramExplorer >> hideElements: elements [
 	diagramController deselectAll.
-	dataElements
+	elements
 		do: [ :each | diagramController hideModelFromDiagram: each ].
 	diagramController view signalUpdate
 ]

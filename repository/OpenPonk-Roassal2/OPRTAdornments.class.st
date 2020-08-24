@@ -51,7 +51,6 @@ OPRTAdornments >> createAdornmentFrom: anAssociation position: aPosition on: anE
 OPRTAdornments >> hideAdornmentsOn: anElement [
 	(anElement hasAttribute: self className)
 		ifFalse: [ ^ self ].
-	self halt.
 	(anElement attributeAt: self className)
 		do: [ :each | 
 			each announcer unsubscribe: each view.

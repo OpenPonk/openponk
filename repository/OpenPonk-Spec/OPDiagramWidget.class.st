@@ -72,7 +72,7 @@ OPDiagramWidget >> newWidgetHeading [
 
 { #category : #actions }
 OPDiagramWidget >> openDiagram: aModel [
-	World showWaitCursorWhile: [ self workbench openEditorOn: aModel ]
+	UIManager default showWaitCursorWhile: [ self workbench openEditorOn: aModel ]
 ]
 
 { #category : #accessing }

@@ -17,7 +17,7 @@ Class {
 		'focusedEditor',
 		'diagramWidget',
 		'useEditorForm',
-		'modelTree'
+		'projectTree'
 	],
 	#classInstVars : [
 		'layoutStyle',
@@ -124,9 +124,9 @@ OPWorkbench class >> specCombined [
 			row
 				newColumn: [ :col | 
 					col
-						add: #diagramWidget;
-						add: #modelTree ]
-					width: 200;
+						add: #projectTree;
+						add: #diagramWidget ]
+					width: 250;
 				addSplitter;
 				newColumn: [ :col | col add: #tabManager ] ]
 			top: self toolbarHeight;
@@ -137,15 +137,17 @@ OPWorkbench class >> specCombined [
 OPWorkbench class >> specSeparated [
 	<spec: #separated>
 	^ SpecLayout composed
-		newRow: [ :row | row newColumn: [ :col | col add: #topToolbar height: self toolbarHeight ] ]
+		newRow: [ :row | 
+			row
+				newColumn: [ :col | col add: #topToolbar height: self toolbarHeight ] ]
 			height: self toolbarHeight;
 		newRow: [ :row | 
 			row
 				newColumn: [ :col | 
 					col
-						add: #diagramWidget;
-						add: #modelTree ]
-					width: 200;
+						add: #projectTree;
+						add: #diagramWidget ]
+					width: 250;
 				addSplitter;
 				newColumn: [ :col | col add: #tabManager ];
 				addSplitter;
@@ -217,9 +219,9 @@ OPWorkbench >> formModel [
 
 { #category : #protocol }
 OPWorkbench >> initialExtent [
-	World extent x > 3000
+	self currentWorld extent x > 3000
 		ifTrue: [ ^ 1200 @ 800 ].
-	^ World extent * (0.65 @ 0.7)
+	^ self currentWorld extent * (0.65 @ 0.7)
 ]
 
 { #category : #initialization }
@@ -241,20 +243,15 @@ OPWorkbench >> initializePresenter [
 OPWorkbench >> initializeWidgets [
 	topToolbar := self instantiate: OPWorkbenchToolbar.
 	diagramWidget := self instantiate: OPDiagramsWidget.
-	modelTree := self instantiate: OPModelNavigator.
+	projectTree := self instantiate: OPProjectNavigator.
 	tabManager := self newTabManager.
 	formModel := self instantiate: OPScrollableForm.
 	self focusOrder
 		add: topToolbar;
 		add: diagramWidget;
-		add: modelTree;
+		add: projectTree;
 		add: formModel;
 		add: tabManager
-]
-
-{ #category : #'accessing - spec' }
-OPWorkbench >> modelTree [
-	^ modelTree
 ]
 
 { #category : #opening }
@@ -351,7 +348,7 @@ OPWorkbench >> openProject: aProject [
 	topToolbar updateProjectMenu.
 	project whenChanged: [ self updateTitle ].
 	diagramWidget project: project.
-	modelTree openOn: project.
+	projectTree openOn: project.
 	projectController openDiagrams
 ]
 
@@ -363,6 +360,11 @@ OPWorkbench >> pluginRegistry [
 { #category : #accessing }
 OPWorkbench >> projectController [
 	^ projectController
+]
+
+{ #category : #'accessing - spec' }
+OPWorkbench >> projectTree [
+	^ projectTree
 ]
 
 { #category : #'accessing - spec' }

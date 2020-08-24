@@ -2,13 +2,13 @@
 I close the opened workbench.
 "
 Class {
-	#name : #OPWorkbenchExitCommand,
-	#superclass : #OPWorkbenchCommand,
+	#name : #OPProjectExitCommand,
+	#superclass : #OPProjectCommand,
 	#category : #'OpenPonk-Spec-Commands'
 }
 
 { #category : #activation }
-OPWorkbenchExitCommand class >> toolbarMenuActivation [
+OPProjectExitCommand class >> toolbarMenuActivation [
 	<classAnnotation>
 	^ OPWorkbenchActivation
 		byItemOf: OPWProjectExitMenuGroup
@@ -17,16 +17,16 @@ OPWorkbenchExitCommand class >> toolbarMenuActivation [
 ]
 
 { #category : #accessing }
-OPWorkbenchExitCommand >> defaultMenuIcon [
+OPProjectExitCommand >> defaultMenuIcon [
 	^ self iconNamed: #smallQuit
 ]
 
 { #category : #accessing }
-OPWorkbenchExitCommand >> defaultMenuItemName [
+OPProjectExitCommand >> defaultMenuItemName [
 	^ 'Close Project'
 ]
 
 { #category : #accessing }
-OPWorkbenchExitCommand >> execute [
+OPProjectExitCommand >> execute [
 	workbench delete
 ]

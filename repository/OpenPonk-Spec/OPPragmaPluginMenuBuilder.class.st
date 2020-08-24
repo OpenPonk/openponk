@@ -68,11 +68,11 @@ OPPragmaPluginMenuBuilder >> testBlockFor: aModel [
 		with:
 			OPWorkbenchToolbar
 				-> [ :prg | prg arguments first = aModel projectController project className ]
-		with:
-			OPModelNavigator
-				-> [ :prg | prg arguments first = aModel projectController project className ]
 		"with:
+			OPModelNavigator
+				-> [ :prg | prg arguments first = aModel projectController project className ]"
+		with:
 			OPProjectNavigator
-				-> [ :prg | prg arguments first = aModel projectController project className ]".
+				-> [ :prg | prg arguments first = aModel projectController project className ].
 	^ blocks at: aModel class
 ]

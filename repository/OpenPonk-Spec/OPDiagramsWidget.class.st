@@ -54,13 +54,11 @@ OPDiagramsWidget >> contextMenu: aMenuMorph for: aView [
 		target: self
 		selector: #openView:
 		argument: aView) icon: (self iconNamed: #glamorousOpen).
-	self flag: #nsmHack.
-	aView modelType = #FlowModel
-		ifFalse: [ (aMenuMorph
-				add: 'Clone view ...'
-				target: self
-				selector: #cloneView:
-				argument: aView) icon: (self iconNamed: #smallRemoteOpen) ].
+	(aMenuMorph
+		add: 'Clone view ...'
+		target: self
+		selector: #cloneView:
+		argument: aView) icon: (self iconNamed: #smallCopy).
 	aView isDefault
 		ifFalse: [ (aMenuMorph
 				add: 'Rename view'
@@ -153,7 +151,7 @@ OPDiagramsWidget >> initializeToolbar [
 			group
 				addItem: [ :item | 
 					openButton := item
-						icon: (self iconNamed: #glamorousOpen);
+						icon: (self iconNamed: #smallCopy);
 						description: 'Open view';
 						action: [ self selectedItem ifNotNil: [ :i | self openView: i ] ] ].
 			group
@@ -197,7 +195,7 @@ OPDiagramsWidget >> newWidgetHeading [
 
 { #category : #actions }
 OPDiagramsWidget >> openView: aView [
-	World showWaitCursorWhile: [ self workbench openEditorOnDiagram: aView ]
+	UIManager default showWaitCursorWhile: [ self workbench openEditorOnDiagram: aView ]
 ]
 
 { #category : #accessing }
@@ -242,7 +240,7 @@ OPDiagramsWidget >> selectionChanged: aView [
 
 { #category : #api }
 OPDiagramsWidget >> title [
-	^ 'Diagram Views'
+	^ 'Diagrams'
 ]
 
 { #category : #'accessing - spec' }

@@ -6,7 +6,9 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'diagramController',
-		'adapters'
+		'adapters',
+		'treeModel',
+		'selectionMutex'
 	],
 	#category : #'OpenPonk-Spec-Dialogs'
 }
@@ -41,7 +43,7 @@ OPShowHideElementsBrowser >> elementTypes: aComposite [
 	^ aComposite morph
 		title: 'Element Types';
 		morph: [ :morphPresentation | 
-			| treeModel treeMorph allTypes colors allTypesWithNames |
+			| treeMorph allTypes colors allTypesWithNames |
 			treeModel := MorphTreeModel new.
 			allTypesWithNames := self possibleElementTypesWithNames.
 			allTypes := (allTypesWithNames associations
@@ -67,7 +69,7 @@ OPShowHideElementsBrowser >> elementTypes: aComposite [
 				selectedItems: self elementTypesSelection;
 				vResizing: #spaceFill;
 				yourself.
-			treeModel onSelectionChangeSend: #filterSelectionChanged: to: self.
+			treeModel onSelectionChangeSend: #typesChangedBy: to: self.
 			treeMorph ]
 ]
 
@@ -80,27 +82,7 @@ OPShowHideElementsBrowser >> elementTypesSelection [
 	visible := elements at: true ifAbsent: [ #() ].
 	hidden := elements at: false ifAbsent: [ #() ].
 	^ allTypes
-		select: [ :type | hidden noneSatisfy: [ :each | each class = type ] ]
-]
-
-{ #category : #'as yet unclassified' }
-OPShowHideElementsBrowser >> filterSelectionChanged: anEvent [
-	| executor allTypes pickedTypes visibleTypes typesToShow hiddenTypes typesToHide toShow toHide |
-	pickedTypes := anEvent selection selectedItems.
-	visibleTypes := self elementTypesSelection.
-	allTypes := self possibleElementTypes.
-	typesToShow := pickedTypes \ visibleTypes.
-	hiddenTypes := allTypes \ visibleTypes.
-	typesToHide := allTypes \ typesToShow \ hiddenTypes.	"
-	show := show copyReplaceAll: {'None'} with: {nil}.
-	hide := hide copyReplaceAll: {'None'} with: {nil}."
-	toShow := self allElements
-		select: [ :each | typesToShow includes: each class ].
-	toHide := self allElements
-		select: [ :each | typesToHide includes: each class ].
-	executor := OPDiagramExplorer on: diagramController.
-	executor hideElements: toHide.
-	executor showElements: toShow
+		select: [ :type | visible anySatisfy: [ :each | each class = type ] ]
 ]
 
 { #category : #accessing }
@@ -117,7 +99,8 @@ OPShowHideElementsBrowser >> initialPick [
 { #category : #initialization }
 OPShowHideElementsBrowser >> initialize [
 	super initialize.
-	adapters := OPNavigatorAdapters default
+	adapters := OPNavigatorAdapters default.
+	selectionMutex := Semaphore forMutualExclusion
 ]
 
 { #category : #accessing }
@@ -179,4 +162,25 @@ OPShowHideElementsBrowser >> possibleElementTypesWithNames [
 { #category : #opening }
 OPShowHideElementsBrowser >> startOn: aDiagramController [
 	diagramController := aDiagramController
+]
+
+{ #category : #'as yet unclassified' }
+OPShowHideElementsBrowser >> typesChangedBy: anEvent [
+	| executor allTypes pickedTypes visibleTypes typesToShow hiddenTypes typesToHide toShow toHide |
+	selectionMutex
+		critical: [ pickedTypes := anEvent selection selectedItems.
+			visibleTypes := self elementTypesSelection.
+			allTypes := self possibleElementTypes.
+			typesToShow := pickedTypes \ visibleTypes.
+			hiddenTypes := allTypes \ visibleTypes.
+			typesToHide := allTypes \ pickedTypes \ hiddenTypes.
+			toShow := self allElements
+				select: [ :each | typesToShow includes: each class ].
+			toHide := self allElements
+				select: [ :each | typesToHide includes: each class ].
+			executor := OPDiagramExplorer on: diagramController.
+			executor hideElements: toHide.
+			executor showElements: toShow.
+			treeModel selectItems: self elementTypesSelection ]
+		ifLocked: [ "do nothing" ]
 ]

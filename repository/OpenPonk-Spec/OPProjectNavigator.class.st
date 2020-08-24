@@ -21,7 +21,7 @@ OPProjectNavigator >> openOn: aProject [
 	project := aProject.
 	tree roots: {project}.
 	project whenChanged: [ tree updateTree ].
-	self whenBuiltDo: [ tree expandRoots ]
+	tree expandRoots
 ]
 
 { #category : #initialization }

@@ -2,7 +2,7 @@
 I am a base class for workbench toolbar commands.
 "
 Class {
-	#name : #OPWorkbenchCommand,
+	#name : #OPProjectCommand,
 	#superclass : #CmdCommand,
 	#instVars : [
 		'workbenchToolbar',
@@ -13,12 +13,12 @@ Class {
 }
 
 { #category : #testing }
-OPWorkbenchCommand class >> isAbstract [
-	^ self = OPWorkbenchCommand
+OPProjectCommand class >> isAbstract [
+	^ self = OPProjectCommand
 ]
 
 { #category : #activation }
-OPWorkbenchCommand class >> toolbarMenuActivation [
+OPProjectCommand class >> toolbarMenuActivation [
 	<classAnnotation>
 	^ OPWorkbenchActivation
 		byRootGroupItemOrder: 1
@@ -26,7 +26,7 @@ OPWorkbenchCommand class >> toolbarMenuActivation [
 ]
 
 { #category : #accessing }
-OPWorkbenchCommand >> prepareFullExecutionInContext: aToolContext [
+OPProjectCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	workbenchToolbar := aToolContext.
 	projectController := workbenchToolbar projectController.

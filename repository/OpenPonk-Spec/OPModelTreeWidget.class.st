@@ -137,7 +137,7 @@ OPModelTreeWidget >> newWidgetHeading [
 
 { #category : #'menu commands' }
 OPModelTreeWidget >> openCommand: aDiagram [
-	World showWaitCursorWhile: [ self workbench openEditorOn: aDiagram ]
+	UIManager default showWaitCursorWhile: [ self workbench openEditorOn: aDiagram ]
 ]
 
 { #category : #accessing }
@@ -151,7 +151,7 @@ OPModelTreeWidget >> openOn: aProject [
 			tree
 				roots: {project};
 				expandRoots ].
-	self whenBuiltDo: [ tree expandRoots ]
+	tree expandRoots
 ]
 
 { #category : #accessing }

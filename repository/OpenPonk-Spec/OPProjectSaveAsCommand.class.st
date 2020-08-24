@@ -1,26 +1,26 @@
 Class {
-	#name : #OPWorkbenchSaveAsCommand,
-	#superclass : #OPWorkbenchCommand,
+	#name : #OPProjectSaveAsCommand,
+	#superclass : #OPProjectCommand,
 	#category : #'OpenPonk-Spec-Commands'
 }
 
 { #category : #accessing }
-OPWorkbenchSaveAsCommand class >> toolbarMenuActivation [
+OPProjectSaveAsCommand class >> toolbarMenuActivation [
 	<classAnnotation>
 	^ OPWorkbenchActivation byItemOf: OPWProjectSaveMenuGroup order: 15 for: OPWorkbenchToolbar
 ]
 
 { #category : #accessing }
-OPWorkbenchSaveAsCommand >> defaultMenuIcon [
+OPProjectSaveAsCommand >> defaultMenuIcon [
 	^ self iconNamed: #smallSaveAs
 ]
 
 { #category : #accessing }
-OPWorkbenchSaveAsCommand >> defaultMenuItemName [
+OPProjectSaveAsCommand >> defaultMenuItemName [
 	^ 'Save Project as...'
 ]
 
 { #category : #accessing }
-OPWorkbenchSaveAsCommand >> execute [
+OPProjectSaveAsCommand >> execute [
 	projectController saveProjectAs
 ]

@@ -72,9 +72,6 @@ BaselineOfOpenPonk >> baseline: spec [
 
 { #category : #accessing }
 BaselineOfOpenPonk >> externalProjectsBaseline: spec [
-"	spec
-		baseline: 'Commander'
-		with: [ spec repository: 'github://pharo-ide/Commander:v0.7.0/src' ]."
 	spec
 		baseline: 'XMLParser'
 		with: [ spec
@@ -99,7 +96,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 	spec
 		baseline: 'Moose'
 		with: [ spec
-				repository: 'github://moosetechnology/Moose:24a33d7/src';
+				repository: 'github://moosetechnology/Moose:3693b26/src';
 				loads: #(Merlin) ].
 	spec
 		baseline: 'Mocketry'

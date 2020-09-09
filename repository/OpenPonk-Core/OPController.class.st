@@ -209,6 +209,15 @@ OPController >> removeController [
 ]
 
 { #category : #destruction }
+OPController >> removeDependent [
+	self dependentControllers
+		do: [ :each | 
+			self diagramController controllers
+				detect: [ :ctrl | ctrl model = each model ]
+				ifFound: #removeFull ]
+]
+
+{ #category : #destruction }
 OPController >> removeDependentControllers [
 	self dependentControllers
 		do: [ :each | 
@@ -225,7 +234,7 @@ OPController >> removeFigure [
 
 { #category : #destruction }
 OPController >> removeFull [
-	self removeDependentControllers.
+	self removeDependent.
 	self removeModel.
 	self removeController
 ]

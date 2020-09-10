@@ -4,8 +4,6 @@ I am the topmost window of an opened Project.
 Class {
 	#name : #OPWorkbench,
 	#superclass : #ComposablePresenter,
-	#traits : 'TOPSpecRetriever',
-	#classTraits : 'TOPSpecRetriever classTrait',
 	#instVars : [
 		'tabManager',
 		'formModel',
@@ -365,6 +363,17 @@ OPWorkbench >> projectController [
 { #category : #'accessing - spec' }
 OPWorkbench >> projectTree [
 	^ projectTree
+]
+
+{ #category : #api }
+OPWorkbench >> retrieveSpec: aSelector [
+	((SpecPragmaCollector behavior: self class class)
+		filter:
+				[ :pragma | pragma selector = #spec: and: [ pragma arguments first = aSelector ] ];
+		reset;
+		collected)
+		ifNotEmpty: [ :pragmas | ^ super retrieveSpec: pragmas first method selector ].
+	^ super retrieveSpec: aSelector
 ]
 
 { #category : #'accessing - spec' }

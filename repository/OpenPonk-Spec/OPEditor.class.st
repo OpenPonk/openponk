@@ -6,8 +6,6 @@ I am bound with a diagram package and cannot live without it.
 Class {
 	#name : #OPEditor,
 	#superclass : #ComposablePresenter,
-	#traits : 'TOPSpecRetriever',
-	#classTraits : 'TOPSpecRetriever classTrait',
 	#instVars : [
 		'canvasModel',
 		'paletteModel',
@@ -216,6 +214,17 @@ OPEditor >> rebuildWidget [
 OPEditor >> registerShortcutsOn: aPresenter [
 	shortcuts := self collectShortcuts.
 	shortcuts do: [ :each | aPresenter bindKeyCombination: each key toAction: each value ]
+]
+
+{ #category : #api }
+OPEditor >> retrieveSpec: aSelector [
+	((SpecPragmaCollector behavior: self class class)
+		filter:
+				[ :pragma | pragma selector = #spec: and: [ pragma arguments first = aSelector ] ];
+		reset;
+		collected)
+		ifNotEmpty: [ :pragmas | ^ super retrieveSpec: pragmas first method selector ].
+	^ super retrieveSpec: aSelector
 ]
 
 { #category : #initialization }

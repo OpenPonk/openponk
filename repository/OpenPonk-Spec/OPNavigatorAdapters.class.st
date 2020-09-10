@@ -19,6 +19,12 @@ OPNavigatorAdapters class >> default [
 	^ default ifNil: [ default := self new ]
 ]
 
+{ #category : #accessing }
+OPNavigatorAdapters class >> reset [
+	<example>
+	^ default := self new
+]
+
 { #category : #'accessing - private' }
 OPNavigatorAdapters >> adapterFor: aModelObject [
 	^ typeToAdapterMapping

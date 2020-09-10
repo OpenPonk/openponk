@@ -22,8 +22,14 @@ OPZipPersistence >> save: aRoot to: aZipFile [
 	aRoot allChildren
 		do: [ :each | 
 			each isFile
-				ifTrue:
-					[ archive addFile: each as: (each relativeTo: aRoot path) fullName ] ].
+				ifTrue: [ (ZipNewFileMember class respondsTo: #newFromFile:)
+						ifTrue: [ archive addFile: each as: (each relativeTo: aRoot path) fullName ]
+						ifFalse: [ self flag: #pharo7compatibility.
+							each
+								readStreamDo: [ :readStream | 
+									archive
+										addString: readStream contents
+										as: (each relativeTo: aRoot path) fullName ] ] ] ].
 	aZipFile
 		ensureDelete;
 		binaryWriteStreamDo: [ :stream | archive writeTo: stream ].

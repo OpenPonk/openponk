@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'candidatesBlock'
 	],
-	#category : 'OpenPonk-Roassal2-Interactivity'
+	#category : #'OpenPonk-Roassal2-Interactivity'
 }
 
 { #category : #util }
@@ -27,12 +27,14 @@ OPRTSelectableView >> color [
 
 { #category : #util }
 OPRTSelectableView >> getSelectedElementsWith: aSelectionElement [
+
 	| selected bounds candidates |
 	selected := RTGroup new.
 	bounds := aSelectionElement encompassingRectangle.
 	candidates := self candidates copyWithout: aSelectionElement.
-	selected := candidates select: [ :each | bounds intersects: each encompassingRectangle ].
-	^ selected asGroup
+	selected := candidates select: [ :each | 
+		            bounds intersects: each encompassingRectangle ].
+	^ RTGroup withAll: selected
 ]
 
 { #category : #initialization }

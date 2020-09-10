@@ -52,20 +52,24 @@ OPLayouter >> applyLayout: aTwoArgBlock [
 
 { #category : #userinterface }
 OPLayouter >> basicApplyLayout: aTwoArgBlock [
+
 	| selectedBoxes allNodes nodes allEdges edges isPartialLayout oldEncompassingRectangle newEncompassingRectangle |
-	selectedBoxes := diagramController editor canvasModel selectedElements.
+	selectedBoxes := diagramController editor canvasModel
+		                 selectedElements.
 	isPartialLayout := selectedBoxes size > 1.
 	allNodes := self allNodes.
-	nodes := (isPartialLayout
-		ifTrue: [ allNodes intersection: selectedBoxes ]
-		ifFalse: [ allNodes ]) asGroup.
+	nodes := RTGroup withAll: (isPartialLayout
+			          ifTrue: [ allNodes intersection: selectedBoxes ]
+			          ifFalse: [ allNodes ]).
 	allEdges := self allEdges reject: [ :each | each to = each from ].
-	edges := allEdges select: [ :each | (nodes includes: each from) & (nodes includes: each to) ].
+	edges := allEdges select: [ :each | 
+		         (nodes includes: each from) & (nodes includes: each to) ].
 	oldEncompassingRectangle := nodes encompassingRectangle.
 	aTwoArgBlock value: nodes value: edges.
 	newEncompassingRectangle := nodes encompassingRectangle.
 	isPartialLayout
-		ifTrue: [ nodes translateTo: oldEncompassingRectangle center.
+		ifTrue: [ 
+			nodes translateTo: oldEncompassingRectangle center.
 			diagramController view signalUpdate ]
 		ifFalse: [ self updateView ]
 ]
@@ -122,16 +126,17 @@ OPLayouter >> gridLayout [
 
 { #category : #layouts }
 OPLayouter >> sugiyamaLayout [
-	self
-		applyLayout: [ :boxes :links | 
-			| centerY |
-			RTSugiyamaLayout new
-				doNotAttachPoint;
-				verticalGap: 100;
-				horizontalGap: 100;
-				on: boxes edges: links.
-			centerY := boxes asGroup encompassingRectangle center y.
-			boxes do: [ :each | each translateBy: 0 @ 2 * (centerY - each position y) ] ]
+
+	self applyLayout: [ :boxes :links | 
+		| centerY |
+		RTSugiyamaLayout new
+			doNotAttachPoint;
+			verticalGap: 100;
+			horizontalGap: 100;
+			on: boxes edges: links.
+		centerY := (RTGroup withAll: boxes) encompassingRectangle center y.
+		boxes do: [ :each | 
+			each translateBy: 0 @ 2 * (centerY - each position y) ] ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -141,16 +146,17 @@ OPLayouter >> supports: aLayoutCommand [
 
 { #category : #layouts }
 OPLayouter >> treeLayout [
-	self
-		applyLayout: [ :boxes :links | 
-			| centerY |
-			RTTreeLayout new
-				doNotAttachPoint;
-				verticalGap: 100;
-				horizontalGap: 100;
-				on: boxes edges: links.
-			centerY := boxes asGroup encompassingRectangle center y.
-			boxes do: [ :each | each translateBy: 0 @ 2 * (centerY - each position y) ] ]
+
+	self applyLayout: [ :boxes :links | 
+		| centerY |
+		RTTreeLayout new
+			doNotAttachPoint;
+			verticalGap: 100;
+			horizontalGap: 100;
+			on: boxes edges: links.
+		centerY := (RTGroup withAll: boxes) encompassingRectangle center y.
+		boxes do: [ :each | 
+			each translateBy: 0 @ 2 * (centerY - each position y) ] ]
 ]
 
 { #category : #userinterface }

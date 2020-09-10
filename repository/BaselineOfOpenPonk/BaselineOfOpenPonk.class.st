@@ -100,7 +100,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 				loads: #(Merlin) ].
 	spec
 		baseline: 'Mocketry'
-		with: [ spec repository: 'github://dionisiydk/Mocketry:v6.0.0' ].
+		with: [ spec repository: 'github://dionisiydk/Mocketry:v6.0.2' ].
 	spec
 		baseline: 'NeoJSON'
 		with: [ spec repository: 'github://svenvc/NeoJSON/repository' ]

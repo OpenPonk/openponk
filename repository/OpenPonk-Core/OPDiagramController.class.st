@@ -82,11 +82,10 @@ OPDiagramController >> addModelElement: aModelElement [
 { #category : #accessing }
 OPDiagramController >> addedFigureFor: aController [
 	| figure |
-	(figuresBeingAdded isEmpty
-		or: [ (figuresBeingAdded includes: aController) not ])
-		ifTrue: [ Transcript
+	(figuresBeingAdded includes: aController)
+		ifFalse: [ Transcript
 				show: 'DiagramController: added figure not previously marked as being added'	"self halt" ]
-		ifFalse: [ figuresBeingAdded remove: aController ].
+		ifTrue: [ figuresBeingAdded remove: aController ].
 	figure := aController figure.
 	figureAdded value: figure.
 	figuresBeingAdded ifEmpty: [ self updateView ].

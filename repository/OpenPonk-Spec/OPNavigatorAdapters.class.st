@@ -59,6 +59,11 @@ OPNavigatorAdapters >> allAdapters [
 ]
 
 { #category : #accessing }
+OPNavigatorAdapters >> allChildrenFor: anObject [
+	^ (self adapterFor: anObject) allChildrenFor: anObject
+]
+
+{ #category : #accessing }
 OPNavigatorAdapters >> childrenFor: anObject [
 	^ (self adapterFor: anObject) childrenFor: anObject
 ]

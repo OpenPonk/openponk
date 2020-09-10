@@ -189,7 +189,8 @@ OPController >> nameOfType [
 { #category : #figures }
 OPController >> refreshFigure [
 	self figure trachelShape triggerCallbacksForStep: 0 @ 0.
-	self figure signalUpdate
+	self figure signalUpdate.
+	^ self figure
 ]
 
 { #category : #deprecated }
@@ -273,7 +274,8 @@ OPController >> showDenyFeedbackFor: aController [
 
 { #category : #construction }
 OPController >> showInDiagram: aDiagramController [
-	^ self showWithoutDependentInDiagram: aDiagramController
+	^ self dependentElements
+		do: [ :each | aDiagramController showInDiagramModel: each ]
 ]
 
 { #category : #'canvas actions' }
@@ -281,9 +283,4 @@ OPController >> showSelectionFeedback [
 	"by default do nothing"
 
 	
-]
-
-{ #category : #construction }
-OPController >> showWithoutDependentInDiagram: aDiagramController [
-	self subclassResponsibility
 ]

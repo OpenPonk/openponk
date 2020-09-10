@@ -52,6 +52,12 @@ OPNavigatorAdapter >> actionMapping [
 ]
 
 { #category : #'widget API' }
+OPNavigatorAdapter >> allChildrenFor: anObject [
+	^ (self mappingFor: anObject in: self retrieveChildrenMapping)
+		flatCollectAsSet: [ :each | (self allChildrenFor: each) , {each} ]
+]
+
+{ #category : #'widget API' }
 OPNavigatorAdapter >> childrenFor: anObject [
 	^ self mappingFor: anObject in: self retrieveChildrenMapping
 ]

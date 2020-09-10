@@ -36,7 +36,8 @@ OPTestEntityController >> removeModel [
 
 { #category : #construction }
 OPTestEntityController >> renderFigureIn: aView [
+	self diagramController addingFigureFor: self.
 	figure := RTBox new size: 50; elementOn: self model.
 	aView add: figure.
-	self diagramController figureAdded: figure
+	^ self diagramController addedFigureFor: self
 ]

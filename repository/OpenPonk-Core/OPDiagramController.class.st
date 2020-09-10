@@ -19,7 +19,8 @@ Class {
 		'workbenchAnnouncer',
 		'diagram',
 		'view',
-		'layouter'
+		'layouter',
+		'figuresBeingAdded'
 	],
 	#category : #'OpenPonk-Core-Controllers'
 }
@@ -76,6 +77,27 @@ OPDiagramController >> addModelElement: aModelElement [
 	figure view ifNil: [ figure renderIn: self view ].
 	self diagramController figureAdded: figure.
 	^ controller"
+]
+
+{ #category : #accessing }
+OPDiagramController >> addedFigureFor: aController [
+	| figure |
+	(figuresBeingAdded isEmpty
+		or: [ (figuresBeingAdded includes: aController) not ])
+		ifTrue: [ Transcript
+				show: 'DiagramController: added figure not previously marked as being added'	"self halt" ]
+		ifFalse: [ figuresBeingAdded remove: aController ].
+	figure := aController figure.
+	figureAdded value: figure.
+	figuresBeingAdded ifEmpty: [ self updateView ].
+	^ figure
+]
+
+{ #category : #accessing }
+OPDiagramController >> addingFigureFor: aController [
+	(figuresBeingAdded includes: aController)
+		ifTrue: [ self notify: 'Same controller is already being added' ].
+	figuresBeingAdded add: aController
 ]
 
 { #category : #rendering }
@@ -285,8 +307,8 @@ OPDiagramController >> figure [
 
 { #category : #accessing }
 OPDiagramController >> figureAdded: aFigure [
-	figureAdded value: aFigure.
-	self updateView
+	self deprecated: 'Use addedFigureFor: instead'.
+	self addedFigureFor: (self controllerForFigure: aFigure)
 ]
 
 { #category : #deprecated }
@@ -366,7 +388,8 @@ OPDiagramController >> initialize [
 	hoverHolder := [  ].
 	figureAdded := [ :figure |  ].
 	modelToControllerMapping := self modelToControllerMapping.
-	diagramController := self
+	diagramController := self.
+	figuresBeingAdded := Set new
 ]
 
 { #category : #'ui interaction' }
@@ -600,7 +623,7 @@ OPDiagramController >> selectableFigures [
 { #category : #rebuilding }
 OPDiagramController >> showAllElements [
 	self disableRefresh.
-	self showWithoutDependentInDiagram: self.
+	self showInDiagram: self.
 	self enableRefresh.
 	self controllers
 		select: [ :each | each isKindOf: OPController ]
@@ -636,13 +659,6 @@ OPDiagramController >> showInDiagramModel: aModel [
 	^ (self newControllerFor: aModel)
 		showInDiagram: self;
 		yourself
-]
-
-{ #category : #construction }
-OPDiagramController >> showWithoutDependentInDiagram: aDiagramController [
-	"it is impossible to show diagram without dependent - dependent elements ARE the diagram"
-	self dependentElements
-		do: [ :each | aDiagramController showInDiagramModel: each ]
 ]
 
 { #category : #figures }

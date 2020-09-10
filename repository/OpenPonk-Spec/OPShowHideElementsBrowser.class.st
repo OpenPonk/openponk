@@ -154,7 +154,7 @@ OPShowHideElementsBrowser >> possibleElementTypes [
 
 { #category : #accessing }
 OPShowHideElementsBrowser >> possibleElementTypesWithNames [
-	^ (diagramController elementsToShowInside
+	^ ((adapters allChildrenFor: diagramController model)
 		collect: [ :each | each class -> (diagramController nameOfTypeForModel: each) ])
 		asSet asDictionary
 ]

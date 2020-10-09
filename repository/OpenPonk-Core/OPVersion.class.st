@@ -121,7 +121,7 @@ OPVersion >> fullVersion [
 
 { #category : #accessing }
 OPVersion >> hasNumberedVersion [
-	^ version anySatisfy: [ :any | any asString asInteger isNotNil ]
+	^ self version anySatisfy: [ :any | any asString asInteger isNotNil ]
 ]
 
 { #category : #comparing }
@@ -138,7 +138,7 @@ OPVersion >> isMostRecent [
 
 { #category : #accessing }
 OPVersion >> projectName [
-	^ projectName ifNil: [ 'openponk' ]
+	^ projectName ifNil: [ 'all-in-one' ]
 ]
 
 { #category : #accessing }

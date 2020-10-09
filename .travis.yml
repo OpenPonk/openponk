@@ -8,19 +8,19 @@ env:
   - BUILD_TIMESTAMP=`date -Is`
 matrix:
   include:
-    - smalltalk: Pharo64-7.0
-      env: PHARO_VERSION="7.0" PHARO_BITS="64"
-    - smalltalk: Pharo32-8.0
-      env: PHARO_VERSION="8.0" PHARO_BITS="32"
     - smalltalk: Pharo64-8.0
       env: PHARO_VERSION="8.0" PHARO_BITS="64"
+    - smalltalk: Pharo32-8.0
+      env: PHARO_VERSION="8.0" PHARO_BITS="32"
     - smalltalk: Pharo64-9.0
       env: PHARO_VERSION="9.0" PHARO_BITS="64"
-  allow_failures:
     - smalltalk: Pharo64-7.0
       env: PHARO_VERSION="7.0" PHARO_BITS="64"
+  allow_failures:
     - smalltalk: Pharo64-9.0
       env: PHARO_VERSION="9.0" PHARO_BITS="64"
+    - smalltalk: Pharo64-7.0
+      env: PHARO_VERSION="7.0" PHARO_BITS="64"
 before_install:
   - echo $PROJECT_NAME
   - echo $FULL_PROJECT_NAME
@@ -39,7 +39,9 @@ before_install:
 deploy:
   - provider: script
     on:
+      all_branches: true
       smalltalk: Pharo64-8.0
+      condition: $TRAVIS_BRANCH = master || $TRAVIS_BRANCH = $TRAVIS_TAG
     skip_cleanup: true
     script: 
       bash scripts/trigger_dependent.sh "class-editor" "borm-editor" "fsm-editor" "petrinets" "all-in-one"      

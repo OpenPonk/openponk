@@ -78,8 +78,7 @@ OPProjectController >> modelMementoFor: aModel [
 		diagrams:
 			(controllers
 				select: [ :each | each model = aModel ]
-				thenCollect: [ :each | each diagram ]	"
-				ifEmpty: [ (OPDiagram defaultDiagramFor: aModel) project: project ]")
+				thenCollect: [ :each | each diagram ])
 ]
 
 { #category : #saving }
@@ -266,8 +265,8 @@ OPProjectController >> updateDiagrams [
 				detect: [ :ctrl | ctrl diagram = eachDiagram ]
 				ifFound: [ :ctrl | 
 					eachDiagram isOpen: true.
-					eachDiagram layout: ctrl layout.
-					eachDiagram visibleElements: ctrl visibleElements.
+					eachDiagram layout: ctrl layout copy.
+					eachDiagram visibleElements: ctrl visibleElements copy.
 					eachDiagram updateFromRoassalView: ctrl view.
 					eachDiagram order: (controllers indexOf: ctrl).
 					eachDiagram isSelected: ctrl = focusedController ]

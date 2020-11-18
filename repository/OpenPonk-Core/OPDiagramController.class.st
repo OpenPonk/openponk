@@ -502,6 +502,8 @@ OPDiagramController >> plugin [
 OPDiagramController >> rebuild [
 	controllers := nil.
 	self cleanView.
+	diagram
+		ifNil: [ ^ self showDiagram: (OPDiagram withWholeModel: model) ].
 	diagram camera
 		ifNotNil: [ :camera | 
 			view canvas camera translateTo: camera offset.

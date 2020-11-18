@@ -21,7 +21,8 @@ OPDefaultNavigatorAdapter class >> registerAdapter: aNavigator [
 { #category : #'widget API' }
 OPDefaultNavigatorAdapter >> childrenMapping [
 	^ {(Object -> #()).
-	(OPProject -> #models)}
+	(OPProject -> #models).
+	(OPTestContainerModel -> #entities)}
 ]
 
 { #category : #'widget API' }
@@ -32,7 +33,9 @@ OPDefaultNavigatorAdapter >> displayMapping [
 
 { #category : #'widget API' }
 OPDefaultNavigatorAdapter >> hasMappingFor: anObject [
-	^ anObject class = OPProject
+	^ {OPProject.
+	OPTestModel.
+	OPTestContainerModel} anySatisfy: [ :any | anObject isKindOf: any ]
 ]
 
 { #category : #'widget API' }

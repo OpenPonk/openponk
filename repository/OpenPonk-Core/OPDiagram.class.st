@@ -109,6 +109,8 @@ OPDiagram >> allElementsVisible [
 		will: [ aCollection ].
 	(aCollection stub ifNotEmpty: (Kind of: BlockClosure))
 		will: [ :block | block value ].
+	(aCollection stub printOn: Any)
+		will: [ 'and OrderedCollection mock matching any element' ].
 	self visibleElements: aCollection
 ]
 

@@ -101,7 +101,7 @@ OPTestDiagramControllerTest >> testRebuildNonEmpty [
 	diagramController
 		layouter: OPNoLayouter new;
 		rebuild.
-	self assert: diagramController controllers size > 0.
+	self assert: diagramController controllers isNotEmpty.
 	self
 		shouldnt: [ subController := diagramController controllerForModel: subModel ]
 		raise: NotFound.

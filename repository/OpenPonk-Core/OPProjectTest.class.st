@@ -20,7 +20,7 @@ OPProjectTest >> testAddModel [
 	project ensureModelsHaveDiagrams.
 	self assert: project diagrams size equals: 1.
 	view := project diagrams first.
-	self assert: view isDefault.
+	view visibleElements ifEmpty: [ self assert: false ].
 	self assert: view model equals: model
 ]
 

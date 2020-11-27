@@ -195,14 +195,17 @@ OPWorkbench >> focusEditorOf: aDiagram [
 		ifTrue: [ ^ self ].
 	focusedEditor
 		ifNotNil: [ focusedEditor diagramController diagram
-				ifNotNil: [ :oldDiagram | oldDiagram isSelected: false ].
+				ifNotNil: [ :oldDiagram | 
+					self projectController updateDiagram: oldDiagram.
+					oldDiagram isSelected: false ].
 			self announce: (OPEditorUnfocused on: focusedEditor) ].
 	editorTabPair := editors at: aDiagram.
 	focusedEditor := editorTabPair first.
 	aDiagram isSelected: true.
 	editorTabPair second selected: true.
 	self announce: (OPEditorFocused on: focusedEditor).
-	topToolbar activeEditor: focusedEditor
+	topToolbar activeEditor: focusedEditor.
+	focusedEditor showDiagram: aDiagram
 ]
 
 { #category : #accessing }
@@ -324,8 +327,7 @@ OPWorkbench >> openEditorOnDiagram: aDiagram model: aModel [
 				evaluate: [ :t | self closeEditor: editor ] ].
 	self announce: (OPEditorCreated on: editor).
 	tabManager addTab: tab.
-	self focusEditorOf: aDiagram.
-	editor showDiagram: aDiagram
+	self focusEditorOf: aDiagram
 ]
 
 { #category : #opening }

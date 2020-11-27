@@ -53,10 +53,12 @@ OPDiagramsWidget >> contextMenu: aMenuMorph for: aDiagram [
 		argument: aDiagram) icon: (self iconNamed: #glamorousEdit).
 	aMenuMorph addLine.
 	(aMenuMorph
-		add: 'Delete diagram'
+		addToggle: 'Delete diagram'
 		target: self
 		selector: #deleteDiagram:
-		argument: aDiagram) icon: (self iconNamed: #glamorousTrash).
+		getStateSelector: nil
+		enablementSelector: [ self isDeleteAllowedFor: aDiagram ]
+		argumentList: {aDiagram}) icon: (self iconNamed: #glamorousTrash).
 	^ aMenuMorph
 ]
 
@@ -200,6 +202,12 @@ OPDiagramsWidget >> initializeWidgets [
 	self initializeToolbar
 ]
 
+{ #category : #actions }
+OPDiagramsWidget >> isDeleteAllowedFor: aDiagram [
+	^ project isNotNil
+		and: [ (project diagramsOf: aDiagram model) size > 1 ]
+]
+
 { #category : #'accessing - spec' }
 OPDiagramsWidget >> list [
 	^ list
@@ -240,11 +248,8 @@ OPDiagramsWidget >> renameDiagram: aView [
 
 { #category : #actions }
 OPDiagramsWidget >> selectedDiagram: aDiagram [
-	| enableModification |
-	enableModification := project isNotNil
-		and: [ (project diagramsOf: aDiagram model) size > 1 ].
 	deleteButton
-		enabled: enableModification;
+		enabled: (self isDeleteAllowedFor: aDiagram);
 		changed: #enabled.
 	editButton
 		enabled: true;

@@ -255,6 +255,22 @@ OPProjectController >> unsubscribeFrom: aDiagramController [
 ]
 
 { #category : #opening }
+OPProjectController >> updateDiagram: aDiagram [
+	controllers
+		detect: [ :ctrl | ctrl diagram = aDiagram ]
+		ifFound: [ :ctrl | 
+			aDiagram isOpen: true.
+			aDiagram layout: ctrl layout copy.
+			aDiagram visibleElements: ctrl visibleElements copy.
+			aDiagram updateFromRoassalView: ctrl view.
+			aDiagram order: (controllers indexOf: ctrl) ]
+		ifNone: [ aDiagram
+				isOpen: false;
+				order: -1;
+				isSelected: false ]
+]
+
+{ #category : #opening }
 OPProjectController >> updateDiagrams [
 	| focusedController |
 	focusedController := workbench focusedEditor

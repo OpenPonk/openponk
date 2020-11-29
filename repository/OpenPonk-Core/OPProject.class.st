@@ -31,6 +31,11 @@ OPProject class >> named: aString [
 ]
 
 { #category : #accessing }
+OPProject >> addDiagram: aDiagram [
+	diagrams add: aDiagram
+]
+
+{ #category : #accessing }
 OPProject >> addDiagrams: aCollection [
 	diagrams addAll: aCollection
 ]
@@ -38,7 +43,6 @@ OPProject >> addDiagrams: aCollection [
 { #category : #adding }
 OPProject >> addModel: aModel [
 	models add: aModel.
-	"self addDefaultDiagramFor: aModel."
 	(aModel respondsTo: #project:)
 		ifTrue: [ aModel project: self ]
 ]
@@ -82,14 +86,23 @@ OPProject >> diagrams: aCollection [
 	self addDiagrams: aCollection
 ]
 
+{ #category : #removing }
+OPProject >> diagramsOf: aModel [
+	^ diagrams select: [ :each | each model = aModel ]
+]
+
 { #category : #adding }
 OPProject >> ensureModelsHaveDiagrams [
 	self
 		addDiagrams:
 			(self models
-				select:
-					[ :eachModel | self diagrams noneSatisfy: [ :any | any model = eachModel ] ]
-				thenCollect: [ :eachModel | OPDiagram defaultDiagramFor: eachModel ])
+				reject: [ :eachModel | self hasDiagramsModel: eachModel ]
+				thenCollect: [ :eachModel | OPDiagram withWholeModel: eachModel ])
+]
+
+{ #category : #adding }
+OPProject >> hasDiagramsModel: aModel [
+	^ self diagrams anySatisfy: [ :any | any model = aModel ]
 ]
 
 { #category : #initialization }

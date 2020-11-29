@@ -503,9 +503,7 @@ OPDiagramController >> rebuild [
 	controllers := nil.
 	self cleanView.
 	diagram
-		ifNil: [ ^ self
-				showElements;
-				applyDefaultLayout ].
+		ifNil: [ ^ self showDiagram: (OPDiagram withWholeModel: model) ].
 	diagram camera
 		ifNotNil: [ :camera | 
 			view canvas camera translateTo: camera offset.
@@ -539,7 +537,8 @@ OPDiagramController >> remove [
 
 { #category : #destruction }
 OPDiagramController >> removeAllControllers [
-	[ self controllers isNotEmpty ] whileTrue: [ self controllers last removeController ]
+	[ self controllers isNotEmpty ]
+		whileTrue: [ self controllers anyOne removeController ]
 ]
 
 { #category : #'controllers management' }
@@ -631,25 +630,13 @@ OPDiagramController >> showAllElements [
 
 { #category : #views }
 OPDiagramController >> showDiagram: aDiagram [
-	aDiagram camera
-		ifNotNil: [ :camera | 
-			view canvas camera translateTo: camera offset.
-			view canvas camera scale: camera zoom ].
-	aDiagram isDefault & aDiagram visibleElements isEmpty
-		ifTrue: [ self showAllElements ]
-		ifFalse: [ self visibleElements: aDiagram visibleElements ].
-	aDiagram layout
-		ifNil: [ self applyDefaultLayout ]
-		ifNotNil: [ self layout: aDiagram layout ].
-	diagram := aDiagram
+	diagram := aDiagram.
+	self rebuild
 ]
 
 { #category : #rebuilding }
 OPDiagramController >> showElements [
-	self showAllElements.
-	diagram
-		ifNotNil: [ diagram visibleElements
-				ifNotEmpty: [ :elements | self visibleElements: elements ] ]
+	self visibleElements: diagram visibleElements
 ]
 
 { #category : #figures }

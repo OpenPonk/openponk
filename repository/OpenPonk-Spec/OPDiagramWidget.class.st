@@ -50,7 +50,7 @@ OPDiagramWidget >> initializePresenter [
 	list
 		displayBlock: [ :aModel | adapters displayFor: aModel ];
 		icons: [ :aModel | adapters iconFor: aModel ];
-		doubleClickAction: [ list selectedItem ifNotNil: [ :aModel | self openDiagram: aModel ] ]
+		doubleClickAction: [ list selectedItem ifNotNil: [ :aModel | self openModel: aModel ] ]
 ]
 
 { #category : #initialization }
@@ -72,6 +72,11 @@ OPDiagramWidget >> newWidgetHeading [
 
 { #category : #actions }
 OPDiagramWidget >> openDiagram: aModel [
+	UIManager default showWaitCursorWhile: [ self workbench openEditorOn: aModel ]
+]
+
+{ #category : #actions }
+OPDiagramWidget >> openModel: aModel [
 	UIManager default showWaitCursorWhile: [ self workbench openEditorOn: aModel ]
 ]
 

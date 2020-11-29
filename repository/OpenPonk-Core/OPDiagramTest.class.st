@@ -11,7 +11,7 @@ Class {
 OPDiagramTest >> testAsInfo [
 	| info |
 	view := OPDiagram new
-		name: 'default';
+		name: 'test diagram';
 		model: OPTestContainerModel new;
 		isOpen: true;
 		isSelected: false;

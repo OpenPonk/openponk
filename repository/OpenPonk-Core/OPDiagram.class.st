@@ -23,12 +23,13 @@ Class {
 }
 
 { #category : #'instance creation' }
-OPDiagram class >> defaultDiagramFor: aModel [
+OPDiagram class >> emptyOfModel: aModel [
 	^ self new
-		name: 'default';
+		name: aModel name;
 		model: aModel;
 		isOpen: false;
-		isSelected: false
+		isSelected: false;
+		yourself
 ]
 
 { #category : #accessing }
@@ -86,9 +87,31 @@ OPDiagram class >> ofModel: aModel fromJsonString: aString [
 	^ self ofModel: aModel fromJson: aString readStream
 ]
 
+{ #category : #'instance creation' }
+OPDiagram class >> withWholeModel: aModel [
+	^ (self emptyOfModel: aModel)
+		allElementsVisible;
+		yourself
+]
+
 { #category : #copying }
 OPDiagram >> = otherDiagram [
 	^ self asJson = otherDiagram asJson
+]
+
+{ #category : #accessing }
+OPDiagram >> allElementsVisible [
+	| aCollection |
+	aCollection := OrderedCollection new.
+	(aCollection stub anySatisfy: Any) will: [ true ].
+	(aCollection stub noneSatisfy: Any) will: [ false ].
+	(aCollection stub ifEmpty: (Kind of: BlockClosure))
+		will: [ aCollection ].
+	(aCollection stub ifNotEmpty: (Kind of: BlockClosure))
+		will: [ :block | block value ].
+	(aCollection stub printElementsOn: Any)
+		will: [ 'mock matching any element' ].
+	self visibleElements: aCollection
 ]
 
 { #category : #converting }
@@ -128,11 +151,6 @@ OPDiagram >> initialize [
 	super initialize.
 	visibleElements := OrderedCollection new.
 	options := Dictionary new
-]
-
-{ #category : #testing }
-OPDiagram >> isDefault [
-	^ self name = 'default'
 ]
 
 { #category : #accessing }

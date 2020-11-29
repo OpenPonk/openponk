@@ -195,14 +195,17 @@ OPWorkbench >> focusEditorOf: aDiagram [
 		ifTrue: [ ^ self ].
 	focusedEditor
 		ifNotNil: [ focusedEditor diagramController diagram
-				ifNotNil: [ :oldDiagram | oldDiagram isSelected: false ].
+				ifNotNil: [ :oldDiagram | 
+					self projectController updateDiagram: oldDiagram.
+					oldDiagram isSelected: false ].
 			self announce: (OPEditorUnfocused on: focusedEditor) ].
 	editorTabPair := editors at: aDiagram.
 	focusedEditor := editorTabPair first.
 	aDiagram isSelected: true.
 	editorTabPair second selected: true.
 	self announce: (OPEditorFocused on: focusedEditor).
-	topToolbar activeEditor: focusedEditor
+	topToolbar activeEditor: focusedEditor.
+	focusedEditor showDiagram: aDiagram
 ]
 
 { #category : #accessing }
@@ -254,14 +257,13 @@ OPWorkbench >> initializeWidgets [
 
 { #category : #opening }
 OPWorkbench >> open [
-	useEditorForm := self class shouldUseEditorForm.
 	self openWithSpec: self class layoutStyle
 ]
 
 { #category : #opening }
 OPWorkbench >> openEditorOn: aModel [
 	self
-		openEditorOnDiagram: (project diagrams detect: [ :each | each model = aModel & each isDefault ])
+		openEditorOnDiagram: (project diagrams detect: [ :each | each model = aModel ])
 ]
 
 { #category : #opening }
@@ -325,13 +327,12 @@ OPWorkbench >> openEditorOnDiagram: aDiagram model: aModel [
 				evaluate: [ :t | self closeEditor: editor ] ].
 	self announce: (OPEditorCreated on: editor).
 	tabManager addTab: tab.
-	self focusEditorOf: aDiagram.
-	editor showDiagram: aDiagram
+	self focusEditorOf: aDiagram
 ]
 
 { #category : #opening }
 OPWorkbench >> openFormOn: aController [
-	useEditorForm
+	self useEditorForm
 		ifTrue: [ focusedEditor openFormOn: aController ]
 		ifFalse: [ formModel editController: aController ]
 ]
@@ -389,6 +390,12 @@ OPWorkbench >> title [
 { #category : #'accessing - spec' }
 OPWorkbench >> topToolbar [
 	^ topToolbar
+]
+
+{ #category : #opening }
+OPWorkbench >> useEditorForm [
+	^ useEditorForm
+		ifNil: [ useEditorForm := self class shouldUseEditorForm ]
 ]
 
 { #category : #'accessing - spec' }

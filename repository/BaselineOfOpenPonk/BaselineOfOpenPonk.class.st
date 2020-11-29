@@ -123,7 +123,7 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 BaselineOfOpenPonk >> loadBormEditor [
 	Metacello new
 		baseline: 'BormEditor';
-		repository: 'github://openponk/borm-editor:v2.0.0/repository';
+		repository: 'github://openponk/borm-editor:v2.0.1/repository';
 		load: #(plugin)
 ]
 
@@ -131,7 +131,7 @@ BaselineOfOpenPonk >> loadBormEditor [
 BaselineOfOpenPonk >> loadClassEditor [
 	Metacello new
 		baseline: 'ClassEditor';
-		repository: 'github://openponk/class-editor:v2.0.1/repository';
+		repository: 'github://openponk/class-editor:v2.0.2/repository';
 		load: #(plugin)
 ]
 
@@ -140,7 +140,7 @@ BaselineOfOpenPonk >> loadDemoEditor [
 	self notify: 'OpenPonk DEMO project is abandoned - it is not working'.
 	Metacello new
 		baseline: 'DemoEditor';
-		repository: 'github://openponk/demo-editor:v2.0.0/repository';
+		repository: 'github://openponk/demo-editor:v2.0.1/repository';
 		load: #(plugin)
 ]
 
@@ -148,7 +148,7 @@ BaselineOfOpenPonk >> loadDemoEditor [
 BaselineOfOpenPonk >> loadFsmEditor [
 	Metacello new
 		baseline: 'FsmEditor';
-		repository: 'github://openponk/fsm-editor:v2.0.0/repository';
+		repository: 'github://openponk/fsm-editor:v2.0.1/repository';
 		load: #(plugin)
 ]
 

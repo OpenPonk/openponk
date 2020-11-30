@@ -167,7 +167,7 @@ BaselineOfOpenPonk >> loadPetitParser [
 BaselineOfOpenPonk >> loadPetriNets [
 	Metacello new
 		baseline: 'PetriNets';
-		repository: 'github://openponk/petrinets:v2.0.0/repository';
+		repository: 'github://openponk/petrinets:v2.0.1/repository';
 		load: #(plugin)
 ]
 

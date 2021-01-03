@@ -54,7 +54,9 @@ OPPalette >> alignButtons [
 OPPalette >> createPaletteFor: aDiagramController [
 	diagramController := aDiagramController.
 	self removeAll.
-	diagramController initializePalette: self.
+	OPPaletteInitializer
+		addAllToPalette: self
+		forController: diagramController.
 	self selectSelectionTool.
 	diagramController whenDeselectionChanged: [ self deselectTool ]
 ]

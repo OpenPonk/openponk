@@ -4,6 +4,7 @@ Class {
 	#category : #'OpenPonk-Spec-Palettes'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'canvas actions' }
 OPPaletteNullController >> hideSelectionFeedback [
+	"do nothing"
 ]

@@ -182,6 +182,12 @@ OPDiagramController >> cachedControllerForModel: aModel ifNone: aNoneBlock [
 	^ ctrl
 ]
 
+{ #category : #connecting }
+OPDiagramController >> canBeTargetFor: aController [
+	^ (aController isKindOf: OPCommonElementController)
+		and: [ aController class ~= OPCommonElementController ]
+]
+
 { #category : #rebuilding }
 OPDiagramController >> cleanView [
 	self view clean.
@@ -377,6 +383,13 @@ OPDiagramController >> hoverFigure: aFigure [
 { #category : #'protocol-canvas' }
 OPDiagramController >> hoverView [
 	hoverHolder value: self
+]
+
+{ #category : #'ui interaction' }
+OPDiagramController >> incompatiblePaletteItemNames [
+	^ OPCommonElementController allSubclasses
+		reject: [ :eachClass | self canBeTargetFor: eachClass new ]
+		thenCollect: [ :each | each paletteItemName ]
 ]
 
 { #category : #initialization }

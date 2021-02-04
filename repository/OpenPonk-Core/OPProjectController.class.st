@@ -18,6 +18,40 @@ Class {
 	#category : #'OpenPonk-Core-Controllers'
 }
 
+{ #category : #'instance creation' }
+OPProjectController class >> fromDirectory: aFolder [
+	^ OPProjectDirectoryMaterializer new
+		loadProjectFrom: aFolder asFileReference
+]
+
+{ #category : #'instance creation' }
+OPProjectController class >> fromFile: aFile [
+	| newProject store |
+	store := OPZipPersistence new loadFrom: aFile asFileReference.
+	newProject := self fromDirectory: store / 'project'.
+	newProject storageFile: aFile asFileReference.
+	^ newProject
+]
+
+{ #category : #opening }
+OPProjectController class >> openFromFile [
+	FDOpenFileDialog new
+		whenSelected: [ :file | self openFromFile: file ];
+		extensionFilters:
+			{'OpenPonk projects' -> #('opp').
+			'All files' -> #()};
+		defaultFolder: FileLocator imageDirectory asFileReference;
+		title: 'Select an OpenPonk project...';
+		open
+]
+
+{ #category : #'instance creation' }
+OPProjectController class >> openFromFile: aFile [
+	^ (self fromFile: aFile)
+		open;
+		yourself
+]
+
 { #category : #adding }
 OPProjectController >> addDiagramController: aController [
 	self subscribeTo: aController.
@@ -102,35 +136,6 @@ OPProjectController >> openDiagrams [
 		ifTrue: [ workbench openEditorOnDiagram: project diagrams first ]
 ]
 
-{ #category : #opening }
-OPProjectController >> openProject [
-	FDOpenFileDialog new
-		whenSelected: [ :file | self openProjectFromFile: file ];
-		extensionFilters:
-			{'OpenPonk projects' -> #('opp').
-			'All files' -> #()};
-		defaultFolder: FileLocator imageDirectory asFileReference;
-		title: 'Select an OpenPonk project...';
-		open
-]
-
-{ #category : #opening }
-OPProjectController >> openProjectFromDirectory: aFolder [
-	| newProject |
-	newProject := OPProjectDirectoryMaterializer new loadProjectFrom: aFolder.
-	^ newProject open
-]
-
-{ #category : #opening }
-OPProjectController >> openProjectFromFile: aFile [
-	| reader newProject store |
-	store := OPZipPersistence new loadFrom: aFile.
-	reader := OPProjectDirectoryMaterializer new.
-	newProject := reader loadProjectFrom: store / 'project'.
-	newProject storageFile: aFile.
-	newProject open
-]
-
 { #category : #accessing }
 OPProjectController >> persistenceManager [
 	^ persistenceManager ifNil: [ persistenceManager := OPProjectDirectorySerializer new ]
@@ -148,13 +153,15 @@ OPProjectController >> project: aProject [
 
 { #category : #accessing }
 OPProjectController >> projectFile [
-	self project storageFile
-		ifNil: [ self project
+	(self project storageFile isNil
+		or: [ self project storageFile exists not
+				or: [ self project storageFile isWritable not ] ])
+		ifTrue: [ self project
 				storageFile:
 					(FDSaveFileDialog new
 						extensionFilters:
-							{'OpenPonk projects' -> #('opp').
-							'All files' -> #()};
+							{('OpenPonk projects' -> #('opp')).
+							('All files' -> #())};
 						defaultFolder: FileLocator imageDirectory asFileReference;
 						openModal) ].
 	^ self project storageFile

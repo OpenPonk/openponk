@@ -14,6 +14,12 @@ OPBoundary class >> named: aString [
 		yourself
 ]
 
+{ #category : #initialization }
+OPBoundary >> initialize [
+	super initialize.
+	name := ''
+]
+
 { #category : #accessing }
 OPBoundary >> name [
 	^ name

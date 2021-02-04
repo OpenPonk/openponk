@@ -28,7 +28,7 @@ Class {
 		'anchorShape',
 		'guideLine'
 	],
-	#category : 'OpenPonk-Roassal2-Constraints'
+	#category : #'OpenPonk-Roassal2-Constraints'
 }
 
 { #category : #example }
@@ -36,7 +36,7 @@ OPRTAnchorConstraint class >> example [
 	| v es e rep anchor |
 	v := RTView new.
 	v @ RTDraggableView.
-	v @ OPRTGridView.
+	v @ RTGridView.
 	v @ RTZoomableView.
 
 	es := RTBox new
@@ -130,7 +130,7 @@ OPRTAnchorConstraint class >> exampleSelfEdge [
 | v e box start end createAnchor|
 v := RTView new.
 v @ RTDraggableView.
-v @ OPRTGridView.
+v @ RTGridView.
 v @ RTZoomableView.
 
 box := RTBox new

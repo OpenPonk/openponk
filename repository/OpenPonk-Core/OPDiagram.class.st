@@ -48,13 +48,20 @@ OPDiagram class >> neoJsonMapping: mapper [
 			customDo: [ :mapping | 
 			mapping
 				encoder: [ :object | object uuid asString ];
-				decoder:
-						[ :string | OPModelObjectReference withUUID: (UUID fromString: string) ] ];
+				decoder: [ :string | 
+					OPModelObjectReference
+						withUUID:
+							([ UUID fromString: string ]
+								on: Error
+								do: [ string ]) ] ];
 		for: UUID
 			customDo: [ :mapping | 
 			mapping
 				encoder: [ :uuid | uuid asString ];
-				decoder: [ :string | UUID fromString: string ] ];
+				decoder: [ :string | 
+					[ UUID fromString: string ]
+						on: Error
+						do: [ string ] ] ];
 		for: #UUIDsWithPoints
 			customDo: [ :mapping | 
 			mapping
@@ -65,7 +72,12 @@ OPDiagram class >> neoJsonMapping: mapper [
 						parseMapKeysDo: [ :key | 
 							| value |
 							value := jsonReader nextAs: OPElementLayout.
-							map at: (UUID fromString: key) put: value ].
+							map
+								at:
+									([ UUID fromString: key ]
+										on: Error
+										do: [ key ])
+								put: value ].
 					map ];
 				writer: [ :jsonWriter :map | 
 					jsonWriter

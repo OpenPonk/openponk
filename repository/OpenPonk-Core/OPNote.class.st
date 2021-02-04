@@ -14,6 +14,12 @@ OPNote class >> withText: aString [
 		yourself
 ]
 
+{ #category : #initialization }
+OPNote >> initialize [
+	super initialize.
+	text := ''
+]
+
 { #category : #accessing }
 OPNote >> text [
 	^ text

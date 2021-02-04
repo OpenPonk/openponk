@@ -182,7 +182,7 @@ OPProject >> storageFolder: aFilePath [
 
 { #category : #accessing }
 OPProject >> uuid [
-	^ uuid
+	^ uuid ifNil: [ ^ UUID new ]
 ]
 
 { #category : #accessing }

@@ -46,6 +46,16 @@ OPEditElementTextCommand >> execute [
 ]
 
 { #category : #accessing }
+OPEditElementTextCommand >> get [
+	^ get
+]
+
+{ #category : #accessing }
+OPEditElementTextCommand >> get: anObject [
+	get := anObject
+]
+
+{ #category : #accessing }
 OPEditElementTextCommand >> getSelector: anAccessor [
 	self
 		get: [ (MessageSend receiver: model selector: anAccessor) value ]
@@ -55,6 +65,26 @@ OPEditElementTextCommand >> getSelector: anAccessor [
 OPEditElementTextCommand >> initialize [
 	super initialize.
 	self accessor: #text
+]
+
+{ #category : #accessing }
+OPEditElementTextCommand >> name [
+	^ name
+]
+
+{ #category : #accessing }
+OPEditElementTextCommand >> name: anObject [
+	name := anObject
+]
+
+{ #category : #accessing }
+OPEditElementTextCommand >> set [
+	^ set
+]
+
+{ #category : #accessing }
+OPEditElementTextCommand >> set: anObject [
+	set := anObject
 ]
 
 { #category : #accessing }

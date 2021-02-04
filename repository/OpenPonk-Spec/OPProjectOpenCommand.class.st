@@ -22,5 +22,5 @@ OPProjectOpenCommand >> defaultMenuItemName [
 
 { #category : #accessing }
 OPProjectOpenCommand >> execute [
-	projectController openProject
+	OPProjectController openFromFile
 ]

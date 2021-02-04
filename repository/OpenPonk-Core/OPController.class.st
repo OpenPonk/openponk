@@ -204,8 +204,8 @@ OPController >> removeController [
 	model ifNotNil: [ self removeDependentControllers ].
 	self diagramController ifNil: [ ^ self ].
 	self removeFigure.
-	self model: nil.
 	self diagramController removeController: self.
+	self model: nil.
 	self diagramController: nil
 ]
 

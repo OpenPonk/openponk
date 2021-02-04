@@ -14,6 +14,19 @@ OPZipPersistenceTest >> setUp [
 ]
 
 { #category : #tests }
+OPZipPersistenceTest >> testNonASCII [
+	| root loaded zipFile |
+	root := FileSystem memory root.
+	root / 'file.txt'
+		writeStreamDo: [ :stream | stream << 'ěščřžýáíéůú' ].
+	zipFile := (FileSystem memory / 'project.zip') ensureCreateFile.
+	persistence save: root to: zipFile.
+	loaded := persistence loadFrom: zipFile.
+	self assert: (loaded / 'file.txt') isFile.
+	self assert: (loaded / 'file.txt') contents equals: 'ěščřžýáíéůú'
+]
+
+{ #category : #tests }
 OPZipPersistenceTest >> testRoundTrip [
 	| root loaded zipFile |
 	root := FileSystem memory root.

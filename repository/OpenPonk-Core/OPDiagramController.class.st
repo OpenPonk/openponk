@@ -477,8 +477,8 @@ OPDiagramController >> modelToControllerMapping [
 
 { #category : #'as yet unclassified' }
 OPDiagramController >> nameOfTypeForModel: aModel [
-	^ (((aModel className withoutPrefix: self commonModelClassPrefix) splitOnCapitals
-		collect: #asLowercase) joinUsing: ' ') capitalized
+	^ (((aModel className withoutPrefix: self commonModelClassPrefix)
+		splitOnCapitals collect: #asLowercase) joinUsing: ' ') capitalized
 ]
 
 { #category : #'controllers management' }
@@ -556,7 +556,7 @@ OPDiagramController >> removeAllControllers [
 
 { #category : #'controllers management' }
 OPDiagramController >> removeController: aController [
-	self controllers remove: aController
+	self controllers remove: aController ifAbsent: [  ]
 ]
 
 { #category : #deprecated }

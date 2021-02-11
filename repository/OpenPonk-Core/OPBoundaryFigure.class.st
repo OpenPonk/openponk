@@ -2,44 +2,60 @@ Class {
 	#name : #OPBoundaryFigure,
 	#superclass : #OPResizableFigureWithText,
 	#instVars : [
-		'innerBoxToDisallowDrag',
-		'outerBoxToDrag'
+		'dragBoxes',
+		'updateDragBoxAfterMainBlock',
+		'dragBoxUpdates',
+		'positionOfMainRelativeToDragBoxes',
+		'dragBoxesByPosition',
+		'dragBoxUpdateBlocks'
 	],
 	#category : #'OpenPonk-Core-CommonElements'
 }
 
 { #category : #accessing }
 OPBoundaryFigure >> baseShape [
-	^ RTBox new
+	| box |
+	box := RTBox new
 		color: Color transparent;
-		borderColor: Color darkGray;
+		borderColor: Color gray;
 		width: self defaultWidth;
 		height: self defaultHeight;
-		yourself
+		yourself.
+	box borderStyle dash.
+	^ box
 ]
 
 { #category : #'creating - subelements' }
 OPBoundaryFigure >> createOwnedElements [
-	super createOwnedElements."
-	outerBoxToDrag := RTBox new
+	| horizonalBoxShape verticalBoxShape |
+	super createOwnedElements.
+	horizonalBoxShape := RTBox new
 		color: Color transparent;
 		borderColor: Color transparent;
-		elementOn: self.
-	outerBoxToDrag @ RTDraggable."
-	innerBoxToDisallowDrag := RTBox new
+		width: self defaultWidth;
+		height: 2 * self draggableOffset;
+		yourself.
+	verticalBoxShape := RTBox new
 		color: Color transparent;
 		borderColor: Color transparent;
-		elementOn: self.
-	innerBoxToDisallowDrag @ OPRTNotDraggable.
+		width: 2 * self draggableOffset;
+		height: self defaultHeight;
+		yourself.
+	dragBoxes := {(horizonalBoxShape elementOn: #top).
+	(horizonalBoxShape elementOn: #bottom).
+	(verticalBoxShape elementOn: #left).
+	(verticalBoxShape elementOn: #right)} asGroup.
+	dragBoxesByPosition := (dragBoxes
+		collect: [ :each | each model -> each ]) asDictionary.
+	self addAll: dragBoxes.
+	dragBoxes
+		do: [ :each | 
+			each
+				addInteraction: RTDraggableSnapToGrid;
+				addCallback: (TRTranslationCallback block: [ self updateAfterDragOf: each ]) ].
+	self addCallback: (TRExtentCallback block: [ self updateDragBoxes ]).
 	self
-		"add: outerBoxToDrag;"
-		add: innerBoxToDisallowDrag.
-	self updateDragBoxes.
-	"outerBoxToDrag
-		addCallback: (TRTranslationCallback block: [ self updateAfterDrag ])."
-	self
-		addCallback: (TRTranslationCallback block: [ self updateDragBoxes ]).
-	self addCallback: (TRExtentCallback block: [ self updateDragBoxes ])
+		addCallback: (TRTranslationCallback block: [ self updateDragBoxes ])
 ]
 
 { #category : #accessing }
@@ -52,9 +68,40 @@ OPBoundaryFigure >> defaultWidth [
 	^ 500
 ]
 
+{ #category : #'as yet unclassified' }
+OPBoundaryFigure >> dragBoxUpdateBlocks [
+	^ dragBoxUpdateBlocks
+		ifNil: [ | topDragBox bottomDragBox leftDragBox rightDragBox |
+			topDragBox := dragBoxesByPosition at: #top.
+			bottomDragBox := dragBoxesByPosition at: #bottom.
+			leftDragBox := dragBoxesByPosition at: #left.
+			rightDragBox := dragBoxesByPosition at: #right.
+			dragBoxUpdateBlocks := {(#top
+				-> [ topDragBox trachelShape
+						doWithoutCallbacks: [ topDragBox
+								width: self width;
+								translateTo: self encompassingRectangle topCenter ] ]).
+			(#bottom
+				-> [ bottomDragBox trachelShape
+						doWithoutCallbacks: [ bottomDragBox
+								width: self width;
+								translateTo: self encompassingRectangle bottomCenter ] ]).
+			(#left
+				-> [ leftDragBox trachelShape
+						doWithoutCallbacks: [ leftDragBox
+								height: self height;
+								translateTo: self encompassingRectangle leftCenter ] ]).
+			(#right
+				-> [ rightDragBox trachelShape
+						doWithoutCallbacks: [ rightDragBox
+								height: self height;
+								translateTo: self encompassingRectangle rightCenter ] ])}
+				asDictionary ]
+]
+
 { #category : #accessing }
 OPBoundaryFigure >> draggableOffset [
-	^ 10
+	^ 5
 ]
 
 { #category : #hooks }
@@ -63,26 +110,43 @@ OPBoundaryFigure >> modelTextSelector [
 ]
 
 { #category : #'as yet unclassified' }
-OPBoundaryFigure >> updateAfterDrag [
-	self translateTo: outerBoxToDrag position
+OPBoundaryFigure >> positionOfMainRelativeToDragBoxes [
+	^ positionOfMainRelativeToDragBoxes
+		ifNil: [ positionOfMainRelativeToDragBoxes := {(#top
+				-> [ (dragBoxesByPosition at: #top) position + (0 @ (self height / 2)) ]).
+			(#bottom
+				-> [ (dragBoxesByPosition at: #bottom) position - (0 @ (self height / 2)) ]).
+			(#left
+				-> [ (dragBoxesByPosition at: #left) position + ((self width / 2) @ 0) ]).
+			(#right
+				-> [ (dragBoxesByPosition at: #right) position - ((self width / 2) @ 0) ])}
+				asDictionary ]
+]
+
+{ #category : #actions }
+OPBoundaryFigure >> pushBack [
+	super pushBack.
+	dragBoxes pushBack
+]
+
+{ #category : #'creating - subelements' }
+OPBoundaryFigure >> textOffset [
+	^ 0 @ (16 - (self height / 2))
+]
+
+{ #category : #'as yet unclassified' }
+OPBoundaryFigure >> updateAfterDragOf: draggedBox [
+	self
+		translateTo: (self positionOfMainRelativeToDragBoxes at: draggedBox model) value.
+	self dragBoxUpdateBlocks
+		keysAndValuesDo: [ :eachPosition :eachBlock | 
+			eachPosition == draggedBox model
+				ifFalse: [ eachBlock value ] ].
+	self pushBack
 ]
 
 { #category : #'as yet unclassified' }
 OPBoundaryFigure >> updateDragBoxes [
-	"outerBoxToDrag shape
-		width: (self defaultWidth + (2 * self draggableOffset) max: 0);
-		height: (self defaultHeight + (2 * self draggableOffset) max: 0).
-	outerBoxToDrag update.
-	outerBoxToDrag trachelShape
-		doWithoutCallbacks: [ outerBoxToDrag translateTo: self position ]."
-
-	innerBoxToDisallowDrag shape
-		width: (self defaultWidth - (2 * self draggableOffset) max: 0);
-		height: (self defaultHeight - (2 * self draggableOffset) max: 0).
-	innerBoxToDisallowDrag update.
-	innerBoxToDisallowDrag translateTo: self position.
-	self view
-		ifNotNil: [ innerBoxToDisallowDrag pushBack.
-			self pushBack
-			"outerBoxToDrag pushBack" ]
+	self dragBoxUpdateBlocks do: [ :each | each value ].
+	self pushBack
 ]

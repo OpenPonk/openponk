@@ -9,8 +9,7 @@ Class {
 
 { #category : #rendering }
 OPResizableFigureWithText >> addInteractions [
-	self @ RTResizable.
-	self @ RTDraggableSnapToGrid
+	self @ RTResizable
 ]
 
 { #category : #'creating - subelements' }

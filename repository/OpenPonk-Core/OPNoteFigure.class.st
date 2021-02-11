@@ -4,6 +4,12 @@ Class {
 	#category : #'OpenPonk-Core-CommonElements'
 }
 
+{ #category : #rendering }
+OPNoteFigure >> addInteractions [
+	super addInteractions.
+	self @ RTDraggableSnapToGrid
+]
+
 { #category : #accessing }
 OPNoteFigure >> baseShape [
 	^ RTBox new

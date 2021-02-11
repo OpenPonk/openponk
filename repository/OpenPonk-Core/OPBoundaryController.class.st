@@ -11,6 +11,11 @@ OPBoundaryController class >> paletteItemName [
 	^ #boundary
 ]
 
+{ #category : #connecting }
+OPBoundaryController >> addAsTargetFor: aController [
+	^ self diagramController addAsTargetFor: aController
+]
+
 { #category : #forms }
 OPBoundaryController >> buildEditorForm: aForm [
 	(aForm addText: 'Name')
@@ -18,6 +23,11 @@ OPBoundaryController >> buildEditorForm: aForm [
 		whenTextIsAccepted: [ :newValue | 
 			self model name: newValue asString.
 			self refreshFigure ]
+]
+
+{ #category : #connecting }
+OPBoundaryController >> canBeTargetFor: aController [
+	^ self diagramController canBeTargetFor: aController
 ]
 
 { #category : #accessing }

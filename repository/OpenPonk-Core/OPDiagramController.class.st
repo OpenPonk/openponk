@@ -11,7 +11,6 @@ Class {
 		'figureAdded',
 		'selectionHolder',
 		'deselectionHolder',
-		'modelToControllerMapping',
 		'plugin',
 		'autosaveManager',
 		'figureToControllerCache',
@@ -20,7 +19,8 @@ Class {
 		'diagram',
 		'view',
 		'layouter',
-		'figuresBeingAdded'
+		'figuresBeingAdded',
+		'controllerFactory'
 	],
 	#category : #'OpenPonk-Core-Controllers'
 }
@@ -44,6 +44,11 @@ OPDiagramController >> addAsTargetFor: aController [
 	aController attach.
 	self model add: newModel.
 	self view signalUpdate"
+]
+
+{ #category : #adding }
+OPDiagramController >> addCommonElementsFromDiagram [
+	diagram commonElements do: [ :each | self showInDiagramModel: each ]
 ]
 
 { #category : #'controllers management' }
@@ -104,6 +109,7 @@ OPDiagramController >> allShowableElements [
 	"Should return all elements that could be directly hidden on diagram"
 
 	^ (Set with: model) , self elementsToShowInside
+		, self diagram commonElements
 ]
 
 { #category : #'as yet unclassified' }
@@ -196,6 +202,21 @@ OPDiagramController >> cleanView [
 			(each isKindOf: TRCanvasGridShape)
 				ifFalse: [ each remove ] ].
 	self view canvas fixedShapes copy do: #remove
+]
+
+{ #category : #accessing }
+OPDiagramController >> commonElementControllers [
+	^ self controllers select: #isCommon
+]
+
+{ #category : #accessing }
+OPDiagramController >> commonElements [
+	^ self commonElementControllers collect: #model as: Array
+]
+
+{ #category : #accessing }
+OPDiagramController >> controllerFactory [
+	^ OPControllerFactory withCommonElements
 ]
 
 { #category : #'controllers management' }
@@ -349,9 +370,7 @@ OPDiagramController >> hasRedo [
 
 { #category : #testing }
 OPDiagramController >> hasSupportForModel: aModel [
-	modelToControllerMapping isDictionary
-		ifTrue: [ ^ modelToControllerMapping includesKey: aModel class ].
-	^ modelToControllerMapping hasControllerFor: aModel
+	^ controllerFactory hasControllerFor: aModel
 ]
 
 { #category : #testing }
@@ -399,7 +418,7 @@ OPDiagramController >> initialize [
 	deselectionHolder := [  ].
 	hoverHolder := [  ].
 	figureAdded := [ :figure |  ].
-	modelToControllerMapping := self modelToControllerMapping.
+	controllerFactory := self controllerFactory.
 	diagramController := self.
 	figuresBeingAdded := Set new
 ]
@@ -472,7 +491,10 @@ OPDiagramController >> modelRemoved: aModel [
 
 { #category : #accessing }
 OPDiagramController >> modelToControllerMapping [
-	^ Dictionary new
+	self
+		deprecated: 'Use #controllerFactory instead'
+		transformWith: '`@receiver modelToControllerMapping' -> '`@receiver controllerFactory'.
+	^ self controllerFactory 
 ]
 
 { #category : #'as yet unclassified' }
@@ -483,17 +505,7 @@ OPDiagramController >> nameOfTypeForModel: aModel [
 
 { #category : #'controllers management' }
 OPDiagramController >> newControllerFor: aModel [
-	modelToControllerMapping isDictionary
-		ifTrue: [ ^ self newControllerForOld: aModel ].
-	^ modelToControllerMapping newControllerFor: aModel
-]
-
-{ #category : #'controllers management' }
-OPDiagramController >> newControllerForOld: aModel [
-	| controller |
-	controller := (modelToControllerMapping at: aModel class) new.
-	controller model: aModel.
-	^ controller
+	^ controllerFactory newControllerFor: aModel
 ]
 
 { #category : #'ui interaction' }
@@ -521,6 +533,7 @@ OPDiagramController >> rebuild [
 		ifNotNil: [ :camera | 
 			view canvas camera translateTo: camera offset.
 			view canvas camera scale: camera zoom ].
+	self addCommonElementsFromDiagram.
 	self showElements.
 	diagram layout
 		ifNil: [ self applyDefaultLayout ]

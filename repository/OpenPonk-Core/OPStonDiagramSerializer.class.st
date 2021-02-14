@@ -26,7 +26,5 @@ OPStonDiagramSerializer >> serializeDiagram: aDiagramMemento [
 
 { #category : #'ston - serialize/materialize' }
 OPStonDiagramSerializer >> stonMaterialize: aString [
-	^ (STON reader
-		allowComplexMapKeys: true;
-		on: aString readStream) next
+	^ STON fromString: aString
 ]

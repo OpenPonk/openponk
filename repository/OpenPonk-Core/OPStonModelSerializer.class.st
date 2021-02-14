@@ -28,9 +28,7 @@ OPStonModelSerializer >> serializeModel: aModel to: aStream [
 
 { #category : #'ston - serialize/materialize' }
 OPStonModelSerializer >> stonMaterialize: aStream [
-	^ (STON reader
-		allowComplexMapKeys: true;
-		on: aStream) next
+	^ STON fromStream: aStream
 ]
 
 { #category : #'ston - serialize/materialize' }

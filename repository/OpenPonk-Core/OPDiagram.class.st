@@ -8,16 +8,13 @@ Class {
 	#instVars : [
 		'name',
 		'isOpen',
-		'filters',
 		'layout',
-		'notes',
 		'order',
 		'isSelected',
 		'camera',
-		'version',
 		'visibleElements',
 		'model',
-		'options'
+		'commonElements'
 	],
 	#category : #'OpenPonk-Core-Diagrams'
 }
@@ -40,8 +37,21 @@ OPDiagram class >> neoJsonMapping: mapper [
 			mapping mapInstVars: mapping identifier instVarNames \ #(model).
 			(mapping mapInstVar: #layout) valueSchema: #UUIDsWithPoints.
 			(mapping mapInstVar: #camera) valueSchema: OPDiagramCamera.
+			(mapping mapInstVar: #commonElements) valueSchema: #CommonElements.
 			(mapping mapInstVar: #visibleElements)
 				valueSchema: #ObjectsWithUUIDs ];
+		for: #CommonElements
+			customDo: [ :mapping | mapping listOfElementSchema: #CommonElement ];
+		for: #CommonElement
+			customDo: [ :mapping | 
+			mapping
+				reader: [ :jsonReader | 
+					| map element |
+					map := jsonReader parseMap.
+					element := (map at: #className) asClass new.
+					NeoJSONReader
+						fromString: (NeoJSONWriter toString: map)
+						as: element class ] ];
 		for: #ObjectsWithUUIDs
 			customDo: [ :mapping | mapping listOfElementSchema: #ObjectWithUUID ];
 		for: #ObjectWithUUID
@@ -158,11 +168,21 @@ OPDiagram >> camera: aCameraSettings [
 	camera := aCameraSettings
 ]
 
+{ #category : #accessing }
+OPDiagram >> commonElements [
+	^ commonElements
+]
+
+{ #category : #accessing }
+OPDiagram >> commonElements: anObject [
+	commonElements := anObject
+]
+
 { #category : #initialization }
 OPDiagram >> initialize [
 	super initialize.
-	visibleElements := OrderedCollection new.
-	options := Dictionary new
+	commonElements := #().
+	visibleElements := OrderedCollection new
 ]
 
 { #category : #accessing }
@@ -238,26 +258,6 @@ OPDiagram >> newCopy [
 	newView := self class ofModel: model fromJsonString: self asJson.
 	newView name: 'copy of ' , self name.
 	^ newView
-]
-
-{ #category : #accessing }
-OPDiagram >> notes [
-	^ notes
-]
-
-{ #category : #accessing }
-OPDiagram >> notes: aCollection [
-	notes := aCollection
-]
-
-{ #category : #accessing }
-OPDiagram >> options [
-	^ options
-]
-
-{ #category : #accessing }
-OPDiagram >> options: aDictionary [
-	options := aDictionary
 ]
 
 { #category : #accessing }

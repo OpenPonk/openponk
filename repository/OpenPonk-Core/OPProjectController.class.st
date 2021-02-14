@@ -209,15 +209,15 @@ OPProjectController >> saveProjectAs [
 
 { #category : #saving }
 OPProjectController >> saveProjectTo: aFile [
-	| store |
+	| store projectDirectory |
 	store := FileSystem memory root.
-	(store / 'project') ensureCreateDirectory.
+	projectDirectory := store / 'project'.
+	projectDirectory ensureCreateDirectory.
 	self recentProjects at: self project uuid put: aFile.
 	self updateDiagrams.
 	self persistenceManager
-		saveProject: self project
-		withMementos: self modelMementos
-		to: store / 'project'.
+		directory: projectDirectory;
+		saveProject: self project withMementos: self modelMementos.
 	OPZipPersistence new save: store to: aFile
 ]
 
@@ -268,7 +268,9 @@ OPProjectController >> updateDiagram: aDiagram [
 		ifFound: [ :ctrl | 
 			aDiagram isOpen: true.
 			aDiagram layout: ctrl layout copy.
+					self halt.
 			aDiagram visibleElements: ctrl visibleElements copy.
+			aDiagram commonElements: ctrl commonElements.
 			aDiagram updateFromRoassalView: ctrl view.
 			aDiagram order: (controllers indexOf: ctrl) ]
 		ifNone: [ aDiagram
@@ -290,6 +292,7 @@ OPProjectController >> updateDiagrams [
 					eachDiagram isOpen: true.
 					eachDiagram layout: ctrl layout copy.
 					eachDiagram visibleElements: ctrl visibleElements copy.
+					eachDiagram commonElements: ctrl commonElements.
 					eachDiagram updateFromRoassalView: ctrl view.
 					eachDiagram order: (controllers indexOf: ctrl).
 					eachDiagram isSelected: ctrl = focusedController ]

@@ -18,6 +18,11 @@ OPCommonElementController >> createModelIn: aParentModel [
 	^ model
 ]
 
+{ #category : #testing }
+OPCommonElementController >> isCommon [
+	^ true
+]
+
 { #category : #'as yet unclassified' }
 OPCommonElementController >> paletteItemName [
 	^ self class paletteItemName

@@ -21,7 +21,8 @@ OPMemento class >> model: aModel diagram: aDiagram [
 { #category : #'instance creation' }
 OPMemento class >> model: aModel diagrams: diagramsCollection [
 	^ self new
-		setModel: aModel diagrams: diagramsCollection;
+		model: aModel;
+		diagrams: diagramsCollection;
 		yourself
 ]
 
@@ -42,7 +43,10 @@ OPMemento >> diagram [
 { #category : #accessing }
 OPMemento >> diagram: aDiagram [
 	self
-		deprecated: 'OP no longer has one diagram per model, use diagrams: instead'.
+		deprecated: 'OP no longer has one diagram per model, use diagrams: instead'
+		transformWith:
+			'`@receiver diagram: `@statements1'
+				-> '`@receiver diagrams: {`@statements1}'.
 	diagrams := {aDiagram}
 ]
 
@@ -70,6 +74,9 @@ OPMemento >> model: aModel [
 OPMemento >> setModel: aModel diagram: aDiagram [
 	self
 		deprecated: 'OP no longer has one diagram per model, use views instead'
+		transformWith:
+			'`@receiver setModel: `@statements1 diagram: `@statements2'
+				-> '`@receiver model: `@statements1; diagrams: {`@statements2}'
 
 	"model := aModel.
 	diagram := aDiagram"
@@ -77,6 +84,11 @@ OPMemento >> setModel: aModel diagram: aDiagram [
 
 { #category : #initialization }
 OPMemento >> setModel: aModel diagrams: diagramsCollection [
+	self
+		deprecated: 'set model and diagrams separately'
+		transformWith:
+			'`@receiver setModel: `@statements1 diagrams: `@statements2'
+				-> '`@receiver model: `@statements1; diagrams: `@statements2'.
 	self
 		model: aModel;
 		diagrams: diagramsCollection

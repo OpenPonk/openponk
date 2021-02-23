@@ -37,8 +37,67 @@ OPNoteFigure >> baseShape [
 ]
 
 { #category : #'creating - subelements' }
+OPNoteFigure >> createOwnedBorderLines [
+	| lineShape innerLineShape |
+	lineShape := RTLine new
+		color: Color darkGray;
+		width: 1;
+		yourself.
+	innerLineShape := RTLine new
+		color: Color gray;
+		width: 1;
+		yourself.
+	lines := {(lineShape edgeFrom: upperTopRightBox to: lowerTopRightBox).
+	(lineShape edgeFrom: lowerTopRightBox to: bottomRightBox).
+	(lineShape edgeFrom: bottomRightBox to: bottomLeftBox).
+	(lineShape edgeFrom: bottomLeftBox to: topLeftBox).
+	(lineShape edgeFrom: topLeftBox to: upperTopRightBox)} asGroup.
+	self addAll: lines
+]
+
+{ #category : #'creating - subelements' }
+OPNoteFigure >> createOwnedCornerTriangle [
+	triangle := RTSVGPath new
+		path: 'L20,0L0,-20Z';
+		color: Color lightYellow darker;
+		borderColor: Color darkGray;
+		elementOn: #triangle.
+	self
+		add: triangle.
+]
+
+{ #category : #'creating - subelements' }
 OPNoteFigure >> createOwnedElements [
-	| invisibleBoxShape lineShape innerLineShape |
+	super createOwnedElements.
+	self createOwnedInvisibleBoxes.
+	self createOwnedFillBoxes.
+	self createOwnedCornerTriangle.
+	self createOwnedBorderLines.
+	ownedElements sort: [ :a :b | a isEdge & b isEdge not ].
+	self updateOwnedElements.
+	self
+		addCallback: (TRExtentCallback block: [ self updateOwnedElements ]).
+	self
+		addCallback: (TRTranslationCallback block: [ self updateOwnedElements ])
+]
+
+{ #category : #'creating - subelements' }
+OPNoteFigure >> createOwnedFillBoxes [
+	| fillBoxShape |
+	fillBoxShape := RTBox new
+		color: Color lightYellow;
+		borderColor: Color transparent;
+		yourself.
+	leftFillBox := fillBoxShape elementOn: #left.
+	bottomFillBox := fillBoxShape elementOn: #bottom.
+	self
+		add: leftFillBox;
+		add: bottomFillBox
+]
+
+{ #category : #'creating - subelements' }
+OPNoteFigure >> createOwnedInvisibleBoxes [
+	| invisibleBoxShape |
 	invisibleBoxShape := RTBox new
 		color: Color transparent;
 		borderColor: Color transparent;
@@ -54,44 +113,7 @@ OPNoteFigure >> createOwnedElements [
 	(middleLeftBox := invisibleBoxShape elementOn: #middleLeft).
 	(middleBottomBox := invisibleBoxShape elementOn: #middleBottom)}
 		asGroup.
-	self
-		addCallback: (TRExtentCallback block: [ self updateOwnedElements ]).
-	self
-		addCallback: (TRTranslationCallback block: [ self updateOwnedElements ]).
-	lineShape := RTLine new
-		color: Color darkGray;
-		width: 1;
-		yourself.
-	innerLineShape := RTLine new
-		color: Color gray;
-		width: 1;
-		yourself.
-	lines := {(lineShape edgeFrom: upperTopRightBox to: lowerTopRightBox).
-	(lineShape edgeFrom: lowerTopRightBox to: bottomRightBox).
-	(lineShape edgeFrom: bottomRightBox to: bottomLeftBox).
-	(lineShape edgeFrom: bottomLeftBox to: topLeftBox).
-	(lineShape edgeFrom: topLeftBox to: upperTopRightBox)} asGroup.
-	triangle := RTSVGPath new
-		path: 'L20,0L0,-20Z';
-		color: Color lightYellow darker;
-		borderColor: Color darkGray;
-		elementOn: #triangle.
-	leftFillBox := RTBox new
-		color: Color lightYellow;
-		borderColor: Color transparent;
-		elementOn: #left.
-	bottomFillBox := RTBox new
-		color: Color lightYellow;
-		borderColor: Color transparent;
-		elementOn: #bottom.
-	self
-		add: leftFillBox;
-		add: bottomFillBox;
-		add: triangle.
-	self addAll: lines.
-	self addAll: invisibleBoxes.
-	super createOwnedElements.
-	self updateOwnedElements
+	self addAll: invisibleBoxes
 ]
 
 { #category : #rendering }
@@ -129,6 +151,5 @@ OPNoteFigure >> updateOwnedElements [
 		translateTo: self position + (-10 @ 0).
 	bottomFillBox
 		extent: self extent + (0 @ -20);
-		translateTo: self position + (0 @ 10).
-	text update
+		translateTo: self position + (0 @ 10)
 ]

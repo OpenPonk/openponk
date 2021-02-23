@@ -8,24 +8,6 @@ Class {
 }
 
 { #category : #tests }
-OPDiagramTest >> testAsInfo [
-	| info |
-	view := OPDiagram new
-		name: 'test diagram';
-		model: OPTestContainerModel new;
-		isOpen: true;
-		isSelected: false;
-		order: 7.
-	info := view asInfo.
-	self assert: info diagramName equals: view name.
-	self assert: info modelName equals: view modelName.
-	self assert: info modelType equals: view modelType.
-	self assert: info isOpen equals: view isOpen.
-	self assert: info isSelected equals: view isSelected.
-	self assert: info order equals: view order
-]
-
-{ #category : #tests }
 OPDiagramTest >> testAsJsonComplex [
 	view := OPDiagram new
 		camera:
@@ -41,7 +23,8 @@ OPDiagramTest >> testAsJsonComplex [
 			(STON
 				fromString:
 					'{ 	"camera" : { "offset" : { "x" : 20, "y" : 30 }, "zoom" : 1.2 }	,
-		"layout" : { "Person" : { "position" : { "x" : 27, "y" : 23 }, "extent" : { "x" : 0, "y" : 0 } } },
+		"layout" : { "Person" : { "position" : { "x" : 27, "y" : 23 }, "extent" : { "x" : 0, "y" : 0 } } }, 
+		"commonElements" : [],
 		"visibleElements" : [  ] }')
 ]
 
@@ -54,7 +37,7 @@ OPDiagramTest >> testAsJsonModel [
 	view := OPDiagram new model: model.
 	self
 		assert: (STON fromString: view asJson)
-		equals: (STON fromString: '{"visibleElements" : [ ] }')
+		equals: (STON fromString: '{ "commonElements" : [], "visibleElements" : [ ] }')
 ]
 
 { #category : #tests }
@@ -62,7 +45,7 @@ OPDiagramTest >> testAsJsonModel2 [
 	view := OPDiagram new model: OPTestContainerModel new.
 	self
 		assert: (STON fromString: view asJson)
-		equals: (STON fromString: '{ "visibleElements" : [ ] }')
+		equals: (STON fromString: '{ "commonElements" : [], "visibleElements" : [ ] }')
 ]
 
 { #category : #tests }
@@ -116,19 +99,6 @@ OPDiagramTest >> testNewCopy [
 	self assert: newView name equals: 'copy of original'.
 	self assert: newView model equals: model.
 	view
-]
-
-{ #category : #tests }
-OPDiagramTest >> testUpdateFromInfo [
-	| info |
-	info := OPDiagramInfo new
-		isOpen: true;
-		isSelected: false;
-		order: 7.
-	view := OPDiagram new updateFromInfo: info.
-	self assert: info isOpen equals: view isOpen.
-	self assert: info isSelected equals: view isSelected.
-	self assert: info order equals: view order
 ]
 
 { #category : #tests }

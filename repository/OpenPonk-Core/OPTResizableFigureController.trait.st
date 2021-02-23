@@ -14,5 +14,5 @@ OPTResizableFigureController >> layout [
 OPTResizableFigureController >> layout: anElementLayout [
 	super layout: anElementLayout.
 	anElementLayout hasExtent
-		ifTrue: [ self figure shape extent: anElementLayout extent ]
+		ifTrue: [ self figure extent: anElementLayout extent ]
 ]

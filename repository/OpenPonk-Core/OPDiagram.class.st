@@ -138,6 +138,8 @@ OPDiagram >> allElementsVisible [
 
 { #category : #converting }
 OPDiagram >> asInfo [
+	self deprecated: 'OPDiagramInfo is no longer used'.
+	
 	^ OPDiagramInfo new
 		diagramName: self name;
 		isOpen: self isOpen;
@@ -207,7 +209,7 @@ OPDiagram >> isSelected: aBoolean [
 
 { #category : #accessing }
 OPDiagram >> layout [
-	^ layout 
+	^ layout
 ]
 
 { #category : #accessing }
@@ -279,6 +281,8 @@ OPDiagram >> printOn: aStream [
 
 { #category : #converting }
 OPDiagram >> updateFromInfo: anInfo [
+	self deprecated: 'OPDiagramInfo is no longer used'.
+	
 	self isOpen: anInfo isOpen.
 	self isSelected: anInfo isSelected.
 	self order: anInfo order

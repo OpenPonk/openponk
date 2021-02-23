@@ -537,7 +537,7 @@ OPDiagramController >> rebuild [
 	self showElements.
 	diagram layout
 		ifNil: [ self applyDefaultLayout ]
-		ifNotNil: [ self layout: diagram layout ]
+		ifNotNil: [ :layout | self layout: layout ]
 ]
 
 { #category : #'undo/redo' }
@@ -704,7 +704,8 @@ OPDiagramController >> view: aView [
 
 { #category : #accessing }
 OPDiagramController >> visibleElements [
-	^ self allShowableElements select: [ :el | self isVisibleInDiagram: el ]
+	^ self allShowableElements
+		select: [ :el | self isVisibleInDiagram: el ]
 ]
 
 { #category : #accessing }

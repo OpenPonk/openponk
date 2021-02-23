@@ -268,7 +268,6 @@ OPProjectController >> updateDiagram: aDiagram [
 		ifFound: [ :ctrl | 
 			aDiagram isOpen: true.
 			aDiagram layout: ctrl layout copy.
-					self halt.
 			aDiagram visibleElements: ctrl visibleElements copy.
 			aDiagram commonElements: ctrl commonElements.
 			aDiagram updateFromRoassalView: ctrl view.
@@ -291,8 +290,8 @@ OPProjectController >> updateDiagrams [
 				ifFound: [ :ctrl | 
 					eachDiagram isOpen: true.
 					eachDiagram layout: ctrl layout copy.
-					eachDiagram visibleElements: ctrl visibleElements copy.
 					eachDiagram commonElements: ctrl commonElements.
+					eachDiagram visibleElements: ctrl visibleElements copy.
 					eachDiagram updateFromRoassalView: ctrl view.
 					eachDiagram order: (controllers indexOf: ctrl).
 					eachDiagram isSelected: ctrl = focusedController ]

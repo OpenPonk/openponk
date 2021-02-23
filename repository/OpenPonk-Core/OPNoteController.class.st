@@ -17,12 +17,28 @@ OPNoteController >> buildEditorForm: aForm [
 		text: self model text;
 		whenTextIsAccepted: [ :newValue | 
 			self model text: newValue asString.
-			self refreshFigure ]
+			self model
+				announce: (OPElementTextAttributeChanged withAttributeName: #text) ]
+]
+
+{ #category : #construction }
+OPNoteController >> createModelIn: aParentModel [
+	super createModelIn: aParentModel.
+	model
+		when: OPElementTextAttributeChanged
+		do: [ self figure updateText ].
+	^ model
 ]
 
 { #category : #accessing }
 OPNoteController >> modelClass [
 	^ OPNote
+]
+
+{ #category : #construction }
+OPNoteController >> removeModel [
+	model announcer unsubscribe: self.
+	super removeModel
 ]
 
 { #category : #construction }

@@ -11,7 +11,7 @@ OPMementoFileSerializer >> addFormatNameTo: aFileReference [
 
 { #category : #formatting }
 OPMementoFileSerializer >> formatName [
-	^ 'opp'
+	^ self subclassResponsibility
 ]
 
 { #category : #saving }

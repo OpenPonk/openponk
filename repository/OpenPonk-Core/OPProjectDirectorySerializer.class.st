@@ -4,8 +4,21 @@ My job is to store a project with all the plugins into a provided directory.
 Class {
 	#name : #OPProjectDirectorySerializer,
 	#superclass : #Object,
+	#instVars : [
+		'directory'
+	],
 	#category : #'OpenPonk-Core-Persistence'
 }
+
+{ #category : #accessing }
+OPProjectDirectorySerializer >> directory [
+	^ directory
+]
+
+{ #category : #accessing }
+OPProjectDirectorySerializer >> directory: aFolder [
+	directory := aFolder asFileReference 
+]
 
 { #category : #accessing }
 OPProjectDirectorySerializer >> exporter [
@@ -30,6 +43,11 @@ OPProjectDirectorySerializer >> modelReferencesToJson: models [
 	^ STON toJsonStringPretty: references
 ]
 
+{ #category : #accessing }
+OPProjectDirectorySerializer >> modelsDirectory [
+	^ directory / 'models'
+]
+
 { #category : #writing }
 OPProjectDirectorySerializer >> projectToJson: aProject [
 	^ STON
@@ -45,50 +63,49 @@ OPProjectDirectorySerializer >> projectToJson: aProject [
 					'timestamp' -> DateAndTime now truncated asString} asDictionary} asDictionary
 ]
 
-{ #category : #saving }
-OPProjectDirectorySerializer >> removeModelsNotIn: aCollection from: aFolder [
+{ #category : #'private - saving' }
+OPProjectDirectorySerializer >> removeModelsNotIn: aCollection [
 	| toDelete ids |
 	ids := aCollection collect: [ :each | each uuid asString ].
-	toDelete := aFolder children
+	toDelete := self modelsDirectory children
 		reject: [ :each | ids includes: each basenameWithoutExtension ].
 	toDelete do: [ :each | each deleteAll ]
 ]
 
-{ #category : #saving }
-OPProjectDirectorySerializer >> saveMemento: aMemento to: aRoot with: aSerializer [
+{ #category : #'private - saving' }
+OPProjectDirectorySerializer >> saveMemento: aMemento with: aSerializer [
 	| fileReference |
-	aRoot ensureCreateDirectory.
+	self modelsDirectory ensureCreateDirectory.
 	fileReference := aSerializer
-		addFormatNameTo: aRoot / aMemento uuid asString.
+		addFormatNameTo: self modelsDirectory / aMemento uuid asString.
 	aSerializer saveMemento: aMemento to: fileReference
 ]
 
-{ #category : #saving }
-OPProjectDirectorySerializer >> saveMementos: aCollection to: aFolder [
+{ #category : #'private - saving' }
+OPProjectDirectorySerializer >> saveMementos: aCollection [
 	aCollection
 		do: [ :each | 
 			self
 				saveMemento: each
-				to: aFolder / 'models'
 				with: (OPPluginRegistry default pluginFor: each model) serializer ]
 ]
 
-{ #category : #saving }
-OPProjectDirectorySerializer >> saveProject: aProject to: aFolder [
-	aFolder ensureCreateDirectory.
-	(aFolder / 'models') ensureCreateDirectory.
-	(aFolder / '.history' / 'models') ensureCreateDirectory.
-	(aFolder / 'project.json')
+{ #category : #'private - saving' }
+OPProjectDirectorySerializer >> saveProject: aProject [
+	directory ensureCreateDirectory.
+	(directory / 'models') ensureCreateDirectory.
+	(directory / '.history' / 'models') ensureCreateDirectory.
+	(directory / 'project.json')
 		ensureDelete;
 		writeStreamDo: [ :stream | stream << (self projectToJson: aProject) ].
-	(aFolder / 'models.json')
+	(directory / 'models.json')
 		ensureDelete;
 		writeStreamDo: [ :stream | stream << (self modelReferencesToJson: aProject models) ]
 ]
 
 { #category : #'public - saving' }
-OPProjectDirectorySerializer >> saveProject: aProject withMementos: aCollection to: aFolder [
-	self saveProject: aProject to: aFolder asFileReference.
-	self saveMementos: aCollection to: aFolder asFileReference.
-	self removeModelsNotIn: aCollection from: aFolder / 'models'
+OPProjectDirectorySerializer >> saveProject: aProject withMementos: aCollection [
+	self saveProject: aProject.
+	self saveMementos: aCollection.
+	self removeModelsNotIn: aCollection
 ]

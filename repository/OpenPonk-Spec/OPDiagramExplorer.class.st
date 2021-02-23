@@ -99,7 +99,8 @@ OPDiagramExplorer >> showElements: aCollectionOfModelObjects [
 		collect: [ :each | diagramController controllerForModel: each ifNone: [ nil ] ]
 		thenSelect: [ :each | each isNotNil ].
 	ctrls := (aCollectionOfModelObjects
-		sorted: [ :a :b | adapters dependsTypeOf: b on: a in: diagramController model ])
+		sorted:
+			[ :a :b | adapters dependsTypeOf: b on: a in: diagramController model ])
 		collect: [ :each | diagramController showWithoutDependentInDiagramModel: each ].
 	diagramController enableRefresh.
 	ctrls \ existingCtrls do: #refreshFigure

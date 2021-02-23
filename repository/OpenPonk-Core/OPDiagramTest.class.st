@@ -34,8 +34,7 @@ OPDiagramTest >> testAsJsonComplex [
 				zoom: 1.2);
 		layout:
 			{('Person' -> (OPElementLayout withPosition: 27 @ 23 extent: 0 @ 0))}
-				asDictionary;
-		options: {('key' -> 'value')} asDictionary.
+				asDictionary.
 	self
 		assert: (STON fromString: view asJson)
 		equals:
@@ -43,7 +42,6 @@ OPDiagramTest >> testAsJsonComplex [
 				fromString:
 					'{ 	"camera" : { "offset" : { "x" : 20, "y" : 30 }, "zoom" : 1.2 }	,
 		"layout" : { "Person" : { "position" : { "x" : 27, "y" : 23 }, "extent" : { "x" : 0, "y" : 0 } } },
-		"options" : { "key" : "value" },
 		"visibleElements" : [  ] }')
 ]
 
@@ -56,10 +54,7 @@ OPDiagramTest >> testAsJsonModel [
 	view := OPDiagram new model: model.
 	self
 		assert: (STON fromString: view asJson)
-		equals:
-			(STON
-				fromString:
-					'{"visibleElements" : [ ],"options": { } }')
+		equals: (STON fromString: '{"visibleElements" : [ ] }')
 ]
 
 { #category : #tests }
@@ -67,10 +62,7 @@ OPDiagramTest >> testAsJsonModel2 [
 	view := OPDiagram new model: OPTestContainerModel new.
 	self
 		assert: (STON fromString: view asJson)
-		equals:
-			(STON
-				fromString:
-					'{ "visibleElements" : [ ], "options" : {  } }')
+		equals: (STON fromString: '{ "visibleElements" : [ ] }')
 ]
 
 { #category : #tests }
@@ -85,7 +77,6 @@ OPDiagramTest >> testFromJsonComplex [
 		fromJsonString:
 			'{ 	"camera" : { "offset" : { "x" : 20, "y" : 30 }, "zoom" : 1.2 },
 		"layout" : { "6b181c2c-135a-0d00-86ce-55e80f4cf59c" : { "position" : { "x" : 27, "y" : 23 } } },
-		"options" : { "key" : "value" },
 		"visibleElements" : [ "6b181c2c-135a-0d00-86ce-55e80f4cf59c" ]	 }'.
 	self assert: view camera offset equals: 20 @ 30.
 	self assert: view camera zoom equals: 1.2.
@@ -94,7 +85,6 @@ OPDiagramTest >> testFromJsonComplex [
 		equals: {(personUUID -> (OPElementLayout withPosition: 27 @ 23))} asDictionary.
 	self assert: view visibleElements size equals: 1.
 	self assert: view visibleElements anyOne equals: person.
-	self assert: view options equals: {('key' -> 'value')} asDictionary
 ]
 
 { #category : #tests }

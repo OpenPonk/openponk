@@ -12,6 +12,11 @@ Class {
 	#category : #'OpenPonk-Core-Controllers'
 }
 
+{ #category : #'as yet unclassified' }
+OPControllerFactory class >> withCommonElements [
+	^ self new registerCommonElements
+]
+
 { #category : #'accessing - defaults' }
 OPControllerFactory >> acceptAllCondition [
 	^ [ :aModel | true ]
@@ -50,6 +55,12 @@ OPControllerFactory >> register: aControllerClass forModel: aModelClass conditio
 				controllerClass: aControllerClass;
 				modelClass: aModelClass;
 				condition: aConditionBlock)
+]
+
+{ #category : #'as yet unclassified' }
+OPControllerFactory >> registerCommonElements [
+	OPCommonElementController
+		allSubclassesDo: [ :each | self register: each forModel: each modelClass ]
 ]
 
 { #category : #'accessing - defaults' }

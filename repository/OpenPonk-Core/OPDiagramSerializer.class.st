@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 OPDiagramSerializer >> formatName [
-	^ 'diagram'
+	^ self subclassResponsibility
 ]
 
 { #category : #'serialize/materialize' }

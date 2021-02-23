@@ -2,12 +2,32 @@ Class {
 	#name : #OPCommonElement,
 	#superclass : #Object,
 	#instVars : [
-		'owner',
 		'uuid',
 		'announcer'
 	],
 	#category : #'OpenPonk-Core-CommonElements'
 }
+
+{ #category : #accessing }
+OPCommonElement class >> neoJsonMapping: mapper [
+	mapper
+		for: self
+			do: [ :mapping | 
+			mapping mapInstVars: mapping identifier allInstVarNames \ #(announcer).
+			(mapping mapInstVar: #uuid) valueSchema: UUID.
+			mapping
+				mapProperty: #className
+				getter: [ :object | object className ]
+				setter: [ :object :value | object assert: object className equals: value ] ];
+		for: UUID
+			customDo: [ :mapping | 
+			mapping
+				encoder: [ :uuid | uuid asString ];
+				decoder: [ :string | 
+					[ UUID fromString: string ]
+						on: Error
+						do: [ string ] ] ]
+]
 
 { #category : #announce }
 OPCommonElement >> announce: anAnnouncement [
@@ -18,11 +38,6 @@ OPCommonElement >> announce: anAnnouncement [
 OPCommonElement >> announcer [
 	announcer ifNil: [ announcer := Announcer new ].
 	^ announcer
-]
-
-{ #category : #accessing }
-OPCommonElement >> owner [
-	^ owner
 ]
 
 { #category : #enumerating }

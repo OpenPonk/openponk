@@ -23,7 +23,8 @@ OPProjectDirectorySerializerTest >> tearDown [
 OPProjectDirectorySerializerTest >> testCreateFolderStructure [
 	| root |
 	root := FileSystem memory root / 'project'.
-	persistence saveProject: OPProject new to: root.
+	persistence directory: root.
+	persistence saveProject: OPProject new.
 	self assert: root isDirectory.
 	self assert: (root / 'project.json') isFile.
 	self assert: (root / 'models.json') isFile.
@@ -33,23 +34,23 @@ OPProjectDirectorySerializerTest >> testCreateFolderStructure [
 
 { #category : #tests }
 OPProjectDirectorySerializerTest >> testDeleteOldModels [
-	| models folder |
-	folder := FileSystem memory root / 'models'.
+	| models folder modelsFolder |
+	folder := FileSystem memory root.
+	modelsFolder := folder / 'models'.
 	models := {(OPTestEntityModel new uuid: UUID new).
 	OPTestEntityModel new}.
+	persistence directory: folder.
 	persistence
 		saveMemento: (OPPersistenceMemento model: models first diagrams: #())
-		to: folder
 		with: OPStonSerializer new.
 	persistence
 		saveMemento: (OPPersistenceMemento model: models second diagrams: #())
-		to: folder
 		with: OPStonSerializer new.
-	self assert: folder children size equals: 2.
-	persistence removeModelsNotIn: models allButLast from: folder.
-	self assert: folder children size equals: 1.
+	self assert: modelsFolder children size equals: 2.
+	persistence removeModelsNotIn: models allButLast.
+	self assert: modelsFolder children size equals: 1.
 	self
-		assert: folder children anyOne basename
+		assert: modelsFolder children anyOne basename
 		equals: models first uuid asString , '.ston'
 ]
 

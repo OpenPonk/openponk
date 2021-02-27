@@ -14,8 +14,10 @@ Class {
 { #category : #initialization }
 OPEditorAnnouncementsTest >> setUp [
 	plugin := Mock new.
-	plugin stub diagramControllerClass willReturn: OPTestDiagramController.
+	plugin stub diagramControllerClass
+		willReturn: OPTestDiagramController.
 	(plugin stub isPluginFor: Any) willReturn: true.
+	(plugin stub isForController: Any) willReturn: true.
 	OPPluginRegistry setDefault: (OPPluginRegistry new add: plugin).
 	project := OPProject new.
 	project addModel: OPTestContainerModel new.

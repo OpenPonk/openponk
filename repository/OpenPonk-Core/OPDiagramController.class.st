@@ -499,8 +499,12 @@ OPDiagramController >> modelToControllerMapping [
 
 { #category : #'as yet unclassified' }
 OPDiagramController >> nameOfTypeForModel: aModel [
-	^ (((aModel className withoutPrefix: self commonModelClassPrefix)
-		splitOnCapitals collect: #asLowercase) joinUsing: ' ') capitalized
+	self
+		deprecated: 'use #name on typeOfModel: instead'
+		transformWith:
+			'`@receiver nameOfTypeForModel: `@argument'
+				-> '(`@receiver typeOfModel: `@argument) name'.
+	^ (self typeOfModel: aModel) name
 ]
 
 { #category : #'controllers management' }
@@ -679,6 +683,14 @@ OPDiagramController >> showWithoutDependentInDiagramModel: aModel [
 	^ (self newControllerFor: aModel)
 		showWithoutDependentInDiagram: self;
 		yourself
+]
+
+{ #category : #'as yet unclassified' }
+OPDiagramController >> typeOfModel: aModel [
+	^ OPModelObjectType
+		named:
+			((aModel className withoutPrefix: self commonModelClassPrefix)
+				splitOnCapitals joinUsing: ' ')
 ]
 
 { #category : #'undo/redo' }

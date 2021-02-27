@@ -183,7 +183,7 @@ OPController >> modelClass [
 
 { #category : #accessing }
 OPController >> nameOfType [
-	^ self diagramController nameOfTypeForModel: self model
+	^ (self diagramController typeOfModel: self model) name
 ]
 
 { #category : #figures }

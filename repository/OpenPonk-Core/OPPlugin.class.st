@@ -42,6 +42,11 @@ OPPlugin >> icon [
 ]
 
 { #category : #testing }
+OPPlugin >> isForController: aDiagramController [
+	^ self diagramControllerClass = aDiagramController class
+]
+
+{ #category : #testing }
 OPPlugin >> isPluginFor: aModel [
 	^ self modelClass = aModel class
 ]
@@ -68,11 +73,22 @@ OPPlugin >> name [
 	^ self subclassResponsibility
 ]
 
+{ #category : #'instance creation' }
+OPPlugin >> newModel [
+	^ self modelClass new
+]
+
 { #category : #accessing }
 OPPlugin >> serializer [
 	^ OPMementoDirectorySerializer
 		withModelSerializer: self modelSerializerClass new
 		diagramsSerializer: self diagramSerializerClass new
+]
+
+{ #category : #accessing }
+OPPlugin >> simpleName [
+	^ self name capitalized
+		select: [ :each | each isLetter and: [ each asciiValue <= 127 ] ]
 ]
 
 { #category : #accessing }

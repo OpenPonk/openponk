@@ -112,3 +112,9 @@ OPNavigatorAdapters >> initialize [
 	adapters := self allAdapters collect: #new.
 	typeToAdapterMapping := Dictionary new
 ]
+
+{ #category : #sorting }
+OPNavigatorAdapters >> sort: modelObjects [
+	modelObjects ifEmpty: [ ^ modelObjects ].
+	^ (self adapterFor: modelObjects anyOne) sort: modelObjects
+]

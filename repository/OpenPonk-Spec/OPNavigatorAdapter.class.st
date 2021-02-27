@@ -223,6 +223,11 @@ OPNavigatorAdapter >> retrieveTypesByDependency [
 				flatCollect: [ :eachClass | eachClass withAllSubclasses ] ]
 ]
 
+{ #category : #private }
+OPNavigatorAdapter >> sort: modelObjects [
+	^ modelObjects sorted: [ :a :b | a hash < b hash ]
+]
+
 { #category : #'widget API' }
 OPNavigatorAdapter >> typesByDependency [
 	^ self subclassResponsibility

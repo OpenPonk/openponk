@@ -79,14 +79,17 @@ OPDiagramsWidget >> copyDiagram: aView [
 
 { #category : #actions }
 OPDiagramsWidget >> createDiagram [
-	| name diagram |
+	| name diagram openModel |
+	openModel := self workbench focusedEditor
+		ifNotNil: [ :editor | editor diagramController model ].
 	[ name := UIManager default
 		request: 'Diagram name: '
-		initialAnswer: self project name
+		initialAnswer: openModel name
 		title: 'Create new' ]
 		doWhileTrue: [ name isNotNil and: [ name isEmpty ] ].
 	name ifNil: [ ^ self ].
-	diagram := OPDiagram emptyOfModel: self project models first.
+	diagram := OPDiagram
+		emptyOfModel: (openModel ifNil: [ self project models first ]).
 	diagram name: name.
 	project addDiagram: diagram.
 	self workbench openEditorOnDiagram: diagram

@@ -22,5 +22,7 @@ OPProjectNewModelCommand >> defaultMenuItemName [
 
 { #category : #execution }
 OPProjectNewModelCommand >> execute [
-	projectController inspect
+	(OPModelTypeSelector
+		newApplication: SpApplication defaultApplication
+		model: projectController) openWithSpec
 ]

@@ -32,12 +32,13 @@ OPProject class >> named: aString [
 
 { #category : #accessing }
 OPProject >> addDiagram: aDiagram [
-	diagrams add: aDiagram
+	(diagrams at: aDiagram model ifAbsentPut: [ OrderedCollection new ])
+		add: aDiagram
 ]
 
 { #category : #accessing }
 OPProject >> addDiagrams: aCollection [
-	diagrams addAll: aCollection
+	aCollection do: [ :each | self addDiagram: each ]
 ]
 
 { #category : #adding }
@@ -77,7 +78,7 @@ OPProject >> descriptionName [
 
 { #category : #accessing }
 OPProject >> diagrams [
-	^ diagrams
+	^ diagrams values flattened
 ]
 
 { #category : #accessing }
@@ -88,7 +89,7 @@ OPProject >> diagrams: aCollection [
 
 { #category : #removing }
 OPProject >> diagramsOf: aModel [
-	^ diagrams select: [ :each | each model = aModel ]
+	^ diagrams at: aModel
 ]
 
 { #category : #adding }
@@ -109,10 +110,10 @@ OPProject >> hasDiagramsModel: aModel [
 OPProject >> initialize [
 	uuid := UUID new.
 	models := OrderedCollection new asValueHolder.
-	diagrams := "SRToManyLink
+	diagrams := Dictionary new.	"SRToManyLink
 		on: self
 		slot: #diagrams
-		oppositeSlot: #project." OrderedCollection new.
+		oppositeSlot: #project."
 	name := NewValueHolder value: 'Unnamed project'.
 	dirty := false asValueHolder.
 	models whenChangedDo: [ dirty value: true ].
@@ -136,7 +137,7 @@ OPProject >> name: aString [
 
 { #category : #removing }
 OPProject >> removeDiagramsOf: aModel [
-	diagrams removeAllSuchThat: [ :each | each model = aModel ]
+	diagrams removeKey: aModel
 ]
 
 { #category : #persistence }

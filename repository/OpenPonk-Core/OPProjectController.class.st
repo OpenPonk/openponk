@@ -136,6 +136,11 @@ OPProjectController >> openDiagrams [
 		ifTrue: [ workbench openEditorOnDiagram: project diagrams first ]
 ]
 
+{ #category : #opening }
+OPProjectController >> openEditorOnDiagram: aDiagram [
+	workbench openEditorOnDiagram: aDiagram
+]
+
 { #category : #accessing }
 OPProjectController >> persistenceManager [
 	^ persistenceManager ifNil: [ persistenceManager := OPProjectDirectorySerializer new ]

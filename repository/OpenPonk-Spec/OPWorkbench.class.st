@@ -183,6 +183,12 @@ OPWorkbench >> closeEditorOfView: aView [
 ]
 
 { #category : #'accessing - spec' }
+OPWorkbench >> deleteDiagram: aDiagram [
+	self closeEditorOfView: aDiagram.
+	self projectController removeDiagram: aDiagram
+]
+
+{ #category : #'accessing - spec' }
 OPWorkbench >> diagramWidget [
 	^ diagramWidget
 ]
@@ -295,8 +301,7 @@ OPWorkbench >> openEditorOnDiagram: aDiagram [
 				evaluate: [ :t | self closeEditor: editor ] ].
 	self announce: (OPEditorCreated on: editor).
 	tabManager addTab: tab.
-	self focusEditorOf: aDiagram.
-	editor showDiagram: aDiagram
+	self focusEditorOf: aDiagram
 ]
 
 { #category : #opening }

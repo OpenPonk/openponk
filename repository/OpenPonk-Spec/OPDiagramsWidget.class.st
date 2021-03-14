@@ -101,8 +101,7 @@ OPDiagramsWidget >> deleteDiagram: aView [
 		confirm: 'Delete view "' , (self displayFor: aView) , '"?'
 		label: 'Delete')
 		ifFalse: [ ^ self ].
-	self workbench closeEditorOfView: aView.
-	"aView project: nil."
+	self workbench deleteDiagram: aView.
 	self updateContent
 ]
 

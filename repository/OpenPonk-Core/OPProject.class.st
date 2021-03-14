@@ -62,7 +62,7 @@ OPProject >> controllerClass [
 OPProject >> copyDiagram: aDiagram [
 	| newDiagram |
 	newDiagram := aDiagram newCopy.
-	self diagrams add: newDiagram.
+	self addDiagram: newDiagram.
 	^ newDiagram
 ]
 
@@ -78,7 +78,8 @@ OPProject >> descriptionName [
 
 { #category : #accessing }
 OPProject >> diagrams [
-	^ diagrams values flattened
+	^ self models
+		flatCollect: [ :eachModel | self diagramsOf: eachModel ]
 ]
 
 { #category : #accessing }
@@ -89,7 +90,7 @@ OPProject >> diagrams: aCollection [
 
 { #category : #removing }
 OPProject >> diagramsOf: aModel [
-	^ diagrams at: aModel
+	^ diagrams at: aModel ifAbsent: [ #() ]
 ]
 
 { #category : #adding }
@@ -133,6 +134,14 @@ OPProject >> name [
 { #category : #accessing }
 OPProject >> name: aString [
 	name := aString
+]
+
+{ #category : #removing }
+OPProject >> removeDiagram: aDiagram [
+	| diagramsOfModel |
+	diagramsOfModel := diagrams at: aDiagram model.
+	diagramsOfModel remove: aDiagram.
+	diagramsOfModel ifEmpty: [ diagrams removeKey: aDiagram model ]
 ]
 
 { #category : #removing }

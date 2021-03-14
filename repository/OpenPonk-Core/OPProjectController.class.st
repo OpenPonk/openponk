@@ -133,7 +133,8 @@ OPProjectController >> openDiagrams [
 	selected ifNotNil: [ workbench openEditorOnDiagram: selected ].
 	(project diagrams isNotEmpty
 		and: [ project diagrams noneSatisfy: #isOpen ])
-		ifTrue: [ workbench openEditorOnDiagram: project diagrams first ]
+		ifTrue: [ project diagrams
+				do: [ :eachDiagram | workbench openEditorOnDiagram: eachDiagram ] ]
 ]
 
 { #category : #opening }
@@ -183,6 +184,16 @@ OPProjectController >> projectFolder [
 { #category : #accessing }
 OPProjectController >> recentProjects [
 	^ RecentProjects ifNil: [ RecentProjects := OrderedDictionary new ]
+]
+
+{ #category : #removing }
+OPProjectController >> removeDiagram: aDiagram [
+	project removeDiagram: aDiagram.
+	self
+		removeDiagramController:
+			(controllers
+				detect: [ :any | any diagram = aDiagram ]
+				ifNone: [ ^ self ])
 ]
 
 { #category : #removing }

@@ -21,7 +21,7 @@ OPNavigatorAdapters class >> default [
 
 { #category : #accessing }
 OPNavigatorAdapters class >> reset [
-	<example>
+	<script>
 	^ default := self new
 ]
 

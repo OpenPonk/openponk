@@ -8,32 +8,18 @@ Class {
 	#classTraits : 'TComparable classTrait',
 	#instVars : [
 		'version',
-		'buildNumber',
-		'buildTimestamp',
-		'projectName'
+		'commit',
+		'projectName',
+		'buildDate',
+		'commitDate',
+		'runId'
 	],
 	#classInstVars : [
-		'current'
+		'current',
+		'latest'
 	],
 	#category : #'OpenPonk-Core-Persistence'
 }
-
-{ #category : #'instance creation' }
-OPVersion class >> buildStorageUrl [
-	| document versions version |
-	document := XMLDOMParser
-		parseURL: 'https://dl.bintray.com/openponk/builds/' , self current projectName.
-	versions := ((document / 'html' / 'body' / 'pre' / 'a') stringValues
-		select: [ :any | any includesNumber ]
-		thenCollect: [ :each | ((each withoutPrefix: 'v') withoutSuffix: '/') -> each ])
-		asSortedCollection.
-	version := (versions isEmpty
-		or: [ self current hasNumberedVersion not ])
-		ifTrue: [ 'latest/' ]
-		ifFalse: [ versions last value ].
-	^ 'https://dl.bintray.com/openponk/builds/'
-		, self current projectName , '/' , version , 'version-info.json'
-]
 
 { #category : #accessing }
 OPVersion class >> current [
@@ -42,98 +28,177 @@ OPVersion class >> current [
 
 { #category : #'instance creation' }
 OPVersion class >> current: aVersion [
-	current := aVersion
+	current := aVersion.
+	latest := nil
 ]
 
 { #category : #'instance creation' }
-OPVersion class >> currentFromJSON: aString [
-	self current: (self fromJSON: aString)
+OPVersion class >> currentWithRunId: anId projectName: aProjectName [
+	self
+		current:
+			(self new
+				runId: anId;
+				projectName: aProjectName;
+				yourself)
 ]
 
 { #category : #'instance creation' }
-OPVersion class >> fromBuildStorage [
-	^ self fromJSON: (ZnEasy get: self buildStorageUrl) entity string
+OPVersion class >> fromRunJson: aRun [
+	^ self new fromRunJson: aRun
 ]
 
-{ #category : #'instance creation' }
-OPVersion class >> fromJSON: aString [
-	| dictionary |
-	dictionary := NeoJSONReader fromString: aString.
-	^ self new
-		buildNumber: (dictionary at: 'build_number');
-		buildTimestamp:
-			(DateAndTime
-				fromSeconds: (dictionary at: 'build_timestamp') asDateAndTime asSeconds);
-		version: (dictionary at: 'version');
-		projectName: (dictionary at: 'project_name');
-		yourself
+{ #category : #accessing }
+OPVersion class >> latest [
+	current ifNil: [ ^ nil ].
+	^ latest ifNil: [ latest := self current getOfLatest ]
 ]
 
-{ #category : #'instance creation' }
-OPVersion class >> fromUrl: anURLString [
-	self fromJSON: (ZnEasy get: anURLString)
+{ #category : #accessing }
+OPVersion class >> resetCurrent [
+	<script>
+	^ current := self new
+]
+
+{ #category : #constants }
+OPVersion class >> semanticVersionRegex [
+	^ 'v(\d+)\.(\d+)\.(\d+)'
 ]
 
 { #category : #comparing }
 OPVersion >> < aComparable [
-	(self hasNumberedVersion xor: [ aComparable hasNumberedVersion ])
+	(self isRelease xor: [ aComparable isRelease ])
 		ifTrue: [ ^ false ].
 	self version = aComparable version
-		ifTrue: [ ^ self buildNumber < aComparable buildNumber ].
+		ifTrue: [ ^ self buildDate < aComparable buildDate ].
 	^ self version < aComparable version
 ]
 
 { #category : #comparing }
 OPVersion >> = aComparable [
-	^ self hasNumberedVersion = aComparable hasNumberedVersion
+	^ self isRelease = aComparable isRelease
 		and: [ self version = aComparable version
-				and: [ self hasNumberedVersion
-						or: [ self buildNumber = aComparable buildNumber ] ] ]
+				and:
+					[ self isRelease or: [ self commit = aComparable commit ] ] ]
 ]
 
 { #category : #accessing }
-OPVersion >> buildNumber [
-	^ buildNumber ifNil: [ 0 ]
+OPVersion >> buildDate [
+	buildDate ifNil: [ self updateInfo ].
+	^ buildDate
 ]
 
 { #category : #accessing }
-OPVersion >> buildNumber: aNumber [
-	buildNumber := aNumber
+OPVersion >> buildDate: aDateAndTime [
+	buildDate := aDateAndTime
 ]
 
 { #category : #accessing }
-OPVersion >> buildTimestamp [
-	^ buildTimestamp
+OPVersion >> commit [
+	commit ifNil: [ self updateInfo ].
+	^ commit
 ]
 
 { #category : #accessing }
-OPVersion >> buildTimestamp: aDateAndTime [
-	buildTimestamp := aDateAndTime
+OPVersion >> commit: aString [
+	commit := aString
+]
+
+{ #category : #accessing }
+OPVersion >> commitDate [
+	^ commitDate
+]
+
+{ #category : #accessing }
+OPVersion >> commitDate: anObject [
+	commitDate := anObject
+]
+
+{ #category : #'instance creation' }
+OPVersion >> fromRunJson: aRun [
+	| runCommit repository runVersion |
+	runCommit := aRun at: #head_commit.
+	repository := aRun at: #repository.
+	runVersion := aRun at: #head_branch.
+	runVersion = 'master'
+		ifTrue: [ runVersion := 'nightly' ].
+	self
+		projectName: (repository at: #name);
+		runId: (aRun at: #id);
+		version: runVersion;
+		commit: (runCommit at: #id);
+		commitDate: (runCommit at: #timestamp) asDateAndTime asLocal;
+		buildDate: (aRun at: #updated_at) asDateAndTime asLocal
 ]
 
 { #category : #accessing }
 OPVersion >> fullVersion [
 	^ String
 		streamContents: [ :stream | 
-			stream << self projectName << '-' << self version << '-build'
-				<< self buildNumber asString ]
+			stream << self projectName << '-' << self version.
+			self isRelease
+				ifFalse: [ stream << '-' << self commit ] ]
 ]
 
-{ #category : #accessing }
-OPVersion >> hasNumberedVersion [
-	^ self version anySatisfy: [ :any | any asString asInteger isNotNil ]
+{ #category : #downloading }
+OPVersion >> getOfLatest [
+	^ self isRelease
+		ifTrue: [ self getOfLatestRelease ]
+		ifFalse: [ self getOfLatestNightlyBuild ]
+]
+
+{ #category : #downloading }
+OPVersion >> getOfLatestNightlyBuild [
+	| runs run |
+	runs := self class getRuns.
+	run := runs
+		detect: [ :any | 
+			(any at: #name) = 'Nightly'
+				and: [ (any at: #status) = 'completed'
+						and: [ (any at: #conclusion) = 'success' ] ] ].
+	^ self class fromRunJson: run
+]
+
+{ #category : #downloading }
+OPVersion >> getOfLatestRelease [
+	| runs run |
+	runs := self class getRuns.
+	run := runs
+		detect: [ :any | 
+			(any at: #name) = 'Release'
+				and: [ (any at: #status) = 'completed'
+						and: [ (any at: #conclusion) = 'success'
+								and:
+									[ (any at: #head_branch) matchesRegex: self class semanticVersionRegex ] ] ] ].
+	^ self class fromRunJson: run
+]
+
+{ #category : #downloading }
+OPVersion >> getRun [
+	^ STONJSON
+		fromString: (ZnEasy get: self runsUrl , '/' , self runId asString)
+]
+
+{ #category : #downloading }
+OPVersion >> getRuns [
+	^ (STONJSON fromString: (ZnEasy get: self runsUrl))
+		at: #workflow_runs
 ]
 
 { #category : #comparing }
 OPVersion >> hash [
-	self hasNumberedVersion
-		ifFalse: [ ^ self buildNumber hash ].
+	self isRelease
+		ifFalse: [ ^ self commit hash ].
 	^ self version hash
 ]
 
 { #category : #testing }
 OPVersion >> isMostRecent [
-	^ self class fromBuildStorage = self
+	^ self getOfLatest = self
+]
+
+{ #category : #accessing }
+OPVersion >> isRelease [
+	^ self version matchesRegex: self class semanticVersionRegex
 ]
 
 { #category : #accessing }
@@ -147,8 +212,31 @@ OPVersion >> projectName: aString [
 ]
 
 { #category : #accessing }
+OPVersion >> runId [
+	^ runId
+]
+
+{ #category : #accessing }
+OPVersion >> runId: anObject [
+	runId := anObject
+]
+
+{ #category : #downloading }
+OPVersion >> runsUrl [
+	^ 'https://api.github.com/repos/openponk/' , self projectName
+		, '/actions/runs'
+]
+
+{ #category : #downloading }
+OPVersion >> updateInfo [
+	self runId ifNil: [ ^ self ].
+	^ self fromRunJson: self getRun
+]
+
+{ #category : #accessing }
 OPVersion >> version [
-	^ version ifNil: [ 'unknown' ]
+	version ifNil: [ self updateInfo ].
+	^ version
 ]
 
 { #category : #accessing }

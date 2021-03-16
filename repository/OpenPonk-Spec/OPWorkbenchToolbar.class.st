@@ -103,12 +103,20 @@ OPWorkbenchToolbar >> opMenu [
 						action: [ [ OPVersion current isMostRecent
 								ifTrue: [ GrowlMorph
 										openWithLabel: 'Your version is current'
-										contents: 'Your version of OpenPonk build is the most recent'
+										contents:
+											'Your version ' , OPVersion current fullVersion
+												, ' is the most recent'
 										backgroundColor: Color gray
 										labelColor: Color white ]
 								ifFalse: [ GrowlMorph
 										openWithLabel: 'New version available!'
-										contents: 'There is a new version of OpenPonk available on openponk.org'
+										contents:
+											'There is a new version of OpenPonk available: '
+												, OPVersion latest fullVersion , ' from '
+												, OPVersion latest buildDate asStringYMDHM , '. '
+												, String cr , 'Your version: '
+												, OPVersion current fullVersion , ' from '
+												, OPVersion current buildDate asStringYMDHM
 										backgroundColor: Color yellow
 										labelColor: Color black ] ]
 								on: Error

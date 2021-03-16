@@ -70,12 +70,12 @@ jobs:
   build-dependent:
     needs: [test-linux, test-win, create-dependent-matrix]
     runs-on: ubuntu-latest
-    name: 'Build dependent repositories'
-    if: ${{ needs.create-dependent-matrix.outputs.matrix }} | grep -q ":"
+    name: 'Build dependent'
+    if: ${{ contains(needs.create-dependent-matrix.outputs.matrix, '/') }}
     strategy:
       matrix: ${{fromJson(needs.create-dependent-matrix.outputs.matrix)}}
     steps:
-      - name: Build ${{ matrix.repository }}
+      - name: Start ${{ matrix.repository }} build
         uses: benc-uk/workflow-dispatch@v1.1.0
         with:
           workflow: Nightly

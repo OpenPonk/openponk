@@ -132,6 +132,8 @@ OPVersion >> fromRunJson: aRun [
 
 { #category : #accessing }
 OPVersion >> fullVersion [
+	(projectName isNil or: [ runId isNil ])
+		ifTrue: [ ^ 'unknown' ].
 	^ String
 		streamContents: [ :stream | 
 			stream << self projectName << '-' << self version.

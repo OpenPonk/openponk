@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+env:
+  REPOSITORY_NAME: '${{ github.event.repository.name }}'
+  PROJECT_NAME: 'openponk-${{ github.event.repository.name }}'
+  VERSION: ${{ github.event.release.tag_name }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  RUN_ID: ${{ github.run_id }}
+  
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    env:
+      PLATFORM: ${{ github.job }}
+    name: 'Build Linux and upload zip'
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - uses: hpi-swa/setup-smalltalkCI@1.2.1
+        id: smalltalkci
+        with:
+          smalltalk-version: Pharo64-8.0
+      - name: Prepare image and test
+        run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
+        shell: bash
+        timeout-minutes: 10
+
+  win:
+    runs-on: windows-latest
+    env:
+      PLATFORM: ${{ github.job }}
+    name: 'Build Windows and upload zip'
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - uses: hpi-swa/setup-smalltalkCI@1.2.1
+        id: smalltalkci
+        with:
+          smalltalk-version: Pharo64-8.0
+      - name: Prepare image and test
+        run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
+        shell: bash
+        timeout-minutes: 15

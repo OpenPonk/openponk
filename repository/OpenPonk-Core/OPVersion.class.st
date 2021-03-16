@@ -39,6 +39,7 @@ OPVersion class >> currentWithRunId: anId projectName: aProjectName [
 			(self new
 				runId: anId;
 				projectName: aProjectName;
+				updateInfo;
 				yourself)
 ]
 
@@ -177,12 +178,12 @@ OPVersion >> getOfLatestRelease [
 { #category : #downloading }
 OPVersion >> getRun [
 	^ STONJSON
-		fromString: (ZnEasy get: self runsUrl , '/' , self runId asString)
+		fromString: (ZnEasy get: self runsUrl , '/' , self runId asString) entity string
 ]
 
 { #category : #downloading }
 OPVersion >> getRuns [
-	^ (STONJSON fromString: (ZnEasy get: self runsUrl))
+	^ (STONJSON fromString: (ZnEasy get: self runsUrl) entity string)
 		at: #workflow_runs
 ]
 

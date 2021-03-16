@@ -71,6 +71,7 @@ jobs:
     needs: [test-linux, test-win, create-dependent-matrix]
     runs-on: ubuntu-latest
     name: 'Build dependent repositories'
+    if: ${{ needs.create-dependent-matrix.outputs.matrix }} | grep -q ":"
     strategy:
       matrix: ${{fromJson(needs.create-dependent-matrix.outputs.matrix)}}
     steps:

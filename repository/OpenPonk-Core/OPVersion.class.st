@@ -57,14 +57,14 @@ OPVersion class >> fromRunJson: aRun [
 
 { #category : #'as yet unclassified' }
 OPVersion class >> getRunsOf: aRepositoryName workflowName: aWorkflowName [
-	self runsCache
-		at: aRepositoryName
+	^ self runsCache
+		at: aRepositoryName , '-' , aWorkflowName asLowercase
 		ifAbsentPut: [ | response |
 			response := ZnEasy
 				get:
 					'https://api.github.com/repos/openponk/' , aRepositoryName
-						, '/actions/runs?status=completed&conclusion=success&per_page=1&name='
-						, aWorkflowName.
+						, '/actions/workflows/' , aWorkflowName asLowercase
+						, '.yml/runs?status=success&per_page=1'.
 			response isError
 				ifTrue: [ (ZnHttpUnsuccessful response: response) signal ].
 			(STONJSON fromString: response entity string) at: #workflow_runs ]
@@ -189,7 +189,7 @@ OPVersion >> fromRunJson: aRun [
 		releaseName: runReleaseName;
 		commit: (runCommit at: #id);
 		commitDate: (runCommit at: #timestamp) asDateAndTime asLocal;
-		buildDate: (aRun at: #updated_at) asDateAndTime asLocal
+		buildDate: (aRun at: #created_at) asDateAndTime asLocal
 ]
 
 { #category : #accessing }

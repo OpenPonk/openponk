@@ -27,7 +27,7 @@ OPProjectDirectorySerializer >> exporter [
 
 { #category : #accessing }
 OPProjectDirectorySerializer >> exporterVersion [
-	^ OPVersion current fullVersion
+	^ OPVersion current fullVersionString
 ]
 
 { #category : #writing }

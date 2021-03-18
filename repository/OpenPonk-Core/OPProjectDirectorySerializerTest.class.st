@@ -59,7 +59,7 @@ OPProjectDirectorySerializerTest >> testExporterVersion [
 	self assert: persistence exporter equals: 'OpenPonk'.
 	self
 		assert: persistence exporterVersion
-		equals: OPVersion current fullVersion
+		equals: OPVersion current fullVersionString
 ]
 
 { #category : #tests }
@@ -103,6 +103,6 @@ OPProjectDirectorySerializerTest >> testProjectFile [
 			('exporter'
 				->
 					{('exporter' -> 'OpenPonk').
-					('exporterVersion' -> OPVersion current fullVersion).
+					('exporterVersion' -> OPVersion current fullVersionString).
 					('timestamp' -> '0')} asDictionary)} asDictionary
 ]

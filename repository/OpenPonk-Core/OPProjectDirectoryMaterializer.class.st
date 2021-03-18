@@ -14,7 +14,7 @@ OPProjectDirectoryMaterializer >> exporter [
 
 { #category : #accessing }
 OPProjectDirectoryMaterializer >> exporterVersion [
-	^ OPVersion current fullVersion
+	^ OPVersion current fullVersionString
 ]
 
 { #category : #'public - reading' }

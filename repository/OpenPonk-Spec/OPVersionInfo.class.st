@@ -101,7 +101,7 @@ OPVersionInfo >> refreshInfo [
 		label: (version commit asString first: 7);
 		url:
 			'https://github.com/OpenPonk/' , version repositoryName , '/commit/'
-				, commit asString.
+				, version commit asString.
 	commitDate label: version commitDate asStringYMDHM.
 	onInfoDownloadBlock value
 ]

@@ -1,8 +1,8 @@
 {
 	"include" : [
-		{ "repository" : "OpenPonk/borm-editor" },
-		{ "repository" : "OpenPonk/petrinets" },
-		{ "repository" : "OpenPonk/fsm-editor" },
-		{ "repository" : "OpenPonk/class-editor" }
+		{ "repository" : "OpenPonk/borm-editor", "build-dependent" : false },
+		{ "repository" : "OpenPonk/petrinets", "build-dependent" : false },
+		{ "repository" : "OpenPonk/fsm-editor", "build-dependent" : false },
+		{ "repository" : "OpenPonk/class-editor", "build-dependent" : true }
 	]
 }

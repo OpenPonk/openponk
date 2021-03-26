@@ -131,7 +131,7 @@ BaselineOfOpenPonk >> loadClassEditor [
 	Metacello new
 		baseline: 'ClassEditor';
 		repository: 'github://openponk/class-editor/repository';
-		load: #(complete-plugin)
+		load: #('complete-plugin')
 ]
 
 { #category : #plugins }

@@ -8,16 +8,13 @@ Class {
 	#instVars : [
 		'name',
 		'isOpen',
-		'filters',
 		'layout',
-		'notes',
 		'order',
 		'isSelected',
 		'camera',
-		'version',
 		'visibleElements',
 		'model',
-		'options'
+		'commonElements'
 	],
 	#category : #'OpenPonk-Core-Diagrams'
 }
@@ -40,21 +37,41 @@ OPDiagram class >> neoJsonMapping: mapper [
 			mapping mapInstVars: mapping identifier instVarNames \ #(model).
 			(mapping mapInstVar: #layout) valueSchema: #UUIDsWithPoints.
 			(mapping mapInstVar: #camera) valueSchema: OPDiagramCamera.
+			(mapping mapInstVar: #commonElements) valueSchema: #CommonElements.
 			(mapping mapInstVar: #visibleElements)
 				valueSchema: #ObjectsWithUUIDs ];
+		for: #CommonElements
+			customDo: [ :mapping | mapping listOfElementSchema: #CommonElement ];
+		for: #CommonElement
+			customDo: [ :mapping | 
+			mapping
+				reader: [ :jsonReader | 
+					| map element |
+					map := jsonReader parseMap.
+					element := (map at: #className) asClass new.
+					NeoJSONReader
+						fromString: (NeoJSONWriter toString: map)
+						as: element class ] ];
 		for: #ObjectsWithUUIDs
 			customDo: [ :mapping | mapping listOfElementSchema: #ObjectWithUUID ];
 		for: #ObjectWithUUID
 			customDo: [ :mapping | 
 			mapping
 				encoder: [ :object | object uuid asString ];
-				decoder:
-						[ :string | OPModelObjectReference withUUID: (UUID fromString: string) ] ];
+				decoder: [ :string | 
+					OPModelObjectReference
+						withUUID:
+							([ UUID fromString: string ]
+								on: Error
+								do: [ string ]) ] ];
 		for: UUID
 			customDo: [ :mapping | 
 			mapping
 				encoder: [ :uuid | uuid asString ];
-				decoder: [ :string | UUID fromString: string ] ];
+				decoder: [ :string | 
+					[ UUID fromString: string ]
+						on: Error
+						do: [ string ] ] ];
 		for: #UUIDsWithPoints
 			customDo: [ :mapping | 
 			mapping
@@ -65,7 +82,12 @@ OPDiagram class >> neoJsonMapping: mapper [
 						parseMapKeysDo: [ :key | 
 							| value |
 							value := jsonReader nextAs: OPElementLayout.
-							map at: (UUID fromString: key) put: value ].
+							map
+								at:
+									([ UUID fromString: key ]
+										on: Error
+										do: [ key ])
+								put: value ].
 					map ];
 				writer: [ :jsonWriter :map | 
 					jsonWriter
@@ -116,6 +138,8 @@ OPDiagram >> allElementsVisible [
 
 { #category : #converting }
 OPDiagram >> asInfo [
+	self deprecated: 'OPDiagramInfo is no longer used'.
+	
 	^ OPDiagramInfo new
 		diagramName: self name;
 		isOpen: self isOpen;
@@ -146,11 +170,21 @@ OPDiagram >> camera: aCameraSettings [
 	camera := aCameraSettings
 ]
 
+{ #category : #accessing }
+OPDiagram >> commonElements [
+	^ commonElements
+]
+
+{ #category : #accessing }
+OPDiagram >> commonElements: anObject [
+	commonElements := anObject
+]
+
 { #category : #initialization }
 OPDiagram >> initialize [
 	super initialize.
-	visibleElements := OrderedCollection new.
-	options := Dictionary new
+	commonElements := #().
+	visibleElements := OrderedCollection new
 ]
 
 { #category : #accessing }
@@ -175,7 +209,7 @@ OPDiagram >> isSelected: aBoolean [
 
 { #category : #accessing }
 OPDiagram >> layout [
-	^ layout 
+	^ layout
 ]
 
 { #category : #accessing }
@@ -229,26 +263,6 @@ OPDiagram >> newCopy [
 ]
 
 { #category : #accessing }
-OPDiagram >> notes [
-	^ notes
-]
-
-{ #category : #accessing }
-OPDiagram >> notes: aCollection [
-	notes := aCollection
-]
-
-{ #category : #accessing }
-OPDiagram >> options [
-	^ options
-]
-
-{ #category : #accessing }
-OPDiagram >> options: aDictionary [
-	options := aDictionary
-]
-
-{ #category : #accessing }
 OPDiagram >> order [
 	^ order ifNil: [ 0 ]
 ]
@@ -267,6 +281,8 @@ OPDiagram >> printOn: aStream [
 
 { #category : #converting }
 OPDiagram >> updateFromInfo: anInfo [
+	self deprecated: 'OPDiagramInfo is no longer used'.
+	
 	self isOpen: anInfo isOpen.
 	self isSelected: anInfo isSelected.
 	self order: anInfo order

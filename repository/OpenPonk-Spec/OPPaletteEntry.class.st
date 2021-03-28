@@ -12,6 +12,15 @@ Class {
 	#category : #'OpenPonk-Spec-Palettes'
 }
 
+{ #category : #private }
+OPPaletteEntry >> addShortcutTipFor: aCharacter on: aString [
+
+	SystemVersion current major > 8 ifTrue: [ 
+		self flag: 'remove this method in Spec2'.
+		^ super addShortcutTipFor: nil on: aString ].
+	^ super addShortcutTipFor: aCharacter on: aString
+]
+
 { #category : #protocol }
 OPPaletteEntry >> deselect [
 	tool deselect.

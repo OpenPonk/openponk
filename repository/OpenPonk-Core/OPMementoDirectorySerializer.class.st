@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'rootFolder',
 		'modelSerializer',
-		'diagramSerializer'
+		'diagramSerializer',
+		'commonElementsSerializer'
 	],
 	#category : #'OpenPonk-Core-Persistence'
 }
@@ -18,8 +19,19 @@ OPMementoDirectorySerializer class >> withModelSerializer: aModelSerializer diag
 ]
 
 { #category : #accessing }
+OPMementoDirectorySerializer >> commonElementsSerializer: aCommonElementsSerializer [
+	commonElementsSerializer := aCommonElementsSerializer
+]
+
+{ #category : #accessing }
 OPMementoDirectorySerializer >> diagramSerializer: aDiagramSerializer [
 	diagramSerializer := aDiagramSerializer
+]
+
+{ #category : #initialization }
+OPMementoDirectorySerializer >> initialize [
+	super initialize.
+	commonElementsSerializer := OPStonCommonElementsSerializer new
 ]
 
 { #category : #loading }

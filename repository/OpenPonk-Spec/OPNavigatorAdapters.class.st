@@ -21,7 +21,7 @@ OPNavigatorAdapters class >> default [
 
 { #category : #accessing }
 OPNavigatorAdapters class >> reset [
-	<example>
+	<script>
 	^ default := self new
 ]
 
@@ -60,8 +60,7 @@ OPNavigatorAdapters >> adaptersFor: anObject in: aRootModel detect: aTwoArgSymbo
 OPNavigatorAdapters >> allAdapters [
 	"Return default navigator last, because it has the lowest priority."
 
-	^ OPNavigatorAdapter allSubclasses \ {OPDefaultNavigatorAdapter}
-		, {OPDefaultNavigatorAdapter}
+	^ OPNavigatorAdapter allSubclasses
 ]
 
 { #category : #accessing }
@@ -112,4 +111,10 @@ OPNavigatorAdapters >> initialize [
 	super initialize.
 	adapters := self allAdapters collect: #new.
 	typeToAdapterMapping := Dictionary new
+]
+
+{ #category : #sorting }
+OPNavigatorAdapters >> sort: modelObjects [
+	modelObjects ifEmpty: [ ^ modelObjects ].
+	^ (self adapterFor: modelObjects anyOne) sort: modelObjects
 ]

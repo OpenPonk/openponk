@@ -92,6 +92,11 @@ OPElementController >> hideSelectionFeedback [
 			self figure view signalUpdate ]
 ]
 
+{ #category : #testing }
+OPElementController >> isCommon [
+	^ false
+]
+
 { #category : #accessing }
 OPElementController >> layout [
 	^ OPElementLayout withPosition: self figure position

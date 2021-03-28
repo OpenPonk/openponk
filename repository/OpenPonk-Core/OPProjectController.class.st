@@ -18,6 +18,40 @@ Class {
 	#category : #'OpenPonk-Core-Controllers'
 }
 
+{ #category : #'instance creation' }
+OPProjectController class >> fromDirectory: aFolder [
+	^ OPProjectDirectoryMaterializer new
+		loadProjectFrom: aFolder asFileReference
+]
+
+{ #category : #'instance creation' }
+OPProjectController class >> fromFile: aFile [
+	| newProject store |
+	store := OPZipPersistence new loadFrom: aFile asFileReference.
+	newProject := self fromDirectory: store / 'project'.
+	newProject storageFile: aFile asFileReference.
+	^ newProject
+]
+
+{ #category : #opening }
+OPProjectController class >> openFromFile [
+	FDOpenFileDialog new
+		whenSelected: [ :file | self openFromFile: file ];
+		extensionFilters:
+			{'OpenPonk projects' -> #('opp').
+			'All files' -> #()};
+		defaultFolder: FileLocator imageDirectory asFileReference;
+		title: 'Select an OpenPonk project...';
+		open
+]
+
+{ #category : #'instance creation' }
+OPProjectController class >> openFromFile: aFile [
+	^ (self fromFile: aFile)
+		open;
+		yourself
+]
+
 { #category : #adding }
 OPProjectController >> addDiagramController: aController [
 	self subscribeTo: aController.
@@ -99,36 +133,13 @@ OPProjectController >> openDiagrams [
 	selected ifNotNil: [ workbench openEditorOnDiagram: selected ].
 	(project diagrams isNotEmpty
 		and: [ project diagrams noneSatisfy: #isOpen ])
-		ifTrue: [ workbench openEditorOnDiagram: project diagrams first ]
+		ifTrue: [ project diagrams
+				do: [ :eachDiagram | workbench openEditorOnDiagram: eachDiagram ] ]
 ]
 
 { #category : #opening }
-OPProjectController >> openProject [
-	FDOpenFileDialog new
-		whenSelected: [ :file | self openProjectFromFile: file ];
-		extensionFilters:
-			{'OpenPonk projects' -> #('opp').
-			'All files' -> #()};
-		defaultFolder: FileLocator imageDirectory asFileReference;
-		title: 'Select an OpenPonk project...';
-		open
-]
-
-{ #category : #opening }
-OPProjectController >> openProjectFromDirectory: aFolder [
-	| newProject |
-	newProject := OPProjectDirectoryMaterializer new loadProjectFrom: aFolder.
-	^ newProject open
-]
-
-{ #category : #opening }
-OPProjectController >> openProjectFromFile: aFile [
-	| reader newProject store |
-	store := OPZipPersistence new loadFrom: aFile.
-	reader := OPProjectDirectoryMaterializer new.
-	newProject := reader loadProjectFrom: store / 'project'.
-	newProject storageFile: aFile.
-	newProject open
+OPProjectController >> openEditorOnDiagram: aDiagram [
+	workbench openEditorOnDiagram: aDiagram
 ]
 
 { #category : #accessing }
@@ -148,13 +159,15 @@ OPProjectController >> project: aProject [
 
 { #category : #accessing }
 OPProjectController >> projectFile [
-	self project storageFile
-		ifNil: [ self project
+	(self project storageFile isNil
+		or: [ self project storageFile exists not
+				or: [ self project storageFile isWritable not ] ])
+		ifTrue: [ self project
 				storageFile:
 					(FDSaveFileDialog new
 						extensionFilters:
-							{'OpenPonk projects' -> #('opp').
-							'All files' -> #()};
+							{('OpenPonk projects' -> #('opp')).
+							('All files' -> #())};
 						defaultFolder: FileLocator imageDirectory asFileReference;
 						openModal) ].
 	^ self project storageFile
@@ -171,6 +184,16 @@ OPProjectController >> projectFolder [
 { #category : #accessing }
 OPProjectController >> recentProjects [
 	^ RecentProjects ifNil: [ RecentProjects := OrderedDictionary new ]
+]
+
+{ #category : #removing }
+OPProjectController >> removeDiagram: aDiagram [
+	project removeDiagram: aDiagram.
+	self
+		removeDiagramController:
+			(controllers
+				detect: [ :any | any diagram = aDiagram ]
+				ifNone: [ ^ self ])
 ]
 
 { #category : #removing }
@@ -202,15 +225,15 @@ OPProjectController >> saveProjectAs [
 
 { #category : #saving }
 OPProjectController >> saveProjectTo: aFile [
-	| store |
+	| store projectDirectory |
 	store := FileSystem memory root.
-	(store / 'project') ensureCreateDirectory.
+	projectDirectory := store / 'project'.
+	projectDirectory ensureCreateDirectory.
 	self recentProjects at: self project uuid put: aFile.
 	self updateDiagrams.
 	self persistenceManager
-		saveProject: self project
-		withMementos: self modelMementos
-		to: store / 'project'.
+		directory: projectDirectory;
+		saveProject: self project withMementos: self modelMementos.
 	OPZipPersistence new save: store to: aFile
 ]
 
@@ -262,6 +285,7 @@ OPProjectController >> updateDiagram: aDiagram [
 			aDiagram isOpen: true.
 			aDiagram layout: ctrl layout copy.
 			aDiagram visibleElements: ctrl visibleElements copy.
+			aDiagram commonElements: ctrl commonElements.
 			aDiagram updateFromRoassalView: ctrl view.
 			aDiagram order: (controllers indexOf: ctrl) ]
 		ifNone: [ aDiagram
@@ -282,6 +306,7 @@ OPProjectController >> updateDiagrams [
 				ifFound: [ :ctrl | 
 					eachDiagram isOpen: true.
 					eachDiagram layout: ctrl layout copy.
+					eachDiagram commonElements: ctrl commonElements.
 					eachDiagram visibleElements: ctrl visibleElements copy.
 					eachDiagram updateFromRoassalView: ctrl view.
 					eachDiagram order: (controllers indexOf: ctrl).

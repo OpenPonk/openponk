@@ -183,7 +183,7 @@ OPController >> modelClass [
 
 { #category : #accessing }
 OPController >> nameOfType [
-	^ self diagramController nameOfTypeForModel: self model
+	^ (self diagramController typeOfModel: self model) name
 ]
 
 { #category : #figures }
@@ -204,8 +204,8 @@ OPController >> removeController [
 	model ifNotNil: [ self removeDependentControllers ].
 	self diagramController ifNil: [ ^ self ].
 	self removeFigure.
-	self model: nil.
 	self diagramController removeController: self.
+	self model: nil.
 	self diagramController: nil
 ]
 

@@ -20,18 +20,16 @@ OPZipPersistence >> save: aRoot to: aZipFile [
 	| archive |
 	archive := ZipArchive new.
 	aRoot allChildren
-		do: [ :each | 
-			each isFile
-				ifTrue: [ (ZipNewFileMember class respondsTo: #newFromFile:)
-						ifTrue: [ archive addFile: each as: (each relativeTo: aRoot path) fullName ]
-						ifFalse: [ self flag: #pharo7compatibility.
-							each
-								readStreamDo: [ :readStream | 
-									archive
-										addString: readStream contents
-										as: (each relativeTo: aRoot path) fullName ] ] ] ].
-	aZipFile
-		ensureDelete;
-		binaryWriteStreamDo: [ :stream | archive writeTo: stream ].
+		select: #isFile
+		thenDo:
+			[ :each | archive addFile: each as: (each relativeTo: aRoot path) fullName ].
+	[ aZipFile exists and: [ aZipFile isWritable not ] ]
+		whileTrue: [ (FileWriteError fileName: aZipFile name)
+				signal:
+					'File ' , aZipFile name
+						,
+							' cannot be overwritten. It might be open in another program or Pharo might not have sufficient permissions.' ].
+	aZipFile ensureDelete.
+	archive writeToFile: aZipFile.
 	archive close
 ]

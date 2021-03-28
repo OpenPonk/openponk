@@ -9,17 +9,14 @@ SmalltalkCISpec {
 			#load : [ 'default' ]
 		}
 	],
-	#postLoading : [
-		'scripts/script.st'
-	],
 	#testing : {
 		#coverage : {
 			#packages : [
-				'OpenPonk.*'
+				'OpenPonk*'
 			]
 		},
 		#packages : [
-			'OpenPonk.*'
+			'OpenPonk*'
 		]
 	}
 }

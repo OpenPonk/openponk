@@ -13,6 +13,13 @@ OPTestDiagramController >> canBeTargetFor: aController [
 ]
 
 { #category : #accessing }
+OPTestDiagramController >> controllerFactory [
+	^ super controllerFactory
+		register: OPTestEntityController forModel: OPTestEntityModel;
+		register: OPTestRelationController forModel: OPTestRelationModel
+]
+
+{ #category : #accessing }
 OPTestDiagramController >> elementsToShowInside [
 	^ model entities
 ]
@@ -20,11 +27,4 @@ OPTestDiagramController >> elementsToShowInside [
 { #category : #destruction }
 OPTestDiagramController >> initializePalette: aPalette [
 	(aPalette newCreationEntry: [ OPTestEntityController new ]) label: 'Entity'
-]
-
-{ #category : #accessing }
-OPTestDiagramController >> modelToControllerMapping [
-	^ OPControllerFactory new
-		register: OPTestEntityController forModel: OPTestEntityModel;
-		register: OPTestRelationController forModel: OPTestRelationModel
 ]

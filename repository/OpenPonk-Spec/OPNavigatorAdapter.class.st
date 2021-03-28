@@ -184,11 +184,6 @@ OPNavigatorAdapter >> mappingFor: anObject inModel: aRootModel in: aDictionary [
 	^ #()
 ]
 
-{ #category : #'as yet unclassified' }
-OPNavigatorAdapter >> modelNameOf: aModelObject [
-	^ self subclassResponsibility
-]
-
 { #category : #private }
 OPNavigatorAdapter >> retrieveActionMapping [
 	^ actionMapping ifNil: [ actionMapping := self actionMapping asDictionary ]
@@ -226,6 +221,11 @@ OPNavigatorAdapter >> retrieveTypesByDependency [
 	^ typesByDependency
 		ifNil: [ typesByDependency := self typesByDependency
 				flatCollect: [ :eachClass | eachClass withAllSubclasses ] ]
+]
+
+{ #category : #private }
+OPNavigatorAdapter >> sort: modelObjects [
+	^ modelObjects sorted: [ :a :b | a hash < b hash ]
 ]
 
 { #category : #'widget API' }

@@ -19,7 +19,7 @@ Class {
 
 { #category : #singleton }
 OPPluginRegistry class >> default [
-	^ Default ifNil: [ self withAll ]
+	^ Default ifNil: [ Default := self withAll ]
 ]
 
 { #category : #singleton }
@@ -48,7 +48,12 @@ OPPluginRegistry >> add: aPlugin [
 
 { #category : #adding }
 OPPluginRegistry >> addAll [
-	plugins := OPPlugin allSubclasses collect: #new
+	plugins := OrderedCollection new.
+	OPPlugin
+		allSubclassesWithLevelDo: [ :each :level | 
+			level > 0
+				ifTrue: [ plugins add: each new ] ]
+		startingLevel: 0
 ]
 
 { #category : #accessing }
@@ -69,7 +74,7 @@ OPPluginRegistry >> pluginFor: aModel [
 
 { #category : #accessing }
 OPPluginRegistry >> pluginForController: aController [
-	^ plugins detect: [ :each | each diagramControllerClass = aController class ]
+	^ plugins detect: [ :each | each isForController: aController ]
 ]
 
 { #category : #accessing }

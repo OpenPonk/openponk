@@ -7,6 +7,11 @@ Class {
 	#category : #'OpenPonk-Core-Persistence'
 }
 
+{ #category : #formatting }
+OPNullSerializer >> formatName [
+	^ 'opp'
+]
+
 { #category : #saving }
 OPNullSerializer >> loadMementoFrom: aFile [
 	^ nil

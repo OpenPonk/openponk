@@ -43,3 +43,10 @@ OPControllerFactoryRegistration >> modelClass [
 OPControllerFactoryRegistration >> modelClass: anObject [
 	modelClass := anObject
 ]
+
+{ #category : #printing }
+OPControllerFactoryRegistration >> printOn: stream [
+	super printOn: stream.
+	stream << ' (' << self modelClass asString << ' -> '
+		<< self controllerClass asString << ')'
+]

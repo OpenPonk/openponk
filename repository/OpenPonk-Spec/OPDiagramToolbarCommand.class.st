@@ -13,6 +13,8 @@ Class {
 { #category : #accessing }
 OPDiagramToolbarCommand class >> defaultMenuItemName [
 	| parts |
+	true
+		ifTrue: [ ^ 'TESTTEST' ].
 	parts := self name splitOnCapitals allButLast: 2.
 	parts ifEmpty: [ ^ self name ].
 	^ String

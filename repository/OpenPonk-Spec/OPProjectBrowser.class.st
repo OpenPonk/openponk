@@ -27,10 +27,9 @@ Class {
 { #category : #specs }
 OPProjectBrowser class >> addDiagramButtons: aSpecLayout [
 	OPPluginRegistry default
-		pluginsDo:
-			[ :each | 
+		pluginsDo: [ :each | 
 			aSpecLayout
-				add: (each modelClass asString uncapitalized , 'Radio') asSymbol
+				add: (each simpleName , 'Radio') asSymbol
 				height: self buttonHeight ]
 ]
 
@@ -60,7 +59,7 @@ OPProjectBrowser class >> defaultSpec [
 OPProjectBrowser class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #OpenPonk)
-		icon: OPIcons current dynacaseIcon;
+		icon: OPIcons current openponkIcon;
 		action: [ self open ];
 		withSeparatorAfter;
 		order: 25.700
@@ -81,7 +80,7 @@ OPProjectBrowser >> createProject [
 		ifFound: [ :each | 
 			project
 				addModel:
-					(each first modelClass new
+					(each first newModel
 						name: projectNameInput text;
 						yourself) ].
 	self openProject: project
@@ -137,9 +136,9 @@ OPProjectBrowser >> initializeWidgets [
 	pluginRegistry
 		pluginsDo: [ :each | 
 			(diagramOptions
-				at: (each modelClass asString uncapitalized , 'Radio') asSymbol
-				put: (Array with: each with: (self newRadioButton label: each name))) second
-				whenBuiltDo: [ :event | event model widget hSpaceFill ] ].
+				at: (each simpleName , 'Radio') asSymbol
+				put: (Array with: each with: (self newRadioButton label: each name)))
+				second whenBuiltDo: [ :event | event model widget hSpaceFill ] ].
 	self setGroup
 ]
 

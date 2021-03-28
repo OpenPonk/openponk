@@ -15,6 +15,13 @@ Class {
 	#category : #'OpenPonk-Core-Diagrams'
 }
 
+{ #category : #testing }
+OPDiagramInfo class >> isDeprecated [
+	"no longer tested and used"
+
+	^ true
+]
+
 { #category : #serializing }
 OPDiagramInfo >> asJson [
 	^ String

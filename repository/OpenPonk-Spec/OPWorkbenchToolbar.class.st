@@ -100,26 +100,8 @@ OPWorkbenchToolbar >> opMenu [
 					item
 						name: 'Check for new version';
 						icon: (self iconNamed: #smallUpdate);
-						action: [ [ OPVersion current isMostRecent
-								ifTrue: [ GrowlMorph
-										openWithLabel: 'Your version is current'
-										contents: 'Your version of OpenPonk build is the most recent'
-										backgroundColor: Color gray
-										labelColor: Color white ]
-								ifFalse: [ GrowlMorph
-										openWithLabel: 'New version available!'
-										contents: 'There is a new version of OpenPonk available on openponk.org'
-										backgroundColor: Color yellow
-										labelColor: Color black ] ]
-								on: Error
-								do: [ :error | 
-									OPWorkbench isDevelopmentMode
-										ifTrue: [ error pass ].
-									GrowlMorph
-										openWithLabel: 'Failed to check version'
-										contents: 'There was an error trying to check for a new version'
-										backgroundColor: Color red
-										labelColor: Color white ] ] ] ];
+						action: [ (OPUpdater newApplication: SpApplication defaultApplication)
+								openWithSpec ] ] ];
 		addGroup: [ :group | 
 			group
 				addItem: [ :item | 

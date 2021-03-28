@@ -59,14 +59,13 @@ BaselineOfOpenPonk >> baseline: spec [
 				package: 'OpenPonk-Spec'
 					with: [ spec
 						requires:
-							#('Moose' 'FileDialog' 'Magritte'" 'Commander'" 'SynchronizedLinks' 'OpenPonk-Morphic') ];
-				package: 'OpenPonk-UI';
+							#('Moose' 'FileDialog' 'Magritte' 'SynchronizedLinks' 'OpenPonk-Morphic')	" 'Commander'" ];
 				package: 'OpenPonk-Plugins'
 					with: [ spec postLoadDoIt: #loadPlugins ].
 			spec
 				group: 'default'
 				with:
-					#('OpenPonk-Core' 'OpenPonk-Perf' 'OpenPonk-Trachel' 'OpenPonk-Roassal2' 'OpenPonk-Morphic' 'OpenPonk-Spec' 'OpenPonk-UI' 'OpenPonk-Help'	"'OpenPonk-Telemetry'").
+					#('OpenPonk-Core' 'OpenPonk-Perf' 'OpenPonk-Trachel' 'OpenPonk-Roassal2' 'OpenPonk-Morphic' 'OpenPonk-Spec' 'OpenPonk-Help').	"'OpenPonk-Telemetry'"
 			spec group: 'complete' with: #('default' 'OpenPonk-Plugins') ]
 ]
 
@@ -131,8 +130,8 @@ BaselineOfOpenPonk >> loadBormEditor [
 BaselineOfOpenPonk >> loadClassEditor [
 	Metacello new
 		baseline: 'ClassEditor';
-		repository: 'github://openponk/class-editor:v2.0.2/repository';
-		load: #(plugin)
+		repository: 'github://openponk/class-editor:v2.1.x/repository';
+		load: #('complete-plugin')
 ]
 
 { #category : #plugins }

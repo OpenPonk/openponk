@@ -47,6 +47,15 @@ OPDiagramExplorer >> hideDependentFor: aDataElement [
 ]
 
 { #category : #actions }
+OPDiagramExplorer >> hideElement: element [
+	diagramController deselectAll.
+	element = diagramController model
+		ifTrue: [ diagramController hideAllElements ]
+		ifFalse: [ diagramController hideModelFromDiagram: element ].
+	diagramController view signalUpdate
+]
+
+{ #category : #actions }
 OPDiagramExplorer >> hideElements: elements [
 	diagramController deselectAll.
 	elements
@@ -90,6 +99,23 @@ OPDiagramExplorer >> showDependentFor: aModelObject [
 ]
 
 { #category : #actions }
+OPDiagramExplorer >> showElement: aModelObject [
+	| existingCtrl ctrl |
+	self diagramController deselectAll.
+	aModelObject = diagramController model
+		ifTrue: [ ^ diagramController showAllElements ].
+	diagramController disableRefresh.
+	existingCtrl := diagramController
+		controllerForModel: aModelObject
+		ifNone: [ nil ].
+	ctrl := diagramController
+		showWithoutDependentInDiagramModel: aModelObject.
+	diagramController enableRefresh.
+	existingCtrl ifNil: [ ^ self ].
+	ctrl refreshFigure
+]
+
+{ #category : #actions }
 OPDiagramExplorer >> showElements: aCollectionOfModelObjects [
 	| ctrls existingCtrls |
 	aCollectionOfModelObjects ifEmpty: [ ^ self ].
@@ -99,7 +125,8 @@ OPDiagramExplorer >> showElements: aCollectionOfModelObjects [
 		collect: [ :each | diagramController controllerForModel: each ifNone: [ nil ] ]
 		thenSelect: [ :each | each isNotNil ].
 	ctrls := (aCollectionOfModelObjects
-		sorted: [ :a :b | adapters dependsTypeOf: b on: a in: diagramController model ])
+		sorted:
+			[ :a :b | adapters dependsTypeOf: b on: a in: diagramController model ])
 		collect: [ :each | diagramController showWithoutDependentInDiagramModel: each ].
 	diagramController enableRefresh.
 	ctrls \ existingCtrls do: #refreshFigure

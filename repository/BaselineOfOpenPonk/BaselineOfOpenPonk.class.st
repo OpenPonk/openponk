@@ -115,14 +115,14 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 		with: [ spec repository: 'github://peteruhnak/pharo-sentry:v1.x/repository' ]."
 	spec
 		baseline: 'SynchronizedLinks'
-		with: [ spec repository: 'github://openponk/synchronized-links:v2.0.0/repository' ]
+		with: [ spec repository: 'github://openponk/synchronized-links:v2.1.x/repository' ]
 ]
 
 { #category : #plugins }
 BaselineOfOpenPonk >> loadBormEditor [
 	Metacello new
 		baseline: 'BormEditor';
-		repository: 'github://openponk/borm-editor:v2.0.1/repository';
+		repository: 'github://openponk/borm-editor:v2.1.x/repository';
 		load: #(plugin)
 ]
 
@@ -139,7 +139,7 @@ BaselineOfOpenPonk >> loadDemoEditor [
 	self notify: 'OpenPonk DEMO project is abandoned - it is not working'.
 	Metacello new
 		baseline: 'DemoEditor';
-		repository: 'github://openponk/demo-editor:v2.0.1/repository';
+		repository: 'github://openponk/demo-editor:v2.1.x/repository';
 		load: #(plugin)
 ]
 
@@ -147,7 +147,7 @@ BaselineOfOpenPonk >> loadDemoEditor [
 BaselineOfOpenPonk >> loadFsmEditor [
 	Metacello new
 		baseline: 'FsmEditor';
-		repository: 'github://openponk/fsm-editor:v2.0.1/repository';
+		repository: 'github://openponk/fsm-editor:v2.1.x/repository';
 		load: #(plugin)
 ]
 
@@ -166,7 +166,7 @@ BaselineOfOpenPonk >> loadPetitParser [
 BaselineOfOpenPonk >> loadPetriNets [
 	Metacello new
 		baseline: 'PetriNets';
-		repository: 'github://openponk/petrinets:v2.0.1/repository';
+		repository: 'github://openponk/petrinets:v2.1.x/repository';
 		load: #(plugin)
 ]
 

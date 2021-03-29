@@ -1,5 +1,5 @@
 # The OpenPonk Modeling Platform
-[![Build Status](https://travis-ci.com/OpenPonk/openponk.svg?branch=master)](https://travis-ci.com/OpenPonk/openponk) [![Coverage Status](https://coveralls.io/repos/github/OpenPonk/openponk/badge.svg?branch=master)](https://coveralls.io/github/OpenPonk/openponk?branch=master)
+[![Nightly](https://github.com/OpenPonk/openponk/actions/workflows/nightly.yml/badge.svg)](https://github.com/OpenPonk/openponk/actions/workflows/nightly.yml)  [![Coverage Status](https://coveralls.io/repos/github/OpenPonk/openponk/badge.svg?branch=master)](https://coveralls.io/github/OpenPonk/openponk?branch=master)
 
 OpenPonk is a metamodeling platform and a modeling workbench implemented in the dynamic environment [Pharo](https://pharo.org) aimed at supporting activities surrounding software and business engineering such as modeling, execution, simulation, source code generation, etc.
 

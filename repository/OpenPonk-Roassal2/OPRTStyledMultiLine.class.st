@@ -7,6 +7,11 @@ Class {
 	#category : #'OpenPonk-Roassal2-Shapes'
 }
 
+{ #category : #testing }
+OPRTStyledMultiLine class >> isDeprecated [
+	^ true
+]
+
 { #category : #private }
 OPRTStyledMultiLine >> checkLineToSelfFor: anEdge [
 	anEdge from = anEdge to

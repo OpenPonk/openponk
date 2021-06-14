@@ -72,7 +72,7 @@ OPRTRailConstraint class >> example [
 	v add: conn.
 
 	const := OPRTRailConstraint new.
-	const gripLine color: Color blue.
+	const gripLineColor: Color blue.
 	const gripShape size: 10.
 	const
 		initialPosition: 0.2;
@@ -91,6 +91,8 @@ OPRTRailConstraint class >> example [
 OPRTRailConstraint >> addGrip [
 	gripElement := gripShape element.
 	element view add: gripElement.
+	gripLine color = Color transparent
+		ifTrue: [ ^ self ].
 	gripEdge := gripLine edgeFrom: element to: gripElement.
 	element view add: gripEdge
 ]
@@ -150,6 +152,11 @@ OPRTRailConstraint >> gripLine [
 ]
 
 { #category : #accessing }
+OPRTRailConstraint >> gripLineColor: aColor [
+	gripLine color: aColor
+]
+
+{ #category : #accessing }
 OPRTRailConstraint >> gripShape [
 	^ gripShape
 ]
@@ -169,6 +176,11 @@ OPRTRailConstraint >> initialize [
 		color: Color black
 ]
 
+{ #category : #accessing }
+OPRTRailConstraint >> noGripLine [
+	self gripLineColor: Color transparent
+]
+
 { #category : #'as yet unclassified' }
 OPRTRailConstraint >> pointBetween: a and: b distance: dist [
 	| denom |
@@ -185,16 +197,22 @@ OPRTRailConstraint >> segmentForPosition: aPosition [
 	| sum newSum |
 	sum := 0.
 	self segments
-		do:
-			[ :each | 
-			newSum := sum + (each first dist: each second).
+		do: [ :each | 
+			| length |
+			length := each first dist: each second.
+			newSum := sum + length.
 			sum <= aPosition & (aPosition <= newSum)
-				ifTrue:
-					[ 
-					^ {each first.
+				ifTrue: [ ^ {each first.
 					each second.
-					(self pointBetween: each first and: each second distance: aPosition - sum)} ].
+					(self
+						pointBetween: each first
+						and: each second
+						distance: aPosition - sum)} ].
 			sum := newSum ].
+	self segments
+		ifNotEmpty: [ ^ {self segments first first.
+			self segments first second.
+			(self segments first first + (aPosition @ aPosition))} ].
 	self error: 'failed to find a segment'
 ]
 

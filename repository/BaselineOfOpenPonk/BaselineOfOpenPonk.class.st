@@ -119,6 +119,14 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 ]
 
 { #category : #plugins }
+BaselineOfOpenPonk >> loadBPMN [
+	Metacello new
+		baseline: 'BPMN';
+		repository: 'github://openponk/OpenPonk-BPMN/repository';
+		load: #(plugin)
+]
+
+{ #category : #plugins }
 BaselineOfOpenPonk >> loadBormEditor [
 	Metacello new
 		baseline: 'BormEditor';
@@ -177,7 +185,8 @@ BaselineOfOpenPonk >> loadPlugins [
 		loadClassEditor;
 		"loadDemoEditor;" "OpenPonk DEMO project is abandoned - it is not working"
 		loadFsmEditor;
-		loadPetriNets
+		loadPetriNets;
+		loadBPMN
 ]
 
 { #category : #scripts }

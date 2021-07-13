@@ -55,7 +55,7 @@ OPRTAnchorConstraint class >> example [
 		element.
 	v add: rep.
 	rep translateBy: 30 @ 50.
-	rep @ (RTDraggableSnapToGrid new gridSize: 20).
+	rep @ (OPRTDraggableSnapToGrid new gridSize: 20).
 
 	v addAll: es.
 	v add: e.
@@ -69,7 +69,7 @@ OPRTAnchorConstraint class >> example [
 		minDistance: 10;
 		build.
 
-	es @ (RTDraggableSnapToGrid new gridSize: 20).
+	es @ (OPRTDraggableSnapToGrid new gridSize: 20).
 
 	es first translateTo: 70 negated @ 90 negated.
 	es second translateTo: 70 @ 110.
@@ -117,7 +117,7 @@ OPRTAnchorConstraint class >> example2 [
 		minDistance: 10;
 		build.
 
-	es @ (RTDraggableSnapToGrid new gridSize: 20).
+	es @ (OPRTDraggableSnapToGrid new gridSize: 20).
 
 	es first translateTo: 70 negated @ 100 negated.
 	es second translateTo: 70 @ 110.
@@ -179,7 +179,7 @@ createAnchor value: end second value: -10 value: -1.
 start @ OPRTRoundedDraggable.
 end @ OPRTRoundedDraggable.
 
-box @ (RTDraggableSnapToGrid new gridSize: 20).
+box @ (OPRTDraggableSnapToGrid new gridSize: 20).
 
 box translateBy: 0@0.
 

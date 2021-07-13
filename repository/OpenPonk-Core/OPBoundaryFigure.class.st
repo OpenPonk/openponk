@@ -51,7 +51,7 @@ OPBoundaryFigure >> createOwnedElements [
 	dragBoxes
 		do: [ :each | 
 			each
-				addInteraction: RTDraggableSnapToGrid;
+				addInteraction: OPRTDraggableSnapToGrid;
 				addCallback: (TRTranslationCallback block: [ self updateAfterDragOf: each ]) ].
 	self addCallback: (TRExtentCallback block: [ self updateDragBoxes ]).
 	self

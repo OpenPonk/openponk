@@ -23,7 +23,7 @@ Class {
 { #category : #rendering }
 OPNoteFigure >> addInteractions [
 	self @ (RTResizable new minSize: self minWidth @ self minHeight).
-	self @ RTDraggableSnapToGrid
+	self @ OPRTDraggableSnapToGrid
 ]
 
 { #category : #accessing }

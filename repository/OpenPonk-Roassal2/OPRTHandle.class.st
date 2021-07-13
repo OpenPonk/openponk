@@ -12,7 +12,7 @@ Class {
 		'element',
 		'pointLink'
 	],
-	#category : 'OpenPonk-Roassal2-Connection'
+	#category : #'OpenPonk-Roassal2-Connection'
 }
 
 { #category : #accessing }
@@ -73,7 +73,7 @@ OPRTHandle >> renderIn: aView [
 	element := self shape elementOn: edge.
 	aView add: element.
 	element translateTo: pointLink value.
-	element @ RTDraggableSnapToGrid center.
+	element @ OPRTDraggableSnapToGrid center.
 	"element @ DCRTRoundedDraggable."
 	element addConnectedEdge: edge.
 	element

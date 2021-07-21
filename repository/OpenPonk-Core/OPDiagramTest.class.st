@@ -15,15 +15,23 @@ OPDiagramTest >> testAsJsonComplex [
 				offset: 20 @ 30;
 				zoom: 1.2);
 		layout:
-			{('Person' -> (OPElementLayout withPosition: 27 @ 23 extent: 0 @ 0))}
-				asDictionary.
+			{('Person' -> (OPElementLayout withPosition: 27 @ 23 extent: 0 @ 0)).
+			('Relationship'
+				->
+					(OPElementLayout
+						withPathPoints:
+							{(0 @ 0).
+							(10 @ 10)}))} asDictionary.
 	self
 		assert: (STON fromString: view asJson)
 		equals:
 			(STON
 				fromString:
 					'{ 	"camera" : { "offset" : { "x" : 20, "y" : 30 }, "zoom" : 1.2 }	,
-		"layout" : { "Person" : { "position" : { "x" : 27, "y" : 23 }, "extent" : { "x" : 0, "y" : 0 } } }, 
+		"layout" : { 
+			"Person" : { "position" : { "x" : 27, "y" : 23 }, "extent" : { "x" : 0, "y" : 0 } },
+			"Relationship" : { "pathPoints" : [ { "x" : 0, "y" : 0 }, { "x" : 10, "y" : 10 } ] } 
+		}, 
 		"commonElements" : [],
 		"visibleElements" : [  ] }')
 ]

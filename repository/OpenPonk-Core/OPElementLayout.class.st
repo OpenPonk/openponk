@@ -3,45 +3,41 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'position',
-		'extent'
+		'extent',
+		'path'
 	],
 	#classInstVars : [
 		'none'
 	],
-	#category : #'OpenPonk-Core-Figures'
+	#category : #'OpenPonk-Core-Layout'
 }
 
 { #category : #accessing }
 OPElementLayout class >> neoJsonMapping: mapper [
 	mapper
 		for: self
-			customDo: [ :mapping | 
-			mapping
-				reader: [ :jsonReader | 
-					| elementLayout map |
-					elementLayout := self new.
-					map := jsonReader parseMap.
-					((map includesKey: #x) and: [ map includesKey: #y ])
-						ifTrue: [ elementLayout position: (map at: #x) @ (map at: #y) ]
-						ifFalse: [ (map includesKey: #position)
-								ifTrue: [ elementLayout
-										position: ((map at: #position) at: #x) @ ((map at: #position) at: #y) ].
-							(map includesKey: #extent)
-								ifTrue: [ elementLayout
-										extent: ((map at: #extent) at: #x) @ ((map at: #extent) at: #y) ] ].
-					elementLayout ];
-				writer: [ :jsonWriter :aLayout | 
-					jsonWriter
-						writeMapStreamingDo: [ :mapWriter | 
-							mapWriter writeKey: #position value: aLayout position as: Point.
-							aLayout extent
-								ifNotNil: [ mapWriter writeKey: #extent value: aLayout extent as: Point ] ] ] ];
-		mapInstVarsFor: Point
+		do: [ :mapping | 
+			(mapping mapInstVar: #position) valueSchema: Point.
+			(mapping mapInstVar: #extent) valueSchema: Point.
+			(mapping mapInstVar: #path) valueSchema: OPRelationshipPath ]
 ]
 
 { #category : #'instance creation' }
 OPElementLayout class >> none [
 	^ none ifNil: [ none := self new ]
+]
+
+{ #category : #'instance creation' }
+OPElementLayout class >> withPath: aRelationshipPath [
+	^ self new
+		path: aRelationshipPath;
+		yourself
+]
+
+{ #category : #'instance creation' }
+OPElementLayout class >> withPathFromSource: anId throughPoints: anArrayOfPoints [
+	^ self
+		withPath: (OPRelationshipPath fromSource: anId throughPoints: anArrayOfPoints)
 ]
 
 { #category : #'instance creation' }
@@ -87,7 +83,17 @@ OPElementLayout >> hash [
 
 { #category : #testing }
 OPElementLayout >> isNone [
-	^ position isNil & extent isNil
+	^ position isNil & extent isNil & path isNil
+]
+
+{ #category : #accessing }
+OPElementLayout >> path [
+	^ path
+]
+
+{ #category : #accessing }
+OPElementLayout >> path: aRelationshipPath [
+	path := aRelationshipPath
 ]
 
 { #category : #accessing }
@@ -103,7 +109,9 @@ OPElementLayout >> position: aPoint [
 { #category : #printing }
 OPElementLayout >> printOn: aStream [
 	super printOn: aStream.
-	position ifNil: [ ^ self ].
+	position
+		ifNil: [ path ifNil: [ ^ self ].
+			aStream nextPutAll: ' (relationship)' ].
 	aStream space.
 	position printOn: aStream.
 	extent

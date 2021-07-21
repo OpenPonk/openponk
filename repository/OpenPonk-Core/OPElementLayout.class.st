@@ -16,10 +16,11 @@ Class {
 OPElementLayout class >> neoJsonMapping: mapper [
 	mapper
 		for: self
-		do: [ :mapping | 
+			do: [ :mapping | 
 			(mapping mapInstVar: #position) valueSchema: Point.
 			(mapping mapInstVar: #extent) valueSchema: Point.
-			(mapping mapInstVar: #path) valueSchema: OPRelationshipPath ]
+			(mapping mapInstVar: #path) valueSchema: OPRelationshipPath ];
+		mapAllInstVarsFor: Point
 ]
 
 { #category : #'instance creation' }

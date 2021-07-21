@@ -19,12 +19,13 @@ OPElementLayoutTest >> setUp [
 		withPosition: -10 @ 50
 		extent: 100 @ 200.
 	relationshipLayout := OPElementLayout
-		withPathPoints:
+		withPathFromSource: 'element'
+		throughPoints:
 			{(100 @ 200).
 			(150 @ 200).
 			(150 @ 300)}.
 	elementLayoutJSON := '{"position":{"x":-10,"y":50},"extent":{"x":100,"y":200}}'.
-	relationshipLayoutJSON := '{"pathPoints":[{"x":100,"y":200},{"x":150,"y":200},{"x":150,"y":300}]}'
+	relationshipLayoutJSON := '{"path":{"points":[{"x":100,"y":200},{"x":150,"y":200},{"x":150,"y":300}],"source":"element"}}'
 ]
 
 { #category : #tests }
@@ -64,24 +65,28 @@ OPElementLayoutTest >> testJSONWithoutExtent [
 
 { #category : #tests }
 OPElementLayoutTest >> testRelationshipContentFromJSON [
-	| newLayout |
+	| newLayout path |
 	newLayout := NeoJSONReader fromString: relationshipLayoutJSON.
-	self assert: (newLayout includesKey: #pathPoints).
-	self assert: (newLayout at: #pathPoints) isCollection.
-	self assert: (newLayout at: #pathPoints) isSequenceable.
-	self assert: (newLayout at: #pathPoints) size equals: 3.
-	self assert: (((newLayout at: #pathPoints) at: 1) includesKey: #x).
-	self assert: (((newLayout at: #pathPoints) at: 1) at: #x) equals: 100.
-	self assert: (((newLayout at: #pathPoints) at: 1) includesKey: #y).
-	self assert: (((newLayout at: #pathPoints) at: 1) at: #y) equals: 200.
-	self assert: (((newLayout at: #pathPoints) at: 2) includesKey: #x).
-	self assert: (((newLayout at: #pathPoints) at: 2) at: #x) equals: 150.
-	self assert: (((newLayout at: #pathPoints) at: 2) includesKey: #y).
-	self assert: (((newLayout at: #pathPoints) at: 2) at: #y) equals: 200.
-	self assert: (((newLayout at: #pathPoints) at: 3) includesKey: #x).
-	self assert: (((newLayout at: #pathPoints) at: 3) at: #x) equals: 150.
-	self assert: (((newLayout at: #pathPoints) at: 3) includesKey: #y).
-	self assert: (((newLayout at: #pathPoints) at: 3) at: #y) equals: 300
+	self assert: (newLayout includesKey: #path).
+	path := newLayout at: #path.
+	self assert: (path includesKey: #source).
+	self assert: (path at: #source) equals: 'element'.
+	self assert: (path includesKey: #points).
+	self assert: (path at: #points) isCollection.
+	self assert: (path at: #points) isSequenceable.
+	self assert: (path at: #points) size equals: 3.
+	self assert: (((path at: #points) at: 1) includesKey: #x).
+	self assert: (((path at: #points) at: 1) at: #x) equals: 100.
+	self assert: (((path at: #points) at: 1) includesKey: #y).
+	self assert: (((path at: #points) at: 1) at: #y) equals: 200.
+	self assert: (((path at: #points) at: 2) includesKey: #x).
+	self assert: (((path at: #points) at: 2) at: #x) equals: 150.
+	self assert: (((path at: #points) at: 2) includesKey: #y).
+	self assert: (((path at: #points) at: 2) at: #y) equals: 200.
+	self assert: (((path at: #points) at: 3) includesKey: #x).
+	self assert: (((path at: #points) at: 3) at: #x) equals: 150.
+	self assert: (((path at: #points) at: 3) includesKey: #y).
+	self assert: (((path at: #points) at: 3) at: #y) equals: 300
 ]
 
 { #category : #tests }
@@ -90,12 +95,13 @@ OPElementLayoutTest >> testRelationshipFromJSON [
 	newLayout := NeoJSONReader
 		fromString: relationshipLayoutJSON
 		as: OPElementLayout.
-	self assert: newLayout pathPoints isCollection.
-	self assert: newLayout pathPoints isSequenceable.
-	self assert: newLayout pathPoints size equals: 3.
-	self assert: (newLayout pathPoints at: 1) equals: 100 @ 200.
-	self assert: (newLayout pathPoints at: 2) equals: 150 @ 200.
-	self assert: (newLayout pathPoints at: 3) equals: 150 @ 300
+	self assert: newLayout path source equals: 'element'.
+	self assert: newLayout path points isCollection.
+	self assert: newLayout path points isSequenceable.
+	self assert: newLayout path points size equals: 3.
+	self assert: (newLayout path points at: 1) equals: 100 @ 200.
+	self assert: (newLayout path points at: 2) equals: 150 @ 200.
+	self assert: (newLayout path points at: 3) equals: 150 @ 300
 ]
 
 { #category : #tests }

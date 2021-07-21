@@ -19,7 +19,7 @@ OPDiagramTest >> testAsJsonComplex [
 			('Relationship'
 				->
 					(OPElementLayout
-						withPathPoints:
+						withPathFromSource: 'Person' throughPoints:
 							{(0 @ 0).
 							(10 @ 10)}))} asDictionary.
 	self
@@ -30,7 +30,7 @@ OPDiagramTest >> testAsJsonComplex [
 					'{ 	"camera" : { "offset" : { "x" : 20, "y" : 30 }, "zoom" : 1.2 }	,
 		"layout" : { 
 			"Person" : { "position" : { "x" : 27, "y" : 23 }, "extent" : { "x" : 0, "y" : 0 } },
-			"Relationship" : { "pathPoints" : [ { "x" : 0, "y" : 0 }, { "x" : 10, "y" : 10 } ] } 
+			"Relationship" : { "path" : { "source" : "Person", "points" : [ { "x" : 0, "y" : 0 }, { "x" : 10, "y" : 10 } ] } }
 		}, 
 		"commonElements" : [],
 		"visibleElements" : [  ] }')

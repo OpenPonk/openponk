@@ -33,7 +33,7 @@ OPRelationshipPath class >> neoJsonMapping: mapper [
 						do: [ string ] ] ];
 		for: #ArrayOfPoints
 			customDo: [ :mapping | mapping listOfElementSchema: Point ];
-		mapInstVarsFor: Point
+		mapAllInstVarsFor: Point
 ]
 
 { #category : #accessing }

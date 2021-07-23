@@ -40,33 +40,32 @@ BaselineOfOpenPonk class >> loadPlugins [
 
 { #category : #accessing }
 BaselineOfOpenPonk >> baseline: spec [
+
 	<baseline>
-	spec
-		for: #common
-		do: [ self externalProjectsBaseline: spec.
-			self internalProjectsBaseline: spec.
-			spec
-				package: 'OpenPonk-Core'
-					with: [ spec
-						requires: #('Magritte' 'Mocketry' 'Roassal2' 'XMLParser' 'XPath' 'NeoJSON') ];
-				package: 'OpenPonk-Perf';
-				package: 'OpenPonk-Trachel';
-				package: 'OpenPonk-Roassal2';
-				package: 'OpenPonk-Morphic';
-				"package: 'OpenPonk-Telemetry'
+	spec for: #common do: [ 
+		self externalProjectsBaseline: spec.
+		self internalProjectsBaseline: spec.
+		spec
+			package: 'OpenPonk-Core' with: [ 
+				spec requires:
+						#( 'Magritte' 'Mocketry' 'Roassal2' 'XMLParser' 'XPath' 'NeoJSON' ) ];
+			package: 'OpenPonk-Trachel';
+			package: 'OpenPonk-Roassal2';
+			package: 'OpenPonk-Morphic';
+			"package: 'OpenPonk-Telemetry'
 					with: [ spec requires: #('Sentry') ];"
-					package: 'OpenPonk-Help';
-				package: 'OpenPonk-Spec'
-					with: [ spec
-						requires:
-							#('Moose' 'FileDialog' 'Magritte' 'SynchronizedLinks' 'OpenPonk-Morphic')	" 'Commander'" ];
-				package: 'OpenPonk-Plugins'
-					with: [ spec postLoadDoIt: #loadPlugins ].
-			spec
-				group: 'default'
-				with:
-					#('OpenPonk-Core' 'OpenPonk-Perf' 'OpenPonk-Trachel' 'OpenPonk-Roassal2' 'OpenPonk-Morphic' 'OpenPonk-Spec' 'OpenPonk-Help').	"'OpenPonk-Telemetry'"
-			spec group: 'complete' with: #('default' 'OpenPonk-Plugins') ]
+			package: 'OpenPonk-Help';
+			package: 'OpenPonk-Spec' with: [ 
+				spec requires:
+						#( 'Moose' 'FileDialog' 'Magritte' 'SynchronizedLinks'
+						   'OpenPonk-Morphic' ) " 'Commander'" ];
+			package: 'OpenPonk-Plugins'
+			with: [ spec postLoadDoIt: #loadPlugins ].
+		spec
+			group: 'default'
+			with: #( 'OpenPonk-Core' 'OpenPonk-Trachel' 'OpenPonk-Roassal2'
+				   'OpenPonk-Morphic' 'OpenPonk-Spec' 'OpenPonk-Help' ). "'OpenPonk-Telemetry'"
+		spec group: 'complete' with: #( 'default' 'OpenPonk-Plugins' ) ]
 ]
 
 { #category : #accessing }

@@ -125,7 +125,10 @@ OPRTRailConstraint >> connection: aConnection [
 
 { #category : #'as yet unclassified' }
 OPRTRailConstraint >> connectionLength [
-	^ self segments inject: 0 into: [ :sum :each | sum + (each first dist: each second) ]
+
+	^ self segments
+		  inject: 0
+		  into: [ :sum :each | sum + (each first distanceTo: each second) ]
 ]
 
 { #category : #accessing }
@@ -183,36 +186,38 @@ OPRTRailConstraint >> noGripLine [
 
 { #category : #'as yet unclassified' }
 OPRTRailConstraint >> pointBetween: a and: b distance: dist [
+
 	| denom |
-	denom := a dist: b.
+	denom := a distanceTo: b.
 	^ denom > 0
-		ifTrue: [ a + ((b - a) / denom * dist) ]
-		ifFalse: [ a ]
-	"
-	^ a + ((b - a) / (a dist: b) * dist)"
+		  ifTrue: [ a + (b - a / denom * dist) ]
+		  ifFalse: [ "
+	^ a + ((b - a) / (a dist: b) * dist)" a ]
 ]
 
 { #category : #'as yet unclassified' }
 OPRTRailConstraint >> segmentForPosition: aPosition [
+
 	| sum newSum |
 	sum := 0.
-	self segments
-		do: [ :each | 
-			| length |
-			length := each first dist: each second.
-			newSum := sum + length.
-			sum <= aPosition & (aPosition <= newSum)
-				ifTrue: [ ^ {each first.
-					each second.
-					(self
-						pointBetween: each first
-						and: each second
-						distance: aPosition - sum)} ].
-			sum := newSum ].
-	self segments
-		ifNotEmpty: [ ^ {self segments first first.
-			self segments first second.
-			(self segments first first + (aPosition @ aPosition))} ].
+	self segments do: [ :each | 
+		| length |
+		length := each first distanceTo: each second.
+		newSum := sum + length.
+		sum <= aPosition & (aPosition <= newSum) ifTrue: [ 
+			^ { 
+				  each first.
+				  each second.
+				  (self
+					   pointBetween: each first
+					   and: each second
+					   distance: aPosition - sum) } ].
+		sum := newSum ].
+	self segments ifNotEmpty: [ 
+		^ { 
+			  self segments first first.
+			  self segments first second.
+			  (self segments first first + (aPosition @ aPosition)) } ].
 	self error: 'failed to find a segment'
 ]
 

@@ -273,8 +273,10 @@ OPCanvasPresenter >> viewClicked: anEvent [
 
 { #category : #'selection handling' }
 OPCanvasPresenter >> viewContextClicked: anEvent [
-	(OPPragmaPluginMenuBuilder cachedPragmaKeyword: #opCanvasContextMenu: model: self) menuSpec
-		asMenuMorph popUpInWorld
+
+	(OPPragmaPluginMenuBuilder
+		 pragmaKeyword: #opCanvasContextMenu:
+		 model: self) menuSpec asMenuMorph popUpInWorld
 ]
 
 { #category : #accessing }

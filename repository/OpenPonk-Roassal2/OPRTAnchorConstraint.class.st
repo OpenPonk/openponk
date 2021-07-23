@@ -240,18 +240,24 @@ OPRTAnchorConstraint >> build [
 
 { #category : #'as yet unclassified' }
 OPRTAnchorConstraint >> computeExtraDistance [
+
 	"Compute the extra distance required to move the element to not overlap the segment."
 
 	| segment sideOfElement normals |
 	segment := self anchorSegment first.
 	sideOfElement := segment sideOfPoint: element position.
 	normals := element encompassingRectangle corners
-		select: [ :each | (segment sideOfPoint: each) ~= sideOfElement ]
-		thenCollect: [ :each | each dist: (each nearestPointAlongLineFrom: segment from to: segment to) ].
+		           select: [ :each | 
+		           (segment sideOfPoint: each) ~= sideOfElement ]
+		           thenCollect: [ :each | 
+			           each distanceTo:
+				           (each
+					            nearestPointAlongLineFrom: segment from
+					            to: segment to) ].
 	normals ifEmpty: [ ^ 0 ].
 	^ minDistance sign > 0
-		ifTrue: [ normals max ]
-		ifFalse: [ normals max negated ]
+		  ifTrue: [ normals max ]
+		  ifFalse: [ normals max negated ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -315,24 +321,24 @@ OPRTAnchorConstraint >> moveAnchor [
 
 { #category : #'as yet unclassified' }
 OPRTAnchorConstraint >> moveAwayFrom: aRectangle via: aVector [
+
 	"There should be minDistance between the start and the element. Move it in the direction fo the current segment"
 
 	| vector corners segment |
 	"source and target of the edge on top of each other... ignore"
-	aVector r = 0
-		ifTrue: [ ^ self ].
-	vector := aVector normalized * (aRectangle origin dist: aRectangle corner).
-	corners := element encompassingRectangle corners
-		select: [ :each | aRectangle containsPoint: each ].
-	segment := (corners
-		collect:
-			[ :each | 
-			| sg |
-			sg := RTLineSegment from: each to: each + vector.
-			RTLineSegment from: each to: (sg intersectRectangle: aRectangle) anyOne ])
-		detectMax: #length.
-	segment ifNotNil: [ element translateBy: segment vector ]
-	"	segment
+	aVector r = 0 ifTrue: [ ^ self ].
+	vector := aVector normalized
+	          * (aRectangle origin distanceTo: aRectangle corner).
+	corners := element encompassingRectangle corners select: [ :each | 
+		           aRectangle containsPoint: each ].
+	segment := (corners collect: [ :each | 
+		            | sg |
+		            sg := RTLineSegment from: each to: each + vector.
+		            RTLineSegment
+			            from: each
+			            to: (sg intersectRectangle: aRectangle) anyOne ]) 
+		           detectMax: #length.
+	segment ifNotNil: [ "	segment
 		ifNotNil:
 			[ element view
 				add:
@@ -340,7 +346,8 @@ OPRTAnchorConstraint >> moveAwayFrom: aRectangle via: aVector [
 						path:
 							'M' , segment from x asString , ',' , segment from y asString , 'L' , segment to x asString
 								, ',' , segment to y asString;
-						element) ]"
+						element) ]" 
+		element translateBy: segment vector ]
 ]
 
 { #category : #'as yet unclassified' }

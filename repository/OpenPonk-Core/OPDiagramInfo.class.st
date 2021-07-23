@@ -114,7 +114,11 @@ OPDiagramInfo >> order: anObject [
 
 { #category : #printing }
 OPDiagramInfo >> printOn: aStream [
+
 	super printOn: aStream.
-	aStream << '(' << self diagramName printString << '@'
-		<< self modelName printString << '-' << ')'
+	aStream << '('.
+	self diagramName printOn: aStream.
+	aStream << '@'.
+	self modelName printOn: aStream.
+	aStream << '-' << ')'
 ]

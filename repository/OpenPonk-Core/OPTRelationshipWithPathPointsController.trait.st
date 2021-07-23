@@ -18,6 +18,7 @@ OPTRelationshipWithPathPointsController >> layout [
 
 { #category : #accessing }
 OPTRelationshipWithPathPointsController >> layout: aLayout [
+
 	| router innerPoints pathPoints path |
 	aLayout ifNil: [ ^ self ].
 	path := aLayout path.
@@ -28,10 +29,11 @@ OPTRelationshipWithPathPointsController >> layout: aLayout [
 	router := self figure shape router.
 	router removeAll.
 	innerPoints := pathPoints size < 2
-		ifTrue: [ pathPoints ]
-		ifFalse: [ pathPoints copyFrom: 2 to: pathPoints size - 1 ].
-	self pathSourceModel uuid = path source
-		ifFalse: [ innerPoints := innerPoints reversed ].
+		               ifTrue: [ pathPoints ]
+		               ifFalse: [ 
+		               pathPoints copyFrom: 2 to: pathPoints size - 1 ].
+	self pathSourceModel uuid = path source ifFalse: [ 
+		innerPoints := innerPoints reversed ].
 	innerPoints do: [ :each | router addPoint: each ]
 ]
 

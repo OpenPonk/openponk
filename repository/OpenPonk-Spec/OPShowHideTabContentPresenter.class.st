@@ -49,34 +49,35 @@ OPShowHideTabContentPresenter >> initialRoots [
 
 { #category : #initialization }
 OPShowHideTabContentPresenter >> initializePresenters [
+
 	| mainColumn |
 	tree := self newTreeTable.
 	mainColumn := SpCompositeTableColumn new.
-	mainColumn
-		addColumn:
-			((SpCheckBoxTableColumn
-				evaluated: [ :modelObject | self isSelected: modelObject ])
-				width: 20;
-				onActivation: [ :modelObject | self processAndUpdateSelected: modelObject ];
-				onDesactivation: [ :modelObject | self processAndUpdateUnselected: modelObject ];
-				yourself).
-	self hasIcon
-		ifTrue: [ mainColumn
-				addColumn:
-					((SpImageTableColumn
-						evaluated: [ :modelObject | self iconFor: modelObject ])
-						width: 20;
-						yourself) ].
-	mainColumn
-		addColumn:
-			(SpStringTableColumn
-				evaluated: [ :modelObject | self nameFor: modelObject ]).
+	mainColumn addColumn:
+		((SpCheckBoxTableColumn evaluated: [ :modelObject | 
+				  self isSelected: modelObject ])
+			 width: 20;
+			 onActivation: [ :modelObject | 
+				 self processAndUpdateSelected: modelObject ];
+			 onDeactivation: [ :modelObject | 
+				 self processAndUpdateUnselected: modelObject ];
+			 yourself).
+	self hasIcon ifTrue: [ 
+		mainColumn addColumn:
+			((SpImageTableColumn evaluated: [ :modelObject | 
+					  self iconFor: modelObject ])
+				 width: 20;
+				 yourself) ].
+	mainColumn addColumn:
+		(SpStringTableColumn evaluated: [ :modelObject | 
+			 self nameFor: modelObject ]).
 	tree
 		addColumn: mainColumn;
 		roots: self initialRoots;
 		hideColumnHeaders;
 		children: [ :item | self childrenFor: item ];
-		whenBuiltDo: [ :buildWidget | buildWidget widget dataSource rootItem expandAll ]
+		whenBuiltDo: [ :buildWidget | 
+			buildWidget widget dataSource rootItem expandAll ]
 ]
 
 { #category : #testing }

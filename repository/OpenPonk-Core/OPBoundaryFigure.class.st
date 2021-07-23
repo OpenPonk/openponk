@@ -3,8 +3,6 @@ Class {
 	#superclass : #OPResizableFigureWithText,
 	#instVars : [
 		'dragBoxes',
-		'updateDragBoxAfterMainBlock',
-		'dragBoxUpdates',
 		'positionOfMainRelativeToDragBoxes',
 		'dragBoxesByPosition',
 		'dragBoxUpdateBlocks'

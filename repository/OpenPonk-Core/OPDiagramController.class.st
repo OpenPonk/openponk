@@ -31,21 +31,6 @@ OPDiagramController >> addAllElements [
 "	model elements do: [ :each | self addModelElement: each ]"
 ]
 
-{ #category : #connecting }
-OPDiagramController >> addAsTargetFor: aController [
-	super addAsTargetFor: aController.
-"	| newModel |
-	self assert: (self canBeTargetFor: aController).
-	newModel := aController createModel.
-	aController
-		diagramController: self diagramController;
-		model: newModel.
-	self controllers add: aController.
-	aController attach.
-	self model add: newModel.
-	self view signalUpdate"
-]
-
 { #category : #adding }
 OPDiagramController >> addCommonElementsFromDiagram [
 	diagram commonElements do: [ :each | self showInDiagramModel: each ]
@@ -86,10 +71,16 @@ OPDiagramController >> addModelElement: aModelElement [
 
 { #category : #accessing }
 OPDiagramController >> addedFigureFor: aController [
+
 	| figure |
 	(figuresBeingAdded includes: aController)
-		ifFalse: [ Transcript
-				show: 'DiagramController: added figure not previously marked as being added'	"self halt" ]
+		ifFalse: [ 
+			GrowlMorph
+				openWithLabel: 'OpenPonk debug: Controller warning'
+				contents:
+				'DiagramController: added figure not previously marked as being added'
+				backgroundColor: GrowlMorph theme warningBackgroundColor
+				labelColor: GrowlMorph theme textColor ]
 		ifTrue: [ figuresBeingAdded remove: aController ].
 	figure := aController figure.
 	figureAdded value: figure.

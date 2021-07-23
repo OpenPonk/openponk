@@ -18,9 +18,6 @@ Class {
 		'createProjectButton',
 		'openProjectButton'
 	],
-	#classVars : [
-		'RecentProjects'
-	],
 	#category : #'OpenPonk-Spec-Windows'
 }
 

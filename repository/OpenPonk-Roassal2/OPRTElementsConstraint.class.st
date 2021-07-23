@@ -24,25 +24,26 @@ OPRTElementsConstraint class >> keepExtentOf: conformingShape like: originShape 
 
 { #category : #'public - visualization' }
 OPRTElementsConstraint class >> whenDragging: anElement drawLineToPoint: aBlock [
+
 	| lineTargetBox dynamicLine |
 	anElement
-		when: TRMouseDragStart
-			do: [ (lineTargetBox := RTBox new
-				size: 0;
-				color: Color transparent;
-				element) translateTo: aBlock value.
+		when: TRMouseDragStart do: [ 
+			(lineTargetBox := RTBox new
+				                  size: 0;
+				                  color: Color transparent;
+				                  element) translateTo: aBlock value.
 			anElement view
 				add: lineTargetBox;
-				add:
-					(dynamicLine := (RTLine new color: Color veryLightGray)
-						edgeFrom: lineTargetBox
-						to: anElement);
+				add: (dynamicLine := (RTLine new color: Color veryLightGray)
+						                edgeFrom: lineTargetBox
+						                to: anElement);
 				signalUpdate ];
 		when: TRMouseDragging
-			do: [ lineTargetBox translateTo: aBlock value ];
-		when: TRMouseDragEnd
-			do: [ dynamicLine remove.
-			lineTargetBox remove.
-			dynamicLine := lineTargetBox := nil.
-			anElement view signalUpdate ]
+		do: [ 
+		lineTargetBox ifNotNil: [ lineTargetBox translateTo: aBlock value ] ];
+		when: TRMouseDragEnd do: [ 
+		dynamicLine ifNotNil: [ dynamicLine remove ].
+		lineTargetBox ifNotNil: [ lineTargetBox remove ].
+		dynamicLine := lineTargetBox := nil.
+		anElement view signalUpdate ]
 ]

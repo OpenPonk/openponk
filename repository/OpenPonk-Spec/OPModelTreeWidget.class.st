@@ -11,9 +11,6 @@ Class {
 		'heading',
 		'refreshButton'
 	],
-	#classVars : [
-		'Icons'
-	],
 	#category : #'OpenPonk-Spec-Windows'
 }
 

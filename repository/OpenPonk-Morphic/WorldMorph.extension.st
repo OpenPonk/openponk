@@ -2,8 +2,10 @@ Extension { #name : #WorldMorph }
 
 { #category : #'*OpenPonk-Morphic' }
 WorldMorph >> showWaitCursorWhile: aBlock [
-	[ World activeHand showTemporaryCursor: Cursor wait.
-	World doOneCycle.
-	aBlock value ]
-		ensure: [ World activeHand showTemporaryCursor: nil ]
+
+	[ 
+	self currentWorld activeHand showTemporaryCursor: Cursor wait.
+	self currentWorld doOneCycle.
+	aBlock value ] ensure: [ 
+		self currentWorld activeHand showTemporaryCursor: nil ]
 ]

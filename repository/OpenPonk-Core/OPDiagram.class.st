@@ -31,70 +31,62 @@ OPDiagram class >> emptyOfModel: aModel [
 
 { #category : #accessing }
 OPDiagram class >> neoJsonMapping: mapper [
+
 	mapper
-		for: self
-			do: [ :mapping | 
-			mapping mapInstVars: mapping identifier instVarNames \ #(model).
+		for: self do: [ :mapping | 
+			mapping mapInstVars: mapping identifier instVarNames \ #( model ).
 			(mapping mapInstVar: #layout) valueSchema: #UUIDsWithPoints.
 			(mapping mapInstVar: #camera) valueSchema: OPDiagramCamera.
 			(mapping mapInstVar: #commonElements) valueSchema: #CommonElements.
-			(mapping mapInstVar: #visibleElements)
-				valueSchema: #ObjectsWithUUIDs ];
+			(mapping mapInstVar: #visibleElements) valueSchema:
+					#ObjectsWithUUIDs ];
 		for: #CommonElements
-			customDo: [ :mapping | mapping listOfElementSchema: #CommonElement ];
-		for: #CommonElement
-			customDo: [ :mapping | 
-			mapping
-				reader: [ :jsonReader | 
+		customDo: [ :mapping | mapping listOfElementSchema: #CommonElement ];
+		for: #CommonElement customDo: [ :mapping | 
+			mapping reader: [ :jsonReader | 
 					| map element |
 					map := jsonReader parseMap.
-					element := (map at: #className) asClass new.
+					element := (self class environment at: (map at: #className)) new.
 					NeoJSONReader
 						fromString: (NeoJSONWriter toString: map)
 						as: element class ] ];
 		for: #ObjectsWithUUIDs
-			customDo: [ :mapping | mapping listOfElementSchema: #ObjectWithUUID ];
-		for: #ObjectWithUUID
-			customDo: [ :mapping | 
+		customDo: [ :mapping | mapping listOfElementSchema: #ObjectWithUUID ];
+		for: #ObjectWithUUID customDo: [ :mapping | 
 			mapping
 				encoder: [ :object | object uuid asString ];
 				decoder: [ :string | 
-					OPModelObjectReference
-						withUUID:
-							([ UUID fromString: string ]
-								on: Error
-								do: [ string ]) ] ];
-		for: UUID
-			customDo: [ :mapping | 
-			mapping
-				encoder: [ :uuid | uuid asString ];
-				decoder: [ :string | 
-					[ UUID fromString: string ]
-						on: Error
-						do: [ string ] ] ];
-		for: #UUIDsWithPoints
-			customDo: [ :mapping | 
-			mapping
-				reader: [ :jsonReader | 
-					| map |
-					map := jsonReader mapClass new.
-					jsonReader
-						parseMapKeysDo: [ :key | 
-							| value |
-							value := jsonReader nextAs: OPElementLayout.
-							map
-								at:
-									([ UUID fromString: key ]
-										on: Error
-										do: [ key ])
-								put: value ].
-					map ];
-				writer: [ :jsonWriter :map | 
-					jsonWriter
-						writeMapStreamingDo: [ :mapWriter | 
-							map
-								keysAndValuesDo:
-									[ :key :value | mapWriter writeKey: key asString value: value as: OPElementLayout ] ] ] ]
+					OPModelObjectReference withUUID: ([ UUID fromString: string ]
+								 on: Error
+								 do: [ string ]) ] ];
+		for: UUID customDo: [ :mapping | 
+		mapping
+			encoder: [ :uuid | uuid asString ];
+			decoder: [ :string | 
+				[ UUID fromString: string ]
+					on: Error
+					do: [ string ] ] ];
+		for: #UUIDsWithPoints customDo: [ :mapping | 
+		mapping
+			reader: [ :jsonReader | 
+				| map |
+				map := jsonReader mapClass new.
+				jsonReader parseMapKeysDo: [ :key | 
+						| value |
+						value := jsonReader nextAs: OPElementLayout.
+						map
+							at: ([ UUID fromString: key ]
+									 on: Error
+									 do: [ key ])
+							put: value ].
+				map ];
+			writer: [ :jsonWriter :map | 
+				jsonWriter writeMapStreamingDo: [ :mapWriter | 
+						map keysAndValuesDo: [ :key :value | 
+								mapWriter
+									writeKey: key asString
+									value: value
+									as: OPElementLayout ] ] ] ]
 ]
 
 { #category : #'instance creation' }
@@ -274,9 +266,13 @@ OPDiagram >> order: anOrder [
 
 { #category : #printing }
 OPDiagram >> printOn: aStream [
+
 	super printOn: aStream.
-	aStream << '(' << self name printString << '@'
-		<< self modelName printString << '-' << ')'
+	aStream << '('.
+	self name printOn: aStream.
+	aStream << '@'.
+	self modelName printOn: aStream.
+	aStream << ')'
 ]
 
 { #category : #converting }

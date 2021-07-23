@@ -105,12 +105,6 @@ OPCanvasPresenter >> editor [
 ]
 
 { #category : #'private-focus' }
-OPCanvasPresenter >> enableCommanderShortcutsIn: aWidget [
-
-	^ CmdKMDispatcher attachedTo: aWidget withCommandsFrom: self
-]
-
-{ #category : #'private-focus' }
 OPCanvasPresenter >> ensureKeyBindingsFor: aWidget [
 	super ensureKeyBindingsFor: aWidget.
 	^self enableCommanderShortcutsIn: aWidget
@@ -127,25 +121,26 @@ OPCanvasPresenter >> exportAsPng [
 
 { #category : #toolbar }
 OPCanvasPresenter >> exportCanvasTo: aFile [
+
 	| gridShape gridColor selectedElements |
-	gridShape := roassalView canvas shapes
-		detect: [ :each | each isKindOf: TRCanvasGridShape ].
+	gridShape := roassalView canvas shapes detect: [ :each | 
+		             each isKindOf: TRCanvasGridShape ].
 	gridColor := gridShape color.
 	selectedElements := self selectedElements.
 	self diagramController deselectAll.
-	[ gridShape color: Color transparent.
-	OPTRCanvasExporter new
-		asPNG;
-		canvas: roassalView canvas;
+	[ 
+	gridShape color: Color transparent.
+	(RTCanvasExporter canvas: roassalView canvas)
+		format: #png;
 		whole;
 		defaultScale;
 		oversizedBy: 20 @ 20;
 		fileName: aFile;
 		export.
-	self inform: 'Saved to ' , aFile pathString ]
-		ensure: [ gridShape color: gridColor.
-			selectedElements
-				do: [ :each | "self diagramController selectFigure: " each announce: TRMouseLeftClick new ] ]
+	self inform: 'Saved to ' , aFile pathString ] ensure: [ 
+		gridShape color: gridColor.
+		selectedElements do: [ :each | "self diagramController selectFigure: " 
+			each announce: TRMouseLeftClick new ] ]
 ]
 
 { #category : #adding }
@@ -219,12 +214,14 @@ OPCanvasPresenter >> lastSelectedFigure: aFigure [
 
 { #category : #private }
 OPCanvasPresenter >> loadElementsFromController [
+
 	self deprecated: 'Control reloading from Controller, not Canvas'.
-	[ World activeHand showTemporaryCursor: Cursor wait.
-	World doOneCycle.
+	[ 
+	self currentWorld activeHand showTemporaryCursor: Cursor wait.
+	self currentWorld doOneCycle.
 	diagramController rebuild.
-	diagramController applyDefaultLayout ]
-		ensure: [ World activeHand showTemporaryCursor: nil ]
+	diagramController applyDefaultLayout ] ensure: [ 
+		self currentWorld activeHand showTemporaryCursor: nil ]
 ]
 
 { #category : #accessing }
@@ -255,9 +252,10 @@ OPCanvasPresenter >> selectedElements [
 
 { #category : #'as yet unclassified' }
 OPCanvasPresenter >> showAllFigures [
-	roassalView elements size = 0
-		ifTrue: [ roassalView canvas camera scale: 1 ]
-		ifFalse: [ roassalView canvas focusOnCenterScaled ]
+
+	roassalView elements
+		ifEmpty: [ roassalView canvas camera scale: 1 ]
+		ifNotEmpty: [ roassalView canvas focusOnCenterScaled ]
 ]
 
 { #category : #signalling }

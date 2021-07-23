@@ -2,20 +2,18 @@ Class {
 	#name : #OPNoteFigure,
 	#superclass : #OPResizableFigureWithText,
 	#instVars : [
-		'invisibleBoxes',
-		'invisibleBoxesByPosition',
 		'lines',
 		'topLeftBox',
 		'upperTopRightBox',
 		'lowerTopRightBox',
 		'bottomLeftBox',
 		'bottomRightBox',
-		'invisibleBoxUpdateBlocks',
 		'middleLeftBox',
 		'middleBottomBox',
 		'leftFillBox',
 		'bottomFillBox',
-		'triangle'
+		'triangle',
+		'invisibleBoxes'
 	],
 	#category : #'OpenPonk-Core-CommonElements'
 }

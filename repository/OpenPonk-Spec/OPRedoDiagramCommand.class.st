@@ -12,7 +12,8 @@ OPRedoDiagramCommand class >> toolbarMenuActivation [
 
 { #category : #execution }
 OPRedoDiagramCommand >> defaultMenuIcon [
-	^ Smalltalk ui icons smallRedo
+
+	^ self iconNamed: #smallRedo
 ]
 
 { #category : #accessing }

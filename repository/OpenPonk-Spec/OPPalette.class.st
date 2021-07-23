@@ -100,11 +100,12 @@ OPPalette >> heading [
 
 { #category : #initialization }
 OPPalette >> initialize [
+
 	items := OrderedCollection new.
-	selectedItem := nil.
-	selectedTool := nil.
 	super initialize.
-	self bindKeyCombination: Character escape toAction: [ self selectSelectionTool ]
+	self
+		bindKeyCombination: Character escape
+		toAction: [ self selectSelectionTool ]
 ]
 
 { #category : #initialization }

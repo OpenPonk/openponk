@@ -10,17 +10,18 @@ Class {
 
 { #category : #accessing }
 OPCommonElement class >> neoJsonMapping: mapper [
+
 	mapper
-		for: self
-			do: [ :mapping | 
-			mapping mapInstVars: mapping identifier allInstVarNames \ #(announcer).
+		for: self do: [ :mapping | 
+			mapping mapInstVars:
+					mapping identifier allInstVarNames \ #( announcer ).
 			(mapping mapInstVar: #uuid) valueSchema: UUID.
 			mapping
 				mapProperty: #className
 				getter: [ :object | object className ]
-				setter: [ :object :value | object assert: object className equals: value ] ];
-		for: UUID
-			customDo: [ :mapping | 
+				setter: [ :object :value | 
+					object assert: object className = value ] ];
+		for: UUID customDo: [ :mapping | 
 			mapping
 				encoder: [ :uuid | uuid asString ];
 				decoder: [ :string | 

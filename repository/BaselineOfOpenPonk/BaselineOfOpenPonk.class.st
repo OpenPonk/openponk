@@ -79,10 +79,9 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 		spec
 			repository: 'github://pharo-contributions/XML-XPath:3450f91/src';
 			loads: #( Core ) ].
-	spec baseline: 'Roassal2' with: [ 
-		spec
-			repository: 'github://hernanmd/Roassal2:934e5ab/src';
-			postLoadDoIt: #loadPetitParser ].
+	spec
+		baseline: 'Roassal2'
+		with: [ spec repository: 'github://hernanmd/Roassal2:934e5ab/src' ].
 	spec baseline: 'Magritte' with: [ 
 		spec
 			repository:
@@ -153,17 +152,6 @@ BaselineOfOpenPonk >> loadFsmEditor [
 		baseline: 'FsmEditor';
 		repository: 'github://openponk/fsm-editor/repository';
 		load: #(plugin)
-]
-
-{ #category : #accessing }
-BaselineOfOpenPonk >> loadPetitParser [
-	"this is solved separatedly by direct loading code because PetitParser does not specify Roassal2 version, which causes conflicts and this is probably only way to use onConflict:"
-	
-	Metacello new
-		baseline: 'PetitParser';
-		repository: 'github://moosetechnology/PetitParser:v2.x.x/src';
-		onConflict: [ :err | err useLoaded ];
-		load
 ]
 
 { #category : #plugins }

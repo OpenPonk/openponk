@@ -70,34 +70,29 @@ BaselineOfOpenPonk >> baseline: spec [
 
 { #category : #accessing }
 BaselineOfOpenPonk >> externalProjectsBaseline: spec [
-	spec
-		baseline: 'XMLParser'
-		with: [ spec
-				repository: 'github://pharo-contributions/XML-XMLParser:3.5.x/src';
-				loads: #(Core) ].
-	spec
-		baseline: 'XPath'
-		with: [ spec
-				repository: 'github://pharo-contributions/XML-XPath:3450f91/src';
-				loads: #(Core) ].
-	spec
-		baseline: 'Roassal2'
-		with: [ spec
-				repository:
-					'github://ObjectProfile/Roassal2:v2.0.1/src';
-				postLoadDoIt: #loadPetitParser ].
-	spec
-		baseline: 'Magritte'
-		with: [ spec
-				repository:
-					'github://magritte-metamodel/magritte:49781e985875315d06c5991f094c30d6f8c9f02d/source';
-				loads: #(Core 'Magritte-Morph');
-				postLoadDoIt: #removeGreaseWarnings ].
-	spec
-		baseline: 'Moose'
-		with: [ spec
-				repository: 'github://moosetechnology/Moose:d49bd89/src';
-				loads: #(Merlin) ].
+
+	spec baseline: 'XMLParser' with: [ 
+		spec
+			repository: 'github://pharo-contributions/XML-XMLParser:3.5.x/src';
+			loads: #( Core ) ].
+	spec baseline: 'XPath' with: [ 
+		spec
+			repository: 'github://pharo-contributions/XML-XPath:3450f91/src';
+			loads: #( Core ) ].
+	spec baseline: 'Roassal2' with: [ 
+		spec
+			repository: 'github://hernanmd/Roassal2:934e5ab/src';
+			postLoadDoIt: #loadPetitParser ].
+	spec baseline: 'Magritte' with: [ 
+		spec
+			repository:
+				'github://magritte-metamodel/magritte:49781e985875315d06c5991f094c30d6f8c9f02d/source';
+			loads: #( Core 'Magritte-Morph' );
+			postLoadDoIt: #removeGreaseWarnings ].
+	spec baseline: 'Moose' with: [ 
+		spec
+			repository: 'github://moosetechnology/Moose:d49bd89/src';
+			loads: #( Merlin ) ].
 	spec
 		baseline: 'Mocketry'
 		with: [ spec repository: 'github://JanBliznicenko/Mocketry:pharo9' ].

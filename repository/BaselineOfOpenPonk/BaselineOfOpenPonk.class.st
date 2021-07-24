@@ -84,20 +84,20 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 		with: [ spec repository: 'github://hernanmd/Roassal2:934e5ab/src' ].
 	spec baseline: 'Magritte' with: [ 
 		spec
-			repository:
-				'github://magritte-metamodel/magritte:49781e985875315d06c5991f094c30d6f8c9f02d/source';
+			repository: 'github://magritte-metamodel/magritte:v3.7/source';
 			loads: #( Core 'Magritte-Morph' );
 			postLoadDoIt: #removeGreaseWarnings ].
 	spec baseline: 'Moose' with: [ 
 		spec
-			repository: 'github://moosetechnology/Moose:d49bd89/src';
+			repository: 'github://moosetechnology/Moose:b5163b2/src';
 			loads: #( Merlin ) ].
 	spec
 		baseline: 'Mocketry'
-		with: [ spec repository: 'github://JanBliznicenko/Mocketry:pharo9' ].
+		with: [ spec repository: 'github://dionisiydk/Mocketry:v6.0.3' ].
 	spec
 		baseline: 'NeoJSON'
-		with: [ spec repository: 'github://svenvc/NeoJSON/repository' ]
+		with: [ 
+		spec repository: 'github://svenvc/NeoJSON:a16e02b/repository' ]
 ]
 
 { #category : #accessing }

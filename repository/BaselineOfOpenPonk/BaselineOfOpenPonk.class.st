@@ -81,7 +81,8 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 			loads: #( Core ) ].
 	spec
 		baseline: 'Roassal2'
-		with: [ spec repository: 'github://hernanmd/Roassal2:934e5ab/src' ].
+		with: [ 
+		spec repository: 'github://ObjectProfile/Roassal2:v2.0.2/src' ].
 	spec baseline: 'Magritte' with: [ 
 		spec
 			repository: 'github://magritte-metamodel/magritte:8b38673/source';

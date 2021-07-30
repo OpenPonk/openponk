@@ -26,7 +26,9 @@ Class {
 		'gripEdge',
 		'distance',
 		'relativePosition',
-		'position'
+		'position',
+		'gripLineDragColor',
+		'gripLineStaticColor'
 	],
 	#category : #'OpenPonk-Roassal2-Constraints'
 }
@@ -89,22 +91,35 @@ OPRTRailConstraint class >> example [
 
 { #category : #building }
 OPRTRailConstraint >> addGrip [
+
 	gripElement := gripShape element.
 	element view add: gripElement.
-	gripLine color = Color transparent
-		ifTrue: [ ^ self ].
+	element addCallback: (TRRemoveCallback block: [ 
+			 gripElement view ifNotNil: [ gripElement remove ] ]).
+	gripLine color = Color transparent ifTrue: [ ^ self ].
 	gripEdge := gripLine edgeFrom: element to: gripElement.
 	element view add: gripEdge
 ]
 
 { #category : #building }
 OPRTRailConstraint >> build [
+
+	gripElement ifNotNil: [ ^ self ].
 	self addGrip.
+	element when: TRMouseDragStart do: [ 
+		gripLine color: gripLineDragColor.
+		gripEdge update ].
 	element when: TRMouseDragging do: [ self updateParameters ].
-	element when: TRMouseDragEnd do: [ self updateParameters ].
-	"	element addCallback: (TRTranslationCallback block: [ self updatePosition ])."
-	connection from addCallback: (TRTranslationCallback block: [ self updatePosition ]).
-	connection to addCallback: (TRTranslationCallback block: [ self updatePosition ]).
+	element when: TRMouseDragEnd do: [ 
+		self updateParameters.
+		gripLine color: gripLineStaticColor.
+		gripEdge
+			update;
+			signalUpdate ].
+	connection from addCallback:
+		(TRTranslationCallback block: [ self updatePosition ]).
+	connection to addCallback:
+		(TRTranslationCallback block: [ self updatePosition ]).
 	connection when: OPRTHandleMoved do: [ self updatePosition ].
 	self updatePosition
 ]
@@ -156,7 +171,11 @@ OPRTRailConstraint >> gripLine [
 
 { #category : #accessing }
 OPRTRailConstraint >> gripLineColor: aColor [
-	gripLine color: aColor
+
+	gripLineStaticColor ~= Color transparent ifTrue: [ 
+		gripLine color: aColor.
+		gripLineStaticColor := aColor ].
+	gripLineDragColor := aColor
 ]
 
 { #category : #accessing }
@@ -171,12 +190,20 @@ OPRTRailConstraint >> initialPosition: aNumber [
 
 { #category : #building }
 OPRTRailConstraint >> initialize [
+
+	super initialize.
 	(gripShape := RTBox new)
 		size: 0;
 		color: Color red.
-	(gripLine := RTLine new)
-		attachPoint: RTBorderAttachPoint new;
-		color: Color black
+	(gripLine := RTLine new) attachPoint: RTBorderAttachPoint new.
+	self gripLineColor: Color black
+]
+
+{ #category : #accessing }
+OPRTRailConstraint >> lineOnDragOnly [
+
+	gripLine color: Color transparent.
+	gripLineStaticColor := Color transparent
 ]
 
 { #category : #accessing }
@@ -250,7 +277,7 @@ OPRTRailConstraint >> updateParameters [
 		                  element position distanceTo: each fourth ].
 	sum := (self segments first: closestSegment first - 1)
 		       inject: 0
-		       into: [ :s :next | s + (next first dist: next second) ].
+		       into: [ :s :next | s + (next first distanceTo: next second) ].
 	sum := sum
 	       + (closestSegment second distanceTo: closestSegment fourth).
 	gripElement trachelShape doWithoutCallbacks: [ 

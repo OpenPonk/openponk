@@ -84,7 +84,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 		with: [ spec repository: 'github://hernanmd/Roassal2:934e5ab/src' ].
 	spec baseline: 'Magritte' with: [ 
 		spec
-			repository: 'github://magritte-metamodel/magritte:v3.7/source';
+			repository: 'github://magritte-metamodel/magritte:8b38673/source';
 			loads: #( Core 'Magritte-Morph' );
 			postLoadDoIt: #removeGreaseWarnings ].
 	spec baseline: 'Moose' with: [ 

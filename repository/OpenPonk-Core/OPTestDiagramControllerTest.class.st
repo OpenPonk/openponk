@@ -62,7 +62,7 @@ OPTestDiagramControllerTest >> testCleanView [
 	self assert: view elements size > 0.
 	diagramController cleanView.
 	self assert: view elements asArray equals: #(  ).
-	self assert: view geomEdges asArray equals: #(  )
+	self assert: view edges asArray equals: #(  )
 ]
 
 { #category : #'tests - ui interaction' }

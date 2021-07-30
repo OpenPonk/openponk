@@ -193,7 +193,7 @@ OPRTRailConstraint >> initialize [
 
 	super initialize.
 	(gripShape := RTBox new)
-		size: 0;
+		size: 1;
 		color: Color red.
 	(gripLine := RTLine new) attachPoint: RTBorderAttachPoint new.
 	self gripLineColor: Color black

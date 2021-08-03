@@ -49,12 +49,15 @@ OPDynamicForm class >> isLinkInstalled [
 
 { #category : #specs }
 OPDynamicForm class >> settingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder setting: #showPriority)
 		parent: #openponk;
 		target: self;
 		label: 'Show Properties Form Priorities';
-		description: 'Show magritte fields priority for the properties form.'
+		description:
+			'Show magritte fields priority for the properties form.';
+		order: 60
 ]
 
 { #category : #specs }

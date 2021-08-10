@@ -297,6 +297,7 @@ OPIcons >> initializeIcons [
 OPIcons >> inspectionIcons [
 
 	<inspectorPresentationOrder: 40 title: 'Icons'>
+	<script: 'self current inspect'>
 	| selectorsByForms |
 	selectorsByForms := (self iconSelectors collect: [ :each | 
 		                     ([ self perform: each ]

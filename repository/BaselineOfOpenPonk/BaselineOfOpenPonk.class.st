@@ -53,8 +53,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 	spec baseline: 'Magritte' with: [ 
 		spec
 			repository: 'github://magritte-metamodel/magritte:dc9a440/source';
-			loads: #( Core 'Magritte-Morph' );
-			postLoadDoIt: #removeGreaseWarnings ].
+			loads: #( Core 'Magritte-Morph' ) ].
 	spec baseline: 'Moose' with: [ 
 		spec
 			repository: 'github://moosetechnology/Moose:b5163b2/src';
@@ -79,14 +78,4 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 		baseline: 'SynchronizedLinks'
 		with: [ 
 		spec repository: 'github://openponk/synchronized-links/repository' ]
-]
-
-{ #category : #scripts }
-BaselineOfOpenPonk >> removeGreaseWarnings [
-
-	"('Grease-Pharo40-Slime' asPackageIfAbsent: [ ^ self ])
-		removeFromSystem.
-	'Grease-Core' asPackage mcWorkingCopy modified: false"
-
-	
 ]

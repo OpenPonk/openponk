@@ -107,6 +107,12 @@ OPProject >> hasDiagramsModel: aModel [
 	^ self diagrams anySatisfy: [ :any | any model = aModel ]
 ]
 
+{ #category : #adding }
+OPProject >> hasModel: aModel [
+
+	^ self models includes: aModel
+]
+
 { #category : #initialization }
 OPProject >> initialize [
 	uuid := UUID new.

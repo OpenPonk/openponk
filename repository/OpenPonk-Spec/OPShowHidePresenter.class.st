@@ -3,8 +3,6 @@ Class {
 	#superclass : #SpPresenter,
 	#instVars : [
 		'diagramController',
-		'cherryPicker',
-		'typesPicker',
 		'notebook'
 	],
 	#category : #'OpenPonk-Spec-Dialogs'

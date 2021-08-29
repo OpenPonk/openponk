@@ -1,17 +1,3 @@
-"
-I am a modified PragmaMenuBuilder that also ensures that only menus for a particular plugin are retrieved.
-
-Example:
-
-```
-OPPragmaPluginMenuBuilder pragmaMultiKeyword: #opProjectSubmenu model: self 
-```
-
-Will retrieve all menus with <opProjectSubmenu> or <opProjectSubmenu: #arg> pragmas.
-
-For the argumented version a test will be performed. The test is currently hardcoded in `#testBlockFor:` method.
-
-"
 Class {
 	#name : #OPPragmaPluginMenuBuilder,
 	#superclass : #PragmaMenuBuilder,
@@ -21,30 +7,24 @@ Class {
 	#category : #'OpenPonk-Spec-Utils'
 }
 
-{ #category : #'instance creation' }
-OPPragmaPluginMenuBuilder class >> pragmaMultiKeyword: aPragmaKeyword model: aModel [
-	"Build a builder using aPragmaKeyword and aPragmaKeyword: as the pragma keywords and aModel a the model of the resulting builder"
-
-	^ self
-		withAllPragmaKeywords: (Array with: aPragmaKeyword with: (aPragmaKeyword , ':') asSymbol)
-		model: aModel
-]
-
 { #category : #'registrations handling' }
 OPPragmaPluginMenuBuilder >> collectRegistrations [
+
 	"Retrieve all pragma methods and evaluate them by passing the 
 	MenuRegistration class as argument. The result is a list of trees
 	stored in my itemList inst var"
 
 	| menu |
 	menu := PragmaMenuAndShortcutRegistration model: self model.
-	(self pragmaCollector
-		select: [ :each | self hasCorrectArguments: each ])
-		do: [ :prg | 
+	self pragmas
+		select: [ :each | self hasCorrectArguments: each ]
+		thenDo: [ :prg | 
 			self
 				currentRoot: self
-				while:
-					[ prg methodClass instanceSide perform: prg methodSelector with: menu ] ].
+				while: [ 
+				prg methodClass instanceSide
+					perform: prg methodSelector
+					with: menu ] ].
 	self interpretRegistration: menu
 ]
 

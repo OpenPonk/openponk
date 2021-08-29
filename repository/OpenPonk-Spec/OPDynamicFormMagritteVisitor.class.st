@@ -81,7 +81,7 @@ OPDynamicFormMagritteVisitor >> visitSingleOptionDescription: aSingleOptionDescr
 		ifTrue: [ form addEditableDroplist: aSingleOptionDescription label ]
 		ifFalse: [ form addDroplist: aSingleOptionDescription label ])
 		items: aSingleOptionDescription options;
-		enabled: aSingleOptionDescription isReadonly not;
+		enabled: aSingleOptionDescription isReadOnly not;
 		displayBlock: [ :each | aSingleOptionDescription labelForOption: each ];
 		iconHolder: [ :each :item | aSingleOptionDescription iconForOption: each ];
 		setSelectedItem: (aSingleOptionDescription accessor read: controller);
@@ -90,16 +90,28 @@ OPDynamicFormMagritteVisitor >> visitSingleOptionDescription: aSingleOptionDescr
 
 { #category : #visiting }
 OPDynamicFormMagritteVisitor >> visitStringDescription: aStringDescription [
-	aStringDescription isReadonly
-		ifTrue: [ ^ self visitLabelDescription: aStringDescription ].
+
+	aStringDescription isReadOnly ifTrue: [ 
+		^ self visitLabelDescription: aStringDescription ].
 	(form addTextInput: aStringDescription label)
-		text: (aStringDescription accessor read: controller);
-		whenTextIsAccepted: [ :newValue | 
-			[ aStringDescription validate: newValue.
-			aStringDescription accessor write: newValue to: controller ]
+		text: ((aStringDescription accessor read: controller) ifNil: [ '' ]);
+		whenTextIsAccepted: [ :newText | 
+			[ 
+			| newString |
+			newString := newText asString.
+			aStringDescription validate: newString.
+			aStringDescription accessor write: newString to: controller ]
 				on: MAValidationError
-				do: [ :e | self inform: e messageText ] ];
-		in: [ :input | aStringDescription accessor opWhenUpdated: [ :newValue | input text: newValue ] ]
+				do: [ :e | 
+					OPWorkbench isDevelopmentMode
+						ifTrue: [ e pass ]
+						ifFalse: [ 
+							(GrowlMorph label: 'Error' contents: e asString)
+								backgroundColor: GrowlMorph theme dangerBackgroundColor;
+								openInWorld ] ] ];
+		in: [ :input | 
+			aStringDescription accessor opWhenUpdated: [ :newValue | 
+				input text: newValue ] ]
 ]
 
 { #category : #visiting }

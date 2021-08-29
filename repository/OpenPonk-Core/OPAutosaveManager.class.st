@@ -87,7 +87,7 @@ OPAutosaveManager >> saveState: aMemento [
 		ensureDelete;
 		writeStreamDo: [ :stream | 
 			stream
-				wantsLineEndConversion: true;
+				"wantsLineEndConversion: true; incompatible with Pharo 9"
 				nextPutAll: current ]
 ]
 

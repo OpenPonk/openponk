@@ -22,7 +22,15 @@ OPProjectNewModelCommand >> defaultMenuItemName [
 
 { #category : #execution }
 OPProjectNewModelCommand >> execute [
+
+	OPPluginRegistry default plugins ifEmpty: [ 
+		^ GrowlMorph
+			  openWithLabel: 'OpenPonk: No plugins'
+			  contents:
+			  'Cannot add a model unless there is at least one OpenPonk plugin loaded'
+			  backgroundColor: GrowlMorph theme warningBackgroundColor
+			  labelColor: GrowlMorph theme textColor ].
 	(OPModelTypeSelector
-		newApplication: SpApplication defaultApplication
-		model: projectController) openWithSpec
+		 newApplication: SpApplication defaultApplication
+		 model: projectController) openWithSpec
 ]

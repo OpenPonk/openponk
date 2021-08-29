@@ -4,6 +4,8 @@ A DCRelationshipController is the parent class to all line based element control
 Class {
 	#name : #OPDirectionalRelationshipController,
 	#superclass : #OPElementController,
+	#traits : 'OPTRelationshipWithPathPointsController',
+	#classTraits : 'OPTRelationshipWithPathPointsController classTrait',
 	#instVars : [
 		'source',
 		'target'
@@ -49,16 +51,6 @@ OPDirectionalRelationshipController >> hideSelectionFeedback [
 ]
 
 { #category : #accessing }
-OPDirectionalRelationshipController >> layout [
-	^ OPElementLayout none
-]
-
-{ #category : #accessing }
-OPDirectionalRelationshipController >> layout: anObject [
-	"do nothing"
-]
-
-{ #category : #accessing }
 OPDirectionalRelationshipController >> modelSource [
 	^ model source
 ]
@@ -66,20 +58,6 @@ OPDirectionalRelationshipController >> modelSource [
 { #category : #accessing }
 OPDirectionalRelationshipController >> modelTarget [
 	^ model target
-]
-
-{ #category : #'canvas actions' }
-OPDirectionalRelationshipController >> showAcceptFeedbackFor: aController [
-	"Return something that understands #remove, or nil to not show any feedback."
-
-	^ OPAcceptDenyFeedbackBuilder acceptFeedbackFor: self figure
-]
-
-{ #category : #'canvas actions' }
-OPDirectionalRelationshipController >> showDenyFeedbackFor: aController [
-	"Return something that understands #remove, or nil to not show any feedback."
-
-	^ OPAcceptDenyFeedbackBuilder denyFeedbackFor: self figure
 ]
 
 { #category : #'canvas actions' }

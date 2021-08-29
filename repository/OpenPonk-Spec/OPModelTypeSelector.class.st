@@ -5,33 +5,53 @@ Class {
 		'projectController',
 		'addModelButton',
 		'pluginRegistry',
-		'radioButtons',
-		'radioButtonsPerPlugin',
-		'projectNameInput'
+		'plugins',
+		'projectNameInput',
+		'projectNameLabel',
+		'pluginsLabel',
+		'nameChanged'
 	],
 	#category : #'OpenPonk-Spec-Windows'
 }
 
 { #category : #specs }
 OPModelTypeSelector class >> defaultSpec [
+
 	^ SpBoxLayout newVertical
-		add: SpBoxLayout newHorizontal;
-		add: #radioButtons;
-		add: SpBoxLayout newHorizontal;
-		add: #projectNameInput expand: false fill: false padding: 5;
-		add: #addModelButton height: self buttonHeight;
-		yourself
+		  add: #pluginsLabel
+		  expand: false
+		  fill: false
+		  padding: 5;
+		  add: #plugins;
+		  add: (SpBoxLayout newHorizontal
+				   add: #projectNameLabel
+				   expand: false
+				   fill: false
+				   padding: 2;
+				   add: #projectNameInput;
+				   yourself)
+		  expand: false
+		  fill: false
+		  padding: 5;
+		  add: (SpBoxLayout newHorizontal
+				   add: SpBoxLayout newVertical;
+				   add: #addModelButton width: 150;
+				   add: SpBoxLayout newVertical;
+				   yourself)
+		  height: self buttonHeight;
+		  yourself
 ]
 
 { #category : #'as yet unclassified' }
 OPModelTypeSelector >> addModel [
-	| model diagram plugin |
-	plugin := (radioButtonsPerPlugin associations
-		detect: [ :pluginAndRadioButton | pluginAndRadioButton value state ]
-		ifNone: [ ^ self ]) key.
-	model := plugin newModel
-		name: projectNameInput text;
-		yourself.
+
+	| model diagram selectedPlugin |
+	selectedPlugin := plugins selectedItem.
+	selectedPlugin ifNil: [ 
+		^ self inform: 'Select type of the model first' ].
+	model := selectedPlugin newModel
+		         name: projectNameInput text;
+		         yourself.
 	diagram := OPDiagram withWholeModel: model.
 	projectController project
 		addModel: model;
@@ -40,67 +60,60 @@ OPModelTypeSelector >> addModel [
 	self withWindowDo: #close
 ]
 
-{ #category : #'accessing - spec' }
-OPModelTypeSelector >> addModelButton [
-	^ addModelButton
-]
-
 { #category : #initialization }
 OPModelTypeSelector >> connectPresenters [
-	| builder |
+
 	addModelButton action: [ self addModel ].
 	projectNameInput
 		autoAccept: true;
-		whenTextChangedDo: [ :newValue | addModelButton enabled: newValue isNotEmpty ].
-	builder := SpDynamicPresentersListBuilder new
-		modelObjects: pluginRegistry plugins;
-		presenter: SpRadioButtonPresenter
-			configuredAs: [ :radioButtonPresenter :plugin | 
-			radioButtonsPerPlugin size > 1
-				ifTrue: [ radioButtonPresenter
-						associatedRadioButtons: radioButtonsPerPlugin values ].
-			radioButtonsPerPlugin at: plugin put: radioButtonPresenter.
-			radioButtonPresenter label: plugin name ];
-		layoutBuilder: (SpDynamicTopToBottomRowsLayout rows: 1);
-		yourself.
-	self newDynamicPresentersListIn: #radioButtons usingBuilder: builder
+		whenTextChangedDo: [ :newValue | 
+			nameChanged := true.
+			self ensureButtonActivation ].
+	plugins items: pluginRegistry plugins.
+	plugins whenSelectionChangedDo: [ :selection | 
+		self ensureButtonActivation.
+		selection selectedItem ifNotNil: [ :selectedItem | 
+			nameChanged ifFalse: [ 
+				projectNameInput text: 'New ' , selectedItem name , ' Model'.
+				nameChanged := false ] ] ].
+	plugins items ifNotEmpty: [ plugins selectFirst ]
 ]
 
-{ #category : #api }
-OPModelTypeSelector >> initialExtent [
-	^ 400 @ 300
+{ #category : #initialization }
+OPModelTypeSelector >> ensureButtonActivation [
+
+	addModelButton enabled: (projectNameInput text isNotEmpty and: [ 
+			 plugins selectedItem isNotNil ])
 ]
 
 { #category : #initialization }
 OPModelTypeSelector >> initialize [
-	radioButtonsPerPlugin := Dictionary new.
+
 	pluginRegistry := OPPluginRegistry default.
+	nameChanged := false.
 	super initialize
 ]
 
 { #category : #initialization }
 OPModelTypeSelector >> initializePresenters [
-	radioButtons := self newNullPresenter.
+
+	pluginsLabel := self newLabel label: 'Select model type:'.
+	plugins := self newList.
+	plugins display: [ :plugin | plugin name ].
+	projectNameLabel := self newLabel label: 'Model name: '.
 	projectNameInput := self newTextInput text: 'New Model'.
 	addModelButton := self newButton label: 'Create'
 ]
 
-{ #category : #accessing }
-OPModelTypeSelector >> radioButtons [
-	^ radioButtons
-]
+{ #category : #initialization }
+OPModelTypeSelector >> initializeWindow: aWindow [
 
-{ #category : #accessing }
-OPModelTypeSelector >> radioButtons: aDynamicPresenter [
-	radioButtons := aDynamicPresenter
+	aWindow
+		title: 'OpenPonk - Add new model to project';
+		initialExtent: 300 @ 265
 ]
 
 { #category : #'accessing model' }
 OPModelTypeSelector >> setModelBeforeInitialization: aProjectController [
 	projectController := aProjectController
-]
-
-{ #category : #'accessing - spec' }
-OPModelTypeSelector >> title [
-	^ 'Select new model to OpenPonk project'
 ]

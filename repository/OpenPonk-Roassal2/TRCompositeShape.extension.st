@@ -24,3 +24,17 @@ TRCompositeShape >> removeFirst [
 TRCompositeShape >> removeLast [
 	^ shapeAndOffsets removeLast first
 ]
+
+{ #category : #'*OpenPonk-Roassal2' }
+TRCompositeShape >> verticalAndLeftWithoutReset [
+	"Layout the shapes vertically and aligned on the left hand side"
+
+	RTAlignment new
+		elements: (shapeAndOffsets collect: #first);
+		left.
+	RTVerticalLineLayout new
+		gapSize: 0;
+		on: (shapeAndOffsets collect: #first).
+	shapeAndOffsets
+		doWithIndex: [ :tuple :index | tuple at: 2 put: tuple first position ]
+]

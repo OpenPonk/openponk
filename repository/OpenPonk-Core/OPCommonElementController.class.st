@@ -1,9 +1,6 @@
 Class {
 	#name : #OPCommonElementController,
 	#superclass : #OPElementController,
-	#instVars : [
-		'announcer'
-	],
 	#category : #'OpenPonk-Core-CommonElements'
 }
 

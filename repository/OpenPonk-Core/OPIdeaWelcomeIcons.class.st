@@ -37,6 +37,12 @@ OPIdeaWelcomeIcons class >> gtInspectorIconsIn: composite [
 		column: 'Selector' evaluated: #key
 ]
 
+{ #category : #initialization }
+OPIdeaWelcomeIcons class >> iconSelectors [
+
+	^ self class selectorsInCategory: 'accessing - icons'
+]
+
 { #category : #accessing }
 OPIdeaWelcomeIcons class >> icons [
 	^ icons ifNil: [ icons := Dictionary new ]
@@ -57,6 +63,37 @@ OPIdeaWelcomeIcons class >> importProjectIconContents [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAX0lEQVR42mNgIANMLV/Ox0Au
 AGrWBuLrQBxGieanIJoizSA+IQ27YH4lWTNU01OoIZYENc9avuEMMkYyABnjtplIAyxxOpdI
 A3bhjH8iDcBtCDYDSALoBmDDw90ASgAAsEIRZbX5U38AAAAASUVORK5CYII='
+]
+
+{ #category : #'gt-inspector' }
+OPIdeaWelcomeIcons class >> inspectionIcons [
+
+	<inspectorPresentationOrder: 40 title: 'Icons'>
+	<script: 'self inspect'>
+	| selectorsByForms |
+	selectorsByForms := (self iconSelectors collect: [ :each | 
+		                     ([ self perform: each ]
+			                      on: Deprecation
+			                      do: #resume) -> each ]) asDictionary.
+	^ SpTablePresenter new
+		  items:
+			  (selectorsByForms keys sortedAs: [ :each | 
+					   selectorsByForms at: each ]);
+		  addColumn: (SpImageTableColumn new
+				   title: 'Icon';
+				   evaluated: [ :each | 
+					   [ 
+					   each scaledToSize:
+							   (50 min: each width) @ (16 min: each height) ]
+						   on: Deprecation
+						   do: #resume ];
+				   width: 50;
+				   yourself);
+		  addColumn: (SpStringTableColumn new
+				   title: 'Name';
+				   evaluated: [ :each | selectorsByForms at: each ];
+				   yourself);
+		  yourself
 ]
 
 { #category : #'accessing - icons' }

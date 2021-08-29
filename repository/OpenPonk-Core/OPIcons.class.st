@@ -273,7 +273,10 @@ OPIcons >> gtInspectorIconsIn: composite [
 
 { #category : #initialization }
 OPIcons >> iconSelectors [
-	^ self class selectors select: [ :each | '*Icon' match: each asString ]
+
+	^ self class selectors select: [ :each | 
+		  (each asString asLowercase endsWith: 'icon') or: [ 
+			  each asString asLowercase endsWith: 'logo' ] ]
 ]
 
 { #category : #initialization }
@@ -288,6 +291,37 @@ OPIcons >> initializeIcons [
 		maximumWeight: 64;
 		factory: [ :key | self perform: key ];
 		yourself
+]
+
+{ #category : #'gt-inspector' }
+OPIcons >> inspectionIcons [
+
+	<inspectorPresentationOrder: 40 title: 'Icons'>
+	<script: 'self current inspect'>
+	| selectorsByForms |
+	selectorsByForms := (self iconSelectors collect: [ :each | 
+		                     ([ self perform: each ]
+			                      on: Deprecation
+			                      do: #resume) -> each ]) asDictionary.
+	^ SpTablePresenter new
+		  items:
+			  (selectorsByForms keys sortedAs: [ :each | 
+					   selectorsByForms at: each ]);
+		  addColumn: (SpImageTableColumn new
+				   title: 'Icon';
+				   evaluated: [ :each | 
+					   [ 
+					   each scaledToSize:
+							   (50 min: each width) @ (16 min: each height) ]
+						   on: Deprecation
+						   do: #resume ];
+				   width: 50;
+				   yourself);
+		  addColumn: (SpStringTableColumn new
+				   title: 'Name';
+				   evaluated: [ :each | selectorsByForms at: each ];
+				   yourself);
+		  yourself
 ]
 
 { #category : #'accessing - icons' }

@@ -126,12 +126,6 @@ OPEditor >> diagramController [
 ]
 
 { #category : #'private-focus' }
-OPEditor >> enableCommanderShortcutsIn: aWidget [
-
-	^ CmdKMDispatcher attachedTo: aWidget withCommandsFrom: self
-]
-
-{ #category : #'private-focus' }
 OPEditor >> ensureKeyBindingsFor: aWidget [
 	super ensureKeyBindingsFor: aWidget.
 	^self enableCommanderShortcutsIn: aWidget

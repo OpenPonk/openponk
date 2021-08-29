@@ -18,9 +18,6 @@ Class {
 		'createProjectButton',
 		'openProjectButton'
 	],
-	#classVars : [
-		'RecentProjects'
-	],
 	#category : #'OpenPonk-Spec-Windows'
 }
 
@@ -57,12 +54,13 @@ OPProjectBrowser class >> defaultSpec [
 
 { #category : #'world menu' }
 OPProjectBrowser class >> menuCommandOn: aBuilder [
+
 	<worldMenu>
 	(aBuilder item: #OpenPonk)
 		icon: OPIcons current openponkIcon;
 		action: [ self open ];
 		withSeparatorAfter;
-		order: 25.700
+		order: 200
 ]
 
 { #category : #'instance creation' }

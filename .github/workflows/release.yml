@@ -22,7 +22,7 @@ jobs:
       - uses: hpi-swa/setup-smalltalkCI@1.2.1
         id: smalltalkci
         with:
-          smalltalk-version: Pharo64-8.0
+          smalltalk-version: Pharo64-9.0
       - name: Prepare image and test
         run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
         shell: bash
@@ -38,7 +38,7 @@ jobs:
       - uses: hpi-swa/setup-smalltalkCI@1.2.1
         id: smalltalkci
         with:
-          smalltalk-version: Pharo64-8.0
+          smalltalk-version: Pharo64-9.0
       - name: Prepare image and test
         run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
         shell: bash

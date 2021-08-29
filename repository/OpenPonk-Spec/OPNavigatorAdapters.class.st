@@ -74,13 +74,26 @@ OPNavigatorAdapters >> childrenFor: anObject [
 ]
 
 { #category : #accessing }
-OPNavigatorAdapters >> contextMenuFor: anObject in: aMenu [
+OPNavigatorAdapters >> contextMenuFor: anObject projectController: aProjectController in: aMenu [
+
 	| builder |
 	builder := OPMenuBuilder new.
 	builder menu: aMenu.
-	((adapters select: [ :each | each hasMappingFor: anObject ])
-		collect: [ :each | each contextMenuFor: anObject ]) flattened
-		do: [ :pair | builder addItem: pair key action: [ pair value value: anObject ] ]
+	((adapters select: [ :each | each hasMappingFor: anObject ]) 
+		 collect: [ :each | each contextMenuFor: anObject ]) flattened do: [ 
+		:pair | 
+		builder addItem: pair key action: [ pair value value: anObject ] ].
+	((aProjectController hasModel: anObject) and: [ 
+		 aProjectController project models size > 1 ]) ifFalse: [ ^ self ].
+	builder addItem: 'Delete from project' action: [ 
+		SpConfirmDialog new
+			title: 'Delete model from project?';
+			label:
+				'Do you want to delete the model, including its contents and diagrams?';
+			acceptLabel: 'Yes, delete it';
+			cancelLabel: 'Cancel';
+			onAccept: [ aProjectController removeModel: anObject ];
+			openDialogWithSpec ]
 ]
 
 { #category : #accessing }

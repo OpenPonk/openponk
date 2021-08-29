@@ -15,7 +15,7 @@ Class {
 		'lineBuilder',
 		'moveSubscription'
 	],
-	#category : 'OpenPonk-Roassal2-Interactivity'
+	#category : #'OpenPonk-Roassal2-Interactivity'
 }
 
 { #category : #accessing }
@@ -36,12 +36,12 @@ OPInteractiveLine >> lineBuilder: aBlock [
 
 { #category : #accessing }
 OPInteractiveLine >> remove [
-	running
-		ifTrue: [ 
-			running := false.
-			view announcer unsubscribe: moveSubscription.
-			mouseBox remove.
-			view signalUpdate ]
+
+	running ifFalse: [ ^ self ].
+	running := false.
+	view announcer unsubscribe: moveSubscription.
+	mouseBox remove.
+	view signalUpdate
 ]
 
 { #category : #hooks }

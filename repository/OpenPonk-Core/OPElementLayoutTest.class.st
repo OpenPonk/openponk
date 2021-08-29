@@ -5,21 +5,33 @@ Class {
 	#name : #OPElementLayoutTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'layout'
+		'elementLayout',
+		'relationshipLayout',
+		'elementLayoutJSON',
+		'relationshipLayoutJSON'
 	],
 	#category : #'OpenPonk-Core-Tests'
 }
 
 { #category : #running }
 OPElementLayoutTest >> setUp [
-	layout := OPElementLayout withPosition: -10 @ 50 extent: 100 @ 200
+	elementLayout := OPElementLayout
+		withPosition: -10 @ 50
+		extent: 100 @ 200.
+	relationshipLayout := OPElementLayout
+		withPathFromSource: 'element'
+		throughPoints:
+			{(100 @ 200).
+			(150 @ 200).
+			(150 @ 300)}.
+	elementLayoutJSON := '{"position":{"x":-10,"y":50},"extent":{"x":100,"y":200}}'.
+	relationshipLayoutJSON := '{"path":{"points":[{"x":100,"y":200},{"x":150,"y":200},{"x":150,"y":300}],"source":"element"}}'
 ]
 
 { #category : #tests }
 OPElementLayoutTest >> testContentFromJSON [
 	| newLayout |
-	newLayout := NeoJSONReader
-		fromString: '{"position":{"x":-10,"y":50},"extent":{"x":100,"y":200}}'.
+	newLayout := NeoJSONReader fromString: elementLayoutJSON.
 	self assert: (newLayout includesKey: #position).
 	self assert: ((newLayout at: #position) includesKey: #x).
 	self assert: ((newLayout at: #position) at: #x) equals: -10.
@@ -35,7 +47,7 @@ OPElementLayoutTest >> testContentFromJSON [
 OPElementLayoutTest >> testFromJSON [
 	| newLayout |
 	newLayout := NeoJSONReader
-		fromString: '{"position":{"x":-10,"y":50},"extent":{"x":100,"y":200}}'
+		fromString: elementLayoutJSON
 		as: OPElementLayout.
 	self assert: newLayout position equals: -10 @ 50.
 	self assert: newLayout extent equals: 100 @ 200
@@ -44,26 +56,80 @@ OPElementLayoutTest >> testFromJSON [
 { #category : #tests }
 OPElementLayoutTest >> testJSONWithoutExtent [
 	| json newLayout |
-	layout extent: nil.
-	json := NeoJSONWriter toString: layout.
+	elementLayout extent: nil.
+	json := NeoJSONWriter toString: elementLayout.
 	newLayout := NeoJSONReader fromString: json as: OPElementLayout.
 	self assert: newLayout extent equals: nil.
-	self assert: newLayout equals: layout
+	self assert: newLayout equals: elementLayout
+]
+
+{ #category : #tests }
+OPElementLayoutTest >> testRelationshipContentFromJSON [
+	| newLayout path |
+	newLayout := NeoJSONReader fromString: relationshipLayoutJSON.
+	self assert: (newLayout includesKey: #path).
+	path := newLayout at: #path.
+	self assert: (path includesKey: #source).
+	self assert: (path at: #source) equals: 'element'.
+	self assert: (path includesKey: #points).
+	self assert: (path at: #points) isCollection.
+	self assert: (path at: #points) isSequenceable.
+	self assert: (path at: #points) size equals: 3.
+	self assert: (((path at: #points) at: 1) includesKey: #x).
+	self assert: (((path at: #points) at: 1) at: #x) equals: 100.
+	self assert: (((path at: #points) at: 1) includesKey: #y).
+	self assert: (((path at: #points) at: 1) at: #y) equals: 200.
+	self assert: (((path at: #points) at: 2) includesKey: #x).
+	self assert: (((path at: #points) at: 2) at: #x) equals: 150.
+	self assert: (((path at: #points) at: 2) includesKey: #y).
+	self assert: (((path at: #points) at: 2) at: #y) equals: 200.
+	self assert: (((path at: #points) at: 3) includesKey: #x).
+	self assert: (((path at: #points) at: 3) at: #x) equals: 150.
+	self assert: (((path at: #points) at: 3) includesKey: #y).
+	self assert: (((path at: #points) at: 3) at: #y) equals: 300
+]
+
+{ #category : #tests }
+OPElementLayoutTest >> testRelationshipFromJSON [
+	| newLayout |
+	newLayout := NeoJSONReader
+		fromString: relationshipLayoutJSON
+		as: OPElementLayout.
+	self assert: newLayout path source equals: 'element'.
+	self assert: newLayout path points isCollection.
+	self assert: newLayout path points isSequenceable.
+	self assert: newLayout path points size equals: 3.
+	self assert: (newLayout path points at: 1) equals: 100 @ 200.
+	self assert: (newLayout path points at: 2) equals: 150 @ 200.
+	self assert: (newLayout path points at: 3) equals: 150 @ 300
+]
+
+{ #category : #tests }
+OPElementLayoutTest >> testRelationshipRoundtripJSON [
+	| json newLayout |
+	json := NeoJSONWriter toString: relationshipLayout.
+	newLayout := NeoJSONReader fromString: json as: OPElementLayout.
+	self assert: newLayout equals: relationshipLayout
+]
+
+{ #category : #tests }
+OPElementLayoutTest >> testRelationshipToJSON [
+	| json |
+	json := NeoJSONWriter toString: relationshipLayout.
+	self assert: json equals: relationshipLayoutJSON
 ]
 
 { #category : #tests }
 OPElementLayoutTest >> testRoundtripJSON [
 	| json newLayout |
-	json := NeoJSONWriter toString: layout.
+	json := NeoJSONWriter toString: elementLayout.
 	newLayout := NeoJSONReader fromString: json as: OPElementLayout.
-	self assert: newLayout equals: layout
+	self assert: newLayout equals: elementLayout
 ]
 
 { #category : #tests }
 OPElementLayoutTest >> testToJSON [
 	| json |
-	json := NeoJSONWriter toString: layout.
-	self
-		assert: json
-		equals: '{"position":{"x":-10,"y":50},"extent":{"x":100,"y":200}}'
+	json := NeoJSONWriter toString: elementLayout.
+	self assert: json equals: elementLayoutJSON
 ]

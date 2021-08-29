@@ -75,7 +75,8 @@ OPProjectController >> hasDiagram: aDiagram [
 
 { #category : #adding }
 OPProjectController >> hasModel: aModel [
-	^ controllers anySatisfy: [ :each | each model = aModel ]
+
+	^ project hasModel: aModel
 ]
 
 { #category : #adding }
@@ -200,6 +201,14 @@ OPProjectController >> removeDiagram: aDiagram [
 OPProjectController >> removeDiagramController: aController [
 	controllers remove: aController.
 	self unsubscribeFrom: aController
+]
+
+{ #category : #removing }
+OPProjectController >> removeModel: aModel [
+
+	(controllers select: [ :any | any model = aModel ]) do: [ :each | 
+		self removeDiagramController: each ].
+	project removeModel: aModel
 ]
 
 { #category : #saving }

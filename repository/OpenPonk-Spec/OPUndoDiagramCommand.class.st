@@ -14,7 +14,8 @@ OPUndoDiagramCommand class >> toolbarMenuActivation [
 
 { #category : #execution }
 OPUndoDiagramCommand >> defaultMenuIcon [
-	^ Smalltalk ui icons smallUndo
+
+	^ self iconNamed: #smallUndo
 ]
 
 { #category : #accessing }

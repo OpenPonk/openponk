@@ -11,9 +11,6 @@ Class {
 		'heading',
 		'refreshButton'
 	],
-	#classVars : [
-		'Icons'
-	],
 	#category : #'OpenPonk-Spec-Windows'
 }
 
@@ -97,16 +94,20 @@ OPModelTreeWidget >> initialize [
 
 { #category : #initialization }
 OPModelTreeWidget >> initializeTree [
+
 	tree
-		roots: {};
+		roots: #(  );
 		doubleClick: [ self doubleClick ];
 		menu: [ :menu | 
-			tree hasSelectedItem
-				ifTrue: [ adapters contextMenuFor: self selectedItem in: menu ] ];
+			tree hasSelectedItem ifTrue: [ 
+					adapters
+						contextMenuFor: self selectedItem
+						projectController: self projectController
+						in: menu ] ];
 		displayBlock: [ :anObject | adapters displayFor: anObject ];
 		childrenBlock: [ :anObject | 
-			(adapters childrenFor: anObject)
-				sorted: [ :a :b | (tree displayBlock value: a) < (tree displayBlock value: b) ] ];
+			(adapters childrenFor: anObject) sorted: [ :a :b | 
+					(tree displayBlock value: a) < (tree displayBlock value: b) ] ];
 		iconBlock: [ :anObject | adapters iconFor: anObject ].
 	tree
 		expandRoots;

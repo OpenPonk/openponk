@@ -156,8 +156,14 @@ OPDslEditor >> newModel [
 
 { #category : #'save/load' }
 OPDslEditor >> openFromFile [
+
 	| filename |
-	filename := UITheme builder fileOpen: 'Choose a .txt file' extensions: #('txt').
+	filename := self theme
+		            chooseFileIn: self currentWorld
+		            title: 'Choose a .txt file'
+		            extensions: #( 'txt' )
+		            path: nil
+		            preview: true.
 	filename ifNil: [ ^ self ].
 	location := filename name asFileReference.
 	editor text: location contents
@@ -212,17 +218,19 @@ OPDslEditor >> updateFromModel [
 
 { #category : #'event handling' }
 OPDslEditor >> updateModel [
-	| statements text toks |
+
+	| statements text |
 	model ifNil: [ model := self newModel ].
 	text := editor text.
-	text makeAllColor: Smalltalk ui theme textColor.
+	text makeAllColor: self theme textColor.
 	statements := self parser class new parseStatements: text asString.
 	statements isPetitFailure
-		ifTrue: [ text asPetitStream newlines
-				overlappingPairsDo: [ :start :end | 
-					(statements position between: start and: end)
-						ifTrue: [ text makeColor: Color red from: (1 max: start) to: end ] ] ]
-		ifFalse: [ parser replaceModel: model withStatements: statements.
+		ifTrue: [ 
+			text asPetitStream newlines overlappingPairsDo: [ :start :end | 
+				(statements position between: start and: end) ifTrue: [ 
+					text makeColor: Color red from: (1 max: start) to: end ] ] ]
+		ifFalse: [ 
+			parser replaceModel: model withStatements: statements.
 			self highlight: text ].
 	editor text: text.
 	model announcer announce: (OPModelContentReplaced model: model)

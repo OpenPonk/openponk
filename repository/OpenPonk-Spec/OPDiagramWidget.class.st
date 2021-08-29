@@ -10,9 +10,6 @@ Class {
 		'project',
 		'adapters'
 	],
-	#classVars : [
-		'Icons'
-	],
 	#category : #'OpenPonk-Spec-Windows'
 }
 

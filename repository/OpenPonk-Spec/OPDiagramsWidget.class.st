@@ -18,9 +18,6 @@ Class {
 		'createButton',
 		'cloneButton'
 	],
-	#classVars : [
-		'Icons'
-	],
 	#category : #'OpenPonk-Spec-Windows'
 }
 
@@ -118,18 +115,19 @@ OPDiagramsWidget >> displayFor: aDiagramView [
 
 { #category : #initialization }
 OPDiagramsWidget >> displayRowFor: aView [
+
 	| name nameMorph modelMorph container |
 	name := aView name.
 	nameMorph := name asTextMorph lock.
 	modelMorph := GLMMorphic
-		togglingButtonLabelled: aView modelName
-		pressed: false
-		style: #grayRoundedButton.
+		              togglingButtonLabelled: aView modelName
+		              pressed: false
+		              style: #grayRoundedButton.
 	container := OrderedCollection new.
 	container
 		add: nameMorph;
 		add: modelMorph.
-	^ Smalltalk ui theme newRowIn: World for: container
+	^ self theme newRowIn: self currentWorld for: container
 ]
 
 { #category : #'accessing - spec' }

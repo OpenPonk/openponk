@@ -26,7 +26,9 @@ Class {
 		'gripEdge',
 		'distance',
 		'relativePosition',
-		'position'
+		'position',
+		'gripLineDragColor',
+		'gripLineStaticColor'
 	],
 	#category : #'OpenPonk-Roassal2-Constraints'
 }
@@ -72,7 +74,7 @@ OPRTRailConstraint class >> example [
 	v add: conn.
 
 	const := OPRTRailConstraint new.
-	const gripLine color: Color blue.
+	const gripLineColor: Color blue.
 	const gripShape size: 10.
 	const
 		initialPosition: 0.2;
@@ -89,20 +91,35 @@ OPRTRailConstraint class >> example [
 
 { #category : #building }
 OPRTRailConstraint >> addGrip [
+
 	gripElement := gripShape element.
 	element view add: gripElement.
+	element addCallback: (TRRemoveCallback block: [ 
+			 gripElement view ifNotNil: [ gripElement remove ] ]).
+	gripLine color = Color transparent ifTrue: [ ^ self ].
 	gripEdge := gripLine edgeFrom: element to: gripElement.
 	element view add: gripEdge
 ]
 
 { #category : #building }
 OPRTRailConstraint >> build [
+
+	gripElement ifNotNil: [ ^ self ].
 	self addGrip.
+	element when: TRMouseDragStart do: [ 
+		gripLine color: gripLineDragColor.
+		gripEdge update ].
 	element when: TRMouseDragging do: [ self updateParameters ].
-	element when: TRMouseDragEnd do: [ self updateParameters ].
-	"	element addCallback: (TRTranslationCallback block: [ self updatePosition ])."
-	connection from addCallback: (TRTranslationCallback block: [ self updatePosition ]).
-	connection to addCallback: (TRTranslationCallback block: [ self updatePosition ]).
+	element when: TRMouseDragEnd do: [ 
+		self updateParameters.
+		gripLine color: gripLineStaticColor.
+		gripEdge
+			update;
+			signalUpdate ].
+	connection from addCallback:
+		(TRTranslationCallback block: [ self updatePosition ]).
+	connection to addCallback:
+		(TRTranslationCallback block: [ self updatePosition ]).
 	connection when: OPRTHandleMoved do: [ self updatePosition ].
 	self updatePosition
 ]
@@ -123,7 +140,10 @@ OPRTRailConstraint >> connection: aConnection [
 
 { #category : #'as yet unclassified' }
 OPRTRailConstraint >> connectionLength [
-	^ self segments inject: 0 into: [ :sum :each | sum + (each first dist: each second) ]
+
+	^ self segments
+		  inject: 0
+		  into: [ :sum :each | sum + (each first distanceTo: each second) ]
 ]
 
 { #category : #accessing }
@@ -150,6 +170,15 @@ OPRTRailConstraint >> gripLine [
 ]
 
 { #category : #accessing }
+OPRTRailConstraint >> gripLineColor: aColor [
+
+	gripLineStaticColor ~= Color transparent ifTrue: [ 
+		gripLine color: aColor.
+		gripLineStaticColor := aColor ].
+	gripLineDragColor := aColor
+]
+
+{ #category : #accessing }
 OPRTRailConstraint >> gripShape [
 	^ gripShape
 ]
@@ -161,40 +190,61 @@ OPRTRailConstraint >> initialPosition: aNumber [
 
 { #category : #building }
 OPRTRailConstraint >> initialize [
+
+	super initialize.
 	(gripShape := RTBox new)
-		size: 0;
+		size: 1;
 		color: Color red.
-	(gripLine := RTLine new)
-		attachPoint: RTBorderAttachPoint new;
-		color: Color black
+	(gripLine := RTLine new) attachPoint: RTBorderAttachPoint new.
+	self gripLineColor: Color black
+]
+
+{ #category : #accessing }
+OPRTRailConstraint >> lineOnDragOnly [
+
+	gripLine color: Color transparent.
+	gripLineStaticColor := Color transparent
+]
+
+{ #category : #accessing }
+OPRTRailConstraint >> noGripLine [
+	self gripLineColor: Color transparent
 ]
 
 { #category : #'as yet unclassified' }
 OPRTRailConstraint >> pointBetween: a and: b distance: dist [
+
 	| denom |
-	denom := a dist: b.
+	denom := a distanceTo: b.
 	^ denom > 0
-		ifTrue: [ a + ((b - a) / denom * dist) ]
-		ifFalse: [ a ]
-	"
-	^ a + ((b - a) / (a dist: b) * dist)"
+		  ifTrue: [ a + (b - a / denom * dist) ]
+		  ifFalse: [ "
+	^ a + ((b - a) / (a dist: b) * dist)" a ]
 ]
 
 { #category : #'as yet unclassified' }
 OPRTRailConstraint >> segmentForPosition: aPosition [
+
 	| sum newSum |
 	sum := 0.
-	self segments
-		do:
-			[ :each | 
-			newSum := sum + (each first dist: each second).
-			sum <= aPosition & (aPosition <= newSum)
-				ifTrue:
-					[ 
-					^ {each first.
-					each second.
-					(self pointBetween: each first and: each second distance: aPosition - sum)} ].
-			sum := newSum ].
+	self segments do: [ :each | 
+		| length |
+		length := each first distanceTo: each second.
+		newSum := sum + length.
+		sum <= aPosition & (aPosition <= newSum) ifTrue: [ 
+			^ { 
+				  each first.
+				  each second.
+				  (self
+					   pointBetween: each first
+					   and: each second
+					   distance: aPosition - sum) } ].
+		sum := newSum ].
+	self segments ifNotEmpty: [ 
+		^ { 
+			  self segments first first.
+			  self segments first second.
+			  (self segments first first + (aPosition @ aPosition)) } ].
 	self error: 'failed to find a segment'
 ]
 
@@ -211,32 +261,33 @@ OPRTRailConstraint >> segmentsForConnection: aConnection [
 
 { #category : #'private - layout' }
 OPRTRailConstraint >> updateParameters [
+
 	| segmentsWithDistances closestSegment sum |
-	self connectionLength isZero
-		ifTrue: [ ^ self segments first first ].
-	segmentsWithDistances := self segments
-		withIndexCollect: [ :each :i | 
-			Array
-				with: i
-				with: each first
-				with: each second
-				with: (element position nearestPointOnLineFrom: each first to: each second) ].
-	closestSegment := segmentsWithDistances
-		detectMin: [ :each | element position dist: each fourth ].
+	self connectionLength isZero ifTrue: [ ^ self segments first first ].
+	segmentsWithDistances := self segments withIndexCollect: [ :each :i | 
+		                         Array
+			                         with: i
+			                         with: each first
+			                         with: each second
+			                         with:
+			                         (element position
+				                          nearestPointOnLineFrom: each first
+				                          to: each second) ].
+	closestSegment := segmentsWithDistances detectMin: [ :each | 
+		                  element position distanceTo: each fourth ].
 	sum := (self segments first: closestSegment first - 1)
-		inject: 0
-		into: [ :s :next | s + (next first dist: next second) ].
-	sum := sum + (closestSegment second dist: closestSegment fourth).
-	gripElement trachelShape
-		doWithoutCallbacks: [ position := sum / self connectionLength.
-			distance := element position dist: closestSegment fourth.
-			(self
-				windingOrder: element position
-				segment:
-					{closestSegment second.
-					closestSegment third}) < 0
-				ifTrue: [ distance := distance negated ].
-			gripElement translateTo: closestSegment fourth ]
+		       inject: 0
+		       into: [ :s :next | s + (next first distanceTo: next second) ].
+	sum := sum
+	       + (closestSegment second distanceTo: closestSegment fourth).
+	gripElement trachelShape doWithoutCallbacks: [ 
+		position := sum / self connectionLength.
+		distance := element position distanceTo: closestSegment fourth.
+		(self windingOrder: element position segment: { 
+				 closestSegment second.
+				 closestSegment third }) < 0 ifTrue: [ 
+			distance := distance negated ].
+		gripElement translateTo: closestSegment fourth ]
 ]
 
 { #category : #'private - layout' }

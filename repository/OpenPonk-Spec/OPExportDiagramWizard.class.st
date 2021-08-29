@@ -34,20 +34,22 @@ OPExportDiagramWizard >> addExportPane [
 
 { #category : #exporting }
 OPExportDiagramWizard >> exportWith: aDictionary [
+
 	| gridShape gridColor |
-	(aDictionary at: #targetFile) ifNil: [ ^ self inform: 'Export canceled.' ].
-	gridShape := view canvas shapes detect: [ :each | each isKindOf: TRCanvasGridShape ].
+	(aDictionary at: #targetFile) ifNil: [ 
+		^ self inform: 'Export canceled.' ].
+	gridShape := view canvas shapes detect: [ :each | 
+		             each isKindOf: TRCanvasGridShape ].
 	gridColor := gridShape color.
-	[ gridShape color: Color transparent.
-	OPTRCanvasExporter new
-		asPNG;
-		canvas: view canvas;
+	[ 
+	gridShape color: Color transparent.
+	(RTCanvasExporter canvas: view canvas)
+		format: #png;
 		whole;
 		defaultScale;
 		oversizedBy: 20 @ 20;
 		fileName: (aDictionary at: #targetFile);
-		export ]
-		ensure: [ gridShape color: gridColor ]
+		export ] ensure: [ gridShape color: gridColor ]
 ]
 
 { #category : #'initialize-release' }

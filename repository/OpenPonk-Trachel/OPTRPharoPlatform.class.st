@@ -5,18 +5,13 @@ Class {
 		'fontCache',
 		'widthsCache'
 	],
-	#category : 'OpenPonk-Trachel'
+	#category : #'OpenPonk-Trachel-MorphSpecific'
 }
 
 { #category : #testing }
 OPTRPharoPlatform class >> beCurrent [
 	<script>
 	TRPlatform current: self new
-]
-
-{ #category : #testing }
-OPTRPharoPlatform class >> isActivePlatform [
-	^ true
 ]
 
 { #category : #fonts }
@@ -67,7 +62,7 @@ OPTRPharoPlatform >> resetWidthsCache [
 OPTRPharoPlatform >> widthOfString: string font: font [
 	^ (self widthsCache at: string ifAbsentPut: [ Dictionary new ])
 		at: font
-		ifAbsentPut: [ self logCr: 'cache miss @ ' , string.
+		ifAbsentPut: [ self traceCr: 'cache miss @ ' , string.
 			font widthOfString: string ]
 ]
 

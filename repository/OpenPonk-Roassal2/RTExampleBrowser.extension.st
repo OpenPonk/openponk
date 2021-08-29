@@ -5,7 +5,7 @@ RTExampleBrowser class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	((aBuilder item: #Roassal) icon: RTIcon smallRoassal)
 		withSeparatorAfter;
-		order: 10;
+		order: 199;
 		with: [ (aBuilder item: #'Roassal Examples')
 				order: 0.1;
 				parent: #Roassal;

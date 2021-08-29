@@ -39,14 +39,17 @@ OPWorkbench class >> defaultLayoutStyle [
 
 { #category : #settings }
 OPWorkbench class >> developerSettingsOn: aBuilder [
+
 	<systemsettings>
-	(aBuilder group: #'op-dev') label: 'OpenPonk Development'; parent: #openponk.
+	(aBuilder group: #'op-dev')
+		label: 'OpenPonk Development';
+		parent: #openponk;
+		order: 100.
 	(aBuilder setting: #isDevelopmentMode)
 		parent: #'op-dev';
 		target: self;
 		label: 'Enable Development Mode';
-		description: 'Add extra options useful for developers.';
-		default: false
+		description: 'Add extra options useful for developers.'
 ]
 
 { #category : #settings }
@@ -94,6 +97,7 @@ OPWorkbench class >> openProject: aProject [
 
 { #category : #settings }
 OPWorkbench class >> settingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder group: #openponk) label: 'OpenPonk'.
 	(aBuilder pickOne: #layoutStyle)
@@ -102,7 +106,8 @@ OPWorkbench class >> settingsOn: aBuilder [
 		label: 'Form Layout Style';
 		description: 'Separate or combine Palette and Form widgets.';
 		default: self defaultLayoutStyle;
-		domainValues: self availableLayoutStyles
+		domainValues: self availableLayoutStyles;
+		order: 40
 ]
 
 { #category : #specs }

@@ -78,15 +78,5 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 	spec
 		baseline: 'SynchronizedLinks'
 		with: [ 
-		spec repository: 'github://openponk/synchronized-links/repository' ]
-]
-
-{ #category : #scripts }
-BaselineOfOpenPonk >> removeGreaseWarnings [
-
-	"('Grease-Pharo40-Slime' asPackageIfAbsent: [ ^ self ])
-		removeFromSystem.
-	'Grease-Core' asPackage mcWorkingCopy modified: false"
-
-	
+		spec repository: 'github://openponk/synchronized-links:v2.1.x/repository' ]
 ]

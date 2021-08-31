@@ -96,7 +96,7 @@ OPRTEdgeAlongConstraint >> fix [
 		                to: endPoint.
 	positionVector := shape position - nearestPoint.
 	edgeVectorR := edgeVector r.
-	offset := shape position dist: nearestPoint.
+	offset := shape position distanceTo: nearestPoint.
 	(edgeVector + positionVector rightRotated) r > edgeVectorR ifTrue: [ 
 		offset := offset negated ].
 	edgeVectorR < 5

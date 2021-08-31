@@ -46,15 +46,16 @@ OPInteractiveLine >> remove [
 
 { #category : #hooks }
 OPInteractiveLine >> renderIn: aView [
+
 	view := aView.
 
 	mouseBox := RTBox new
-		size: 0;
-		color: Color transparent;
-		element.
+		            size: 2;
+		            color: Color transparent;
+		            element.
 
 	line := lineBuilder value: source value: mouseBox.
-"	line shape color: Color veryLightGray."
+	"	line shape color: Color veryLightGray."
 
 	mouseBox translateTo: source position.
 	aView add: mouseBox.
@@ -64,10 +65,10 @@ OPInteractiveLine >> renderIn: aView [
 	aView signalUpdate.
 
 	moveSubscription := aView announcer
-		when: TRMouseMove
-		do: [ :event | 
-			mouseBox translateTo: event position.
-			aView signalUpdate ].
+		                    when: TRMouseMove
+		                    do: [ :event | 
+			                    mouseBox translateTo: event position.
+			                    aView signalUpdate ].
 
 	running := true
 ]

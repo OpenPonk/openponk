@@ -4,7 +4,7 @@ I contain some examples for shapes and utilities available in this package.
 Class {
 	#name : #OPRTExamples,
 	#superclass : #RTAbstractExample,
-	#category : 'OpenPonk-Roassal2-Examples'
+	#category : #'OpenPonk-Roassal2-Examples'
 }
 
 { #category : #'as yet unclassified' }
@@ -40,30 +40,30 @@ playground update.
 
 { #category : #sources }
 OPRTExamples >> exampleAdornments [
-|v el|
-v := RTView new.
 
-el := RTBox new
-	size: 100;
-	element.
-v add: el.
-el
-	@
-		(OPRTAdornments new
-			adornments:
-				{#testNotRun asIcon
-					-> [ el color: Color veryVeryLightGray.
-						v signalUpdate ].
-				#testGreen asIcon
-					-> [ el color: Color green.
-						v signalUpdate ].
-				#testRed asIcon
-					-> [ el color: Color red.
-						v signalUpdate ]}).
-el when: TRMouseLeftClick do: [ :evt | el announce: OPTRFocused new ].
-v when: TRMouseLeftClick do: [ :evt | el announce: OPTRUnfocused new ].
+	| v el |
+	v := RTView new.
 
-^ v
+	el := RTBox new
+		      size: 100;
+		      element.
+	v add: el.
+	el @ (OPRTAdornments new adornments: { 
+			 ((self iconNamed: #testNotRun) -> [ 
+			  el color: Color veryVeryLightGray.
+			  v signalUpdate ]).
+			 ((self iconNamed: #testGreen) -> [ 
+			  el color: Color green.
+			  v signalUpdate ]).
+			 ((self iconNamed: #testRed) -> [ 
+			  el color: Color red.
+			  v signalUpdate ]) }).
+	el when: TRMouseLeftClick do: [ :evt | el announce: OPTRFocused new ].
+	v
+		when: TRMouseLeftClick
+		do: [ :evt | el announce: OPTRUnfocused new ].
+
+	^ v
 ]
 
 { #category : #icons }

@@ -53,9 +53,7 @@ OPModelTypeSelector >> addModel [
 		         name: projectNameInput text;
 		         yourself.
 	diagram := OPDiagram withWholeModel: model.
-	projectController project
-		addModel: model;
-		addDiagram: diagram.
+	projectController project addDiagram: diagram.
 	projectController openEditorOnDiagram: diagram.
 	self withWindowDo: #close
 ]

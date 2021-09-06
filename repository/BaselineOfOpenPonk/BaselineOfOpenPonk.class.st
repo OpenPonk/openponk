@@ -16,19 +16,20 @@ BaselineOfOpenPonk >> baseline: spec [
 		self externalProjectsBaseline: spec.
 		self internalProjectsBaseline: spec.
 		spec
-			package: 'OpenPonk-Core' with: [ 
-				spec requires:
-						#( 'Magritte' 'Mocketry' 'Roassal2' 'XMLParser' 'XPath' 'NeoJSON' ) ];
 			package: 'OpenPonk-Trachel'
 			with: [ spec requires: #( 'Roassal2' ) ];
 			package: 'OpenPonk-Roassal2'
-			with: [ spec requires: #( 'OpenPonk-Trachel' 'Roassal2' ) ];
+			with: [ spec requires: #( 'OpenPonk-Trachel' ) ];
+			package: 'OpenPonk-Core' with: [ 
+				spec requires:
+						#( 'Magritte' 'Mocketry' 'XMLParser' 'XPath' 'NeoJSON' 'OpenPonk-Roassal2' ) ];
 			package: 'OpenPonk-Morphic';
 			package: 'OpenPonk-Help';
 			package: 'OpenPonk-Spec' with: [ 
 				spec requires:
 						#( 'Moose' 'FileDialog' 'Magritte' 'SynchronizedLinks'
-						   'OpenPonk-Morphic' ) ].
+						   'OpenPonk-Morphic' ) ];
+			preLoadDoIt: #loadPetitParser.
 		spec
 			group: 'default'
 			with: #( 'OpenPonk-Core' 'OpenPonk-Roassal2' 'OpenPonk-Morphic'
@@ -46,17 +47,17 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 		spec
 			repository: 'github://pharo-contributions/XML-XPath:3450f91/src';
 			loads: #( Core ) ].
-	spec
-		baseline: 'Roassal2'
-		with: [ 
-		spec repository: 'github://ObjectProfile/Roassal2:v2.0.2/src' ].
+	spec baseline: 'Roassal2' with: [ 
+		spec
+			repository: 'github://ObjectProfile/Roassal2:v2.0.2/src';
+			loads: #( Core ) ].
 	spec baseline: 'Magritte' with: [ 
 		spec
 			repository: 'github://magritte-metamodel/magritte:dc9a440/source';
 			loads: #( Core 'Magritte-Morph' ) ].
 	spec baseline: 'Moose' with: [ 
 		spec
-			repository: 'github://moosetechnology/Moose:b5163b2/src';
+			repository: 'github://moosetechnology/Moose:f2b6052/src';
 			loads: #( Merlin ) ].
 	spec
 		baseline: 'Mocketry'
@@ -70,12 +71,23 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 { #category : #baselines }
 BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 
-	spec
-		baseline: 'FileDialog'
-		with: [ 
-		spec repository: 'github://peteruhnak/file-dialog:v1.x/repository' ].
+	spec baseline: 'FileDialog' with: [ 
+		spec repository:
+			'github://peteruhnak/file-dialog:3faba6b/repository' ].
 	spec
 		baseline: 'SynchronizedLinks'
 		with: [ 
 		spec repository: 'github://openponk/synchronized-links/repository' ]
+]
+
+{ #category : #'as yet unclassified' }
+BaselineOfOpenPonk >> loadPetitParser [
+
+	"PetitParser is not needed by core OP. It is needed by BormEditor, but due to Pharo bug https://github.com/pharo-project/pharo/issues/9913 it must be always loaded before Roassal2 in Pharo 10"
+
+	Smalltalk at: #BaselineOfPetitParser ifPresent: [ ^ self ].
+	Metacello new
+		baseline: 'PetitParser';
+		repository: 'github://moosetechnology/PetitParser:v2.x.x/src';
+		load: #( 'Core' )
 ]

@@ -26,30 +26,32 @@ OPProjectController class >> fromDirectory: aFolder [
 
 { #category : #'instance creation' }
 OPProjectController class >> fromFile: aFile [
-	| newProject store |
-	store := OPZipPersistence new loadFrom: aFile asFileReference.
+
+	| newProject store aFileReference |
+	aFileReference := aFile asFileReference.
+	store := OPZipPersistence new loadFrom: aFileReference.
 	newProject := self fromDirectory: store / 'project'.
-	newProject storageFile: aFile asFileReference.
+	newProject storageFile: aFileReference.
 	^ newProject
 ]
 
 { #category : #opening }
-OPProjectController class >> openFromFile [
+OPProjectController class >> fromFileDo: aBlock [
+
 	FDOpenFileDialog new
-		whenSelected: [ :file | self openFromFile: file ];
-		extensionFilters:
-			{'OpenPonk projects' -> #('opp').
-			'All files' -> #()};
+		whenSelected: [ :file | aBlock value: (self fromFile: file) ];
+		extensionFilters: { 
+				('OpenPonk projects' -> #( 'opp' )).
+				('All files' -> #(  )) };
 		defaultFolder: FileLocator imageDirectory asFileReference;
 		title: 'Select an OpenPonk project...';
 		open
 ]
 
-{ #category : #'instance creation' }
-OPProjectController class >> openFromFile: aFile [
-	^ (self fromFile: aFile)
-		open;
-		yourself
+{ #category : #opening }
+OPProjectController class >> openFromFile [
+
+	self fromFileDo: [ :project | project open ]
 ]
 
 { #category : #adding }
@@ -104,6 +106,28 @@ OPProjectController >> lastSave [
 { #category : #loading }
 OPProjectController >> loadStateFrom: aFile [
 	^ STON fromStream: aFile readStream
+]
+
+{ #category : #'as yet unclassified' }
+OPProjectController >> mergeFrom: aFile [
+
+	self mergeProject: (self class fromFile: aFile)
+]
+
+{ #category : #'as yet unclassified' }
+OPProjectController >> mergeFromFile [
+
+	self class fromFileDo: [ :otherProject | 
+		self mergeWith: otherProject ]
+]
+
+{ #category : #'as yet unclassified' }
+OPProjectController >> mergeWith: aProject [
+
+	| otherProjectDiagrams |
+	otherProjectDiagrams := aProject diagrams.
+	project mergeWith: aProject.
+	otherProjectDiagrams do: [ :each | self openEditorOnDiagram: each ]
 ]
 
 { #category : #saving }

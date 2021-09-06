@@ -89,5 +89,7 @@ BaselineOfOpenPonk >> loadPetitParser [
 	Metacello new
 		baseline: 'PetitParser';
 		repository: 'github://moosetechnology/PetitParser:v2.x.x/src';
-		load: #( 'Core' 'ParserCore' )
+		load:
+			#( 'Core' 'Tests' 'Examples' 'Islands' 'Analyzer' 'Preprocessor'
+			   'Indent' 'Extension' 'TestsExtension' 'Parser' )
 ]

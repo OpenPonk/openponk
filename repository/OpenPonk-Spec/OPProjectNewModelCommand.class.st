@@ -7,7 +7,7 @@ Class {
 { #category : #activation }
 OPProjectNewModelCommand class >> toolbarMenuActivation [
 	<classAnnotation>
-	^ OPWorkbenchActivation byItemOf: OPWProjectOpenMenuGroup order: 20 for: OPWorkbenchToolbar
+	^ OPWorkbenchActivation byItemOf: OPWProjectModelsMenuGroup order: 20 for: OPWorkbenchToolbar
 ]
 
 { #category : #accessing }

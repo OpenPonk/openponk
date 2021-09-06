@@ -11,5 +11,5 @@ OPWProjectOpenMenuGroup >> isInlined [
 
 { #category : #accessing }
 OPWProjectOpenMenuGroup >> order [
-	^ 1
+	^ 10
 ]

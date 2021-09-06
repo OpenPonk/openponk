@@ -160,7 +160,15 @@ OPWorkbench class >> specSeparated [
 ]
 
 { #category : #opening }
-OPWorkbench >> closeEditor: anEditor [
+OPWorkbench >> closeEditorOfDiagram: aDiagram [
+
+	editors
+		at: aDiagram
+		ifPresent: [ :pair | tabManager removeTab: pair second ]
+]
+
+{ #category : #opening }
+OPWorkbench >> closedTabOfEditor: anEditor [
 	topToolbar activeEditor: nil.
 	editors removeKey: anEditor diagramController diagram.
 	focusedEditor = anEditor
@@ -169,27 +177,9 @@ OPWorkbench >> closeEditor: anEditor [
 	self announce: (OPEditorClosed on: anEditor)
 ]
 
-{ #category : #opening }
-OPWorkbench >> closeEditorOf: aView [
-	editors
-		at: aView
-		ifPresent: [ :pair | 
-			tabManager removeTab: pair second.
-			self announce: (OPEditorClosed on: pair first) ]
-]
-
-{ #category : #opening }
-OPWorkbench >> closeEditorOfView: aView [
-	editors
-		at: aView
-		ifPresent: [ :pair | 
-			tabManager removeTab: pair second.
-			self announce: (OPEditorClosed on: pair first) ]
-]
-
 { #category : #'accessing - spec' }
 OPWorkbench >> deleteDiagram: aDiagram [
-	self closeEditorOfView: aDiagram.
+	self closeEditorOfDiagram: aDiagram.
 	self projectController removeDiagram: aDiagram
 ]
 
@@ -279,9 +269,10 @@ OPWorkbench >> openEditorOn: aModel [
 
 { #category : #opening }
 OPWorkbench >> openEditorOnDiagram: aDiagram [
+
 	| editor tab plugin widget model |
-	(self projectController hasDiagram: aDiagram)
-		ifTrue: [ ^ self focusEditorOf: aDiagram ].
+	(self projectController hasDiagram: aDiagram) ifTrue: [ 
+		^ self focusEditorOf: aDiagram ].
 	model := aDiagram model.
 	plugin := pluginRegistry pluginFor: model.
 	editor := OPEditor on: plugin.
@@ -291,9 +282,9 @@ OPWorkbench >> openEditorOnDiagram: aDiagram [
 	widget := editor buildWithSpec asWidget.
 	editor owner: tab.
 	editor openEmptyModel: model.
-	(model respondsTo: #whenChanged:)
-		ifTrue: [ model
-				whenChanged: [ tab label: '[' , aDiagram name , '] ' , model name ] ].
+	(model respondsTo: #whenChanged:) ifTrue: [ 
+		model whenChanged: [ 
+			tab label: '[' , aDiagram name , '] ' , model name ] ].
 	editor paletteModel rebuildWidget.
 	tab
 		label: '[' , aDiagram name , '] ' , model name;
@@ -303,10 +294,11 @@ OPWorkbench >> openEditorOnDiagram: aDiagram [
 			w widget when: #tabDeleted send: #tabDeleted to: editor.
 			w widget
 				when: #tabDeleted
-				evaluate: [ :t | self closeEditor: editor ] ].
+				evaluate: [ :t | self closedTabOfEditor: editor ] ].
 	self announce: (OPEditorCreated on: editor).
 	tabManager addTab: tab.
-	self focusEditorOf: aDiagram
+	self focusEditorOf: aDiagram.
+	^ editor
 ]
 
 { #category : #opening }

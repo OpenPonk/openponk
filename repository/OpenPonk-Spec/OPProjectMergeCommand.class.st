@@ -7,7 +7,7 @@ Class {
 { #category : #activation }
 OPProjectMergeCommand class >> toolbarMenuActivation [
 	<classAnnotation>
-	^ OPWorkbenchActivation byItemOf: OPWProjectOpenMenuGroup order: 20 for: OPWorkbenchToolbar
+	^ OPWorkbenchActivation byItemOf: OPWProjectOpenMenuGroup order: 15 for: OPWorkbenchToolbar
 ]
 
 { #category : #accessing }

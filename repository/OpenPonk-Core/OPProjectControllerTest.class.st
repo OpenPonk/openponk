@@ -29,8 +29,7 @@ OPProjectControllerTest >> testAddController [
 	model := OPTestContainerModel new.
 	dc model: model.
 	controller addDiagramController: dc.
-	self assert: controller controllers asArray equals: { dc }.
-	self assert: (model announcer hasSubscriber: controller)
+	self assert: controller controllers asArray equals: { dc }
 ]
 
 { #category : #tests }

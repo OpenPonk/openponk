@@ -110,7 +110,7 @@ OPProjectController >> loadStateFrom: aFile [
 { #category : #'as yet unclassified' }
 OPProjectController >> mergeFrom: aFile [
 
-	self mergeProject: (self class fromFile: aFile)
+	self mergeWith: (self class fromFile: aFile)
 ]
 
 { #category : #'as yet unclassified' }

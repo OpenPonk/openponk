@@ -27,8 +27,11 @@ Class {
 
 { #category : #deprecated }
 OPDiagramController >> addAllElements [
-	self deprecated: 'Use #showAllElements instead.'.
-"	model elements do: [ :each | self addModelElement: each ]"
+
+	self
+		deprecated: 'Use #showAllElements instead.'
+		transformWith:
+		'`@receiver addAllElements' -> '`@receiver showAllElements'
 ]
 
 { #category : #adding }
@@ -324,7 +327,12 @@ OPDiagramController >> figure [
 
 { #category : #accessing }
 OPDiagramController >> figureAdded: aFigure [
-	self deprecated: 'Use addedFigureFor: instead'.
+
+	self
+		deprecated: 'Use addedFigureFor: instead'
+		transformWith: '`@receiver figureAdded: `@statements1'
+			->
+			'`@receiver addedFigureFor: (`@receiver controllerForFigure: `@statements1)'.
 	self addedFigureFor: (self controllerForFigure: aFigure)
 ]
 
@@ -550,10 +558,9 @@ OPDiagramController >> registerModelEvents: aModel [
 
 { #category : #deprecated }
 OPDiagramController >> remove [
-	self deprecated: 'There should be no need to call #remove on DiagramController'.
-	self error: 'There should be no need to call #remove on DiagramController'.
-"	super remove.
-	[ self controllers isNotEmpty ] whileTrue: [ self controllers last remove ]"
+
+	self error:
+		'There should be no need to call #remove on DiagramController'
 ]
 
 { #category : #destruction }

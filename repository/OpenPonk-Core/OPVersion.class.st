@@ -57,17 +57,19 @@ OPVersion class >> fromRunJson: aRun [
 
 { #category : #'as yet unclassified' }
 OPVersion class >> getRunsOf: aRepositoryName workflowName: aWorkflowName [
+
 	^ self runsCache
-		at: aRepositoryName , '-' , aWorkflowName asLowercase
-		ifAbsentPut: [ | response |
-			response := ZnEasy
-				get:
-					'https://api.github.com/repos/openponk/' , aRepositoryName
-						, '/actions/workflows/' , aWorkflowName asLowercase
-						, '.yml/runs?status=success&per_page=1'.
-			response isError
-				ifTrue: [ (ZnHttpUnsuccessful response: response) signal ].
-			(STONJSON fromString: response entity string) at: #workflow_runs ]
+		  at: aRepositoryName , '-' , aWorkflowName asLowercase
+		  ifAbsentPut: [ 
+			  | response |
+			  response := ZnEasy get:
+				              'https://api.github.com/repos/openponk/'
+				              , aRepositoryName , '/actions/workflows/'
+				              , aWorkflowName asLowercase
+				              , '.yml/runs?status=success&per_page=1'.
+			  response isError ifTrue: [ 
+				  (ZnHttpUnsuccessful response: response) signal ].
+			  (STONJSON fromString: response entity string) at: #workflow_runs ]
 ]
 
 { #category : #accessing }
@@ -222,20 +224,15 @@ OPVersion >> getOfLatestRelease [
 
 { #category : #downloading }
 OPVersion >> getRun [
+
 	| response |
-	response := ZnEasy
-		get:
-			'https://api.github.com/repos/openponk/' , self repositoryName
-				, '/actions/runs/' , self githubWorkflowRunId asString.
-	response isError
-		ifTrue: [ (ZnHttpUnsuccessful response: response) signal ].
-	^ STONJSON
-		fromString:
-			(ZnEasy
-				get:
-					'https://api.github.com/repos/openponk/' , self repositoryName
-						, '/actions/runs/' , self githubWorkflowRunId asString) entity
-				string
+	response := ZnEasy get:
+		            'https://api.github.com/repos/openponk/'
+		            , self repositoryName , '/actions/runs/'
+		            , self githubWorkflowRunId asString.
+	response isError ifTrue: [ 
+		(ZnHttpUnsuccessful response: response) signal ].
+	^ STONJSON fromString: response entity string
 ]
 
 { #category : #accessing }

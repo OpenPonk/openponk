@@ -77,7 +77,7 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 	spec
 		baseline: 'SynchronizedLinks'
 		with: [ 
-		spec repository: 'github://openponk/synchronized-links/repository' ]
+		spec repository: 'github://openponk/synchronized-links:v2.1.x/repository' ]
 ]
 
 { #category : #'as yet unclassified' }

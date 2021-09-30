@@ -127,9 +127,12 @@ OPElementController >> registerModelEvents: aModel [
 
 { #category : #deprecated }
 OPElementController >> remove [
-	self deprecated: 'Use #removeController instead.'.
-	
-	self removeController.
+
+	self
+		deprecated: 'Use #removeController instead.'
+		transformWith: '`@receiver remove' -> '`@receiver removeController'.
+
+	self removeController
 ]
 
 { #category : #construction }

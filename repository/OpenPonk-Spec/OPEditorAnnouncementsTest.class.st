@@ -13,11 +13,16 @@ Class {
 
 { #category : #initialization }
 OPEditorAnnouncementsTest >> setUp [
+
 	plugin := Mock new.
-	plugin stub diagramControllerClass
-		willReturn: OPTestDiagramController.
+	plugin stub diagramControllerClass willReturn:
+		OPTestDiagramController.
 	(plugin stub isPluginFor: Any) willReturn: true.
 	(plugin stub isForController: Any) willReturn: true.
+	plugin stub supportsHidingElements willReturn: true.
+	plugin stub supportsMergingModels willReturn: false.
+	plugin stub icon willReturn: (Form extent: 0 @ 0).
+	plugin stub layouterClass willReturn: OPNoLayouter.
 	OPPluginRegistry setDefault: (OPPluginRegistry new add: plugin).
 	project := OPProject new.
 	2 timesRepeat: [ project addModel: OPTestContainerModel new ].

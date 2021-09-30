@@ -46,7 +46,8 @@ OPDiagram class >> neoJsonMapping: mapper [
 			mapping reader: [ :jsonReader | 
 					| map element |
 					map := jsonReader parseMap.
-					element := (self class environment at: (map at: #className)) new.
+					element := (self class environment at:
+							            (map at: #className) asSymbol) new.
 					NeoJSONReader
 						fromString: (NeoJSONWriter toString: map)
 						as: element class ] ];

@@ -119,10 +119,11 @@ OPDiagramsWidget >> displayRowFor: aView [
 	| name nameMorph modelMorph container |
 	name := aView name.
 	nameMorph := name asTextMorph lock.
-	modelMorph := GLMMorphic
-		              togglingButtonLabelled: aView modelName
-		              pressed: false
-		              style: #grayRoundedButton.
+	modelMorph := (' ' , aView modelName , ' ') asTextMorph
+		              lock;
+		              color: Color white;
+		              backgroundColor: Color veryLightGray;
+		              yourself.
 	container := OrderedCollection new.
 	container
 		add: nameMorph;

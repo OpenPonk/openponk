@@ -26,35 +26,36 @@ OPProjectController class >> fromDirectory: aFolder [
 
 { #category : #'instance creation' }
 OPProjectController class >> fromFile: aFile [
-	| newProject store |
-	store := OPZipPersistence new loadFrom: aFile asFileReference.
+
+	| newProject store aFileReference |
+	aFileReference := aFile asFileReference.
+	store := OPZipPersistence new loadFrom: aFileReference.
 	newProject := self fromDirectory: store / 'project'.
-	newProject storageFile: aFile asFileReference.
+	newProject storageFile: aFileReference.
 	^ newProject
 ]
 
 { #category : #opening }
-OPProjectController class >> openFromFile [
+OPProjectController class >> fromFileDo: aBlock [
+
 	FDOpenFileDialog new
-		whenSelected: [ :file | self openFromFile: file ];
-		extensionFilters:
-			{'OpenPonk projects' -> #('opp').
-			'All files' -> #()};
+		whenSelected: [ :file | aBlock value: (self fromFile: file) ];
+		extensionFilters: { 
+				('OpenPonk projects' -> #( 'opp' )).
+				('All files' -> #(  )) };
 		defaultFolder: FileLocator imageDirectory asFileReference;
 		title: 'Select an OpenPonk project...';
 		open
 ]
 
-{ #category : #'instance creation' }
-OPProjectController class >> openFromFile: aFile [
-	^ (self fromFile: aFile)
-		open;
-		yourself
+{ #category : #opening }
+OPProjectController class >> openFromFile [
+
+	self fromFileDo: [ :project | project open ]
 ]
 
 { #category : #adding }
 OPProjectController >> addDiagramController: aController [
-	self subscribeTo: aController.
 	controllers add: aController
 ]
 
@@ -106,6 +107,73 @@ OPProjectController >> loadStateFrom: aFile [
 	^ STON fromStream: aFile readStream
 ]
 
+{ #category : #'as yet unclassified' }
+OPProjectController >> mergeFrom: aFile [
+
+	self mergeWith: (self class fromFile: aFile)
+]
+
+{ #category : #'as yet unclassified' }
+OPProjectController >> mergeFromFile [
+
+	self class fromFileDo: [ :otherProject | 
+		self mergeWith: otherProject ]
+]
+
+{ #category : #'as yet unclassified' }
+OPProjectController >> mergeModelsAndDiagramsIntoOne [
+
+	| showError plugins models plugin |
+	showError := [ :text | 
+	             ^ (GrowlMorph
+		                label: 'Unable to merge models'
+		                contents: text)
+		               backgroundColor:
+			               GrowlMorph theme dangerBackgroundColor;
+		               openInWorld ].
+	models := self project models.
+	models ifEmpty: [ ^ showError value: 'There are no models' ].
+	(self project diagrams size < 2 and: [ models size < 2 ]) ifTrue: [ 
+		^ showError value:
+			  'The model is as merged as it can be - there have to be at least 2 models or 2 diagrams' ].
+	plugins := models collect: [ :each | 
+		           OPPluginRegistry default pluginFor: each ].
+	plugins asSet size = 1 ifFalse: [ 
+		^ showError value:
+			  'All models must be of the same type/metamodel/plugin' ].
+	plugin := plugins anyOne.
+	plugin supportsMergingModels ifFalse: [ 
+		^ showError value: 'Plugin of these models does not support merging' ].
+
+	SpConfirmDialog new
+		title: 'Merge all models and diagrams into one?';
+		label:
+			'This is irreversible and original models and diagrams will be lost.';
+		acceptLabel: 'Yes, merge them';
+		cancelLabel: 'Cancel';
+		onAccept: [ 
+			| model diagram layouter |
+			model := plugin mergeModels: models.
+			self project diagrams do: [ :eachDiagram | 
+					workbench closeEditorOfDiagram: eachDiagram ].
+			models do: [ :eachModel | self removeModel: eachModel ].
+			diagram := OPDiagram withWholeModel: model.
+			self project addDiagram: diagram.
+			layouter := (self openEditorOnDiagram: diagram) diagramController
+				            layouter.
+			layouter dominanceTreeLayout ];
+		openDialogWithSpec
+]
+
+{ #category : #'as yet unclassified' }
+OPProjectController >> mergeWith: aProject [
+
+	| otherProjectDiagrams |
+	otherProjectDiagrams := aProject diagrams.
+	project mergeWith: aProject.
+	otherProjectDiagrams do: [ :each | self openEditorOnDiagram: each ]
+]
+
 { #category : #saving }
 OPProjectController >> modelMementoFor: aModel [
 	^ OPPersistenceMemento
@@ -140,7 +208,8 @@ OPProjectController >> openDiagrams [
 
 { #category : #opening }
 OPProjectController >> openEditorOnDiagram: aDiagram [
-	workbench openEditorOnDiagram: aDiagram
+
+	^ workbench openEditorOnDiagram: aDiagram
 ]
 
 { #category : #accessing }
@@ -199,8 +268,8 @@ OPProjectController >> removeDiagram: aDiagram [
 
 { #category : #removing }
 OPProjectController >> removeDiagramController: aController [
-	controllers remove: aController.
-	self unsubscribeFrom: aController
+
+	controllers remove: aController
 ]
 
 { #category : #removing }
@@ -266,24 +335,6 @@ OPProjectController >> selectInDiagram: aModelElement [
 							dctrl editor canvasModel roassalView canvas camera
 								translateTo: ctrl figure position.
 							^ self ] ] ]
-]
-
-{ #category : #announcements }
-OPProjectController >> subscribeTo: aDiagramController [
-	aDiagramController model announcer
-		when: OPOpenEditorRequest
-		do: [ :ann | workbench openEditorOn: ann model ].
-	aDiagramController model announcer
-		when: OPCloseEditorRequest
-		do: [ :ann | workbench closeEditorOf: ann model ].
-	aDiagramController model announcer
-		when: OPSelectDiagramElement
-		do: [ :ann | self selectInDiagram: ann model ]
-]
-
-{ #category : #announcements }
-OPProjectController >> unsubscribeFrom: aDiagramController [
-	aDiagramController model announcer unsubscribe: self
 ]
 
 { #category : #opening }

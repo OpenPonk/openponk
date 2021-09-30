@@ -58,6 +58,12 @@ OPPlugin >> layouterClass [
 	^ self subclassResponsibility
 ]
 
+{ #category : #'as yet unclassified' }
+OPPlugin >> mergeModels: aModelsCollection [
+
+	self notYetImplemented
+]
+
 { #category : #accessing }
 OPPlugin >> modelClass [
 	^ self subclassResponsibility
@@ -98,6 +104,11 @@ OPPlugin >> singleStringSerializer [
 
 { #category : #testing }
 OPPlugin >> supportsHidingElements [
+	^ false
+]
+
+{ #category : #testing }
+OPPlugin >> supportsMergingModels [
 	^ false
 ]
 

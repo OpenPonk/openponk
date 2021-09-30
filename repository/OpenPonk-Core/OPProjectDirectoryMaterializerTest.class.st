@@ -69,19 +69,20 @@ OPProjectDirectoryMaterializerTest >> testRead [
 
 { #category : #tests }
 OPProjectDirectoryMaterializerTest >> testReadMemento [
+
 	| memento |
 	memento := reader
-		readMementoFrom: root / 'models' / project models first uuid asString
-		with:
-			(OPMementoDirectorySerializer
-				withModelSerializer: OPStonModelSerializer new
-				diagramsSerializer: OPJsonDiagramSerializer new).
+		           readMementoFrom:
+		           root / 'models' / project models first uuid asString
+		           with: (OPMementoDirectorySerializer
+				            withModelSerializer: OPStonModelSerializer new
+				            diagramsSerializer: OPJsonDiagramSerializer new).
 	self
 		assert: memento model className
 		equals: project models first className.
 	self assert: memento model name equals: project models first name.
 	self assert: memento model uuid equals: project models first uuid.
-	self assert: memento diagram equals: nil
+	self assert: memento diagrams isEmpty
 ]
 
 { #category : #tests }

@@ -47,6 +47,18 @@ OPTestPlugin >> serializer [
 		diagramsSerializer: self diagramSerializerClass new
 ]
 
+{ #category : #testing }
+OPTestPlugin >> supportsHidingElements [
+
+	^ false
+]
+
+{ #category : #testing }
+OPTestPlugin >> supportsMergingModels [
+
+	^ false
+]
+
 { #category : #accessing }
 OPTestPlugin >> version [
 	^ '0.1.0-beta.2'

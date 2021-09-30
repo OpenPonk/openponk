@@ -7,11 +7,10 @@ Class {
 	#instVars : [
 		'uuid',
 		'dirty',
-		'models',
 		'storageFolder',
 		'storageFile',
 		'name',
-		'diagrams'
+		'modelsAndDiagrams'
 	],
 	#category : #'OpenPonk-Core-Models'
 }
@@ -32,8 +31,8 @@ OPProject class >> named: aString [
 
 { #category : #accessing }
 OPProject >> addDiagram: aDiagram [
-	(diagrams at: aDiagram model ifAbsentPut: [ OrderedCollection new ])
-		add: aDiagram
+
+	(self addModel: aDiagram model) add: aDiagram
 ]
 
 { #category : #accessing }
@@ -43,9 +42,13 @@ OPProject >> addDiagrams: aCollection [
 
 { #category : #adding }
 OPProject >> addModel: aModel [
-	models add: aModel.
-	(aModel respondsTo: #project:)
-		ifTrue: [ aModel project: self ]
+
+	| diagrams |
+	diagrams := modelsAndDiagrams
+		            at: aModel
+		            ifAbsentPut: OrderedCollection new.
+	(aModel respondsTo: #project:) ifTrue: [ aModel project: self ].
+	^ diagrams
 ]
 
 { #category : #announcements }
@@ -78,19 +81,21 @@ OPProject >> descriptionName [
 
 { #category : #accessing }
 OPProject >> diagrams [
-	^ self models
-		flatCollect: [ :eachModel | self diagramsOf: eachModel ]
+
+	^ modelsAndDiagrams flattened
 ]
 
 { #category : #accessing }
 OPProject >> diagrams: aCollection [
-	diagrams removeAll.
+
+	modelsAndDiagrams do: [ :each | each removeAll ].
 	self addDiagrams: aCollection
 ]
 
 { #category : #removing }
 OPProject >> diagramsOf: aModel [
-	^ diagrams at: aModel ifAbsent: [ #() ]
+
+	^ modelsAndDiagrams at: aModel ifAbsent: [ OrderedCollection new ]
 ]
 
 { #category : #adding }
@@ -104,7 +109,8 @@ OPProject >> ensureModelsHaveDiagrams [
 
 { #category : #adding }
 OPProject >> hasDiagramsModel: aModel [
-	^ self diagrams anySatisfy: [ :any | any model = aModel ]
+
+	^ (modelsAndDiagrams at: aModel ifAbsent: [ ^ false ]) isNotEmpty
 ]
 
 { #category : #adding }
@@ -115,21 +121,35 @@ OPProject >> hasModel: aModel [
 
 { #category : #initialization }
 OPProject >> initialize [
+
 	uuid := UUID new.
-	models := OrderedCollection new asValueHolder.
-	diagrams := Dictionary new.	"SRToManyLink
-		on: self
-		slot: #diagrams
-		oppositeSlot: #project."
+	modelsAndDiagrams := Dictionary new asValueHolder.
 	name := NewValueHolder value: 'Unnamed project'.
 	dirty := false asValueHolder.
-	models whenChangedDo: [ dirty value: true ].
+	modelsAndDiagrams whenChangedDo: [ dirty value: true ].
 	name whenChangedDo: [ dirty value: true ]
+]
+
+{ #category : #operations }
+OPProject >> mergeWith: aProject [
+
+	| otherModels otherDiagrams |
+	otherModels := aProject models.
+	otherDiagrams := aProject diagrams.
+	otherModels do: [ :each | aProject removeModel: each ].
+	self addDiagrams: otherDiagrams
 ]
 
 { #category : #accessing }
 OPProject >> models [
-	^ models value
+
+	^ modelsAndDiagrams keys
+]
+
+{ #category : #accessing }
+OPProject >> modelsAndDiagrams [
+
+	^ modelsAndDiagrams copy
 ]
 
 { #category : #accessing }
@@ -144,15 +164,16 @@ OPProject >> name: aString [
 
 { #category : #removing }
 OPProject >> removeDiagram: aDiagram [
-	| diagramsOfModel |
-	diagramsOfModel := diagrams at: aDiagram model.
-	diagramsOfModel remove: aDiagram.
-	diagramsOfModel ifEmpty: [ diagrams removeKey: aDiagram model ]
+
+	modelsAndDiagrams
+		at: aDiagram model
+		ifPresent: [ :diagrams | diagrams remove: aDiagram ]
 ]
 
 { #category : #removing }
 OPProject >> removeDiagramsOf: aModel [
-	diagrams removeKey: aModel
+
+	(modelsAndDiagrams at: aModel) removeAll
 ]
 
 { #category : #persistence }
@@ -162,11 +183,11 @@ OPProject >> removeFromImage [
 
 { #category : #removing }
 OPProject >> removeModel: aModel [
-	self removeDiagramsOf: aModel.
-	models remove: aModel.
-	aModel announcer unsubscribe: self.
-	(aModel respondsTo: #project:)
-		ifTrue: [ aModel project: nil ]
+
+	modelsAndDiagrams removeKey: aModel.
+	(aModel respondsTo: #announcer) ifTrue: [ 
+		aModel announcer unsubscribe: self ].
+	(aModel respondsTo: #project:) ifTrue: [ aModel project: nil ]
 ]
 
 { #category : #persistence }

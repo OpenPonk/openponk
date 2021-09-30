@@ -20,41 +20,6 @@ env:
   RUN_ID: ${{ github.run_id }}
 
 jobs:
-  test-p10-linux:
-    runs-on: ubuntu-latest
-    env:
-      PLATFORM: linux
-    name: 'Test Pharo 10 Linux'
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2.3.4
-      - name: Load SmalltalkCI environment
-        uses: hpi-swa/setup-smalltalkCI@1.2.1
-        id: smalltalkci
-        with:
-          smalltalk-version: Pharo64-10
-      - name: Prepare image and test
-        run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
-        shell: bash
-        timeout-minutes: 10
-
-  test-p10-win:
-    runs-on: windows-latest
-    env:
-      PLATFORM: win
-    name: 'Test Pharo 10 Windows'
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2.3.4
-      - name: Load SmalltalkCI environment
-        uses: hpi-swa/setup-smalltalkCI@1.2.1
-        id: smalltalkci
-        with:
-          smalltalk-version: Pharo64-10
-      - name: Prepare image and test
-        run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
-        shell: bash
-        timeout-minutes: 15
 
   test-linux:
     runs-on: ubuntu-latest

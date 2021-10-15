@@ -111,17 +111,28 @@ OPCanvasPresenter >> ensureKeyBindingsFor: aWidget [
 
 { #category : #toolbar }
 OPCanvasPresenter >> exportAsPng [
-	FDSaveFileDialog new
-		whenSelected: [ :file | self exportCanvasTo: file ];
-		extensionFilters: {'Images' -> #(png)};
-		defaultName: self editor diagramController model name asFileName , '.png';
+
+	OPExportCanvasDialog new
+		whenSelected: [ :file :zoom | self exportCanvasTo: file zoom: zoom ];
+		extensionFilters: { ('Images' -> #( png )) };
+		defaultName:
+			self editor diagramController model name asFileName , '.png';
 		open
 ]
 
 { #category : #toolbar }
 OPCanvasPresenter >> exportCanvasTo: aFile [
 
-	| gridShape gridColor selectedElements |
+	self exportCanvasTo: aFile zoom: TRCamera new defaultCameraScale
+]
+
+{ #category : #toolbar }
+OPCanvasPresenter >> exportCanvasTo: aFileReference zoom: aNumber [
+
+	| gridShape gridColor selectedElements zoom |
+	zoom := aNumber = 1
+		        ifTrue: [ roassalView canvas camera defaultCameraScale ]
+		        ifFalse: [ aNumber ].
 	gridShape := roassalView canvas shapes detect: [ :each | 
 		             each isKindOf: TRCanvasGridShape ].
 	gridColor := gridShape color.
@@ -129,14 +140,21 @@ OPCanvasPresenter >> exportCanvasTo: aFile [
 	self diagramController deselectAll.
 	[ 
 	gridShape color: Color transparent.
-	(RTCanvasExporter canvas: roassalView canvas)
+	(OPRTCanvasExporter canvas: roassalView canvas)
 		format: #png;
 		whole;
-		defaultScale;
+		scale: zoom;
 		oversizedBy: 20 @ 20;
-		fileName: aFile;
+		fileName: aFileReference;
 		export.
-	self inform: 'Saved to ' , aFile pathString ] ensure: [ 
+	UIManager default
+		inform: (String streamContents: [ :s | 
+				 s << 'Saved to ' << aFileReference pathString.
+				 s
+					 cr;
+					 cr.
+				 s << 'Click to open location' ])
+		actionOnClick: [ aFileReference openInOSFileBrowser ] ] ensure: [ 
 		gridShape color: gridColor.
 		selectedElements do: [ :each | "self diagramController selectFigure: " 
 			each announce: TRMouseLeftClick new ] ]

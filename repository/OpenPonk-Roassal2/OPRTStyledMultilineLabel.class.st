@@ -20,30 +20,67 @@ OPRTStyledMultilineLabel >> trachelShapeFor: anElement [
 ]
 
 { #category : #'trachel shape production' }
-OPRTStyledMultilineLabel >> updateFor: anElement trachelShape: trachelShape [
-	| lines lbl txt aColor fontSize |
-	aColor := self colorFor: anElement.
-	fontSize := self heightFor: anElement.
+OPRTStyledMultilineLabel >> trachelShapeForMultiLine: anElement [
+
+	| colorForElement fontSizeForElement textForElement emphasisForElement fontNameForElement txt lines shape |
+	colorForElement := self colorFor: anElement.
+	fontSizeForElement := self heightFor: anElement.
+	textForElement := self textFor: anElement.
+	emphasisForElement := self emphasisFor: anElement.
+	fontNameForElement := self fontNameFor: anElement.
+
 	txt := self textFor: anElement.
 	txt := txt copyReplaceAll: String tab with: '    '.
 	lines := txt lines.
-	trachelShape numberOfShapes > lines size
-		ifTrue: [ trachelShape numberOfShapes - lines size
-				timesRepeat: [ trachelShape shapes last remove.
-					trachelShape removeLast ] ].
-	lines size > trachelShape numberOfShapes
-		ifTrue: [ lines size - trachelShape numberOfShapes
-				timesRepeat: [ | shape |
-					shape := TRLabelShape new.
-					shape element: anElement.
-					trachelShape canvas addShape: shape.
-					trachelShape addShape: shape ].
-			trachelShape positionShapesAfterBeingAdded ].
-	lines
-		doWithIndex: [ :l :index | 
-			lbl := (trachelShape shapes at: index) text: l.
-			lbl color: aColor.
-			lbl fontSize: fontSize ].
+
+	shape := TRCompositeShape new.
+	lines doWithIndex: [ :l :index | 
+		| lbl |
+		lbl := TRStyledLabelShape new.
+		lbl
+			text: l;
+			color: colorForElement;
+			fontSize: fontSizeForElement;
+			emphasis: emphasisForElement;
+			fontName: fontNameForElement.
+		shape addShape: lbl ].
+	shape verticalAndLeft.
+
+	^ shape
+]
+
+{ #category : #'trachel shape production' }
+OPRTStyledMultilineLabel >> updateFor: anElement trachelShape: trachelShape [
+
+	| lines colorForElement fontSizeForElement textForElement emphasisForElement fontNameForElement |
+	colorForElement := self colorFor: anElement.
+	fontSizeForElement := self heightFor: anElement.
+	textForElement := self textFor: anElement.
+	emphasisForElement := self emphasisFor: anElement.
+	fontNameForElement := self fontNameFor: anElement.
+	textForElement := textForElement
+		                  copyReplaceAll: String tab
+		                  with: '    '.
+	lines := textForElement lines.
+	trachelShape numberOfShapes > lines size ifTrue: [ 
+		trachelShape numberOfShapes - lines size timesRepeat: [ 
+			trachelShape shapes last remove.
+			trachelShape removeLast ] ].
+	lines size > trachelShape numberOfShapes ifTrue: [ 
+		lines size - trachelShape numberOfShapes timesRepeat: [ 
+			| shape |
+			shape := TRLabelShape new.
+			shape element: anElement.
+			trachelShape canvas addShape: shape.
+			trachelShape addShape: shape ].
+		trachelShape positionShapesAfterBeingAdded ].
+	lines doWithIndex: [ :l :index | 
+		(trachelShape shapes at: index)
+			text: l;
+			color: colorForElement;
+			fontSize: fontSizeForElement;
+			emphasis: emphasisForElement;
+			fontName: fontNameForElement ].
 	trachelShape verticalAndLeftWithoutReset.
 	^ trachelShape
 ]

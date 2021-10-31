@@ -52,13 +52,14 @@ OPPalette >> alignButtons [
 
 { #category : #protocol }
 OPPalette >> createPaletteFor: aDiagramController [
+
 	diagramController := aDiagramController.
 	self removeAll.
 	OPPaletteInitializer
 		addAllToPalette: self
 		forController: diagramController.
 	self selectSelectionTool.
-	diagramController whenDeselectionChanged: [ self deselectTool ]
+	diagramController whenAllDeselectedDo: [ self deselectTool ]
 ]
 
 { #category : #'building widgets' }

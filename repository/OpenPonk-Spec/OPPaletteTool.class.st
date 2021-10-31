@@ -28,6 +28,7 @@ OPPaletteTool >> palette [
 
 { #category : #accessing }
 OPPaletteTool >> palette: aPalette [
+
 	palette := aPalette
 ]
 

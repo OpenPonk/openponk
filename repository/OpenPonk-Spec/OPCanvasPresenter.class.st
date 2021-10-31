@@ -62,9 +62,11 @@ OPCanvasPresenter >> addMouseEventsFor: aFigure [
 
 { #category : #accessing }
 OPCanvasPresenter >> attachController: aDiagramController [
+
 	(diagramController := aDiagramController)
 		view: roassalView;
-		whenFigureAdded: [ :figure | self figureAdded: figure ]
+		whenFigureAdded: [ :figure | self figureAdded: figure ];
+		whenAllDeselectedDo: [ self lastSelectedFigure: nil ]
 ]
 
 { #category : #private }
@@ -261,10 +263,13 @@ OPCanvasPresenter >> roassalView [
 
 { #category : #accessing }
 OPCanvasPresenter >> selectedElements [
+
 	roassalView attributes
 		at: OPRTSelectableView
 		ifPresent: [ :els | els ifNotEmpty: [ ^ els ] ].
-	^ self lastSelectedFigure ifNil: [ {} ] ifNotNil: [ {self lastSelectedFigure} ]
+	^ self lastSelectedFigure
+		  ifNil: [ {  } ]
+		  ifNotNil: [ { self lastSelectedFigure } ]
 ]
 
 { #category : #'as yet unclassified' }

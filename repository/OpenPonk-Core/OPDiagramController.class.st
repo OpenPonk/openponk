@@ -5,6 +5,7 @@ Class {
 	#name : #OPDiagramController,
 	#superclass : #OPController,
 	#instVars : [
+		'announcer',
 		'controllers',
 		'editor',
 		'hoverHolder',
@@ -111,6 +112,12 @@ OPDiagramController >> allVisibleShowableElements [
 	"Should return all elements that could be directly hidden on diagram but are currently shown"
 
 	^ self controllers collect: [ :each | each model ]
+]
+
+{ #category : #accessing }
+OPDiagramController >> announcer [
+
+	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
 { #category : #userinterface }
@@ -269,8 +276,9 @@ OPDiagramController >> createController: aModel [
 
 { #category : #'protocol-canvas' }
 OPDiagramController >> deselectAll [
+
 	view announce: TRResizeCanceled new.
-	deselectionHolder value
+	self announcer announce: OPAllFiguresDeselected new
 ]
 
 { #category : #accessing }
@@ -730,9 +738,16 @@ OPDiagramController >> visibleElements: aCollection [
 				select: [ :each | aCollection anySatisfy: [ :any | any = each ] ])
 ]
 
+{ #category : #accessing }
+OPDiagramController >> when: anEvent do: aBlock [
+
+	^ self announcer when: anEvent do: aBlock
+]
+
 { #category : #'protocol-events' }
-OPDiagramController >> whenDeselectionChanged: aBlock [
-	deselectionHolder := aBlock
+OPDiagramController >> whenAllDeselectedDo: aBlock [
+
+	self when: OPAllFiguresDeselected do: aBlock
 ]
 
 { #category : #'protocol-events' }

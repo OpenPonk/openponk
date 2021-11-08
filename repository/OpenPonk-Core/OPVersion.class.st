@@ -225,14 +225,50 @@ OPVersion >> getOfLatestRelease [
 { #category : #downloading }
 OPVersion >> getRun [
 
-	| response |
-	response := ZnEasy get:
-		            'https://api.github.com/repos/openponk/'
-		            , self repositoryName , '/actions/runs/'
-		            , self githubWorkflowRunId asString.
-	response isError ifTrue: [ 
-		(ZnHttpUnsuccessful response: response) signal ].
-	^ STONJSON fromString: response entity string
+	| response client githubToken |
+	client := ZnClient new.
+	client url:
+		'https://api.github.com/repos/openponk/' , self repositoryName
+		, '/actions/runs/' , self githubWorkflowRunId asString.
+	githubToken := OSEnvironment current
+		               at: 'GITHUB_TOKEN'
+		               ifAbsent: [ nil ].
+	githubToken ifNotNil: [ :token | 
+		Stdio stdout
+			nextPutAll: 'Loading version info using GitHub API token';
+			nextPutAll: OSPlatform current lineEnding.
+		client request setAuthorization: 'Bearer ' , githubToken ].
+	response := client
+		            get;
+		            response.
+	response isError
+		ifTrue: [ 
+			(Smalltalk image isInteractiveGraphic not and: [ 
+				 response code = 403 and: [ 
+					 response statusLine reason includesSubstring: 'rate limit' ] ])
+				ifTrue: [ 
+					| reset resetIn |
+					reset := DateAndTime fromUnixTime:
+						         (response headers at: 'X-RateLimit-Reset') asInteger.
+					resetIn := reset - DateAndTime now.
+					Stdio stdout nextPutAll:
+						'Downloading OPVersion run info failed due to rate limiting. Limit resets at '.
+					reset printHMSOn: Stdio stdout.
+					Stdio stdout
+						nextPutAll: ' (in ';
+						nextPutAll: resetIn minutes asString;
+						nextPutAll: ' min, ';
+						nextPutAll: resetIn seconds asString;
+						nextPutAll: ' sec).';
+						nextPutAll: OSPlatform current lineEnding.
+					resetIn < 8 minutes
+						ifTrue: [ 
+							Stdio stdout nextPutAll: 'Waiting until reset...'.
+							resetIn wait.
+							^ self getRun ]
+						ifFalse: [ (ZnHttpUnsuccessful response: response) signal ] ]
+				ifFalse: [ (ZnHttpUnsuccessful response: response) signal ] ]
+		ifFalse: [ ^ STONJSON fromString: response entity string ]
 ]
 
 { #category : #accessing }
@@ -286,22 +322,29 @@ OPVersion >> releaseName: aString [
 
 { #category : #accessing }
 OPVersion >> repositoryName [
-	^ repositoryName
-		ifNil: [ | activePlugins |
-			activePlugins := {((Smalltalk globals
-				includesKey: #BaselineOfClassEditor)
-				ifTrue: [ #'class-editor' ]).
-			((Smalltalk globals includesKey: #BaselineOfBormEditor)
-				ifTrue: [ #'borm-editor' ]).
-			((Smalltalk globals includesKey: #BaselineOfFsmEditor)
-				ifTrue: [ #'fsm-editor' ]).
-			((Smalltalk globals includesKey: #BaselineOfPetriNets)
-				ifTrue: [ #petrinets ])} reject: #isNil.
-			repositoryName := activePlugins size >= 4
-				ifTrue: [ #'all-in-one' ]
-				ifFalse: [ activePlugins size = 1
-						ifTrue: [ activePlugins first ]
-						ifFalse: [ self class unknownRepositoryName ] ] ]
+
+	^ repositoryName ifNil: [ 
+		  | activePlugins |
+		  activePlugins := { 
+			                   ((Smalltalk globals includesKey:
+				                     #BaselineOfClassEditor) ifTrue: [ 
+				                    #'class-editor' ]).
+			                   ((Smalltalk globals includesKey:
+				                     #BaselineOfBormEditor) ifTrue: [ 
+				                    #'borm-editor' ]).
+			                   ((Smalltalk globals includesKey:
+				                     #BaselineOfFsmEditor) ifTrue: [ 
+				                    #'fsm-editor' ]).
+			                   ((Smalltalk globals includesKey:
+				                     #BaselineOfPetriNets) ifTrue: [ #petrinets ]).
+			                   ((Smalltalk globals includesKey: #BaselineOfBPMN) 
+				                    ifTrue: [ #'OpenPonk-BPMN' ]) } reject: #isNil.
+		  repositoryName := activePlugins size >= 4
+			                    ifTrue: [ #plugins ]
+			                    ifFalse: [ 
+				                    activePlugins size = 1
+					                    ifTrue: [ activePlugins first ]
+					                    ifFalse: [ self class unknownRepositoryName ] ] ]
 ]
 
 { #category : #accessing }
@@ -311,13 +354,16 @@ OPVersion >> repositoryName: aString [
 
 { #category : #accessing }
 OPVersion >> repositoryNotationName [
+
 	| notationNames |
-	notationNames := {(#'class-editor' -> '(Onto)UML').
-	(#'borm-editor' -> 'BORM').
-	(#'fsm-editor' -> 'FSM').
-	(#petrinets -> 'Petri nets').
-	(#'all-in-one' -> 'All-in-one')} asDictionary.
+	notationNames := { 
+		                 (#'class-editor' -> '(Onto)UML').
+		                 (#'borm-editor' -> 'BORM').
+		                 (#'fsm-editor' -> 'FSM').
+		                 (#petrinets -> 'Petri nets').
+		                 (#'OpenPonk-BPMN' -> 'BPMN').
+		                 (#plugins -> 'All plugins') } asDictionary.
 	^ notationNames
-		at: self repositoryName
-		ifAbsent: [ self repositoryName ]
+		  at: self repositoryName
+		  ifAbsent: [ self repositoryName ]
 ]

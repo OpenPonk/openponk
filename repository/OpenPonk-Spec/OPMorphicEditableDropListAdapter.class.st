@@ -6,8 +6,8 @@ Class {
 
 { #category : #factory }
 OPMorphicEditableDropListAdapter >> addToList: anItem [
-	self model addSilentlyItemLabeled: anItem do: [  ].
-	self model setSelectedItem: anItem
+
+	self model addAndSelectItemLabeled: anItem copy do: [  ]
 ]
 
 { #category : #factory }

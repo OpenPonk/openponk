@@ -12,7 +12,7 @@ Class {
 		'nearStart',
 		'nearEnd'
 	],
-	#category : 'OpenPonk-Roassal2-Connection'
+	#category : #'OpenPonk-Roassal2-Connection'
 }
 
 { #category : #'as yet unclassified' }
@@ -27,51 +27,10 @@ OPRTMidpointHandle >> beNearStart [
 
 { #category : #'as yet unclassified' }
 OPRTMidpointHandle >> constraintFor: anElement [
-	nearStart & nearEnd
-		ifTrue: [ ^ self constraintForStartEnd: anElement ].
-	nearStart
-		ifTrue: [ ^ self constraintForStart: anElement ].
-	nearEnd
-		ifTrue: [ ^ self constraintForEnd: anElement ].
-	TRConstraint stick: anElement trachelShape between: from trachelShape and: to trachelShape
-]
 
-{ #category : #'as yet unclassified' }
-OPRTMidpointHandle >> constraintForEnd: anElement [
-	| moveBlock b callback |
-	moveBlock := [ anElement translateTo: ((edge shape attachPoint endingPointOf: edge) + from position) / 2 ].
-	moveBlock value.
-	b := [ :shape :step | moveBlock value ].
-	callback := TRTranslationCallback block: b.
-	from addCallback: callback.
-	to addCallback: callback.
-	callback := TRExtentCallback block: b.
-	from addCallback: callback.
-	to addCallback: callback
-]
-
-{ #category : #'as yet unclassified' }
-OPRTMidpointHandle >> constraintForStart: anElement [
-	| moveBlock b callback |
-	moveBlock := [ anElement translateTo: ((edge shape attachPoint startingPointOf: edge) + to position) / 2 ].
-	moveBlock value.
-	b := [ :shape :step | moveBlock value ].
-	callback := TRTranslationCallback block: b.
-	from addCallback: callback.
-	to addCallback: callback.
-	callback := TRExtentCallback block: b.
-	from addCallback: callback.
-	to addCallback: callback
-]
-
-{ #category : #'as yet unclassified' }
-OPRTMidpointHandle >> constraintForStartEnd: anElement [
 	| moveBlock b callback |
 	moveBlock := [ 
-	anElement
-		translateTo:
-			((edge shape attachPoint startingPointOf: edge)
-				+ (edge shape attachPoint endingPointOf: edge)) / 2 ].
+	             anElement translateTo: self fromPoint + self toPoint / 2 ].
 	moveBlock value.
 	b := [ :shape :step | moveBlock value ].
 	callback := TRTranslationCallback block: b.
@@ -90,6 +49,14 @@ OPRTMidpointHandle >> element [
 { #category : #'as yet unclassified' }
 OPRTMidpointHandle >> from [
 	^ from
+]
+
+{ #category : #'as yet unclassified' }
+OPRTMidpointHandle >> fromPoint [
+
+	^ nearStart
+		  ifTrue: [ edge shape attachPoint startingPointOf: edge ]
+		  ifFalse: [ from position ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -117,10 +84,14 @@ OPRTMidpointHandle >> remove [
 
 { #category : #'as yet unclassified' }
 OPRTMidpointHandle >> renderIn: aView [
+
 	element := self shape elementOn: edge trachelShape.
-	element @ RTDraggable.
+	element @ (OPRTConditionallyDraggable onCondition: [ 
+		 (self fromPoint distanceTo: self toPoint) > 10 ]).
 	self constraintFor: element.
-	element when: TRMouseDragStart do: [ :event | self promote ].
+	element when: TRMouseDragStart do: [ :event | 
+		(self fromPoint distanceTo: self toPoint) > 10 ifTrue: [ 
+			self promote ] ].
 	aView add: element
 ]
 
@@ -131,4 +102,17 @@ OPRTMidpointHandle >> shape [
 		color: #color;
 		borderColor: Color black;
 		yourself
+]
+
+{ #category : #'as yet unclassified' }
+OPRTMidpointHandle >> to [
+	^ to
+]
+
+{ #category : #'as yet unclassified' }
+OPRTMidpointHandle >> toPoint [
+
+	^ nearEnd
+		  ifTrue: [ edge shape attachPoint endingPointOf: edge ]
+		  ifFalse: [ to position ]
 ]

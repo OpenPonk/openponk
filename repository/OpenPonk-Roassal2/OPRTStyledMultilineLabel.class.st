@@ -69,7 +69,7 @@ OPRTStyledMultilineLabel >> updateFor: anElement trachelShape: trachelShape [
 	lines size > trachelShape numberOfShapes ifTrue: [ 
 		lines size - trachelShape numberOfShapes timesRepeat: [ 
 			| shape |
-			shape := TRLabelShape new.
+			shape := TRStyledLabelShape new.
 			shape element: anElement.
 			trachelShape canvas addShape: shape.
 			trachelShape addShape: shape ].

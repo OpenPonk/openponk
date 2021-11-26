@@ -105,28 +105,13 @@ OPDiagram class >> ofModel: aModel fromJsonString: aString [
 { #category : #'instance creation' }
 OPDiagram class >> withWholeModel: aModel [
 	^ (self emptyOfModel: aModel)
-		allElementsVisible;
+		setAllElementsVisible;
 		yourself
 ]
 
 { #category : #copying }
 OPDiagram >> = otherDiagram [
 	^ self asJson = otherDiagram asJson
-]
-
-{ #category : #accessing }
-OPDiagram >> allElementsVisible [
-	| aCollection |
-	aCollection := OrderedCollection new.
-	(aCollection stub anySatisfy: Any) will: [ true ].
-	(aCollection stub noneSatisfy: Any) will: [ false ].
-	(aCollection stub ifEmpty: (Kind of: BlockClosure))
-		will: [ aCollection ].
-	(aCollection stub ifNotEmpty: (Kind of: BlockClosure))
-		will: [ :block | block value ].
-	(aCollection stub printElementsOn: Any)
-		will: [ 'mock matching any element' ].
-	self visibleElements: aCollection
 ]
 
 { #category : #converting }
@@ -276,6 +261,12 @@ OPDiagram >> printOn: aStream [
 	aStream << ')'
 ]
 
+{ #category : #accessing }
+OPDiagram >> setAllElementsVisible [
+
+	visibleElements := nil
+]
+
 { #category : #converting }
 OPDiagram >> updateFromInfo: anInfo [
 	self deprecated: 'OPDiagramInfo is no longer used'.
@@ -295,11 +286,13 @@ OPDiagram >> updateFromRoassalView: aView [
 ]
 
 { #category : #accessing }
-OPDiagram >> visibleElements [
-	^ visibleElements
+OPDiagram >> visibleElements: aCollection [
+	visibleElements := aCollection
 ]
 
 { #category : #accessing }
-OPDiagram >> visibleElements: aCollection [
-	visibleElements := aCollection
+OPDiagram >> visibleElementsOrIfNotSet: aBlock [
+
+	visibleElements ifNil: [ visibleElements := aBlock value ].
+	^ visibleElements
 ]

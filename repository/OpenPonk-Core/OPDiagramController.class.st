@@ -672,7 +672,9 @@ OPDiagramController >> showDiagram: aDiagram [
 
 { #category : #rebuilding }
 OPDiagramController >> showElements [
-	self visibleElements: diagram visibleElements
+
+	self visibleElements:
+		(diagram visibleElementsOrIfNotSet: [ self allShowableElements ])
 ]
 
 { #category : #figures }

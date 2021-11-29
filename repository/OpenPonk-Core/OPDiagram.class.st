@@ -286,6 +286,15 @@ OPDiagram >> updateFromRoassalView: aView [
 ]
 
 { #category : #accessing }
+OPDiagram >> visibleElements [
+
+	self deprecated:
+		'Use visibleElementsOrIfNotSet: with block as parameter. Variable visibleElements is not set usually when all elements should be visible'.
+
+	^ self visibleElementsOrIfNotSet: [ {  } ]
+]
+
+{ #category : #accessing }
 OPDiagram >> visibleElements: aCollection [
 	visibleElements := aCollection
 ]

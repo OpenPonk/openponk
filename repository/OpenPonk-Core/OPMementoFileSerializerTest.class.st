@@ -17,9 +17,10 @@ OPMementoFileSerializerTest class >> isAbstract [
 
 { #category : #'instance creation' }
 OPMementoFileSerializerTest >> newMementoWithModel: aModel [
+
 	^ OPPersistenceMemento
-		model: aModel
-		diagrams: {(OPDiagram withWholeModel: aModel)}
+		  model: aModel
+		  diagrams: { (OPDiagram emptyOfModel: aModel) }
 ]
 
 { #category : #'instance creation' }

@@ -58,24 +58,30 @@ OPDiagramTest >> testAsJsonModel2 [
 
 { #category : #tests }
 OPDiagramTest >> testFromJsonComplex [
+
 	| personUUID personUUIDstring person |
 	personUUIDstring := '6b181c2c-135a-0d00-86ce-55e80f4cf59c'.
 	personUUID := UUID fromString: personUUIDstring.
 	person := Mock new.
 	person stub uuid willReturn: personUUID.
 	view := OPDiagram
-		ofModel: Mock new
-		fromJsonString:
-			'{ 	"camera" : { "offset" : { "x" : 20, "y" : 30 }, "zoom" : 1.2 },
+		        ofModel: Mock new
+		        fromJsonString:
+			        '{ 	"camera" : { "offset" : { "x" : 20, "y" : 30 }, "zoom" : 1.2 },
 		"layout" : { "6b181c2c-135a-0d00-86ce-55e80f4cf59c" : { "position" : { "x" : 27, "y" : 23 } } },
 		"visibleElements" : [ "6b181c2c-135a-0d00-86ce-55e80f4cf59c" ]	 }'.
 	self assert: view camera offset equals: 20 @ 30.
 	self assert: view camera zoom equals: 1.2.
 	self
 		assert: view layout
-		equals: {(personUUID -> (OPElementLayout withPosition: 27 @ 23))} asDictionary.
-	self assert: view visibleElements size equals: 1.
-	self assert: view visibleElements anyOne equals: person.
+		equals: { (personUUID -> (OPElementLayout withPosition: 27 @ 23)) }
+				asDictionary.
+	self
+		assert: (view visibleElementsOrIfNotSet: [ { 1.2. 3 } ]) size
+		equals: 1.
+	self
+		assert: (view visibleElementsOrIfNotSet: [ { 1.2. 3 } ]) anyOne
+		equals: person
 ]
 
 { #category : #tests }

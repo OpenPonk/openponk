@@ -44,10 +44,10 @@ OPExportCanvasDialog >> confirm [
 	file ifNil: [ ^ self ].
 	zoomNumber := (NumberParser
 		               parse: zoomText text
-		               onError: [ TRCamera new defaultCameraScale * 100 ])
-	              / 100.
+		               onError: [ 
+		               TRCamera basicNew defaultCameraScale * 100 ]) / 100.
 	zoomNumber < 0.01 ifTrue: [ 
-		zoomNumber := TRCamera new defaultCameraScale ].
+		zoomNumber := TRCamera basicNew defaultCameraScale ].
 	onConfirmBlock cull: file cull: zoomNumber.
 	self delete
 ]

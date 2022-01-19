@@ -125,7 +125,7 @@ OPCanvasPresenter >> exportAsPng [
 { #category : #toolbar }
 OPCanvasPresenter >> exportCanvasTo: aFile [
 
-	self exportCanvasTo: aFile zoom: TRCamera new defaultCameraScale
+	self exportCanvasTo: aFile zoom: TRCamera basicNew defaultCameraScale
 ]
 
 { #category : #toolbar }

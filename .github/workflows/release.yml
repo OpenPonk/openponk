@@ -2,7 +2,8 @@ name: Release
 
 on:
   release:
-    types: [published]
+    types: [published]    
+  workflow_call:
 
 env:
   REPOSITORY_NAME: '${{ github.event.repository.name }}'
@@ -12,11 +13,43 @@ env:
   RUN_ID: ${{ github.run_id }}
   
 jobs:
-  linux:
+  linux-pharo8:
     runs-on: ubuntu-latest
     env:
       PLATFORM: ${{ github.job }}
-    name: 'Build Linux and upload zip'
+    name: 'Test Linux - Pharo 8'
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - uses: hpi-swa/setup-smalltalkCI@1.2.1
+        id: smalltalkci
+        with:
+          smalltalk-version: Pharo64-8.0
+      - name: Prepare image and test
+        run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
+        shell: bash
+        timeout-minutes: 10
+
+  win-pharo8:
+    runs-on: windows-latest
+    env:
+      PLATFORM: ${{ github.job }}
+    name: 'Test Windows - Pharo 8'
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - uses: hpi-swa/setup-smalltalkCI@1.2.1
+        id: smalltalkci
+        with:
+          smalltalk-version: Pharo64-8.0
+      - name: Prepare image and test
+        run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
+        shell: bash
+        timeout-minutes: 15
+
+  linux-pharo9:
+    runs-on: ubuntu-latest
+    env:
+      PLATFORM: ${{ github.job }}
+    name: 'Test Linux - Pharo 9'
     steps:
       - uses: actions/checkout@v2.3.4
       - uses: hpi-swa/setup-smalltalkCI@1.2.1
@@ -28,11 +61,11 @@ jobs:
         shell: bash
         timeout-minutes: 10
 
-  win:
+  win-pharo9:
     runs-on: windows-latest
     env:
       PLATFORM: ${{ github.job }}
-    name: 'Build Windows and upload zip'
+    name: 'Test Windows - Pharo 9'
     steps:
       - uses: actions/checkout@v2.3.4
       - uses: hpi-swa/setup-smalltalkCI@1.2.1

@@ -105,10 +105,10 @@ OPModelTypeSelector >> initializePresenters [
 
 { #category : #initialization }
 OPModelTypeSelector >> initializeWindow: aWindow [
-
 	aWindow
 		title: 'OpenPonk - Add new model to project';
-		initialExtent: 300 @ 265
+		initialExtent: 300 @ 265;
+		windowIcon: OPIcons current openponkIcon
 ]
 
 { #category : #'accessing model' }

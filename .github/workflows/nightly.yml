@@ -10,6 +10,7 @@ on:
   push:
     branches:
       - 'master'
+  workflow_call:
 
 env:
   REPOSITORY_NAME: '${{ github.event.repository.name }}'
@@ -21,41 +22,59 @@ env:
 
 jobs:
 
-  test-linux:
+  test-linux-pharo8:
     runs-on: ubuntu-latest
     env:
       PLATFORM: linux
-    name: 'Test Linux'
+    name: 'Test Linux - Pharo 8'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2.3.4
       - name: Load SmalltalkCI environment
-        uses: hpi-swa/setup-smalltalkCI@1.2.1
+        uses: hpi-swa/setup-smalltalkCI@1.3.2
         id: smalltalkci
         with:
-          smalltalk-version: Pharo64-9.0
+          smalltalk-image: Pharo64-8.0
       - name: Prepare image and test
-        run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
+        run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-image }}
         shell: bash
-        timeout-minutes: 10
+        timeout-minutes: 8
 
-  test-win:
+  test-win-pharo8:
     runs-on: windows-latest
     env:
       PLATFORM: win
-    name: 'Test Windows'
+    name: 'Test Windows - Pharo 8'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2.3.4
       - name: Load SmalltalkCI environment
-        uses: hpi-swa/setup-smalltalkCI@1.2.1
+        uses: hpi-swa/setup-smalltalkCI@1.3.2
         id: smalltalkci
         with:
-          smalltalk-version: Pharo64-9.0
+          smalltalk-image: Pharo64-8.0
       - name: Prepare image and test
-        run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
+        run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-image }}
         shell: bash
-        timeout-minutes: 15
+        timeout-minutes: 10
+
+  test-linux-pharo9:
+    runs-on: ubuntu-latest
+    env:
+      PLATFORM: linux
+    name: 'Test Linux - Pharo 9'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2.3.4
+      - name: Load SmalltalkCI environment
+        uses: hpi-swa/setup-smalltalkCI@1.3.2
+        id: smalltalkci
+        with:
+          smalltalk-image: Pharo64-9.0
+      - name: Prepare image and test
+        run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-image }}
+        shell: bash
+        timeout-minutes: 7
 
   create-dependent-matrix:
     runs-on: ubuntu-latest
@@ -74,7 +93,7 @@ jobs:
         run: echo "::set-output name=matrix::`cat ./.github/dependent-repositories.txt | tr -d " \t\n\r"`"
 
   build-dependent:
-    needs: [test-linux, test-win, create-dependent-matrix]
+    needs: [test-linux-pharo9, test-linux-pharo8, test-win-pharo8, create-dependent-matrix]
     runs-on: ubuntu-latest
     name: 'Build dependent'
     if: ${{ contains(needs.create-dependent-matrix.outputs.matrix, '/') }}

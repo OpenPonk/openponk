@@ -127,5 +127,6 @@ OPUpdater >> initializePresenters [
 OPUpdater >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 		title: 'OpenPonk version info';
-		initialExtent: 700 @ 210
+		initialExtent: 720 @ 230.
+	aWindowPresenter windowIcon: OPIcons current openponkIcon
 ]

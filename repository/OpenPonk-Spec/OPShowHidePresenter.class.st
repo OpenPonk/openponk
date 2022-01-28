@@ -45,7 +45,8 @@ OPShowHidePresenter >> initializeWindow: aWindowPresenter [
 				, ' - OpenPonk'.
 	aWindowPresenter window announcer
 		when: WindowActivated
-		do: [ self refreshCurrentPage ]
+		do: [ self refreshCurrentPage ].
+	aWindowPresenter windowIcon: OPIcons current openponkIcon
 ]
 
 { #category : #initialization }

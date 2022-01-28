@@ -237,8 +237,10 @@ OPWorkbench >> initialize [
 OPWorkbench >> initializePresenter [
 	super initializePresenter.
 	tabManager
-		whenTabSelected:
-			[ :tab | self focusEditorOf: (editors associations detect: [ :pair | pair value second = tab ]) key ]
+		whenTabSelected: [ :tab | 
+			self
+				focusEditorOf: (editors associations detect: [ :pair | pair value second = tab ]) key ].
+	self windowIcon: OPIcons current openponkIcon
 ]
 
 { #category : #initialization }

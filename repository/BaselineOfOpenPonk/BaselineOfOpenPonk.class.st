@@ -10,30 +10,41 @@ Class {
 
 { #category : #baselines }
 BaselineOfOpenPonk >> baseline: spec [
-
 	<baseline>
-	spec for: #common do: [ 
-		self externalProjectsBaseline: spec.
-		self internalProjectsBaseline: spec.
-		spec
-			package: 'OpenPonk-Trachel'
-			with: [ spec requires: #( 'Roassal2' ) ];
-			package: 'OpenPonk-Roassal2'
-			with: [ spec requires: #( 'OpenPonk-Trachel' ) ];
-			package: 'OpenPonk-Core' with: [ 
-				spec requires:
-						#( 'Magritte' 'Mocketry' 'XMLParser' 'XPath' 'NeoJSON' 'OpenPonk-Roassal2' ) ];
-			package: 'OpenPonk-Morphic';
-			package: 'OpenPonk-Help';
-			package: 'OpenPonk-Spec' with: [ 
-				spec requires:
-						#( 'Moose' 'FileDialog' 'Magritte' 'SynchronizedLinks'
-						   'OpenPonk-Morphic' ) ];
-			preLoadDoIt: #loadPetitParser.
-		spec
-			group: 'default'
-			with: #( 'OpenPonk-Core' 'OpenPonk-Roassal2' 'OpenPonk-Morphic'
-				   'OpenPonk-Spec' 'OpenPonk-Help' ) ]
+	spec
+		for: #common
+		do: [ self externalProjectsBaseline: spec.
+			self internalProjectsBaseline: spec.
+			spec
+				package: 'OpenPonk-Trachel'
+					with: [ spec requires: #('Roassal2') ];
+				package: 'OpenPonk-Roassal2'
+					with: [ spec requires: #('OpenPonk-Trachel') ];
+				package: 'OpenPonk-Core'
+					with: [ spec
+						requires:
+							#('Magritte' 'Mocketry' 'XMLParser' 'XPath' 'NeoJSON' 'OpenPonk-Roassal2') ];
+				package: 'OpenPonk-Morphic';
+				package: 'OpenPonk-Help';
+				package: 'OpenPonk-Spec'
+					with: [ spec
+						requires:
+							#('Moose' 'FileDialog' 'Magritte' 'SynchronizedLinks' 'OpenPonk-Morphic') ];
+				preLoadDoIt: #loadPetitParser.
+			spec
+				group: 'baseForAllPharoVersions'
+				with:
+					#('OpenPonk-Core' 'OpenPonk-Roassal2' 'OpenPonk-Morphic' 'OpenPonk-Spec' 'OpenPonk-Help').
+			spec package: 'OpenPonk-Pharo8SysExtensions'.
+			spec
+				package: 'OpenPonk-Pharo8OPExtensions'
+				with: [ spec
+						requires: #('OpenPonk-Pharo8SysExtensions' 'baseForAllPharoVersions') ].
+			spec
+				for: #(#'pharo8.x' #'pharo7.x')
+					do: [ spec group: 'default' with: #('OpenPonk-Pharo8OPExtensions') ];
+				for: #(#'pharo11.x' #'pharo10.x' #'pharo9.x')
+					do: [ spec group: 'default' with: #(#baseForAllPharoVersions) ] ]
 ]
 
 { #category : #baselines }
@@ -80,7 +91,7 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 		spec repository: 'github://openponk/synchronized-links/repository' ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #baselines }
 BaselineOfOpenPonk >> loadPetitParser [
 
 	"PetitParser is not needed by core OP. It is needed by BormEditor, but due to Pharo bug https://github.com/pharo-project/pharo/issues/9913 it must be always loaded before Roassal2 in Pharo 10"

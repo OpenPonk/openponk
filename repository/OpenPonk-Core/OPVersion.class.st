@@ -224,35 +224,35 @@ OPVersion >> getOfLatestRelease [
 
 { #category : #downloading }
 OPVersion >> getRun [
-
 	| response client githubToken |
 	client := ZnClient new.
-	client url:
-		'https://api.github.com/repos/openponk/' , self repositoryName
-		, '/actions/runs/' , self githubWorkflowRunId asString.
+	client
+		url:
+			'https://api.github.com/repos/openponk/' , self repositoryName
+				, '/actions/runs/' , self githubWorkflowRunId asString.
 	githubToken := OSEnvironment current
-		               at: 'GITHUB_TOKEN'
-		               ifAbsent: [ nil ].
-	githubToken ifNotNil: [ :token | 
-		Stdio stdout
-			nextPutAll: 'Loading version info using GitHub API token';
-			nextPutAll: OSPlatform current lineEnding.
-		client request setAuthorization: 'Bearer ' , githubToken ].
+		at: 'GITHUB_TOKEN'
+		ifAbsent: [ nil ].
+	githubToken
+		ifNotNil: [ :token | 
+			Stdio stdout
+				nextPutAll: 'Loading version info using GitHub API token';
+				nextPutAll: OSPlatform current lineEnding.
+			client request setAuthorization: 'Bearer ' , githubToken ].
 	response := client
-		            get;
-		            response.
+		get;
+		response.
 	response isError
-		ifTrue: [ 
-			(Smalltalk image isInteractiveGraphic not and: [ 
-				 response code = 403 and: [ 
-					 response statusLine reason includesSubstring: 'rate limit' ] ])
-				ifTrue: [ 
-					| reset resetIn |
-					reset := DateAndTime fromUnixTime:
-						         (response headers at: 'X-RateLimit-Reset') asInteger.
+		ifTrue: [ (Smalltalk image isInteractive not
+				and: [ response code = 403
+						and: [ response statusLine reason includesSubstring: 'rate limit' ] ])
+				ifTrue: [ | reset resetIn |
+					reset := DateAndTime
+						fromUnixTime: (response headers at: 'X-RateLimit-Reset') asInteger.
 					resetIn := reset - DateAndTime now.
-					Stdio stdout nextPutAll:
-						'Downloading OPVersion run info failed due to rate limiting. Limit resets at '.
+					Stdio stdout
+						nextPutAll:
+							'Downloading OPVersion run info failed due to rate limiting. Limit resets at '.
 					reset printHMSOn: Stdio stdout.
 					Stdio stdout
 						nextPutAll: ' (in ';
@@ -262,8 +262,7 @@ OPVersion >> getRun [
 						nextPutAll: ' sec).';
 						nextPutAll: OSPlatform current lineEnding.
 					resetIn < 8 minutes
-						ifTrue: [ 
-							Stdio stdout nextPutAll: 'Waiting until reset...'.
+						ifTrue: [ Stdio stdout nextPutAll: 'Waiting until reset...'.
 							resetIn wait.
 							^ self getRun ]
 						ifFalse: [ (ZnHttpUnsuccessful response: response) signal ] ]

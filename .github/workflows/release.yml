@@ -2,7 +2,7 @@ name: Release
 
 on:
   release:
-    types: [published]    
+    types: [published]
   workflow_call:
 
 env:
@@ -13,66 +13,50 @@ env:
   RUN_ID: ${{ github.run_id }}
   
 jobs:
-  linux-pharo8:
+  test-linux:
+    runs-on: ubuntu-latest
+    env:
+      PLATFORM: ${{ github.job }}
+    name: 'Test Linux'
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - uses: hpi-swa/setup-smalltalkCI@1.3.2
+        id: smalltalkci
+        with:
+          smalltalk-image: Pharo64-9.0
+      - name: Prepare image and test
+        run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-image }}
+        shell: bash
+        timeout-minutes: 12
+
+  test-win:
+    runs-on: windows-latest
+    env:
+      PLATFORM: ${{ github.job }}
+    name: 'Test Windows'
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - uses: hpi-swa/setup-smalltalkCI@1.3.2
+        id: smalltalkci
+        with:
+          smalltalk-image: Pharo64-9.0
+      - name: Prepare image and test
+        run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-image }}
+        shell: bash
+        timeout-minutes: 20
+
+  test-linux-p8:
     runs-on: ubuntu-latest
     env:
       PLATFORM: ${{ github.job }}
     name: 'Test Linux - Pharo 8'
     steps:
-      - uses: actions/checkout@v2.3.4
-      - uses: hpi-swa/setup-smalltalkCI@1.2.1
+      - uses: actions/checkout@v2.4.0
+      - uses: hpi-swa/setup-smalltalkCI@1.3.2
         id: smalltalkci
         with:
-          smalltalk-version: Pharo64-8.0
+          smalltalk-image: Pharo64-8.0
       - name: Prepare image and test
-        run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
+        run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-image }}
         shell: bash
-        timeout-minutes: 10
-
-  win-pharo8:
-    runs-on: windows-latest
-    env:
-      PLATFORM: ${{ github.job }}
-    name: 'Test Windows - Pharo 8'
-    steps:
-      - uses: actions/checkout@v2.3.4
-      - uses: hpi-swa/setup-smalltalkCI@1.2.1
-        id: smalltalkci
-        with:
-          smalltalk-version: Pharo64-8.0
-      - name: Prepare image and test
-        run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
-        shell: bash
-        timeout-minutes: 15
-
-  linux-pharo9:
-    runs-on: ubuntu-latest
-    env:
-      PLATFORM: ${{ github.job }}
-    name: 'Test Linux - Pharo 9'
-    steps:
-      - uses: actions/checkout@v2.3.4
-      - uses: hpi-swa/setup-smalltalkCI@1.2.1
-        id: smalltalkci
-        with:
-          smalltalk-version: Pharo64-9.0
-      - name: Prepare image and test
-        run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
-        shell: bash
-        timeout-minutes: 10
-
-  win-pharo9:
-    runs-on: windows-latest
-    env:
-      PLATFORM: ${{ github.job }}
-    name: 'Test Windows - Pharo 9'
-    steps:
-      - uses: actions/checkout@v2.3.4
-      - uses: hpi-swa/setup-smalltalkCI@1.2.1
-        id: smalltalkci
-        with:
-          smalltalk-version: Pharo64-9.0
-      - name: Prepare image and test
-        run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
-        shell: bash
-        timeout-minutes: 15
+        timeout-minutes: 12

@@ -11,6 +11,9 @@ on:
     branches:
       - 'master'
   workflow_call:
+    secrets:
+      WORKFLOW_ACCESS_TOKEN:
+        required: true
 
 env:
   REPOSITORY_NAME: '${{ github.event.repository.name }}'

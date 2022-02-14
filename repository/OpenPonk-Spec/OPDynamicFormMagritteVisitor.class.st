@@ -3,7 +3,7 @@ I convert magritte descriptions into DynamicForm widgets.
 "
 Class {
 	#name : #OPDynamicFormMagritteVisitor,
-	#superclass : #Object,
+	#superclass : #MAVisitor,
 	#instVars : [
 		'form',
 		'controller'
@@ -40,9 +40,14 @@ OPDynamicFormMagritteVisitor >> shouldIncludeLabelFor: aContainer [
 
 { #category : #visiting }
 OPDynamicFormMagritteVisitor >> visit: anObject [
-	anObject isVisible
-		ifFalse: [ ^ self ].
-	anObject acceptMagritte: self
+	((anObject respondsTo: #isVisible) and: [ anObject isVisible not ])
+		ifTrue: [ ^ self ].
+	^ super visit: anObject
+]
+
+{ #category : #visiting }
+OPDynamicFormMagritteVisitor >> visitActionDescription: aDescription [
+	(form addButton: aDescription label) action: aDescription action
 ]
 
 { #category : #visiting }
@@ -100,14 +105,12 @@ OPDynamicFormMagritteVisitor >> visitSingleOptionDescription: aSingleOptionDescr
 
 { #category : #visiting }
 OPDynamicFormMagritteVisitor >> visitStringDescription: aStringDescription [
-
-	aStringDescription isReadOnly ifTrue: [ 
-		^ self visitLabelDescription: aStringDescription ].
+	aStringDescription isReadOnly
+		ifTrue: [ ^ self visitLabelDescription: aStringDescription ].
 	(form addTextInput: aStringDescription label)
 		text: ((aStringDescription accessor read: controller) ifNil: [ '' ]);
 		whenTextIsAccepted: [ :newText | 
-			[ 
-			| newString |
+			[ | newString |
 			newString := newText asString.
 			aStringDescription validate: newString.
 			aStringDescription accessor write: newString to: controller ]
@@ -115,13 +118,12 @@ OPDynamicFormMagritteVisitor >> visitStringDescription: aStringDescription [
 				do: [ :e | 
 					OPWorkbench isDevelopmentMode
 						ifTrue: [ e pass ]
-						ifFalse: [ 
-							(GrowlMorph label: 'Error' contents: e asString)
+						ifFalse: [ (GrowlMorph label: 'Error' contents: e asString)
 								backgroundColor: GrowlMorph theme dangerBackgroundColor;
 								openInWorld ] ] ];
 		in: [ :input | 
-			aStringDescription accessor opWhenUpdated: [ :newValue | 
-				input text: newValue ] ]
+			aStringDescription accessor
+				opWhenUpdated: [ :newValue | input text: newValue ] ]
 ]
 
 { #category : #visiting }

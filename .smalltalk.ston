@@ -11,7 +11,9 @@ SmalltalkCISpec {
 	],
 	#testing : {
 		#packages : [
-			'OpenPonk*'
+			'OpenPonk*',
+			'FileDialog*',
+			'SynchronizedLinks*'
 		]
 	}
 }

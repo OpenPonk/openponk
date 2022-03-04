@@ -84,14 +84,13 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 
 { #category : #baselines }
 BaselineOfOpenPonk >> internalProjectsBaseline: spec [
-
-	spec baseline: 'FileDialog' with: [ 
-		spec repository:
-			'github://peteruhnak/file-dialog:3faba6b/repository' ].
+	spec
+		baseline: 'FileDialog'
+		with: [ spec repository: 'github://openponk/file-dialog:a00eeb4' ].
 	spec
 		baseline: 'SynchronizedLinks'
-		with: [ 
-		spec repository: 'github://openponk/synchronized-links/repository' ]
+		with:
+			[ spec repository: 'github://openponk/synchronized-links/repository' ]
 ]
 
 { #category : #baselines }

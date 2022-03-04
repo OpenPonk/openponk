@@ -59,6 +59,17 @@ OPProjectController >> addDiagramController: aController [
 	controllers add: aController
 ]
 
+{ #category : #saving }
+OPProjectController >> canProjectBeSavedToFile: aFileReference [
+	aFileReference ifNil: [ ^ false ].
+	[ aFileReference createFile ]
+		on: Error
+		do: [ ^ false ].
+	aFileReference size isZero
+		ifTrue: [ aFileReference delete ].
+	^ true
+]
+
 { #category : #accessing }
 OPProjectController >> controllers [
 	^ controllers
@@ -92,7 +103,7 @@ OPProjectController >> initialize [
 	controllers := OrderedCollection new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #saving }
 OPProjectController >> initializeProjectFolder: aFolder [
 	(aFolder / 'models') ensureCreateDirectory
 ]
@@ -107,20 +118,20 @@ OPProjectController >> loadStateFrom: aFile [
 	^ STON fromStream: aFile readStream
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #merging }
 OPProjectController >> mergeFrom: aFile [
 
 	self mergeWith: (self class fromFile: aFile)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #merging }
 OPProjectController >> mergeFromFile [
 
 	self class fromFileDo: [ :otherProject | 
 		self mergeWith: otherProject ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #merging }
 OPProjectController >> mergeModelsAndDiagramsIntoOne [
 
 	| showError plugins models plugin |
@@ -165,7 +176,7 @@ OPProjectController >> mergeModelsAndDiagramsIntoOne [
 		openDialogWithSpec
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #merging }
 OPProjectController >> mergeWith: aProject [
 
 	| otherProjectDiagrams |
@@ -228,26 +239,12 @@ OPProjectController >> project: aProject [
 ]
 
 { #category : #accessing }
-OPProjectController >> projectFile [
-	(self project storageFile isNil
-		or: [ self project storageFile exists not
-				or: [ self project storageFile isWritable not ] ])
-		ifTrue: [ self project
-				storageFile:
-					(FDSaveFileDialog new
-						extensionFilters:
-							{('OpenPonk projects' -> #('opp')).
-							('All files' -> #())};
-						defaultFolder: FileLocator imageDirectory asFileReference;
-						openModal) ].
-	^ self project storageFile
-]
-
-{ #category : #accessing }
 OPProjectController >> projectFolder [
 	self project storageFolder
 		ifNil: [ self project
-				storageFolder: (UIManager default chooseDirectory: 'Choose Directory where your project should be stored') ].
+				storageFolder:
+					(UIManager default
+						chooseDirectory: 'Choose Directory where your project should be stored') ].
 	^ self project storageFolder
 ]
 
@@ -281,23 +278,33 @@ OPProjectController >> removeModel: aModel [
 ]
 
 { #category : #saving }
-OPProjectController >> saveProject [
-	self projectFile ifNil: [ ^ self inform: 'Saving canceled' ].
-	self project saveInImage.
-	self saveProjectTo: self project storageFile.
-	self inform: 'Project saved to ' , self project storageFile fullName
-]
-
-{ #category : #accessing }
-OPProjectController >> saveProjectAs [
-	self project
+OPProjectController >> replaceWritableProjectFile [
+	^ self project
 		storageFile:
-			(FDSaveFileDialog new
+			((FDSaveFileDialog new
 				extensionFilters:
 					{('OpenPonk projects' -> #('opp')).
 					('All files' -> #())};
 				defaultFolder: FileLocator imageDirectory asFileReference;
-				openModal).
+				openModal) ifNil: [ OPProjectSaveCanceledException signal ])
+]
+
+{ #category : #saving }
+OPProjectController >> saveProject [
+	| file |
+	file := [ self writableProjectFile ]
+		on: OPProjectSaveCanceledException
+		do: [ ^ self inform: 'Saving canceled' ].
+	self project saveInImage.
+	self saveProjectTo: file.
+	self inform: 'Project saved to ' , file fullName
+]
+
+{ #category : #saving }
+OPProjectController >> saveProjectAs [
+	[ self replaceWritableProjectFile ]
+		on: OPProjectSaveCanceledException
+		do: [ ^ self inform: 'Saving canceled' ].
 	self saveProject
 ]
 
@@ -380,4 +387,14 @@ OPProjectController >> updateDiagrams [
 { #category : #accessing }
 OPProjectController >> workbench: aWorkbench [
 	workbench := aWorkbench 
+]
+
+{ #category : #saving }
+OPProjectController >> writableProjectFile [
+	[ self canProjectBeSavedToFile: self project storageFile ]
+		whileFalse: [ self project storageFile
+				ifNotNil: [ self
+						inform: 'Unable to write to file ' , self project storageFile pathString ].
+			self replaceWritableProjectFile ].
+	^ self project storageFile
 ]

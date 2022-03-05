@@ -86,7 +86,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 	spec
 		baseline: 'FileDialog'
-		with: [ spec repository: 'github://openponk/file-dialog:a00eeb4' ].
+		with: [ spec repository: 'github://openponk/file-dialog:a9d791e' ].
 	spec
 		baseline: 'SynchronizedLinks'
 		with:

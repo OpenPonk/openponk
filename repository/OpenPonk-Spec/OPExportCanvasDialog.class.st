@@ -48,6 +48,8 @@ OPExportCanvasDialog >> confirm [
 		               TRCamera basicNew defaultCameraScale * 100 ]) / 100.
 	zoomNumber < 0.01 ifTrue: [ 
 		zoomNumber := TRCamera basicNew defaultCameraScale ].
+
+	self window close.
 	onConfirmBlock cull: file cull: zoomNumber.
 	self delete
 ]

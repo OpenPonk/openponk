@@ -132,48 +132,61 @@ OPCanvasPresenter >> exportCanvasTo: aFile [
 OPCanvasPresenter >> exportCanvasTo: aFileReference zoom: aNumber [
 
 	| gridShape gridColor selectedElements zoom view approxResolution |
-	zoom := (aNumber * roassalView canvas encompassingRectangle area
-	         > 250000000
+	view := roassalView.
+	approxResolution := aNumber * aNumber
+	                    * view canvas encompassingRectangle area.
+	zoom := (aNumber squared * view canvas encompassingRectangle area
+	         > 500000000
 		         ifTrue: [ 
-			         250000000 / roassalView canvas encompassingRectangle area 
+			         (500000000 / view canvas encompassingRectangle area) sqrt 
 				         roundDownTo: 0.01 ]
 		         ifFalse: [ aNumber ]) max: 0.01.
+
 	(aNumber - zoom) abs > 0.011 ifTrue: [ 
 		GrowlMorph
 			openWithLabel: 'Warning'
-			contents:
-				'Zoom was changed to ' , (zoom * 100 printShowingDecimalPlaces: 0)
+			contents: 'Export zoom was reduced to '
+				, (zoom * 100 printShowingDecimalPlaces: 0)
 				, ' % zoom due to technical restrictions.'
 			backgroundColor: GrowlMorph theme warningBackgroundColor
 			labelColor: GrowlMorph theme textColor ].
+
 	zoom = 1 ifTrue: [ zoom := 1.01 ].
-	gridShape := roassalView canvas shapes detect: [ :each | 
+
+	gridShape := view canvas shapes detect: [ :each | 
 		             each isKindOf: TRCanvasGridShape ].
 	gridColor := gridShape color.
 	selectedElements := self selectedElements.
 	self diagramController deselectAll.
-	[ 
-	gridShape color: Color transparent.
-	view := roassalView.
-	approxResolution := zoom
-	                    * roassalView canvas encompassingRectangle area.
+
 	[ :job | 
+	approxResolution := zoom * zoom
+	                    * view canvas encompassingRectangle area.
 	job title:
-		'Exporting diagram - might take ' , (approxResolution > 150000000
-			 ifTrue: [ 'up to a minute' ]
+		'Exporting diagram - might take ' , (approxResolution > 120000000
+			 ifTrue: [ 'tens of seconds' ]
 			 ifFalse: [ 
-				 approxResolution > 10000000
+				 approxResolution > 1200000
 					 ifTrue: [ 'several seconds' ]
 					 ifFalse: [ 'a few seconds' ] ]).
+	[ 
+	gridShape color: Color transparent.
 	(zoom - view canvas camera scale) abs >= 0.01 ifTrue: [ 
 		view := view veryDeepCopy.
 		view canvas camera scale: zoom.
-		job progress: 0.25 ].
+		job progress: 0.2 ].
+
 	RTPNGExporter new
 		builder: view;
 		withScale;
 		fileName: aFileReference pathString;
-		exportToFile ] asJob run.
+		exportToFile ] ensure: [ 
+		job progress: 0.8.
+		gridShape color: gridColor.
+		view signalUpdate.
+		selectedElements do: [ :each | each announce: TRMouseLeftClick new ] ] ]
+		asJob run.
+
 	UIManager default
 		inform: (String streamContents: [ :s | 
 				 s << 'Saved to ' << aFileReference pathString.
@@ -181,10 +194,7 @@ OPCanvasPresenter >> exportCanvasTo: aFileReference zoom: aNumber [
 					 cr;
 					 cr.
 				 s << 'Click to open location' ])
-		actionOnClick: [ aFileReference openInOSFileBrowser ] ] ensure: [ 
-		gridShape color: gridColor.
-		selectedElements do: [ :each | "self diagramController selectFigure: " 
-			each announce: TRMouseLeftClick new ] ]
+		actionOnClick: [ aFileReference openInOSFileBrowser ]
 ]
 
 { #category : #adding }

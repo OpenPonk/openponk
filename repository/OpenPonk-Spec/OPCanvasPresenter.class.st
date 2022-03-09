@@ -131,10 +131,22 @@ OPCanvasPresenter >> exportCanvasTo: aFile [
 { #category : #toolbar }
 OPCanvasPresenter >> exportCanvasTo: aFileReference zoom: aNumber [
 
-	| gridShape gridColor selectedElements zoom |
-	zoom := aNumber = 1
-		        ifTrue: [ roassalView canvas camera defaultCameraScale ]
-		        ifFalse: [ aNumber ].
+	| gridShape gridColor selectedElements zoom view approxResolution |
+	zoom := (aNumber * roassalView canvas encompassingRectangle area
+	         > 250000000
+		         ifTrue: [ 
+			         250000000 / roassalView canvas encompassingRectangle area 
+				         roundDownTo: 0.01 ]
+		         ifFalse: [ aNumber ]) max: 0.01.
+	(aNumber - zoom) abs > 0.011 ifTrue: [ 
+		GrowlMorph
+			openWithLabel: 'Warning'
+			contents:
+				'Zoom was changed to ' , (zoom * 100 printShowingDecimalPlaces: 0)
+				, ' % zoom due to technical restrictions.'
+			backgroundColor: GrowlMorph theme warningBackgroundColor
+			labelColor: GrowlMorph theme textColor ].
+	zoom = 1 ifTrue: [ zoom := 1.01 ].
 	gridShape := roassalView canvas shapes detect: [ :each | 
 		             each isKindOf: TRCanvasGridShape ].
 	gridColor := gridShape color.
@@ -142,13 +154,26 @@ OPCanvasPresenter >> exportCanvasTo: aFileReference zoom: aNumber [
 	self diagramController deselectAll.
 	[ 
 	gridShape color: Color transparent.
-	(OPRTCanvasExporter canvas: roassalView canvas)
-		format: #png;
-		whole;
-		scale: zoom;
-		oversizedBy: 20 @ 20;
-		fileName: aFileReference;
-		export.
+	view := roassalView.
+	approxResolution := zoom
+	                    * roassalView canvas encompassingRectangle area.
+	[ :job | 
+	job title:
+		'Exporting diagram - might take ' , (approxResolution > 150000000
+			 ifTrue: [ 'up to a minute' ]
+			 ifFalse: [ 
+				 approxResolution > 10000000
+					 ifTrue: [ 'several seconds' ]
+					 ifFalse: [ 'a few seconds' ] ]).
+	(zoom - view canvas camera scale) abs >= 0.01 ifTrue: [ 
+		view := view veryDeepCopy.
+		view canvas camera scale: zoom.
+		job progress: 0.25 ].
+	RTPNGExporter new
+		builder: view;
+		withScale;
+		fileName: aFileReference pathString;
+		exportToFile ] asJob run.
 	UIManager default
 		inform: (String streamContents: [ :s | 
 				 s << 'Saved to ' << aFileReference pathString.

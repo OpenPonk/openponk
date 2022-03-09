@@ -451,11 +451,11 @@ OPDiagramController >> layout [
 
 { #category : #accessing }
 OPDiagramController >> layout: aLayout [
-	aLayout
-		keysAndValuesDo: [ :key :value | 
-			self controllers
-				detect: [ :ctrl | ctrl model uuid = key ]
-				ifFound: [ :ctrl | ctrl layout: value ] ].
+
+	aLayout keysAndValuesDo: [ :key :value | 
+		self controllers
+			detect: [ :ctrl | ctrl model uuid = key ]
+			ifFound: [ :ctrl | ctrl layout: value ] ].
 	self updateView
 ]
 
@@ -538,19 +538,21 @@ OPDiagramController >> plugin [
 
 { #category : #rebuilding }
 OPDiagramController >> rebuild [
+
 	controllers := nil.
+	[ :job | 
+	job title: 'Preparing diagram'.
 	self cleanView.
-	diagram
-		ifNil: [ ^ self showDiagram: (OPDiagram withWholeModel: model) ].
-	diagram camera
-		ifNotNil: [ :camera | 
-			view canvas camera translateTo: camera offset.
-			view canvas camera scale: camera zoom ].
+	diagram ifNil: [ 
+		^ self showDiagram: (OPDiagram withWholeModel: model) ].
+	diagram camera ifNotNil: [ :camera | 
+		view canvas camera translateTo: camera offset.
+		view canvas camera scale: camera zoom ].
 	self addCommonElementsFromDiagram.
 	self showElements.
 	diagram layout
 		ifNil: [ self applyDefaultLayout ]
-		ifNotNil: [ :layout | self layout: layout ]
+		ifNotNil: [ :layout | self layout: layout ] ] asJob run
 ]
 
 { #category : #'undo/redo' }

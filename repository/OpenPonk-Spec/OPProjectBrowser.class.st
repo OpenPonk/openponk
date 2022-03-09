@@ -175,10 +175,13 @@ OPProjectBrowser >> openProjectFromFile [
 
 { #category : #'project handling' }
 OPProjectBrowser >> openProjectFromFile: aFile [
+
 	| reader newProject store |
 	store := OPZipPersistence new loadFrom: aFile.
 	reader := OPProjectDirectoryMaterializer new.
-	newProject := reader loadProjectFrom: store / 'project'.
+	newProject := [ :job | 
+	              job title: 'Reading project from file'.
+	              reader loadProjectFrom: store / 'project' ] asJob run.
 	newProject storageFile: aFile.
 	newProject saveInImage.
 	newProject open.

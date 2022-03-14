@@ -18,7 +18,7 @@ Class {
 		'gripEdge',
 		'distance'
 	],
-	#category : 'OpenPonk-Roassal2-Constraints'
+	#category : #'OpenPonk-Roassal2-Constraints'
 }
 
 { #category : #public }
@@ -120,7 +120,7 @@ OPRTRailsConstraint >> gripShape [
 OPRTRailsConstraint >> initialize [
 	(gripShape := RTBox new)
 		size: 0;
-		color: Color red.
+		color: Color purple.
 	(gripLine := RTLine new)
 		attachPoint: RTBorderAttachPoint new;
 		color: Color black

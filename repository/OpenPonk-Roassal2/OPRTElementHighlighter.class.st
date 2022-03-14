@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'noBorder'
 	],
-	#category : 'OpenPonk-Roassal2-Builders'
+	#category : #'OpenPonk-Roassal2-Builders'
 }
 
 { #category : #'instance creation' }
@@ -34,7 +34,7 @@ OPRTElementHighlighter >> highlight: anElement color: aColor [
 		element.
 	noBorder
 		ifTrue: [ overlay trachelShape strokeWidth: 0.
-			overlay trachelShape strokePaint: Color red ].
+			overlay trachelShape strokePaint: Color blue ].
 	originalCallbacks := model trachelShape callbacks copy.
 	OPRTElementsConstraint keepExtentOf: overlay like: model plus: 3 @ 3.
 	TRConstraint stick: overlay onTheCenterOf: model.

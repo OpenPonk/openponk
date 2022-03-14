@@ -188,13 +188,13 @@ OPRTRailConstraint >> initialPosition: aNumber [
 	position := aNumber
 ]
 
-{ #category : #building }
+{ #category : #initialization }
 OPRTRailConstraint >> initialize [
 
 	super initialize.
 	(gripShape := RTBox new)
 		size: 1;
-		color: Color red.
+		color: Color pink.
 	(gripLine := RTLine new) attachPoint: RTBorderAttachPoint new.
 	self gripLineColor: Color black
 ]

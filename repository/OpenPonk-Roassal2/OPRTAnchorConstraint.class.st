@@ -293,7 +293,7 @@ OPRTAnchorConstraint >> guideLine [
 OPRTAnchorConstraint >> initialize [
 	(anchorShape := RTEllipse new)
 		size: 0;
-		color: Color red.
+		color: Color green.
 	(guideLine := RTLine new) color: Color transparent
 ]
 

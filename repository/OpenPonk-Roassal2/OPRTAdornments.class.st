@@ -25,24 +25,26 @@ OPRTAdornments >> adornments: aListOrBlock [
 
 { #category : #adornments }
 OPRTAdornments >> createAdornmentFrom: anAssociation position: aPosition on: anElement [
+
 	| box icon size |
 	size := 20.
 	box := RTBox new
-		size: size;
-		color: Color transparent;
-		borderColor: Color black;
-		element.
-	(RTConstraint on: box background: anElement)
-		top;
-		right;
-		outer;
-		verticalPadding: (size * aPosition) negated;
-		stick.
+		       size: size;
+		       color: Color transparent;
+		       borderColor: Color black;
+		       element.
 	icon := RTBitmap new
-		form: anAssociation key;
-		element.
-	(RTConstraint on: icon background: box) stick.
-	box addCallback: (TRAddedCallback block: [ box view add: icon ]).
+		        form: anAssociation key;
+		        element.
+	box addCallback: (TRAddedCallback block: [ 
+			 box view add: icon.
+			 (RTConstraint on: box background: anElement)
+				 top;
+				 right;
+				 outer;
+				 verticalPadding: (size * aPosition) negated;
+				 stick.
+			 (RTConstraint on: icon background: box) stick ]).
 	box addCallback: (TRRemoveCallback block: [ icon remove ]).
 	^ box
 ]
@@ -79,14 +81,18 @@ OPRTAdornments >> shapesCache [
 
 { #category : #adornments }
 OPRTAdornments >> showAdornmentsOn: anElement [
+
 	| boxes |
-	boxes := self adornments
-		withIndexCollect: [ :each :i | 
-			| box |
-			box := self shapesCache
-				at: each
-				ifAbsentPut: [ self createAdornmentFrom: each position: i on: anElement ].
-			box when: TRMouseLeftClick do: [ :evt | each value value ] ].
+	boxes := self adornments withIndexCollect: [ :each :i | 
+		         | box |
+		         box := self shapesCache
+			                at: each
+			                ifAbsentPut: [ 
+			                self
+				                createAdornmentFrom: each
+				                position: i
+				                on: anElement ].
+		         box when: TRMouseLeftClick do: [ :evt | each value value ] ].
 	anElement attributeAt: self className put: boxes.
 	anElement view addAll: boxes.
 	anElement view signalUpdate

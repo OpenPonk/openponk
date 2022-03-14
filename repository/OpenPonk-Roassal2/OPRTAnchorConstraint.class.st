@@ -17,17 +17,7 @@ A minimum distance (in pixels) that should be maintained between the edge and th
 "
 Class {
 	#name : #OPRTAnchorConstraint,
-	#superclass : #Object,
-	#instVars : [
-		'element',
-		'edge',
-		'minDistance',
-		'balance',
-		'anchorElement',
-		'guideEdge',
-		'anchorShape',
-		'guideLine'
-	],
+	#superclass : #RTAnchorConstraint,
 	#category : #'OpenPonk-Roassal2-Constraints'
 }
 
@@ -187,210 +177,21 @@ v open
 ]
 
 { #category : #building }
-OPRTAnchorConstraint >> addAnchor [
-	anchorElement := self anchorShape element.
-	element view add: anchorElement.
-	guideEdge := self guideLine edgeFrom: element to: anchorElement.
-	element view add: guideEdge
-]
-
-{ #category : #building }
-OPRTAnchorConstraint >> anchorSegment [
-	^ self segments segmentWithPointFor: self balance
-]
-
-{ #category : #accessing }
-OPRTAnchorConstraint >> anchorShape [
-	^ anchorShape
-]
-
-{ #category : #accessing }
-OPRTAnchorConstraint >> balance [
-	^ balance
-]
-
-{ #category : #accessing }
-OPRTAnchorConstraint >> balance: aNumber [
-	balance := aNumber
-]
-
-{ #category : #building }
 OPRTAnchorConstraint >> build [
 
-	self addAnchor.
-	edge from addCallback: (TRTranslationCallback block: [ self update ]).
-	edge to addCallback: (TRTranslationCallback block: [ self update ]).
-	"Do a symbol-based check, because DCRTConnection is not (yet?) in Roassal"
-	edge shape className asSymbol = #OPRTConnection
-	| (edge shape className asSymbol = #OPRTStyledConnection) ifTrue: [ 
-		edge
-			when: (self class environment at: #OPRTHandleMoved)
-			do: [ self update ] ].
-	element when: TRMouseDragStart do: [ 
-		guideLine color: Color gray.
-		guideEdge update.
-		guideEdge view signalUpdate ].
-	element when: TRMouseDragEnd do: [ 
-		guideLine color: Color transparent.
-		guideEdge update.
-		guideEdge view signalUpdate ]
-]
-
-{ #category : #'as yet unclassified' }
-OPRTAnchorConstraint >> computeExtraDistance [
-
-	"Compute the extra distance required to move the element to not overlap the segment."
-
-	| segment sideOfElement normals |
-	segment := self anchorSegment first.
-	sideOfElement := segment sideOfPoint: element position.
-	normals := element encompassingRectangle corners
-		           select: [ :each | 
-		           (segment sideOfPoint: each) ~= sideOfElement ]
-		           thenCollect: [ :each | 
-			           each distanceTo:
-				           (each
-					            nearestPointAlongLineFrom: segment from
-					            to: segment to) ].
-	normals ifEmpty: [ ^ 0 ].
-	^ minDistance sign > 0
-		  ifTrue: [ normals max ]
-		  ifFalse: [ normals max negated ]
-]
-
-{ #category : #'as yet unclassified' }
-OPRTAnchorConstraint >> connectionSegmentsFor: anEdge [
-	^ (anEdge shape pathFor: anEdge)
-		overlappingPairsCollect: [ :from :to | RTLineSegment from: from to: to ]
-]
-
-{ #category : #accessing }
-OPRTAnchorConstraint >> edge [
-	^ edge
-]
-
-{ #category : #accessing }
-OPRTAnchorConstraint >> edge: anEdge [
-	edge := anEdge
-]
-
-{ #category : #accessing }
-OPRTAnchorConstraint >> element [
-	^ element
-]
-
-{ #category : #accessing }
-OPRTAnchorConstraint >> element: anElement [
-	element := anElement
-]
-
-{ #category : #accessing }
-OPRTAnchorConstraint >> guideLine [
-	^ guideLine
-]
-
-{ #category : #initialization }
-OPRTAnchorConstraint >> initialize [
-	(anchorShape := RTEllipse new)
-		size: 0;
-		color: Color green.
-	(guideLine := RTLine new) color: Color transparent
-]
-
-{ #category : #'as yet unclassified' }
-OPRTAnchorConstraint >> lineSegmentFor: anEdge [
-	^ anEdge lineSegments first
-]
-
-{ #category : #accessing }
-OPRTAnchorConstraint >> minDistance [
-	^ minDistance
-]
-
-{ #category : #accessing }
-OPRTAnchorConstraint >> minDistance: anInteger [
-	minDistance := anInteger
-]
-
-{ #category : #'as yet unclassified' }
-OPRTAnchorConstraint >> moveAnchor [
-	anchorElement translateTo: self anchorSegment last
-]
-
-{ #category : #'as yet unclassified' }
-OPRTAnchorConstraint >> moveAwayFrom: aRectangle via: aVector [
-
-	"There should be minDistance between the start and the element. Move it in the direction fo the current segment"
-
-	| vector corners segment |
-	"source and target of the edge on top of each other... ignore"
-	aVector r = 0 ifTrue: [ ^ self ].
-	vector := aVector normalized
-	          * (aRectangle origin distanceTo: aRectangle corner).
-	corners := element encompassingRectangle corners select: [ :each | 
-		           aRectangle containsPoint: each ].
-	segment := (corners collect: [ :each | 
-		            | sg |
-		            sg := RTLineSegment from: each to: each + vector.
-		            RTLineSegment
-			            from: each
-			            to: (sg intersectRectangle: aRectangle) anyOne ]) 
-		           detectMax: #length.
-	segment ifNotNil: [ "	segment
-		ifNotNil:
-			[ element view
-				add:
-					(RTSVGPath new
-						path:
-							'M' , segment from x asString , ',' , segment from y asString , 'L' , segment to x asString
-								, ',' , segment to y asString;
-						element) ]" 
-		element translateBy: segment vector ]
-]
-
-{ #category : #'as yet unclassified' }
-OPRTAnchorConstraint >> moveAwayFromSegment: aSegment [
-	(aSegment intersectRectangle: element encompassingRectangle)
-		ifNotEmpty:
-			[ :crossings | 
-			element
-				translateBy:
-					aSegment vector normal
-						* (minDistance + self computeExtraDistance) negated ]
-]
-
-{ #category : #'as yet unclassified' }
-OPRTAnchorConstraint >> moveElement [
-	| segment from to |
-	segment := self anchorSegment first.
-	element
-		translateTo: anchorElement position + (segment vector normal * minDistance negated).
-	self moveAwayFromSegment: segment.
-	from := edge from encompassingRectangle expandBy: minDistance abs.
-	to := edge to encompassingRectangle expandBy: minDistance abs.
-	balance > 0 & (element encompassingRectangle intersects: from)
-		ifTrue: [ self moveAwayFrom: from via: segment vector ].
-	balance < 0 & (element encompassingRectangle intersects: to)
-		ifTrue: [ self moveAwayFrom: to via: segment vector negated ]
-]
-
-{ #category : #removing }
-OPRTAnchorConstraint >> remove [
-	anchorElement view ifNotNil: [ anchorElement remove ].
-	guideEdge view ifNotNil: [ guideEdge remove ]
+	super build.
+	(edge shape className asSymbol = #OPRTConnection or: [ 
+		 edge shape className asSymbol = #OPRTStyledConnection ]) ifFalse: [ 
+		^ self ].
+	edge
+		when: (self class environment at: #OPRTHandleMoved)
+		do: [ self update ]
 ]
 
 { #category : #accessing }
 OPRTAnchorConstraint >> segments [
-	(edge shape isKindOf: OPRTConnection)
-		ifTrue: [ ^ OPRTPolyLineSegment withAll: (self connectionSegmentsFor: edge) ].
-	(edge shape isKindOf: RTBezierLine)
-		ifTrue: [ ^ self notYetImplemented ].
-	^ OPRTPolyLineSegment with: (self lineSegmentFor: edge)
-]
 
-{ #category : #updating }
-OPRTAnchorConstraint >> update [
-	self moveAnchor.
-	self moveElement
+	(edge shape isKindOf: OPRTConnection) ifTrue: [ 
+		^ OPRTPolyLineSegment withAll: (self connectionSegmentsFor: edge) ].
+	^ super segments
 ]

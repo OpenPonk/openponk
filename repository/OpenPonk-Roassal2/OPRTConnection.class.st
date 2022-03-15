@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'router'
 	],
-	#category : 'OpenPonk-Roassal2-Connection'
+	#category : #'OpenPonk-Roassal2-Connection'
 }
 
 { #category : #examples }
@@ -91,12 +91,19 @@ OPRTConnection >> router: aRouter [
 	router := aRouter
 ]
 
+{ #category : #hooks }
+OPRTConnection >> trachelShapeClass [
+
+	^ TRCompositeShape
+]
+
 { #category : #rendering }
 OPRTConnection >> trachelShapeFor: anEdge [
+
 	| shape multiShape path |
 	path := self pathFor: anEdge.
-	multiShape := TRCompositeShape new.
-	path overlappingPairsDo: [ :a :b |
+	multiShape := self trachelShapeClass new.
+	path overlappingPairsDo: [ :a :b | 
 		shape := self lineSegmentFor: anEdge from: a to: b.
 		multiShape addShape: shape ].
 	^ multiShape

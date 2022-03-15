@@ -79,12 +79,8 @@ OPDiagramController >> addedFigureFor: aController [
 	| figure |
 	(figuresBeingAdded includes: aController)
 		ifFalse: [ 
-			GrowlMorph
-				openWithLabel: 'OpenPonk debug: Controller warning'
-				contents:
-				'DiagramController: added figure not previously marked as being added'
-				backgroundColor: GrowlMorph theme warningBackgroundColor
-				labelColor: GrowlMorph theme textColor ]
+			self traceCr:
+				'DiagramController>>#addedFigureFor: added figure not previously marked as being added' ]
 		ifTrue: [ figuresBeingAdded remove: aController ].
 	figure := aController figure.
 	figureAdded value: figure.

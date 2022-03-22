@@ -16,9 +16,3 @@ TRMorph >> resetShapeBeingPointed [
 	ee morph: self.
 	shapeBeingPointed announce: ee
 ]
-
-{ #category : #'*OpenPonk-Roassal2' }
-TRMorph >> trMouseDraggingOver: aMorphicEvent [
-
-	"dragging element into another disabled for OpenPonk"
-]

@@ -20,6 +20,24 @@ OPNote >> initialize [
 	text := ''
 ]
 
+{ #category : #printing }
+OPNote >> printOn: aStream [
+
+	super printOn: aStream.
+	aStream nextPutAll: '('''.
+
+	self text size <= 20
+		ifTrue: [ 
+			aStream
+				nextPutAll: self text;
+				nextPut: $' ]
+		ifFalse: [ 
+			aStream
+				nextPutAll: (self text takeFirst: 17);
+				nextPutAll: '''...' ].
+	aStream nextPutAll: ')'
+]
+
 { #category : #accessing }
 OPNote >> text [
 	^ text

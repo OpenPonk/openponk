@@ -49,7 +49,7 @@ OPNoteFigure >> createOwnedBorderLines [
 	(lineShape edgeFrom: lowerTopRightBox to: bottomRightBox).
 	(lineShape edgeFrom: bottomRightBox to: bottomLeftBox).
 	(lineShape edgeFrom: bottomLeftBox to: topLeftBox).
-	(lineShape edgeFrom: topLeftBox to: upperTopRightBox)} asGroup.
+	(lineShape edgeFrom: topLeftBox to: upperTopRightBox)} asRTGroup.
 	self addAll: lines
 ]
 
@@ -110,7 +110,7 @@ OPNoteFigure >> createOwnedInvisibleBoxes [
 	(bottomRightBox := invisibleBoxShape elementOn: #bottomRight).
 	(middleLeftBox := invisibleBoxShape elementOn: #middleLeft).
 	(middleBottomBox := invisibleBoxShape elementOn: #middleBottom)}
-		asGroup.
+		asRTGroup.
 	self addAll: invisibleBoxes
 ]
 

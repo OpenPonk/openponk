@@ -114,24 +114,35 @@ OPCanvasPresenter >> ensureKeyBindingsFor: aWidget [
 { #category : #toolbar }
 OPCanvasPresenter >> exportAsPng [
 
-	OPExportCanvasDialog new
-		whenSelected: [ :file :zoom | self exportCanvasTo: file zoom: zoom ];
-		extensionFilters: { ('Images' -> #( png )) };
+	OPExportImageDialog new
+		whenSelected: [ :file :zoom | self exportCanvasToPng: file zoom: zoom ];
+		extensionFilters: { ('PNG images' -> #( png )) };
 		defaultName:
 			self editor diagramController model name asFileName , '.png';
 		open
 ]
 
 { #category : #toolbar }
-OPCanvasPresenter >> exportCanvasTo: aFile [
+OPCanvasPresenter >> exportAsSvg [
 
-	self exportCanvasTo: aFile zoom: TRCamera basicNew defaultCameraScale
+	OPExportCanvasDialog new
+		whenSelected: [ :file | self exportCanvasToSvg: file ];
+		extensionFilters: { ('SVG images' -> #( svg )) };
+		defaultName:
+			self editor diagramController model name asFileName , '.svg';
+		open
 ]
 
 { #category : #toolbar }
-OPCanvasPresenter >> exportCanvasTo: aFileReference zoom: aNumber [
+OPCanvasPresenter >> exportCanvasToPng: aFile [
 
-	| gridShape gridColor selectedElements zoom view approxResolution |
+	self exportCanvasToPng: aFile zoom: TRCamera basicNew defaultCameraScale
+]
+
+{ #category : #toolbar }
+OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aNumber [
+
+	| gridShape gridColor zoom view approxResolution |
 	view := roassalView.
 	approxResolution := aNumber * aNumber
 	                    * view canvas encompassingRectangle area.
@@ -156,7 +167,6 @@ OPCanvasPresenter >> exportCanvasTo: aFileReference zoom: aNumber [
 	gridShape := view canvas shapes detect: [ :each | 
 		             each isKindOf: TRCanvasGridShape ].
 	gridColor := gridShape color.
-	selectedElements := self selectedElements.
 	self diagramController deselectAll.
 
 	[ :job | 
@@ -183,9 +193,38 @@ OPCanvasPresenter >> exportCanvasTo: aFileReference zoom: aNumber [
 		exportToFile ] ensure: [ 
 		job progress: 0.8.
 		gridShape color: gridColor.
-		view signalUpdate.
-		selectedElements do: [ :each | each announce: TRMouseLeftClick new ] ] ]
-		asJob run.
+		view signalUpdate ] ] asJob run.
+
+	UIManager default
+		inform: (String streamContents: [ :s | 
+				 s << 'Saved to ' << aFileReference pathString.
+				 s
+					 cr;
+					 cr.
+				 s << 'Click to open location' ])
+		actionOnClick: [ aFileReference openInOSFileBrowser ]
+]
+
+{ #category : #toolbar }
+OPCanvasPresenter >> exportCanvasToSvg: aFileReference [
+
+	| view amountOfElements |
+	view := roassalView.
+
+	self diagramController deselectAll.
+
+	[ :job | 
+	amountOfElements := view elements size.
+	job title:
+		'Exporting diagram - might take ' , (amountOfElements > 5000
+			 ifTrue: [ 'tens of seconds' ]
+			 ifFalse: [ 
+				 amountOfElements > 500
+					 ifTrue: [ 'several seconds' ]
+					 ifFalse: [ 'a few seconds' ] ]).
+
+	RTSVGExporter exportViewAsSVG: view filename: aFileReference ] asJob
+		run.
 
 	UIManager default
 		inform: (String streamContents: [ :s | 

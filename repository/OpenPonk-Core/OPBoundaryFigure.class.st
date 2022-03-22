@@ -42,7 +42,7 @@ OPBoundaryFigure >> createOwnedElements [
 	dragBoxes := {(horizonalBoxShape elementOn: #top).
 	(horizonalBoxShape elementOn: #bottom).
 	(verticalBoxShape elementOn: #left).
-	(verticalBoxShape elementOn: #right)} asGroup.
+	(verticalBoxShape elementOn: #right)} asRTGroup.
 	dragBoxesByPosition := (dragBoxes
 		collect: [ :each | each model -> each ]) asDictionary.
 	self addAll: dragBoxes.
@@ -129,7 +129,8 @@ OPBoundaryFigure >> pushBack [
 
 { #category : #'creating - subelements' }
 OPBoundaryFigure >> textOffset [
-	^ 0 @ (16 - (self height / 2))
+
+	^ 0 @ (4 + (text height - self height / 2))
 ]
 
 { #category : #'as yet unclassified' }

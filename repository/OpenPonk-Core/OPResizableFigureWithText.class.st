@@ -15,10 +15,9 @@ OPResizableFigureWithText >> addInteractions [
 { #category : #'creating - subelements' }
 OPResizableFigureWithText >> createOwnedElements [
 	| block |
-	text := RTText new
-		fontSize: 10;
+	text := OPRTStyledMultilineLabel new
+		height: 10;
 		text: [ :m | m model ifNil: '' ifNotNil: self modelTextSelector ];
-		wrapText;
 		elementOn: self.
 	self add: text.
 	block := [ self updateText ].
@@ -49,6 +48,7 @@ OPResizableFigureWithText >> textPadding [
 
 { #category : #update }
 OPResizableFigureWithText >> updateText [
+
 	text shape width: self width - (self textPadding * 2).
 	text update.
 	text translateTo: self position + self textOffset

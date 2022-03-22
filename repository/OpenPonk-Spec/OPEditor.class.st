@@ -80,10 +80,13 @@ OPEditor class >> specSeparated [
 
 { #category : #toolbar }
 OPEditor class >> toolbarMenu: aBuilder [
+
 	<opEditorToolbarMenu>
 	self developerToolbarMenu: aBuilder.
-	(aBuilder item: 'Export as PNG...')
-		action: [ aBuilder model canvasModel exportAsPng ]
+	(aBuilder item: 'Export as PNG...') action: [ 
+		aBuilder model canvasModel exportAsPng ].
+	(aBuilder item: 'Export as SVG (incomplete/simplified)...') action: [ 
+		aBuilder model canvasModel exportAsSvg ]
 ]
 
 { #category : #api }

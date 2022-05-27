@@ -52,6 +52,16 @@ OPProjectBrowser class >> defaultSpec [
 		yourself
 ]
 
+{ #category : #'System-FileRegistry' }
+OPProjectBrowser class >> fileReaderServicesForFile: fullName suffix: suffix [
+
+	"Answers a collection of services that can handle the file and suffixes"
+
+	<fileService>
+	suffix = 'opp' ifTrue: [ ^ { self serviceOpen } ].
+	^ {  }
+]
+
 { #category : #'world menu' }
 OPProjectBrowser class >> menuCommandOn: aBuilder [
 
@@ -67,6 +77,18 @@ OPProjectBrowser class >> menuCommandOn: aBuilder [
 OPProjectBrowser class >> open [
 	<script>
 	^ self new openWithSpec
+]
+
+{ #category : #'System-FileRegistry' }
+OPProjectBrowser class >> serviceOpen [
+
+	"answers a service for opening the project window from project file"
+
+	^ SimpleServiceEntry
+		  provider: self new
+		  label: 'Load'
+		  selector: #openProjectFromFile:
+		  description: 'Open OpenPonk project'
 ]
 
 { #category : #'as yet unclassified' }
@@ -177,7 +199,7 @@ OPProjectBrowser >> openProjectFromFile [
 OPProjectBrowser >> openProjectFromFile: aFile [
 
 	| reader newProject store |
-	store := OPZipPersistence new loadFrom: aFile.
+	store := OPZipPersistence new loadFrom: aFile asFileReference.
 	reader := OPProjectDirectoryMaterializer new.
 	newProject := [ :job | 
 	              job title: 'Reading project from file'.

@@ -20,8 +20,20 @@ Class {
 
 { #category : #'instance creation' }
 OPProjectController class >> fromDirectory: aFolder [
-	^ OPProjectDirectoryMaterializer new
-		loadProjectFrom: aFolder asFileReference
+
+	^ [ :job | 
+	  job title: 'Reading project from file'.
+	  OPProjectDirectoryMaterializer new loadProjectFrom:
+		  aFolder asFileReference ] asJob run
+]
+
+{ #category : #opening }
+OPProjectController class >> fromDirectoryDo: aBlock [
+
+	StFBOpenDirectoryDialog new
+		title: 'Choose an OpenPonk project directory';
+		okAction: [ :dir | aBlock value: (self fromDirectory: dir) ];
+		openWithSpec
 ]
 
 { #category : #'instance creation' }
@@ -38,14 +50,11 @@ OPProjectController class >> fromFile: aFile [
 { #category : #opening }
 OPProjectController class >> fromFileDo: aBlock [
 
-	FDOpenFileDialog new
-		whenSelected: [ :file | aBlock value: (self fromFile: file) ];
-		extensionFilters: { 
-				('OpenPonk projects' -> #( 'opp' )).
-				('All files' -> #(  )) };
-		defaultFolder: FileLocator imageDirectory asFileReference;
-		title: 'Select an OpenPonk project...';
-		open
+	StFBOpenFileDialog new
+		title: 'Choose an OpenPonk project';
+		okAction: [ :file | aBlock value: (self fromFile: file) ];
+		extensions: #( opp ) named: 'OP projects';
+		openWithSpec
 ]
 
 { #category : #opening }
@@ -279,14 +288,12 @@ OPProjectController >> removeModel: aModel [
 
 { #category : #saving }
 OPProjectController >> replaceWritableProjectFile [
-	^ self project
-		storageFile:
-			((FDSaveFileDialog new
-				extensionFilters:
-					{('OpenPonk projects' -> #('opp')).
-					('All files' -> #())};
-				defaultFolder: FileLocator imageDirectory asFileReference;
-				openModal) ifNil: [ OPProjectSaveCanceledException signal ])
+
+	^ self project storageFile: ((StFBSaveFileDialog new
+			    title: 'Set a file for saving an OpenPonk project';
+			    extensions: #( opp ) named: 'OP projects';
+			    openModalWithSpec;
+			    selectedEntry) ifNil: [ OPProjectSaveCanceledException signal ])
 ]
 
 { #category : #saving }

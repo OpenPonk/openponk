@@ -29,7 +29,7 @@ BaselineOfOpenPonk >> baseline: spec [
 				package: 'OpenPonk-Spec'
 					with: [ spec
 						requires:
-							#('Moose' 'FileDialog' 'Magritte' 'SynchronizedLinks' 'OpenPonk-Morphic') ];
+							#('Moose' 'NewTools' 'Magritte' 'SynchronizedLinks' 'OpenPonk-Morphic') ];
 				preLoadDoIt: #loadPetitParser.
 			spec
 				group: 'baseForAllPharoVersions'
@@ -84,13 +84,15 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 
 { #category : #baselines }
 BaselineOfOpenPonk >> internalProjectsBaseline: spec [
-	spec
-		baseline: 'FileDialog'
-		with: [ spec repository: 'github://openponk/file-dialog:a9d791e' ].
+
+	spec baseline: 'NewTools' with: [ 
+		spec
+			repository: 'github://JanBliznicenko/NewTools:Pharo11';
+			loads: #( FileBrowser ) ].
 	spec
 		baseline: 'SynchronizedLinks'
-		with:
-			[ spec repository: 'github://openponk/synchronized-links/repository' ]
+		with: [ 
+		spec repository: 'github://openponk/synchronized-links/repository' ]
 ]
 
 { #category : #baselines }

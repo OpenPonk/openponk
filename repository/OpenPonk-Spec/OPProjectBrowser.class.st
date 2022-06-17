@@ -165,6 +165,7 @@ OPProjectBrowser >> initializeWidgets [
 
 { #category : #'project handling' }
 OPProjectBrowser >> openProject: project [
+
 	project saveInImage.
 	project open.
 	self delete
@@ -177,35 +178,22 @@ OPProjectBrowser >> openProjectButton [
 
 { #category : #'as yet unclassified' }
 OPProjectBrowser >> openProjectFromDirectory [
-	| folder |
-	folder := UIManager default chooseDirectory: 'Choose directory containing the project'.
-	folder ifNil: [ ^ self ].
-	self openProject: (OPProjectDirectoryMaterializer new loadProjectFrom: folder)
+
+	^ OPProjectController fromDirectoryDo: [ :aProject | 
+		  self openProject: aProject ]
 ]
 
 { #category : #'as yet unclassified' }
 OPProjectBrowser >> openProjectFromFile [
 
-	StFBOpenFileDialog new
-		title: 'Select an OpenPonk project';
-		okAction: [ :file | self openProjectFromFile: file ];
-		extensions: #( 'opp' ) named: 'OP projects';
-		openWithSpec
+	^ OPProjectController fromFileDo: [ :aProject | 
+		  self openProject: aProject ]
 ]
 
 { #category : #'project handling' }
 OPProjectBrowser >> openProjectFromFile: aFile [
 
-	| reader newProject store |
-	store := OPZipPersistence new loadFrom: aFile asFileReference.
-	reader := OPProjectDirectoryMaterializer new.
-	newProject := [ :job | 
-	              job title: 'Reading project from file'.
-	              reader loadProjectFrom: store / 'project' ] asJob run.
-	newProject storageFile: aFile.
-	newProject saveInImage.
-	newProject open.
-	self delete
+	^ self openProject: (OPProjectController fromFile: aFile)
 ]
 
 { #category : #'as yet unclassified' }

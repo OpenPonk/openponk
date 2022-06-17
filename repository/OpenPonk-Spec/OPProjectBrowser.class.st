@@ -185,14 +185,12 @@ OPProjectBrowser >> openProjectFromDirectory [
 
 { #category : #'as yet unclassified' }
 OPProjectBrowser >> openProjectFromFile [
-	FDOpenFileDialog new
-		whenSelected: [ :file | self openProjectFromFile: file ];
-		extensionFilters:
-			{'OpenPonk projects' -> #('opp').
-			'All files' -> #()};
-		defaultFolder: FileLocator imageDirectory asFileReference;
-		title: 'Select an OpenPonk project...';
-		open
+
+	StFBOpenFileDialog new
+		title: 'Select an OpenPonk project';
+		okAction: [ :file | self openProjectFromFile: file ];
+		extensions: #( 'opp' ) named: 'OP projects';
+		openWithSpec
 ]
 
 { #category : #'project handling' }

@@ -19,39 +19,35 @@ Class {
 
 { #category : #specs }
 OPUpdater class >> defaultSpec [
-	^ SpBoxLayout newVertical
-		borderWidth: 5;
-		add:
-			(SpBoxLayout newHorizontal
-					spacing: 5;
-					add: SpBoxLayout newVertical;
-					add: #repositoryNameLabel expand: false;
-					add: #repositoryName expand: false;
-					add: SpBoxLayout newVertical;
-					yourself)
-			expand: false
-			fill: false
-			padding: 12;
-		add:
-			(SpBoxLayout newHorizontal
-				spacing: 5;
-				add:
-					(SpBoxLayout newVertical
-						add: #versionInfoLabel height: self labelHeight * 1.6;
-						add: #versionInfo);
-				add:
-					(SpBoxLayout newVertical
-						add: #lastVersionInfoLabel height: self labelHeight * 1.6;
-						add: #lastVersionInfo;
-						yourself);
-				add:
-					(SpBoxLayout newVertical
-						add: #lastNightlyVersionInfoLabel
-							height: self labelHeight * 1.6;
-						add: #lastNightlyVersionInfo;
-						yourself);
-				yourself);
-		yourself
+
+	^ SpBoxLayout newTopToBottom
+		  borderWidth: 5;
+		  add: (SpBoxLayout newLeftToRight
+				   spacing: 5;
+				   add: SpBoxLayout newTopToBottom;
+				   add: #repositoryNameLabel expand: false;
+				   add: #repositoryName expand: false;
+				   add: SpBoxLayout newTopToBottom;
+				   yourself)
+		  expand: false
+		  fill: false
+		  padding: 12;
+		  add: (SpBoxLayout newLeftToRight
+				   spacing: 5;
+				   add: (SpBoxLayout newTopToBottom
+						    add: #versionInfoLabel height: self labelHeight * 1.6;
+						    add: #versionInfo);
+				   add: (SpBoxLayout newTopToBottom
+						    add: #lastVersionInfoLabel height: self labelHeight * 1.6;
+						    add: #lastVersionInfo;
+						    yourself);
+				   add: (SpBoxLayout newTopToBottom
+						    add: #lastNightlyVersionInfoLabel
+						    height: self labelHeight * 1.6;
+						    add: #lastNightlyVersionInfo;
+						    yourself);
+				   yourself);
+		  yourself
 ]
 
 { #category : #initialization }

@@ -17,13 +17,13 @@ Class {
 { #category : #specs }
 OPModelTypeSelector class >> defaultSpec [
 
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		  add: #pluginsLabel
 		  expand: false
 		  fill: false
 		  padding: 5;
 		  add: #plugins;
-		  add: (SpBoxLayout newHorizontal
+		  add: (SpBoxLayout newLeftToRight
 				   add: #projectNameLabel
 				   expand: false
 				   fill: false
@@ -33,10 +33,10 @@ OPModelTypeSelector class >> defaultSpec [
 		  expand: false
 		  fill: false
 		  padding: 5;
-		  add: (SpBoxLayout newHorizontal
-				   add: SpBoxLayout newVertical;
+		  add: (SpBoxLayout newLeftToRight
+				   add: SpBoxLayout newTopToBottom;
 				   add: #addModelButton width: 150;
-				   add: SpBoxLayout newVertical;
+				   add: SpBoxLayout newTopToBottom;
 				   yourself)
 		  height: self buttonHeight;
 		  yourself

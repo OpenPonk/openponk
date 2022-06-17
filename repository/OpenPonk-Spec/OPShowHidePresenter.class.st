@@ -10,9 +10,10 @@ Class {
 
 { #category : #specs }
 OPShowHidePresenter class >> defaultSpec [
-	^ SpBoxLayout newVertical
-		add: #notebook;
-		yourself
+
+	^ SpBoxLayout newTopToBottom
+		  add: #notebook;
+		  yourself
 ]
 
 { #category : #initialization }

@@ -12,9 +12,10 @@ Class {
 
 { #category : #specs }
 OPShowHideTabContentPresenter class >> defaultSpec [
-	^ SpBoxLayout newVertical
-		add: #tree;
-		yourself
+
+	^ SpBoxLayout newTopToBottom
+		  add: #tree;
+		  yourself
 ]
 
 { #category : #accessing }

@@ -33,7 +33,7 @@ OPProjectController class >> fromDirectoryDo: aBlock [
 	StFBOpenDirectoryDialog new
 		title: 'Choose an OpenPonk project directory';
 		okAction: [ :dir | aBlock value: (self fromDirectory: dir) ];
-		openWithSpec
+		open
 ]
 
 { #category : #'instance creation' }
@@ -54,7 +54,7 @@ OPProjectController class >> fromFileDo: aBlock [
 		title: 'Choose an OpenPonk project';
 		okAction: [ :file | aBlock value: (self fromFile: file) ];
 		extensions: #( opp ) named: 'OP projects';
-		openWithSpec
+		open
 ]
 
 { #category : #opening }
@@ -292,8 +292,7 @@ OPProjectController >> replaceWritableProjectFile [
 	^ self project storageFile: ((StFBSaveFileDialog new
 			    title: 'Set a file for saving an OpenPonk project';
 			    extensions: #( opp ) named: 'OP projects';
-			    openModalWithSpec;
-			    selectedEntry) ifNil: [ OPProjectSaveCanceledException signal ])
+			    openModal) ifNil: [ OPProjectSaveCanceledException signal ])
 ]
 
 { #category : #saving }

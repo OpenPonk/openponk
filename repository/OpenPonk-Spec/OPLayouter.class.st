@@ -54,7 +54,7 @@ OPLayouter >> applyLayout: aTwoArgBlock [
 OPLayouter >> basicApplyLayout: aTwoArgBlock [
 
 	| selectedBoxes allNodes nodes allEdges edges isPartialLayout oldEncompassingRectangle newEncompassingRectangle |
-	selectedBoxes := diagramController editor canvasModel
+	selectedBoxes := diagramController editor canvasPresenter
 		                 selectedElements.
 	isPartialLayout := selectedBoxes size > 1.
 	allNodes := self allNodes.

@@ -3,7 +3,7 @@ I am a scrolling wrapper around DynamicForm.
 "
 Class {
 	#name : #OPScrollableForm,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'form',
 		'scrollPane'
@@ -11,11 +11,19 @@ Class {
 	#category : #'OpenPonk-Spec-Form'
 }
 
+{ #category : #'as yet unclassified' }
+OPScrollableForm class >> defaultLayout [
+
+	^ SpBoxLayout newLeftToRight
+		  add: #scrollPane;
+		  yourself
+]
+
 { #category : #specs }
 OPScrollableForm class >> defaultSpec [
-	^ SpecLayout composed
-		add: #scrollPane;
-		yourself
+
+	self flag: 'Pharo 9- compatibility'.
+	^ self defaultLayout
 ]
 
 { #category : #'reflective operations' }
@@ -33,8 +41,8 @@ OPScrollableForm >> form [
 	^ form
 ]
 
-{ #category : #initialization }
-OPScrollableForm >> initializeWidgets [
+{ #category : #'as yet unclassified' }
+OPScrollableForm >> initializePresenters [
 	form := self instantiate: OPDynamicForm.
 	scrollPane := (self newScrollPaneFor: form) asSpecAdapter
 ]

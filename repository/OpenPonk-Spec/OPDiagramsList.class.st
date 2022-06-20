@@ -4,8 +4,8 @@ I show a list of available diagram views for editing.
 Right-clicking on a view shows additional options.
 "
 Class {
-	#name : #OPDiagramsWidget,
-	#superclass : #ComposablePresenter,
+	#name : #OPDiagramsList,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'list',
 		'heading',
@@ -16,22 +16,39 @@ Class {
 		'deleteButton',
 		'openButton',
 		'createButton',
-		'cloneButton'
+		'cloneButton',
+		'notebook'
 	],
 	#category : #'OpenPonk-Spec-Windows'
 }
 
+{ #category : #'as yet unclassified' }
+OPDiagramsList class >> defaultLayout [
+
+	^ SpTabLayout new
+		  add: (SpBoxLayout newTopToBottom
+				   add: #list;
+				   add: #toolbar height: self toolbarHeight;
+				   yourself)
+		  label: 'Diagrams';
+		  yourself
+]
+
 { #category : #specs }
-OPDiagramsWidget class >> defaultSpec [
-	^ SpecColumnLayout composed
-		add: #heading height: self toolbarHeight;
-		add: #list;
-		add: #toolbar height: self toolbarHeight;
-		yourself
+OPDiagramsList class >> defaultSpec [
+
+	self flag: 'Pharo 9- compatibility'.
+	^ self defaultLayout
+]
+
+{ #category : #'as yet unclassified' }
+OPDiagramsList >> connectPresenters [
+	super connectPresenters.
+	self initializeList
 ]
 
 { #category : #retrieving }
-OPDiagramsWidget >> contextMenu: aMenuMorph for: aDiagram [
+OPDiagramsList >> contextMenu: aMenuMorph for: aDiagram [
 	aDiagram ifNil: [ ^ aMenuMorph ].
 	(aMenuMorph
 		add: 'Open diagram'
@@ -60,7 +77,7 @@ OPDiagramsWidget >> contextMenu: aMenuMorph for: aDiagram [
 ]
 
 { #category : #actions }
-OPDiagramsWidget >> copyDiagram: aView [
+OPDiagramsList >> copyDiagram: aView [
 	| name newView |
 	[ name := UIManager default
 		request: 'Copy diagram "' , (self displayFor: aView) , '". New name: '
@@ -75,7 +92,7 @@ OPDiagramsWidget >> copyDiagram: aView [
 ]
 
 { #category : #actions }
-OPDiagramsWidget >> createDiagram [
+OPDiagramsList >> createDiagram [
 	| name diagram openModel |
 	openModel := self workbench focusedEditor
 		ifNotNil: [ :editor | editor diagramController model ].
@@ -93,7 +110,7 @@ OPDiagramsWidget >> createDiagram [
 ]
 
 { #category : #actions }
-OPDiagramsWidget >> deleteDiagram: aView [
+OPDiagramsList >> deleteDiagram: aView [
 	(UIManager default
 		confirm: 'Delete view "' , (self displayFor: aView) , '"?'
 		label: 'Delete')
@@ -103,18 +120,18 @@ OPDiagramsWidget >> deleteDiagram: aView [
 ]
 
 { #category : #accessing }
-OPDiagramsWidget >> diagramsIn: aProject [
+OPDiagramsList >> diagramsIn: aProject [
 	^ aProject diagrams
 		sorted: #modelType ascending , #modelName ascending
 ]
 
 { #category : #retrieving }
-OPDiagramsWidget >> displayFor: aDiagramView [
+OPDiagramsList >> displayFor: aDiagramView [
 	^ '[' , aDiagramView name , '] ' , (adapters displayFor: aDiagramView model)
 ]
 
 { #category : #initialization }
-OPDiagramsWidget >> displayRowFor: aView [
+OPDiagramsList >> displayRowFor: aView [
 
 	| name nameMorph modelMorph container |
 	name := aView name.
@@ -132,34 +149,40 @@ OPDiagramsWidget >> displayRowFor: aView [
 ]
 
 { #category : #'accessing - spec' }
-OPDiagramsWidget >> heading [
+OPDiagramsList >> heading [
 	^ heading
 ]
 
 { #category : #initialization }
-OPDiagramsWidget >> initialize [
+OPDiagramsList >> initialize [
 	super initialize.
 	adapters := OPNavigatorAdapters default
 ]
 
 { #category : #initialization }
-OPDiagramsWidget >> initializeList [
+OPDiagramsList >> initializeList [
+
 	list
-		displayBlock: [ :aView | self displayRowFor: aView ];
-		icons: [ :aView | adapters iconFor: aView model ];
-		doubleClickAction: [ list selectedItem ifNotNil: [ :aView | self openDiagram: aView ] ];
-		whenSelectedItemChanged: [ :item | self selectionChanged: item ];
-		menu: [ :menu | self contextMenu: menu for: list selectedItem ]
+		display: [ :aView | self displayRowFor: aView ];
+		displayIcon: [ :aView | adapters iconFor: aView model ];
+		whenActivatedDo: [ 
+			list selectedItem ifNotNil: [ :aView | self openDiagram: aView ] ];
+		whenSelectionChangedDo: [ :item | self selectionChanged: item ];
+		contextMenu: [ :menu | 
+			self contextMenu: menu for: list selectedItem ]
+]
+
+{ #category : #'as yet unclassified' }
+OPDiagramsList >> initializePresenters [
+
+	list := self newList.
+	list whenBuiltDo: [ :widget | widget widget disableFunction ].
+	toolbar := self newMenuBar.
+	self initializeToolbar
 ]
 
 { #category : #initialization }
-OPDiagramsWidget >> initializePresenter [
-	super initializePresenter.
-	self initializeList
-]
-
-{ #category : #initialization }
-OPDiagramsWidget >> initializeToolbar [
+OPDiagramsList >> initializeToolbar [
 	toolbar
 		addGroup: [ :group | 
 			group
@@ -194,52 +217,43 @@ OPDiagramsWidget >> initializeToolbar [
 						action: [ self selectedItem ifNotNil: [ :i | self deleteDiagram: i ] ] ] ]
 ]
 
-{ #category : #initialization }
-OPDiagramsWidget >> initializeWidgets [
-	(list := self instantiate: FastTableModel) handlesDoubleClick: true.
-	list whenBuiltDo: [ :widget | widget widget disableFunction ].
-	self newWidgetHeading.
-	toolbar := self instantiate: MenuModel.
-	self initializeToolbar
-]
-
 { #category : #actions }
-OPDiagramsWidget >> isDeleteAllowedFor: aDiagram [
+OPDiagramsList >> isDeleteAllowedFor: aDiagram [
 	^ project isNotNil
 		and: [ (project diagramsOf: aDiagram model) size > 1 ]
 ]
 
 { #category : #'accessing - spec' }
-OPDiagramsWidget >> list [
+OPDiagramsList >> list [
 	^ list
 ]
 
-{ #category : #initialization }
-OPDiagramsWidget >> newWidgetHeading [
-	heading := OPWidgetHeading forLabel: self title
-]
-
 { #category : #actions }
-OPDiagramsWidget >> openDiagram: aView [
+OPDiagramsList >> openDiagram: aView [
 	UIManager default showWaitCursorWhile: [ self workbench openEditorOnDiagram: aView ]
 ]
 
 { #category : #accessing }
-OPDiagramsWidget >> project [
+OPDiagramsList >> project [
 	^ project
 ]
 
 { #category : #accessing }
-OPDiagramsWidget >> project: aProject [
+OPDiagramsList >> project: aProject [
+
 	project := aProject.
 	project whenChanged: [ self updateContent ].
 	self updateContent.
-	self workbench announcer when: OPEditorUnfocused do: [ :event | list resetSelection ].
-	self workbench announcer when: OPEditorFocused do: [ :event | self updateContent ]
+	self workbench announcer
+		when: OPEditorUnfocused
+		do: [ :event | list resetListSelection ].
+	self workbench announcer
+		when: OPEditorFocused
+		do: [ :event | self updateContent ]
 ]
 
 { #category : #actions }
-OPDiagramsWidget >> renameDiagram: aView [
+OPDiagramsList >> renameDiagram: aView [
 	| name |
 	[ name := UIManager default request: 'Rename view "', (self displayFor: aView), '"' initialAnswer: aView name title: 'Rename' ]
 		doWhileTrue: [ name isNotNil and: [ name = aView name ] ].
@@ -248,7 +262,7 @@ OPDiagramsWidget >> renameDiagram: aView [
 ]
 
 { #category : #actions }
-OPDiagramsWidget >> selectedDiagram: aDiagram [
+OPDiagramsList >> selectedDiagram: aDiagram [
 	deleteButton
 		enabled: (self isDeleteAllowedFor: aDiagram);
 		changed: #enabled.
@@ -261,28 +275,23 @@ OPDiagramsWidget >> selectedDiagram: aDiagram [
 ]
 
 { #category : #accessing }
-OPDiagramsWidget >> selectedItem [
+OPDiagramsList >> selectedItem [
 	^ list selectedItem
 ]
 
 { #category : #actions }
-OPDiagramsWidget >> selectionChanged: aDiagram [
+OPDiagramsList >> selectionChanged: aDiagram [
 	aDiagram ifNil: [ ^ self unselectedDiagram ].
 	self selectedDiagram: aDiagram
 ]
 
-{ #category : #api }
-OPDiagramsWidget >> title [
-	^ 'Diagrams'
-]
-
 { #category : #'accessing - spec' }
-OPDiagramsWidget >> toolbar [
+OPDiagramsList >> toolbar [
 	^ toolbar
 ]
 
 { #category : #actions }
-OPDiagramsWidget >> unselectedDiagram [
+OPDiagramsList >> unselectedDiagram [
 	deleteButton
 		enabled: false;
 		changed: #enabled.
@@ -295,16 +304,17 @@ OPDiagramsWidget >> unselectedDiagram [
 ]
 
 { #category : #actions }
-OPDiagramsWidget >> updateContent [
+OPDiagramsList >> updateContent [
+
 	| diagrams |
 	diagrams := self diagramsIn: project.
 	list items: diagrams.
 	diagrams
 		detect: #isSelected
-		ifFound: [ :view | list setSelectedItem: view ]
+		ifFound: [ :view | list selectItem: view ]
 ]
 
 { #category : #'accessing - spec' }
-OPDiagramsWidget >> workbench [
+OPDiagramsList >> workbench [
 	^ owner workbench
 ]

@@ -12,6 +12,6 @@ Class {
 }
 
 { #category : #initialization }
-OPModelNavigator >> title [
+OPModelNavigator class >> title [
 	^ 'Model Tree'
 ]

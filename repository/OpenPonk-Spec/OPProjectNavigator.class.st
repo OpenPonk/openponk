@@ -9,15 +9,15 @@ Class {
 	#category : #'OpenPonk-Spec-Windows'
 }
 
+{ #category : #initialization }
+OPProjectNavigator class >> title [
+	^ 'Project Tree'
+]
+
 { #category : #accessing }
 OPProjectNavigator >> openOn: aProject [
 	project := aProject.
 	tree roots: {project}.
 	project whenChanged: [ tree updateTree ].
 	tree expandRoots
-]
-
-{ #category : #initialization }
-OPProjectNavigator >> title [
-	^ 'Project Tree'
 ]

@@ -14,8 +14,8 @@ Class {
 	#category : #'OpenPonk-Spec-Windows'
 }
 
-{ #category : #specs }
-OPModelTypeSelector class >> defaultSpec [
+{ #category : #'as yet unclassified' }
+OPModelTypeSelector class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
 		  add: #pluginsLabel
@@ -40,6 +40,13 @@ OPModelTypeSelector class >> defaultSpec [
 				   yourself)
 		  height: self buttonHeight;
 		  yourself
+]
+
+{ #category : #specs }
+OPModelTypeSelector class >> defaultSpec [
+
+	self flag: 'Pharo 9- compatibility'.
+	^ self defaultLayout
 ]
 
 { #category : #'as yet unclassified' }

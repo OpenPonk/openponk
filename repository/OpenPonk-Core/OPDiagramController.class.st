@@ -355,8 +355,8 @@ OPDiagramController >> figureForModel: aModel [
 ]
 
 { #category : #'ui interaction' }
-OPDiagramController >> formPresenter [
-	^ self editor workbench formModel
+OPDiagramController >> form [
+	^ self editor workbench form
 ]
 
 { #category : #'controllers management' }
@@ -519,7 +519,7 @@ OPDiagramController >> newControllerFor: aModel [
 
 { #category : #'ui interaction' }
 OPDiagramController >> openInForm: aController [
-	self formPresenter editController: aController
+	self form editController: aController
 ]
 
 { #category : #accessing }
@@ -634,7 +634,7 @@ OPDiagramController >> saveState [
 
 { #category : #'ui interaction' }
 OPDiagramController >> selectController: aController [
-	self editor paletteModel selectSelectionTool selectedTool targetSelected: aController
+	self editor palette selectSelectionTool selectedTool targetSelected: aController
 ]
 
 { #category : #'protocol-canvas' }

@@ -1,39 +1,46 @@
 Class {
 	#name : #OPExportImageDialog,
-	#superclass : #OPExportCanvasDialog,
+	#superclass : #StFBSaveFileDialog,
 	#instVars : [
 		'zoomLabel',
 		'zoomText',
 		'zoomPercentageLabel'
 	],
-	#category : #'OpenPonk-Spec'
+	#category : #'OpenPonk-Spec-Dialogs'
 }
 
-{ #category : #specs }
-OPExportImageDialog class >> defaultSpec [
+{ #category : #'as yet unclassified' }
+OPExportImageDialog class >> defaultLayout [
 
-	^ SpecColumnLayout composed
-		  newRow: [ :r | 
+	^ SpBoxLayout newTopToBottom
+		  add: SpBoxLayout newLeftToRight:  [ :r | 
 			  r
-				  newColumn: [ :c | c add: #bookmarksList ] width: 150;
-				  newColumn: [ :c | 
+				  add: SpBoxLayout newTopToBottom:  [ :c | c add: #bookmarksList ] width: 150;
+				  add: SpBoxLayout newTopToBottom:  [ :c | 
 					  c add: #currentFolderLabel height: self toolbarHeight.
 					  c add: #filesList ] ];
-		  newRow: [ :r | 
+		  add: SpBoxLayout newLeftToRight:  [ :r | 
 			  r
 				  add: #nameLabel width: 50;
 				  add: #nameText;
 				  add: #filtersDropList width: 200 ]
 		  height: self toolbarHeight;
-		  newRow: [ :r | 
+		  add: SpBoxLayout newLeftToRight:  [ :r | 
 			  r
 				  add: #zoomLabel width: 50;
 				  add: #zoomText width: 40;
 				  add: #zoomPercentageLabel.
-			  r newColumn: [ :c |  ].
+			  r add: SpBoxLayout newTopToBottom:  [ :c |  ].
 			  self dialogButtonsLayout: r ]
 		  height: self toolbarHeight;
 		  yourself
+]
+
+{ #category : #specs }
+OPExportImageDialog class >> defaultSpec [
+
+	self flag: 'Pharo 9- compatibility'.
+	^ self defaultLayout
 ]
 
 { #category : #actions }
@@ -49,31 +56,23 @@ OPExportImageDialog >> confirm [
 	zoomNumber < 0.01 ifTrue: [ 
 		zoomNumber := TRCamera basicNew defaultCameraScale ].
 
-	self window close.
-	onConfirmBlock cull: file cull: zoomNumber.
-	self delete
+	okAction cull: file cull: zoomNumber
 ]
 
-{ #category : #initialization }
-OPExportImageDialog >> initializePresenter [
+{ #category : #actions }
+OPExportImageDialog >> connectPresenters [
 
-	super initializePresenter.
+	super connectPresenters.
 	self initializeZoom
 ]
 
-{ #category : #initialization }
-OPExportImageDialog >> initializeWidgets [
+{ #category : #actions }
+OPExportImageDialog >> initializePresenters [
 
-	super initializeWidgets.
+	super initializePresenters.
 	(zoomLabel := self newLabel) label: 'Zoom: '.
 	(zoomText := self newTextInput) autoAccept: true.
-	(zoomPercentageLabel := self newLabel) label: ' %'.
-	self focusOrder: { 
-			nameText.
-			filtersDropList.
-			zoomText.
-			cancelButton.
-			confirmButton }
+	(zoomPercentageLabel := self newLabel) label: ' %'
 ]
 
 { #category : #initialization }

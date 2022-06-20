@@ -22,6 +22,11 @@ OPPaletteTool >> diagramController [
 ]
 
 { #category : #accessing }
+OPPaletteTool >> editor [
+	^ palette editor
+]
+
+{ #category : #accessing }
 OPPaletteTool >> palette [
 	^ palette
 ]

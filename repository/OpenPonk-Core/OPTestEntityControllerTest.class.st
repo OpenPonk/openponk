@@ -157,7 +157,7 @@ OPTestEntityControllerTest >> testOpenInForm [
 	| form |
 	controller model: model.
 	form := OPScrollableForm new.
-	diagramController stub formPresenter willReturn: form.
+	diagramController stub form willReturn: form.
 	self assert: form widgets isEmpty.
 	diagramController openInForm: controller.
 	self assert: form widgets isNotEmpty

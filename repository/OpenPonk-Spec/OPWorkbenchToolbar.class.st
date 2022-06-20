@@ -3,7 +3,7 @@ I am top menu toolbar for Workbench.
 "
 Class {
 	#name : #OPWorkbenchToolbar,
-	#superclass : #DynamicComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'toolbar',
 		'activeEditor'
@@ -11,18 +11,29 @@ Class {
 	#category : #'OpenPonk-Spec-Windows'
 }
 
+{ #category : #'as yet unclassified' }
+OPWorkbenchToolbar class >> defaultLayout [
+
+	^ SpBoxLayout newTopToBottom
+		  add: #toolbar expand: false;
+		  yourself
+]
+
 { #category : #specs }
 OPWorkbenchToolbar class >> defaultSpec [
-	^ SpecLayout composed
-		newRow: [ :row | row add: #toolbar ];
-		yourself
+
+	self flag: 'Pharo 9- compatibility'.
+	^ self defaultLayout
 ]
 
 { #category : #'menus for editor' }
 OPWorkbenchToolbar >> activeEditor: anEditor [
+
 	activeEditor := anEditor.
-	activeEditor ifNil: [ self removeEditorMenu ] ifNotNil: [ self addEditorMenu ].
-	self rebuildWidget
+	activeEditor
+		ifNil: [ self removeEditorMenu ]
+		ifNotNil: [ self addEditorMenu ].
+	self update
 ]
 
 { #category : #'menus for editor' }
@@ -36,24 +47,9 @@ OPWorkbenchToolbar >> addEditorMenu [
 				subMenu: self editorMenu ]
 ]
 
-{ #category : #'menus for editor' }
-OPWorkbenchToolbar >> editorMenu [
+{ #category : #'as yet unclassified' }
+OPWorkbenchToolbar >> connectPresenters [
 
-	| menu |
-	menu := self instantiate: MenuPresenter.
-	menu fromSpec: (PragmaMenuBuilder
-			 pragmaKeyword: #opEditorToolbarMenu
-			 model: activeEditor) menuSpec.
-	menu fromSpec: (OPPragmaPluginMenuBuilder
-			 pragmaKeyword: #opEditorToolbarMenu:
-			 model: activeEditor) menuSpec.
-	"MenuModel is stupid and will crash when provided with an empty subMenu"
-	menu menuGroups ifEmpty: [ ^ nil ].
-	^ menu
-]
-
-{ #category : #initialization }
-OPWorkbenchToolbar >> initializePresenter [
 	toolbar
 		autoRefresh: true;
 		addGroup: [ :group | 
@@ -68,18 +64,35 @@ OPWorkbenchToolbar >> initializePresenter [
 						name: 'Project';
 						icon: (self iconNamed: #openIcon);
 						subMenu: self projectMenu ] ].
-	toolbar applyTo: self
+	self flag: 'might be removed?'.
+	"toolbar applyTo: self"
 ]
 
-{ #category : #initialization }
-OPWorkbenchToolbar >> initializeWidgets [
-	toolbar := self instantiate: MenuPresenter
+{ #category : #'menus for editor' }
+OPWorkbenchToolbar >> editorMenu [
+
+	| menu |
+	menu := self newMenu.
+	menu fromSpec: (PragmaMenuBuilder
+			 pragmaKeyword: #opEditorToolbarMenu
+			 model: activeEditor) menuSpec.
+	menu fromSpec: (OPPragmaPluginMenuBuilder
+			 pragmaKeyword: #opEditorToolbarMenu:
+			 model: activeEditor) menuSpec.
+	"MenuPresenter is stupid and will crash when provided with an empty subMenu"
+	menu menuGroups ifEmpty: [ self halt. ^ nil ].
+	^ menu
+]
+
+{ #category : #'as yet unclassified' }
+OPWorkbenchToolbar >> initializePresenters [
+	toolbar := self newMenuBar
 ]
 
 { #category : #'menus for project' }
 OPWorkbenchToolbar >> opMenu [
 	| menu browser path |
-	menu := self instantiate: MenuPresenter.
+	menu := self newMenu.
 	menu
 		addGroup: [ :group | 
 			group
@@ -117,16 +130,10 @@ OPWorkbenchToolbar >> projectController [
 { #category : #'menus for project' }
 OPWorkbenchToolbar >> projectMenu [
 	| menu cmdMenu |
-	menu := self instantiate: MenuPresenter.
+	menu := self newMenu.
 	cmdMenu := OPWorkbenchActivation buildMenuInContext: (CmdSimpleToolContext for: self).
 	cmdMenu buildSpecMenuOn: menu.
 	^ menu
-]
-
-{ #category : #'building widgets' }
-OPWorkbenchToolbar >> rebuildWidget [
-	self needFullRebuild: false.
-	self buildWithSpec
 ]
 
 { #category : #'menus for editor' }
@@ -143,7 +150,7 @@ OPWorkbenchToolbar >> toolbar [
 { #category : #'menus for project' }
 OPWorkbenchToolbar >> updateProjectMenu [
 	toolbar menuGroups first menuItems second subMenu: self projectMenu.
-	self rebuildWidget
+	self update
 ]
 
 { #category : #'accessing - spec' }

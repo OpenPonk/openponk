@@ -7,7 +7,7 @@ DCProjectBrowser open
 "
 Class {
 	#name : #OPProjectBrowser,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'recentLabel',
 		'recentList',
@@ -20,37 +20,6 @@ Class {
 	],
 	#category : #'OpenPonk-Spec-Windows'
 }
-
-{ #category : #specs }
-OPProjectBrowser class >> addDiagramButtons: aSpecLayout [
-	OPPluginRegistry default
-		pluginsDo: [ :each | 
-			aSpecLayout
-				add: (each simpleName , 'Radio') asSymbol
-				height: self buttonHeight ]
-]
-
-{ #category : #specs }
-OPProjectBrowser class >> defaultSpec [
-	^ SpecLayout composed
-		newRow:
-				[ :row | 
-			row
-				newColumn:
-						[ :col | 
-					col
-						add: #recentLabel height: self buttonHeight;
-						add: #recentList ];
-				newColumn:
-						[ :col | 
-					col add: #quickStartLabel height: self buttonHeight.
-					col add: #projectNameInput height: self buttonHeight.
-					self addDiagramButtons: col.
-					col add: #createProjectButton height: self buttonHeight.
-					col add: #openProjectButton height: self buttonHeight.
-					col newRow: [ :r |  ] ] ];
-		yourself
-]
 
 { #category : #'System-FileRegistry' }
 OPProjectBrowser class >> fileReaderServicesForFile: fullName suffix: suffix [
@@ -91,35 +60,40 @@ OPProjectBrowser class >> serviceOpen [
 		  description: 'Open OpenPonk project'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
+OPProjectBrowser >> connectPresenters [
+
+	super connectPresenters.
+	recentList
+		items: OPProjectStorage default projects;
+		display: #name;
+		whenActivatedDo: [ 
+			self openProjectFromFile: recentList selectedItem storageFile ];
+		contextMenu: [ :menu | 
+			self projectMenu: menu for: recentList selectedItem ].
+	projectNameInput whenTextChangedDo: [ :newValue | 
+		createProjectButton enabled: newValue isNotEmpty ].
+	createProjectButton action: [ self createProject ].
+	openProjectButton action: [ self openProjectFromFile ]
+]
+
+{ #category : #initialization }
 OPProjectBrowser >> createProject [
+
 	| project |
 	project := OPProject named: projectNameInput text.
-	diagramOptions values
-		detect: [ :each | each second state ]
-		ifFound: [ :each | 
-			project
-				addModel:
-					(each first newModel
-						name: projectNameInput text;
-						yourself) ].
+	diagramOptions associations
+		detect: [ :eachAssoc | eachAssoc value state ]
+		ifFound: [ :eachAssoc | 
+			project addModel: (eachAssoc key newModel
+					 name: projectNameInput text;
+					 yourself) ].
 	self openProject: project
 ]
 
 { #category : #'accessing - spec' }
 OPProjectBrowser >> createProjectButton [
 	^ createProjectButton
-]
-
-{ #category : #'accessing - spec' }
-OPProjectBrowser >> doesNotUnderstand: aMessage [
-	^ (diagramOptions at: aMessage selector ifAbsent: [ super doesNotUnderstand: aMessage ])
-		second
-]
-
-{ #category : #api }
-OPProjectBrowser >> initialExtent [
-	^ 400 @ 400
 ]
 
 { #category : #initialization }
@@ -130,37 +104,61 @@ OPProjectBrowser >> initialize [
 ]
 
 { #category : #initialization }
-OPProjectBrowser >> initializePresenter [
-	super initializePresenter.
-	recentList
-		items: OPProjectStorage default projects;
-		displayBlock: [ :each | each name ];
-		doubleClickAction: [ self openProjectFromFile: recentList selectedItem storageFile ];
-		handlesDoubleClick: true;
-		menu: [ :menu | self projectMenu: menu for: recentList selectedItem ].
-	projectNameInput
-		autoAccept: true;
-		whenTextChanged: [ :newValue | createProjectButton enabled: newValue isNotEmpty ].
-	createProjectButton action: [ self createProject ].
-	openProjectButton action: [ self openProjectFromFile ].
-	self windowIcon: OPIcons current openponkIcon
+OPProjectBrowser >> initializeLayout [
+
+	| rightColumn |
+	rightColumn := SpBoxLayout newTopToBottom.
+	rightColumn
+		add: self newNullPresenter height: 5;
+		add: #quickStartLabel height: self class buttonHeight.
+	diagramOptions do: [ :each | 
+		rightColumn add: each height: self class buttonHeight ].
+	rightColumn
+		add: self newNullPresenter;
+		add: #projectNameInput height: self class buttonHeight;
+		add: self newNullPresenter height: 5;
+		add: #createProjectButton height: self class buttonHeight.
+
+	self layout: (SpPanedLayout newLeftToRight
+			 add: (SpBoxLayout newTopToBottom
+					  add: self newNullPresenter height: 5;
+					  add: #recentLabel height: self class buttonHeight;
+					  add: #recentList expand: true fill: true;
+					  add: self newNullPresenter height: 5;
+					  add: #openProjectButton height: self class buttonHeight);
+			 add: rightColumn;
+			 yourself)
 ]
 
 { #category : #initialization }
-OPProjectBrowser >> initializeWidgets [
+OPProjectBrowser >> initializePresenters [
+
+	| radioButtons |
 	recentLabel := self newLabel label: 'Recent Projects'.
-	recentList := self instantiate: FastTableModel.
+	recentList := self newList.
 	quickStartLabel := self newLabel label: 'Quick Start'.
 	projectNameInput := self newTextInput text: 'New Project'.
 	createProjectButton := self newButton label: 'Create Project'.
 	openProjectButton := self newButton label: 'Open Project...'.
-	pluginRegistry
-		pluginsDo: [ :each | 
-			(diagramOptions
-				at: (each simpleName , 'Radio') asSymbol
-				put: (Array with: each with: (self newRadioButton label: each name)))
-				second whenBuiltDo: [ :event | event model widget hSpaceFill ] ].
-	self setGroup
+	
+	pluginRegistry pluginsDo: [ :each | 
+		diagramOptions at: each put: (self newRadioButton label: each name) ].
+
+	self initializeLayout.
+	
+	radioButtons := diagramOptions asArray.
+	radioButtons size < 2 ifTrue: [ ^ self ].
+	radioButtons first associatedRadioButtons:
+		radioButtons copyWithoutFirst
+]
+
+{ #category : #initialization }
+OPProjectBrowser >> initializeWindow: aWindow [
+
+	aWindow
+		windowIcon: OPIcons current openponkIcon;
+		title: 'OpenPonk Project Browser';
+		initialExtent: 400 @ 400
 ]
 
 { #category : #'project handling' }
@@ -176,14 +174,14 @@ OPProjectBrowser >> openProjectButton [
 	^ openProjectButton
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 OPProjectBrowser >> openProjectFromDirectory [
 
 	^ OPProjectController fromDirectoryDo: [ :aProject | 
 		  self openProject: aProject ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 OPProjectBrowser >> openProjectFromFile [
 
 	^ OPProjectController fromFileDo: [ :aProject | 
@@ -196,7 +194,7 @@ OPProjectBrowser >> openProjectFromFile: aFile [
 	^ self openProject: (OPProjectController fromFile: aFile)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 OPProjectBrowser >> projectMenu: aMenu [
 	| project menuBuilder |
 	project := recentList selectedItem ifNil: [ ^ self ].
@@ -210,7 +208,7 @@ OPProjectBrowser >> projectMenu: aMenu [
 				updateList ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 OPProjectBrowser >> projectMenu: aMenu for: aProject [
 	| menuBuilder |
 	aProject ifNil: [ ^ self ].
@@ -242,18 +240,6 @@ OPProjectBrowser >> recentList [
 ]
 
 { #category : #initialization }
-OPProjectBrowser >> setGroup [
-	| group |
-	group := RadioButtonGroup new.
-	diagramOptions valuesDo: [ :each | group addRadioButton: each second ]
-]
-
-{ #category : #'accessing - spec' }
-OPProjectBrowser >> title [
-	^ 'OpenPonk Project Browser'
-]
-
-{ #category : #'as yet unclassified' }
 OPProjectBrowser >> updateRecentList [
 	^ recentList
 		items: OPProjectStorage default projects;

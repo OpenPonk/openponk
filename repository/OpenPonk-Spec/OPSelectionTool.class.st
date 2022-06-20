@@ -17,7 +17,7 @@ OPSelectionTool >> deselect [
 
 	selectedController hideSelectionFeedback.
 	selectedController := OPPaletteNullController new.
-	self workbench openFormOn: nil
+	self editor openFormOn: nil
 ]
 
 { #category : #accessing }
@@ -47,5 +47,5 @@ OPSelectionTool >> targetSelected: aController [
 	isDiagramControllerSubscribed ifFalse: [ 
 		self diagramController whenAllDeselectedDo: [ self deselect ].
 		isDiagramControllerSubscribed := true ].
-	self workbench openFormOn: selectedController
+	self editor openFormOn: selectedController
 ]

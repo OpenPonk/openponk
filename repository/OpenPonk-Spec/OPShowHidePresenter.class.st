@@ -8,12 +8,19 @@ Class {
 	#category : #'OpenPonk-Spec-Dialogs'
 }
 
-{ #category : #specs }
-OPShowHidePresenter class >> defaultSpec [
+{ #category : #'as yet unclassified' }
+OPShowHidePresenter class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
 		  add: #notebook;
 		  yourself
+]
+
+{ #category : #specs }
+OPShowHidePresenter class >> defaultSpec [
+
+	self flag: 'Pharo 9- compatibility'.
+	^ self defaultLayout
 ]
 
 { #category : #initialization }

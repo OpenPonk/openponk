@@ -5,20 +5,83 @@ I am bound with a diagram package and cannot live without it.
 "
 Class {
 	#name : #OPEditor,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
-		'canvasModel',
-		'paletteModel',
 		'workbench',
-		'canvasMenuModel',
-		'formModel',
 		'zoomLabel',
 		'diagramController',
 		'plugin',
-		'shortcuts'
+		'shortcuts',
+		'canvasPresenter',
+		'canvasMenu',
+		'form',
+		'palette'
+	],
+	#classInstVars : [
+		'currentLayoutName'
 	],
 	#category : #'OpenPonk-Spec-Windows'
 }
+
+{ #category : #settings }
+OPEditor class >> availableLayoutDifferences [
+
+	| singlePaneWidth |
+	singlePaneWidth := 250.
+	^ { 
+		  (#horizontal -> { 
+			   (#layout -> SpPanedLayout newLeftToRight).
+			   (#width -> (singlePaneWidth * 2)) } asDictionary).
+		  (#vertical -> { 
+			   (#layout -> SpPanedLayout newTopToBottom).
+			   (#width -> singlePaneWidth) } asDictionary) } asDictionary
+]
+
+{ #category : #settings }
+OPEditor class >> availableLayoutNames [
+
+	^ self availableLayoutDifferences keys
+]
+
+{ #category : #specs }
+OPEditor class >> commonLayoutWithFormPaletteLayout: aBoxLayout width: aWidthOfRightPanes [
+
+	^ SpPanedLayout newLeftToRight
+		  positionOfSlider:
+			  OPWorkbench initialExtent x - OPWorkbench initialListsWidth
+			  - aWidthOfRightPanes;
+		  add: (SpBoxLayout newTopToBottom
+				   add: #canvasPresenter;
+				   add: (SpBoxLayout newLeftToRight
+						    add: #canvasMenu;
+						    add: #zoomLabel width: 35;
+						    yourself)
+				   height: self toolbarHeight - 1;
+				   yourself);
+		  add: (aBoxLayout
+				   add: #palette;
+				   add: #form;
+				   yourself) yourself
+]
+
+{ #category : #settings }
+OPEditor class >> currentLayout [
+
+	^ self layoutNamed: self layoutStyle
+]
+
+{ #category : #settings }
+OPEditor class >> defaultLayoutName [
+
+	^ #horizontal
+]
+
+{ #category : #specs }
+OPEditor class >> defaultSpec [
+
+	self flag: 'Pharo 9- compatibility'.
+	^ self horizontalLayout
+]
 
 { #category : #toolbar }
 OPEditor class >> developerToolbarMenu: aBuilder [
@@ -30,52 +93,48 @@ OPEditor class >> developerToolbarMenu: aBuilder [
 ]
 
 { #category : #specs }
-OPEditor class >> specCombined [
-	<spec: #combined>
-	^ SpecColumnLayout composed
-		newRow: [ :row | 
-			row
-				newColumn: [ :col | 
-					col
-						add: #canvasModel;
-						addSplitter;
-						newRow: [ :r | 
-							r
-								add: #canvasMenuModel;
-								add: #zoomLabel width: 35 ]
-							height: self toolbarHeight - 1 ];
-				addSplitter;
-				newColumn: [ :col | 
-					col
-						add: #paletteModel;
-						add: #formModel ]
-					width: 170 ];
-		yourself
+OPEditor class >> horizontalLayout [
+
+	^ self layoutNamed: #horizontal
 ]
 
-{ #category : #specs }
-OPEditor class >> specSeparated [
-	<spec: #separated>
-	^ SpecColumnLayout composed
-		newRow: [ :row | 
-			row
-				newColumn: [ :col | 
-					col
-						add: #canvasModel;
-						addSplitter;
-						newRow: [ :r | 
-							r
-								add: #canvasMenuModel;
-								add: #zoomLabel width: 35 ]
-							height: self toolbarHeight - 1 ];
-				addSplitter;
-				newColumn: [ :col | 
-					col
-						add: #paletteModel
-"						addSplitter;"
-"						add: #formModel" ]
-					width: 150 ];
-		yourself
+{ #category : #settings }
+OPEditor class >> layoutNamed: aString [
+
+	| layoutDetails |
+	layoutDetails := self availableLayoutDifferences at: aString asSymbol.
+	^ self
+		  commonLayoutWithFormPaletteLayout: (layoutDetails at: #layout)
+		  width: (layoutDetails at: #width)
+]
+
+{ #category : #settings }
+OPEditor class >> layoutStyle [
+	^ currentLayoutName ifNil: [ currentLayoutName := self defaultLayoutName ]
+]
+
+{ #category : #settings }
+OPEditor class >> layoutStyle: aStyle [
+
+	currentLayoutName := aStyle.
+	self allInstances
+		select: [ :each | each isOpen ]
+		thenDo: [ :each | each layout: self currentLayout ]
+]
+
+{ #category : #settings }
+OPEditor class >> settingsOn: aBuilder [
+
+	<systemsettings>
+	(aBuilder pickOne: #layoutStyle)
+		parent: #openponk;
+		target: self;
+		label: 'Form-Palette Layout Style';
+		description:
+			'Show form below (vertical) or next to (horizontal) palette.';
+		default: self defaultLayoutName;
+		domainValues: self availableLayoutNames;
+		order: 40
 ]
 
 { #category : #toolbar }
@@ -84,24 +143,25 @@ OPEditor class >> toolbarMenu: aBuilder [
 	<opEditorToolbarMenu>
 	self developerToolbarMenu: aBuilder.
 	(aBuilder item: 'Export as PNG...') action: [ 
-		aBuilder model canvasModel exportAsPng ].
+		aBuilder model canvasPresenter exportAsPng ].
 	(aBuilder item: 'Export as SVG (incomplete/simplified)...') action: [ 
-		aBuilder model canvasModel exportAsSvg ]
+		aBuilder model canvasPresenter exportAsSvg ]
 ]
 
-{ #category : #api }
-OPEditor >> buildWithSpec [
-	^ self buildWithSpec: OPWorkbench layoutStyle
-]
+{ #category : #specs }
+OPEditor class >> verticalLayout [
 
-{ #category : #'accessing - spec' }
-OPEditor >> canvasMenuModel [
-	^ canvasMenuModel
+	^ self layoutNamed: #vertical
 ]
 
 { #category : #'accessing - spec' }
-OPEditor >> canvasModel [
-	^ canvasModel
+OPEditor >> canvasMenu [
+	^ canvasMenu
+]
+
+{ #category : #'accessing - spec' }
+OPEditor >> canvasPresenter [
+	^ canvasPresenter
 ]
 
 { #category : #shortcuts }
@@ -116,11 +176,20 @@ OPEditor >> collectShortcuts [
 		flattened
 ]
 
+{ #category : #'as yet unclassified' }
+OPEditor >> connectPresenters [
+
+	| menu |
+	menu := OPDiagramToolbarActivation buildMenuInContext:
+		        (CmdSimpleToolContext for: canvasPresenter).
+	menu buildSpecMenuOn: canvasMenu
+]
+
 { #category : #'private-focus' }
 OPEditor >> createCommandContext [
 	"Subclases should override it if they provide any selection"
 
-	^ canvasModel createCommandContext
+	^ canvasPresenter createCommandContext
 ]
 
 { #category : #accessing }
@@ -135,30 +204,24 @@ OPEditor >> ensureKeyBindingsFor: aWidget [
 ]
 
 { #category : #'accessing - spec' }
-OPEditor >> formModel [
-	^ formModel
+OPEditor >> form [
+	^ form
 ]
 
-{ #category : #initialization }
-OPEditor >> initializePresenter [
-	| menu |
-	menu := OPDiagramToolbarActivation
-		buildMenuInContext: (CmdSimpleToolContext for: canvasModel).
-	menu buildSpecMenuOn: canvasMenuModel
-]
+{ #category : #'as yet unclassified' }
+OPEditor >> initializePresenters [
 
-{ #category : #initialization }
-OPEditor >> initializeWidgets [
-	canvasMenuModel := self instantiate: MenuModel.
-	canvasModel := self instantiate: OPCanvasPresenter.
-	paletteModel := self instantiate: OPScrollablePalette.
-	formModel := self instantiate: OPScrollableForm.
+	canvasMenu := self newMenuBar.
+	canvasPresenter := self instantiate: OPCanvasPresenter.
+	palette := self instantiate: OPPalette.
+	form := self instantiate: OPDynamicForm.
 	(zoomLabel := self newLabel) label: '100%'.
 	self focusOrder
-		add: canvasMenuModel;
-		add: canvasModel;
-		add: paletteModel;
-		add: formModel
+		add: canvasMenu;
+		add: canvasPresenter;
+		add: palette;
+		add: form.
+	self layout: self class currentLayout
 ]
 
 { #category : #'diagram handling' }
@@ -172,20 +235,23 @@ OPEditor >> newDiagramControllerFor: aModel [
 
 { #category : #'diagram handling' }
 OPEditor >> openEmptyModel: aModel [
+
 	diagramController := self newDiagramControllerFor: aModel.
-	self workbench projectController addDiagramController: diagramController.
-	canvasModel attachController: diagramController.
-	self rebuildWidget
+	self workbench projectController addDiagramController:
+		diagramController.
+	self rebuildWidget.
+	canvasPresenter attachController: diagramController
 ]
 
 { #category : #'as yet unclassified' }
 OPEditor >> openFormOn: aController [
-	formModel editController: aController
+	form editController: aController
 ]
 
-{ #category : #'accessing - spec' }
-OPEditor >> paletteModel [
-	^ paletteModel
+{ #category : #accessing }
+OPEditor >> palette [
+
+	^ palette
 ]
 
 { #category : #accessing }
@@ -200,28 +266,17 @@ OPEditor >> plugin: aPlugin [
 
 { #category : #updating }
 OPEditor >> rebuildWidget [
-	diagramController
-		ifNotNil: [ paletteModel createPaletteFor: diagramController ].
-	canvasModel needRebuild: false.
-	self needRebuild: false.
-	self buildWithSpec
+
+	diagramController ifNotNil: [ 
+		palette createPaletteFor: diagramController ].
+	canvasPresenter needRebuild: false.
+	self update
 ]
 
 { #category : #shortcuts }
 OPEditor >> registerShortcutsOn: aPresenter [
 	shortcuts := self collectShortcuts.
 	shortcuts do: [ :each | aPresenter bindKeyCombination: each key toAction: each value ]
-]
-
-{ #category : #api }
-OPEditor >> retrieveSpec: aSelector [
-	((SpecPragmaCollector behavior: self class class)
-		filter:
-				[ :pragma | pragma selector = #spec: and: [ pragma arguments first = aSelector ] ];
-		reset;
-		collected)
-		ifNotEmpty: [ :pragmas | ^ super retrieveSpec: pragmas first method selector ].
-	^ super retrieveSpec: aSelector
 ]
 
 { #category : #initialization }
@@ -250,14 +305,16 @@ OPEditor >> unregisterShortcutsOn: aPresenter [
 
 { #category : #updating }
 OPEditor >> updateUndoRedo [
+	self flag: #unused.
+	"
 	| items |
-	items := canvasMenuModel menuGroups flatCollect: #menuItems.
+	items := canvasPresenter menuGroups flatCollect: #menuItems.
 	(items detect: [ :each | each name = 'Undo' ])
 		enabled: self diagramController hasUndo;
 		changed: #enabled with: {self diagramController hasUndo}.
 	(items detect: [ :each | each name = 'Redo' ])
 		enabled: self diagramController hasRedo;
-		changed: #enabled with: {self diagramController hasRedo}
+		changed: #enabled with: {self diagramController hasRedo}"
 ]
 
 { #category : #'accessing - spec' }

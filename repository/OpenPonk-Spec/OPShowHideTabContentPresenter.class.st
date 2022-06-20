@@ -10,12 +10,19 @@ Class {
 	#category : #'OpenPonk-Spec-Dialogs'
 }
 
-{ #category : #specs }
-OPShowHideTabContentPresenter class >> defaultSpec [
+{ #category : #'as yet unclassified' }
+OPShowHideTabContentPresenter class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
 		  add: #tree;
 		  yourself
+]
+
+{ #category : #specs }
+OPShowHideTabContentPresenter class >> defaultSpec [
+
+	self flag: 'Pharo 9- compatibility'.
+	^ self defaultLayout
 ]
 
 { #category : #accessing }

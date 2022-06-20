@@ -58,7 +58,7 @@ OPMenuBuilder >> group [
 { #category : #initialization }
 OPMenuBuilder >> initialize [
 	super initialize.
-	menu := MenuModel new
+	menu := SpMenuPresenter new
 ]
 
 { #category : #accessing }

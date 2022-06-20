@@ -3,12 +3,11 @@ I present model entities in a hierarchical tree-like structure.
 "
 Class {
 	#name : #OPModelTreeWidget,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'tree',
 		'project',
 		'adapters',
-		'heading',
 		'refreshButton'
 	],
 	#category : #'OpenPonk-Spec-Windows'
@@ -22,16 +21,27 @@ OPModelTreeWidget class >> contextMenu: aBuilder [
 	(aBuilder item: 'Inspect') action: [ navigator selectedItem inspect ]
 ]
 
+{ #category : #'as yet unclassified' }
+OPModelTreeWidget class >> defaultLayout [
+
+	^ SpTabLayout new
+		  add: (SpBoxLayout newTopToBottom
+				   add: (SpBoxLayout newLeftToRight
+						    addLast: #refreshButton
+						    withConstraints: [ :constraints | constraints width: 25 ];
+						    yourself)
+				   height: self toolbarHeight;
+				   add: #tree;
+				   yourself)
+		  label: self title;
+		  yourself
+]
+
 { #category : #specs }
 OPModelTreeWidget class >> defaultSpec [
-	^ SpecColumnLayout composed
-		newRow: [ :r | 
-			r
-				add: #heading;
-				add: #refreshButton width: 25 ]
-			height: self toolbarHeight;
-		add: #tree;
-		yourself
+
+	self flag: 'Pharo 9- compatibility'.
+	^ self defaultLayout
 ]
 
 { #category : #'as yet unclassified' }
@@ -43,7 +53,7 @@ OPModelTreeWidget class >> openOn: aProject [
 
 { #category : #specs }
 OPModelTreeWidget class >> withoutHeadingSpec [
-	^ SpecColumnLayout composed
+	^ SpBoxLayout newTopToBottom
 		add: #tree;
 		yourself
 ]
@@ -76,64 +86,51 @@ OPModelTreeWidget >> editElementCommand: aModelElement [
 	UIManager default inform: 'Editing from tree is disabled'	"disabled due to not having controller at our disposal atm"	"	self openInForm: (self findControllerByModel: aModelElement)"
 ]
 
-{ #category : #'accessing - spec' }
-OPModelTreeWidget >> heading [
-	^ heading
-]
-
-{ #category : #api }
-OPModelTreeWidget >> initialExtent [
-	^ 600 @ 800
-]
-
 { #category : #initialization }
 OPModelTreeWidget >> initialize [
 	super initialize.
 	adapters := OPNavigatorAdapters default
 ]
 
-{ #category : #initialization }
-OPModelTreeWidget >> initializeTree [
-
-	tree
-		roots: #(  );
-		doubleClick: [ self doubleClick ];
-		menu: [ :menu | 
-			tree hasSelectedItem ifTrue: [ 
-					adapters
-						contextMenuFor: self selectedItem
-						projectController: self projectController
-						in: menu ] ];
-		displayBlock: [ :anObject | adapters displayFor: anObject ];
-		childrenBlock: [ :anObject | 
-			(adapters childrenFor: anObject) sorted: [ :a :b | 
-					(tree displayBlock value: a) < (tree displayBlock value: b) ] ];
-		iconBlock: [ :anObject | adapters iconFor: anObject ].
-	tree
-		expandRoots;
-		autoDeselection: false
-]
-
-{ #category : #initialization }
-OPModelTreeWidget >> initializeWidgets [
-	tree := self newTree.
+{ #category : #'as yet unclassified' }
+OPModelTreeWidget >> initializePresenters [
 	self initializeTree.
-	self focusOrder add: tree.
-	self newWidgetHeading.
 	refreshButton := self newButton.
 	refreshButton
 		icon: (self iconNamed: #glamorousRefresh);
 		action: [ self refresh ]
 ]
 
+{ #category : #initialization }
+OPModelTreeWidget >> initializeTree [
+
+	tree := self newTree.
+	tree
+		roots: #(  );
+		whenActivatedDo: [ self doubleClick ];
+		contextMenu: [ :menu | 
+			tree hasSelectedItem ifTrue: [ 
+					adapters
+						contextMenuFor: self selectedItem
+						projectController: self projectController
+						in: menu ] ];
+		display: [ :anObject | adapters displayFor: anObject ];
+		children: [ :anObject | 
+			(adapters childrenFor: anObject) sorted: [ :a :b | 
+					(tree display value: a) < (tree display value: b) ] ];
+		displayIcon: [ :anObject | adapters iconFor: anObject ];
+		expandRoots
+]
+
+{ #category : #api }
+OPModelTreeWidget >> initializeWindow: aWindow [
+
+	aWindow initialExtent: 600 @ 800
+]
+
 { #category : #'menu commands' }
 OPModelTreeWidget >> inspectCommand: anObject [
 	anObject inspect
-]
-
-{ #category : #initialization }
-OPModelTreeWidget >> newWidgetHeading [
-	heading := OPWidgetHeading forLabel: self title
 ]
 
 { #category : #'menu commands' }

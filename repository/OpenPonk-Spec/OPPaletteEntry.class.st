@@ -5,7 +5,7 @@ You can configure both the underlying button and the palette tool through me.
 "
 Class {
 	#name : #OPPaletteEntry,
-	#superclass : #ButtonPresenter,
+	#superclass : #SpButtonPresenter,
 	#instVars : [
 		'tool'
 	],
@@ -47,22 +47,22 @@ OPPaletteEntry >> palette [
 
 { #category : #private }
 OPPaletteEntry >> registerShortcut: newShortcut [
+
 	| receiver |
 	receiver := self window.
-	(receiver isNil or: [ newShortcut isNil ])
-		ifTrue: [ ^ self ].
+	(receiver isNil or: [ newShortcut isNil ]) ifTrue: [ ^ self ].
 
-	"ButtonModel binds the shortcut to the Window which means that it will consume any character, which is rather useless when you want to type in a text box. So I selectively check whats the actual target (which is also misreported afaik -_-) and cancel the handling if needed."
-	receiver model
+	"SpButtonPresenter binds the shortcut to the Window which means that it will consume any character, which is rather useless when you want to type in a text box. So I selectively check whats the actual target (which is also misreported afaik -_-) and cancel the handling if needed."
+	receiver presenter
 		bindKeyCombination: newShortcut
 		toAction: [ :target :morph :event | 
 			| shouldIgnoreEvent |
 			shouldIgnoreEvent := false.
-			receiver model formModel form focusOrder
+			receiver model form form focusOrder
 				detect: [ :each | each widget widget hasKeyboardFocus ]
 				ifFound: [ :each | 
-					(each isKindOf: TextPresenter)
-						ifTrue: [ shouldIgnoreEvent := true ] ].
+					(each isKindOf: SpTextPresenter) ifTrue: [ 
+						shouldIgnoreEvent := true ] ].
 			shouldIgnoreEvent
 				ifTrue: [ event wasHandled: false ]
 				ifFalse: [ self performAction ] ]

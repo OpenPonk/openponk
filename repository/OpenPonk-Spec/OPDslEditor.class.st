@@ -3,7 +3,7 @@ I am an editor for UML DSL.
 "
 Class {
 	#name : #OPDslEditor,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'editor',
 		'autoUpdate',
@@ -20,13 +20,20 @@ Class {
 	#category : #'OpenPonk-Spec-Windows'
 }
 
+{ #category : #'as yet unclassified' }
+OPDslEditor class >> defaultLayout [
+	^ SpecColumnLayout new
+		add: SpBoxLayout newLeftToRight:  [ :row | row add: #toolbar ] height: self toolbarHeight;
+		add: SpBoxLayout newLeftToRight:  [ :row | row add: #editor ];
+		add: SpBoxLayout newLeftToRight:  [ :row | row add: #autoUpdate ] height: self toolbarHeight;
+		yourself
+]
+
 { #category : #specs }
 OPDslEditor class >> defaultSpec [
-	^ SpecColumnLayout new
-		newRow: [ :row | row add: #toolbar ] height: self toolbarHeight;
-		newRow: [ :row | row add: #editor ];
-		newRow: [ :row | row add: #autoUpdate ] height: self toolbarHeight;
-		yourself
+
+	self flag: 'Pharo 9- compatibility'.
+	^ self defaultLayout
 ]
 
 { #category : #'accessing - spec' }
@@ -78,6 +85,12 @@ OPDslEditor >> buildToolbar: aMenu [
 							OPWorkbench openModel: model ] ] ]
 ]
 
+{ #category : #'as yet unclassified' }
+OPDslEditor >> connectPresenters [
+	super connectPresenters.
+	editor whenTextIsAccepted: [ self textUpdated: editor text ]
+]
+
 { #category : #'accessing - spec' }
 OPDslEditor >> editor [
 	^ editor
@@ -112,15 +125,9 @@ OPDslEditor >> highlighter: aHighlighterParser [
 	highlighter := aHighlighterParser
 ]
 
-{ #category : #initialization }
-OPDslEditor >> initializePresenter [
-	super initializePresenter.
-	editor whenTextIsAccepted: [ self textUpdated: editor text ]
-]
-
-{ #category : #initialization }
-OPDslEditor >> initializeWidgets [
-	toolbar := self instantiate: MenuModel.
+{ #category : #'as yet unclassified' }
+OPDslEditor >> initializePresenters [
+	toolbar := self newMenu.
 	self buildToolbar: toolbar.
 	toolbar applyTo: self.
 	(editor := self newText)

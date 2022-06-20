@@ -16,8 +16,8 @@ Class {
 	#category : #'OpenPonk-Spec-Dialogs'
 }
 
-{ #category : #specs }
-OPVersionInfo class >> defaultSpec [
+{ #category : #'as yet unclassified' }
+OPVersionInfo class >> defaultLayout [
 	^ SpGridLayout new
 		borderWidth: 0;
 		beColumnNotHomogeneous;
@@ -31,6 +31,13 @@ OPVersionInfo class >> defaultSpec [
 		add: #commitDate at: 2 @ 4;
 		add: '' at: 1 @ 5 span: 2 @ 1;
 		yourself
+]
+
+{ #category : #specs }
+OPVersionInfo class >> defaultSpec [
+
+	self flag: 'Pharo 9- compatibility'.
+	^ self defaultLayout
 ]
 
 { #category : #initialization }

@@ -3,38 +3,50 @@ I am the topmost window of an opened Project.
 "
 Class {
 	#name : #OPWorkbench,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
-		'tabManager',
-		'formModel',
 		'project',
 		'projectController',
 		'pluginRegistry',
 		'topToolbar',
 		'editors',
 		'focusedEditor',
-		'diagramWidget',
-		'useEditorForm',
-		'projectTree'
+		'projectTree',
+		'notebook',
+		'diagramsList'
 	],
 	#classInstVars : [
-		'layoutStyle',
 		'isDevelopmentMode'
 	],
 	#category : #'OpenPonk-Spec-Windows'
 }
 
-{ #category : #settings }
-OPWorkbench class >> availableLayoutStyles [
-	^ ((SpecPragmaCollector behavior: self class)
-		filter: [ :pragma | pragma selector = #spec: ];
-		reset;
-		collected) collect: [ :pragma | pragma arguments first ]
+{ #category : #specs }
+OPWorkbench class >> defaultLayout [
+
+	^ SpBoxLayout newTopToBottom
+		  add: (SpBoxLayout newTopToBottom
+				   add: #topToolbar;
+				   yourself)
+		  expand: false;
+		  add: (SpPanedLayout newLeftToRight
+				   add: (SpPanedLayout newTopToBottom
+						    add: #projectTree;
+						    add: #diagramsList;
+						    yourself);
+				   positionOfSlider: self initialListsWidth;
+				   add: (SpBoxLayout newTopToBottom
+						    add: #notebook;
+						    yourself);
+				   yourself);
+		  yourself
 ]
 
-{ #category : #settings }
-OPWorkbench class >> defaultLayoutStyle [
-	^ #separated
+{ #category : #specs }
+OPWorkbench class >> defaultSpec [
+
+	self flag: 'Pharo 9- compatibility'.
+	^ self defaultLayout
 ]
 
 { #category : #settings }
@@ -52,6 +64,18 @@ OPWorkbench class >> developerSettingsOn: aBuilder [
 		description: 'Add extra options useful for developers.'
 ]
 
+{ #category : #api }
+OPWorkbench class >> initialExtent [
+
+	^ self currentWorld extent * 0.8 min: 1600 @ 1000
+]
+
+{ #category : #api }
+OPWorkbench class >> initialListsWidth [
+
+	^ 250
+]
+
 { #category : #settings }
 OPWorkbench class >> isDevelopmentMode [
 	^ isDevelopmentMode ifNil: [ false ]
@@ -60,16 +84,6 @@ OPWorkbench class >> isDevelopmentMode [
 { #category : #settings }
 OPWorkbench class >> isDevelopmentMode: aBoolean [
 	isDevelopmentMode := aBoolean
-]
-
-{ #category : #settings }
-OPWorkbench class >> layoutStyle [
-	^ layoutStyle ifNil: [ layoutStyle := self defaultLayoutStyle ]
-]
-
-{ #category : #settings }
-OPWorkbench class >> layoutStyle: aStyle [
-	layoutStyle := aStyle
 ]
 
 { #category : #'instance creation' }
@@ -99,64 +113,7 @@ OPWorkbench class >> openProject: aProject [
 OPWorkbench class >> settingsOn: aBuilder [
 
 	<systemsettings>
-	(aBuilder group: #openponk) label: 'OpenPonk'.
-	(aBuilder pickOne: #layoutStyle)
-		parent: #openponk;
-		target: self;
-		label: 'Form Layout Style';
-		description: 'Separate or combine Palette and Form widgets.';
-		default: self defaultLayoutStyle;
-		domainValues: self availableLayoutStyles;
-		order: 40
-]
-
-{ #category : #specs }
-OPWorkbench class >> shouldUseEditorForm [
-	^ self layoutStyle ~= #separated
-]
-
-{ #category : #specs }
-OPWorkbench class >> specCombined [
-	<spec: #combined>
-	^ SpecLayout composed
-		newRow: [ :row | 
-			row
-				newColumn: [ :col | col add: #topToolbar height: self toolbarHeight ] ]
-			height: self toolbarHeight;
-		newRow: [ :row | 
-			row
-				newColumn: [ :col | 
-					col
-						add: #projectTree;
-						add: #diagramWidget ]
-					width: 250;
-				addSplitter;
-				newColumn: [ :col | col add: #tabManager ] ]
-			top: self toolbarHeight;
-		yourself
-]
-
-{ #category : #specs }
-OPWorkbench class >> specSeparated [
-	<spec: #separated>
-	^ SpecLayout composed
-		newRow: [ :row | 
-			row
-				newColumn: [ :col | col add: #topToolbar height: self toolbarHeight ] ]
-			height: self toolbarHeight;
-		newRow: [ :row | 
-			row
-				newColumn: [ :col | 
-					col
-						add: #projectTree;
-						add: #diagramWidget ]
-					width: 250;
-				addSplitter;
-				newColumn: [ :col | col add: #tabManager ];
-				addSplitter;
-				newColumn: [ :col | col add: #formModel ] width: 150 ]
-			top: self toolbarHeight;
-		yourself
+	(aBuilder group: #openponk) label: 'OpenPonk'
 ]
 
 { #category : #opening }
@@ -164,7 +121,7 @@ OPWorkbench >> closeEditorOfDiagram: aDiagram [
 
 	editors
 		at: aDiagram
-		ifPresent: [ :pair | tabManager removeTab: pair second ]
+		ifPresent: [ :pair | notebook removeTab: pair second ]
 ]
 
 { #category : #opening }
@@ -177,6 +134,17 @@ OPWorkbench >> closedTabOfEditor: anEditor [
 	self announce: (OPEditorClosed on: anEditor)
 ]
 
+{ #category : #'as yet unclassified' }
+OPWorkbench >> connectPresenters [
+
+	super connectPresenters.
+	notebook
+		whenSelectedPageChangedDo: [ :newPage | 
+			self focusEditorOf: (editors associations detect: [ :pair | 
+							 (pair value at: #page) = newPage ]) key ];
+		whenPageRemovedDo: [ :page | self pageRemoved: page ]
+]
+
 { #category : #'accessing - spec' }
 OPWorkbench >> deleteDiagram: aDiagram [
 	self closeEditorOfDiagram: aDiagram.
@@ -184,26 +152,26 @@ OPWorkbench >> deleteDiagram: aDiagram [
 ]
 
 { #category : #'accessing - spec' }
-OPWorkbench >> diagramWidget [
-	^ diagramWidget
+OPWorkbench >> diagramsList [
+	^ diagramsList
 ]
 
 { #category : #opening }
 OPWorkbench >> focusEditorOf: aDiagram [
-	| editorTabPair |
-	(focusedEditor isNotNil
-		and: [ focusedEditor diagramController diagram = aDiagram ])
-		ifTrue: [ ^ self ].
-	focusedEditor
-		ifNotNil: [ focusedEditor diagramController diagram
-				ifNotNil: [ :oldDiagram | 
-					self projectController updateDiagram: oldDiagram.
-					oldDiagram isSelected: false ].
-			self announce: (OPEditorUnfocused on: focusedEditor) ].
-	editorTabPair := editors at: aDiagram.
-	focusedEditor := editorTabPair first.
+
+	| editorTabInfo |
+	(focusedEditor isNotNil and: [ 
+		 focusedEditor diagramController diagram = aDiagram ]) ifTrue: [ 
+		^ self ].
+	focusedEditor ifNotNil: [ 
+		focusedEditor diagramController diagram ifNotNil: [ :oldDiagram | 
+			self projectController updateDiagram: oldDiagram.
+			oldDiagram isSelected: false ].
+		self announce: (OPEditorUnfocused on: focusedEditor) ].
+	editorTabInfo := editors at: aDiagram.
+	focusedEditor := editorTabInfo at: #editor.
 	aDiagram isSelected: true.
-	editorTabPair second selected: true.
+	notebook selectPage: (editorTabInfo at: #page).
 	self announce: (OPEditorFocused on: focusedEditor).
 	topToolbar activeEditor: focusedEditor.
 	focusedEditor showDiagram: aDiagram
@@ -214,18 +182,6 @@ OPWorkbench >> focusedEditor [
 	^ focusedEditor
 ]
 
-{ #category : #'accessing - spec' }
-OPWorkbench >> formModel [
-	^ formModel
-]
-
-{ #category : #protocol }
-OPWorkbench >> initialExtent [
-	self currentWorld extent x > 3000
-		ifTrue: [ ^ 1200 @ 800 ].
-	^ self currentWorld extent * (0.65 @ 0.7)
-]
-
 { #category : #initialization }
 OPWorkbench >> initialize [
 	pluginRegistry := OPPluginRegistry default.
@@ -233,34 +189,38 @@ OPWorkbench >> initialize [
 	super initialize
 ]
 
-{ #category : #initialization }
-OPWorkbench >> initializePresenter [
-	super initializePresenter.
-	tabManager
-		whenTabSelected: [ :tab | 
-			self
-				focusEditorOf: (editors associations detect: [ :pair | pair value second = tab ]) key ].
-	self windowIcon: OPIcons current openponkIcon
-]
+{ #category : #'as yet unclassified' }
+OPWorkbench >> initializePresenters [
 
-{ #category : #initialization }
-OPWorkbench >> initializeWidgets [
 	topToolbar := self instantiate: OPWorkbenchToolbar.
-	diagramWidget := self instantiate: OPDiagramsWidget.
+	diagramsList := self instantiate: OPDiagramsList.
 	projectTree := self instantiate: OPProjectNavigator.
-	tabManager := self newTabManager.
-	formModel := self instantiate: OPScrollableForm.
+	notebook := self newNotebook.
 	self focusOrder
 		add: topToolbar;
-		add: diagramWidget;
+		add: diagramsList;
 		add: projectTree;
-		add: formModel;
-		add: tabManager
+		add: notebook
+]
+
+{ #category : #'as yet unclassified' }
+OPWorkbench >> initializeWindow: aWindow [
+
+	aWindow
+		windowIcon: OPIcons current openponkIcon;
+		title: self title;
+		initialExtent: self class initialExtent
+]
+
+{ #category : #'accessing - spec' }
+OPWorkbench >> notebook [
+	^ notebook
 ]
 
 { #category : #opening }
 OPWorkbench >> open [
-	self openWithSpec: self class layoutStyle
+
+	self openWithSpec
 ]
 
 { #category : #opening }
@@ -272,42 +232,32 @@ OPWorkbench >> openEditorOn: aModel [
 { #category : #opening }
 OPWorkbench >> openEditorOnDiagram: aDiagram [
 
-	| editor tab plugin widget model |
+	| editor notebookPage plugin model |
 	(self projectController hasDiagram: aDiagram) ifTrue: [ 
 		^ self focusEditorOf: aDiagram ].
 	model := aDiagram model.
 	plugin := pluginRegistry pluginFor: model.
 	editor := OPEditor on: plugin.
 	editor workbench: self.
-	tab := self newTab.
-	editors at: aDiagram put: (Array with: editor with: tab).
-	widget := editor buildWithSpec asWidget.
-	editor owner: tab.
+	notebookPage := self newNotebookPage.
+	notebookPage beCloseable.
+	editors at: aDiagram put: { 
+			(#editor -> editor).
+			(#page -> notebookPage) } asDictionary.
+	editor owner: notebook.
 	editor openEmptyModel: model.
 	(model respondsTo: #whenChanged:) ifTrue: [ 
 		model whenChanged: [ 
-			tab label: '[' , aDiagram name , '] ' , model name ] ].
-	editor paletteModel rebuildWidget.
-	tab
-		label: '[' , aDiagram name , '] ' , model name;
+			notebookPage label: '[' , aDiagram name , '] ' , model name ] ].
+	editor palette rebuildWidget.
+	notebookPage
+		title: '[' , aDiagram name , '] ' , model name;
 		icon: plugin icon;
-		retrievingBlock: [ widget ];
-		whenBuiltDo: [ :w | 
-			w widget when: #tabDeleted send: #tabDeleted to: editor.
-			w widget
-				when: #tabDeleted
-				evaluate: [ :t | self closedTabOfEditor: editor ] ].
+		presenterProvider: [ editor ].
 	self announce: (OPEditorCreated on: editor).
-	tabManager addTab: tab.
+	notebook addPage: notebookPage.
 	self focusEditorOf: aDiagram.
 	^ editor
-]
-
-{ #category : #opening }
-OPWorkbench >> openFormOn: aController [
-	self useEditorForm
-		ifTrue: [ focusedEditor openFormOn: aController ]
-		ifFalse: [ formModel editController: aController ]
 ]
 
 { #category : #'project handling' }
@@ -319,9 +269,18 @@ OPWorkbench >> openProject: aProject [
 	self updateTitle.
 	topToolbar updateProjectMenu.
 	project whenChanged: [ self updateTitle ].
-	diagramWidget project: project.
+	diagramsList project: project.
 	projectTree openOn: project.
 	projectController openDiagrams
+]
+
+{ #category : #'as yet unclassified' }
+OPWorkbench >> pageRemoved: aPage [
+
+	"activePresenter is editor"
+
+	aPage activePresenter tabDeleted.
+	self closedTabOfEditor: aPage activePresenter
 ]
 
 { #category : #accessing }
@@ -339,25 +298,12 @@ OPWorkbench >> projectTree [
 	^ projectTree
 ]
 
-{ #category : #api }
-OPWorkbench >> retrieveSpec: aSelector [
-	((SpecPragmaCollector behavior: self class class)
-		filter:
-				[ :pragma | pragma selector = #spec: and: [ pragma arguments first = aSelector ] ];
-		reset;
-		collected)
-		ifNotEmpty: [ :pragmas | ^ super retrieveSpec: pragmas first method selector ].
-	^ super retrieveSpec: aSelector
-]
-
-{ #category : #'accessing - spec' }
-OPWorkbench >> tabManager [
-	^ tabManager
-]
-
 { #category : #protocol }
 OPWorkbench >> title [
-	^ project ifNil: [ 'OpenPonk' ] ifNotNil: [ project name , ' - ' , 'OpenPonk' ]
+
+	^ project
+		  ifNil: [ 'OpenPonk' ]
+		  ifNotNil: [ project name , ' - OpenPonk' ]
 ]
 
 { #category : #'accessing - spec' }
@@ -365,10 +311,10 @@ OPWorkbench >> topToolbar [
 	^ topToolbar
 ]
 
-{ #category : #opening }
-OPWorkbench >> useEditorForm [
-	^ useEditorForm
-		ifNil: [ useEditorForm := self class shouldUseEditorForm ]
+{ #category : #protocol }
+OPWorkbench >> updateTitle [
+
+	^ self withWindowDo: [ :window | window title: self title ]
 ]
 
 { #category : #'accessing - spec' }

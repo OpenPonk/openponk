@@ -17,8 +17,8 @@ Class {
 	#category : #'OpenPonk-Spec-Dialogs'
 }
 
-{ #category : #specs }
-OPUpdater class >> defaultSpec [
+{ #category : #'as yet unclassified' }
+OPUpdater class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
 		  borderWidth: 5;
@@ -48,6 +48,13 @@ OPUpdater class >> defaultSpec [
 						    yourself);
 				   yourself);
 		  yourself
+]
+
+{ #category : #specs }
+OPUpdater class >> defaultSpec [
+
+	self flag: 'Pharo 9- compatibility'.
+	^ self defaultLayout
 ]
 
 { #category : #initialization }

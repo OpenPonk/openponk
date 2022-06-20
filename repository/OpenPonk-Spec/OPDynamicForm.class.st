@@ -9,21 +9,27 @@ Creating form controls (text boxes, checkboxes, etc) for editing a controller's 
 "
 Class {
 	#name : #OPDynamicForm,
-	#superclass : #DynamicComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'components',
 		'whenAccepted',
-		'controller',
-		'heading'
+		'controller'
 	],
 	#category : #'OpenPonk-Spec-Form'
 }
 
+{ #category : #'as yet unclassified' }
+OPDynamicForm class >> defaultLayout [
+
+	self flag: 'Pharo 9- compatibility'.
+	^ SpBoxLayout newTopToBottom
+]
+
 { #category : #specs }
 OPDynamicForm class >> defaultSpec [
-	^ SpecLayout composed
-		newColumn: [ :c | c newRow: [ :r |  ] ];
-		yourself
+
+	self flag: 'Pharo 9- compatibility'.
+	^ self defaultLayout
 ]
 
 { #category : #specs }
@@ -123,7 +129,7 @@ OPDynamicForm >> addDroplist: aName [
 OPDynamicForm >> addEditableDroplist: aName [
 	| control |
 	self addLabel: aName.
-	control := self instantiate: OPEditableDropListPresenter.
+	control := self newDropList. self flag: 'used to be editable drop list'.
 	self addControl: control.
 	^ control
 ]
@@ -178,31 +184,26 @@ OPDynamicForm >> addTextInput: aName [
 	^ control
 ]
 
-{ #category : #'private - building widgets' }
-OPDynamicForm >> createWidgets [
-	components do: [ :each | self assign: each to: ('control' , each hash asString) asSymbol ]
-]
-
 { #category : #initialization }
 OPDynamicForm >> defaultHeights [
 	| lineHeight |
 	lineHeight := 20.
 	^ {OPSelectEntity -> lineHeight.
-	LabelPresenter -> (lineHeight - 5).
-	TextInputFieldPresenter -> (lineHeight + 2).
-	TextPresenter -> (lineHeight * 4).
-	OPEditableDropListPresenter -> lineHeight.
-	DropListPresenter -> lineHeight.
-	CheckBoxPresenter -> (lineHeight * 1).
-	ButtonPresenter -> (lineHeight * 1.2)} asDictionary
+	SpLabelPresenter -> (lineHeight - 5).
+	SpTextInputFieldPresenter -> (lineHeight + 2).
+	SpTextPresenter -> (lineHeight * 4).
+	SpDropListPresenter -> lineHeight.
+	SpDropListPresenter -> lineHeight.
+	SpCheckBoxPresenter -> (lineHeight * 1).
+	SpButtonPresenter -> (lineHeight * 1.2)} asDictionary
 ]
 
 { #category : #'private - building widgets' }
 OPDynamicForm >> dynamicLayout [
 	| keys height |
 	keys := self widgets keys.
-	^ SpecRowLayout composed
-		newColumn: [ :c | 
+	^ SpBoxLayout newLeftToRight
+		add: SpBoxLayout newTopToBottom:  [ :c | 
 			keys ifNotEmpty: [ c add: #heading height: self class toolbarHeight ].
 			keys
 				do: [ :key | 
@@ -210,7 +211,7 @@ OPDynamicForm >> dynamicLayout [
 					height
 						ifNil: [ c add: key ]
 						ifNotNil: [ c add: key height: height ] ].
-			c newRow: [ :r |  ] ];
+			c add: SpBoxLayout newLeftToRight:  [ :r |  ] ];
 		yourself
 ]
 
@@ -233,11 +234,6 @@ OPDynamicForm >> fromMagritteDescriptions: aContainer [
 	visitor visit: aContainer
 ]
 
-{ #category : #accessing }
-OPDynamicForm >> heading [
-	^ heading
-]
-
 { #category : #private }
 OPDynamicForm >> heightFor: aModel [
 	^ self defaultHeights at: aModel class ifAbsent: nil
@@ -247,23 +243,39 @@ OPDynamicForm >> heightFor: aModel [
 OPDynamicForm >> initialize [
 	self reset.
 	super initialize.
-	heading := OPWidgetHeading forLabel: 'Properties'.
 	whenAccepted := [  ]
 ]
 
 { #category : #'private - building widgets' }
+OPDynamicForm >> initializeLayout [
+
+	| componentsLayout |
+	componentsLayout := SpBoxLayout newTopToBottom.
+	components do: [ :each | componentsLayout add: each ].
+	self layout: (SpTabLayout new
+			 add: (components
+					  ifEmpty: [ self newNullPresenter ]
+					  ifNotEmpty: [ SpScrollableLayout with: componentsLayout ])
+			 label: 'Properties')
+]
+
+{ #category : #'private - building widgets' }
+OPDynamicForm >> initializePresenters [
+
+	super initializePresenter.
+	self initializeLayout
+]
+
+{ #category : #'private - building widgets' }
 OPDynamicForm >> rebuildWidget [
-	self widgets removeAll.
-	self createWidgets.
-	self needFullRebuild: false.
-	self buildWithSpecLayout: self dynamicLayout.
-	self resizeWidgets
+
+	self initializeLayout
 ]
 
 { #category : #private }
 OPDynamicForm >> reset [
-	components := OrderedCollection new.
-	focusOrder := OrderedCollection new
+
+	components := OrderedCollection new
 ]
 
 { #category : #'private - building widgets' }

@@ -15,22 +15,28 @@ DCEditor
 "
 Class {
 	#name : #OPPalette,
-	#superclass : #DynamicComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'items',
 		'selectedTool',
 		'selectedItem',
-		'diagramController',
-		'heading'
+		'diagramController'
 	],
 	#category : #'OpenPonk-Spec-Palettes'
 }
 
+{ #category : #'as yet unclassified' }
+OPPalette class >> defaultLayout [
+
+	self flag: 'Pharo 9- compatibility'.
+	^ SpBoxLayout newTopToBottom
+]
+
 { #category : #specs }
 OPPalette class >> defaultSpec [
-	^ SpecRowLayout composed
-		newColumn: [ :c | c newRow: [ :r |  ] ];
-		yourself
+
+	self flag: 'Pharo 9- compatibility'.
+	^ self defaultLayout
 ]
 
 { #category : #private }
@@ -81,22 +87,22 @@ OPPalette >> diagramController [
 OPPalette >> dynamicLayout [
 	| keys |
 	keys := self widgets keys.
-	^ SpecRowLayout composed
-		newColumn: [ :c | 
+	^ SpBoxLayout newLeftToRight
+		add: SpBoxLayout newTopToBottom:  [ :c | 
 			c add: #heading height: self class toolbarHeight.
-			keys do: [ :key | c newRow: key height: self class buttonHeight ].
-			c newRow: [ :r |  ] ];
+			keys do: [ :key | c add: SpBoxLayout newLeftToRight:  key height: self class buttonHeight ].
+			c add: SpBoxLayout newLeftToRight:  [ :r |  ] ];
 		yourself
+]
+
+{ #category : #accessing }
+OPPalette >> editor [
+	^ self owner
 ]
 
 { #category : #accessing }
 OPPalette >> entries [
 	^ items
-]
-
-{ #category : #accessing }
-OPPalette >> heading [
-	^ heading
 ]
 
 { #category : #initialization }
@@ -109,9 +115,22 @@ OPPalette >> initialize [
 		toAction: [ self selectSelectionTool ]
 ]
 
-{ #category : #initialization }
-OPPalette >> initializeWidgets [
-	self newWidgetHeading.
+{ #category : #'building widgets' }
+OPPalette >> initializeLayout [
+
+	| itemsLayout |
+	itemsLayout := SpBoxLayout newTopToBottom.
+	items do: [ :each | itemsLayout add: each ].
+	self layout: (SpTabLayout new
+			 add: (items
+					  ifEmpty: [ self newNullPresenter ]
+					  ifNotEmpty: [ SpScrollableLayout with: items ])
+			 label: 'Palette';
+			 yourself)
+]
+
+{ #category : #'as yet unclassified' }
+OPPalette >> initializePresenters [
 	self newSelectionTool.
 	self newSeparator
 ]
@@ -232,25 +251,16 @@ OPPalette >> newSeparator [
 	items add: item
 ]
 
-{ #category : #initialization }
-OPPalette >> newWidgetHeading [
-	heading := OPWidgetHeading forLabel: 'Palette'
-]
-
 { #category : #'building widgets' }
 OPPalette >> rebuildWidget [
-	self widgets removeAll.
-	self createWidgets.
-	self needFullRebuild: false.
-	self buildWithSpecLayout: self dynamicLayout.
-	self alignButtons
+
+	self initializeLayout
 ]
 
 { #category : #removing }
 OPPalette >> removeAll [
 	items := OrderedCollection new.
-	self widgets removeAll.
-	self initializeWidgets
+	self initializePresenters
 ]
 
 { #category : #private }
@@ -293,5 +303,5 @@ OPPalette >> selectedTool [
 
 { #category : #accessing }
 OPPalette >> workbench [
-	^ owner workbench
+	^ self editor workbench
 ]

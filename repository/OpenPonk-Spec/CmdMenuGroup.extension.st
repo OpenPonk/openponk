@@ -22,7 +22,7 @@ CmdMenuGroup >> buildSpecMenuOn: aMenu [
 { #category : #'*OpenPonk-Spec' }
 CmdMenuGroup >> buildSpecSubMenuOn: aMenuItem [
 	| menu |
-	menu := MenuModel new.
+	menu := SpMenuPresenter new.
 	menu addGroup: [ :group | self buildSpecMenuInlineOn: group ].
 	aMenuItem subMenu: menu
 ]

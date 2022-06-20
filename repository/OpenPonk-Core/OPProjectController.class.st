@@ -343,9 +343,9 @@ OPProjectController >> selectInDiagram: aModelElement [
 				do: [ :ctrl | 
 					ctrl model = aModelElement
 						ifTrue: [ | palette |
-							palette := dctrl editor paletteModel.
+							palette := dctrl editor palette.
 							palette selectSelectionTool selectedTool targetSelected: ctrl.
-							dctrl editor canvasModel roassalView canvas camera
+							dctrl editor canvasPresenter roassalView canvas camera
 								translateTo: ctrl figure position.
 							^ self ] ] ]
 ]

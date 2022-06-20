@@ -3,7 +3,7 @@ I am Spec model to embed Roassal2 into DCEditor.
 "
 Class {
 	#name : #OPCanvasPresenter,
-	#superclass : #RoassalModel,
+	#superclass : #RoassalPresenter,
 	#instVars : [
 		'roassalView',
 		'diagramController',
@@ -114,23 +114,27 @@ OPCanvasPresenter >> ensureKeyBindingsFor: aWidget [
 { #category : #toolbar }
 OPCanvasPresenter >> exportAsPng [
 
+	self flag: 'default name not supported in file browser'.
 	OPExportImageDialog new
-		whenSelected: [ :file :zoom | self exportCanvasToPng: file zoom: zoom ];
-		extensionFilters: { ('PNG images' -> #( png )) };
-		defaultName:
-			self editor diagramController model name asFileName , '.png';
+		title: 'Choose a PNG file to export the diagram';
+		okAction: [ :file :zoom | self exportCanvasToPng: file zoom: zoom ];
+		extensions: #( png ) named: 'PNG images';
+		"defaultName:
+			self editor diagramController model name asFileName , '.png';"
 		open
 ]
 
 { #category : #toolbar }
 OPCanvasPresenter >> exportAsSvg [
 
-	OPExportCanvasDialog new
-		whenSelected: [ :file | self exportCanvasToSvg: file ];
-		extensionFilters: { ('SVG images' -> #( svg )) };
-		defaultName:
-			self editor diagramController model name asFileName , '.svg';
-		open
+	self flag: 'default name not supported in file browser'.
+	StFBSaveFileDialog new
+		title: 'Choose a SVG file to export the diagram';
+		okAction: [ :file | self exportCanvasToSvg: file ];
+		extensions: #( svg ) named: 'SVG images';
+		"defaultName:
+			self editor diagramController model name asFileName , '.svg';"
+			open
 ]
 
 { #category : #toolbar }
@@ -248,12 +252,12 @@ OPCanvasPresenter >> figureAdded: aFigure [
 
 { #category : #initialization }
 OPCanvasPresenter >> initialize [
+
 	super initialize.
 	onZoomChange := [ :value |  ].
-	self
-		script: [ :view :canvas | 
-			roassalView := view.
-			self initializeView: view ]
+	self script: [ :view :canvas | 
+		roassalView := view.
+		self initializeView: view ]
 ]
 
 { #category : #initialization }

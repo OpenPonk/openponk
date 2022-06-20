@@ -7,7 +7,7 @@ This is a direct copy of SelectEntity from the Ancestry project. It is available
 "
 Class {
 	#name : #OPSelectEntity,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'entity',
 		'selectEntity',
@@ -21,20 +21,27 @@ Class {
 	#category : #'OpenPonk-Spec-Windows'
 }
 
-{ #category : #specs }
-OPSelectEntity class >> defaultSpec [
-	^ SpecColumnLayout composed
-		newRow: [ :row | 
+{ #category : #'as yet unclassified' }
+OPSelectEntity class >> defaultLayout [
+	^ SpBoxLayout newTopToBottom
+		add: SpBoxLayout newLeftToRight:  [ :row | 
 			row
 				add: #entityText;
 				add: #selectEntity width: 25 ];
 		yourself
 ]
 
+{ #category : #specs }
+OPSelectEntity class >> defaultSpec [
+
+	self flag: 'Pharo 9- compatibility'.
+	^ self defaultLayout
+]
+
 { #category : #example }
 OPSelectEntity class >> example [
 	SelectEntity new
-		selectDialog: [ FastTableModel new items: #(Henrik Peter); yourself];
+		selectDialog: [ SpListPresenter new items: #(Henrik Peter); yourself];
 		displaySymbol: #asString;
 		ghostText: 'Names';
 		possibleEntities: [#(Diego Stephan Norbert Stephane Marcus Torsten Sven Sean) sorted];
@@ -44,12 +51,23 @@ OPSelectEntity class >> example [
 
 { #category : #specs }
 OPSelectEntity class >> specLayout [
-	^ SpecColumnLayout composed
-		newRow: [ :row | 
+	^ SpBoxLayout newTopToBottom
+		add: SpBoxLayout newLeftToRight:  [ :row | 
 			row
 				add: #entityText;
 				add: #selectEntity width: 25 ];
 		yourself
+]
+
+{ #category : #'as yet unclassified' }
+OPSelectEntity >> connectPresenters [
+	selectEntity 
+		action: [  |select|
+			select := self selectDialog value.
+			select openDialogWithSpec
+				okAction: [  
+					self entity: select selectedItem ]]
+
 ]
 
 { #category : #api }
@@ -117,28 +135,8 @@ OPSelectEntity >> initialize [
 	self initializeValueHolders
 ]
 
-{ #category : #initialization }
-OPSelectEntity >> initializePresenter [
-	selectEntity 
-		action: [  |select|
-			select := self selectDialog value.
-			select openDialogWithSpec
-				okAction: [  
-					self entity: select selectedItem ]]
-
-]
-
-{ #category : #initialization }
-OPSelectEntity >> initializeValueHolders [
-	displaySymbol := #displayString asValueHolder.
-	entity := nil asValueHolder.
-	ghostText := 'Choose one' asValueHolder.
-	possibleEntities := #() asValueHolder.
-	selectDialog := [  ] asValueHolder
-]
-
-{ #category : #initialization }
-OPSelectEntity >> initializeWidgets [
+{ #category : #'as yet unclassified' }
+OPSelectEntity >> initializePresenters [
 
 	entityText := self newTextInput
 		              ghostText: self ghostText;
@@ -151,6 +149,15 @@ OPSelectEntity >> initializeWidgets [
 	self focusOrder
 		add: entityText;
 		add: selectEntity
+]
+
+{ #category : #initialization }
+OPSelectEntity >> initializeValueHolders [
+	displaySymbol := #displayString asValueHolder.
+	entity := nil asValueHolder.
+	ghostText := 'Choose one' asValueHolder.
+	possibleEntities := #() asValueHolder.
+	selectDialog := [  ] asValueHolder
 ]
 
 { #category : #api }

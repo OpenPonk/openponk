@@ -42,7 +42,7 @@ OPTestDiagramControllerTest >> testAttachEditor [
 	workbench := OPWorkbench new.
 	editor stub workbench willReturn: workbench.
 	diagramController editor: editor.
-	self assert: diagramController formPresenter isNotNil
+	self assert: diagramController form isNotNil
 ]
 
 { #category : #'tests - connecting' }
@@ -68,7 +68,7 @@ OPTestDiagramControllerTest >> testCleanView [
 { #category : #'tests - ui interaction' }
 OPTestDiagramControllerTest >> testInitializePalette [
 	| palette |
-	palette := OPScrollablePalette new.
+	palette := OPPalette new.
 	self assert: palette entries size = 2.
 	diagramController initializePalette: palette.
 	self assert: palette entries size = 3

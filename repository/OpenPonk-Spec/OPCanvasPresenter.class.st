@@ -3,7 +3,7 @@ I am Spec model to embed Roassal2 into DCEditor.
 "
 Class {
 	#name : #OPCanvasPresenter,
-	#superclass : #RoassalPresenter,
+	#superclass : #SpRoassal2Presenter,
 	#instVars : [
 		'roassalView',
 		'diagramController',

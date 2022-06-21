@@ -25,12 +25,11 @@ Class {
 { #category : #'as yet unclassified' }
 OPDiagramsList class >> defaultLayout [
 
-	^ SpTabLayout new
-		  add: (SpBoxLayout newTopToBottom
-				   add: #list;
-				   add: #toolbar height: self toolbarHeight;
-				   yourself)
-		  label: 'Diagrams';
+	^ SpBoxLayout newTopToBottom
+		  add: (SpTabLayout new
+				   add: #list label: 'Diagrams';
+				   yourself);
+		  add: #toolbar height: self toolbarHeight;
 		  yourself
 ]
 

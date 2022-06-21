@@ -21,8 +21,9 @@ Class {
 { #category : #'as yet unclassified' }
 OPDynamicForm class >> defaultLayout [
 
-	self flag: 'Pharo 9- compatibility'.
-	^ SpBoxLayout newTopToBottom
+	^ SpTabLayout new
+		  add: SpNullPresenter new label: 'Properties';
+		  yourself
 ]
 
 { #category : #specs }
@@ -30,6 +31,12 @@ OPDynamicForm class >> defaultSpec [
 
 	self flag: 'Pharo 9- compatibility'.
 	^ self defaultLayout
+]
+
+{ #category : #specs }
+OPDynamicForm class >> initialWidth [
+
+	^ 300
 ]
 
 { #category : #specs }
@@ -145,11 +152,12 @@ OPDynamicForm >> addEntity: aName [
 
 { #category : #'public - adding' }
 OPDynamicForm >> addLabel: aLabel [
+
 	| control |
 	control := self newLabel.
-	control
-		label: aLabel;
-		emphasis: #(bold).
+	control label: aLabel.
+	"control addStyle: 'bold'."
+	self flag: 'implement bold'.
 
 	self addControl: control.
 	^ control
@@ -162,11 +170,11 @@ OPDynamicForm >> addSeparator [
 
 { #category : #'public - adding' }
 OPDynamicForm >> addText: aName [
+
 	| control |
 	self addLabel: aName.
 
 	control := self newText.
-	control autoAccept: true.
 
 	self addControl: control.
 	^ control
@@ -174,11 +182,11 @@ OPDynamicForm >> addText: aName [
 
 { #category : #'public - adding' }
 OPDynamicForm >> addTextInput: aName [
+
 	| control |
 	self addLabel: aName.
 
 	control := self newTextInput.
-	control autoAccept: true.
 
 	self addControl: control.
 	^ control
@@ -196,23 +204,6 @@ OPDynamicForm >> defaultHeights [
 	SpDropListPresenter -> lineHeight.
 	SpCheckBoxPresenter -> (lineHeight * 1).
 	SpButtonPresenter -> (lineHeight * 1.2)} asDictionary
-]
-
-{ #category : #'private - building widgets' }
-OPDynamicForm >> dynamicLayout [
-	| keys height |
-	keys := self widgets keys.
-	^ SpBoxLayout newLeftToRight
-		add: SpBoxLayout newTopToBottom:  [ :c | 
-			keys ifNotEmpty: [ c add: #heading height: self class toolbarHeight ].
-			keys
-				do: [ :key | 
-					height := self heightFor: (self perform: key).
-					height
-						ifNil: [ c add: key ]
-						ifNotNil: [ c add: key height: height ] ].
-			c add: SpBoxLayout newLeftToRight:  [ :r |  ] ];
-		yourself
 ]
 
 { #category : #public }
@@ -249,14 +240,21 @@ OPDynamicForm >> initialize [
 { #category : #'private - building widgets' }
 OPDynamicForm >> initializeLayout [
 
-	| componentsLayout |
-	componentsLayout := SpBoxLayout newTopToBottom.
-	components do: [ :each | componentsLayout add: each ].
+	| itemsLayout |
+	itemsLayout := SpBoxLayout newTopToBottom.
+	components do: [ :each | itemsLayout add: each expand: false ].
+	itemsLayout
+		add: (SpLabelPresenter new
+				 label: '';
+				 yourself)
+		expand: true fill: false;
+		add: (SpLabelPresenter new
+				 label: '';
+				 yourself)
+		expand: false.
 	self layout: (SpTabLayout new
-			 add: (components
-					  ifEmpty: [ self newNullPresenter ]
-					  ifNotEmpty: [ SpScrollableLayout with: componentsLayout ])
-			 label: 'Properties')
+			 add: (SpScrollableLayout with: itemsLayout) label: 'Properties';
+			 yourself)
 ]
 
 { #category : #'private - building widgets' }

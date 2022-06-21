@@ -70,11 +70,11 @@ OPModelTreeWidget >> deleteElementCommand: aModelElement [
 
 { #category : #private }
 OPModelTreeWidget >> doubleClick [
+
 	| element |
-	tree hasSelectedItem
-		ifFalse: [ ^ self ].
-	element := self selectedItem.
-	self flag: 'no registration mechanism for double click available at the moment'.
+	element := self selectedItem ifNil: [ ^ self ].
+	self flag:
+		'no registration mechanism for double click available at the moment'.
 	OPPluginRegistry default plugins
 		detect: [ :each | each modelClass = element class ]
 		ifFound: [ self openCommand: element ]
@@ -159,7 +159,8 @@ OPModelTreeWidget >> projectController [
 
 { #category : #actions }
 OPModelTreeWidget >> refresh [
-	tree updateTree
+
+	tree refresh
 ]
 
 { #category : #'accessing - spec' }
@@ -174,7 +175,8 @@ OPModelTreeWidget >> renameCommand: modelObject [
 
 { #category : #private }
 OPModelTreeWidget >> selectedItem [
-	^ tree selectedItem content
+
+	^ tree selectedItem
 ]
 
 { #category : #'accessing - spec' }

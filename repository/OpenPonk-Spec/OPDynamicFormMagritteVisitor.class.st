@@ -61,15 +61,18 @@ OPDynamicFormMagritteVisitor >> visitBooleanDescription: aBooleanDescription [
 
 { #category : #visiting }
 OPDynamicFormMagritteVisitor >> visitLabelDescription: aStringDescription [
+
 	form addLabel: aStringDescription label.
-	(form addLabel: (aStringDescription accessor read: controller)) emphasis: #()
+	form addLabel: (aStringDescription accessor read: controller)
 ]
 
 { #category : #visiting }
 OPDynamicFormMagritteVisitor >> visitMemoDescription: aMemoDescription [
+
 	(form addText: aMemoDescription label)
 		text: (aMemoDescription accessor read: controller);
-		whenTextIsAccepted: [ :newValue | aMemoDescription accessor write: newValue asString to: controller ]
+		whenTextChangedDo: [ :newValue | 
+			aMemoDescription accessor write: newValue asString to: controller ]
 ]
 
 { #category : #visiting }
@@ -92,25 +95,26 @@ OPDynamicFormMagritteVisitor >> visitSingleOptionDescription: aSingleOptionDescr
 	dropList
 		items: aSingleOptionDescription options;
 		enabled: aSingleOptionDescription isReadOnly not;
-		displayBlock: [ :each | 
-			aSingleOptionDescription labelForOption: each ];
-		iconHolder: [ :each :item | 
+		display: [ :each | aSingleOptionDescription labelForOption: each ];
+		iconBlock: [ :each :item | 
 			aSingleOptionDescription iconForOption: each ];
 		addAndSelectItemLabeled:
 			(aSingleOptionDescription accessor read: controller)
 		do: [  ];
-		whenSelectedItemChanged: [ :newValue | 
+		whenSelectedItemChangedDo: [ :newValue | 
 			aSingleOptionDescription accessor write: newValue to: controller ]
 ]
 
 { #category : #visiting }
 OPDynamicFormMagritteVisitor >> visitStringDescription: aStringDescription [
-	aStringDescription isReadOnly
-		ifTrue: [ ^ self visitLabelDescription: aStringDescription ].
+
+	aStringDescription isReadOnly ifTrue: [ 
+		^ self visitLabelDescription: aStringDescription ].
 	(form addTextInput: aStringDescription label)
 		text: ((aStringDescription accessor read: controller) ifNil: [ '' ]);
-		whenTextIsAccepted: [ :newText | 
-			[ | newString |
+		whenTextChangedDo: [ :newText | 
+			[ 
+			| newString |
 			newString := newText asString.
 			aStringDescription validate: newString.
 			aStringDescription accessor write: newString to: controller ]
@@ -118,12 +122,13 @@ OPDynamicFormMagritteVisitor >> visitStringDescription: aStringDescription [
 				do: [ :e | 
 					OPWorkbench isDevelopmentMode
 						ifTrue: [ e pass ]
-						ifFalse: [ (GrowlMorph label: 'Error' contents: e asString)
+						ifFalse: [ 
+							(GrowlMorph label: 'Error' contents: e asString)
 								backgroundColor: GrowlMorph theme dangerBackgroundColor;
 								openInWorld ] ] ];
 		in: [ :input | 
-			aStringDescription accessor
-				opWhenUpdated: [ :newValue | input text: newValue ] ]
+			aStringDescription accessor opWhenUpdated: [ :newValue | 
+				input text: newValue ] ]
 ]
 
 { #category : #visiting }

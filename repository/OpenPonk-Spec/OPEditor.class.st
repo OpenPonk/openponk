@@ -24,44 +24,54 @@ Class {
 }
 
 { #category : #settings }
-OPEditor class >> availableLayoutDifferences [
+OPEditor class >> availableLayoutNames [
 
-	| singlePaneWidth |
-	singlePaneWidth := 250.
-	^ { 
-		  (#horizontal -> { 
-			   (#layout -> SpPanedLayout newLeftToRight).
-			   (#width -> (singlePaneWidth * 2)) } asDictionary).
-		  (#vertical -> { 
-			   (#layout -> SpPanedLayout newTopToBottom).
-			   (#width -> singlePaneWidth) } asDictionary) } asDictionary
+	^ self availableLayouts keys
 ]
 
 { #category : #settings }
-OPEditor class >> availableLayoutNames [
+OPEditor class >> availableLayouts [
 
-	^ self availableLayoutDifferences keys
+	^ { 
+		  ('Palette on left' asSymbol -> [ self pcfLayout ]).
+		  ('Palette on right' asSymbol -> [ self cpfLayout ]) }
+		  asOrderedDictionary
 ]
 
 { #category : #specs }
-OPEditor class >> commonLayoutWithFormPaletteLayout: aBoxLayout width: aWidthOfRightPanes [
+OPEditor class >> canvasSectionLayout [
+
+	^ SpBoxLayout newTopToBottom
+		  add: #canvasPresenter;
+		  add: (SpBoxLayout newLeftToRight
+				   add: #canvasMenu;
+				   add: #zoomLabel expand: false;
+				   yourself)
+		  expand: false;
+		  yourself
+]
+
+{ #category : #settings }
+OPEditor class >> canvasSectionWidth [
+
+	^ OPWorkbench initialExtent x - OPWorkbench initialListsWidth
+	  - OPPalette initialWidth - OPDynamicForm initialWidth
+]
+
+{ #category : #settings }
+OPEditor class >> cpfLayout [
+
+	"[ [ Canvas | Palette ] | Form ]"
 
 	^ SpPanedLayout newLeftToRight
-		  positionOfSlider:
-			  OPWorkbench initialExtent x - OPWorkbench initialListsWidth
-			  - aWidthOfRightPanes;
-		  add: (SpBoxLayout newTopToBottom
-				   add: #canvasPresenter;
-				   add: (SpBoxLayout newLeftToRight
-						    add: #canvasMenu;
-						    add: #zoomLabel width: 35;
-						    yourself)
-				   height: self toolbarHeight - 1;
-				   yourself);
-		  add: (aBoxLayout
+		  positionOfSlider: self canvasSectionWidth + OPPalette initialWidth;
+		  add: (SpPanedLayout newLeftToRight
+				   positionOfSlider: self canvasSectionWidth;
+				   add: self canvasSectionLayout;
 				   add: #palette;
-				   add: #form;
-				   yourself) yourself
+				   yourself);
+		  add: #form;
+		  yourself
 ]
 
 { #category : #settings }
@@ -70,17 +80,23 @@ OPEditor class >> currentLayout [
 	^ self layoutNamed: self layoutStyle
 ]
 
+{ #category : #specs }
+OPEditor class >> defaultLayout [
+
+	^ self pcfLayout
+]
+
 { #category : #settings }
 OPEditor class >> defaultLayoutName [
 
-	^ #horizontal
+	^ self availableLayoutNames first
 ]
 
 { #category : #specs }
 OPEditor class >> defaultSpec [
 
 	self flag: 'Pharo 9- compatibility'.
-	^ self horizontalLayout
+	^ self defaultLayout
 ]
 
 { #category : #toolbar }
@@ -92,25 +108,17 @@ OPEditor class >> developerToolbarMenu: aBuilder [
 	aBuilder withSeparatorAfter
 ]
 
-{ #category : #specs }
-OPEditor class >> horizontalLayout [
-
-	^ self layoutNamed: #horizontal
-]
-
 { #category : #settings }
 OPEditor class >> layoutNamed: aString [
 
-	| layoutDetails |
-	layoutDetails := self availableLayoutDifferences at: aString asSymbol.
-	^ self
-		  commonLayoutWithFormPaletteLayout: (layoutDetails at: #layout)
-		  width: (layoutDetails at: #width)
+	^ (self availableLayouts
+		   at: aString asSymbol
+		   ifAbsent: [ self defaultLayout ]) value
 ]
 
 { #category : #settings }
 OPEditor class >> layoutStyle [
-	^ currentLayoutName ifNil: [ currentLayoutName := self defaultLayoutName ]
+	^ currentLayoutName ifNil: [ self setDefaultLayoutStyle ]
 ]
 
 { #category : #settings }
@@ -118,8 +126,35 @@ OPEditor class >> layoutStyle: aStyle [
 
 	currentLayoutName := aStyle.
 	self allInstances
-		select: [ :each | each isOpen ]
+		select: [ :each | 
+			| isWindowOpen |
+			isWindowOpen := false.
+			each withWindowDo: [ :window | isWindowOpen := window isOpen ].
+			isWindowOpen ]
 		thenDo: [ :each | each layout: self currentLayout ]
+]
+
+{ #category : #settings }
+OPEditor class >> pcfLayout [
+
+	"[ Palette | [ Canvas | Form ] ]"
+
+	^ SpPanedLayout newLeftToRight
+		  positionOfSlider: 200;
+		  add: #palette;
+		  add: (SpPanedLayout newLeftToRight
+				   positionOfSlider: self canvasSectionWidth;
+				   add: self canvasSectionLayout;
+				   add: #form;
+				   yourself);
+		  yourself
+]
+
+{ #category : #settings }
+OPEditor class >> setDefaultLayoutStyle [
+
+	<script>
+	^ currentLayoutName := self defaultLayoutName
 ]
 
 { #category : #settings }
@@ -146,12 +181,6 @@ OPEditor class >> toolbarMenu: aBuilder [
 		aBuilder model canvasPresenter exportAsPng ].
 	(aBuilder item: 'Export as SVG (incomplete/simplified)...') action: [ 
 		aBuilder model canvasPresenter exportAsSvg ]
-]
-
-{ #category : #specs }
-OPEditor class >> verticalLayout [
-
-	^ self layoutNamed: #vertical
 ]
 
 { #category : #'accessing - spec' }

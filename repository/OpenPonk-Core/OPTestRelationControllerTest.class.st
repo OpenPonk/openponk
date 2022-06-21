@@ -101,7 +101,7 @@ OPTestRelationControllerTest >> testNewController [
 OPTestRelationControllerTest >> testOpenInForm [
 	| form |
 	controller model: model.
-	form := OPScrollableForm new.
+	form := OPDynamicForm new.
 	diagramController stub form willReturn: form.
 	self assert: form widgets isEmpty.
 	diagramController openInForm: controller.

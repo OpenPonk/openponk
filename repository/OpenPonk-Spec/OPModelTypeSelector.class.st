@@ -69,11 +69,9 @@ OPModelTypeSelector >> addModel [
 OPModelTypeSelector >> connectPresenters [
 
 	addModelButton action: [ self addModel ].
-	projectNameInput
-		autoAccept: true;
-		whenTextChangedDo: [ :newValue | 
-			nameChanged := true.
-			self ensureButtonActivation ].
+	projectNameInput whenTextChangedDo: [ :newValue | 
+		nameChanged := true.
+		self ensureButtonActivation ].
 	plugins items: pluginRegistry plugins.
 	plugins whenSelectionChangedDo: [ :selection | 
 		self ensureButtonActivation.

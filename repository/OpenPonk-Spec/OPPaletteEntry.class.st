@@ -56,14 +56,7 @@ OPPaletteEntry >> registerShortcut: newShortcut [
 	receiver presenter
 		bindKeyCombination: newShortcut
 		toAction: [ :target :morph :event | 
-			| shouldIgnoreEvent |
-			shouldIgnoreEvent := false.
-			receiver model form form focusOrder
-				detect: [ :each | each widget widget hasKeyboardFocus ]
-				ifFound: [ :each | 
-					(each isKindOf: SpTextPresenter) ifTrue: [ 
-						shouldIgnoreEvent := true ] ].
-			shouldIgnoreEvent
+			(self shouldIgnoreEvent: receiver)
 				ifTrue: [ event wasHandled: false ]
 				ifFalse: [ self performAction ] ]
 ]
@@ -72,6 +65,17 @@ OPPaletteEntry >> registerShortcut: newShortcut [
 OPPaletteEntry >> select [
 	tool select.
 	self state: true
+]
+
+{ #category : #asserting }
+OPPaletteEntry >> shouldIgnoreEvent: aWindow [
+
+	aWindow presenter focusedEditor form focusOrder do: [ :each | 
+		(each isKindOf: SpAbstractTextPresenter) and: [ 
+			each withAdapterDo: [ :itemAdapter | 
+				itemAdapter widgetDo: [ :itemWidget | 
+					itemWidget hasKeyboardFocus ifTrue: [ ^ true ] ] ] ] ].
+	^ false
 ]
 
 { #category : #accessing }

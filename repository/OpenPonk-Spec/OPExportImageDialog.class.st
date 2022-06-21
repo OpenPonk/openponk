@@ -13,26 +13,18 @@ Class {
 OPExportImageDialog class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
-		  add: SpBoxLayout newLeftToRight:  [ :r | 
-			  r
-				  add: SpBoxLayout newTopToBottom:  [ :c | c add: #bookmarksList ] width: 150;
-				  add: SpBoxLayout newTopToBottom:  [ :c | 
-					  c add: #currentFolderLabel height: self toolbarHeight.
-					  c add: #filesList ] ];
-		  add: SpBoxLayout newLeftToRight:  [ :r | 
-			  r
-				  add: #nameLabel width: 50;
-				  add: #nameText;
-				  add: #filtersDropList width: 200 ]
-		  height: self toolbarHeight;
-		  add: SpBoxLayout newLeftToRight:  [ :r | 
-			  r
-				  add: #zoomLabel width: 50;
-				  add: #zoomText width: 40;
-				  add: #zoomPercentageLabel.
-			  r add: SpBoxLayout newTopToBottom:  [ :c |  ].
-			  self dialogButtonsLayout: r ]
-		  height: self toolbarHeight;
+		  add: (SpPanedLayout newLeftToRight
+				   positionOfSlider: 200;
+				   add: #bookmarksTreeTable;
+				   add: #fileNavigationSystem;
+				   yourself);
+		  add: (SpBoxLayout newLeftToRight
+				   add: SpNullPresenter new;
+				   add: #zoomLabel expand: false;
+				   add: #zoomText expand: false;
+				   add: #zoomPercentageLabel expand: false;
+				   yourself)
+		  expand: false;
 		  yourself
 ]
 
@@ -71,7 +63,7 @@ OPExportImageDialog >> initializePresenters [
 
 	super initializePresenters.
 	(zoomLabel := self newLabel) label: 'Zoom: '.
-	(zoomText := self newTextInput) autoAccept: true.
+	zoomText := self newTextInput.
 	(zoomPercentageLabel := self newLabel) label: ' %'
 ]
 
@@ -80,7 +72,7 @@ OPExportImageDialog >> initializeZoom [
 
 	zoomText
 		text: '100';
-		whenTextIsAccepted: [ :text | 
+		whenTextChangedDo: [ :text | 
 			zoomText text: ((text select: #isDigit) takeFirst: 4) ]
 ]
 

@@ -28,8 +28,9 @@ Class {
 { #category : #'as yet unclassified' }
 OPPalette class >> defaultLayout [
 
-	self flag: 'Pharo 9- compatibility'.
-	^ SpBoxLayout newTopToBottom
+	^ SpTabLayout new
+		  add: SpNullPresenter new label: 'Palette';
+		  yourself
 ]
 
 { #category : #specs }
@@ -37,6 +38,12 @@ OPPalette class >> defaultSpec [
 
 	self flag: 'Pharo 9- compatibility'.
 	^ self defaultLayout
+]
+
+{ #category : #'widget API' }
+OPPalette class >> initialWidth [
+
+	^ 200
 ]
 
 { #category : #private }
@@ -83,18 +90,6 @@ OPPalette >> diagramController [
 	^ diagramController
 ]
 
-{ #category : #'building widgets' }
-OPPalette >> dynamicLayout [
-	| keys |
-	keys := self widgets keys.
-	^ SpBoxLayout newLeftToRight
-		add: SpBoxLayout newTopToBottom:  [ :c | 
-			c add: #heading height: self class toolbarHeight.
-			keys do: [ :key | c add: SpBoxLayout newLeftToRight:  key height: self class buttonHeight ].
-			c add: SpBoxLayout newLeftToRight:  [ :r |  ] ];
-		yourself
-]
-
 { #category : #accessing }
 OPPalette >> editor [
 	^ self owner
@@ -120,12 +115,16 @@ OPPalette >> initializeLayout [
 
 	| itemsLayout |
 	itemsLayout := SpBoxLayout newTopToBottom.
-	items do: [ :each | itemsLayout add: each ].
+	itemsLayout spacing: 2.
+	items do: [ :each | itemsLayout add: each expand: false ].
+	itemsLayout
+		add: SpNullPresenter new expand: true fill: false;
+		add: (SpLabelPresenter new
+				 label: '';
+				 yourself)
+		expand: false.
 	self layout: (SpTabLayout new
-			 add: (items
-					  ifEmpty: [ self newNullPresenter ]
-					  ifNotEmpty: [ SpScrollableLayout with: items ])
-			 label: 'Palette';
+			 add: (SpScrollableLayout with: itemsLayout) label: 'Palette';
 			 yourself)
 ]
 

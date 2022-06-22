@@ -69,8 +69,8 @@ OPProjectBrowser >> connectPresenters [
 		display: #name;
 		whenActivatedDo: [ 
 			self openProjectFromFile: recentList selectedItem storageFile ];
-		contextMenu: [ :menu | 
-			self projectMenu: menu for: recentList selectedItem ].
+		contextMenu: [ 
+			self projectMenu: self newMenu for: recentList selectedItem ].
 	projectNameInput whenTextChangedDo: [ :newValue | 
 		createProjectButton enabled: newValue isNotEmpty ].
 	createProjectButton action: [ self createProject ].
@@ -195,28 +195,24 @@ OPProjectBrowser >> openProjectFromFile: aFile [
 ]
 
 { #category : #initialization }
-OPProjectBrowser >> projectMenu: aMenu [
-	| project menuBuilder |
-	project := recentList selectedItem ifNil: [ ^ self ].
-	menuBuilder := OPMenuBuilder new menu: aMenu.
-	menuBuilder
-		addItem: 'Remove'
-		action:
-			[ project removeFromImage.
-			recentList
-				items: OPProjectStorage default projects;
-				updateList ]
+OPProjectBrowser >> projectMenu: aMenuPresenter [
+
+	self
+		projectMenu: aMenuPresenter
+		for: (recentList selectedItem ifNil: [ ^ aMenuPresenter ])
 ]
 
 { #category : #initialization }
-OPProjectBrowser >> projectMenu: aMenu for: aProject [
-	| menuBuilder |
-	aProject ifNil: [ ^ self ].
-	(menuBuilder := OPMenuBuilder new) menu: aMenu.
-	menuBuilder
-		addItem: 'Remove'
-		action: [ aProject removeFromImage.
-			self updateRecentList ]
+OPProjectBrowser >> projectMenu: aMenuPresenter for: aProject [
+
+	aProject ifNil: [ ^ aMenuPresenter ].
+	aMenuPresenter addItem: [ :item | 
+		item
+			name: 'Remove';
+			action: [ 
+				aProject removeFromImage.
+				self updateRecentList ] ].
+	^ aMenuPresenter
 ]
 
 { #category : #'accessing - spec' }

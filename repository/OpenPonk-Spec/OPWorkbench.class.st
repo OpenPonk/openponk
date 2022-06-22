@@ -121,7 +121,8 @@ OPWorkbench >> closeEditorOfDiagram: aDiagram [
 
 	editors
 		at: aDiagram
-		ifPresent: [ :pair | notebook removeTab: pair second ]
+		ifPresent: [ :editorInfo | 
+		notebook removePage: (editorInfo at: #page) ]
 ]
 
 { #category : #opening }
@@ -248,7 +249,7 @@ OPWorkbench >> openEditorOnDiagram: aDiagram [
 	editor openEmptyModel: model.
 	(model respondsTo: #whenChanged:) ifTrue: [ 
 		model whenChanged: [ 
-			notebookPage label: '[' , aDiagram name , '] ' , model name ] ].
+			notebookPage title: '[' , aDiagram name , '] ' , model name ] ].
 	editor palette rebuildWidget.
 	notebookPage
 		title: '[' , aDiagram name , '] ' , model name;

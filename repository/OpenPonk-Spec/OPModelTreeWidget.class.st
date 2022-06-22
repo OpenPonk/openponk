@@ -108,12 +108,12 @@ OPModelTreeWidget >> initializeTree [
 	tree
 		roots: #(  );
 		whenActivatedDo: [ self doubleClick ];
-		contextMenu: [ :menu | 
-			tree hasSelectedItem ifTrue: [ 
+		contextMenu: [ 
+			self selectedItem ifNotNil: [ :selectedItem | 
 					adapters
-						contextMenuFor: self selectedItem
+						contextMenuFor: selectedItem
 						projectController: self projectController
-						in: menu ] ];
+						in: self newMenu ] ];
 		display: [ :anObject | adapters displayFor: anObject ];
 		children: [ :anObject | 
 			(adapters childrenFor: anObject) sorted: [ :a :b | 

@@ -47,32 +47,35 @@ OPDiagramsList >> connectPresenters [
 ]
 
 { #category : #retrieving }
-OPDiagramsList >> contextMenu: aMenuMorph for: aDiagram [
-	aDiagram ifNil: [ ^ aMenuMorph ].
-	(aMenuMorph
-		add: 'Open diagram'
-		target: self
-		selector: #openDiagram:
-		argument: aDiagram) icon: (self iconNamed: #glamorousOpen).
-	(aMenuMorph
-		add: 'Copy diagram...'
-		target: self
-		selector: #copyDiagram:
-		argument: aDiagram) icon: (self iconNamed: #smallCopy).
-	(aMenuMorph
-		add: 'Rename diagram'
-		target: self
-		selector: #renameDiagram:
-		argument: aDiagram) icon: (self iconNamed: #glamorousEdit).
-	aMenuMorph addLine.
-	(aMenuMorph
-		addToggle: 'Delete diagram'
-		target: self
-		selector: #deleteDiagram:
-		getStateSelector: nil
-		enablementSelector: [ self isDeleteAllowedFor: aDiagram ]
-		argumentList: {aDiagram}) icon: (self iconNamed: #glamorousTrash).
-	^ aMenuMorph
+OPDiagramsList >> contextMenu: aMenuPresenter for: aDiagram [
+
+	aDiagram ifNil: [ ^ aMenuPresenter ].
+	aMenuPresenter
+		addGroup: [ :group | 
+			group
+				addItem: [ :item | 
+					item
+						name: 'Open diagram';
+						action: [ self openDiagram: aDiagram ];
+						iconName: #glamorousOpen ];
+				addItem: [ :item | 
+					item
+						name: 'Copy diagram...';
+						action: [ self copyDiagram: aDiagram ];
+						iconName: #smallCopy ];
+				addItem: [ :item | 
+					item
+						name: 'Rename diagram';
+						action: [ self renameDiagram: aDiagram ];
+						iconName: #glamorousEdit ] ];
+		addGroup: [ :group | 
+			group addItem: [ :item | 
+				item
+					name: 'Delete diagram';
+					action: [ self deleteDiagram: aDiagram ];
+					iconName: #glamorousTrash;
+					enabled: [ self isDeleteAllowedFor: aDiagram ] ] ].
+	^ aMenuPresenter
 ]
 
 { #category : #actions }
@@ -167,8 +170,8 @@ OPDiagramsList >> initializeList [
 		whenActivatedDo: [ 
 			list selectedItem ifNotNil: [ :aView | self openDiagram: aView ] ];
 		whenSelectionChangedDo: [ :item | self selectionChanged: item ];
-		contextMenu: [ :menu | 
-			self contextMenu: menu for: list selectedItem ]
+		contextMenu: [ 
+			self contextMenu: self newMenu for: list selectedItem ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -253,11 +256,17 @@ OPDiagramsList >> project: aProject [
 
 { #category : #actions }
 OPDiagramsList >> renameDiagram: aView [
+
 	| name |
-	[ name := UIManager default request: 'Rename view "', (self displayFor: aView), '"' initialAnswer: aView name title: 'Rename' ]
-		doWhileTrue: [ name isNotNil and: [ name = aView name ] ].
+	[ 
+	name := UIManager default
+		        request: 'Rename view "' , (self displayFor: aView) , '"'
+		        initialAnswer: aView name
+		        title: 'Rename' ] doWhileTrue: [ 
+		name isNotNil and: [ name = aView name ] ].
 	name ifNil: [ ^ self ].
-	aView name: name
+	aView name: name.
+	list updateList
 ]
 
 { #category : #actions }

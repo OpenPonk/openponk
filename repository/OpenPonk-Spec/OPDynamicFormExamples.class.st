@@ -39,7 +39,7 @@ OPDynamicFormExamples >> exampleAllWidgets [
 	form addLabel: 'There''s a separator above me and below me'.
 	form addSeparator.
 	(form addText: 'Enter Some Text') text: 'poem required'.
-	(form addTextInput: 'Single Line With Ghost Text') ghostText: 'wooo!'.
+	(form addTextInput: 'Single Line With Ghost Text') placeholder: 'wooo!'.
 	(form addTextInput: 'Line Without Ghosts') text: 'no ghosts allowed'.
 	window := form openWithSpec.
 	window extent: 400 @ 600.

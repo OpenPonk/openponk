@@ -23,12 +23,11 @@ Class {
 
 { #category : #'as yet unclassified' }
 OPSelectEntity class >> defaultLayout [
-	^ SpBoxLayout newTopToBottom
-		add: SpBoxLayout newLeftToRight:  [ :row | 
-			row
-				add: #entityText;
-				add: #selectEntity width: 25 ];
-		yourself
+
+	^ SpBoxLayout newLeftToRight
+		  add: #entityText;
+		  add: #selectEntity width: 25;
+		  yourself
 ]
 
 { #category : #specs }
@@ -139,7 +138,7 @@ OPSelectEntity >> initialize [
 OPSelectEntity >> initializePresenters [
 
 	entityText := self newTextInput
-		              ghostText: self ghostText;
+		              placeholder: self ghostText;
 		              entryCompletion: self entitiesEntryCompletion;
 		              yourself.
 	selectEntity := self newButton

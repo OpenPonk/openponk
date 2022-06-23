@@ -104,9 +104,10 @@ OPWorkbench class >> openModel: aModel [
 
 { #category : #'instance creation' }
 OPWorkbench class >> openProject: aProject [
-	^ self open
-		openProject: aProject;
-		yourself
+
+	^ self new
+		  openProject: aProject;
+		  yourself
 ]
 
 { #category : #settings }
@@ -219,12 +220,6 @@ OPWorkbench >> notebook [
 ]
 
 { #category : #opening }
-OPWorkbench >> open [
-
-	self openWithSpec
-]
-
-{ #category : #opening }
 OPWorkbench >> openEditorOn: aModel [
 	self
 		openEditorOnDiagram: (project diagrams detect: [ :each | each model = aModel ])
@@ -263,10 +258,12 @@ OPWorkbench >> openEditorOnDiagram: aDiagram [
 
 { #category : #'project handling' }
 OPWorkbench >> openProject: aProject [
+
 	project := aProject.
 	(projectController := aProject controllerClass new)
 		project: project;
 		workbench: self.
+	self hasWindow ifFalse: [ self open ].
 	self updateTitle.
 	topToolbar updateProjectMenu.
 	project whenChanged: [ self updateTitle ].

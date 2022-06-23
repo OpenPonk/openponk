@@ -73,14 +73,13 @@ OPWorkbenchToolbar >> editorMenu [
 
 	| menu |
 	menu := self newMenu.
-	menu fromSpec: (PragmaMenuBuilder
-			 pragmaKeyword: #opEditorToolbarMenu
-			 model: activeEditor) menuSpec.
-	menu fromSpec: (OPPragmaPluginMenuBuilder
-			 pragmaKeyword: #opEditorToolbarMenu:
-			 model: activeEditor) menuSpec.
-	"MenuPresenter is stupid and will crash when provided with an empty subMenu"
-	menu menuGroups ifEmpty: [ self halt. ^ nil ].
+	menu addAllFromPragma: #opEditorToolbarMenu target: activeEditor.
+	menu addAllFromPragma: #opEditorToolbarMenu: target: activeEditor.
+	self flag: 'uncomment if problematic, remove if not'.
+	"MenuPresenter is stupid and will crash when provided with an empty subMenu
+	menu menuGroups ifEmpty: [ 
+		self halt.
+		^ nil ]."
 	^ menu
 ]
 

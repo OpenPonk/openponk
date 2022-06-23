@@ -45,7 +45,7 @@ OPProjectBrowser class >> menuCommandOn: aBuilder [
 { #category : #'instance creation' }
 OPProjectBrowser class >> open [
 	<script>
-	^ self new openWithSpec
+	^ self new open
 ]
 
 { #category : #'System-FileRegistry' }

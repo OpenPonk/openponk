@@ -130,7 +130,8 @@ OPDiagram >> asInfo [
 
 { #category : #serializing }
 OPDiagram >> asJson [
-	^ String << [ :stream | self asJsonTo: stream ]
+
+	^ String streamContents: [ :stream | self asJsonTo: stream ]
 ]
 
 { #category : #serializing }

@@ -19,13 +19,6 @@ OPWorkbenchToolbar class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #specs }
-OPWorkbenchToolbar class >> defaultSpec [
-
-	self flag: 'Pharo 9- compatibility'.
-	^ self defaultLayout
-]
-
 { #category : #'menus for editor' }
 OPWorkbenchToolbar >> activeEditor: anEditor [
 
@@ -44,7 +37,52 @@ OPWorkbenchToolbar >> addEditorMenu [
 			item
 				name: 'Diagram';
 				icon: (self iconNamed: #objects);
-				subMenu: self editorMenu ]
+				subMenu: self addEditorMenuItems ]
+]
+
+{ #category : #'menus for editor' }
+OPWorkbenchToolbar >> addEditorMenuItems [
+
+	| menu |
+	menu := self newMenu.
+	self
+		addEditorMenuItems: ((PragmaMenuBuilder
+				  pragmaKeyword: #opEditorToolbarMenu
+				  model: activeEditor)
+				 buildTree;
+				 itemList)
+		to: menu.
+
+	self
+		addEditorMenuItems: ((OPPragmaPluginMenuBuilder
+				  pragmaKeyword: #opEditorToolbarMenu:
+				  model: activeEditor)
+				 buildTree;
+				 itemList)
+		to: menu.
+
+	^ menu
+]
+
+{ #category : #'menus for editor' }
+OPWorkbenchToolbar >> addEditorMenuItems: menuRegistrations to: spMenu [
+
+	| itemEndingGroupIndex |
+	menuRegistrations ifEmpty: [ ^ spMenu ].
+	menuRegistrations last withSeparatorAfter.
+	itemEndingGroupIndex := menuRegistrations size.
+	spMenu addGroup: [ :group | 
+		menuRegistrations withIndexDo: [ :each :index | 
+			itemEndingGroupIndex >= index ifTrue: [ 
+				group addItem: [ :item | 
+					item
+						name: each label;
+						action: each target ].
+				each spec separator ifTrue: [ itemEndingGroupIndex := index ] ] ] ].
+	^ self
+		  addEditorMenuItems:
+		  (menuRegistrations allButFirst: itemEndingGroupIndex)
+		  to: spMenu
 ]
 
 { #category : #'as yet unclassified' }
@@ -66,21 +104,6 @@ OPWorkbenchToolbar >> connectPresenters [
 						subMenu: self projectMenu ] ].
 	self flag: 'might be removed?'.
 	"toolbar applyTo: self"
-]
-
-{ #category : #'menus for editor' }
-OPWorkbenchToolbar >> editorMenu [
-
-	| menu |
-	menu := self newMenu.
-	menu addAllFromPragma: #opEditorToolbarMenu target: activeEditor.
-	menu addAllFromPragma: #opEditorToolbarMenu: target: activeEditor.
-	self flag: 'uncomment if problematic, remove if not'.
-	"MenuPresenter is stupid and will crash when provided with an empty subMenu
-	menu menuGroups ifEmpty: [ 
-		self halt.
-		^ nil ]."
-	^ menu
 ]
 
 { #category : #'as yet unclassified' }

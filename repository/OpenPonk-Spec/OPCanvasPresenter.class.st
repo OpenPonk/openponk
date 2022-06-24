@@ -107,8 +107,10 @@ OPCanvasPresenter >> editor [
 
 { #category : #'private-focus' }
 OPCanvasPresenter >> ensureKeyBindingsFor: aWidget [
+
+	self flag: 'Does not work in P11'.
 	super ensureKeyBindingsFor: aWidget.
-	^self enableCommanderShortcutsIn: aWidget
+	^ self enableCommanderShortcutsIn: aWidget
 ]
 
 { #category : #toolbar }

@@ -28,13 +28,6 @@ OPExportImageDialog class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #specs }
-OPExportImageDialog class >> defaultSpec [
-
-	self flag: 'Pharo 9- compatibility'.
-	^ self defaultLayout
-]
-
 { #category : #actions }
 OPExportImageDialog >> confirm [
 

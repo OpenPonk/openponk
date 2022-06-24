@@ -96,7 +96,7 @@ OPDynamicFormMagritteVisitor >> visitSingleOptionDescription: aSingleOptionDescr
 		items: aSingleOptionDescription options;
 		enabled: aSingleOptionDescription isReadOnly not;
 		display: [ :each | aSingleOptionDescription labelForOption: each ];
-		iconBlock: [ :each :item | 
+		displayIcon: [ :each :item | 
 			aSingleOptionDescription iconForOption: each ];
 		addAndSelectItemLabeled:
 			(aSingleOptionDescription accessor read: controller)

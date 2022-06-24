@@ -30,13 +30,6 @@ OPSelectEntity class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #specs }
-OPSelectEntity class >> defaultSpec [
-
-	self flag: 'Pharo 9- compatibility'.
-	^ self defaultLayout
-]
-
 { #category : #example }
 OPSelectEntity class >> example [
 	SelectEntity new

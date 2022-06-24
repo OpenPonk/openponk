@@ -28,16 +28,7 @@ Class {
 { #category : #'as yet unclassified' }
 OPPalette class >> defaultLayout [
 
-	^ SpTabLayout new
-		  add: SpNullPresenter new label: 'Palette';
-		  yourself
-]
-
-{ #category : #specs }
-OPPalette class >> defaultSpec [
-
-	self flag: 'Pharo 9- compatibility'.
-	^ self defaultLayout
+	^ SpBoxLayout newTopToBottom
 ]
 
 { #category : #'widget API' }
@@ -114,18 +105,10 @@ OPPalette >> initialize [
 OPPalette >> initializeLayout [
 
 	| itemsLayout |
-	itemsLayout := SpBoxLayout newTopToBottom.
+	itemsLayout := self class defaultLayout.
 	itemsLayout spacing: 2.
 	items do: [ :each | itemsLayout add: each expand: false ].
-	itemsLayout
-		add: SpNullPresenter new expand: true fill: false;
-		add: (SpLabelPresenter new
-				 label: '';
-				 yourself)
-		expand: false.
-	self layout: (SpTabLayout new
-			 add: (SpScrollableLayout with: itemsLayout) label: 'Palette';
-			 yourself)
+	self layout: itemsLayout
 ]
 
 { #category : #'as yet unclassified' }

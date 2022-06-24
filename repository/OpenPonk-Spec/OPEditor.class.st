@@ -68,9 +68,9 @@ OPEditor class >> cpfLayout [
 		  add: (SpPanedLayout newLeftToRight
 				   positionOfSlider: self canvasSectionWidth;
 				   add: self canvasSectionLayout;
-				   add: #palette;
+				   add: self paletteSectionLayout;
 				   yourself);
-		  add: #form;
+		  add: self formSectionLayout;
 		  yourself
 ]
 
@@ -92,13 +92,6 @@ OPEditor class >> defaultLayoutName [
 	^ self availableLayoutNames first
 ]
 
-{ #category : #specs }
-OPEditor class >> defaultSpec [
-
-	self flag: 'Pharo 9- compatibility'.
-	^ self defaultLayout
-]
-
 { #category : #toolbar }
 OPEditor class >> developerToolbarMenu: aBuilder [
 	OPWorkbench isDevelopmentMode
@@ -106,6 +99,12 @@ OPEditor class >> developerToolbarMenu: aBuilder [
 	(aBuilder item: 'Inspect Controller...')
 		action: [ aBuilder model diagramController inspect ].
 	aBuilder withSeparatorAfter
+]
+
+{ #category : #settings }
+OPEditor class >> formSectionLayout [
+
+	^ self scrollableTabWith: #form label: 'Properties'
 ]
 
 { #category : #settings }
@@ -135,18 +134,40 @@ OPEditor class >> layoutStyle: aStyle [
 ]
 
 { #category : #settings }
+OPEditor class >> paletteSectionLayout [
+
+	^ self scrollableTabWith: #palette label: 'Palette'
+]
+
+{ #category : #settings }
 OPEditor class >> pcfLayout [
 
 	"[ Palette | [ Canvas | Form ] ]"
 
 	^ SpPanedLayout newLeftToRight
 		  positionOfSlider: 200;
-		  add: #palette;
+		  add: self paletteSectionLayout;
 		  add: (SpPanedLayout newLeftToRight
 				   positionOfSlider: self canvasSectionWidth;
 				   add: self canvasSectionLayout;
-				   add: #form;
+				   add: self formSectionLayout;
 				   yourself);
+		  yourself
+]
+
+{ #category : #settings }
+OPEditor class >> scrollableTabWith: aContent label: aTabLabel [
+
+	^ SpBoxLayout newTopToBottom
+		  add: (OPTabHeaderPresenter labelled: aTabLabel) expand: false;
+		  spacing: 10;
+		  add: (SpScrollableLayout with: (SpBoxLayout newTopToBottom
+						    add: aContent expand: false;
+						    add: (SpLabelPresenter new
+								     label: '';
+								     yourself)
+						    expand: false;
+						    yourself));
 		  yourself
 ]
 
@@ -228,8 +249,10 @@ OPEditor >> diagramController [
 
 { #category : #'private-focus' }
 OPEditor >> ensureKeyBindingsFor: aWidget [
+
+	self flag: 'Does not work in P11'.
 	super ensureKeyBindingsFor: aWidget.
-	^self enableCommanderShortcutsIn: aWidget
+	^ self enableCommanderShortcutsIn: aWidget
 ]
 
 { #category : #'accessing - spec' }
@@ -250,6 +273,7 @@ OPEditor >> initializePresenters [
 		add: canvasPresenter;
 		add: palette;
 		add: form.
+	self layout: self newNullPresenter.
 	self layout: self class currentLayout
 ]
 
@@ -274,6 +298,7 @@ OPEditor >> openEmptyModel: aModel [
 
 { #category : #'as yet unclassified' }
 OPEditor >> openFormOn: aController [
+
 	form editController: aController
 ]
 
@@ -299,6 +324,7 @@ OPEditor >> rebuildWidget [
 	diagramController ifNotNil: [ 
 		palette createPaletteFor: diagramController ].
 	canvasPresenter needRebuild: false.
+	canvasPresenter update.
 	self update
 ]
 

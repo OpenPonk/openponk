@@ -33,13 +33,6 @@ OPVersionInfo class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #specs }
-OPVersionInfo class >> defaultSpec [
-
-	self flag: 'Pharo 9- compatibility'.
-	^ self defaultLayout
-]
-
 { #category : #initialization }
 OPVersionInfo >> connectPresenters [
 	(version needsDownloadInfo and: [ version canDownloadInfo ])

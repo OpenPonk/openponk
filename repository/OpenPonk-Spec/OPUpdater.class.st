@@ -50,13 +50,6 @@ OPUpdater class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #specs }
-OPUpdater class >> defaultSpec [
-
-	self flag: 'Pharo 9- compatibility'.
-	^ self defaultLayout
-]
-
 { #category : #initialization }
 OPUpdater >> connectPresenters [
 	version needsDownloadInfo

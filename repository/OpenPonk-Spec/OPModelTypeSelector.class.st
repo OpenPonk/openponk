@@ -42,13 +42,6 @@ OPModelTypeSelector class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #specs }
-OPModelTypeSelector class >> defaultSpec [
-
-	self flag: 'Pharo 9- compatibility'.
-	^ self defaultLayout
-]
-
 { #category : #'as yet unclassified' }
 OPModelTypeSelector >> addModel [
 

@@ -37,13 +37,6 @@ OPModelTreeWidget class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #specs }
-OPModelTreeWidget class >> defaultSpec [
-
-	self flag: 'Pharo 9- compatibility'.
-	^ self defaultLayout
-]
-
 { #category : #'as yet unclassified' }
 OPModelTreeWidget class >> openOn: aProject [
 	^ self new

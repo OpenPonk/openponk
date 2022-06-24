@@ -42,13 +42,6 @@ OPWorkbench class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #specs }
-OPWorkbench class >> defaultSpec [
-
-	self flag: 'Pharo 9- compatibility'.
-	^ self defaultLayout
-]
-
 { #category : #settings }
 OPWorkbench class >> developerSettingsOn: aBuilder [
 

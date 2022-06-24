@@ -16,13 +16,6 @@ OPShowHidePresenter class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #specs }
-OPShowHidePresenter class >> defaultSpec [
-
-	self flag: 'Pharo 9- compatibility'.
-	^ self defaultLayout
-]
-
 { #category : #initialization }
 OPShowHidePresenter >> cherryPickPage [
 	^ SpNotebookPage

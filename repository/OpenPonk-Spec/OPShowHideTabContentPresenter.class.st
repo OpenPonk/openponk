@@ -18,13 +18,6 @@ OPShowHideTabContentPresenter class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #specs }
-OPShowHideTabContentPresenter class >> defaultSpec [
-
-	self flag: 'Pharo 9- compatibility'.
-	^ self defaultLayout
-]
-
 { #category : #accessing }
 OPShowHideTabContentPresenter >> childrenFor: anItem [
 	^ self subclassResponsibility

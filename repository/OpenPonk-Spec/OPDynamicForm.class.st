@@ -21,16 +21,7 @@ Class {
 { #category : #'as yet unclassified' }
 OPDynamicForm class >> defaultLayout [
 
-	^ SpTabLayout new
-		  add: SpNullPresenter new label: 'Properties';
-		  yourself
-]
-
-{ #category : #specs }
-OPDynamicForm class >> defaultSpec [
-
-	self flag: 'Pharo 9- compatibility'.
-	^ self defaultLayout
+	^ SpBoxLayout newTopToBottom
 ]
 
 { #category : #specs }
@@ -241,26 +232,15 @@ OPDynamicForm >> initialize [
 OPDynamicForm >> initializeLayout [
 
 	| itemsLayout |
-	itemsLayout := SpBoxLayout newTopToBottom.
+	itemsLayout := self class defaultLayout.
 	components do: [ :each | itemsLayout add: each expand: false ].
-	itemsLayout
-		add: (SpLabelPresenter new
-				 label: '';
-				 yourself)
-		expand: true fill: false;
-		add: (SpLabelPresenter new
-				 label: '';
-				 yourself)
-		expand: false.
-	self layout: (SpTabLayout new
-			 add: (SpScrollableLayout with: itemsLayout) label: 'Properties';
-			 yourself)
+	self layout: itemsLayout
 ]
 
-{ #category : #'private - building widgets' }
+{ #category : #initialization }
 OPDynamicForm >> initializePresenters [
 
-	super initializePresenter.
+	super initializePresenters.
 	self initializeLayout
 ]
 

@@ -34,7 +34,7 @@ OPPalette class >> defaultLayout [
 { #category : #'widget API' }
 OPPalette class >> initialWidth [
 
-	^ 200
+	^ 180
 ]
 
 { #category : #private }

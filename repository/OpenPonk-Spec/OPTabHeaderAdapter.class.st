@@ -10,7 +10,7 @@ Class {
 { #category : #factory }
 OPTabHeaderAdapter >> buildWidget [
 
-	morph := TabLabelMorph new.
+	morph := OPTabLabelMorph new.
 	morph
 		roundedCorners: #( 1 4 );
 		changeTableLayout;
@@ -20,7 +20,8 @@ OPTabHeaderAdapter >> buildWidget [
 		vResizing: #spaceFill;
 		label: (self presenter label ifNil: [ '' ]);
 		tabSelector: self;
-		layoutInset: (morph theme tabLabelInsetFor: self).
+		layoutInset: (morph theme tabLabelInsetFor: self);
+		borderStyle: BorderStyle simple.
 	^ morph
 ]
 

@@ -155,6 +155,18 @@ OPDynamicForm >> addLabel: aLabel [
 ]
 
 { #category : #'public - adding' }
+OPDynamicForm >> addNumberInput: aName [
+
+	| control |
+	self addLabel: aName.
+
+	control := self newNumberInput.
+
+	self addControl: control.
+	^ control
+]
+
+{ #category : #'public - adding' }
 OPDynamicForm >> addSeparator [
 	self addLabel: ''
 ]

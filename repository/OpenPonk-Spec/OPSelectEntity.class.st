@@ -53,13 +53,11 @@ OPSelectEntity class >> specLayout [
 
 { #category : #'as yet unclassified' }
 OPSelectEntity >> connectPresenters [
-	selectEntity 
-		action: [  |select|
-			select := self selectDialog value.
-			select openDialogWithSpec
-				okAction: [  
-					self entity: select selectedItem ]]
 
+	selectEntity action: [ 
+		| select |
+		select := self selectDialog value.
+		select openDialog okAction: [ self entity: select selectedItem ] ]
 ]
 
 { #category : #api }

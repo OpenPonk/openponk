@@ -145,7 +145,7 @@ OPEditor class >> pcfLayout [
 	"[ Palette | [ Canvas | Form ] ]"
 
 	^ SpPanedLayout newLeftToRight
-		  positionOfSlider: 200;
+		  positionOfSlider: OPPalette initialWidth;
 		  add: self paletteSectionLayout;
 		  add: (SpPanedLayout newLeftToRight
 				   positionOfSlider: self canvasSectionWidth;

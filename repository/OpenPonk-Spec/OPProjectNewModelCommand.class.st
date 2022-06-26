@@ -32,5 +32,5 @@ OPProjectNewModelCommand >> execute [
 			  labelColor: GrowlMorph theme textColor ].
 	(OPModelTypeSelector
 		 newApplication: SpApplication defaultApplication
-		 model: projectController) openWithSpec
+		 model: projectController) open
 ]

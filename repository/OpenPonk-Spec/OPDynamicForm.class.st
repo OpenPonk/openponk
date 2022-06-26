@@ -27,7 +27,7 @@ OPDynamicForm class >> defaultLayout [
 { #category : #specs }
 OPDynamicForm class >> initialWidth [
 
-	^ 300
+	^ 260
 ]
 
 { #category : #specs }
@@ -49,6 +49,12 @@ OPDynamicForm class >> installLink [
 { #category : #specs }
 OPDynamicForm class >> isLinkInstalled [
 	^ self visitAst links ifNil: [ false ] ifNotNil: #isNotEmpty
+]
+
+{ #category : #specs }
+OPDynamicForm class >> minWidth [
+
+	^ 120
 ]
 
 { #category : #specs }

@@ -113,6 +113,7 @@ OPWorkbenchToolbar >> initializePresenters [
 
 { #category : #'menus for project' }
 OPWorkbenchToolbar >> opMenu [
+
 	| menu browser path |
 	menu := self newMenu.
 	menu
@@ -122,25 +123,26 @@ OPWorkbenchToolbar >> opMenu [
 					item
 						name: 'Settings';
 						icon: (self iconNamed: #configuration);
-						action: [ browser := SettingBrowser new
-								changePackageSet: {#'OpenPonk-Spec' asPackage};
-								yourself.
-							path := (browser open submorphs
-								detect: [ :each | each isKindOf: MorphTreeMorph ]) nodeList.
+						action: [ 
+							browser := SettingBrowser new
+								           changePackageSet: { #'OpenPonk-Spec' asPackage };
+								           yourself.
+							path := (browser open submorphs detect: [ :each | 
+								         each isKindOf: MorphTreeMorph ]) nodeList.
 							browser expandNodePath: path first contents first path ] ];
 				addItem: [ :item | 
 					item
 						name: 'Check for new version';
 						icon: (self iconNamed: #smallUpdate);
-						action: [ (OPUpdater newApplication: SpApplication defaultApplication)
-								openWithSpec ] ] ];
+						action: [ 
+							(OPUpdater newApplication: SpApplication defaultApplication)
+								open ] ] ];
 		addGroup: [ :group | 
-			group
-				addItem: [ :item | 
-					item
-						name: 'Close OpenPonk';
-						icon: (self iconNamed: #smallQuit);
-						action: [ WorldState saveAndQuit ] ] ].
+			group addItem: [ :item | 
+				item
+					name: 'Close OpenPonk';
+					icon: (self iconNamed: #smallQuit);
+					action: [ WorldState saveAndQuit ] ] ].
 	^ menu
 ]
 

@@ -130,6 +130,21 @@ OPProject >> initialize [
 	name whenChangedDo: [ dirty value: true ]
 ]
 
+{ #category : #'as yet unclassified' }
+OPProject >> inspectionItems [
+
+	<inspectorPresentationOrder: 100 title: 'Models and Diagrams'>
+	| diagramsByModels |
+	diagramsByModels := self modelsAndDiagrams.
+
+	^ SpTreePresenter new
+		  roots: diagramsByModels keys;
+		  children: [ :each | diagramsByModels at: each ifAbsent: [ #(  ) ] ];
+		  display: #name;
+		  expandRoots;
+		  yourself
+]
+
 { #category : #operations }
 OPProject >> mergeWith: aProject [
 
@@ -149,7 +164,7 @@ OPProject >> models [
 { #category : #accessing }
 OPProject >> modelsAndDiagrams [
 
-	^ modelsAndDiagrams copy
+	^ modelsAndDiagrams value
 ]
 
 { #category : #accessing }
@@ -218,6 +233,12 @@ OPProject >> storageFolder: aFilePath [
 	storageFolder := aFilePath
 ]
 
+{ #category : #announcements }
+OPProject >> unsubscribe: aSubscriber [
+
+	dirty announcer unsubscribe: aSubscriber
+]
+
 { #category : #accessing }
 OPProject >> uuid [
 	^ uuid ifNil: [ ^ UUID new ]
@@ -230,5 +251,6 @@ OPProject >> uuid: aUUID [
 
 { #category : #announcements }
 OPProject >> whenChanged: aBlock [
-	dirty whenChangedDo: aBlock
+
+	dirty announcer when: ValueChanged do: aBlock
 ]

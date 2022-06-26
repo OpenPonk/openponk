@@ -37,6 +37,12 @@ OPPalette class >> initialWidth [
 	^ 180
 ]
 
+{ #category : #'widget API' }
+OPPalette class >> minWidth [
+
+	^ 120
+]
+
 { #category : #private }
 OPPalette >> addEntry [
 	| entry |

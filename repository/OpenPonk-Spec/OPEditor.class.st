@@ -18,7 +18,7 @@ Class {
 		'palette'
 	],
 	#classInstVars : [
-		'currentLayoutName'
+		'currentLayout'
 	],
 	#category : #'OpenPonk-Spec-Windows'
 }
@@ -26,70 +26,25 @@ Class {
 { #category : #settings }
 OPEditor class >> availableLayoutNames [
 
-	^ self availableLayouts keys
+	^ self availableLayouts collect: #name
 ]
 
 { #category : #settings }
 OPEditor class >> availableLayouts [
 
-	^ { 
-		  ('Palette on left' asSymbol -> [ self pcfLayout ]).
-		  ('Palette on right' asSymbol -> [ self cpfLayout ]) }
-		  asOrderedDictionary
-]
-
-{ #category : #specs }
-OPEditor class >> canvasSectionLayout [
-
-	^ SpBoxLayout newTopToBottom
-		  add: #canvasPresenter;
-		  add: (SpBoxLayout newLeftToRight
-				   add: #canvasMenu;
-				   add: #zoomLabel expand: false;
-				   yourself)
-		  expand: false;
-		  yourself
-]
-
-{ #category : #settings }
-OPEditor class >> canvasSectionWidth [
-
-	^ OPWorkbench initialExtent x - OPWorkbench initialListsWidth
-	  - OPPalette initialWidth - OPDynamicForm initialWidth
-]
-
-{ #category : #settings }
-OPEditor class >> cpfLayout [
-
-	"[ [ Canvas | Palette ] | Form ]"
-
-	^ SpPanedLayout newLeftToRight
-		  positionOfSlider: self canvasSectionWidth + OPPalette initialWidth;
-		  add: (SpPanedLayout newLeftToRight
-				   positionOfSlider: self canvasSectionWidth;
-				   add: self canvasSectionLayout;
-				   add: self paletteSectionLayout;
-				   yourself);
-		  add: self formSectionLayout;
-		  yourself
+	^ OPEditorLayout all
 ]
 
 { #category : #settings }
 OPEditor class >> currentLayout [
 
-	^ self layoutNamed: self layoutStyle
-]
-
-{ #category : #specs }
-OPEditor class >> defaultLayout [
-
-	^ self pcfLayout
+	^ currentLayout ifNil: [ self setDefaultLayout ]
 ]
 
 { #category : #settings }
-OPEditor class >> defaultLayoutName [
+OPEditor class >> defaultLayout [
 
-	^ self availableLayoutNames first
+	^ OPEditorLayout default
 ]
 
 { #category : #toolbar }
@@ -102,93 +57,42 @@ OPEditor class >> developerToolbarMenu: aBuilder [
 ]
 
 { #category : #settings }
-OPEditor class >> formSectionLayout [
+OPEditor class >> layoutName [
 
-	^ self scrollableTabWith: #form label: 'Properties'
+	^ self currentLayout name
 ]
 
 { #category : #settings }
-OPEditor class >> layoutNamed: aString [
+OPEditor class >> layoutName: aLayoutName [
 
-	^ (self availableLayouts
-		   at: aString asSymbol
-		   ifAbsent: [ self defaultLayout ]) value
-]
-
-{ #category : #settings }
-OPEditor class >> layoutStyle [
-	^ currentLayoutName ifNil: [ self setDefaultLayoutStyle ]
-]
-
-{ #category : #settings }
-OPEditor class >> layoutStyle: aStyle [
-
-	currentLayoutName := aStyle.
+	currentLayout := OPEditorLayout named: aLayoutName.
 	self allInstances
 		select: [ :each | 
 			| isWindowOpen |
 			isWindowOpen := false.
 			each withWindowDo: [ :window | isWindowOpen := window isOpen ].
 			isWindowOpen ]
-		thenDo: [ :each | each layout: self currentLayout ]
+		thenDo: [ :each | currentLayout applyOn: each ]
 ]
 
 { #category : #settings }
-OPEditor class >> paletteSectionLayout [
-
-	^ self scrollableTabWith: #palette label: 'Palette'
-]
-
-{ #category : #settings }
-OPEditor class >> pcfLayout [
-
-	"[ Palette | [ Canvas | Form ] ]"
-
-	^ SpPanedLayout newLeftToRight
-		  positionOfSlider: OPPalette initialWidth;
-		  add: self paletteSectionLayout;
-		  add: (SpPanedLayout newLeftToRight
-				   positionOfSlider: self canvasSectionWidth;
-				   add: self canvasSectionLayout;
-				   add: self formSectionLayout;
-				   yourself);
-		  yourself
-]
-
-{ #category : #settings }
-OPEditor class >> scrollableTabWith: aContent label: aTabLabel [
-
-	^ SpBoxLayout newTopToBottom
-		  add: (OPTabHeaderPresenter labelled: aTabLabel) expand: false;
-		  spacing: 10;
-		  add: (SpScrollableLayout with: (SpBoxLayout newTopToBottom
-						    add: aContent expand: false;
-						    add: (SpLabelPresenter new
-								     label: '';
-								     yourself)
-						    expand: false;
-						    yourself));
-		  yourself
-]
-
-{ #category : #settings }
-OPEditor class >> setDefaultLayoutStyle [
+OPEditor class >> setDefaultLayout [
 
 	<script>
-	^ currentLayoutName := self defaultLayoutName
+	^ currentLayout := self defaultLayout
 ]
 
 { #category : #settings }
 OPEditor class >> settingsOn: aBuilder [
 
 	<systemsettings>
-	(aBuilder pickOne: #layoutStyle)
+	(aBuilder pickOne: #layoutName)
 		parent: #openponk;
 		target: self;
-		label: 'Form-Palette Layout Style';
+		label: 'Editor Layout Style';
 		description:
-			'Show form below (vertical) or next to (horizontal) palette.';
-		default: self defaultLayoutName;
+			'Show palette on the left or right of main canvas.';
+		default: self defaultLayout name;
 		domainValues: self availableLayoutNames;
 		order: 40
 ]
@@ -212,6 +116,13 @@ OPEditor >> canvasMenu [
 { #category : #'accessing - spec' }
 OPEditor >> canvasPresenter [
 	^ canvasPresenter
+]
+
+{ #category : #settings }
+OPEditor >> canvasSectionWidth [
+
+	^ OPWorkbench initialExtent x - OPWorkbench initialListsWidth
+	  - OPPalette initialWidth - OPDynamicForm initialWidth
 ]
 
 { #category : #shortcuts }
@@ -273,8 +184,14 @@ OPEditor >> initializePresenters [
 		add: canvasPresenter;
 		add: palette;
 		add: form.
-	self layout: self newNullPresenter.
-	self layout: self class currentLayout
+	self class currentLayout applyOn: self.
+
+	self whenBuiltDo: [ :builtEvent | 
+		self withWindowDo: [ :window | 
+			window whenResizingDo: [ :resizeEvent | 
+				self class currentLayout
+					resizePanelsOf: builtEvent widget
+					afterWindowResized: resizeEvent ] ] ]
 ]
 
 { #category : #'diagram handling' }

@@ -87,6 +87,7 @@ OPModelTreeWidget >> initialize [
 
 { #category : #'as yet unclassified' }
 OPModelTreeWidget >> initializePresenters [
+
 	self initializeTree.
 	refreshButton := self newButton.
 	refreshButton
@@ -133,15 +134,12 @@ OPModelTreeWidget >> openCommand: aDiagram [
 
 { #category : #accessing }
 OPModelTreeWidget >> openOn: aProject [
-	self workbench announcer
-		when: OPEditorFocused
-		do: [ :event | 
-			project ifNotNil: [ project announcer unsubscribe: self ].
-			project := event diagramController model.
-			project ifNotNil: [ project when: OPModelChanged do: [ tree updateTree ] ].
-			tree
-				roots: {project};
-				expandRoots ].
+
+	self workbench announcer when: OPEditorFocused do: [ :event | 
+		project ifNotNil: [ project unsubscribe: self ].
+		project := event diagramController model.
+		project ifNotNil: [ project whenChanged: [ self refresh ] ].
+		self refresh ].
 	tree expandRoots
 ]
 
@@ -153,7 +151,10 @@ OPModelTreeWidget >> projectController [
 { #category : #actions }
 OPModelTreeWidget >> refresh [
 
-	tree refresh
+	tree
+		roots: { project };
+		expandRoots
+	"tree refresh"
 ]
 
 { #category : #'accessing - spec' }

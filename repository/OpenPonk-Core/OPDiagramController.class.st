@@ -383,7 +383,9 @@ OPDiagramController >> hasUndo [
 
 { #category : #figures }
 OPDiagramController >> hideAllElements [
-	[ self controllers isNotEmpty ] whileTrue: [ self controllers anyOne removeController ].
+
+	[ self controllers isNotEmpty ] whileTrue: [ 
+		self controllers anyOne removeController ].
 	self cleanView.
 	self view signalUpdate
 ]

@@ -16,8 +16,9 @@ OPProjectNavigator class >> title [
 
 { #category : #accessing }
 OPProjectNavigator >> openOn: aProject [
+
 	project := aProject.
-	tree roots: {project}.
-	project whenChanged: [ tree updateTree ].
-	tree expandRoots
+	project unsubscribe: self.
+	project whenChanged: [ self refresh ].
+	self refresh
 ]

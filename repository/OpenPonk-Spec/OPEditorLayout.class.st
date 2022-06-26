@@ -26,6 +26,7 @@ OPEditorLayout class >> named: aString [
 { #category : #applying }
 OPEditorLayout >> applyOn: anEditor [
 
+	anEditor canvasPresenter needRebuild: false.
 	^ anEditor layout: (self spLayoutFor: anEditor)
 ]
 

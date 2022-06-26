@@ -72,14 +72,15 @@ OPEditor class >> layoutName: aLayoutName [
 			isWindowOpen := false.
 			each withWindowDo: [ :window | isWindowOpen := window isOpen ].
 			isWindowOpen ]
-		thenDo: [ :each | currentLayout applyOn: each ]
+		thenDo: [ :each | 
+			currentLayout applyOn: each ]
 ]
 
 { #category : #settings }
 OPEditor class >> setDefaultLayout [
 
 	<script>
-	^ currentLayout := self defaultLayout
+	self layoutName: self defaultLayout name
 ]
 
 { #category : #settings }
@@ -240,8 +241,6 @@ OPEditor >> rebuildWidget [
 
 	diagramController ifNotNil: [ 
 		palette createPaletteFor: diagramController ].
-	canvasPresenter needRebuild: false.
-	canvasPresenter update.
 	self update
 ]
 

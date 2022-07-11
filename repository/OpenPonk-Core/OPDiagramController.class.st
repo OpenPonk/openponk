@@ -356,7 +356,8 @@ OPDiagramController >> figureForModel: aModel [
 
 { #category : #'ui interaction' }
 OPDiagramController >> form [
-	^ self editor workbench form
+
+	^ self editor form
 ]
 
 { #category : #'controllers management' }

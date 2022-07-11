@@ -6,27 +6,22 @@ Class {
 	#name : #OPEditorAnnouncements,
 	#superclass : #Announcement,
 	#instVars : [
-		'editor',
-		'diagramController'
+		'editor'
 	],
 	#category : #'OpenPonk-Core-Announcements'
 }
 
 { #category : #'instance creation' }
 OPEditorAnnouncements class >> on: anEditor [
+
 	^ self new
-		editor: anEditor;
-		diagramController: anEditor diagramController
+		  editor: anEditor;
+		  yourself
 ]
 
 { #category : #accessing }
 OPEditorAnnouncements >> diagramController [
-	^ diagramController
-]
-
-{ #category : #accessing }
-OPEditorAnnouncements >> diagramController: anObject [
-	diagramController := anObject
+	^ self editor diagramController
 ]
 
 { #category : #accessing }

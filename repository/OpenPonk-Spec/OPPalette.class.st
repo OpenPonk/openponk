@@ -17,10 +17,10 @@ Class {
 	#name : #OPPalette,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'items',
 		'selectedTool',
 		'selectedItem',
-		'diagramController'
+		'diagramController',
+		'items'
 	],
 	#category : #'OpenPonk-Spec-Palettes'
 }
@@ -94,7 +94,8 @@ OPPalette >> editor [
 
 { #category : #accessing }
 OPPalette >> entries [
-	^ items
+
+	^ self items select: [ :each | each isKindOf: OPPaletteEntry ]
 ]
 
 { #category : #initialization }
@@ -121,6 +122,11 @@ OPPalette >> initializeLayout [
 OPPalette >> initializePresenters [
 	self newSelectionTool.
 	self newSeparator
+]
+
+{ #category : #accessing }
+OPPalette >> items [
+	^ items
 ]
 
 { #category : #protocol }

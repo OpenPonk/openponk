@@ -69,9 +69,9 @@ OPTestDiagramControllerTest >> testCleanView [
 OPTestDiagramControllerTest >> testInitializePalette [
 	| palette |
 	palette := OPPalette new.
-	self assert: palette entries size = 2.
+	self assert: palette items size = 2.
 	diagramController initializePalette: palette.
-	self assert: palette entries size = 3
+	self assert: palette items size = 3
 ]
 
 { #category : #tests }

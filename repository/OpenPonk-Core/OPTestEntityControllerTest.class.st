@@ -154,13 +154,14 @@ OPTestEntityControllerTest >> testNewController [
 
 { #category : #'tests - ui interaction' }
 OPTestEntityControllerTest >> testOpenInForm [
+
 	| form |
 	controller model: model.
 	form := OPDynamicForm new.
 	diagramController stub form willReturn: form.
-	self assert: form widgets isEmpty.
+	self assert: form layout children isEmpty.
 	diagramController openInForm: controller.
-	self assert: form widgets isNotEmpty
+	self assert: form layout children isNotEmpty
 ]
 
 { #category : #'tests - destruction' }

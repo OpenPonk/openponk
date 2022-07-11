@@ -38,18 +38,21 @@ OPEditorAnnouncementsTest >> tearDown [
 
 { #category : #tests }
 OPEditorAnnouncementsTest >> testEditorClosesAndUnfocuses [
+
 	| unfocusedAnn closedAnn oldModel |
 	oldModel := project models first.
 	announcer when: OPEditorClosed do: [ :ann | closedAnn := ann ].
 	announcer when: OPEditorUnfocused do: [ :ann | unfocusedAnn := ann ].
 	workbench openProject: project.
 	workbench openEditorOn: oldModel.
-	workbench notebook pages first buildWithSpec.
-	workbench notebook pages first widget widget delete.
+	self deny: unfocusedAnn diagramController model equals: oldModel.
+	self assert: closedAnn isNil.
+	workbench notebook pages first removeFromNotebook.
 	self assert: unfocusedAnn isNotNil.
-	self assert: unfocusedAnn editor diagramController model equals: oldModel.
+	self assert: unfocusedAnn diagramController model equals: oldModel.
 	self assert: closedAnn isNotNil.
-	self assert: closedAnn editor diagramController model equals: oldModel
+	self assert: closedAnn diagramController model equals: oldModel.
+	workbench withWindowDo: #close.
 ]
 
 { #category : #tests }
@@ -63,7 +66,8 @@ OPEditorAnnouncementsTest >> testEditorCreatedAndFocused [
 	self assert: createdAnn isNotNil.
 	self assert: createdAnn editor diagramController model equals: model.
 	self assert: focusedAnn isNotNil.
-	self assert: focusedAnn editor diagramController model equals: model
+	self assert: focusedAnn editor diagramController model equals: model.
+	workbench withWindowDo: #close.
 ]
 
 { #category : #tests }
@@ -79,7 +83,8 @@ OPEditorAnnouncementsTest >> testEditorCreationChangesFocus [
 	self assert: unfocusedAnn isNotNil.
 	self assert: unfocusedAnn editor diagramController model equals: oldModel.
 	self assert: focusedAnn isNotNil.
-	self assert: focusedAnn editor diagramController model equals: newModel
+	self assert: focusedAnn editor diagramController model equals: newModel.
+	workbench withWindowDo: #close.
 ]
 
 { #category : #tests }
@@ -102,5 +107,6 @@ OPEditorAnnouncementsTest >> testTabSwitchRefocuses [
 	self assert: focusedAnn isNotNil.
 	self
 		assert: focusedAnn editor diagramController model
-		equals: newModel
+		equals: newModel.
+	workbench withWindowDo: #close.
 ]

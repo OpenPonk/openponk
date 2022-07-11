@@ -38,7 +38,7 @@ OPPlugin >> diagramSerializerClass [
 
 { #category : #accessing }
 OPPlugin >> icon [
-	^ OPIcons current dcFsmDiagramIcon
+	^ OPCoreIcons opFsmDiagramIcon
 ]
 
 { #category : #testing }

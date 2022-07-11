@@ -106,7 +106,7 @@ OPModelTypeSelector >> initializeWindow: aWindow [
 	aWindow
 		title: 'OpenPonk - Add new model to project';
 		initialExtent: 300 @ 265;
-		windowIcon: OPIcons current openponkIcon
+		windowIcon: OPCoreIcons openponkIcon
 ]
 
 { #category : #'accessing model' }

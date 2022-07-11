@@ -33,5 +33,5 @@ OPNavigatorAdaptersTest >> testDisplayForProject [
 OPNavigatorAdaptersTest >> testIconForProject [
 	self
 		assert: (adapters iconFor: OPProject new) bits
-		equals: OPIcons current openponkIcon bits
+		equals: OPCoreIcons openponkIcon bits
 ]

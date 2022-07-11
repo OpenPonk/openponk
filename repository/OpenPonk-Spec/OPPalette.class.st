@@ -222,6 +222,7 @@ OPPalette >> newModelCreationTool: aFactoryBlock [
 
 { #category : #private }
 OPPalette >> newSelectionTool [
+
 	| item tool |
 	item := self addEntry.
 	(tool := OPSelectionTool new) palette: self.
@@ -229,7 +230,7 @@ OPPalette >> newSelectionTool [
 		label: 'Select';
 		action: [ self selectItem: item tool: tool ];
 		shortcut: Character escape asKeyCombination;
-		icon: OPIcons current dcSelectIcon
+		icon: OPCoreIcons opSelectIcon
 ]
 
 { #category : #protocol }

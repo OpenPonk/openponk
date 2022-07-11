@@ -1,19 +1,13 @@
 Class {
 	#name : #OPIdeaGraphIcons,
-	#superclass : #Object,
-	#classVars : [
-		'icons'
-	],
+	#superclass : #OPIcons,
 	#category : #'OpenPonk-Core-Icons'
 }
 
 { #category : #'accessing - icons' }
 OPIdeaGraphIcons class >> actualZoomIcon [
-	"Private - Generated method"
-	^ self icons
-		at: #actualZoomIcon
-		ifAbsentPut: [ Form
-				fromBinaryStream: (self actualZoomIconContents base64Decoded asByteArray readStream) ]
+
+	^ Form fromBinaryStream: self actualZoomIconContents base64Decoded asByteArray readStream
 ]
 
 { #category : #'private - contents' }
@@ -29,11 +23,8 @@ TkSuQmCC'
 
 { #category : #'accessing - icons' }
 OPIdeaGraphIcons class >> exportIcon [
-	"Private - Generated method"
-	^ self icons
-		at: #exportIcon
-		ifAbsentPut: [ Form
-				fromBinaryStream: (self exportIconContents base64Decoded asByteArray readStream) ]
+
+	^ Form fromBinaryStream: self exportIconContents base64Decoded asByteArray readStream
 ]
 
 { #category : #'private - contents' }
@@ -50,11 +41,8 @@ LE+ozbNty+orTAIlLrICEYrPwNSQa8B/YgwgBlPPAABeEDpGXrZK1gAAAABJRU5ErkJggg=='
 
 { #category : #'accessing - icons' }
 OPIdeaGraphIcons class >> fitContentIcon [
-	"Private - Generated method"
-	^ self icons
-		at: #fitContentIcon
-		ifAbsentPut: [ Form
-				fromBinaryStream: (self fitContentIconContents base64Decoded asByteArray readStream) ]
+
+	^ Form fromBinaryStream: self fitContentIconContents base64Decoded asByteArray readStream
 ]
 
 { #category : #'private - contents' }
@@ -66,67 +54,10 @@ ZMB/ssMA6j9cfiZswOZm//+7ewJRMEiM1Fj4T41o/D/g0chASTSSnZTJz0yUYABuiwC/tz/3
 ZwAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'GT-InspectorExtensions' }
-OPIdeaGraphIcons class >> gtInspectorIconsIn: composite [
-	<gtInspectorPresentationOrder: 0>
-	<script: 'self inspect'>
-	composite table
-		title: 'Icons';
-		display: [ (self class selectorsInCategory: 'accessing - icons') sorted
-				collect: [ :each | each -> (self perform: each) ] ];
-		column: 'Icon' evaluated: #value width: 50;
-		column: 'Selector' evaluated: #key
-]
-
-{ #category : #initialization }
-OPIdeaGraphIcons class >> iconSelectors [
-
-	^ self class selectorsInCategory: 'accessing - icons'
-]
-
-{ #category : #accessing }
-OPIdeaGraphIcons class >> icons [
-	^ icons ifNil: [ icons := Dictionary new ]
-]
-
-{ #category : #'gt-inspector' }
-OPIdeaGraphIcons class >> inspectionIcons [
-
-	<inspectorPresentationOrder: 40 title: 'Icons'>
-	<script: 'self inspect'>
-	| selectorsByForms |
-	selectorsByForms := (self iconSelectors collect: [ :each | 
-		                     ([ self perform: each ]
-			                      on: Deprecation
-			                      do: #resume) -> each ]) asDictionary.
-	^ SpTablePresenter new
-		  items:
-			  (selectorsByForms keys sortedAs: [ :each | 
-					   selectorsByForms at: each ]);
-		  addColumn: (SpImageTableColumn new
-				   title: 'Icon';
-				   evaluated: [ :each | 
-					   [ 
-					   each scaledToSize:
-							   (50 min: each width) @ (16 min: each height) ]
-						   on: Deprecation
-						   do: #resume ];
-				   width: 50;
-				   yourself);
-		  addColumn: (SpStringTableColumn new
-				   title: 'Name';
-				   evaluated: [ :each | selectorsByForms at: each ];
-				   yourself);
-		  yourself
-]
-
 { #category : #'accessing - icons' }
 OPIdeaGraphIcons class >> layoutIcon [
-	"Private - Generated method"
-	^ self icons
-		at: #layoutIcon
-		ifAbsentPut: [ Form
-				fromBinaryStream: (self layoutIconContents base64Decoded asByteArray readStream) ]
+
+	^ Form fromBinaryStream: self layoutIconContents base64Decoded asByteArray readStream
 ]
 
 { #category : #'private - contents' }
@@ -140,19 +71,10 @@ AIcYAIoKYhINkgFB0ChHGEBMooFqMIImtiRUFxCRaICK9wPxKyAuRQ4PsAHEJhpsmIHS7AwA
 I+sBKc+7H3oAAAAASUVORK5CYII='
 ]
 
-{ #category : #'accessing - reset' }
-OPIdeaGraphIcons class >> resetIcons [
-	<script>
-	^ icons := nil
-]
-
 { #category : #'accessing - icons' }
 OPIdeaGraphIcons class >> zoomInIcon [
-	"Private - Generated method"
-	^ self icons
-		at: #zoomInIcon
-		ifAbsentPut: [ Form
-				fromBinaryStream: (self zoomInIconContents base64Decoded asByteArray readStream) ]
+
+	^ Form fromBinaryStream: self zoomInIconContents base64Decoded asByteArray readStream
 ]
 
 { #category : #'private - contents' }
@@ -167,11 +89,8 @@ TeAf1BZU4EoqzpU9YaEJvlH0JaP+uAGJbGf9i0DYSbOMn9sDVPxgE0dlAAAAAElFTkSuQmCC'
 
 { #category : #'accessing - icons' }
 OPIdeaGraphIcons class >> zoomOutIcon [
-	"Private - Generated method"
-	^ self icons
-		at: #zoomOutIcon
-		ifAbsentPut: [ Form
-				fromBinaryStream: (self zoomOutIconContents base64Decoded asByteArray readStream) ]
+
+	^ Form fromBinaryStream: self zoomOutIconContents base64Decoded asByteArray readStream
 ]
 
 { #category : #'private - contents' }

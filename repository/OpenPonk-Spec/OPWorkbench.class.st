@@ -203,7 +203,7 @@ OPWorkbench >> initializePresenters [
 OPWorkbench >> initializeWindow: aWindow [
 
 	aWindow
-		windowIcon: OPIcons current openponkIcon;
+		windowIcon: OPCoreIcons openponkIcon;
 		title: self title;
 		initialExtent: self class initialExtent
 ]

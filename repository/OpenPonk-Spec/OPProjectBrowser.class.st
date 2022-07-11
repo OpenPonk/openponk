@@ -36,7 +36,7 @@ OPProjectBrowser class >> menuCommandOn: aBuilder [
 
 	<worldMenu>
 	(aBuilder item: #OpenPonk)
-		icon: OPIcons current openponkIcon;
+		icon: OPCoreIcons openponkIcon;
 		action: [ self open ];
 		withSeparatorAfter;
 		order: 200
@@ -156,7 +156,7 @@ OPProjectBrowser >> initializePresenters [
 OPProjectBrowser >> initializeWindow: aWindow [
 
 	aWindow
-		windowIcon: OPIcons current openponkIcon;
+		windowIcon: OPCoreIcons openponkIcon;
 		title: 'OpenPonk Project Browser';
 		initialExtent: 400 @ 400
 ]

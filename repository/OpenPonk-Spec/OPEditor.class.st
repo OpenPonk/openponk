@@ -38,7 +38,8 @@ OPEditor class >> availableLayouts [
 { #category : #settings }
 OPEditor class >> currentLayout [
 
-	^ currentLayout ifNil: [ self setDefaultLayout ]
+	currentLayout ifNil: [ self setDefaultLayout ].
+	^ currentLayout
 ]
 
 { #category : #settings }

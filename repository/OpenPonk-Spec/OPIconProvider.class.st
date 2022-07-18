@@ -1,7 +1,7 @@
 Class {
 	#name : #OPIconProvider,
 	#superclass : #SpIconProvider,
-	#category : #'OpenPonk-Spec-Windows'
+	#category : #'OpenPonk-Spec-Application'
 }
 
 { #category : #accessing }

@@ -103,7 +103,7 @@ BaselineOfOpenPonk >> loadPetitParser [
 	Smalltalk at: #BaselineOfPetitParser ifPresent: [ ^ self ].
 	Metacello new
 		baseline: 'PetitParser';
-		repository: 'github://moosetechnology/PetitParser:v2.x.x/src';
+		repository: 'github://moosetechnology/PetitParser:v3.x.x/src';
 		load:
 			#( 'Core' 'Tests' 'Examples' 'Islands' 'Analyzer' 'Preprocessor'
 			   'Indent' 'Extension' 'TestsExtension' 'Parser' )

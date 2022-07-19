@@ -32,19 +32,9 @@ BaselineOfOpenPonk >> baseline: spec [
 							#('Moose' 'NewTools' 'Magritte' 'SynchronizedLinks' 'OpenPonk-Morphic') ];
 				preLoadDoIt: #loadPetitParser.
 			spec
-				group: 'baseForAllPharoVersions'
+				group: 'default'
 				with:
-					#('OpenPonk-Core' 'OpenPonk-Roassal2' 'OpenPonk-Morphic' 'OpenPonk-Spec' 'OpenPonk-Help').
-			spec package: 'OpenPonk-Pharo8SysExtensions'.
-			spec
-				package: 'OpenPonk-Pharo8OPExtensions'
-				with: [ spec
-						requires: #('OpenPonk-Pharo8SysExtensions' 'baseForAllPharoVersions') ].
-			spec
-				for: #(#'pharo8.x' #'pharo7.x')
-					do: [ spec group: 'default' with: #('OpenPonk-Pharo8OPExtensions') ];
-				for: #(#'pharo11.x' #'pharo10.x' #'pharo9.x')
-					do: [ spec group: 'default' with: #(#baseForAllPharoVersions) ] ]
+					#('OpenPonk-Core' 'OpenPonk-Roassal2' 'OpenPonk-Morphic' 'OpenPonk-Spec' 'OpenPonk-Help') ]
 ]
 
 { #category : #baselines }

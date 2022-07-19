@@ -77,7 +77,7 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 
 	spec baseline: 'NewTools' with: [ 
 		spec
-			repository: 'github://JanBliznicenko/NewTools:Pharo11';
+			repository: 'github://JanBliznicenko/NewTools:Pharo10';
 			loads: #( FileBrowser ) ].
 	spec
 		baseline: 'SynchronizedLinks'

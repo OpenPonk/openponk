@@ -142,7 +142,7 @@ OPDynamicForm >> addEditableDroplist: aName [
 OPDynamicForm >> addEntity: aName [
 	| control |
 	self addLabel: aName.
-	control := self instantiate: OPSelectEntity.
+	control := self instantiate: SpSelectEntity.
 	self addControl: control.
 	^ control
 ]
@@ -205,7 +205,7 @@ OPDynamicForm >> addTextInput: aName [
 OPDynamicForm >> defaultHeights [
 	| lineHeight |
 	lineHeight := 20.
-	^ {OPSelectEntity -> lineHeight.
+	^ {SpSelectEntity -> lineHeight.
 	SpLabelPresenter -> (lineHeight - 5).
 	SpTextInputFieldPresenter -> (lineHeight + 2).
 	SpTextPresenter -> (lineHeight * 4).

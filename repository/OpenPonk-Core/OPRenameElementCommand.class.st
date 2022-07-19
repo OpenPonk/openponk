@@ -20,6 +20,7 @@ Class {
 { #category : #execute }
 OPRenameElementCommand >> execute [
 	| result |
+	self flag: 'Entry completion needed'.
 	result := UIManager default request: 'Name' initialAnswer: model name.
 	result ifNil: [ ^ self ].
 	model name: result.

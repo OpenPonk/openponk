@@ -23,7 +23,7 @@ jobs:
       - uses: hpi-swa/setup-smalltalkCI@1.3.2
         id: smalltalkci
         with:
-          smalltalk-image: Pharo64-9.0
+          smalltalk-image: Pharo64-10.0
       - name: Prepare image and test
         run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-image }}
         shell: bash
@@ -39,24 +39,8 @@ jobs:
       - uses: hpi-swa/setup-smalltalkCI@1.3.2
         id: smalltalkci
         with:
-          smalltalk-image: Pharo64-9.0
+          smalltalk-image: Pharo64-10.0
       - name: Prepare image and test
         run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-image }}
         shell: bash
         timeout-minutes: 20
-
-  test-linux-p8:
-    runs-on: ubuntu-latest
-    env:
-      PLATFORM: ${{ github.job }}
-    name: 'Test Linux - Pharo 8'
-    steps:
-      - uses: actions/checkout@v2.4.0
-      - uses: hpi-swa/setup-smalltalkCI@1.3.2
-        id: smalltalkci
-        with:
-          smalltalk-image: Pharo64-8.0
-      - name: Prepare image and test
-        run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-image }}
-        shell: bash
-        timeout-minutes: 12

@@ -118,7 +118,7 @@ OPPalette >> initializeLayout [
 	self layout: itemsLayout
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 OPPalette >> initializePresenters [
 	self newSelectionTool.
 	self newSeparator

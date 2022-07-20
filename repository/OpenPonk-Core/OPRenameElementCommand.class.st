@@ -17,11 +17,22 @@ Class {
 	#category : #'OpenPonk-Core-UICommands'
 }
 
+{ #category : #completion }
+OPRenameElementCommand >> entryCompletionOptionsFor: aText [
+
+	^ #(  )
+]
+
 { #category : #execute }
 OPRenameElementCommand >> execute [
-	| result |
-	self flag: 'Entry completion needed'.
-	result := UIManager default request: 'Name' initialAnswer: model name.
+
+	| dialog result |
+	dialog := OPRequestNameDialog new.
+	dialog
+		entryCompletionFilter: [ :text | 
+			self entryCompletionOptionsFor: text ];
+		openBlockedDialog.
+	result := dialog text.
 	result ifNil: [ ^ self ].
 	model name: result.
 	model announcer announce: OPElementRenamed new

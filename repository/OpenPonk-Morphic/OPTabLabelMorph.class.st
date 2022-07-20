@@ -1,7 +1,7 @@
 Class {
 	#name : #OPTabLabelMorph,
 	#superclass : #TabLabelMorph,
-	#category : #'OpenPonk-Spec-Windows'
+	#category : #'OpenPonk-Morphic-Morphic'
 }
 
 { #category : #accessing }

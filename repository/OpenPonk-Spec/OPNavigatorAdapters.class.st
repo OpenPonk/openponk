@@ -16,6 +16,8 @@ Class {
 
 { #category : #accessing }
 OPNavigatorAdapters class >> default [
+
+	<script: 'self default inspect'>
 	^ default ifNil: [ default := self new ]
 ]
 
@@ -27,11 +29,12 @@ OPNavigatorAdapters class >> reset [
 
 { #category : #'accessing - private' }
 OPNavigatorAdapters >> adapterFor: aModelObject [
-	^ typeToAdapterMapping
-		at: aModelObject class
-		ifAbsentPut: [ adapters
-				detect: [ :each | each hasMappingFor: aModelObject ]
-				ifNone: [ self error: 'No adapter found for ' , aModelObject printString ] ]
+
+	^ typeToAdapterMapping at: aModelObject class ifAbsentPut: [ 
+		  adapters
+			  detect: [ :each | each hasMappingFor: aModelObject ]
+			  ifNone: [ 
+			  self error: 'No adapter found for ' , aModelObject printString ] ]
 ]
 
 { #category : #accessing }
@@ -58,9 +61,10 @@ OPNavigatorAdapters >> adaptersFor: anObject in: aRootModel detect: aTwoArgSymbo
 
 { #category : #initialization }
 OPNavigatorAdapters >> allAdapters [
+
 	"Return default navigator last, because it has the lowest priority."
 
-	^ OPNavigatorAdapter allSubclasses
+	^ OPNavigatorAdapter allSubclasses sortedAs: #priority
 ]
 
 { #category : #accessing }
@@ -97,7 +101,7 @@ OPNavigatorAdapters >> contextMenuFor: anObject projectController: aProjectContr
 					acceptLabel: 'Yes, delete it';
 					cancelLabel: 'Cancel';
 					onAccept: [ aProjectController removeModel: anObject ];
-					openDialogWithSpec ] ].
+					openDialog ] ].
 	^ aMenuPresenter
 ]
 
@@ -120,12 +124,19 @@ OPNavigatorAdapters >> displayFor: anObject [
 ]
 
 { #category : #accessing }
+OPNavigatorAdapters >> entryCompletionFilterFor: anObject [
+
+	^ (self adapterFor: anObject) entryCompletionFilterFor: anObject
+]
+
+{ #category : #accessing }
 OPNavigatorAdapters >> iconFor: anObject [
 	^ (self adapterFor: anObject) iconFor: anObject
 ]
 
 { #category : #initialization }
 OPNavigatorAdapters >> initialize [
+
 	super initialize.
 	adapters := self allAdapters collect: #new.
 	typeToAdapterMapping := Dictionary new

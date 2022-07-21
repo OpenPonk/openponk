@@ -36,6 +36,12 @@ OPNavigatorAdapter class >> isAbstract [
 	^ self = OPNavigatorAdapter
 ]
 
+{ #category : #accessing }
+OPNavigatorAdapter class >> priority [
+
+	^ self subclassResponsibility
+]
+
 { #category : #registering }
 OPNavigatorAdapter class >> registerAdapter: aNavigator [
 	aNavigator registerAdapter: self new
@@ -129,6 +135,11 @@ OPNavigatorAdapter >> displayFor: anObject [
 { #category : #'widget API' }
 OPNavigatorAdapter >> displayMapping [
 	^ self subclassResponsibility
+]
+
+{ #category : #'as yet unclassified' }
+OPNavigatorAdapter >> entryCompletionFilterFor: anObject [
+	^ [ :text | #() ]
 ]
 
 { #category : #testing }

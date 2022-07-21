@@ -17,20 +17,14 @@ Class {
 	#category : #'OpenPonk-Core-UICommands'
 }
 
-{ #category : #completion }
-OPRenameElementCommand >> entryCompletionOptionsFor: aText [
-
-	^ #(  )
-]
-
 { #category : #execute }
 OPRenameElementCommand >> execute [
 
 	| dialog result |
 	dialog := OPRequestNameDialog new.
 	dialog
-		entryCompletionFilter: [ :text | 
-			self entryCompletionOptionsFor: text ];
+		entryCompletionFilter:
+			(OPNavigatorAdapters default entryCompletionFilterFor: model);
 		openBlockedDialog.
 	result := dialog text.
 	result ifNil: [ ^ self ].

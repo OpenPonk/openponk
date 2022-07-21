@@ -11,6 +11,12 @@ Class {
 	#category : #'OpenPonk-Spec-Utils'
 }
 
+{ #category : #accessing }
+OPDefaultNavigatorAdapter class >> priority [
+
+	^ 100
+]
+
 { #category : #registering }
 OPDefaultNavigatorAdapter class >> registerAdapter: aNavigator [
 	"Do nothing. This adapter is attached explicitly from DCNavigator"

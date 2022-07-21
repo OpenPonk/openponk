@@ -66,7 +66,9 @@ OPExportImageDialog >> initializeZoom [
 	zoomText
 		text: '100';
 		whenTextChangedDo: [ :text | 
-			zoomText text: ((text select: #isDigit) takeFirst: 4) ]
+			| digits |
+			digits := text select: #isDigit.
+			zoomText text: (digits first: (4 min: digits size)) ]
 ]
 
 { #category : #accessing }

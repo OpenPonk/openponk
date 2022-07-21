@@ -33,7 +33,7 @@ OPNote >> printOn: aStream [
 				nextPut: $' ]
 		ifFalse: [ 
 			aStream
-				nextPutAll: (self text takeFirst: 17);
+				nextPutAll: (self text first: (17 min: self text size));
 				nextPutAll: '''...' ].
 	aStream nextPutAll: ')'
 ]

@@ -10,10 +10,11 @@ Class {
 
 { #category : #'instance creation' }
 OPPaletteInitializer class >> addAllToPalette: aPalette forController: aDiagramController [
+
 	^ self new
-		palette: aPalette;
-		diagramController: aDiagramController;
-		addAll
+		  palette: aPalette;
+		  diagramController: aDiagramController;
+		  addAll
 ]
 
 { #category : #actions }

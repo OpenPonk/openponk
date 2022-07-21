@@ -182,7 +182,7 @@ OPProjectController >> mergeModelsAndDiagramsIntoOne [
 			layouter := (self openEditorOnDiagram: diagram) diagramController
 				            layouter.
 			layouter dominanceTreeLayout ];
-		openDialogWithSpec
+		openDialog
 ]
 
 { #category : #merging }
@@ -297,13 +297,21 @@ OPProjectController >> replaceWritableProjectFile [
 
 { #category : #saving }
 OPProjectController >> saveProject [
+
 	| file |
 	file := [ self writableProjectFile ]
-		on: OPProjectSaveCanceledException
-		do: [ ^ self inform: 'Saving canceled' ].
+		        on: OPProjectSaveCanceledException
+		        do: [ ^ self inform: 'Saving canceled' ].
 	self project saveInImage.
 	self saveProjectTo: file.
-	self inform: 'Project saved to ' , file fullName
+	UIManager default
+		inform: (String streamContents: [ :s | 
+				 s << 'Project saved to ' << file pathString.
+				 s
+					 cr;
+					 cr.
+				 s << 'Click to open location' ])
+		actionOnClick: [ file openInOSFileBrowser ]
 ]
 
 { #category : #saving }

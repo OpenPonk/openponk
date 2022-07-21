@@ -4,6 +4,12 @@ Class {
 	#category : #'OpenPonk-Spec-Utils'
 }
 
+{ #category : #accessing }
+OPBoundaryAndNoteNavigatorAdapter class >> priority [
+
+	^ 50
+]
+
 { #category : #registering }
 OPBoundaryAndNoteNavigatorAdapter class >> registerAdapter: aNavigator [
 	"Do nothing. This adapter is attached explicitly from DCNavigator"

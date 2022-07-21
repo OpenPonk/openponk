@@ -35,24 +35,27 @@ OPPragmaPluginMenuBuilder >> hasCorrectArguments: aPragma [
 
 { #category : #accessing }
 OPPragmaPluginMenuBuilder >> model: anObject [
+
 	super model: anObject.
 	testBlock := self testBlockFor: anObject
 ]
 
 { #category : #accessing }
 OPPragmaPluginMenuBuilder >> testBlockFor: aModel [
+
 	| blocks |
 	blocks := Dictionary
-		with: OPCanvasPresenter -> [ :prg | prg arguments first = aModel editor plugin className ]
-		with: OPEditor -> [ :prg | prg arguments first = aModel plugin className ]
-		with:
-			OPWorkbenchToolbar
-				-> [ :prg | prg arguments first = aModel projectController project className ]
-		"with:
-			OPModelNavigator
-				-> [ :prg | prg arguments first = aModel projectController project className ]"
-		with:
-			OPProjectNavigator
-				-> [ :prg | prg arguments first = aModel projectController project className ].
+		          with: OPCanvasPresenter -> [ :prg | 
+			          aModel editor plugin class withAllSuperclasses 
+				          anySatisfy: [ :any | any name = prg arguments first ] ]
+		          with: OPEditor -> [ :prg | 
+			          aModel plugin class withAllSuperclasses anySatisfy: [ 
+				          :any | any name = prg arguments first ] ]
+		          with: OPWorkbenchToolbar -> [ :prg | 
+			          prg arguments first
+			          = aModel projectController project className ]
+		          with: OPProjectNavigator -> [ :prg | 
+			          prg arguments first
+			          = aModel projectController project className ].
 	^ blocks at: aModel class
 ]

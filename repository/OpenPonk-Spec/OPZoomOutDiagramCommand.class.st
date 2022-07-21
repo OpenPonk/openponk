@@ -20,7 +20,7 @@ OPZoomOutDiagramCommand >> defaultMenuIcon [
 
 { #category : #accessing }
 OPZoomOutDiagramCommand >> defaultMenuItemName [
-	^ nil
+	^ ''
 ]
 
 { #category : #execution }

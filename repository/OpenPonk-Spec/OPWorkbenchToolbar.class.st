@@ -77,7 +77,13 @@ OPWorkbenchToolbar >> addEditorMenuItems: menuRegistrations to: spMenu [
 				group addItem: [ :item | 
 					item
 						name: each label;
-						action: each target ].
+						action: [ :arg | each spec action cull: arg ].
+					(each itemList isNotNil and: [ each itemList isNotEmpty ]) 
+						ifTrue: [ 
+							| submenu |
+							submenu := self newMenu.
+							item subMenu: submenu.
+							self addEditorMenuItems: each itemList to: submenu ] ].
 				each spec separator ifTrue: [ itemEndingGroupIndex := index ] ] ] ].
 	^ self
 		  addEditorMenuItems:

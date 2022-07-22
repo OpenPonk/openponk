@@ -21,7 +21,8 @@ OPShowHideElementsInDiagramCommand >> defaultMenuItemName [
 
 { #category : #execution }
 OPShowHideElementsInDiagramCommand >> execute [
+
 	(OPShowHidePresenter
-		newApplication: SpApplication defaultApplication
-		model: diagramPresenter diagramController) openWithSpec
+		 newApplication: SpApplication defaultApplication
+		 model: diagramPresenter diagramController) open
 ]

@@ -265,7 +265,11 @@ OPEditor >> showDiagram: aDiagram [
 
 { #category : #updating }
 OPEditor >> tabDeleted [
-	self workbench projectController removeDiagramController: diagramController.
+
+	self workbench projectController updateDiagram:
+		diagramController diagram.
+	self workbench projectController removeDiagramController:
+		diagramController.
 	self unregisterShortcutsOn: self workbench.
 	diagramController removeAllControllers
 ]

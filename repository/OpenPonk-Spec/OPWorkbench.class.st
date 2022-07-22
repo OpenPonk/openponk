@@ -121,11 +121,16 @@ OPWorkbench >> closeEditorOfDiagram: aDiagram [
 
 { #category : #opening }
 OPWorkbench >> closedTabOfEditor: anEditor [
+
+	self projectController updateDiagram:
+		anEditor diagramController diagram.
+	anEditor tabDeleted.
 	topToolbar activeEditor: nil.
 	editors removeKey: anEditor diagramController diagram.
-	focusedEditor = anEditor
-		ifTrue: [ focusedEditor := nil.
-			self announce: (OPEditorUnfocused on: anEditor) ].
+	anEditor diagramController diagram isSelected: false.
+	focusedEditor = anEditor ifTrue: [ 
+		focusedEditor := nil.
+		self announce: (OPEditorUnfocused on: anEditor) ].
 	self announce: (OPEditorClosed on: anEditor)
 ]
 
@@ -161,6 +166,7 @@ OPWorkbench >> focusEditorOf: aDiagram [
 	editorTabInfo := editors at: aDiagram.
 	notebook selectedPage = (editorTabInfo at: #page) ifFalse: [ 
 		^ notebook selectPage: (editorTabInfo at: #page) ].
+
 	focusedEditor ifNotNil: [ 
 		focusedEditor diagramController diagram ifNotNil: [ :oldDiagram | 
 			self projectController updateDiagram: oldDiagram.
@@ -271,7 +277,6 @@ OPWorkbench >> pageRemoved: aPage [
 
 	"activePresenter is editor"
 
-	aPage activePresenter tabDeleted.
 	self closedTabOfEditor: aPage activePresenter
 ]
 

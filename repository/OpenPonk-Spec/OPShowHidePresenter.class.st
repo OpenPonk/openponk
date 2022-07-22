@@ -40,13 +40,11 @@ OPShowHidePresenter >> initializePresenters [
 
 { #category : #initialization }
 OPShowHidePresenter >> initializeWindow: aWindowPresenter [
-	aWindowPresenter
-		title:
-			'Show / Hide Elements in ' , diagramController diagram name
-				, ' - OpenPonk'.
-	aWindowPresenter window announcer
-		when: WindowActivated
-		do: [ self refreshCurrentPage ].
+
+	aWindowPresenter title:
+		'Show / Hide Elements in ' , diagramController diagram name
+		, ' - OpenPonk'.
+	aWindowPresenter whenFocusReceivedDo: [ self refreshCurrentPage ].
 	aWindowPresenter windowIcon: OPCoreIcons openponkIcon
 ]
 

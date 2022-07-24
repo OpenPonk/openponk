@@ -38,7 +38,8 @@ OPAsyncTextInputFieldPresenter >> findCompletionOptionsFor: aString [
 
 	| filledName |
 	filledName := aString asString trimBoth.
-	filledName size < 3 ifTrue: [ ^ #(  ) ].
+	((filledName splitOn: Character space) noneSatisfy: [ :any | 
+		 any trimBoth size >= 2 ]) ifTrue: [ ^ #(  ) ].
 	^ entriesByText
 		  at: filledName
 		  ifPresent: [ :options | options ifNil: [ #(  ) ] ]

@@ -17,7 +17,7 @@ OPAsyncTextInputFieldPresenter >> askSourceForCompletionOptionsFor: aString [
 	entriesByText at: aString put: options.
 
 	monitor critical: [ 
-		self text trimBoth = aString ifFalse: [ ^ self ].
+		self text trim = aString ifFalse: [ ^ self ].
 		self adapter widget openChooser ]
 ]
 
@@ -37,9 +37,9 @@ OPAsyncTextInputFieldPresenter >> entryCompletionFilter: aBlock [
 OPAsyncTextInputFieldPresenter >> findCompletionOptionsFor: aString [
 
 	| filledName |
-	filledName := aString asString trimBoth.
+	filledName := aString asString trim.
 	((filledName splitOn: Character space) noneSatisfy: [ :any | 
-		 any trimBoth size >= 2 ]) ifTrue: [ ^ #(  ) ].
+		 any trim size >= 2 ]) ifTrue: [ ^ #(  ) ].
 	^ entriesByText
 		  at: filledName
 		  ifPresent: [ :options | options ifNil: [ #(  ) ] ]

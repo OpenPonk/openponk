@@ -30,12 +30,12 @@ OPPaletteInitializer >> allCommonItemsByName [
 		-> [ (palette newCreationEntry: [ OPNoteController new ])
 				label: 'Note';
 				icon: (self iconNamed: #announcement);
-				whenCompleted: [ :ctrl | OPEditElementTextCommand executeOn: ctrl model ] ]).
+				whenCreated: [ :ctrl | OPEditElementTextCommand executeOn: ctrl model ] ]).
 	(OPBoundaryController paletteItemName
 		-> [ (palette newCreationEntry: [ OPBoundaryController new ])
 				label: 'Boundary';
 				icon: (self iconNamed: #checkBoxOff);
-				whenCompletedRename ])} asDictionary
+				whenCreatedSetup ])} asDictionary
 ]
 
 { #category : #accessing }

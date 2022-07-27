@@ -135,14 +135,14 @@ OPNavigatorAdapters >> displayFor: anObject [
 ]
 
 { #category : #accessing }
-OPNavigatorAdapters >> entryCompletionFilterFor: anObject [
-
-	^ (self adapterFor: anObject) entryCompletionFilterFor: anObject
+OPNavigatorAdapters >> iconFor: anObject [
+	^ (self adapterFor: anObject) iconFor: anObject
 ]
 
 { #category : #accessing }
-OPNavigatorAdapters >> iconFor: anObject [
-	^ (self adapterFor: anObject) iconFor: anObject
+OPNavigatorAdapters >> initialSetupFor: anObject [
+
+	^ (self adapterFor: anObject) initialSetupFor: anObject
 ]
 
 { #category : #initialization }

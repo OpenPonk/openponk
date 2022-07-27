@@ -25,11 +25,8 @@ Class {
 OPRenameElementCommand >> execute [
 
 	| dialog result |
-	dialog := OPRequestNameDialog new.
-	dialog
-		entryCompletionFilter:
-			(OPNavigatorAdapters default entryCompletionFilterFor: model);
-		openBlockedDialog.
+	dialog := SpRequestDialog new.
+	dialog openBlockedDialog.
 	result := dialog text.
 	result ifNil: [ ^ self ].
 	model name: result.

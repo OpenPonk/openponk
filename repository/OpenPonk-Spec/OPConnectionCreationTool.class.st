@@ -98,6 +98,6 @@ OPConnectionCreationTool >> targetSelected: aController [
 ]
 
 { #category : #'as yet unclassified' }
-OPConnectionCreationTool >> whenCompleted: aOneArgBlock [
+OPConnectionCreationTool >> whenCreated: aOneArgBlock [
 	onComplete := aOneArgBlock
 ]

@@ -162,11 +162,6 @@ OPModelTreeWidget >> refreshButton [
 	^ refreshButton
 ]
 
-{ #category : #'menu commands' }
-OPModelTreeWidget >> renameCommand: modelObject [
-	OPRenameElementCommand executeOn: modelObject
-]
-
 { #category : #private }
 OPModelTreeWidget >> selectedItem [
 

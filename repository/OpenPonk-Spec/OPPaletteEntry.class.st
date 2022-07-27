@@ -80,12 +80,13 @@ OPPaletteEntry >> tool: aTool [
 ]
 
 { #category : #'tool api' }
-OPPaletteEntry >> whenCompleted: aOneArgBlock [
-	tool whenCompleted: aOneArgBlock
+OPPaletteEntry >> whenCreated: aOneArgBlock [
+	tool whenCreated: aOneArgBlock
 ]
 
 { #category : #'tool api' }
-OPPaletteEntry >> whenCompletedRename [
-	self
-		whenCompleted: [ :ctrl | OPRenameElementCommand executeOn: ctrl model ]
+OPPaletteEntry >> whenCreatedSetup [
+
+	self whenCreated: [ :ctrl | 
+		OPInitialSetElementCommand executeOn: ctrl model ]
 ]

@@ -137,11 +137,6 @@ OPNavigatorAdapter >> displayMapping [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
-OPNavigatorAdapter >> entryCompletionFilterFor: anObject [
-	^ [ :text | #() ]
-]
-
 { #category : #testing }
 OPNavigatorAdapter >> hasMappingFor: anObject [
 	^ false
@@ -162,6 +157,12 @@ OPNavigatorAdapter >> iconFor: anObject [
 { #category : #'widget API' }
 OPNavigatorAdapter >> iconMapping [
 	^ self subclassResponsibility 
+]
+
+{ #category : #'as yet unclassified' }
+OPNavigatorAdapter >> initialSetupFor: anObject [
+
+	^ OPRenameElementCommand executeOn: anObject
 ]
 
 { #category : #private }

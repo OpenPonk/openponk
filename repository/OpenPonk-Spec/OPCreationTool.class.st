@@ -62,6 +62,6 @@ OPCreationTool >> targetSelected: aController [
 ]
 
 { #category : #callbacks }
-OPCreationTool >> whenCompleted: aOneArgBlock [
+OPCreationTool >> whenCreated: aOneArgBlock [
 	onComplete := aOneArgBlock
 ]

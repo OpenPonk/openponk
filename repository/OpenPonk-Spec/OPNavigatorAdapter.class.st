@@ -138,7 +138,7 @@ OPNavigatorAdapter >> displayMapping [
 ]
 
 { #category : #testing }
-OPNavigatorAdapter >> hasMappingFor: anObject [
+OPNavigatorAdapter >> hasMappingFor: anObject in: aModel [
 	^ false
 ]
 
@@ -160,9 +160,9 @@ OPNavigatorAdapter >> iconMapping [
 ]
 
 { #category : #'as yet unclassified' }
-OPNavigatorAdapter >> initialSetupFor: anObject [
+OPNavigatorAdapter >> initialSetupFor: anObject in: aModel [
 
-	^ OPRenameElementCommand executeOn: anObject
+	^ OPRenameElementCommand executeOn: anObject in: aModel
 ]
 
 { #category : #private }

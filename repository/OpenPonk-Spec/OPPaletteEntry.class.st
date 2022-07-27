@@ -88,5 +88,7 @@ OPPaletteEntry >> whenCreated: aOneArgBlock [
 OPPaletteEntry >> whenCreatedSetup [
 
 	self whenCreated: [ :ctrl | 
-		OPInitialSetElementCommand executeOn: ctrl model ]
+		OPInitialSetElementCommand
+			executeOn: ctrl model
+			in: ctrl diagramController model ]
 ]

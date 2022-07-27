@@ -38,10 +38,13 @@ OPDefaultNavigatorAdapter >> displayMapping [
 ]
 
 { #category : #'widget API' }
-OPDefaultNavigatorAdapter >> hasMappingFor: anObject [
-	^ {OPProject.
-	OPTestModel.
-	OPTestContainerModel} anySatisfy: [ :any | anObject isKindOf: any ]
+OPDefaultNavigatorAdapter >> hasMappingFor: anObject in: aModel [
+
+	^ { 
+		  OPProject.
+		  OPTestModel.
+		  OPTestContainerModel } anySatisfy: [ :any | 
+		  anObject isKindOf: any ]
 ]
 
 { #category : #'widget API' }

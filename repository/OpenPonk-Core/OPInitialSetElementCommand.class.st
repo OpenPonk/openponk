@@ -7,5 +7,5 @@ Class {
 { #category : #execute }
 OPInitialSetElementCommand >> execute [
 
-	OPNavigatorAdapters default initialSetupFor: model
+	OPNavigatorAdapters default initialSetupFor: element in: model
 ]

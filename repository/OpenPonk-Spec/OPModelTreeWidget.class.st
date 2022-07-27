@@ -107,7 +107,7 @@ OPModelTreeWidget >> initializeTree [
 					adapters
 						contextMenuFor: selectedItem
 						projectController: self projectController
-						in: self newMenu ] ];
+						inside: self newMenu ] ];
 		display: [ :anObject | adapters displayFor: anObject ];
 		children: [ :anObject | 
 			(adapters childrenFor: anObject) sorted: [ :a :b | 

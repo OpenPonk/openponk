@@ -29,6 +29,6 @@ OPRenameElementCommand >> execute [
 	dialog openBlockedDialog.
 	result := dialog text.
 	result ifNil: [ ^ self ].
-	model name: result.
-	model announcer announce: OPElementRenamed new
+	element name: result.
+	element announcer announce: OPElementRenamed new
 ]

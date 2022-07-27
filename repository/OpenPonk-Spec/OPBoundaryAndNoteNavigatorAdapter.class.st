@@ -30,9 +30,9 @@ OPBoundaryAndNoteNavigatorAdapter >> displayMapping [
 ]
 
 { #category : #'widget API' }
-OPBoundaryAndNoteNavigatorAdapter >> hasMappingFor: anObject [
-	^ {OPBoundary.
-	OPNote} anySatisfy: [ :any | anObject isKindOf: any ]
+OPBoundaryAndNoteNavigatorAdapter >> hasMappingFor: anObject in: aModel [
+
+	^ (anObject isKindOf: OPBoundary) or: [ anObject isKindOf: OPNote ]
 ]
 
 { #category : #'widget API' }

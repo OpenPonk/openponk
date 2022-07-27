@@ -5,21 +5,22 @@ Class {
 	#name : #OPUICommand,
 	#superclass : #Object,
 	#instVars : [
+		'element',
 		'model'
 	],
 	#category : #'OpenPonk-Core-UICommands'
 }
 
 { #category : #public }
-OPUICommand class >> executeOn: anObject [
-	^ self new
-		on: anObject;
-		execute
+OPUICommand class >> executeOn: anObject in: aModel [
+
+	^ (self on: anObject in: aModel) execute
 ]
 
 { #category : #'instance creation' }
-OPUICommand class >> on: anObject [
-	^ self new on: anObject
+OPUICommand class >> on: anObject in: aModel [
+
+	^ self new on: anObject in: aModel
 ]
 
 { #category : #execute }
@@ -28,6 +29,8 @@ OPUICommand >> execute [
 ]
 
 { #category : #accessing }
-OPUICommand >> on: aModel [
+OPUICommand >> on: anElement in: aModel [
+
+	element := anElement.
 	model := aModel
 ]

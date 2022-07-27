@@ -76,6 +76,26 @@ OPDynamicFormMagritteVisitor >> visitMemoDescription: aMemoDescription [
 ]
 
 { #category : #visiting }
+OPDynamicFormMagritteVisitor >> visitMultipleOptionDescription: aMultipleOptionDescription [
+
+	| dropList |
+	aMultipleOptionDescription isExtensible ifTrue: [ 
+		self notify: 'Extensibility of multilists not yet supported'.
+		^ self ].
+	dropList := form addList: aMultipleOptionDescription label.
+	dropList
+		beMultipleSelection;
+		items: aMultipleOptionDescription options;
+		enabled: aMultipleOptionDescription isReadOnly not;
+		display: [ :each | aMultipleOptionDescription labelForOption: each ];
+		displayIcon: [ :each :item | 
+			aMultipleOptionDescription iconForOption: each ];
+		selectItems: (aMultipleOptionDescription accessor read: controller);
+		whenSelectionChangedDo: [ :selection | 
+			selection accessor write: selection selectedItems to: controller ]
+]
+
+{ #category : #visiting }
 OPDynamicFormMagritteVisitor >> visitPriorityContainer: aContainer [
 	(self shouldIncludeLabelFor: aContainer)
 		ifTrue: [ form addLabel: aContainer label ].

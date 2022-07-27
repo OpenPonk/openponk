@@ -161,6 +161,17 @@ OPDynamicForm >> addLabel: aLabel [
 ]
 
 { #category : #'public - adding' }
+OPDynamicForm >> addList: aName [
+	| control |
+	self addLabel: aName.
+	
+	control := self newList.
+
+	self addControl: control.
+	^ control
+]
+
+{ #category : #'public - adding' }
 OPDynamicForm >> addNumberInput: aName [
 
 	| control |
@@ -201,20 +212,6 @@ OPDynamicForm >> addTextInput: aName [
 	^ control
 ]
 
-{ #category : #initialization }
-OPDynamicForm >> defaultHeights [
-	| lineHeight |
-	lineHeight := 20.
-	^ {SpSelectEntity -> lineHeight.
-	SpLabelPresenter -> (lineHeight - 5).
-	SpTextInputFieldPresenter -> (lineHeight + 2).
-	SpTextPresenter -> (lineHeight * 4).
-	SpDropListPresenter -> lineHeight.
-	SpDropListPresenter -> lineHeight.
-	SpCheckBoxPresenter -> (lineHeight * 1).
-	SpButtonPresenter -> (lineHeight * 1.2)} asDictionary
-]
-
 { #category : #public }
 OPDynamicForm >> editController: aController [
 	components ifNotEmpty: [ self reset ].
@@ -225,6 +222,12 @@ OPDynamicForm >> editController: aController [
 		takeKeyboardFocus
 ]
 
+{ #category : #initialization }
+OPDynamicForm >> forcedHeights [
+
+	^ { (SpListPresenter -> 100) } asDictionary
+]
+
 { #category : #public }
 OPDynamicForm >> fromMagritteDescriptions: aContainer [
 	| visitor |
@@ -232,11 +235,6 @@ OPDynamicForm >> fromMagritteDescriptions: aContainer [
 	visitor form: self.
 	visitor controller: controller.
 	visitor visit: aContainer
-]
-
-{ #category : #private }
-OPDynamicForm >> heightFor: aModel [
-	^ self defaultHeights at: aModel class ifAbsent: nil
 ]
 
 { #category : #initialization }
@@ -251,7 +249,12 @@ OPDynamicForm >> initializeLayout [
 
 	| itemsLayout |
 	itemsLayout := self class defaultLayout.
-	components do: [ :each | itemsLayout add: each expand: false ].
+	components do: [ :each | 
+		itemsLayout add: each withConstraints: [ :constraints | 
+			self forcedHeights
+				at: each class
+				ifPresent: [ :height | constraints height: height ]
+				ifAbsent: [ constraints expand: false ] ] ].
 	self layout: itemsLayout
 ]
 

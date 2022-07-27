@@ -1,6 +1,10 @@
 "
 I am a UI command for renaming a model element.
 
+!! Requirements
+
+The model element has to implement #name: and #announcer
+
 !! Responsibility
 
 Show rename dialog.

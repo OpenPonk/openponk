@@ -80,13 +80,24 @@ OPNavigatorAdapters >> childrenFor: anObject [
 { #category : #accessing }
 OPNavigatorAdapters >> contextMenuFor: anObject projectController: aProjectController in: aMenuPresenter [
 
-	((adapters select: [ :each | each hasMappingFor: anObject ]) 
-		 collect: [ :each | each contextMenuFor: anObject ]) flattened do: [ 
-		:pair | 
-		aMenuPresenter addItem: [ :item | 
-			item
-				name: pair key;
-				action: [ pair value value: anObject ] ] ].
+	| contextMenuGroups |
+	contextMenuGroups := OrderedCollection new.
+	adapters
+		select: [ :each | each hasMappingFor: anObject ]
+		thenDo: [ :each | 
+			(each contextMenuFor: anObject) do: [ :eachGroup | 
+				(eachGroup reject: [ :eachItemPair | 
+					 contextMenuGroups anySatisfy: [ :anyGroup | 
+						 anyGroup anySatisfy: [ :anyItemPair | 
+							 anyItemPair key = eachItemPair key ] ] ]) ifNotEmpty: [ 
+					:filteredGroup | contextMenuGroups add: filteredGroup ] ] ].
+	contextMenuGroups do: [ :eachGroup | 
+		aMenuPresenter addGroup: [ :group | 
+			eachGroup do: [ :eachItemPair | 
+				aMenuPresenter addItem: [ :item | 
+					item
+						name: eachItemPair key;
+						action: [ eachItemPair value value: anObject ] ] ] ] ].
 	((aProjectController hasModel: anObject) and: [ 
 		 aProjectController project models size > 1 ]) ifFalse: [ 
 		^ aMenuPresenter ].

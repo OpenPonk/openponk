@@ -10,31 +10,29 @@ Class {
 
 { #category : #baselines }
 BaselineOfOpenPonk >> baseline: spec [
+
 	<baseline>
-	spec
-		for: #common
-		do: [ self externalProjectsBaseline: spec.
-			self internalProjectsBaseline: spec.
-			spec
-				package: 'OpenPonk-Trachel'
-					with: [ spec requires: #('Roassal2') ];
-				package: 'OpenPonk-Roassal2'
-					with: [ spec requires: #('OpenPonk-Trachel') ];
-				package: 'OpenPonk-Core'
-					with: [ spec
-						requires:
-							#('Magritte' 'Mocketry' 'XMLParser' 'XPath' 'NeoJSON' 'OpenPonk-Roassal2') ];
-				package: 'OpenPonk-Morphic';
-				package: 'OpenPonk-Help';
-				package: 'OpenPonk-Spec'
-					with: [ spec
-						requires:
-							#('Moose' 'NewTools' 'Magritte' 'SynchronizedLinks' 'OpenPonk-Morphic') ];
-				preLoadDoIt: #loadPetitParser.
-			spec
-				group: 'default'
-				with:
-					#('OpenPonk-Core' 'OpenPonk-Roassal2' 'OpenPonk-Morphic' 'OpenPonk-Spec' 'OpenPonk-Help') ]
+	spec for: #common do: [ 
+		self externalProjectsBaseline: spec.
+		self internalProjectsBaseline: spec.
+		spec
+			package: 'OpenPonk-Trachel'
+			with: [ spec requires: #( 'Roassal2' ) ];
+			package: 'OpenPonk-Roassal2'
+			with: [ spec requires: #( 'OpenPonk-Trachel' ) ];
+			package: 'OpenPonk-Core' with: [ 
+				spec requires:
+						#( 'Magritte' 'Mocketry' 'XMLParser' 'XPath' 'NeoJSON' 'OpenPonk-Roassal2' ) ];
+			package: 'OpenPonk-Morphic';
+			package: 'OpenPonk-Spec' with: [ 
+				spec requires:
+						#( 'Moose' 'NewTools' 'Magritte' 'SynchronizedLinks'
+						   'OpenPonk-Morphic' ) ];
+			preLoadDoIt: #loadPetitParser.
+		spec
+			group: 'default'
+			with: #( 'OpenPonk-Core' 'OpenPonk-Roassal2' 'OpenPonk-Morphic'
+				   'OpenPonk-Spec' ) ]
 ]
 
 { #category : #baselines }

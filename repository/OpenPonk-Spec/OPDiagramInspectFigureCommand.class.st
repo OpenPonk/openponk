@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #accessing }
+OPDiagramInspectFigureCommand >> defaultMenuIcon [
+
+	^ self iconNamed: #glamorousInspect
+]
+
+{ #category : #accessing }
 OPDiagramInspectFigureCommand >> defaultMenuItemName [
 	^ 'Inspect figure'
 ]

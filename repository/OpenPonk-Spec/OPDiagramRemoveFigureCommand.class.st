@@ -11,6 +11,12 @@ OPDiagramRemoveFigureCommand class >> canvasShortcutActivation [
 ]
 
 { #category : #accessing }
+OPDiagramRemoveFigureCommand >> defaultMenuIcon [
+
+	^ self iconNamed: #glamorousTrash
+]
+
+{ #category : #accessing }
 OPDiagramRemoveFigureCommand >> defaultMenuItemName [
 	^ 'Remove from model'
 ]

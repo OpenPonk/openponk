@@ -50,9 +50,10 @@ OPEditor class >> defaultLayout [
 
 { #category : #toolbar }
 OPEditor class >> developerToolbarMenu: aBuilder [
-	OPWorkbench isDevelopmentMode
-		ifFalse: [ ^ self ].
+
+	OPWorkbench isDevelopmentMode ifFalse: [ ^ self ].
 	(aBuilder item: 'Inspect Controller...')
+		icon: (self iconNamed: #glamorousInspect);
 		action: [ aBuilder model diagramController inspect ].
 	aBuilder withSeparatorAfter
 ]
@@ -104,10 +105,12 @@ OPEditor class >> toolbarMenu: aBuilder [
 
 	<opEditorToolbarMenu>
 	self developerToolbarMenu: aBuilder.
-	(aBuilder item: 'Export as PNG...') action: [ 
-		aBuilder model canvasPresenter exportAsPng ].
-	(aBuilder item: 'Export as SVG (incomplete/simplified)...') action: [ 
-		aBuilder model canvasPresenter exportAsSvg ]
+	(aBuilder item: 'Export as PNG...')
+		icon: (self iconNamed: #smallScreenshot);
+		action: [ aBuilder model canvasPresenter exportAsPng ].
+	(aBuilder item: 'Export as SVG (incomplete/simplified)...')
+		icon: (self iconNamed: #smallScreenshot);
+		action: [ aBuilder model canvasPresenter exportAsSvg ]
 ]
 
 { #category : #'accessing - spec' }

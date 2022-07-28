@@ -36,13 +36,15 @@ OPNavigatorAdapters >> adapterFor: aModelObject [
 { #category : #'accessing - private' }
 OPNavigatorAdapters >> adapterFor: aModelObject in: aModel [
 
-	^ modelToAdapterMapping at: aModelObject -> aModel ifAbsentPut: [ 
-		  adapters
-			  detect: [ :each | each hasMappingFor: aModelObject in: aModel ]
-			  ifNone: [ 
-				  self error:
-					  'No adapter found for ' , aModelObject printString , ' in '
-					  , aModel printString ] ]
+	^ modelToAdapterMapping
+		  at: (Association key: aModelObject value: aModel)
+		  ifAbsentPut: [ 
+			  adapters
+				  detect: [ :each | each hasMappingFor: aModelObject in: aModel ]
+				  ifNone: [ 
+					  self error:
+						  'No adapter found for ' , aModelObject printString , ' in '
+						  , aModel printString ] ]
 ]
 
 { #category : #accessing }

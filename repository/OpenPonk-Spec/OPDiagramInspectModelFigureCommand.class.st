@@ -10,6 +10,12 @@ OPDiagramInspectModelFigureCommand class >> canvasShortcutActivation [
 	^ CmdShortcutActivation by: $i meta for: OPCanvasPresenter
 ]
 
+{ #category : #accessing }
+OPDiagramInspectModelFigureCommand >> defaultMenuIcon [
+
+	^ self iconNamed: #glamorousInspect
+]
+
 { #category : #execution }
 OPDiagramInspectModelFigureCommand >> defaultMenuItemName [
 	^ 'Inspect model'

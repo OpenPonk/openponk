@@ -142,13 +142,28 @@ OPCanvasPresenter >> exportAsSvg [
 { #category : #toolbar }
 OPCanvasPresenter >> exportCanvasToPng: aFile [
 
-	self exportCanvasToPng: aFile zoom: TRCamera basicNew defaultCameraScale
+	self exportCanvasToPng: aFile silently: false
+]
+
+{ #category : #toolbar }
+OPCanvasPresenter >> exportCanvasToPng: aFile silently: aSilentlyBoolean [
+
+	self
+		exportCanvasToPng: aFile
+		zoom: TRCamera basicNew defaultCameraScale
+		silently: aSilentlyBoolean
 ]
 
 { #category : #toolbar }
 OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aNumber [
 
-	| gridShape gridColor zoom view approxResolution |
+	self exportCanvasToPng: aFileReference zoom: aNumber silently: false
+]
+
+{ #category : #toolbar }
+OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aNumber silently: aSilentlyBoolean [
+
+	| gridShape gridColor zoom view approxResolution jobBlock |
 	view := roassalView.
 	approxResolution := aNumber * aNumber
 	                    * view canvas encompassingRectangle area.
@@ -159,7 +174,7 @@ OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aNumber [
 				         roundDownTo: 0.01 ]
 		         ifFalse: [ aNumber ]) max: 0.01.
 
-	(aNumber - zoom) abs > 0.011 ifTrue: [ 
+	(aSilentlyBoolean not and: [ (aNumber - zoom) abs > 0.011 ]) ifTrue: [ 
 		GrowlMorph
 			openWithLabel: 'Warning'
 			contents: 'Export zoom was reduced to '
@@ -175,31 +190,37 @@ OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aNumber [
 	gridColor := gridShape color.
 	self diagramController deselectAll.
 
-	[ :job | 
-	approxResolution := zoom * zoom
-	                    * view canvas encompassingRectangle area.
-	job title:
-		'Exporting diagram - might take ' , (approxResolution > 120000000
-			 ifTrue: [ 'tens of seconds' ]
-			 ifFalse: [ 
-				 approxResolution > 1200000
-					 ifTrue: [ 'several seconds' ]
-					 ifFalse: [ 'a few seconds' ] ]).
-	[ 
-	gridShape color: Color transparent.
-	(zoom - view canvas camera scale) abs >= 0.01 ifTrue: [ 
-		view := view veryDeepCopy.
-		view canvas camera scale: zoom.
-		job progress: 0.2 ].
+	jobBlock := [ :job | 
+	            approxResolution := zoom * zoom
+	                                *
+	                                view canvas encompassingRectangle
+		                                area.
+	            job title:
+		            'Exporting diagram - might take '
+		            , (approxResolution > 120000000
+				             ifTrue: [ 'tens of seconds' ]
+				             ifFalse: [ 
+					             approxResolution > 1200000
+						             ifTrue: [ 'several seconds' ]
+						             ifFalse: [ 'a few seconds' ] ]).
+	            [ 
+	            gridShape color: Color transparent.
+	            (zoom - view canvas camera scale) abs >= 0.01 ifTrue: [ 
+		            view := view veryDeepCopy.
+		            view canvas camera scale: zoom.
+		            job progress: 0.2 ].
 
-	RTPNGExporter new
-		builder: view;
-		withScale;
-		fileName: aFileReference pathString;
-		exportToFile ] ensure: [ 
-		job progress: 0.8.
-		gridShape color: gridColor.
-		view signalUpdate ] ] asJob run.
+	            RTPNGExporter new
+		            builder: view;
+		            withScale;
+		            fileName: aFileReference pathString;
+		            exportToFile ] ensure: [ 
+		            job progress: 0.8.
+		            gridShape color: gridColor.
+		            view signalUpdate ] ].
+
+	aSilentlyBoolean ifTrue: [ ^ jobBlock value: Job new ].
+	jobBlock asJob run.
 
 	UIManager default
 		inform: (String streamContents: [ :s | 
@@ -214,23 +235,34 @@ OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aNumber [
 { #category : #toolbar }
 OPCanvasPresenter >> exportCanvasToSvg: aFileReference [
 
-	| view amountOfElements |
+	self exportCanvasToSvg: aFileReference silently: false
+]
+
+{ #category : #toolbar }
+OPCanvasPresenter >> exportCanvasToSvg: aFileReference silently: aSilentlyBoolean [
+
+	| view amountOfElements jobBlock |
 	view := roassalView.
 
 	self diagramController deselectAll.
 
-	[ :job | 
-	amountOfElements := view elements size.
-	job title:
-		'Exporting diagram - might take ' , (amountOfElements > 5000
-			 ifTrue: [ 'tens of seconds' ]
-			 ifFalse: [ 
-				 amountOfElements > 500
-					 ifTrue: [ 'several seconds' ]
-					 ifFalse: [ 'a few seconds' ] ]).
+	jobBlock := [ :job | 
+	            amountOfElements := view elements size.
+	            job title:
+		            'Exporting diagram - might take '
+		            , (amountOfElements > 5000
+				             ifTrue: [ 'tens of seconds' ]
+				             ifFalse: [ 
+					             amountOfElements > 500
+						             ifTrue: [ 'several seconds' ]
+						             ifFalse: [ 'a few seconds' ] ]).
 
-	RTSVGExporter exportViewAsSVG: view filename: aFileReference ] asJob
-		run.
+	            RTSVGExporter
+		            exportViewAsSVG: view
+		            filename: aFileReference ].
+
+	aSilentlyBoolean ifTrue: [ ^ jobBlock value: Job new ].
+	jobBlock asJob run.
 
 	UIManager default
 		inform: (String streamContents: [ :s | 

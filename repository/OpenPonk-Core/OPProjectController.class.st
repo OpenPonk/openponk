@@ -196,12 +196,10 @@ OPProjectController >> mergeWith: aProject [
 
 { #category : #saving }
 OPProjectController >> modelMementoFor: aModel [
-	^ OPPersistenceMemento
-		model: aModel
-		diagrams:
-			(controllers
-				select: [ :each | each model = aModel ]
-				thenCollect: [ :each | each diagram ])
+
+	^ OPPersistenceMemento model: aModel diagrams: (controllers
+			   select: [ :each | each model = aModel ]
+			   thenCollect: [ :each | each diagram ])
 ]
 
 { #category : #saving }

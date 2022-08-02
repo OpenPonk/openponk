@@ -13,12 +13,13 @@ OPNoteController class >> paletteItemName [
 
 { #category : #forms }
 OPNoteController >> buildEditorForm: aForm [
+
 	(aForm addText: 'Text')
 		text: self model text;
-		whenTextIsAccepted: [ :newValue | 
+		whenTextChangedDo: [ :newValue | 
 			self model text: newValue asString.
-			self model
-				announce: (OPElementTextAttributeChanged withAttributeName: #text) ]
+			self model announce:
+					(OPElementTextAttributeChanged withAttributeName: #text) ]
 ]
 
 { #category : #construction }

@@ -58,9 +58,25 @@ OPProjectController class >> fromFileDo: aBlock [
 ]
 
 { #category : #opening }
+OPProjectController class >> modalFromFile [
+
+	^ StFBOpenFileDialog new
+		  title: 'Choose an OpenPonk project';
+		  extensions: #( opp ) named: 'OP projects';
+		  openModal
+]
+
+{ #category : #opening }
 OPProjectController class >> openFromFile [
 
 	self fromFileDo: [ :project | project open ]
+]
+
+{ #category : #opening }
+OPProjectController class >> openModalFromFile [
+
+	^ (self fromFile: (self modalFromFile ifNil: [ ^ nil ])) open
+		  projectController
 ]
 
 { #category : #adding }

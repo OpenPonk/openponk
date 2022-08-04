@@ -14,15 +14,16 @@ OPEditorPaletteLeftLayout >> name [
 OPEditorPaletteLeftLayout >> resizePanelsOf: aMorph afterWindowResized: aResizeEvent [
 
 	| canvasFormlayoutPolicy canvasWidth formWidth formLackOfWidth diff |
-	
+	aResizeEvent newSize x < 500 ifTrue: [ ^ self ].
+
 	diff := aResizeEvent newSize x - aResizeEvent oldSize x.
-	
+
 	canvasFormlayoutPolicy := aMorph submorphs third layoutPolicy.
-	
+
 	canvasWidth := aMorph submorphs third submorphs first extent x.
 	formWidth := aMorph submorphs third submorphs third extent x.
 	formLackOfWidth := OPDynamicForm minWidth - formWidth max: 0.
-	
+
 	aMorph layoutPolicy position: aMorph submorphs first extent x.
 	canvasFormlayoutPolicy position: canvasWidth + diff - formLackOfWidth
 ]
@@ -40,7 +41,7 @@ OPEditorPaletteLeftLayout >> spLayoutFor: anEditor [
 				  beNotResizable;
 				  beNotShrinkable ];
 		  add: (SpPanedLayout newLeftToRight
-				   positionOfSlider: anEditor canvasSectionWidth;
+				   positionOfSlider: OPEditor canvasSectionWidth;
 				   add: self canvasSectionLayout
 				   withConstraints: [ :constraints | 
 					   constraints

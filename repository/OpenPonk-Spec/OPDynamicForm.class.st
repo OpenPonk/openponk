@@ -54,7 +54,7 @@ OPDynamicForm class >> isLinkInstalled [
 { #category : #specs }
 OPDynamicForm class >> minWidth [
 
-	^ 120
+	^ 180
 ]
 
 { #category : #specs }

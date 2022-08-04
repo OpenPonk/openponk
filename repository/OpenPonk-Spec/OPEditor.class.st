@@ -36,6 +36,13 @@ OPEditor class >> availableLayouts [
 ]
 
 { #category : #settings }
+OPEditor class >> canvasSectionWidth [
+
+	^ OPWorkbench initialExtent x - OPWorkbench initialListsWidth
+	  - OPPalette initialWidth - OPDynamicForm initialWidth
+]
+
+{ #category : #settings }
 OPEditor class >> currentLayout [
 
 	currentLayout ifNil: [ self setDefaultLayout ].
@@ -123,13 +130,6 @@ OPEditor >> canvasPresenter [
 	^ canvasPresenter
 ]
 
-{ #category : #settings }
-OPEditor >> canvasSectionWidth [
-
-	^ OPWorkbench initialExtent x - OPWorkbench initialListsWidth
-	  - OPPalette initialWidth - OPDynamicForm initialWidth
-]
-
 { #category : #shortcuts }
 OPEditor >> collectShortcuts [
 	^ ((PragmaCollector
@@ -193,10 +193,18 @@ OPEditor >> initializePresenters [
 
 	self whenBuiltDo: [ :builtEvent | 
 		self withWindowDo: [ :window | 
+			| minimized |
+			minimized := false.
+			window window announcer weak
+				when: WindowCollapsed do: [ 
+					minimized := true ];
+				when: WindowExpanded do: [ 
+					minimized := false ].
 			window whenResizingDo: [ :resizeEvent | 
-				self class currentLayout
-					resizePanelsOf: builtEvent widget
-					afterWindowResized: resizeEvent ] ] ]
+				minimized ifFalse: [ 
+					self class currentLayout
+						resizePanelsOf: builtEvent widget
+						afterWindowResized: resizeEvent ] ] ] ]
 ]
 
 { #category : #'diagram handling' }

@@ -49,7 +49,7 @@ OPDiagramController >> addController: aController [
 { #category : #deprecated }
 OPDiagramController >> addModelElement: aModelElement [
 	| controller figure |
-	self deprecated: 'Use createModel:showInDiagram: instead.'.
+	self deprecated: 'Use createModelIn:andShowInDiagram: instead.'.
 "	self controllers detect: [ :ctrl | ctrl model = aModelElement ] ifFound: [ ^ self ].
 	(self model has: aModelElement)
 		ifFalse: [ self model add: aModelElement ].

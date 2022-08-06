@@ -224,7 +224,7 @@ OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aNumber silently: a
 
 	UIManager default
 		inform: (String streamContents: [ :s | 
-				 s << 'Saved to ' << aFileReference pathString.
+				 s << 'Image saved to ' << aFileReference pathString.
 				 s
 					 cr;
 					 cr.
@@ -266,7 +266,7 @@ OPCanvasPresenter >> exportCanvasToSvg: aFileReference silently: aSilentlyBoolea
 
 	UIManager default
 		inform: (String streamContents: [ :s | 
-				 s << 'Saved to ' << aFileReference pathString.
+				 s << 'Image saved to ' << aFileReference pathString.
 				 s
 					 cr;
 					 cr.

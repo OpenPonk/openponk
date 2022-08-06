@@ -124,7 +124,7 @@ OPDiagramsList >> diagramsIn: aProject [
 OPDiagramsList >> displayFor: aDiagramView [
 
 	^ '[' , aDiagramView name , '] '
-	  , (adapters displayFor: aDiagramView model in: nil)
+	  , (adapters displayFor: aDiagramView model)
 ]
 
 { #category : #initialization }

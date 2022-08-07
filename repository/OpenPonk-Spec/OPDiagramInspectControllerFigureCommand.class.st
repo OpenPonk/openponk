@@ -13,7 +13,6 @@ OPDiagramInspectControllerFigureCommand class >> canvasShortcutActivation [
 { #category : #accessing }
 OPDiagramInspectControllerFigureCommand >> defaultMenuIcon [
 
-	self halt.
 	^ self iconNamed: #glamorousInspect
 ]
 

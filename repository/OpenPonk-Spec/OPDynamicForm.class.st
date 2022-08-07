@@ -225,7 +225,9 @@ OPDynamicForm >> editController: aController [
 { #category : #initialization }
 OPDynamicForm >> forcedHeights [
 
-	^ { (SpListPresenter -> 100) } asDictionary
+	^ { 
+		  (SpListPresenter -> 100).
+		  (SpTextPresenter -> 100) } asDictionary
 ]
 
 { #category : #public }

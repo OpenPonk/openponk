@@ -131,9 +131,10 @@ OPDynamicForm >> addDroplist: aName [
 
 { #category : #'public - adding' }
 OPDynamicForm >> addEditableDroplist: aName [
+
 	| control |
 	self addLabel: aName.
-	control := self newDropList. self flag: 'used to be editable drop list'.
+	control := self instantiate: OPEditableDropListPresenter.
 	self addControl: control.
 	^ control
 ]

@@ -52,11 +52,11 @@ OPDynamicFormMagritteVisitor >> visitActionDescription: aDescription [
 
 { #category : #visiting }
 OPDynamicFormMagritteVisitor >> visitBooleanDescription: aBooleanDescription [
+
 	(form addCheckbox: aBooleanDescription label)
 		state: (aBooleanDescription accessor read: controller);
-		whenChangedDo: [ :newValue | aBooleanDescription accessor write: newValue to: controller ];
-		in:
-				[ :input | aBooleanDescription accessor opWhenUpdated: [ :newValue | input state: newValue ] ]
+		whenChangedDo: [ :newValue | 
+			aBooleanDescription accessor write: newValue to: controller ]
 ]
 
 { #category : #visiting }
@@ -145,10 +145,7 @@ OPDynamicFormMagritteVisitor >> visitStringDescription: aStringDescription [
 						ifFalse: [ 
 							(GrowlMorph label: 'Error' contents: e asString)
 								backgroundColor: GrowlMorph theme dangerBackgroundColor;
-								openInWorld ] ] ];
-		in: [ :input | 
-			aStringDescription accessor opWhenUpdated: [ :newValue | 
-				input text: newValue ] ]
+								openInWorld ] ] ]
 ]
 
 { #category : #visiting }

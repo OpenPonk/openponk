@@ -55,7 +55,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 	spec
 		baseline: 'Magritte'
 		with: [ spec
-				repository: 'github://magritte-metamodel/magritte:1e70be8/source';
+				repository: 'github://JanBliznicenko/magritte:fix-spec-usage/source';
 				loads: #(Core 'Magritte-Morph') ].
 	spec
 		baseline: 'Moose'

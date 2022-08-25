@@ -24,11 +24,14 @@ Class {
 { #category : #execute }
 OPRenameElementCommand >> execute [
 
-	| dialog result |
+	| dialog result window |
 	dialog := SpRequestDialog new.
-	dialog openBlockedDialog.
+	dialog label: 'Enter name'.
+	window := dialog openBlockedDialog.
 	result := dialog text.
 	result ifNil: [ ^ self ].
+	result ifEmpty: [ ^ self ].
+	window cancelled ifTrue: [ ^ self ].
 	element name: result.
 	element announcer announce: OPElementRenamed new
 ]

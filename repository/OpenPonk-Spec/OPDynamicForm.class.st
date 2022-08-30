@@ -173,6 +173,18 @@ OPDynamicForm >> addList: aName [
 ]
 
 { #category : #'public - adding' }
+OPDynamicForm >> addLongText: aName [
+
+	| control |
+	self addLabel: aName.
+
+	control := self instantiate: OPLongTextPresenter.
+
+	self addControl: control.
+	^ control
+]
+
+{ #category : #'public - adding' }
 OPDynamicForm >> addNumberInput: aName [
 
 	| control |
@@ -228,7 +240,8 @@ OPDynamicForm >> forcedHeights [
 
 	^ { 
 		  (SpListPresenter -> 100).
-		  (SpTextPresenter -> 100) } asDictionary
+		  (OPLongTextPresenter -> 200).
+		  (SpTextPresenter -> 60) } asDictionary
 ]
 
 { #category : #public }

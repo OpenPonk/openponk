@@ -14,7 +14,7 @@ OPNoteController class >> paletteItemName [
 { #category : #forms }
 OPNoteController >> buildEditorForm: aForm [
 
-	(aForm addText: 'Text')
+	(aForm addLongText: 'Text')
 		text: self model text;
 		whenTextChangedDo: [ :newValue | 
 			self model text: newValue asString.

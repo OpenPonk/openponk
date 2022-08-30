@@ -69,7 +69,9 @@ OPDynamicFormMagritteVisitor >> visitLabelDescription: aStringDescription [
 { #category : #visiting }
 OPDynamicFormMagritteVisitor >> visitMemoDescription: aMemoDescription [
 
-	(form addText: aMemoDescription label)
+	(aMemoDescription lineCount > aMemoDescription class defaultLineCount
+		 ifTrue: [ form addLongText: aMemoDescription label ]
+		 ifFalse: [ form addText: aMemoDescription label ])
 		text: (aMemoDescription accessor read: controller);
 		whenTextChangedDo: [ :newValue | 
 			aMemoDescription accessor write: newValue asString to: controller ]

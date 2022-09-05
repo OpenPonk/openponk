@@ -30,7 +30,7 @@ OPNavigatorAdapters class >> reset [
 { #category : #'accessing - private' }
 OPNavigatorAdapters >> adapterFor: aModelObject [
 
-	^ self adapterFor: aModelObject in: OPProject new
+	^ self adapterFor: aModelObject in: (OPProject new uuid: UUID nilUUID)
 ]
 
 { #category : #'accessing - private' }

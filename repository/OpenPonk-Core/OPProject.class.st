@@ -29,6 +29,12 @@ OPProject class >> named: aString [
 		yourself
 ]
 
+{ #category : #comparing }
+OPProject >> = anotherProject [
+
+	^ self uuid = anotherProject uuid
+]
+
 { #category : #accessing }
 OPProject >> addDiagram: aDiagram [
 
@@ -117,6 +123,12 @@ OPProject >> hasDiagramsModel: aModel [
 OPProject >> hasModel: aModel [
 
 	^ self models includes: aModel
+]
+
+{ #category : #comparing }
+OPProject >> hash [
+
+	^ self uuid hash
 ]
 
 { #category : #initialization }

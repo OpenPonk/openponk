@@ -16,9 +16,20 @@ OPDiagramExplorer class >> on: aDiagramController [
 ]
 
 { #category : #accessing }
+OPDiagramExplorer >> adapters [
+
+	^ adapters ifNil: [ 
+		  adapters := diagramController editor
+			              ifNil: [ OPNavigatorAdapters new ]
+			              ifNotNil: [ 
+				              diagramController editor workbench projectController
+					              navigatorAdapters ] ]
+]
+
+{ #category : #accessing }
 OPDiagramExplorer >> dependentFor: aModelObject [
 
-	^ adapters dependentFor: aModelObject in: diagramController model
+	^ self adapters dependentFor: aModelObject in: diagramController model
 ]
 
 { #category : #accessing }
@@ -56,9 +67,7 @@ OPDiagramExplorer >> hideElements: elements [
 { #category : #initialization }
 OPDiagramExplorer >> setDiagramController: aDiagramController [
 
-	diagramController := aDiagramController.
-	adapters := diagramController editor workbench projectController
-		            navigatorAdapters
+	diagramController := aDiagramController
 ]
 
 { #category : #actions }
@@ -102,7 +111,7 @@ OPDiagramExplorer >> showElements: aCollectionOfModelObjects [
 			                 ifNone: [ nil ] ]
 		                 thenSelect: [ :each | each isNotNil ].
 	ctrls := (aCollectionOfModelObjects sorted: [ :a :b | 
-		          adapters
+		          self adapters
 			          dependsTypeOf: b
 			          on: a
 			          in: diagramController model ]) collect: [ :each | 

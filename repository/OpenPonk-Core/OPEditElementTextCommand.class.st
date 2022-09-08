@@ -33,7 +33,9 @@ OPEditElementTextCommand >> accessor: anAccessor [
 
 { #category : #execute }
 OPEditElementTextCommand >> announceChange [
-	element announcer announce: OPElementTextAttributeChanged new
+
+	controller model announcer announce:
+		OPElementTextAttributeChanged new
 ]
 
 { #category : #execute }
@@ -57,8 +59,9 @@ OPEditElementTextCommand >> get: anObject [
 
 { #category : #accessing }
 OPEditElementTextCommand >> getSelector: anAccessor [
-	self
-		get: [ (MessageSend receiver: element selector: anAccessor) value ]
+
+	self get: [ 
+		(MessageSend receiver: controller model selector: anAccessor) value ]
 ]
 
 { #category : #initialization }
@@ -89,7 +92,8 @@ OPEditElementTextCommand >> set: anObject [
 
 { #category : #accessing }
 OPEditElementTextCommand >> setSelector: anAccessor [
-	self
-		set:
-			[ :argument | (MessageSend receiver: element selector: anAccessor) value: argument ]
+
+	self set: [ :argument | 
+		(MessageSend receiver: controller model selector: anAccessor) 
+			value: argument ]
 ]

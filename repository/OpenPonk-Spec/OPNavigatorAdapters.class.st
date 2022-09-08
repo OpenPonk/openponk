@@ -8,24 +8,8 @@ Class {
 		'adapters',
 		'modelToAdapterMapping'
 	],
-	#classInstVars : [
-		'default'
-	],
 	#category : #'OpenPonk-Spec-Utils'
 }
-
-{ #category : #accessing }
-OPNavigatorAdapters class >> default [
-
-	<script: 'self default inspect'>
-	^ default ifNil: [ default := self new ]
-]
-
-{ #category : #accessing }
-OPNavigatorAdapters class >> reset [
-	<script>
-	^ default := self new
-]
 
 { #category : #'accessing - private' }
 OPNavigatorAdapters >> adapterFor: aModelObject [
@@ -141,9 +125,11 @@ OPNavigatorAdapters >> iconFor: anObject [
 ]
 
 { #category : #accessing }
-OPNavigatorAdapters >> initialSetupFor: anObject in: aModel [
+OPNavigatorAdapters >> initialSetupFor: anObject in: aDiagramController [
 
-	^ (self adapterFor: anObject in: aModel) initialSetupFor: anObject in: aModel
+	^ (self adapterFor: anObject in: aDiagramController model)
+		  initialSetupFor: anObject
+		  in: aDiagramController
 ]
 
 { #category : #initialization }

@@ -119,8 +119,10 @@ OPShowHideTabContentPresenter >> selectedItems [
 
 { #category : #'accessing model' }
 OPShowHideTabContentPresenter >> setModelBeforeInitialization: aDiagramController [
+
 	diagramController := aDiagramController.
-	adapters := OPNavigatorAdapters default
+	adapters := diagramController editor workbench projectController
+		            navigatorAdapters
 ]
 
 { #category : #accessing }

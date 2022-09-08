@@ -160,9 +160,9 @@ OPNavigatorAdapter >> iconMapping [
 ]
 
 { #category : #'as yet unclassified' }
-OPNavigatorAdapter >> initialSetupFor: anObject in: aModel [
+OPNavigatorAdapter >> initialSetupFor: anObject in: aDiagramController [
 
-	^ OPRenameElementCommand executeOn: anObject in: aModel
+	^ OPRenameElementCommand executeOn: (aDiagramController controllerFor: anObject)
 ]
 
 { #category : #private }

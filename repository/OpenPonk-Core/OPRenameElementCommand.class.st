@@ -32,6 +32,6 @@ OPRenameElementCommand >> execute [
 	result ifNil: [ ^ self ].
 	result ifEmpty: [ ^ self ].
 	window cancelled ifTrue: [ ^ self ].
-	element name: result.
-	element announcer announce: OPElementRenamed new
+	controller model name: result.
+	controller model announcer announce: OPElementRenamed new
 ]

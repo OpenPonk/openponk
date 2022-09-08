@@ -32,10 +32,7 @@ OPPaletteInitializer >> allCommonItemsByName [
 		   (palette newCreationEntry: [ OPNoteController new ])
 			   label: 'Note';
 			   icon: (self iconNamed: #announcement);
-			   whenCreated: [ :ctrl | 
-				   OPEditElementTextCommand
-					   executeOn: ctrl model
-					   in: ctrl diagramController model ] ]).
+			   whenCreated: [ :ctrl | OPEditElementTextCommand executeOn: ctrl ] ]).
 		  (OPBoundaryController paletteItemName -> [ 
 		   (palette newCreationEntry: [ OPBoundaryController new ])
 			   label: 'Boundary';

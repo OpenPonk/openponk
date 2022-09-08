@@ -17,6 +17,7 @@ OPDiagramExplorer class >> on: aDiagramController [
 
 { #category : #accessing }
 OPDiagramExplorer >> dependentFor: aModelObject [
+
 	^ adapters dependentFor: aModelObject in: diagramController model
 ]
 
@@ -53,14 +54,11 @@ OPDiagramExplorer >> hideElements: elements [
 ]
 
 { #category : #initialization }
-OPDiagramExplorer >> initialize [
-	super initialize.
-	adapters := OPNavigatorAdapters default
-]
-
-{ #category : #initialization }
 OPDiagramExplorer >> setDiagramController: aDiagramController [
-	diagramController := aDiagramController
+
+	diagramController := aDiagramController.
+	adapters := diagramController editor workbench projectController
+		            navigatorAdapters
 ]
 
 { #category : #actions }
@@ -92,17 +90,23 @@ OPDiagramExplorer >> showElement: aModelObject [
 
 { #category : #actions }
 OPDiagramExplorer >> showElements: aCollectionOfModelObjects [
+
 	| ctrls existingCtrls |
 	aCollectionOfModelObjects ifEmpty: [ ^ self ].
 	self diagramController deselectAll.
 	diagramController disableRefresh.
 	existingCtrls := aCollectionOfModelObjects asArray
-		collect: [ :each | diagramController controllerForModel: each ifNone: [ nil ] ]
-		thenSelect: [ :each | each isNotNil ].
-	ctrls := (aCollectionOfModelObjects
-		sorted:
-			[ :a :b | adapters dependsTypeOf: b on: a in: diagramController model ])
-		collect: [ :each | diagramController showWithoutDependentInDiagramModel: each ].
+		                 collect: [ :each | 
+		                 diagramController
+			                 controllerForModel: each
+			                 ifNone: [ nil ] ]
+		                 thenSelect: [ :each | each isNotNil ].
+	ctrls := (aCollectionOfModelObjects sorted: [ :a :b | 
+		          adapters
+			          dependsTypeOf: b
+			          on: a
+			          in: diagramController model ]) collect: [ :each | 
+		         diagramController showWithoutDependentInDiagramModel: each ].
 	diagramController enableRefresh.
 	ctrls \ existingCtrls do: #refreshFigure
 ]

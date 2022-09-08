@@ -7,5 +7,8 @@ Class {
 { #category : #execute }
 OPInitialSetElementCommand >> execute [
 
-	OPNavigatorAdapters default initialSetupFor: element in: model
+	controller diagramController editor workbench projectController
+		navigatorAdapters
+		initialSetupFor: controller model
+		in: controller diagramController
 ]

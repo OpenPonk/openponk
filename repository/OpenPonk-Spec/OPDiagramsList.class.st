@@ -10,14 +10,14 @@ Class {
 		'list',
 		'heading',
 		'project',
-		'adapters',
 		'toolbar',
 		'editButton',
 		'deleteButton',
 		'openButton',
 		'createButton',
 		'cloneButton',
-		'notebook'
+		'notebook',
+		'adapters'
 	],
 	#category : #'OpenPonk-Spec-Windows'
 }
@@ -31,6 +31,13 @@ OPDiagramsList class >> defaultLayout [
 				   yourself);
 		  add: #toolbar height: self toolbarHeight;
 		  yourself
+]
+
+{ #category : #accessing }
+OPDiagramsList >> adapters [
+
+	^ adapters ifNil: [ 
+		  adapters := self workbench projectController navigatorAdapters ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -124,7 +131,7 @@ OPDiagramsList >> diagramsIn: aProject [
 OPDiagramsList >> displayFor: aDiagramView [
 
 	^ '[' , aDiagramView name , '] '
-	  , (adapters displayFor: aDiagramView model)
+	  , (self adapters displayFor: aDiagramView model)
 ]
 
 { #category : #initialization }
@@ -151,17 +158,11 @@ OPDiagramsList >> heading [
 ]
 
 { #category : #initialization }
-OPDiagramsList >> initialize [
-	super initialize.
-	adapters := OPNavigatorAdapters default
-]
-
-{ #category : #initialization }
 OPDiagramsList >> initializeList [
 
 	list
 		display: [ :aView | self displayRowFor: aView ];
-		displayIcon: [ :aView | adapters iconFor: aView model ];
+		displayIcon: [ :aView | self adapters iconFor: aView model ];
 		whenActivatedDo: [ 
 			list selectedItem ifNotNil: [ :aView | self openDiagram: aView ] ];
 		whenSelectionChangedDo: [ :item | self selectionChanged: item ];

@@ -10,7 +10,8 @@ Class {
 		'controllers',
 		'lastSave',
 		'disableAutosave',
-		'persistenceManager'
+		'persistenceManager',
+		'navigatorAdapters'
 	],
 	#classVars : [
 		'RecentProjects'
@@ -221,6 +222,12 @@ OPProjectController >> modelMementoFor: aModel [
 { #category : #saving }
 OPProjectController >> modelMementos [
 	^ self project models collect: [ :each | self modelMementoFor: each ]
+]
+
+{ #category : #accessing }
+OPProjectController >> navigatorAdapters [
+
+	^ navigatorAdapters ifNil: [ OPNavigatorAdapters new ]
 ]
 
 { #category : #opening }

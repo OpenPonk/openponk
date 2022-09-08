@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'tree',
 		'project',
-		'adapters',
 		'refreshButton'
 	],
 	#category : #'OpenPonk-Spec-Windows'
@@ -51,6 +50,12 @@ OPModelTreeWidget class >> withoutHeadingSpec [
 		yourself
 ]
 
+{ #category : #accessing }
+OPModelTreeWidget >> adapters [
+
+	^ self workbench projectController navigatorAdapters
+]
+
 { #category : #'menu commands' }
 OPModelTreeWidget >> deleteDiagramCommand: aModelElement [
 	^ self notYetImplemented
@@ -79,12 +84,6 @@ OPModelTreeWidget >> editElementCommand: aModelElement [
 	UIManager default inform: 'Editing from tree is disabled'	"disabled due to not having controller at our disposal atm"	"	self openInForm: (self findControllerByModel: aModelElement)"
 ]
 
-{ #category : #initialization }
-OPModelTreeWidget >> initialize [
-	super initialize.
-	adapters := OPNavigatorAdapters default
-]
-
 { #category : #'as yet unclassified' }
 OPModelTreeWidget >> initializePresenters [
 
@@ -104,15 +103,15 @@ OPModelTreeWidget >> initializeTree [
 		whenActivatedDo: [ self doubleClick ];
 		contextMenu: [ 
 			self selectedItem ifNotNil: [ :selectedItem | 
-					adapters
+					self adapters
 						contextMenuFor: selectedItem
 						projectController: self projectController
 						inside: self newMenu ] ];
-		display: [ :anObject | adapters displayFor: anObject ];
+		display: [ :anObject | self adapters displayFor: anObject ];
 		children: [ :anObject | 
-			(adapters childrenFor: anObject) sorted: [ :a :b | 
+			(self adapters childrenFor: anObject) sorted: [ :a :b | 
 					(tree display value: a) < (tree display value: b) ] ];
-		displayIcon: [ :anObject | adapters iconFor: anObject ];
+		displayIcon: [ :anObject | self adapters iconFor: anObject ];
 		expandRoots
 ]
 

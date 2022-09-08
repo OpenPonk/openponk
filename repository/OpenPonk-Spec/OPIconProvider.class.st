@@ -9,8 +9,10 @@ OPIconProvider >> iconNamed: aName ifAbsent: aBlock [
 
 	aName ifNil: [ ^ aBlock value ].
 
-	^ super iconNamed: aName ifAbsent: [ 
-		  OPIcons allSubclasses do: [ :any | 
-			  any at: aName ifPresent: [ :icon | ^ icon ] ].
-		  aBlock value ]
+	^ SpApplication defaultApplication iconProvider
+		  iconNamed: aName
+		  ifAbsent: [ 
+			  OPIcons allSubclasses do: [ :any | 
+				  any at: aName ifPresent: [ :icon | ^ icon ] ].
+			  aBlock value ]
 ]

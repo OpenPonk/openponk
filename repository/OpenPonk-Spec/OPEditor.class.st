@@ -206,7 +206,9 @@ OPEditor >> initializePresenters [
 					self class currentLayout
 						resizePanelsOf: builtEvent widget
 						afterWindowResized: resizeEvent ] ].
-			window whenClosedDo: [ window window announcer unsubscribe: self ] ] ]
+			window whenClosedDo: [ 
+				window window announcer unsubscribe: self.
+				diagramController removeController ] ] ]
 ]
 
 { #category : #'diagram handling' }

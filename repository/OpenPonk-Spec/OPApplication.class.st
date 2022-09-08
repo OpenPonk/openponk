@@ -22,8 +22,7 @@ OPApplication >> start [
 { #category : #'accessing - backend' }
 OPApplication >> useBackend: aName with: aConfiguration [
 
-	aName = self class defaultBackendName ifFalse: [ 
-		self error:
-			'Only ' , self class defaultBackendName
-			, ' is supported by OpenPonk' ]
+	aName = #Morphic ifFalse: [ 
+		self error: 'Only Morphic is supported by OpenPonk' ].
+	^ super useBackend: aName with: aConfiguration
 ]

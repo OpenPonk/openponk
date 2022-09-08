@@ -81,7 +81,8 @@ OPWorkbench class >> isDevelopmentMode: aBoolean [
 
 { #category : #'instance creation' }
 OPWorkbench class >> open [
-	^ self new open
+
+	^ (self newApplication: OPApplication new) open
 ]
 
 { #category : #'instance creation' }
@@ -98,7 +99,7 @@ OPWorkbench class >> openModel: aModel [
 { #category : #'instance creation' }
 OPWorkbench class >> openProject: aProject [
 
-	^ self new
+	^ (self newApplication: OPApplication new)
 		  openProject: aProject;
 		  yourself
 ]
@@ -267,6 +268,8 @@ OPWorkbench >> openProject: aProject [
 	self updateTitle.
 	topToolbar updateProjectMenu.
 	project whenChanged: [ self updateTitle ].
+	self withWindowDo: [ :window | 
+		window whenClosedDo: [ project unsubscribe: self ] ].
 	diagramsList project: project.
 	projectTree openOn: project.
 	projectController openDiagrams

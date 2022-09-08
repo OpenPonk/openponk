@@ -241,6 +241,7 @@ OPDiagramsList >> project: aProject [
 
 	project := aProject.
 	project whenChanged: [ self updateContent ].
+	self withWindowDo: [ :window | window whenClosedDo: [ project unsubscribe: self ] ].
 	self updateContent.
 	self workbench announcer
 		when: OPEditorUnfocused

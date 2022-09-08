@@ -294,6 +294,9 @@ OPDiagramController >> diagramController [
 
 { #category : #accessing }
 OPDiagramController >> diagramController: aController [
+
+	aController ifNil: [ ^ self ].
+	aController = self ifTrue: [ ^ self ].
 	self error: 'Cannot assign diagramController to diagramController'
 ]
 
@@ -593,6 +596,13 @@ OPDiagramController >> removeControllerOf: aModelElement [
 		on: '8 November 2017'
 		in: 'Pharo-6.0-60519-'.
 	^ self removeController: (self controllerForModel: aModelElement)
+]
+
+{ #category : #destruction }
+OPDiagramController >> removeFigure [
+
+	self removeAllControllers.
+	self figure view ifNotNil: [ self figure cleanAll ]
 ]
 
 { #category : #deprecated }

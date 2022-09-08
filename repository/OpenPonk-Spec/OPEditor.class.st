@@ -193,22 +193,20 @@ OPEditor >> initializePresenters [
 
 	self whenBuiltDo: [ :builtEvent | 
 		self withWindowDo: [ :window | 
-			| minimized collapseSubscription expandSubscription |
+			| minimized |
 			minimized := false.
-			collapseSubscription := window window announcer weak
-				                        when: WindowCollapsed
-				                        do: [ minimized := true ].
-			expandSubscription := window window announcer weak
-				                      when: WindowExpanded
-				                      do: [ minimized := false ].
+			window window announcer
+				when: WindowCollapsed
+				do: [ minimized := true ].
+			window window announcer
+				when: WindowExpanded
+				do: [ minimized := false ].
 			window whenResizingDo: [ :resizeEvent | 
 				minimized ifFalse: [ 
 					self class currentLayout
 						resizePanelsOf: builtEvent widget
 						afterWindowResized: resizeEvent ] ].
-			window whenClosedDo: [ 
-				collapseSubscription unregister.
-				expandSubscription unregister ] ] ]
+			window whenClosedDo: [ window window announcer unsubscribe: self ] ] ]
 ]
 
 { #category : #'diagram handling' }

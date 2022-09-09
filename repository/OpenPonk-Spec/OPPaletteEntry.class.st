@@ -61,8 +61,14 @@ OPPaletteEntry >> select [
 { #category : #asserting }
 OPPaletteEntry >> shouldIgnoreEvent: aWindow [
 
+	| writeablePresenters |
+	writeablePresenters := { 
+		                       SpAbstractTextPresenter.
+		                       SpDropListPresenter }.
+
 	aWindow presenter focusedEditor form focusOrder do: [ :each | 
-		(each isKindOf: SpAbstractTextPresenter) and: [ 
+		(writeablePresenters anySatisfy: [ :presenterType | 
+			 each isKindOf: presenterType ]) and: [ 
 			each withAdapterDo: [ :itemAdapter | 
 				itemAdapter widgetDo: [ :itemWidget | 
 					itemWidget hasKeyboardFocus ifTrue: [ ^ true ] ] ] ] ].

@@ -18,7 +18,7 @@ OPMorphicEditableDropListAdapter >> buildWidget [
 		self changed: #getIndex ].
 	self model selection whenChangedDo: [ self changed: #getIndex ].
 
-	^ EditableDropListMorph new
+	^ OPEditableDropListMorph new
 		  wrapSelector: #wrapItem:index:;
 		  on: self
 		  list: #getList

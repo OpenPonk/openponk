@@ -9,6 +9,12 @@ OPEditableDropListMorph >> configureWith: displayModel item: itemPresenter [
 	displayModel configureDropList: self item: itemPresenter
 ]
 
+{ #category : #testing }
+OPEditableDropListMorph >> hasKeyboardFocus [
+
+	^ (contentMorph ifNil: [ ^ false ]) hasKeyboardFocus
+]
+
 { #category : #private }
 OPEditableDropListMorph >> listHeight [
 	"Answer the height for the list."

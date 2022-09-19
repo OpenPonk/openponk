@@ -1,3 +1,6 @@
+"
+This class exists for OPDynamicForm to make the text area larger
+"
 Class {
 	#name : #OPLongTextPresenter,
 	#superclass : #SpTextPresenter,

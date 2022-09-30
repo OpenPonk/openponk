@@ -29,7 +29,7 @@ OPExportImageDialog class >> defaultLayout [
 ]
 
 { #category : #actions }
-OPExportImageDialog >> confirm [
+OPExportImageDialog >> confirmed [
 
 	| zoomNumber file |
 	file := self selectedEntry.

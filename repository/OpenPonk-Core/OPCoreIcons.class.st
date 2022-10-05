@@ -810,6 +810,18 @@ GiiFhmfVQENJNdBAAw008J8QjYxhAw000EAD/27x/wCGSAjyqcKbJQAAAABJRU5ErkJggg=='
 ]
 
 { #category : #'accessing - icons' }
+OPCoreIcons class >> opCheckAllIcon [
+
+	^ Form fromBinaryStream: self opCheckAllIconContents base64Decoded asByteArray readStream
+]
+
+{ #category : #'private - contents' }
+OPCoreIcons class >> opCheckAllIconContents [
+
+	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAVUlEQVQ4y2NgGCigtNHnPwMDAwMLAXX/cWgm2qL/2GyG2c7AwMDARMCZDMiKYex7/lsYYWKMhFyA7tx7/ltQ9DER8gOybchsol2AQ5xxNBpHoxEZAAD4PzMFFDc54QAAAABJRU5ErkJggg=='
+]
+
+{ #category : #'accessing - icons' }
 OPCoreIcons class >> opFsmDiagramIcon [
 
 	^ Form fromBinaryStream: self opFsmDiagramIconContents base64Decoded asByteArray readStream

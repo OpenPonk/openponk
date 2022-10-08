@@ -10,7 +10,7 @@ Class {
 		'midpointHandles',
 		'isActive'
 	],
-	#category : 'OpenPonk-Roassal2-Connection'
+	#category : #'OpenPonk-Roassal2-Connection'
 }
 
 { #category : #private }
@@ -103,7 +103,7 @@ OPRTConnectionHandles >> setupView: aView [
 OPRTConnectionHandles >> showHandles [
 	isActive
 		ifTrue: [ ^ self ].
-	edge shape router linksDo: [ :each | handles add: (OPRTHandle new on: edge at: each) ].
+	edge shape router linksDo: [ :each | handles add: (OPRTBendHandle new on: edge at: each) ].
 	handles do: [ :each | each renderIn: edge view ].
 	self showMidpointHandlesFor: edge.
 	edge signalUpdate.

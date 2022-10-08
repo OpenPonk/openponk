@@ -3,12 +3,10 @@ I am a pseudo handle between two real handles. When dragged I am promoted to a r
 "
 Class {
 	#name : #OPRTMidpointHandle,
-	#superclass : #Object,
+	#superclass : #OPRTHandle,
 	#instVars : [
 		'from',
 		'to',
-		'element',
-		'edge',
 		'nearStart',
 		'nearEnd'
 	],
@@ -78,30 +76,34 @@ OPRTMidpointHandle >> promote [
 ]
 
 { #category : #'as yet unclassified' }
-OPRTMidpointHandle >> remove [
-	element remove
-]
-
-{ #category : #'as yet unclassified' }
 OPRTMidpointHandle >> renderIn: aView [
 
 	element := self shape elementOn: edge trachelShape.
-	element @ (OPRTConditionallyDraggable onCondition: [ 
+	clickBox := self clickBoxShape elementOn: edge trachelShape.
+	clickBox @ (OPRTConditionallyDraggable onCondition: [ 
 		 (self fromPoint distanceTo: self toPoint) > 10 ]).
-	self constraintFor: element.
-	element when: TRMouseDragStart do: [ :event | 
+	self constraintFor: clickBox.
+	(RTConstraint on: element background: clickBox) stick.
+	clickBox when: TRMouseDragStart do: [ :event | 
 		(self fromPoint distanceTo: self toPoint) > 10 ifTrue: [ 
 			self promote ] ].
-	aView add: element
+	aView
+		add: element;
+		add: clickBox
 ]
 
 { #category : #'as yet unclassified' }
 OPRTMidpointHandle >> shape [
-	^ RTEllipse new
-		size: 6;
-		color: #color;
-		borderColor: Color black;
-		yourself
+
+	^ super shape
+		  color: #color;
+		  yourself
+]
+
+{ #category : #accessing }
+OPRTMidpointHandle >> size [
+
+	^ 6
 ]
 
 { #category : #'as yet unclassified' }

@@ -26,17 +26,24 @@ OPRTMidpointHandle >> beNearStart [
 { #category : #'as yet unclassified' }
 OPRTMidpointHandle >> constraintFor: anElement [
 
-	| moveBlock b callback |
+	| moveBlock b callback1 callback2 |
 	moveBlock := [ 
 	             anElement translateTo: self fromPoint + self toPoint / 2 ].
 	moveBlock value.
 	b := [ :shape :step | moveBlock value ].
-	callback := TRTranslationCallback block: b.
-	from addCallback: callback.
-	to addCallback: callback.
-	callback := TRExtentCallback block: b.
-	from addCallback: callback.
-	to addCallback: callback
+	callback1 := TRTranslationCallback block: b.
+	from addCallback: callback1.
+	to addCallback: callback1.
+	callback2 := TRExtentCallback block: b.
+	from addCallback: callback2.
+	to addCallback: callback2.
+	anElement addCallback: (TRRemoveCallback block: [ 
+			 from trachelShape
+				 removeCallback: callback1 ifAbsent: [  ];
+				 removeCallback: callback2 ifAbsent: [  ].
+			 to trachelShape
+				 removeCallback: callback1 ifAbsent: [  ];
+				 removeCallback: callback2 ifAbsent: [  ] ])
 ]
 
 { #category : #'as yet unclassified' }

@@ -1,6 +1,8 @@
 Class {
 	#name : #OPElementLayout,
 	#superclass : #Object,
+	#traits : 'TComparable',
+	#classTraits : 'TComparable classTrait',
 	#instVars : [
 		'position',
 		'extent',
@@ -9,7 +11,7 @@ Class {
 	#classInstVars : [
 		'none'
 	],
-	#category : #'OpenPonk-Core-Layout'
+	#category : #'OpenPonk-Core-Diagrams'
 }
 
 { #category : #accessing }
@@ -57,9 +59,19 @@ OPElementLayout class >> withPosition: aPoint extent: anExtentPoint [
 ]
 
 { #category : #comparing }
+OPElementLayout >> < anOtherLayout [
+
+	^ (self position isNotNil and: [ anOtherLayout position isNil ]) or: [ 
+		  self position isNil = anOtherLayout position isNil and: [ 
+			  self path isNotNil and: [ anOtherLayout path isNil ] ] ]
+]
+
+{ #category : #comparing }
 OPElementLayout >> = anOtherLayout [
-	^ position = anOtherLayout position
-		and: [ extent = anOtherLayout extent ]
+
+	self position ifNil: [ ^ self path = anOtherLayout path ].
+	^ position = anOtherLayout position and: [ 
+		  extent = anOtherLayout extent ]
 ]
 
 { #category : #accessing }
@@ -79,6 +91,8 @@ OPElementLayout >> hasExtent [
 
 { #category : #comparing }
 OPElementLayout >> hash [
+
+	self position ifNil: [ ^ self path hash ].
 	^ position hash bitXor: extent hash
 ]
 

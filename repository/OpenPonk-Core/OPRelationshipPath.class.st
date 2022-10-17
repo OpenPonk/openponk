@@ -5,7 +5,7 @@ Class {
 		'source',
 		'points'
 	],
-	#category : #'OpenPonk-Core-Layout'
+	#category : #'OpenPonk-Core-Diagrams'
 }
 
 { #category : #'instance creation' }

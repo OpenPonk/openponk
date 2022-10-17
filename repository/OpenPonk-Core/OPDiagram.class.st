@@ -80,7 +80,8 @@ OPDiagram class >> neoJsonMapping: mapper [
 									 on: Error
 									 do: [ key ])
 							put: value ].
-				map ];
+				(map associations sorted: [ :a :b | a value < b value ])
+					asOrderedDictionary ];
 			writer: [ :jsonWriter :map | 
 				jsonWriter writeMapStreamingDo: [ :mapWriter | 
 						map keysAndValuesDo: [ :key :value | 
@@ -193,7 +194,9 @@ OPDiagram >> layout [
 
 { #category : #accessing }
 OPDiagram >> layout: aCollection [
-	layout := aCollection
+
+	layout := (aCollection associations sorted: [ :a :b | 
+		           a value < b value ]) asOrderedDictionary
 ]
 
 { #category : #accessing }

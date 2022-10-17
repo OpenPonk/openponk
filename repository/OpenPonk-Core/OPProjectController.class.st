@@ -381,16 +381,18 @@ OPProjectController >> selectInDiagram: aModelElement [
 
 { #category : #opening }
 OPProjectController >> updateDiagram: aDiagram [
+
 	controllers
 		detect: [ :ctrl | ctrl diagram = aDiagram ]
 		ifFound: [ :ctrl | 
 			aDiagram isOpen: true.
-			aDiagram layout: ctrl layout copy.
+			aDiagram layout: ctrl layout.
 			aDiagram visibleElements: ctrl visibleElements copy.
 			aDiagram commonElements: ctrl commonElements.
 			aDiagram updateFromRoassalView: ctrl view.
 			aDiagram order: (controllers indexOf: ctrl) ]
-		ifNone: [ aDiagram
+		ifNone: [ 
+			aDiagram
 				isOpen: false;
 				order: -1;
 				isSelected: false ]

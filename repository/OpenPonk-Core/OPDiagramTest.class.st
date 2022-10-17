@@ -75,7 +75,7 @@ OPDiagramTest >> testFromJsonComplex [
 	self
 		assert: view layout
 		equals: { (personUUID -> (OPElementLayout withPosition: 27 @ 23)) }
-				asDictionary.
+				asOrderedDictionary.
 	self
 		assert: (view visibleElementsOrIfNotSet: [ { 1.2. 3 } ]) size
 		equals: 1.

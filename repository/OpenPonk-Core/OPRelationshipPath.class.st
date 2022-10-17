@@ -1,6 +1,8 @@
 Class {
 	#name : #OPRelationshipPath,
 	#superclass : #Object,
+	#traits : 'TComparable',
+	#classTraits : 'TComparable classTrait',
 	#instVars : [
 		'source',
 		'points'
@@ -34,6 +36,36 @@ OPRelationshipPath class >> neoJsonMapping: mapper [
 		for: #ArrayOfPoints
 			customDo: [ :mapping | mapping listOfElementSchema: Point ];
 		mapAllInstVarsFor: Point
+]
+
+{ #category : #comparing }
+OPRelationshipPath >> < aComparable [
+
+	"Answer whether the receiver is less than the argument."
+
+	^ self source < aComparable source or: [ 
+		  self source = aComparable source and: [ 
+			  self points < aComparable points ] ]
+]
+
+{ #category : #comparing }
+OPRelationshipPath >> = aComparable [
+
+	"Compare the receiver with the argument and answer with true if the 
+	receiver is equal to the argument. Otherwise answer false."
+
+	^ self source = aComparable source and: [ 
+		  self points = aComparable points ]
+]
+
+{ #category : #comparing }
+OPRelationshipPath >> hash [
+
+	"Hash must be redefined whenever = is redefined."
+
+	(self points isNil or: [ self points size < 2 ]) ifTrue: [ 
+		^ self source hash ].
+	^ self source hash bitXor: self points second hash
 ]
 
 { #category : #accessing }

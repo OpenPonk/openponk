@@ -17,11 +17,15 @@ Class {
 		'points',
 		'handler'
 	],
-	#category : 'OpenPonk-Roassal2-Connection'
+	#category : #'OpenPonk-Roassal2-Connection'
 }
 
 { #category : #adding }
 OPRTInteractiveRouter >> addPoint: aPoint [
+
+	points isEmpty ifFalse: [ 
+		(points lastLink value distanceTo: aPoint)
+		< self pointsCollapseDistance ifTrue: [ ^ self ] ].
 	points add: (DoubleLink value: aPoint)
 ]
 
@@ -63,6 +67,12 @@ OPRTInteractiveRouter >> points: aCollection [
 	aCollection do: [ :each | self addPoint: each ]
 ]
 
+{ #category : #constants }
+OPRTInteractiveRouter >> pointsCollapseDistance [
+
+	^ 5
+]
+
 { #category : #geometry }
 OPRTInteractiveRouter >> rebuildHandler [
 	self handler ifNotNil: [ self handler rebuild ]
@@ -76,7 +86,15 @@ OPRTInteractiveRouter >> removeAll [
 
 { #category : #removing }
 OPRTInteractiveRouter >> removePointLink: aLink for: anEdge [
+
+	| previousLink nextLink |
+	previousLink := aLink previousLink.
+	nextLink := aLink nextLink.
 	points removeLink: aLink.
+	previousLink value ifNotNil: [ 
+		nextLink value ifNotNil: [ 
+			(previousLink value distanceTo: nextLink value) < self pointsCollapseDistance ifTrue: [ 
+				self removePointLink: nextLink for: anEdge ] ] ].
 	self rebuildHandler
 ]
 

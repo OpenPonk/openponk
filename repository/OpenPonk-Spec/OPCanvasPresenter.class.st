@@ -119,10 +119,14 @@ OPCanvasPresenter >> exportAsPng [
 	self flag: 'default name not supported in file browser'.
 	OPExportImageDialog new
 		title: 'Choose a PNG file to export the diagram';
-		okAction: [ :file :zoom | self exportCanvasToPng: file zoom: zoom ];
+		okAction: [ :file :zoom | 
+			| acceptFile |
+			acceptFile := true.
+			self ifNonAsciiCharactersIn: file do: [ acceptFile := false ].
+			acceptFile
+				ifTrue: [ self exportCanvasToPng: file zoom: zoom ]
+				ifFalse: [ self exportAsPng ] ];
 		extensions: #( png ) named: 'PNG images';
-		"defaultName:
-			self editor diagramController model name asFileName , '.png';"
 		open
 ]
 
@@ -164,6 +168,7 @@ OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aNumber [
 OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aNumber silently: aSilentlyBoolean [
 
 	| gridShape gridColor zoom view approxResolution jobBlock |
+	self ifNonAsciiCharactersIn: aFileReference do: [ ^ self ].
 	view := roassalView.
 	approxResolution := aNumber * aNumber
 	                    * view canvas encompassingRectangle area.
@@ -282,6 +287,31 @@ OPCanvasPresenter >> figureAdded: aFigure [
 	self addMouseEventsFor: aFigure.
 	self addMenuFor: aFigure.
 	self signalUpdate
+]
+
+{ #category : #toolbar }
+OPCanvasPresenter >> ifNonAsciiCharactersIn: aFileReference do: aBlock [
+
+	| placesWithNonAscii |
+	placesWithNonAscii := OrderedCollection new.
+	aFileReference basename isAsciiString ifFalse: [ 
+		placesWithNonAscii add: 'file name' ].
+	aFileReference parent absolutePath pathString isAsciiString ifFalse: [ 
+		placesWithNonAscii add: 'file path' ].
+	placesWithNonAscii ifEmpty: [ ^ self ].
+	(GrowlMorph
+		 label: (String streamContents: [ :s | 
+					  s << 'PNG exporter error: Non-ASCII characters in '.
+					  placesWithNonAscii asStringOn: s delimiter: ' and ' ])
+		 contents: (String streamContents: [ :s | 
+					  s
+					  <<
+						  'Due to a bug, PNG exporter does not support non-ASCII characters anywhere in file paths. Please export the image to a different '.
+					  placesWithNonAscii asStringOn: s delimiter: ' and ' ]))
+		vanishDelay: 15 seconds;
+		backgroundColor: GrowlMorph theme dangerBackgroundColor;
+		openInWorld.
+	aBlock value
 ]
 
 { #category : #initialization }

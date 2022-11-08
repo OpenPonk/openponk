@@ -122,7 +122,7 @@ OPCanvasPresenter >> exportAsPng [
 		okAction: [ :file :zoom | 
 			| acceptFile |
 			acceptFile := true.
-			self ifNonAsciiCharactersIn: file do: [ acceptFile := false ].
+			self ifFileNameNotCompatible: file do: [ acceptFile := false ].
 			acceptFile
 				ifTrue: [ self exportCanvasToPng: file zoom: zoom ]
 				ifFalse: [ self exportAsPng ] ];
@@ -168,7 +168,7 @@ OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aNumber [
 OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aNumber silently: aSilentlyBoolean [
 
 	| gridShape gridColor zoom view approxResolution jobBlock |
-	self ifNonAsciiCharactersIn: aFileReference do: [ ^ self ].
+	self ifFileNameNotCompatible: aFileReference do: [ ^ self ].
 	view := roassalView.
 	approxResolution := aNumber * aNumber
 	                    * view canvas encompassingRectangle area.
@@ -290,9 +290,10 @@ OPCanvasPresenter >> figureAdded: aFigure [
 ]
 
 { #category : #toolbar }
-OPCanvasPresenter >> ifNonAsciiCharactersIn: aFileReference do: aBlock [
+OPCanvasPresenter >> ifFileNameNotCompatible: aFileReference do: aBlock [
 
 	| placesWithNonAscii |
+	Smalltalk platform isWindows ifFalse: [ ^ self ].
 	placesWithNonAscii := OrderedCollection new.
 	aFileReference basename isAsciiString ifFalse: [ 
 		placesWithNonAscii add: 'file name' ].

@@ -52,7 +52,7 @@ OPModelTypeSelector >> addModel [
 	model := selectedPlugin newModel
 		         name: projectNameInput text;
 		         yourself.
-	diagram := OPDiagram withWholeModel: model.
+	diagram := OPOpenPonkDiagram forModelElement: model.
 	projectController project addDiagram: diagram.
 	projectController openEditorOnDiagram: diagram.
 	self withWindowDo: #close

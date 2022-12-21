@@ -23,9 +23,15 @@ Class {
 OPProjectController class >> fromDirectory: aFolder [
 
 	^ [ :job | 
+	  | materializer |
 	  job title: 'Reading project from file'.
-	  OPProjectDirectoryMaterializer new loadProjectFrom:
-		  aFolder asFileReference ] asJob run
+	  materializer := aFolder files
+		                  detect: [ :any | 
+		                  any basename = OPExportInfo fileName ]
+		                  ifFound: [ :exportInfoFile | 
+		                  OPSerializer forExportInfoFile: exportInfoFile ]
+		                  ifNone: [ OPProjectDirectoryMaterializer new ].
+	  materializer loadProjectFrom: aFolder asFileReference ] asJob run
 ]
 
 { #category : #opening }
@@ -108,7 +114,8 @@ OPProjectController >> enabledPlugins [
 
 { #category : #testing }
 OPProjectController >> hasDiagram: aDiagram [
-	^ controllers anySatisfy: [ :each | each diagram = aDiagram ]
+
+	^ controllers anySatisfy: [ :each | each diagramElement = aDiagram ]
 ]
 
 { #category : #adding }
@@ -194,7 +201,9 @@ OPProjectController >> mergeModelsAndDiagramsIntoOne [
 			self project diagrams do: [ :eachDiagram | 
 					workbench closeEditorOfDiagram: eachDiagram ].
 			models do: [ :eachModel | self removeModel: eachModel ].
-			diagram := OPDiagram withWholeModel: model.
+			diagram := OPOpenPonkDiagram forModelElement: model.
+			diagram ownedElements:
+					(self project diagrams flatCollect: #ownedElements).
 			self project addDiagram: diagram.
 			layouter := (self openEditorOnDiagram: diagram) diagramController
 				            layouter.
@@ -216,7 +225,7 @@ OPProjectController >> modelMementoFor: aModel [
 
 	^ OPPersistenceMemento model: aModel diagrams: (controllers
 			   select: [ :each | each model = aModel ]
-			   thenCollect: [ :each | each diagram ])
+			   thenCollect: [ :each | each diagramElement ])
 ]
 
 { #category : #saving }
@@ -232,19 +241,20 @@ OPProjectController >> navigatorAdapters [
 
 { #category : #opening }
 OPProjectController >> openDiagrams [
+
 	| selected |
 	project ensureModelsHaveDiagrams.
 	selected := project diagrams
-		detect: [ :each | each isOpen & each isSelected ]
-		ifNone: [ nil ].
-	(project diagrams sorted: #order ascending)
+		            detect: [ :each | each isOpen & each isSelected ]
+		            ifNone: [ nil ].
+	project diagrams
 		select: #isOpen
 		thenDo: [ :each | workbench openEditorOnDiagram: each ].
 	selected ifNotNil: [ workbench openEditorOnDiagram: selected ].
-	(project diagrams isNotEmpty
-		and: [ project diagrams noneSatisfy: #isOpen ])
-		ifTrue: [ project diagrams
-				do: [ :eachDiagram | workbench openEditorOnDiagram: eachDiagram ] ]
+	(project diagrams isNotEmpty and: [ 
+		 project diagrams noneSatisfy: #isOpen ]) ifTrue: [ 
+		project diagrams do: [ :eachDiagram | 
+			workbench openEditorOnDiagram: eachDiagram ] ]
 ]
 
 { #category : #opening }
@@ -366,17 +376,17 @@ OPProjectController >> saveState: saveData to: aFile [
 
 { #category : #'diagram selecting' }
 OPProjectController >> selectInDiagram: aModelElement [
-	controllers
-		do: [ :dctrl | 
-			dctrl controllers
-				do: [ :ctrl | 
-					ctrl model = aModelElement
-						ifTrue: [ | palette |
-							palette := dctrl editor palette.
-							palette selectSelectionTool selectedTool targetSelected: ctrl.
-							dctrl editor canvasPresenter roassalView canvas camera
-								translateTo: ctrl figure position.
-							^ self ] ] ]
+
+	controllers do: [ :dctrl | 
+		dctrl controllers do: [ :ctrl | 
+			ctrl model = aModelElement ifTrue: [ 
+				| palette |
+				palette := dctrl editor palette.
+				palette selectSelectionTool selectedTool 
+					selectedTargetControllers: { ctrl }.
+				dctrl editor canvasPresenter roassalView canvas camera 
+					translateTo: ctrl figure position.
+				^ self ] ] ]
 ]
 
 { #category : #opening }
@@ -389,7 +399,7 @@ OPProjectController >> updateDiagram: aDiagram [
 			aDiagram layout: ctrl layout.
 			aDiagram visibleElements: ctrl visibleElements copy.
 			aDiagram commonElements: ctrl commonElements.
-			aDiagram updateFromRoassalView: ctrl view.
+			aDiagram updateFromRoassalCanvas: ctrl canvas.
 			aDiagram order: (controllers indexOf: ctrl) ]
 		ifNone: [ 
 			aDiagram
@@ -400,25 +410,21 @@ OPProjectController >> updateDiagram: aDiagram [
 
 { #category : #opening }
 OPProjectController >> updateDiagrams [
+
 	| focusedController |
-	focusedController := workbench focusedEditor
-		ifNotNil: [ :editor | editor diagramController ].
-	self project diagrams
-		do: [ :eachDiagram | 
-			controllers
-				detect: [ :ctrl | ctrl diagram = eachDiagram ]
-				ifFound: [ :ctrl | 
-					eachDiagram isOpen: true.
-					eachDiagram layout: ctrl layout copy.
-					eachDiagram commonElements: ctrl commonElements.
-					eachDiagram visibleElements: ctrl visibleElements copy.
-					eachDiagram updateFromRoassalView: ctrl view.
-					eachDiagram order: (controllers indexOf: ctrl).
-					eachDiagram isSelected: ctrl = focusedController ]
-				ifNone: [ eachDiagram
-						isOpen: false;
-						order: -1;
-						isSelected: false ] ]
+	focusedController := workbench focusedEditor ifNotNil: [ :editor | 
+		                     editor diagramController ].
+	self project diagrams do: [ :eachDiagram | 
+		controllers
+			detect: [ :ctrl | ctrl diagramElement = eachDiagram ]
+			ifFound: [ :ctrl | 
+				eachDiagram isOpen: true.
+				eachDiagram updateFromRender.
+				eachDiagram isSelected: ctrl = focusedController ]
+			ifNone: [ 
+				eachDiagram
+					isOpen: false;
+					isSelected: false ] ]
 ]
 
 { #category : #accessing }

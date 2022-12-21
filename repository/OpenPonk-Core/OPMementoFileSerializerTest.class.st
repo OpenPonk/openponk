@@ -20,7 +20,7 @@ OPMementoFileSerializerTest >> newMementoWithModel: aModel [
 
 	^ OPPersistenceMemento
 		  model: aModel
-		  diagrams: { (OPDiagram emptyOfModel: aModel) }
+		  diagrams: { (OPLegacyDiagram emptyOfModel: aModel) }
 ]
 
 { #category : #'instance creation' }

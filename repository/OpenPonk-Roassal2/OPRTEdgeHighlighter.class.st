@@ -1,12 +1,17 @@
 Class {
 	#name : #OPRTEdgeHighlighter,
 	#superclass : #OPRTHighlighter,
-	#category : 'OpenPonk-Roassal2-Builders'
+	#category : #'OpenPonk-Roassal2-Builders'
 }
 
 { #category : #'instance creation' }
 OPRTEdgeHighlighter class >> highlight: anElement color: aColor [
 	^ self new highlight: anElement color: aColor
+]
+
+{ #category : #testing }
+OPRTEdgeHighlighter class >> isDeprecated [
+	^ true
 ]
 
 { #category : #testing }

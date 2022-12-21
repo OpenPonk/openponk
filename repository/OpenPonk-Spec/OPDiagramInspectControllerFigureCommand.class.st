@@ -18,10 +18,16 @@ OPDiagramInspectControllerFigureCommand >> defaultMenuIcon [
 
 { #category : #accessing }
 OPDiagramInspectControllerFigureCommand >> defaultMenuItemName [
-	^ 'Inspect controller'
+
+	| basicName |
+	basicName := 'Inspect controller'.
+	controllers ifNil: [ ^ basicName ].
+	^ controllers size pluralize: basicName
 ]
 
 { #category : #execution }
 OPDiagramInspectControllerFigureCommand >> execute [
-	(diagramController controllerForFigure: figure) inspect
+
+	controllers size = 1 ifTrue: [ ^ controllers anyOne inspect ].
+	^ controllers inspect
 ]

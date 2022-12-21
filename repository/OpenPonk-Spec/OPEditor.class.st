@@ -226,8 +226,8 @@ OPEditor >> openEmptyModel: aModel [
 	diagramController := self newDiagramControllerFor: aModel.
 	self workbench projectController addDiagramController:
 		diagramController.
-	self rebuildWidget.
-	canvasPresenter attachController: diagramController
+	canvasPresenter attachController: diagramController.
+	self rebuildWidget
 ]
 
 { #category : #'as yet unclassified' }
@@ -270,12 +270,6 @@ OPEditor >> registerShortcutsOn: aPresenter [
 OPEditor >> setModelBeforeInitialization: aPlugin [
 	self plugin: aPlugin
 	
-]
-
-{ #category : #'diagram handling' }
-OPEditor >> showDiagram: aDiagram [
-	diagramController diagram: aDiagram.
-	diagramController rebuild
 ]
 
 { #category : #updating }

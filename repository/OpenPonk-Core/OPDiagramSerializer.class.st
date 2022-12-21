@@ -1,8 +1,14 @@
 Class {
 	#name : #OPDiagramSerializer,
-	#superclass : #Object,
+	#superclass : #OPSerializer,
 	#category : #'OpenPonk-Core-Persistence'
 }
+
+{ #category : #'as yet unclassified' }
+OPDiagramSerializer class >> exportSubject [
+
+	^ #diagram
+]
 
 { #category : #accessing }
 OPDiagramSerializer >> formatName [

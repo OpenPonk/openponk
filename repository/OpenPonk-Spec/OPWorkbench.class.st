@@ -162,8 +162,8 @@ OPWorkbench >> focusEditorOf: aDiagram [
 
 	| editorTabInfo |
 	(focusedEditor isNotNil and: [ 
-		 focusedEditor diagramController diagram = aDiagram ]) ifTrue: [ 
-		^ self ].
+		 focusedEditor diagramController diagramElement = aDiagram ]) 
+		ifTrue: [ ^ self ].
 	editorTabInfo := editors at: aDiagram.
 	notebook selectedPage = (editorTabInfo at: #page) ifFalse: [ 
 		^ notebook selectPage: (editorTabInfo at: #page) ].
@@ -177,7 +177,8 @@ OPWorkbench >> focusEditorOf: aDiagram [
 	aDiagram isSelected: true.
 	self announce: (OPEditorFocused on: focusedEditor).
 	topToolbar activeEditor: focusedEditor.
-	focusedEditor showDiagram: aDiagram
+	focusedEditor diagramController diagramElement: aDiagram.
+	focusedEditor diagramController showElements
 ]
 
 { #category : #accessing }
@@ -232,7 +233,7 @@ OPWorkbench >> openEditorOnDiagram: aDiagram [
 	| editor notebookPage plugin model |
 	(self projectController hasDiagram: aDiagram) ifTrue: [ 
 		^ self focusEditorOf: aDiagram ].
-	model := aDiagram model.
+	model := aDiagram modelElement.
 	plugin := pluginRegistry pluginFor: model.
 	editor := OPEditor on: plugin.
 	editor workbench: self.
@@ -296,6 +297,20 @@ OPWorkbench >> projectController [
 { #category : #'accessing - spec' }
 OPWorkbench >> projectTree [
 	^ projectTree
+]
+
+{ #category : #'as yet unclassified' }
+OPWorkbench >> showAllElementsInAllDiagrams [
+
+	self projectController controllers do: [ :each | 
+		each
+			showAllElements;
+			applyDefaultLayout.
+		each canvas extent max <= 500 ifTrue: [ 
+			each canvasPresenter whenExtentChangedDo: [ :evt | 
+				each zoomToFit.
+				each canvasPresenter whenExtentChangedDo: [ :event |  ] ] ] ].
+	self projectController controllers do: #zoomToFit
 ]
 
 { #category : #protocol }

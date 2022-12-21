@@ -13,6 +13,11 @@ OPRTElementHighlighter class >> highlight: anElement color: aColor [
 ]
 
 { #category : #testing }
+OPRTElementHighlighter class >> isDeprecated [
+	^ true
+]
+
+{ #category : #testing }
 OPRTElementHighlighter class >> isFor: anElement [
 	^ anElement isElement
 ]

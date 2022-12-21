@@ -57,7 +57,7 @@ OPElementLayoutTest >> testFromJSON [
 OPElementLayoutTest >> testJSONWithoutExtent [
 	| json newLayout |
 	elementLayout extent: nil.
-	json := NeoJSONWriter toString: elementLayout.
+	json := OPJsonWriter toString: elementLayout.
 	newLayout := NeoJSONReader fromString: json as: OPElementLayout.
 	self assert: newLayout extent equals: nil.
 	self assert: newLayout equals: elementLayout
@@ -107,7 +107,7 @@ OPElementLayoutTest >> testRelationshipFromJSON [
 { #category : #tests }
 OPElementLayoutTest >> testRelationshipRoundtripJSON [
 	| json newLayout |
-	json := NeoJSONWriter toString: relationshipLayout.
+	json := OPJsonWriter toString: relationshipLayout.
 	newLayout := NeoJSONReader fromString: json as: OPElementLayout.
 	self assert: newLayout equals: relationshipLayout
 ]
@@ -115,14 +115,14 @@ OPElementLayoutTest >> testRelationshipRoundtripJSON [
 { #category : #tests }
 OPElementLayoutTest >> testRelationshipToJSON [
 	| json |
-	json := NeoJSONWriter toString: relationshipLayout.
+	json := OPJsonWriter toString: relationshipLayout.
 	self assert: json equals: relationshipLayoutJSON
 ]
 
 { #category : #tests }
 OPElementLayoutTest >> testRoundtripJSON [
 	| json newLayout |
-	json := NeoJSONWriter toString: elementLayout.
+	json := OPJsonWriter toString: elementLayout.
 	newLayout := NeoJSONReader fromString: json as: OPElementLayout.
 	self assert: newLayout equals: elementLayout
 ]
@@ -130,6 +130,6 @@ OPElementLayoutTest >> testRoundtripJSON [
 { #category : #tests }
 OPElementLayoutTest >> testToJSON [
 	| json |
-	json := NeoJSONWriter toString: elementLayout.
+	json := OPJsonWriter toString: elementLayout.
 	self assert: json equals: elementLayoutJSON
 ]

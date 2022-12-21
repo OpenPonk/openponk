@@ -32,6 +32,16 @@ OPDiagramCamera >> offset: anObject [
 ]
 
 { #category : #accessing }
+OPDiagramCamera >> position [
+	^ self offset
+]
+
+{ #category : #accessing }
+OPDiagramCamera >> scale [
+	^ self zoom
+]
+
+{ #category : #accessing }
 OPDiagramCamera >> zoom [
 	^ zoom
 ]

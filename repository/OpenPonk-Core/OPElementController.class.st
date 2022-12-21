@@ -5,9 +5,6 @@ It has method which handles the creation of the form for specific element. The c
 Class {
 	#name : #OPElementController,
 	#superclass : #OPController,
-	#instVars : [
-		'figure'
-	],
 	#category : #'OpenPonk-Core-Controllers'
 }
 
@@ -42,6 +39,14 @@ OPElementController >> attachTo: aDiagramController [
 	self attachFigure"
 ]
 
+{ #category : #construction }
+OPElementController >> createDiagramElement [
+
+	diagramElement := self diagramElementClass
+		                  in: self diagramElementOwner
+		                  forModelElement: self model
+]
+
 { #category : #deprecated }
 OPElementController >> createFigure [
 	self deprecated: 'Use renderFigureIn: instead.'.
@@ -64,18 +69,37 @@ OPElementController >> createModelIn: aParentModel [
 
 { #category : #construction }
 OPElementController >> createModelIn: aParentModel andShowInDiagram: aDiagramController [
+
+	self removeDiagramElement.
 	self createModelIn: aParentModel.
 	self showWithoutDependentInDiagram: aDiagramController
 ]
 
-{ #category : #accessing }
-OPElementController >> figure [
-	^ figure
+{ #category : #construction }
+OPElementController >> diagramElementClass [
+
+	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
+OPElementController >> diagramElementOwner [
+
+	^ self diagramController diagramElement
+]
+
+{ #category : #diagrams }
+OPElementController >> ensureToHaveDiagramElement [
+
+	diagramElement
+		ifNil: [ self createDiagramElement ]
+		ifNotNil: [ diagramElement modelElement: self model ]
+]
+
+{ #category : #figures }
 OPElementController >> figure: aFigure [
-	figure := aFigure
+
+	self deprecated:
+		'Figure (Roassal shape) cannot be set directly anymore.'
 ]
 
 { #category : #deprecated }
@@ -95,6 +119,12 @@ OPElementController >> hideSelectionFeedback [
 { #category : #testing }
 OPElementController >> isCommon [
 	^ false
+]
+
+{ #category : #testing }
+OPElementController >> isRendered [
+
+	^ self diagramElement isNotNil and: [ self diagramElement isRendered ]
 ]
 
 { #category : #accessing }
@@ -132,26 +162,37 @@ OPElementController >> remove [
 		deprecated: 'Use #removeController instead.'
 		transformWith: '`@receiver remove' -> '`@receiver removeController'.
 
-	self removeController
+	^ self removeController
 ]
 
 { #category : #construction }
-OPElementController >> renderFigureIn: aView [
-	^ self subclassResponsibility
+OPElementController >> renderDiagramElement [
+
+	self diagramController addingFigureFor: self.
+	self diagramElement renderIn: self diagramController canvas.
+	^ self diagramController addedFigureFor: self
 ]
 
-{ #category : #'ui interaction' }
-OPElementController >> reselect [
-	self diagramController ifNotNil: [ self diagramController selectController: self ]
+{ #category : #construction }
+OPElementController >> renderFigureIn: aCanvas [
+
+	self
+		deprecated: 'Use #createDiagramElement and #renderDiagramElement without parameter.'
+		transformWith: '`@receiver renderFigureIn: `@statements1'
+			-> '`@receiver createDiagramElement; renderDiagramElement'.
+	^ self
+		  createDiagramElement;
+		  renderDiagramElement
 ]
 
 { #category : #construction }
 OPElementController >> showInDiagram: aDiagramController [
+
 	aDiagramController addController: self.
-	self renderFigureIn: aDiagramController view.
-	self dependentElements
-		do:
-			[ :each | aDiagramController showInDiagramModel: each ]
+	self ensureToHaveDiagramElement.
+	self renderDiagramElement.
+	self dependentElements do: [ :each | 
+		aDiagramController showInDiagramModel: each ]
 ]
 
 { #category : #'canvas actions' }
@@ -161,8 +202,10 @@ OPElementController >> showSelectionFeedback [
 
 { #category : #construction }
 OPElementController >> showWithoutDependentInDiagram: aDiagramController [
+
 	aDiagramController addController: self.
-	self renderFigureIn: aDiagramController view
+	self ensureToHaveDiagramElement.
+	self renderDiagramElement
 ]
 
 { #category : #accessing }

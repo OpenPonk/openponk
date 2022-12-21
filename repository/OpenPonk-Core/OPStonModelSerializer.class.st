@@ -11,6 +11,24 @@ Class {
 	#category : #'OpenPonk-Core-Persistence'
 }
 
+{ #category : #'as yet unclassified' }
+OPStonModelSerializer class >> exportVersion [
+
+	^ 1
+]
+
+{ #category : #formatting }
+OPStonModelSerializer class >> formatName [
+
+	^ #ston
+]
+
+{ #category : #accessing }
+OPStonModelSerializer class >> minImportVersion [
+
+	^ 1
+]
+
 { #category : #accessing }
 OPStonModelSerializer >> formatName [
 	^ 'ston'

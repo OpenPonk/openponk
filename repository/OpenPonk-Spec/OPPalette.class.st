@@ -69,7 +69,7 @@ OPPalette >> createPaletteFor: aDiagramController [
 		addAllToPalette: self
 		forController: diagramController.
 	self selectSelectionTool.
-	diagramController whenAllDeselectedDo: [ self deselectTool ]
+	diagramController whenAllDeselectedDo: [ self selectSelectionTool ]
 ]
 
 { #category : #'building widgets' }
@@ -79,7 +79,12 @@ OPPalette >> createWidgets [
 
 { #category : #private }
 OPPalette >> deselectTool [
-	self selectSelectionTool
+
+	self
+		deprecated: 'Use #selectSelectionTool instead.'
+		transformWith:
+		'`@receiver deselectTool' -> '`@receiver selectSelectionTool'.
+	^ self selectSelectionTool
 ]
 
 { #category : #accessing }

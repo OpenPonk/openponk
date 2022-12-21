@@ -52,7 +52,7 @@ OPBaseControllerTest >> setUp [
 	controller := self controllerClass new.
 	diagramController := self diagramControllerClass new.
 	diagramController model: self diagramModelClass new.
-	diagramController view: RTView new.
+	diagramController canvas: RSCanvas new.
 	model := self newModel
 ]
 

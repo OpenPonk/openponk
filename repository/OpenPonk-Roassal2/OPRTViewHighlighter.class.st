@@ -1,12 +1,17 @@
 Class {
 	#name : #OPRTViewHighlighter,
 	#superclass : #OPRTHighlighter,
-	#category : 'OpenPonk-Roassal2-Builders'
+	#category : #'OpenPonk-Roassal2-Builders'
 }
 
 { #category : #'instance creation' }
 OPRTViewHighlighter class >> highlight: anElement color: aColor [
 	^ self new highlight: anElement color: aColor
+]
+
+{ #category : #testing }
+OPRTViewHighlighter class >> isDeprecated [
+	^ true
 ]
 
 { #category : #testing }

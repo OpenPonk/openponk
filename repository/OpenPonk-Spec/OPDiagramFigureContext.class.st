@@ -16,8 +16,8 @@ OPDiagramFigureContext class >> for: aPresenter of: figures [
 ]
 
 { #category : #accessing }
-OPDiagramFigureContext >> controller [
-	^ self diagramController controllerForFigure: self figure
+OPDiagramFigureContext >> canvas [
+	^ self tool canvas
 ]
 
 { #category : #accessing }
@@ -31,25 +31,16 @@ OPDiagramFigureContext >> diagramController [
 ]
 
 { #category : #accessing }
-OPDiagramFigureContext >> figure [
-	^ figures first
-]
-
-{ #category : #accessing }
 OPDiagramFigureContext >> figures [
 	^ figures
 ]
 
 { #category : #accessing }
 OPDiagramFigureContext >> figures: aCollection [
-	figures := aCollection.
-	controllers := self diagramController controllers
-		select: [ :each | figures includes: each figure ]
-]
 
-{ #category : #accessing }
-OPDiagramFigureContext >> model [
-	^ self controller model
+	figures := aCollection.
+	controllers := figures collect: [ :each | 
+		               self diagramController controllerForRoassalShape: each ]
 ]
 
 { #category : #accessing }
@@ -84,9 +75,4 @@ OPDiagramFigureContext >> representsModels: aCollection [
 { #category : #testing }
 OPDiagramFigureContext >> representsSimpleAnnotationUser: aToolClass [
 	^ tool isKindOf: aToolClass
-]
-
-{ #category : #accessing }
-OPDiagramFigureContext >> view [
-	^ self tool view
 ]

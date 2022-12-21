@@ -25,5 +25,5 @@ OPZoomActualDiagramCommand >> defaultMenuItemName [
 
 { #category : #execution }
 OPZoomActualDiagramCommand >> execute [
-	diagramPresenter zoom: 1.0001
+	diagramPresenter zoom: 1.0
 ]

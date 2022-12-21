@@ -3,9 +3,15 @@ I am a serialization interface for undo/redo and persistence.
 "
 Class {
 	#name : #OPModelSerializer,
-	#superclass : #Object,
+	#superclass : #OPSerializer,
 	#category : #'OpenPonk-Core-Persistence'
 }
+
+{ #category : #'as yet unclassified' }
+OPModelSerializer class >> exportSubject [
+
+	^ #model
+]
 
 { #category : #formatting }
 OPModelSerializer >> formatName [

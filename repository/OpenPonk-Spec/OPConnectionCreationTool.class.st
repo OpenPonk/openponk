@@ -11,8 +11,10 @@ Class {
 		'connectionController',
 		'factory',
 		'feedback',
-		'connectionFeedback',
-		'onComplete'
+		'onComplete',
+		'hoverAction',
+		'selectionAction',
+		'edgeCreationTargetController'
 	],
 	#category : #'OpenPonk-Spec-Palettes'
 }
@@ -20,10 +22,10 @@ Class {
 { #category : #protocol }
 OPConnectionCreationTool >> deselect [
 	feedback value: nil.
-	connectionFeedback
+	edgeCreationTargetController
 		ifNotNil: [ 
-			connectionFeedback remove.
-			connectionFeedback := nil ]
+			edgeCreationTargetController remove.
+			edgeCreationTargetController := nil ]
 ]
 
 { #category : #accessing }
@@ -31,67 +33,97 @@ OPConnectionCreationTool >> factory: aBlock [
 	factory := aBlock
 ]
 
+{ #category : #protocol }
+OPConnectionCreationTool >> hoveredController: aController [
+
+	^ hoverAction value: aController
+]
+
+{ #category : #callbacks }
+OPConnectionCreationTool >> hoveredSourceController: aController [
+
+	feedback value: ((aController canBeSourceFor: connectionController)
+			 ifTrue: [ aController showAcceptFeedbackFor: connectionController ]
+			 ifFalse: [ aController showDenyFeedbackFor: connectionController ])
+]
+
+{ #category : #callbacks }
+OPConnectionCreationTool >> hoveredTargetController: aController [
+
+	feedback value: ((aController canBeTargetFor: connectionController)
+			 ifTrue: [ aController showAcceptFeedbackFor: connectionController ]
+			 ifFalse: [ aController showDenyFeedbackFor: connectionController ])
+]
+
 { #category : #'as yet unclassified' }
 OPConnectionCreationTool >> initialize [
+
 	super initialize.
-	onComplete := [ :ctrl | ]
+	self selectSource.
+	onComplete := [ :ctrl |  ]
 ]
 
 { #category : #protocol }
 OPConnectionCreationTool >> select [
+
 	feedback := nil asValueHolder.
-	feedback whenChangedDo: [ :newVal :oldVal | oldVal ifNotNil: [ oldVal remove ] ].
+	feedback whenChangedDo: [ :newVal :oldVal | 
+		oldVal ifNotNil: [ 
+			(newVal isNil or: [ oldVal feedback ~= newVal feedback ]) ifTrue: [ 
+				oldVal remove ] ] ].
 	connectionController := factory value.
 	self selectSource
 ]
 
 { #category : #protocol }
 OPConnectionCreationTool >> selectSource [
-	self diagramController whenHoverChanged: [ :ctrl | self sourceEntered: ctrl ].
-	self diagramController whenSelectionChanged: [ :ctrl | self sourceSelected: ctrl ]
+
+	hoverAction := [ :controller | self hoveredSourceController: controller ].
+	selectionAction := [ :controllers | 
+	                   self selectedSourceControllers: controllers ]
 ]
 
 { #category : #protocol }
 OPConnectionCreationTool >> selectTarget [
-	self diagramController whenHoverChanged: [ :ctrl | self targetEntered: ctrl ].
-	self diagramController whenSelectionChanged: [ :ctrl | self targetSelected: ctrl ]
+
+	hoverAction := [ :controller | self hoveredTargetController: controller ].
+	selectionAction := [ :controllers | 
+	                   self selectedTargetControllers: controllers ]
+]
+
+{ #category : #protocol }
+OPConnectionCreationTool >> selectedControllers: aCollectionOfControllers [
+
+	^ selectionAction value: aCollectionOfControllers
 ]
 
 { #category : #callbacks }
-OPConnectionCreationTool >> sourceEntered: aController [
-	feedback
-		value:
-			((aController canBeSourceFor: connectionController)
-				ifTrue: [ aController showAcceptFeedbackFor: connectionController ]
-				ifFalse: [ aController showDenyFeedbackFor: connectionController ])
-]
+OPConnectionCreationTool >> selectedSourceControllers: aCollectionOfControllers [
 
-{ #category : #callbacks }
-OPConnectionCreationTool >> sourceSelected: aController [
-	(aController canBeSourceFor: connectionController)
-		ifFalse: [ ^ self ].
-	aController addAsSourceFor: connectionController.
-	connectionFeedback := connectionController connectionFeedback.
-	connectionFeedback renderIn: aController figure view.
+	| targetController |
+	aCollectionOfControllers size = 1 ifFalse: [ ^ self ].
+	targetController := aCollectionOfControllers anyOne.
+	(targetController canBeSourceFor: connectionController) ifFalse: [ 
+		^ self ].
+	targetController addAsSourceFor: connectionController.
+	edgeCreationTargetController := OPEdgeCreationTargetController 
+		                                renderForEdgeController:
+		                                connectionController.
 	self selectTarget
 ]
 
 { #category : #callbacks }
-OPConnectionCreationTool >> targetEntered: aController [
-	feedback
-		value:
-			((aController canBeTargetFor: connectionController)
-				ifTrue: [ aController showAcceptFeedbackFor: connectionController ]
-				ifFalse: [ aController showDenyFeedbackFor: connectionController ])
-]
+OPConnectionCreationTool >> selectedTargetControllers: aCollectionOfControllers [
 
-{ #category : #callbacks }
-OPConnectionCreationTool >> targetSelected: aController [
-	(aController canBeTargetFor: connectionController)
-		ifFalse: [ ^ self ].
-	aController addAsTargetFor: connectionController.
-	self palette deselectTool.
-	self palette selectedTool targetSelected: connectionController.
+	| targetController |
+	aCollectionOfControllers size = 1 ifFalse: [ ^ self ].
+	targetController := aCollectionOfControllers anyOne.
+	(targetController canBeTargetFor: connectionController) ifFalse: [ 
+		^ self ].
+	targetController addAsTargetFor: connectionController.
+	self palette selectSelectionTool.
+	self palette selectedTool selectedControllers:
+		{ connectionController }.
 	onComplete value: connectionController.
 	connectionController := nil.
 	self deselect

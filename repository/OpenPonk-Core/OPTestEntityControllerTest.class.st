@@ -178,7 +178,7 @@ OPTestEntityControllerTest >> testRemoveFigureAndModel [
 	diagramController model entities add: model.
 	controller model: model.
 	controller showWithoutDependentInDiagram: diagramController.
-	diagramController removeFromView: controller figure.
+	diagramController removeFromCanvas: controller figure.
 	self assert: diagramController controllers asArray equals: {}.
 	self assert: diagramController model entities asArray equals: {}
 ]
@@ -187,5 +187,5 @@ OPTestEntityControllerTest >> testRemoveFigureAndModel [
 OPTestEntityControllerTest >> testShowInDiagram [
 	controller model: model.
 	controller showWithoutDependentInDiagram: diagramController.
-	self assert: (diagramController controllerForFigure: controller figure) equals: controller
+	self assert: (diagramController controllerForRoassalShape: controller figure) equals: controller
 ]

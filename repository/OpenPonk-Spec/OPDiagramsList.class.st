@@ -95,17 +95,19 @@ OPDiagramsList >> copyDiagram: aView [
 
 { #category : #actions }
 OPDiagramsList >> createDiagram [
+
 	| name diagram openModel |
-	openModel := self workbench focusedEditor
-		ifNotNil: [ :editor | editor diagramController model ].
-	[ name := UIManager default
-		request: 'Diagram name: '
-		initialAnswer: openModel name
-		title: 'Create new' ]
-		doWhileTrue: [ name isNotNil and: [ name isEmpty ] ].
+	openModel := self workbench focusedEditor ifNotNil: [ :editor | 
+		             editor diagramController model ].
+	[ 
+	name := UIManager default
+		        request: 'Diagram name: '
+		        initialAnswer: openModel name
+		        title: 'Create new' ] doWhileTrue: [ 
+		name isNotNil and: [ name isEmpty ] ].
 	name ifNil: [ ^ self ].
-	diagram := OPDiagram
-		emptyOfModel: (openModel ifNil: [ self project models first ]).
+	diagram := OPOpenPonkDiagram forModelElement:
+		           (openModel ifNil: [ self project models first ]).
 	diagram name: name.
 	project addDiagram: diagram.
 	self workbench openEditorOnDiagram: diagram
@@ -135,12 +137,15 @@ OPDiagramsList >> displayFor: aDiagramView [
 ]
 
 { #category : #initialization }
-OPDiagramsList >> displayRowFor: aView [
+OPDiagramsList >> displayRowFor: aDiagram [
 
-	| name nameMorph modelMorph container |
-	name := aView name.
+	| name nameMorph modelMorph container modelName |
+	name := aDiagram name.
 	nameMorph := name asTextMorph lock.
-	modelMorph := (' ' , aView modelName , ' ') asTextMorph
+	modelName := (aDiagram modelElement respondsTo: #name)
+		             ifTrue: [ aDiagram modelElement name ]
+		             ifFalse: [ aDiagram modelElement asString ].
+	modelMorph := (' ' , modelName , ' ') asTextMorph
 		              lock;
 		              color: Color white;
 		              backgroundColor: Color veryLightGray;
@@ -162,10 +167,11 @@ OPDiagramsList >> initializeList [
 
 	list
 		display: [ :aView | self displayRowFor: aView ];
-		displayIcon: [ :aView | self adapters iconFor: aView model ];
+		displayIcon: [ :aView | self adapters iconFor: aView modelElement ];
 		whenActivatedDo: [ 
 			list selectedItem ifNotNil: [ :aView | self openDiagram: aView ] ];
-		whenSelectionChangedDo: [ :item | self selectionChanged: item ];
+		whenSelectionChangedDo: [ :item | 
+			self selectionChanged: item selectedItem ];
 		contextMenu: [ 
 			self contextMenu: self newMenu for: list selectedItem ]
 ]
@@ -217,8 +223,9 @@ OPDiagramsList >> initializeToolbar [
 
 { #category : #actions }
 OPDiagramsList >> isDeleteAllowedFor: aDiagram [
-	^ project isNotNil
-		and: [ (project diagramsOf: aDiagram model) size > 1 ]
+
+	^ project isNotNil and: [ 
+		  (project diagramsOf: aDiagram modelElement) size > 1 ]
 ]
 
 { #category : #'accessing - spec' }

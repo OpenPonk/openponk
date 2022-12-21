@@ -58,20 +58,22 @@ OPLayouter >> basicApplyLayout: aTwoArgBlock [
 		                 selectedElements.
 	isPartialLayout := selectedBoxes size > 1.
 	allNodes := self allNodes.
-	nodes := RTGroup withAll: (isPartialLayout
+	nodes := RSGroup withAll: (isPartialLayout
 			          ifTrue: [ allNodes intersection: selectedBoxes ]
 			          ifFalse: [ allNodes ]).
-	allEdges := self allEdges reject: [ :each | each to = each from ].
+	allEdges := self allEdges reject: [ :each | 
+		            each target = each source ].
 	edges := allEdges select: [ :each | 
-		         (nodes includes: each from) & (nodes includes: each to) ].
+		         (nodes includes: each source)
+		         & (nodes includes: each target) ].
 	oldEncompassingRectangle := nodes encompassingRectangle.
 	aTwoArgBlock value: nodes value: edges.
 	newEncompassingRectangle := nodes encompassingRectangle.
 	isPartialLayout
 		ifTrue: [ 
 			nodes translateTo: oldEncompassingRectangle center.
-			diagramController view signalUpdate ]
-		ifFalse: [ self updateView ]
+			diagramController canvas signalUpdate ]
+		ifFalse: [ self updateCanvas ]
 ]
 
 { #category : #layouts }
@@ -95,14 +97,13 @@ OPLayouter >> diagramController: aDiagramController [
 
 { #category : #layouts }
 OPLayouter >> dominanceTreeLayout [
-	self
-		applyLayout: [ :boxes :links | 
-			RTDominanceTreeLayout new
-				verticallyReverse;
-				verticalGap: 100;
-				horizontalGap: 100;
-				doNotAttachPoint;
-				on: boxes edges: links ]
+
+	self applyLayout: [ :boxes :links | 
+		RSDominanceTreeLayout new
+			verticallyReverse;
+			verticalGap: 100;
+			horizontalGap: 100;
+			on: boxes edges: links ]
 ]
 
 { #category : #accessing }
@@ -129,12 +130,12 @@ OPLayouter >> sugiyamaLayout [
 
 	self applyLayout: [ :boxes :links | 
 		| centerY |
-		RTSugiyamaLayout new
-			doNotAttachPoint;
+		RSSugiyamaLayout new
+			"doNotAttachPoint;"
 			verticalGap: 100;
 			horizontalGap: 100;
 			on: boxes edges: links.
-		centerY := (RTGroup withAll: boxes) encompassingRectangle center y.
+		centerY := (RSGroup withAll: boxes) encompassingRectangle center y.
 		boxes do: [ :each | 
 			each translateBy: 0 @ 2 * (centerY - each position y) ] ]
 ]
@@ -160,9 +161,18 @@ OPLayouter >> treeLayout [
 ]
 
 { #category : #userinterface }
+OPLayouter >> updateCanvas [
+
+	diagramController canvas signalUpdate
+]
+
+{ #category : #userinterface }
 OPLayouter >> updateView [
-	| view |
-	view := diagramController view.
-	view signalUpdate.
-	view canvas camera focusOnCenter
+
+	self
+		deprecated: 'Use #updateCanvas instead.'
+		transformWith:
+		'`@receiver updateView'
+		-> '`@receiver updateCanvas'.
+	^ self updateCanvas
 ]

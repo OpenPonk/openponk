@@ -55,14 +55,6 @@ OPProjectDirectorySerializerTest >> testDeleteOldModels [
 ]
 
 { #category : #tests }
-OPProjectDirectorySerializerTest >> testExporterVersion [
-	self assert: persistence exporter equals: 'OpenPonk'.
-	self
-		assert: persistence exporterVersion
-		equals: OPVersion current fullVersionString
-]
-
-{ #category : #tests }
 OPProjectDirectorySerializerTest >> testModelReferences [
 	| result models |
 	models := OPPluginRegistry default plugins collect: [ :each | each modelClass new ].

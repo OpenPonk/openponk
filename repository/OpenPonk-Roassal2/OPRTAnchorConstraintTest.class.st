@@ -10,11 +10,11 @@ Class {
 		'connection',
 		'connectionElement',
 		'connectionAnchor',
-		'view',
+		'canvas',
 		'segment',
 		'expected'
 	],
-	#category : 'OpenPonk-Roassal2-Tests'
+	#category : #'OpenPonk-Roassal2-Tests'
 }
 
 { #category : #'instance creation' }

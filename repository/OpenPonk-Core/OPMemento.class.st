@@ -84,14 +84,15 @@ OPMemento >> setModel: aModel diagram: aDiagram [
 
 { #category : #initialization }
 OPMemento >> setModel: aModel diagrams: diagramsCollection [
+
 	self
 		deprecated: 'set model and diagrams separately'
 		transformWith:
 			'`@receiver setModel: `@statements1 diagrams: `@statements2'
-				-> '`@receiver model: `@statements1; diagrams: `@statements2'.
-	self
-		model: aModel;
-		diagrams: diagramsCollection
+			-> '`@receiver model: `@statements1; diagrams: `@statements2'.
+	^ self
+		  model: aModel;
+		  diagrams: diagramsCollection
 ]
 
 { #category : #accessing }

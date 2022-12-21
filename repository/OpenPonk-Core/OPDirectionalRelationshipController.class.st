@@ -13,17 +13,19 @@ Class {
 	#category : #'OpenPonk-Core-Controllers'
 }
 
-{ #category : #hooks }
-OPDirectionalRelationshipController >> connectionFeedback [
-	^ OPInteractiveLine new
-		lineBuilder:
-				[ :fromFigure :toFigure | self createEdgeFrom: fromFigure to: toFigure ];
-		from: source figure
+{ #category : #figures }
+OPDirectionalRelationshipController >> createDiagramElement [
+
+	super createDiagramElement.
+	self diagramElement
+		source: self source diagramElement;
+		target: self target diagramElement
 ]
 
 { #category : #hooks }
-OPDirectionalRelationshipController >> createEdgeFrom: fromElement to: toElement [
-	^ self subclassResponsibility
+OPDirectionalRelationshipController >> createLineFrom: fromElement to: toElement [
+
+	self deprecated: 'This is responsibility of DI shapes now'.
 ]
 
 { #category : #construction }
@@ -37,10 +39,9 @@ OPDirectionalRelationshipController >> createModelIn: aParentModel [
 
 { #category : #hooks }
 OPDirectionalRelationshipController >> edgeBuilder [
-	self
-		deprecated:
-			'Depracated without replacement - use Roassal directly or define own figures'.
-	^ self subclassResponsibility
+
+	self deprecated:
+		'Depracated without replacement - use Roassal directly or define own figures'
 ]
 
 { #category : #'canvas actions' }
@@ -58,6 +59,12 @@ OPDirectionalRelationshipController >> modelSource [
 { #category : #accessing }
 OPDirectionalRelationshipController >> modelTarget [
 	^ model target
+]
+
+{ #category : #rendering }
+OPDirectionalRelationshipController >> renderSimplified [
+
+	diagramElement := self diagramElementClass renderSimplifiedForController: self.
 ]
 
 { #category : #'canvas actions' }

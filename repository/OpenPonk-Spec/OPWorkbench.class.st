@@ -300,10 +300,11 @@ OPWorkbench >> projectTree [
 
 { #category : #protocol }
 OPWorkbench >> title [
-
 	^ project
 		  ifNil: [ 'OpenPonk' ]
-		  ifNotNil: [ project name , ' - OpenPonk' ]
+		  ifNotNil: [ 
+			(project storageFile) ifNil: [ project name , ' - OpenPonk']
+									 	ifNotNil: [ project storageFile path pathString, ' - ', project name, ' - OpenPonk' ] ]
 ]
 
 { #category : #'accessing - spec' }

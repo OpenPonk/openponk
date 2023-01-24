@@ -354,7 +354,8 @@ OPProjectController >> saveProjectTo: aFile [
 	self persistenceManager
 		directory: projectDirectory;
 		saveProject: self project withMementos: self modelMementos.
-	OPZipPersistence new save: store to: aFile
+	OPZipPersistence new save: store to: aFile.
+	workbench updateTitle
 ]
 
 { #category : #saving }

@@ -51,5 +51,6 @@ OPResizableFigureWithText >> updateText [
 
 	text shape width: self width - (self textPadding * 2).
 	text update.
-	text translateTo: self position + self textOffset
+	text translateTo: self position + self textOffset.
+	text signalUpdate.
 ]

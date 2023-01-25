@@ -16,15 +16,19 @@ OPTypesShowHidePresenter >> childrenFor: aNode [
 
 { #category : #defaults }
 OPTypesShowHidePresenter >> findSelectedItems [
-	| visibleElements |
+	| visibleElements hidableElementTypes |
 	visibleElements := diagramController allVisibleShowableElements.
+	hidableElementTypes := ((adapters allChildrenFor: diagramController model)
+									collect: [ :element | element class ]) asSet.
+	"Returns all children from getAllNodes x where such visible element exists, that it is hideable and x is its type"
+		"The hidability condition excludes OPNote and OPBoundary"
 	^ (self getAllNodes
 		select: [ :typeTree | 
-			visibleElements
-				anySatisfy:
-					[ :each | typeTree includesType: (diagramController typeOfModel: each) ] ])
-		ifNotEmpty:
-			[ :newNodes | newNodes copyWith: (OPModelObjectTypeNode named: 'All') ]
+			visibleElements anySatisfy:
+					[ :element | 
+						(hidableElementTypes anySatisfy: [:type| type = (element class)])
+							and: [typeTree includesType: (diagramController typeOfModel: element)]]])
+		ifNotEmpty: [ :newNodes | newNodes copyWith: (OPModelObjectTypeNode named: 'All') ]
 ]
 
 { #category : #defaults }

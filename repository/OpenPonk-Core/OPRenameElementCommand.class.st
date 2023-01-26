@@ -24,14 +24,10 @@ Class {
 { #category : #execute }
 OPRenameElementCommand >> execute [
 
-	| dialog result window |
-	dialog := SpRequestDialog new.
-	dialog label: 'Enter name'.
-	window := dialog openBlockedDialog.
-	result := dialog text.
+	| result |
+	result := UIManager default request: 'Enter a name' initialAnswer: (controller model name).
 	result ifNil: [ ^ self ].
 	result ifEmpty: [ ^ self ].
-	window cancelled ifTrue: [ ^ self ].
 	controller model name: result.
-	controller model announcer announce: OPElementRenamed new
+	controller model announcer announce: OPElementRenamed new.
 ]

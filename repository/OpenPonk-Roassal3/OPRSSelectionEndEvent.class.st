@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'originalEvent'
 	],
-	#category : #'OpenPonk-Roassal3'
+	#category : #'OpenPonk-Roassal3-Interactions'
 }
 
 { #category : #accessing }

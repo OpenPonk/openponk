@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'shape'
 	],
-	#category : #'OpenPonk-Roassal3'
+	#category : #'OpenPonk-Roassal3-Markers'
 }
 
 { #category : #accessing }

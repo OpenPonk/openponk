@@ -13,7 +13,7 @@ Class {
 		'anchorPoint',
 		'extraDistance'
 	],
-	#category : #'OpenPonk-Roassal3'
+	#category : #'OpenPonk-Roassal3-AnchorConstraint'
 }
 
 { #category : #building }

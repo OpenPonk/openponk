@@ -7,7 +7,7 @@ Class {
 		'previousSegmentsLength',
 		'lineLength'
 	],
-	#category : #'OpenPonk-Roassal3'
+	#category : #'OpenPonk-Roassal3-AnchorConstraint'
 }
 
 { #category : #calculated }

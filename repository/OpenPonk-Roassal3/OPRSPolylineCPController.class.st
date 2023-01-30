@@ -1,11 +1,11 @@
 Class {
-	#name : #OPRSDraggableCPController,
+	#name : #OPRSPolylineCPController,
 	#superclass : #RSAbstractCPController,
-	#category : #'OpenPonk-Roassal3'
+	#category : #'OpenPonk-Roassal3-Polyline'
 }
 
 { #category : #hooks }
-OPRSDraggableCPController >> controlPointsFor: aLine [
+OPRSPolylineCPController >> controlPointsFor: aLine [
 
 	| lineAttachPoint innerCPs firstSegmentTo lastSegmentFrom firstSegmentLine lastSegmentLine fromPoint toPoint |
 	lineAttachPoint := aLine attachPoint.
@@ -45,7 +45,7 @@ OPRSDraggableCPController >> controlPointsFor: aLine [
 ]
 
 { #category : #hooks }
-OPRSDraggableCPController >> defaultInnerSelfControlPointsFor: aLine [
+OPRSPolylineCPController >> defaultInnerSelfControlPointsFor: aLine [
 
 	| delta encompassingRectangle from corner to |
 	delta := 30.
@@ -61,7 +61,7 @@ OPRSDraggableCPController >> defaultInnerSelfControlPointsFor: aLine [
 ]
 
 { #category : #hooks }
-OPRSDraggableCPController >> innerControlPointsFor: aLine [
+OPRSPolylineCPController >> innerControlPointsFor: aLine [
 
 	| currentInnerCPs defaultInnerCPs diffs |
 	currentInnerCPs := aLine controlPoints
@@ -77,7 +77,7 @@ OPRSDraggableCPController >> innerControlPointsFor: aLine [
 	diffs := (1 to: currentInnerCPs size) collect: [ :index | 
 		         (currentInnerCPs at: index) - (defaultInnerCPs at: index) ].
 	(diffs allSatisfy: [ :each | 
-		 each closeTo: diffs first precision: 0.99 ]) ifTrue: [ 
+		 each closeTo: diffs first absolutePrecision: 0.99 ]) ifTrue: [ 
 		^ defaultInnerCPs ].
 	^ currentInnerCPs
 ]

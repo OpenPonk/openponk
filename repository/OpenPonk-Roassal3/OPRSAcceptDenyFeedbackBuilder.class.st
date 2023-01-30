@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'feedback'
 	],
-	#category : #'OpenPonk-Roassal3'
+	#category : #'OpenPonk-Roassal3-CreationFeedback'
 }
 
 { #category : #'as yet unclassified' }

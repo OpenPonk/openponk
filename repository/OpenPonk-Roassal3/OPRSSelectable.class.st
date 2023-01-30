@@ -1,7 +1,7 @@
 Class {
 	#name : #OPRSSelectable,
 	#superclass : #RSHighlightable,
-	#category : #'OpenPonk-Roassal3'
+	#category : #'OpenPonk-Roassal3-Interactions'
 }
 
 { #category : #announcer }

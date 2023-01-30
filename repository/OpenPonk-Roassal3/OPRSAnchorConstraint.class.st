@@ -9,7 +9,7 @@ Class {
 		'shape',
 		'line'
 	],
-	#category : #'OpenPonk-Roassal3'
+	#category : #'OpenPonk-Roassal3-AnchorConstraint'
 }
 
 { #category : #building }
@@ -54,6 +54,7 @@ OPRSAnchorConstraint >> build [
 	line when: RSShapeRemovedEvent do: [ self remove ].
 	line from when: RSPositionChangedEvent do: [ self moveShape ].
 	line to when: RSPositionChangedEvent do: [ self moveShape ].
+	line when: RSPositionChangedEvent do: [ self moveShape ].
 	shape when: RSMouseLeftDragStart do: [ self addAnchorAndGuideLine ].
 	shape when: RSMouseDragging do: [ self saveShapePosition ].
 	shape when: RSMouseDragEnd do: [ self removeAnchorAndGuideLine ]

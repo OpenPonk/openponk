@@ -1,7 +1,7 @@
 Class {
 	#name : #OPRSEmptyMarker,
 	#superclass : #RSMarker,
-	#category : #'OpenPonk-Roassal3'
+	#category : #'OpenPonk-Roassal3-Markers'
 }
 
 { #category : #accessing }

@@ -1,7 +1,7 @@
 Class {
 	#name : #OPRSNodeADFeedback,
 	#superclass : #OPRSAcceptDenyFeedbackBuilder,
-	#category : #'OpenPonk-Roassal3'
+	#category : #'OpenPonk-Roassal3-CreationFeedback'
 }
 
 { #category : #private }

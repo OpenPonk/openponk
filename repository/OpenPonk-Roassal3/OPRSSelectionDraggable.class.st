@@ -1,7 +1,7 @@
 Class {
 	#name : #OPRSSelectionDraggable,
 	#superclass : #RSDraggable,
-	#category : #'OpenPonk-Roassal3'
+	#category : #'OpenPonk-Roassal3-Interactions'
 }
 
 { #category : #'instance creation' }

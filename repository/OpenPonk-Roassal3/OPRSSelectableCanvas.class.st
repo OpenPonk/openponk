@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'multiselectEnabled'
 	],
-	#category : #'OpenPonk-Roassal3'
+	#category : #'OpenPonk-Roassal3-Interactions'
 }
 
 { #category : #'event processing' }

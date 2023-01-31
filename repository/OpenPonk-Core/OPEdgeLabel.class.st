@@ -35,11 +35,13 @@ OPEdgeLabel >> renderShapeDetails [
 { #category : #rendering }
 OPEdgeLabel >> updateRenderFromModel [
 
-	roassalShape
-		text: self text;
-		signalUpdate.
+	roassalShape text: self text.
 
-	(roassalShape propertyAt: OPRSAnchorConstraint) moveShape
+	(roassalShape propertyAt: OPRSAnchorConstraint) moveShape.
+
+	super updateRenderFromModel.
+
+	roassalShape signalUpdate
 ]
 
 { #category : #roassal }

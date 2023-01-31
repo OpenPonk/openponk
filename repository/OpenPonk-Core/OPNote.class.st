@@ -1,6 +1,6 @@
 Class {
 	#name : #OPNote,
-	#superclass : #OPCommonElement,
+	#superclass : #OPDiagramOnlyShape,
 	#instVars : [
 		'text'
 	],

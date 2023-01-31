@@ -1,6 +1,6 @@
 Class {
 	#name : #OPBoundary,
-	#superclass : #OPCommonElement,
+	#superclass : #OPDiagramOnlyShape,
 	#instVars : [
 		'name'
 	],

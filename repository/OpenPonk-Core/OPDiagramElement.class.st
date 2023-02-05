@@ -50,8 +50,8 @@ OPDiagramElement class >> stonAllInstVarNames [
 
 	"Override to encode my instances using a custom set of instance variables or to define their order."
 
-	^ super stonAllInstVarNames copyWithoutAll:
-		  #( #roassalShape #canvas )
+	^ #( #modelElements #owningElement #targetEdges #sourceEdges
+	     #sharedStyle #localStyle #ownedElements )
 ]
 
 { #category : #accessing }
@@ -136,7 +136,7 @@ OPDiagramElement >> model [
 { #category : #accessing }
 OPDiagramElement >> modelElement [
 
-	^ modelElements first
+	^ self modelElements first
 ]
 
 { #category : #accessing }

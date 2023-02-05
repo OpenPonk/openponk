@@ -49,11 +49,12 @@ OPDiagramExplorer >> hideDependentFor: aDataElement [
 
 { #category : #actions }
 OPDiagramExplorer >> hideElement: element [
+
 	diagramController deselectAll.
 	element = diagramController model
 		ifTrue: [ diagramController hideAllElements ]
 		ifFalse: [ diagramController hideModelFromDiagram: element ].
-	diagramController view signalUpdate
+	diagramController canvas signalUpdate
 ]
 
 { #category : #actions }

@@ -116,10 +116,10 @@ OPDiagramController >> addingFigureFor: aController [
 
 { #category : #rendering }
 OPDiagramController >> allShowableElements [
+
 	"Should return all elements that could be directly hidden on diagram"
 
 	^ (Set with: model) , self elementsToShowInside
-		, self diagram commonElements
 ]
 
 { #category : #'as yet unclassified' }
@@ -202,7 +202,7 @@ OPDiagramController >> cachedControllerForRoassalShape: aFigure [
 			figureToControllerCache at: each roassalShape put: each ] ].
 	ctrl := figureToControllerCache at: aFigure ifPresent: #yourself.
 	(self controllers includes: ctrl) ifTrue: [ ^ ctrl ].
-	ctrl := self controllers detect: [ :fresh | fresh roassalShape = aFigure ].
+	ctrl := self controllers detect: [ :fresh | fresh roassalShape isOrComposesOf: aFigure ].
 	figureToControllerCache at: aFigure put: ctrl.
 	^ ctrl
 ]
@@ -556,6 +556,7 @@ OPDiagramController >> layout [
 
 { #category : #accessing }
 OPDiagramController >> layout: aLayout [
+self halt.
 
 	aLayout keysAndValuesDo: [ :key :value | 
 		self controllers

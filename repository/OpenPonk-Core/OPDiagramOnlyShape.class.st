@@ -7,26 +7,18 @@ Class {
 	#category : #'OpenPonk-Core-CommonElements'
 }
 
-{ #category : #accessing }
-OPDiagramOnlyShape class >> neoJsonMapping: mapper [
+{ #category : #'ston-core' }
+OPDiagramOnlyShape class >> stonAllInstVarNames [
 
-	mapper
-		for: self do: [ :mapping | 
-			mapping mapInstVars:
-					mapping identifier allInstVarNames \ #( announcer ).
-			(mapping mapInstVar: #uuid) valueSchema: UUID.
-			mapping
-				mapProperty: #className
-				getter: [ :object | object className ]
-				setter: [ :object :value | 
-					object assert: object className = value ] ];
-		for: UUID customDo: [ :mapping | 
-			mapping
-				encoder: [ :uuid | uuid asString ];
-				decoder: [ :string | 
-					[ UUID fromString: string ]
-						on: Error
-						do: [ string ] ] ]
+	"Override to encode my instances using a custom set of instance variables or to define their order."
+
+	^ super stonAllInstVarNames , #( #uuid )
+]
+
+{ #category : #accessing }
+OPDiagramOnlyShape >> announcer [
+
+	^ roassalShape ifNotNil: #announcer
 ]
 
 { #category : #accessing }
@@ -37,10 +29,22 @@ OPDiagramOnlyShape >> initialize [
 ]
 
 { #category : #accessing }
+OPDiagramOnlyShape >> modelElements [
+
+	^ { self }
+]
+
+{ #category : #accessing }
 OPDiagramOnlyShape >> modelElements: aCollection [
 
-	aCollection ifEmpty: [ ^ self ].
+	(aCollection noneSatisfy: [ :any | any ~= self ]) ifTrue: [ ^ self ].
 	self shouldNotImplement
+]
+
+{ #category : #rendering }
+OPDiagramOnlyShape >> updateRenderFromModel [
+
+	^ self updateRenderFromSelf
 ]
 
 { #category : #accessing }

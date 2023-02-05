@@ -134,6 +134,7 @@ OPElementController >> layout [
 
 { #category : #accessing }
 OPElementController >> layout: anElementLayout [
+self halt.
 	self figure translateTo: anElementLayout position
 ]
 

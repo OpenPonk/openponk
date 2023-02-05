@@ -15,37 +15,24 @@ OPNoteController class >> paletteItemName [
 OPNoteController >> buildEditorForm: aForm [
 
 	(aForm addLongText: 'Text')
-		text: self model text;
+		text: self diagramElement text;
 		whenTextChangedDo: [ :newValue | 
-			self model text: newValue asString.
-			self model announce:
+			self diagramElement text: newValue asString.
+			self diagramElement announce:
 					(OPElementTextAttributeChanged withAttributeName: #text) ]
 ]
 
-{ #category : #construction }
-OPNoteController >> createModelIn: aParentModel [
-	super createModelIn: aParentModel.
-	model
-		when: OPElementTextAttributeChanged
-		do: [ self figure updateText ].
-	^ model
-]
-
 { #category : #accessing }
-OPNoteController >> modelClass [
+OPNoteController >> diagramElementClass [
+
 	^ OPNote
 ]
 
-{ #category : #construction }
-OPNoteController >> removeModel [
-	model announcer unsubscribe: self.
-	super removeModel
-]
+{ #category : #rendering }
+OPNoteController >> renderDiagramElement [
 
-{ #category : #construction }
-OPNoteController >> renderFigureIn: aView [
-	self diagramController addingFigureFor: self.
-	figure := OPNoteFigure on: self model.
-	figure renderIn: aView.
-	^ self diagramController addedFigureFor: self
+	super renderDiagramElement.
+	diagramElement announcer
+		when: OPElementTextAttributeChanged
+		do: [ diagramElement updateRenderFromModel ]
 ]

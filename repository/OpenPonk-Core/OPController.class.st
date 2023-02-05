@@ -133,7 +133,7 @@ OPController >> figure [
 		deprecated: 'Use #diagramElement instead'
 		transformWith: '`@receiver figure' -> '`@receiver diagramElement'.
 
-	^ self subclassResponsibility
+	^ self diagramElement
 ]
 
 { #category : #'canvas actions' }
@@ -146,7 +146,7 @@ OPController >> hideSelectionFeedback [
 
 { #category : #announcements }
 OPController >> internalSubscribeTo: aModel [
-	aModel announcer when: OPElementRenamed do: [ self refreshFigure ]
+	aModel announcer when: OPElementRenamed do: [ self updateRenderFromModel ]
 ]
 
 { #category : #announcements }

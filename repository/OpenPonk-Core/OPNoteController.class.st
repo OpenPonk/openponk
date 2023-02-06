@@ -33,5 +33,5 @@ OPNoteController >> renderDiagramElement [
 	super renderDiagramElement.
 	diagramElement announcer
 		when: OPElementTextAttributeChanged
-		do: [ diagramElement updateRenderFromModel ]
+		do: [ diagramElement updateRenderFromSelf ]
 ]

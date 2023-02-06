@@ -44,7 +44,7 @@ OPDiagramOnlyShape >> modelElements: aCollection [
 { #category : #rendering }
 OPDiagramOnlyShape >> updateRenderFromModel [
 
-	^ self updateRenderFromSelf
+	"do nothing - there is no model"
 ]
 
 { #category : #accessing }

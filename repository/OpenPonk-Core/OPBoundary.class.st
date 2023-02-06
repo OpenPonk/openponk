@@ -76,9 +76,6 @@ OPBoundary >> renderShapeDetails [
 		@ OPRSSelectable;
 		@ OPRSSelectionDraggableBorder;
 		@ OPRSResizable.
-	roassalShape
-		when: RSExtentChangedEvent do: [ self updateFromRender ];
-		when: RSPositionChangedEvent do: [ self updateFromRender ].
 	self renderLabel
 ]
 

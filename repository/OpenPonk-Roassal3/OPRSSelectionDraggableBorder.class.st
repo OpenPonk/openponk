@@ -74,14 +74,14 @@ OPRSSelectionDraggableBorder >> dragBoxUpdateBlocks [
 			                          dragBox
 				                          height:
 					                          (shape height - self dragBoxWidth max:
-							                           0 @ 0);
+							                           0);
 				                          translateTo:
 					                          shape encompassingRectangle leftCenter ]).
 			                         (#right -> [ :dragBox | 
 			                          dragBox
 				                          height:
 					                          (shape height - self dragBoxWidth max:
-							                           0 @ 0);
+							                           0);
 				                          translateTo:
 					                          shape encompassingRectangle rightCenter ]) }
 			                         asDictionary ]

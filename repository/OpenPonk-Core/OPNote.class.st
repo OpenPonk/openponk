@@ -164,14 +164,8 @@ OPNote >> renderShapeDetails [
 		@ OPRSResizable.
 	self updateOwnedElements.
 	self roassalShape
-		when: RSPositionChangedEvent do: [ 
-			self
-				updateOwnedElements;
-				updateFromRender ];
-		when: RSExtentChangedEvent do: [ 
-		self
-			updateOwnedElements;
-			updateFromRender ].
+		when: RSPositionChangedEvent do: [ self updateOwnedElements ];
+		when: RSExtentChangedEvent do: [ self updateOwnedElements ].
 	self renderLabel
 ]
 

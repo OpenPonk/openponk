@@ -1,6 +1,9 @@
 Class {
 	#name : #OPRSSelectionDraggable,
 	#superclass : #RSDraggable,
+	#instVars : [
+		'draggedShapes'
+	],
 	#category : #'OpenPonk-Roassal3-Interactions'
 }
 
@@ -14,38 +17,53 @@ OPRSSelectionDraggable class >> wantsUniqueInstance [
 OPRSSelectionDraggable >> onShape: aShape [
 
 	super onShape: aShape.
-	aShape propertyAt: self class put: self
+	aShape when: RSMouseDragStart send: #startDrag: to: self.
+	aShape propertyAt: self propertyKey put: self
 ]
 
 { #category : #events }
 OPRSSelectionDraggable >> processDrag: evt [
 
-	| d selectedShapes shapesToMove |
+	| d |
 	d := evt camera distanceFromPixelToSpace: evt step.
-	selectedShapes := evt canvas selectedShapes ifEmpty: [ { evt shape } ].
-	shapesToMove := (selectedShapes includes: evt shape)
-		                ifTrue: [ 
-		                selectedShapes select: [ :each | 
-			                each hasProperty: self class ] ]
-		                ifFalse: [ { evt shape } ].
-	shapesToMove do: [ :each | self translateShape: each by: d ].
+	draggedShapes do: [ :each | each translateBy: d ].
 	evt signalUpdate
 ]
 
-{ #category : #events }
-OPRSSelectionDraggable >> translateShape: aShape by: aPoint [
+{ #category : #'accessing - keys' }
+OPRSSelectionDraggable >> propertyKey [
 
-	| shapeEncompassingRectangle draggableNodesInside |
-	aShape translateBy: aPoint.
+	^ OPRSSelectionDraggable
+]
+
+{ #category : #events }
+OPRSSelectionDraggable >> shapesToDragInside: aShape [
+
+	| shapeEncompassingRectangle |
 	shapeEncompassingRectangle := aShape encompassingRectangle.
-	draggableNodesInside := aShape canvas nodes select: [ :each | 
-		                        each isFixed not and: [ 
-			                        (shapeEncompassingRectangle containsRect:
-				                         each encompassingRectangle) and: [ 
-				                        shapeEncompassingRectangle
-				                        ~= each encompassingRectangle and: [ 
-					                        each isSelectionDraggable ] ] ] ].
-	draggableNodesInside
-		reject: #isSelected
-		thenDo: [ :each | self translateShape: each by: aPoint ]
+	^ aShape canvas nodes select: [ :each | 
+		  each isSelected not and: [ 
+			  each isFixed not and: [ 
+				  (shapeEncompassingRectangle containsRect:
+					   each encompassingRectangle) and: [ 
+					  shapeEncompassingRectangle ~= each encompassingRectangle and: [ 
+						  each isSelectionDraggable ] ] ] ] ]
+]
+
+{ #category : #events }
+OPRSSelectionDraggable >> startDrag: anEvent [
+
+	| selectedShapes selectedShapesToMove |
+	selectedShapes := anEvent canvas selectedShapes ifEmpty: [ 
+		                  { anEvent shape } ].
+	selectedShapesToMove := (selectedShapes includes: anEvent shape)
+		                        ifTrue: [ 
+			                        selectedShapes select: [ :each | 
+				                        each hasProperty: self propertyKey ] ]
+		                        ifFalse: [ { anEvent shape } ].
+
+	draggedShapes := selectedShapesToMove flatCollect: [ 
+		                 :eachSelectedShape | 
+		                 { eachSelectedShape }
+		                 , (self shapesToDragInside: eachSelectedShape) ]
 ]

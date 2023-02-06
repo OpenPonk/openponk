@@ -18,8 +18,7 @@ OPNoteController >> buildEditorForm: aForm [
 		text: self diagramElement text;
 		whenTextChangedDo: [ :newValue | 
 			self diagramElement text: newValue asString.
-			self diagramElement announce:
-					(OPElementTextAttributeChanged withAttributeName: #text) ]
+			self diagramElement updateRenderFromSelf ]
 ]
 
 { #category : #accessing }

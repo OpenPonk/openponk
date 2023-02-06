@@ -158,12 +158,20 @@ OPNote >> renderShapeDetails [
 	self createOwnedFillBoxes.
 	self createOwnedCornerTriangle.
 	self createOwnedBorderLines.
-	self roassalShape @ OPRSSelectionDraggable.
+	roassalShape
+		@ OPRSSelectable;
+		@ OPRSSelectionDraggable;
+		@ OPRSResizable.
 	self updateOwnedElements.
 	self roassalShape
-		when: RSPositionChangedEvent do: [ self updateOwnedElements ];
-		when: RSExtentChangedEvent do: [ self updateOwnedElements ].
-	self roassalShape @ OPRSResizable.
+		when: RSPositionChangedEvent do: [ 
+			self
+				updateOwnedElements;
+				updateFromRender ];
+		when: RSExtentChangedEvent do: [ 
+		self
+			updateOwnedElements;
+			updateFromRender ].
 	self renderLabel
 ]
 

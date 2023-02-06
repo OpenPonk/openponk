@@ -21,11 +21,15 @@ OPRSHandle >> createClickBoxShape [
 
 { #category : #accessing }
 OPRSHandle >> createShape [
+
 	^ RSEllipse new
-		size: self size;
-		color: Color blue;
-		borderColor: Color black;
-		yourself
+		  size: self size;
+		  color: Color white;
+		  borderDo: [ :b | 
+			  b
+				  width: 2;
+				  color: Color blue ];
+		  yourself
 ]
 
 { #category : #removing }

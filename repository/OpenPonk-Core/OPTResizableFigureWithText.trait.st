@@ -12,6 +12,13 @@ OPTResizableFigureWithText >> label [
 ]
 
 { #category : #'creating - subelements' }
+OPTResizableFigureWithText >> removeRender [
+
+	self label ifNotNil: #remove.
+	super removeRender
+]
+
+{ #category : #'creating - subelements' }
 OPTResizableFigureWithText >> renderLabel [
 
 	| block |

@@ -24,7 +24,7 @@ OPBoundaryController >> buildEditorForm: aForm [
 		text: self diagramElement name;
 		whenTextChangedDo: [ :newValue | 
 			self diagramElement name: newValue asString.
-			self diagramElement updateRenderFromSelf ]
+			self diagramElement updateText ]
 ]
 
 { #category : #connecting }

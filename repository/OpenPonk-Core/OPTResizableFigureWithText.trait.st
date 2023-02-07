@@ -61,13 +61,23 @@ OPTResizableFigureWithText >> updateRenderFromSelf [
 
 	self isRendered ifFalse: [ ^ self ].
 
-	self updateText.
+	self updateTextWithoutRedraw.
 
 	super updateRenderFromSelf
 ]
 
 { #category : #update }
 OPTResizableFigureWithText >> updateText [
+
+	self isRendered ifFalse: [ ^ self ].
+
+	self updateTextWithoutRedraw.
+
+	self label signalUpdate
+]
+
+{ #category : #private }
+OPTResizableFigureWithText >> updateTextWithoutRedraw [
 
 	self label width: self width - (self textPadding * 2).
 	self label text: self text.

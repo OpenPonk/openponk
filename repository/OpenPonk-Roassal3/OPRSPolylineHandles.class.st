@@ -149,5 +149,5 @@ OPRSPolylineHandles >> showOnShape: aLine [
 	line := aLine.
 	line when: RSMouseLeftClick do: [ self showHandles ].
 	line when: RSShapeRemovedEvent do: [ self removeHandles ].
-	self connectWithCanvas: line canvas
+	self connectWithCanvas
 ]

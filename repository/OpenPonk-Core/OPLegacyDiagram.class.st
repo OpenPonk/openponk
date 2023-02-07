@@ -177,8 +177,11 @@ OPLegacyDiagram >> asOPDiagram [
 		                        controller := diagramController 
 			                                      newControllerFor: each key.
 		                        diagramController addController: controller.
-		                        controller createDiagramElement.
-		                        diagramElement := controller diagramElement.
+		                        diagramElement := controller
+			                                          ensureDiagramElement.
+		                        diagramElement owningElement ifNil: [ 
+			                        diagramElement owningElement:
+				                        controller diagramElementOwner ].
 		                        controller -> each value ].
 	diagram renderIn: canvas.
 	layoutsPerController do: [ :each | 

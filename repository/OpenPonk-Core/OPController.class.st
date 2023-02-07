@@ -126,6 +126,14 @@ OPController >> elementsToShowInside [
 	^ #()
 ]
 
+{ #category : #accessing }
+OPController >> ensureDiagramElement [
+
+	self assert: diagramElement isNotNil.
+	diagramElement modelElement: self model.
+	^ diagramElement
+]
+
 { #category : #figures }
 OPController >> figure [
 
@@ -187,7 +195,7 @@ OPController >> model: aModel [
 
 { #category : #connecting }
 OPController >> modelAsParent [
-	^ model
+	^ self model
 ]
 
 { #category : #announcements }
@@ -223,13 +231,14 @@ OPController >> refreshFigure [
 
 { #category : #deprecated }
 OPController >> remove [
+
 	self deprecated: 'Use removeController instead.'.
-	model ifNotNil: [ model announcer unsubscribe: self ]
+	self model ifNotNil: [ self model announcer unsubscribe: self ]
 ]
 
 { #category : #destruction }
 OPController >> removeController [
-	model ifNotNil: [ self removeDependentControllers ].
+	self model ifNotNil: [ self removeDependentControllers ].
 	self diagramController ifNil: [ ^ self ].
 	self diagramController deselectAll.
 	self removeDiagramElement.

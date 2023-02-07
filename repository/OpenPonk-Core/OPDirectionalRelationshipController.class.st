@@ -30,11 +30,12 @@ OPDirectionalRelationshipController >> createLineFrom: fromElement to: toElement
 
 { #category : #construction }
 OPDirectionalRelationshipController >> createModelIn: aParentModel [
+
 	self model: self modelClass new.
-	model source: self source model.
-	model target: self target model.
-	aParentModel add: model.
-	^ model
+	self model source: self source model.
+	self model target: self target model.
+	aParentModel add: self model.
+	^ self model
 ]
 
 { #category : #hooks }
@@ -53,12 +54,14 @@ OPDirectionalRelationshipController >> hideSelectionFeedback [
 
 { #category : #accessing }
 OPDirectionalRelationshipController >> modelSource [
-	^ model source
+
+	^ self model source
 ]
 
 { #category : #accessing }
 OPDirectionalRelationshipController >> modelTarget [
-	^ model target
+
+	^ self model target
 ]
 
 { #category : #rendering }

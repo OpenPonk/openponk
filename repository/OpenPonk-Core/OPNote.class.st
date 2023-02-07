@@ -176,6 +176,7 @@ OPNote >> text [
 
 { #category : #accessing }
 OPNote >> text: aString [
+
 	text := aString
 ]
 

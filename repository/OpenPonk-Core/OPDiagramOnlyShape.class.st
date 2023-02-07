@@ -7,6 +7,27 @@ Class {
 	#category : #'OpenPonk-Core-CommonElements'
 }
 
+{ #category : #accessing }
+OPDiagramOnlyShape class >> neoJsonMapping: mapper [
+
+	mapper
+		for: self do: [ :mapping | 
+			mapping mapInstVars: self stonAllInstVarNames.
+			(mapping mapInstVar: #uuid) valueSchema: UUID.
+			mapping
+				mapProperty: #className
+				getter: [ :object | object className ]
+				setter: [ :object :value | 
+					object assert: object className = value ] ];
+		for: UUID customDo: [ :mapping | 
+			mapping
+				encoder: [ :uuid | uuid asString ];
+				decoder: [ :string | 
+					[ UUID fromString: string ]
+						on: Error
+						do: [ string ] ] ]
+]
+
 { #category : #'ston-core' }
 OPDiagramOnlyShape class >> stonAllInstVarNames [
 

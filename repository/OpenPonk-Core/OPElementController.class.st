@@ -62,9 +62,10 @@ OPElementController >> createModel [
 
 { #category : #construction }
 OPElementController >> createModelIn: aParentModel [
+
 	self model: self modelClass new.
-	aParentModel add: model.
-	^ model
+	aParentModel add: self model.
+	^ self model
 ]
 
 { #category : #construction }
@@ -87,12 +88,13 @@ OPElementController >> diagramElementOwner [
 	^ self diagramController diagramElement
 ]
 
-{ #category : #diagrams }
-OPElementController >> ensureToHaveDiagramElement [
+{ #category : #accessing }
+OPElementController >> ensureDiagramElement [
 
 	diagramElement
 		ifNil: [ self createDiagramElement ]
-		ifNotNil: [ diagramElement modelElement: self model ]
+		ifNotNil: [ diagramElement modelElement: self model ].
+	^ diagramElement
 ]
 
 { #category : #figures }
@@ -190,7 +192,7 @@ OPElementController >> renderFigureIn: aCanvas [
 OPElementController >> showInDiagram: aDiagramController [
 
 	aDiagramController addController: self.
-	self ensureToHaveDiagramElement.
+	self ensureDiagramElement.
 	self renderDiagramElement.
 	self dependentElements do: [ :each | 
 		aDiagramController showInDiagramModel: each ]
@@ -205,7 +207,7 @@ OPElementController >> showSelectionFeedback [
 OPElementController >> showWithoutDependentInDiagram: aDiagramController [
 
 	aDiagramController addController: self.
-	self ensureToHaveDiagramElement.
+	self ensureDiagramElement.
 	self renderDiagramElement
 ]
 

@@ -17,6 +17,13 @@ OPCommonElementController >> createModelIn: aParentModel [
 	^ nil
 ]
 
+{ #category : #accessing }
+OPCommonElementController >> ensureDiagramElement [
+
+	diagramElement ifNil: [ self createDiagramElement ].
+	^ diagramElement
+]
+
 { #category : #announcements }
 OPCommonElementController >> internalSubscribeTo: aModel [
 
@@ -34,6 +41,12 @@ OPCommonElementController >> isCommon [
 OPCommonElementController >> model [
 
 	^ self diagramElement
+]
+
+{ #category : #accessing }
+OPCommonElementController >> model: aModel [
+
+	self diagramElement: aModel
 ]
 
 { #category : #accessing }

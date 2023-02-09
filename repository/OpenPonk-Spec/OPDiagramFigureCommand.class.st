@@ -9,7 +9,8 @@ Class {
 		'diagramController',
 		'figures',
 		'models',
-		'controllers'
+		'controllers',
+		'diagramElements'
 	],
 	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
 }
@@ -53,5 +54,6 @@ OPDiagramFigureCommand >> prepareFullExecutionInContext: aToolContext [
 	canvas := diagramController canvas.
 	figures := aToolContext figures.
 	models := aToolContext models.
-	controllers := aToolContext controllers
+	controllers := aToolContext controllers.
+	diagramElements := aToolContext diagramElements.
 ]

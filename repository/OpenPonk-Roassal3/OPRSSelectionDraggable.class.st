@@ -56,7 +56,7 @@ OPRSSelectionDraggable >> startDrag: anEvent [
 	| selectedShapes selectedShapesToMove |
 	selectedShapes := anEvent canvas selectedShapes ifEmpty: [ 
 		                  { anEvent shape } ].
-	selectedShapesToMove := (selectedShapes includes: anEvent)
+	selectedShapesToMove := (selectedShapes includes: anEvent shape)
 		                        ifTrue: [ 
 			                        selectedShapes select: [ :each | 
 				                        each hasProperty: self propertyKey ] ]

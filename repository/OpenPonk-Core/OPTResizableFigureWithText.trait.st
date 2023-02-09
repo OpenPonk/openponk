@@ -1,38 +1,25 @@
 Trait {
 	#name : #OPTResizableFigureWithText,
 	#instVars : [
-		'label'
+		'renderedWrapWidth',
+		'renderedText',
+		'labeled'
 	],
 	#category : #'OpenPonk-Core-CommonElements'
 }
 
-{ #category : #accessing }
-OPTResizableFigureWithText >> label [
-	^ label
-]
-
-{ #category : #'creating - subelements' }
-OPTResizableFigureWithText >> removeRender [
-
-	self label ifNotNil: #remove.
-	super removeRender
-]
-
 { #category : #'creating - subelements' }
 OPTResizableFigureWithText >> renderLabel [
 
-	| block |
-	self flag: #multiline.
-	label := RSLabel new
-		         height: 10;
-		         model: self;
-		         yourself.
-	self canvas add: label.
-	block := [ self updateText ].
-	block value.
-	self roassalShape
-		when: RSPositionChangedEvent do: block;
-		when: RSExtentChangedEvent do: block
+	labeled := OPRSLabeled new.
+	labeled shapeBuilder wrapStrategy:
+		(RSWrapStrategy new wrapMaxWidth: self wrapMaxWidth).
+	labeled locationDo: [ :location | self setupLabelLocation: location ].
+	self updateText.
+
+	self roassalShape @ labeled.
+
+	self roassalShape when: RSExtentChangedEvent do: [ self updateText ]
 ]
 
 { #category : #'creating - subelements' }
@@ -41,14 +28,18 @@ OPTResizableFigureWithText >> renderShapeDetails [
 	self renderLabel
 ]
 
+{ #category : #'creating - subelements' }
+OPTResizableFigureWithText >> setupLabelLocation: aLocation [
+
+	aLocation
+		middle;
+		center;
+		inner
+]
+
 { #category : #hooks }
 OPTResizableFigureWithText >> text [
 	^ self explicitRequirement
-]
-
-{ #category : #'creating - subelements' }
-OPTResizableFigureWithText >> textOffset [
-	^ 0 @ 0
 ]
 
 { #category : #'creating - subelements' }
@@ -61,7 +52,7 @@ OPTResizableFigureWithText >> updateRenderFromSelf [
 
 	self isRendered ifFalse: [ ^ self ].
 
-	self updateTextWithoutRedraw.
+	self updateTextLabelContents.
 
 	super updateRenderFromSelf
 ]
@@ -71,15 +62,21 @@ OPTResizableFigureWithText >> updateText [
 
 	self isRendered ifFalse: [ ^ self ].
 
-	self updateTextWithoutRedraw.
+	self updateTextLabelContents.
 
-	self label signalUpdate
+	self roassalShape signalUpdate
 ]
 
-{ #category : #private }
-OPTResizableFigureWithText >> updateTextWithoutRedraw [
+{ #category : #update }
+OPTResizableFigureWithText >> updateTextLabelContents [
 
-	self label width: self width - (self textPadding * 2).
-	self label text: self text.
-	self label translateTo: self position + self textOffset
+	labeled
+		wrapMaxWidth: self wrapMaxWidth;
+		text: self text
+]
+
+{ #category : #hooks }
+OPTResizableFigureWithText >> wrapMaxWidth [
+
+	^ self width - (self textPadding * 2) max: 20
 ]

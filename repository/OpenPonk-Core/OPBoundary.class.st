@@ -79,13 +79,16 @@ OPBoundary >> renderShapeDetails [
 	self renderLabel
 ]
 
+{ #category : #'creating - subelements' }
+OPBoundary >> setupLabelLocation: aLocation [
+
+	aLocation
+		top;
+		center;
+		inner
+]
+
 { #category : #hooks }
 OPBoundary >> text [
 	^ self name
-]
-
-{ #category : #'creating - subelements' }
-OPBoundary >> textOffset [
-
-	^ 0 @ (4 + (self label height - self height / 2))
 ]

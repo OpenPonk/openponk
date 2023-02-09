@@ -58,9 +58,13 @@ OPRSResizable >> onShape: aShape [
 		ifTrue: [ self connectWithCanvas ]
 		ifFalse: [ 
 		shape when: RSShapeAddedEvent do: [ self connectWithCanvas ] ].
-	shape announcer
+	shape
 		when: RSMouseDragStart send: #disableHandles: to: self;
-		when: RSMouseDragEnd send: #enableHandles: to: self
+		when: RSMouseDragEnd send: #enableHandles: to: self.
+	shape when: RSShapeRemovedEvent do: [ :evt | 
+		shape announcer unsubscribe: self.
+		shape removePropertyAt: self key ifAbsent: [  ].
+		self removeHandles: evt ]
 ]
 
 { #category : #private }
@@ -79,7 +83,7 @@ OPRSResizable >> removeHandles: evt [
 
 	handles do: #remove.
 	handles := nil.
-	canvas signalUpdate
+	canvas ifNotNil: #signalUpdate
 ]
 
 { #category : #private }

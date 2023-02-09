@@ -5,6 +5,13 @@ Class {
 }
 
 { #category : #testing }
+OPDiagramRemoveFigureCommand class >> canBeExecutedInContext: aToolContext [
+
+	^ (super canBeExecutedInContext: aToolContext) and: [ 
+		  aToolContext figures anySatisfy: [ :any | any canvas ~= any ] ]
+]
+
+{ #category : #testing }
 OPDiagramRemoveFigureCommand class >> canvasShortcutActivation [
 	<classAnnotation>
 	^ CmdShortcutActivation by: Character delete meta for: OPCanvasPresenter

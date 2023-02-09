@@ -58,7 +58,8 @@ OPNote >> createOwnedBorderLines [
 		         (lineShape copy
 			          from: topLeftBox;
 			          to: upperTopRightBox) } asGroup.
-	roassalShape canvas addAll: lines
+	roassalShape canvas addAll: lines.
+	roassalShape when: RSShapeRemovedEvent do: [ lines do: #remove ].
 ]
 
 { #category : #'creating - subelements' }
@@ -70,7 +71,8 @@ OPNote >> createOwnedCornerTriangle [
 		            borderColor: Color lightGray;
 		            model: self;
 		            yourself.
-	self canvas add: triangle
+	self canvas add: triangle.
+	roassalShape when: RSShapeRemovedEvent do: [ triangle remove ].
 ]
 
 { #category : #'creating - subelements' }
@@ -85,7 +87,11 @@ OPNote >> createOwnedFillBoxes [
 	bottomFillBox := fillBoxShape copy model: #bottom.
 	self canvas
 		add: leftFillBox;
-		add: bottomFillBox
+		add: bottomFillBox.
+
+	roassalShape when: RSShapeRemovedEvent do: [ 
+		leftFillBox remove.
+		bottomFillBox remove ]
 ]
 
 { #category : #'creating - subelements' }
@@ -113,7 +119,10 @@ OPNote >> createOwnedInvisibleBoxes [
 			                                    #middleLeft).
 		                  (middleBottomBox := invisibleBoxShape copy model:
 			                                      #middleBottom) } asGroup.
-	self canvas addAll: invisibleBoxes
+	self canvas addAll: invisibleBoxes.
+	roassalShape
+		when: RSShapeRemovedEvent
+		do: [ invisibleBoxes do: #remove ]
 ]
 
 { #category : #initialization }

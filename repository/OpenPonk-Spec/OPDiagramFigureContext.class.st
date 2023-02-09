@@ -31,6 +31,11 @@ OPDiagramFigureContext >> diagramController [
 ]
 
 { #category : #accessing }
+OPDiagramFigureContext >> diagramElements [
+	^ self controllers collect: #diagramElement
+]
+
+{ #category : #accessing }
 OPDiagramFigureContext >> figures [
 	^ figures
 ]

@@ -40,14 +40,16 @@ OPRSSelectionDraggableBorder >> createDragBoxes [
 	forwardEvent := [ :event | shape announce: event copy ].
 	dragBoxes do: [ :each | 
 		each
-			when: RSMouseDragStart do: [ :event | self startDrag: shape ];
+			when: RSMouseDragStart do: [ :event | 
+				self startDrag: event.
+				forwardEvent value: event ];
 			when: RSMouseDragging do: [ :event | 
 				self processDrag: (event copy
 							 shape: shape;
-							 yourself) ].
-		each
-			when: RSMouseDragStart do: forwardEvent;
-			when: RSMouseDragEnd do: forwardEvent;
+							 yourself) ];
+			when: RSMouseDragEnd do: [ :event | 
+			self endDrag: event.
+			forwardEvent value: event ];
 			when: RSMouseClick do: forwardEvent ].
 	shape
 		when: RSExtentChangedEvent do: [ self updateDragBoxes ];

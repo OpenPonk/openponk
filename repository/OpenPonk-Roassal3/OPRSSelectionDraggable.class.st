@@ -13,11 +13,26 @@ OPRSSelectionDraggable class >> wantsUniqueInstance [
 	^ false
 ]
 
+{ #category : #events }
+OPRSSelectionDraggable >> endDrag: anEvent [
+
+	| event |
+	event := OPRSDragFromSelectionEnd fromEvent: anEvent.
+	event
+		position: anEvent position;
+		morph: anEvent morph.
+	(draggedShapes copyWithout: anEvent shape) do: [ :each | 
+		each announce: event ].
+
+	draggedShapes := #(  )
+]
+
 { #category : #hooks }
 OPRSSelectionDraggable >> onShape: aShape [
 
 	super onShape: aShape.
-	aShape when: RSMouseDragStart send: #startDrag: to: self.
+	aShape when: RSMouseDragStart do: [ :event | self startDrag: event ].
+	aShape when: RSMouseDragEnd do: [ :event | self endDrag: event ].
 	aShape propertyAt: self propertyKey put: self
 ]
 
@@ -53,7 +68,7 @@ OPRSSelectionDraggable >> shapesToDragInside: aShape [
 { #category : #events }
 OPRSSelectionDraggable >> startDrag: anEvent [
 
-	| selectedShapes selectedShapesToMove |
+	| selectedShapes selectedShapesToMove event |
 	selectedShapes := anEvent canvas selectedShapes ifEmpty: [ 
 		                  { anEvent shape } ].
 	selectedShapesToMove := (selectedShapes includes: anEvent shape)
@@ -65,5 +80,12 @@ OPRSSelectionDraggable >> startDrag: anEvent [
 	draggedShapes := selectedShapesToMove flatCollect: [ 
 		                 :eachSelectedShape | 
 		                 { eachSelectedShape }
-		                 , (self shapesToDragInside: eachSelectedShape) ]
+		                 , (self shapesToDragInside: eachSelectedShape) ].
+
+	event := OPRSDragFromSelectionStart fromEvent: anEvent.
+	event
+		position: anEvent position;
+		morph: anEvent morph.
+	(draggedShapes copyWithout: anEvent shape) do: [ :each | 
+		each announce: event ]
 ]

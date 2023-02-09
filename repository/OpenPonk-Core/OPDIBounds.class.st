@@ -50,7 +50,7 @@ OPDIBounds >> height [
 { #category : #accessing }
 OPDIBounds >> height: anObject [
 
-	height := anObject
+	height := anObject rounded
 ]
 
 { #category : #accessing }
@@ -94,7 +94,7 @@ OPDIBounds >> width [
 { #category : #accessing }
 OPDIBounds >> width: anObject [
 
-	width := anObject
+	width := anObject rounded
 ]
 
 { #category : #accessing }
@@ -106,7 +106,7 @@ OPDIBounds >> x [
 { #category : #accessing }
 OPDIBounds >> x: anObject [
 
-	x := anObject
+	x := anObject rounded
 ]
 
 { #category : #accessing }
@@ -118,5 +118,5 @@ OPDIBounds >> y [
 { #category : #accessing }
 OPDIBounds >> y: anObject [
 
-	y := anObject
+	y := anObject rounded
 ]

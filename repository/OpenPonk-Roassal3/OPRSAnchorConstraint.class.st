@@ -3,11 +3,11 @@ Class {
 	#superclass : #RSObject,
 	#instVars : [
 		'minDistance',
-		'balance',
 		'anchorShape',
 		'guideLine',
 		'shape',
-		'line'
+		'line',
+		'position'
 	],
 	#category : #'OpenPonk-Roassal3-AnchorConstraint'
 }
@@ -37,13 +37,11 @@ OPRSAnchorConstraint >> anchorShape [
 ]
 
 { #category : #accessing }
-OPRSAnchorConstraint >> balance [
-	^ balance
-]
-
-{ #category : #accessing }
 OPRSAnchorConstraint >> balance: aNumber [
-	balance := aNumber
+
+	position := OPRSAnchorConstraintBalancePosition new
+		            balance: aNumber;
+		            yourself
 ]
 
 { #category : #building }
@@ -67,7 +65,7 @@ OPRSAnchorConstraint >> createUpdater [
 		  line: line;
 		  shape: shape;
 		  anchorShape: anchorShape;
-		  balance: balance;
+		  position: position;
 		  minDistance: minDistance;
 		  yourself
 ]
@@ -117,6 +115,28 @@ OPRSAnchorConstraint >> noGuideLine [
 	self guideLine color: Color transparent
 ]
 
+{ #category : #accessing }
+OPRSAnchorConstraint >> position: anAnchorConstraintPosition [
+
+	position := anAnchorConstraintPosition
+]
+
+{ #category : #accessing }
+OPRSAnchorConstraint >> positionFromEnd: aNumber [
+
+	position := OPRSAnchorConstraintEndPosition new
+		           distance: aNumber;
+		           yourself
+]
+
+{ #category : #accessing }
+OPRSAnchorConstraint >> positionFromStart: aNumber [
+
+	position := OPRSAnchorConstraintStartPosition new
+		           distance: aNumber;
+		           yourself
+]
+
 { #category : #building }
 OPRSAnchorConstraint >> remove [
 
@@ -137,12 +157,7 @@ OPRSAnchorConstraint >> removeAnchorAndGuideLine [
 { #category : #updating }
 OPRSAnchorConstraint >> saveShapePosition [
 
-	| nearestPointInfo absoluteMinDistance |
-	nearestPointInfo := self createUpdater nearestPointInfo.
-	balance := nearestPointInfo balance.
-	absoluteMinDistance := nearestPointInfo distanceTo: shape position.
-	minDistance := absoluteMinDistance
-	               * (nearestPointInfo sideOfPoint: shape position).
+	position saveShapePositionIn: self.
 	self createUpdater moveAnchor
 ]
 

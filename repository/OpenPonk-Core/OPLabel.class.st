@@ -40,6 +40,12 @@ OPLabel >> defaultFontSize [
 ]
 
 { #category : #accessing }
+OPLabel >> defaultText [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
 OPLabel >> emphasis [
 
 	^ self
@@ -71,6 +77,12 @@ OPLabel >> fontSize [
 		  ifAbsent: [ self defaultFontSize ]
 ]
 
+{ #category : #accessing }
+OPLabel >> noText [
+
+	self text: ''
+]
+
 { #category : #rendering }
 OPLabel >> renderBasicShape [
 
@@ -79,14 +91,26 @@ OPLabel >> renderBasicShape [
 		fontSize: self fontSize;
 		fontName: self fontName;
 		color: self fontColor;
-		text: (text ifNil: [ self text ]);
+		text: self text;
 		emphasis: self emphasis;
 		model: self;
 		yourself
 ]
 
 { #category : #accessing }
+OPLabel >> resetText [
+
+	self text: nil
+]
+
+{ #category : #accessing }
 OPLabel >> text [
 
-	^ self subclassResponsibility
+	^ text ifNil: [ self defaultText ]
+]
+
+{ #category : #accessing }
+OPLabel >> text: aString [
+
+	text := aString
 ]

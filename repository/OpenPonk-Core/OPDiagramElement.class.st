@@ -237,7 +237,8 @@ OPDiagramElement >> renderIn: aCanvas [
 	self isRendered ifTrue: [ ^ self ].
 	self renderBasicShapeIn: aCanvas.
 	self renderShapeDetails.
-	self createOwnedElementsWithoutController.
+	self ownedElements ifEmpty: [ 
+		self createOwnedElementsWithoutController ].
 	self ownedElements do: [ :each | each renderIn: aCanvas ].
 	self updateRenderFromModel.
 	self updateRenderFromSelf.

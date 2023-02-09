@@ -9,13 +9,13 @@ OPEdgeLabel >> anchorToEdge [
 
 	roassalShape @ RSDraggable.
 	OPRSAnchorConstraint new
-		balance: self defaultBalance;
 		minDistance: self defaultMinDistance;
+		position: self defaultAnchorConstraintPosition;
 		stick: roassalShape on: self owningElement roassalShape
 ]
 
 { #category : #'as yet unclassified' }
-OPEdgeLabel >> defaultBalance [
+OPEdgeLabel >> defaultAnchorConstraintPosition [
 
 	^ self subclassResponsibility
 ]
@@ -35,7 +35,7 @@ OPEdgeLabel >> renderShapeDetails [
 { #category : #rendering }
 OPEdgeLabel >> updateRenderFromModel [
 
-	roassalShape text: self text.
+	roassalShape text: self defaultText.
 
 	(roassalShape propertyAt: OPRSAnchorConstraint) moveShape.
 

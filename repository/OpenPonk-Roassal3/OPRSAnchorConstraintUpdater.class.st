@@ -3,7 +3,7 @@ Class {
 	#superclass : #RSObject,
 	#instVars : [
 		'line',
-		'balance',
+		'position',
 		'minDistance',
 		'anchorShape',
 		'shape',
@@ -36,35 +36,15 @@ OPRSAnchorConstraintUpdater >> anchorShape: aShape [
 	anchorShape := aShape
 ]
 
-{ #category : #accessing }
-OPRSAnchorConstraintUpdater >> balance [
-	^ balance
-]
-
-{ #category : #accessing }
-OPRSAnchorConstraintUpdater >> balance: aNumber [
-	balance := aNumber
-]
-
-{ #category : #building }
-OPRSAnchorConstraintUpdater >> computeAbsoluteBalance [
-
-	^ self lineLength * ((balance min: 1) max: 0)
-]
-
 { #category : #building }
 OPRSAnchorConstraintUpdater >> computeAnchorSegmentAndPoint [
 
-	| sum newSum |
-	sum := 0.
-	self segments do: [ :each | 
-		newSum := sum + each length.
-		(self lengthFromStartOfBalance between: sum and: newSum) ifTrue: [ 
-			anchorSegment := each.
-			anchorPoint := each pointAtLength: self lengthFromStartOfBalance - sum.
-			^ self ].
-		sum := newSum ].
-	self error: 'failed to find a segment'
+	| pair |
+	pair := position
+		        anchorSegmentFrom: self segments
+		        andPointFrom: self lengthFromStartOfBalance.
+	anchorSegment := pair key.
+	anchorPoint := pair value
 ]
 
 { #category : #'as yet unclassified' }
@@ -97,7 +77,8 @@ OPRSAnchorConstraintUpdater >> extraDistance [
 OPRSAnchorConstraintUpdater >> lengthFromStartOfBalance [
 
 	^ absoluteBalance ifNil: [ 
-		  absoluteBalance := self computeAbsoluteBalance ]
+		  absoluteBalance := position computeAbsoluteBalanceForLength:
+			                     self lineLength ]
 ]
 
 { #category : #building }
@@ -179,9 +160,9 @@ OPRSAnchorConstraintUpdater >> moveShapeAwayFromCollisions [
 	self moveAwayFromSegment: self anchorSegment.
 	from := line from encompassingRectangle expandBy: minDistance abs.
 	to := line to encompassingRectangle expandBy: minDistance abs.
-	balance > 0 & (shape encompassingRectangle intersects: from) ifTrue: [ 
+	(shape encompassingRectangle intersects: from) ifTrue: [ 
 		self moveAwayFrom: from via: self anchorSegment vector ].
-	balance < 0 & (shape encompassingRectangle intersects: to) ifTrue: [ 
+	(shape encompassingRectangle intersects: to) ifTrue: [ 
 		self moveAwayFrom: to via: self anchorSegment vector negated ]
 ]
 
@@ -222,6 +203,16 @@ OPRSAnchorConstraintUpdater >> nearestSegment [
 			   current value < nearest value
 				   ifTrue: [ current ]
 				   ifFalse: [ nearest ] ]) key
+]
+
+{ #category : #accessing }
+OPRSAnchorConstraintUpdater >> position [
+	^ position
+]
+
+{ #category : #accessing }
+OPRSAnchorConstraintUpdater >> position: aConstraintPosition [
+	position := aConstraintPosition
 ]
 
 { #category : #accessing }

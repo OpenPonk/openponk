@@ -79,7 +79,7 @@ OPLabel >> renderBasicShape [
 		fontSize: self fontSize;
 		fontName: self fontName;
 		color: self fontColor;
-		text: self text;
+		text: (text ifNil: [ self text ]);
 		emphasis: self emphasis;
 		model: self;
 		yourself

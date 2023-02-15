@@ -168,16 +168,6 @@ OPController >> isHideable [
 ]
 
 { #category : #accessing }
-OPController >> layout [
-	^ OPElementLayout none
-]
-
-{ #category : #accessing }
-OPController >> layout: anObject [
-	"do nothing"
-]
-
-{ #category : #accessing }
 OPController >> model [
 	^ model
 ]
@@ -221,12 +211,7 @@ OPController >> refreshFigure [
 		transformWith: '`@receiver refreshFigure'
 			-> '`@receiver diagramElement updateRenderFromModel'.
 
-	self roassalShape announce: (RSPositionChangedEvent new
-			 shape: self roassalShape;
-			 oldPosition: self roassalShape position;
-			 newPosition: self roassalShape position).
-	self roassalShape signalUpdate.
-	^ self roassalShape
+	^ self diagramElement updateRenderFromModel
 ]
 
 { #category : #deprecated }

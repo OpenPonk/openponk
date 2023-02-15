@@ -7,6 +7,20 @@ Class {
 	#category : #'OpenPonk-Roassal3-AnchorConstraint'
 }
 
+{ #category : #accessing }
+OPRSAnchorConstraintFixedPosition class >> distance: anInteger [
+
+	^ self new
+		  distance: anInteger;
+		  yourself
+]
+
+{ #category : #accessing }
+OPRSAnchorConstraintFixedPosition >> distance: anInteger [
+
+	distance := anInteger
+]
+
 { #category : #'as yet unclassified' }
 OPRSAnchorConstraintFixedPosition >> referencePointOfSegment: aSegment [
 

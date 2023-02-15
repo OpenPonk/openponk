@@ -34,11 +34,6 @@ OPDiagramController >> addAllElements [
 	^ self showAllElements
 ]
 
-{ #category : #adding }
-OPDiagramController >> addCommonElementsFromDiagram [
-	diagram commonElements do: [ :each | self showInDiagramModel: each ]
-]
-
 { #category : #'controllers management' }
 OPDiagramController >> addController: aController [
 	aController diagramController: self.
@@ -546,26 +541,6 @@ OPDiagramController >> isVisibleInDiagram: aModel [
 ]
 
 { #category : #accessing }
-OPDiagramController >> layout [
-	controllers ifNil: [ ^ Dictionary new. ].
-	"else"
-	^ (controllers
-		collect: [ :ctrl | ctrl model uuid -> ctrl layout ]
-		thenReject: [ :each | each value isNone ]) asDictionary.
-]
-
-{ #category : #accessing }
-OPDiagramController >> layout: aLayout [
-self halt.
-
-	aLayout keysAndValuesDo: [ :key :value | 
-		self controllers
-			detect: [ :ctrl | ctrl model uuid = key ]
-			ifFound: [ :ctrl | ctrl layout: value ] ].
-	self updateCanvas
-]
-
-{ #category : #accessing }
 OPDiagramController >> layouter [
 	^ layouter
 		ifNil: [ layouter := self plugin layouterClass new diagramController: self ]
@@ -758,11 +733,6 @@ OPDiagramController >> selectController: aController [
 
 	self editor palette selectSelectionTool selectedTool 
 		selectedTargetControllers: { aController }
-]
-
-{ #category : #figures }
-OPDiagramController >> selectableFigures [
-	^ #()
 ]
 
 { #category : #accessing }

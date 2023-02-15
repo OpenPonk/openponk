@@ -7,7 +7,7 @@ Class {
 { #category : #'as yet unclassified' }
 OPRSAnchorConstraintStartPosition >> anchorSegmentFrom: segments andPointFrom: lenghtFromStart [
 
-	^ segments first -> segments first pointAtLength: lenghtFromStart
+	^ segments first -> (segments first pointAtLength: lenghtFromStart)
 ]
 
 { #category : #'as yet unclassified' }

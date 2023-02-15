@@ -129,17 +129,6 @@ OPElementController >> isRendered [
 	^ self diagramElement isNotNil and: [ self diagramElement isRendered ]
 ]
 
-{ #category : #accessing }
-OPElementController >> layout [
-	^ OPElementLayout withPosition: self figure position
-]
-
-{ #category : #accessing }
-OPElementController >> layout: anElementLayout [
-self halt.
-	self figure translateTo: anElementLayout position
-]
-
 { #category : #deprecated }
 OPElementController >> loadModel [
 	self deprecated: 'Method will be removed without replacement.'

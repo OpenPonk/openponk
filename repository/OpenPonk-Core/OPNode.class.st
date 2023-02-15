@@ -1,0 +1,51 @@
+Class {
+	#name : #OPNode,
+	#superclass : #OPDiagramElement,
+	#category : #'OpenPonk-Core-DiagramInterchange'
+}
+
+{ #category : #accessing }
+OPNode >> encompassingRectangle [
+
+	^ roassalShape encompassingRectangle
+]
+
+{ #category : #accessing }
+OPNode >> extent [
+
+	^ roassalShape extent
+]
+
+{ #category : #accessing }
+OPNode >> height [
+
+	^ roassalShape height
+]
+
+{ #category : #accessing }
+OPNode >> position [
+
+	^ roassalShape position
+]
+
+{ #category : #actions }
+OPNode >> translateBy: deltaAsPoint [
+
+	"Move a shape by a delta value, expressed as a point"
+
+	roassalShape translateBy: deltaAsPoint
+]
+
+{ #category : #actions }
+OPNode >> translateTo: aPoint [
+
+	"Translate a shape to a new position, expressed as a point"
+
+	roassalShape translateTo: aPoint
+]
+
+{ #category : #accessing }
+OPNode >> width [
+
+	^ roassalShape width
+]

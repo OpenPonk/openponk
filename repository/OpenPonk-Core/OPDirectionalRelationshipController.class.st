@@ -18,8 +18,8 @@ OPDirectionalRelationshipController >> createDiagramElement [
 
 	super createDiagramElement.
 	self diagramElement
-		source: self source diagramElement;
-		target: self target diagramElement
+		source: self source ensureDiagramElement;
+		target: self target ensureDiagramElement
 ]
 
 { #category : #hooks }

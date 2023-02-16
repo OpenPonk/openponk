@@ -79,8 +79,10 @@ OPDirectionalRelationshipController >> showSelectionFeedback [
 
 { #category : #accessing }
 OPDirectionalRelationshipController >> source [
-	^ source
-		ifNil: [ diagramController controllerForModel: self modelSource ]
+
+	^ source ifNil: [ 
+		  (diagramController ifNil: [ self target diagramController ]) 
+			  showInDiagramModel: self modelSource ]
 ]
 
 { #category : #accessing }
@@ -90,9 +92,10 @@ OPDirectionalRelationshipController >> source: aSourceController [
 
 { #category : #accessing }
 OPDirectionalRelationshipController >> target [
-	^ target
-		ifNil: [ (diagramController ifNil: [ self source diagramController ])
-				controllerForModel: self modelTarget ]
+
+	^ target ifNil: [ 
+		  (diagramController ifNil: [ self source diagramController ]) 
+			  showInDiagramModel: self modelTarget ]
 ]
 
 { #category : #accessing }

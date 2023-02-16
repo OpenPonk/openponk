@@ -42,6 +42,7 @@ OPEdge class >> stonAllInstVarNames [
 { #category : #deprecated }
 OPEdge >> from [
 
+self halt.
 	self
 		deprecated: 'Use #source'
 		transformWith: '`@receiver from' -> '`@receiver source'.
@@ -93,6 +94,7 @@ OPEdge >> target: anElement [
 { #category : #deprecated }
 OPEdge >> to [
 
+self halt.
 	self
 		deprecated: 'Use #target'
 		transformWith: '`@receiver to' -> '`@receiver target'.

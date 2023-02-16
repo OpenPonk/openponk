@@ -4,6 +4,12 @@ Class {
 	#category : #'OpenPonk-Roassal3-Markers'
 }
 
+{ #category : #converting }
+OPRSEmptyMarker >> asEmptyMarker [
+
+	^ self
+]
+
 { #category : #accessing }
 OPRSEmptyMarker >> shape [
 

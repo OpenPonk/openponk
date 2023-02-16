@@ -106,16 +106,6 @@ OPLayouter >> dominanceTreeLayout [
 			on: boxes edges: links ]
 ]
 
-{ #category : #accessing }
-OPLayouter >> figuresFor: aCollection [
-	^ (aCollection
-		collect: [ :model | 
-			diagramController controllers
-				detect: [ :each | each model = model ]
-				ifFound: #figure
-				ifNone: [ nil ] ]) reject: #isNil
-]
-
 { #category : #layouts }
 OPLayouter >> gridLayout [
 	self
@@ -123,6 +113,16 @@ OPLayouter >> gridLayout [
 			RTGridLayout new
 				gapSize: 140;
 				on: boxes ]
+]
+
+{ #category : #accessing }
+OPLayouter >> roassalShapesFor: aCollection [
+	^ (aCollection
+		collect: [ :model | 
+			diagramController controllers
+				detect: [ :each | each model = model ]
+				ifFound: #roassalShape
+				ifNone: [ nil ] ]) reject: #isNil
 ]
 
 { #category : #layouts }

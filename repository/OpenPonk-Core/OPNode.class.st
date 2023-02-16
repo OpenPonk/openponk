@@ -19,7 +19,7 @@ OPNode >> extent [
 { #category : #accessing }
 OPNode >> height [
 
-	^ roassalShape height
+	^ self extent y
 ]
 
 { #category : #accessing }
@@ -47,5 +47,5 @@ OPNode >> translateTo: aPoint [
 { #category : #accessing }
 OPNode >> width [
 
-	^ roassalShape width
+	^ self extent x
 ]

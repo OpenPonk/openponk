@@ -121,13 +121,13 @@ BaselineOfOpenPonk >> loadRoassal3 [
 	[ 
 	Metacello new
 		baseline: 'Roassal3';
-		repository: 'github://ObjectProfile/Roassal3:v0.9.9L';
+		repository: 'github://ObjectProfile/Roassal3:v0.9.9M';
 		lock;
 		load: #Full ]
 		on: MCMergeOrLoadWarning
 		do: [ :warning | warning load ].
 	Metacello new
 		baseline: 'Roassal3Exporters';
-		repository: 'github://ObjectProfile/Roassal3Exporters:f2f81e9';
+		repository: 'github://ObjectProfile/Roassal3Exporters:264111a';
 		load
 ]

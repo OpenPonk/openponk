@@ -393,7 +393,7 @@ OPProjectController >> selectInDiagram: aModelElement [
 OPProjectController >> updateDiagram: aDiagram [
 
 	controllers
-		detect: [ :ctrl | ctrl diagram = aDiagram ]
+		detect: [ :ctrl | ctrl diagramElement = aDiagram ]
 		ifFound: [ :ctrl | 
 			aDiagram isOpen: true.
 			aDiagram layout: ctrl layout.

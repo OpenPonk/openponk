@@ -18,12 +18,12 @@ OPCanvasPresenter >> attachController: aDiagramController [
 	(diagramController := aDiagramController) canvasPresenter: self
 ]
 
-{ #category : #'selection handling' }
-OPCanvasPresenter >> canvasContextClicked: anEvent [
+{ #category : #accessing }
+OPCanvasPresenter >> canvas [
 
-	(OPPragmaPluginMenuBuilder
-		 pragmaKeyword: #opCanvasContextMenu:
-		 model: self) menuSpec asMenuMorph popUpInWorld
+	currentCanvas ifNil: [ 
+		self initializeCanvas: (currentCanvas := RSCanvas new) ].
+	^ currentCanvas
 ]
 
 { #category : #private }
@@ -237,10 +237,6 @@ OPCanvasPresenter >> initialize [
 { #category : #initialization }
 OPCanvasPresenter >> initializeCanvas: aCanvas [
 
-	| labelMousePos labelMousePosCam labelScale labelCamPos labelLastClick |
-	aCanvas
-		when: RSMouseRightClick
-		do: [ :event | self canvasContextClicked: event ].
 	aCanvas @ RSKeyNavigationCanvasInteraction.
 	aCanvas @ RSZoomableCanvasInteraction.
 	aCanvas @ RSScrollBarsCanvasInteraction.

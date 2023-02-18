@@ -133,7 +133,7 @@ OPDiagramsList >> diagramsIn: aProject [
 OPDiagramsList >> displayFor: aDiagramView [
 
 	^ '[' , aDiagramView name , '] '
-	  , (self adapters displayFor: aDiagramView model)
+	  , (self adapters displayFor: aDiagramView modelElement)
 ]
 
 { #category : #initialization }

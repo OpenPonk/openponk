@@ -61,11 +61,9 @@ OPLayouter >> basicApplyLayout: aTwoArgBlock [
 	nodes := RSGroup withAll: (isPartialLayout
 			          ifTrue: [ allNodes intersection: selectedBoxes ]
 			          ifFalse: [ allNodes ]).
-	allEdges := self allEdges reject: [ :each | 
-		            each target = each source ].
+	allEdges := self allEdges reject: [ :each | each to = each from ].
 	edges := allEdges select: [ :each | 
-		         (nodes includes: each source)
-		         & (nodes includes: each target) ].
+		         (nodes includes: each from) & (nodes includes: each to) ].
 	oldEncompassingRectangle := nodes encompassingRectangle.
 	aTwoArgBlock value: nodes value: edges.
 	newEncompassingRectangle := nodes encompassingRectangle.

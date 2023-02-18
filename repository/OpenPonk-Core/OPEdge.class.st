@@ -39,16 +39,6 @@ OPEdge class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #source #target #waypoints )
 ]
 
-{ #category : #deprecated }
-OPEdge >> from [
-
-self halt.
-	self
-		deprecated: 'Use #source'
-		transformWith: '`@receiver from' -> '`@receiver source'.
-	^ self source
-]
-
 { #category : #removing }
 OPEdge >> remove [
 
@@ -89,16 +79,6 @@ OPEdge >> target: anElement [
 		          oppositeSlot: #targetEdges
 		          updateFrom: target
 		          to: anElement
-]
-
-{ #category : #deprecated }
-OPEdge >> to [
-
-self halt.
-	self
-		deprecated: 'Use #target'
-		transformWith: '`@receiver to' -> '`@receiver target'.
-	^ self target
 ]
 
 { #category : #'as yet unclassified' }

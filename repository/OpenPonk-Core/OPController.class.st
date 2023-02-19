@@ -154,7 +154,10 @@ OPController >> hideSelectionFeedback [
 
 { #category : #announcements }
 OPController >> internalSubscribeTo: aModel [
-	aModel announcer when: OPElementRenamed do: [ self updateRenderFromModel ]
+
+	aModel announcer
+		when: OPElementRenamed
+		do: [ self diagramElement updateRenderFromModel ]
 ]
 
 { #category : #announcements }

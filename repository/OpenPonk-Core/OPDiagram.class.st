@@ -48,7 +48,7 @@ OPDiagram >> name: anObject [
 ]
 
 { #category : #'as yet unclassified' }
-OPDiagram >> ownedElementRenderedIn: aCanvas [
+OPDiagram >> ownedElement: aShape renderedIn: aCanvas [
 
 	self isRendered ifTrue: [ 
 		roassalShape canvas = aCanvas ifFalse: [ 

@@ -4,6 +4,12 @@ Class {
 	#category : #'OpenPonk-Core-DiagramInterchange'
 }
 
+{ #category : #'as yet unclassified' }
+OPNode >> addedByMouseClickTo: aPoint [
+
+	self translateTo: aPoint
+]
+
 { #category : #accessing }
 OPNode >> encompassingRectangle [
 

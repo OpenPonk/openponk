@@ -161,7 +161,7 @@ OPLayouter >> treeLayout [
 { #category : #userinterface }
 OPLayouter >> updateCanvas [
 
-	diagramController canvas signalUpdate
+	diagramController updateCanvas
 ]
 
 { #category : #userinterface }

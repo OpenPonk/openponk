@@ -39,9 +39,7 @@ OPEdgeLabel >> updateRenderFromModel [
 
 	(roassalShape propertyAt: OPRSAnchorConstraint) moveShape.
 
-	super updateRenderFromModel.
-
-	roassalShape signalUpdate
+	super updateRenderFromModel
 ]
 
 { #category : #roassal }

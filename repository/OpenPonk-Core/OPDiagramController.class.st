@@ -81,24 +81,17 @@ OPDiagramController >> addMouseEventsFor: aFigure [
 { #category : #accessing }
 OPDiagramController >> addedFigureFor: aController [
 
-	| figure |
 	(figuresBeingAdded includes: aController)
 		ifFalse: [ 
 			self traceCr:
 				'DiagramController>>#addedFigureFor: added figure not previously marked as being added' ]
 		ifTrue: [ figuresBeingAdded remove: aController ].
 
-	figure := aController roassalShape.
 
-	figure isNode ifTrue: [ 
-		lastSelectionPosition ifNotNil: [ 
-			figure translateTo: lastSelectionPosition ] ].
-	self addMouseEventsFor: figure.
-
-	figuresBeingAdded ifEmpty: [ self updateCanvas ].
-	figure signalUpdate.
-
-	^ figure
+	lastSelectionPosition ifNotNil: [ 
+		aController diagramElement addedByMouseClickTo:
+			lastSelectionPosition ].
+	self addMouseEventsFor: aController roassalShape
 ]
 
 { #category : #accessing }
@@ -822,8 +815,7 @@ OPDiagramController >> undo [
 { #category : #userinterface }
 OPDiagramController >> updateCanvas [
 
-	self controllers do: [ :each | 
-		each diagramElement updateRenderFromModel ]
+	self canvas signalUpdate
 ]
 
 { #category : #userinterface }

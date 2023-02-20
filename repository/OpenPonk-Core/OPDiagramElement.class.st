@@ -54,6 +54,14 @@ OPDiagramElement class >> stonAllInstVarNames [
 	     #sharedStyle #localStyle #ownedElements )
 ]
 
+{ #category : #'as yet unclassified' }
+OPDiagramElement >> addedByMouseClickTo: aPoint [
+
+	"Do nothing by default. The given point is position where user clicked by mouse in order to create the element. If the shape was not added by a mouse click, this method is not called. May be overriden to translate to that position or react in any other way."
+
+	
+]
+
 { #category : #accessing }
 OPDiagramElement >> canvas [
 
@@ -136,7 +144,7 @@ OPDiagramElement >> model [
 { #category : #accessing }
 OPDiagramElement >> modelElement [
 
-	^ self modelElements first
+	^ (self modelElements ifEmpty: [ ^ nil ]) first
 ]
 
 { #category : #accessing }
@@ -159,9 +167,15 @@ OPDiagramElement >> modelElements: aCollection [
 ]
 
 { #category : #'as yet unclassified' }
-OPDiagramElement >> ownedElementRenderedIn: aCanvas [
+OPDiagramElement >> ownedElement: aShape renderedIn: aCanvas [
 
-	"do nothing by default"
+	self isRendered ifTrue: [ 
+		self
+			assert: roassalShape canvas = aCanvas
+			description:
+			'Reusing same diagram element for 2 canvases not allowed'.
+		^ self ].
+	self renderIn: aCanvas
 ]
 
 { #category : #accessing }
@@ -243,7 +257,7 @@ OPDiagramElement >> renderIn: aCanvas [
 	self updateRenderFromModel.
 	self updateRenderFromSelf.
 	self owningElement ifNotNil: [ :element | 
-		element ownedElementRenderedIn: self canvas ].
+		element ownedElement: self renderedIn: self canvas ].
 	^ roassalShape
 ]
 

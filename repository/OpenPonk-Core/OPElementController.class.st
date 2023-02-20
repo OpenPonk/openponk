@@ -162,7 +162,7 @@ OPElementController >> renderDiagramElement [
 
 	self diagramController addingFigureFor: self.
 	self diagramElement renderIn: self diagramController canvas.
-	^ self diagramController addedFigureFor: self
+	self diagramController addedFigureFor: self
 ]
 
 { #category : #construction }

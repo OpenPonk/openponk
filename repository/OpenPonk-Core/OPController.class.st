@@ -226,13 +226,12 @@ OPController >> remove [
 
 { #category : #destruction }
 OPController >> removeController [
+
 	self model ifNotNil: [ self removeDependentControllers ].
 	self diagramController ifNil: [ ^ self ].
 	self diagramController deselectAll.
 	self removeDiagramElement.
-	self diagramController removeController: self.
-	self model: nil.
-	self diagramController: nil
+	self diagramController removeController: self
 ]
 
 { #category : #destruction }
@@ -273,9 +272,11 @@ OPController >> removeFigure [
 
 { #category : #destruction }
 OPController >> removeFull [
+
 	self removeDependent.
+	self removeController.
 	self removeModel.
-	self removeController
+	self model: nil
 ]
 
 { #category : #private }

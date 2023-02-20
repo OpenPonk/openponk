@@ -114,3 +114,13 @@ OPLabel >> text: aString [
 
 	text := aString
 ]
+
+{ #category : #rendering }
+OPLabel >> updateRenderFromModel [
+
+	roassalShape text: self defaultText.
+
+	super updateRenderFromModel.
+
+	roassalShape signalUpdate
+]

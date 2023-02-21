@@ -51,10 +51,12 @@ OPDiagram >> name: anObject [
 OPDiagram >> ownedElement: aShape renderedIn: aCanvas [
 
 	self isRendered ifTrue: [ 
-		roassalShape canvas = aCanvas ifFalse: [ 
-			self error:
-				'Reusing same diagram element for 2 canvases not allowed' ].
-		^ self ].
+		self
+			assert: roassalShape canvas = aCanvas
+			description:
+			'Reusing same diagram element for 2 canvases not allowed'.
+		^ self owningElement ifNotNil: [ :owner | 
+			  owner ownedElement: aShape renderedIn: aCanvas ] ].
 	roassalShape := aCanvas.
 	self updateRenderFromSelf
 ]

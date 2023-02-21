@@ -174,7 +174,8 @@ OPDiagramElement >> ownedElement: aShape renderedIn: aCanvas [
 			assert: roassalShape canvas = aCanvas
 			description:
 			'Reusing same diagram element for 2 canvases not allowed'.
-		^ self ].
+		^ self owningElement ifNotNil: [ :owner | 
+			  owner ownedElement: aShape renderedIn: aCanvas ] ].
 	self renderIn: aCanvas
 ]
 
@@ -419,7 +420,7 @@ OPDiagramElement >> updateFromRender [
 { #category : #rendering }
 OPDiagramElement >> updateRenderFromModel [
 
-	self ownedElements do: #updateRenderFromModel
+	self ownedElements select: #isRendered thenDo: #updateRenderFromModel
 ]
 
 { #category : #rendering }

@@ -30,11 +30,16 @@ OPRSSelectable >> highlightBorderColor: aColor [
 	"Set the border color"
 
 	self
-		when: RSHighlightEvent
-		do: [ :evt | 
-			self record: evt shape selector: #borderColor value: aColor ];
+		when: RSHighlightEvent do: [ :evt | 
+			self
+				record: evt shape
+				selector: #border
+				value:
+					((evt shape border ifNil: [ RSBorder new ] ifNotNil: #copy)
+						 color: aColor;
+						 yourself) ];
 		when: RSUnHighlightEvent
-		do: [ :evt | self restore: evt shape selector: #borderColor ]
+		do: [ :evt | self restore: evt shape selector: #border ]
 ]
 
 { #category : #hooks }

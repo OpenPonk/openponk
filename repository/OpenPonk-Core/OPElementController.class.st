@@ -160,9 +160,9 @@ OPElementController >> remove [
 { #category : #construction }
 OPElementController >> renderDiagramElement [
 
-	self diagramController addingFigureFor: self.
+	self diagramController willRender: self.
 	self diagramElement renderIn: self diagramController canvas.
-	self diagramController addedFigureFor: self
+	self diagramController rendered: self
 ]
 
 { #category : #construction }

@@ -15,6 +15,15 @@ OPShape class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #bounds )
 ]
 
+{ #category : #'as yet unclassified' }
+OPShape >> allOwnedShapesPositionableByUser [
+
+	self isRendered ifFalse: [ ^ #(  ) ].
+	self isPositionableByUser ifFalse: [ 
+		^ super allOwnedShapesPositionableByUser ].
+	^ { self } , super allOwnedShapesPositionableByUser
+]
+
 { #category : #accessing }
 OPShape >> bounds [
 
@@ -25,6 +34,50 @@ OPShape >> bounds [
 OPShape >> bounds: anObject [
 
 	bounds := anObject
+]
+
+{ #category : #'as yet unclassified' }
+OPShape >> moveToEmptySpace [
+
+	| spacing neededSpace canvasRectangle possibleCanvas occupiedRectangles |
+	spacing := 30 @ 30.
+	neededSpace := self extent rounded + (spacing * 2).
+	canvasRectangle := self canvas encompassingRectangle rounded.
+	possibleCanvas := Rectangle
+		                  origin: canvasRectangle origin - spacing
+		                  corner: canvasRectangle corner
+			                  +
+			                  ((800 - canvasRectangle width max: 0)
+			                   @ neededSpace y).
+	occupiedRectangles := SortedCollection sortBlock: [ :a :b | 
+		                      a right > b right ].
+	occupiedRectangles add:
+		(possibleCanvas topLeft corner: possibleCanvas bottomLeft).
+	occupiedRectangles addAll:
+		((self allShapesPositionableByUser copyWithout: self) collect: [ 
+			 :each | each encompassingRectangle rounded ]).
+
+	occupiedRectangles
+		inject: possibleCanvas top
+		into: [ :maxFoundOccupiedY :each | 
+			| filledSpace |
+			filledSpace := Rectangle
+				               origin: each right @ maxFoundOccupiedY
+				               extent: neededSpace.
+			(filledSpace corner <= possibleCanvas corner and: [ 
+				 each bottom > maxFoundOccupiedY ]) ifTrue: [ 
+				^ self translateTo: filledSpace center ].
+			maxFoundOccupiedY max: each bottom ]
+]
+
+{ #category : #rendering }
+OPShape >> renderIn: aCanvas [
+
+	self isRendered ifTrue: [ ^ self ].
+	super renderIn: aCanvas.
+	self bounds ifNil: [ 
+		self isPositionableByUser ifTrue: [ self moveToEmptySpace ] ].
+	^ roassalShape
 ]
 
 { #category : #'as yet unclassified' }

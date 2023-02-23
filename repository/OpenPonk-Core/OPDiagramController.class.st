@@ -78,30 +78,6 @@ OPDiagramController >> addMouseEventsFor: aFigure [
 		do: [ :event | self hoverRoassalShape: event shape ]
 ]
 
-{ #category : #accessing }
-OPDiagramController >> addedFigureFor: aController [
-
-	(figuresBeingAdded includes: aController)
-		ifFalse: [ 
-			self traceCr:
-				'DiagramController>>#addedFigureFor: added figure not previously marked as being added' ]
-		ifTrue: [ figuresBeingAdded remove: aController ].
-
-
-	lastSelectionPosition ifNotNil: [ 
-		aController diagramElement addedByMouseClickTo:
-			lastSelectionPosition ].
-	self addMouseEventsFor: aController roassalShape
-]
-
-{ #category : #accessing }
-OPDiagramController >> addingFigureFor: aController [
-
-	(figuresBeingAdded includes: aController) ifTrue: [ 
-		self notify: 'Same controller is already being added' ].
-	figuresBeingAdded add: aController
-]
-
 { #category : #rendering }
 OPDiagramController >> allShowableElements [
 
@@ -125,6 +101,7 @@ OPDiagramController >> announcer [
 
 { #category : #userinterface }
 OPDiagramController >> applyDefaultLayout [
+
 	self layouter defaultLayout
 ]
 
@@ -412,7 +389,7 @@ OPDiagramController >> figureAdded: aFigure [
 		transformWith: '`@receiver figureAdded: `@statements1'
 			->
 			'`@receiver addedFigureFor: (`@receiver controllerForFigure: `@statements1)'.
-	^ self addedFigureFor: (self controllerForRoassalShape: aFigure)
+	^ self rendered: (self controllerForRoassalShape: aFigure)
 ]
 
 { #category : #accessing }
@@ -707,6 +684,22 @@ OPDiagramController >> removeModelElement: aModelElement [
 ]
 
 { #category : #accessing }
+OPDiagramController >> rendered: aController [
+
+	(figuresBeingAdded includes: aController)
+		ifFalse: [ 
+			self traceCr:
+				'DiagramController>>#addedFigureFor: added figure not previously marked as being added' ]
+		ifTrue: [ figuresBeingAdded remove: aController ].
+
+
+	lastSelectionPosition ifNotNil: [ 
+		aController diagramElement addedByMouseClickTo:
+			lastSelectionPosition ].
+	self addMouseEventsFor: aController roassalShape
+]
+
+{ #category : #accessing }
 OPDiagramController >> roassalShape [
 
 	^ self canvas
@@ -746,11 +739,9 @@ OPDiagramController >> selectedShapes: shapes onPosition: aPoint [
 OPDiagramController >> showAllElements [
 
 	self disableRefresh.
-	self showInDiagram: self.
-	self enableRefresh.
-	self controllers
-		select: [ :each | each isKindOf: OPController ]
-		thenDo: [ :each | each diagramElement updateRenderFromModel ]
+	self allShowableElements do: [ :each | 
+		self showWithoutDependentInDiagramModel: each ].
+	self enableRefresh
 ]
 
 { #category : #rebuilding }
@@ -871,6 +862,14 @@ OPDiagramController >> whenAllDeselectedDo: aBlock [
 { #category : #'protocol-events' }
 OPDiagramController >> whenFigureAdded: aBlock [
 	figureAdded := aBlock ifNil: [ [ :figure |  ] ]
+]
+
+{ #category : #accessing }
+OPDiagramController >> willRender: aController [
+
+	(figuresBeingAdded includes: aController) ifTrue: [ 
+		self notify: 'Same controller is already being added' ].
+	figuresBeingAdded add: aController
 ]
 
 { #category : #accessing }

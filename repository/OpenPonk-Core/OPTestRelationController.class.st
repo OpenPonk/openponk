@@ -24,10 +24,10 @@ OPTestRelationController >> removeModel [
 
 { #category : #construction }
 OPTestRelationController >> renderFigureIn: aView [
-	self diagramController addingFigureFor: self.
+	self diagramController willRender: self.
 	figure := RTBox new elementOn: self model.
 	aView add: figure.
-	^ self diagramController addedFigureFor: self
+	^ self diagramController rendered: self
 ]
 
 { #category : #accessing }

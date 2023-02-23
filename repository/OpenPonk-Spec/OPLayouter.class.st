@@ -129,7 +129,6 @@ OPLayouter >> sugiyamaLayout [
 	self applyLayout: [ :boxes :links | 
 		| centerY |
 		RSSugiyamaLayout new
-			"doNotAttachPoint;"
 			verticalGap: 100;
 			horizontalGap: 100;
 			on: boxes edges: links.
@@ -148,12 +147,12 @@ OPLayouter >> treeLayout [
 
 	self applyLayout: [ :boxes :links | 
 		| centerY |
-		RTTreeLayout new
+		RSTreeLayout new
 			doNotAttachPoint;
 			verticalGap: 100;
 			horizontalGap: 100;
 			on: boxes edges: links.
-		centerY := (RTGroup withAll: boxes) encompassingRectangle center y.
+		centerY := (RSGroup withAll: boxes) encompassingRectangle center y.
 		boxes do: [ :each | 
 			each translateBy: 0 @ 2 * (centerY - each position y) ] ]
 ]

@@ -62,6 +62,19 @@ OPDiagramElement >> addedByMouseClickTo: aPoint [
 	
 ]
 
+{ #category : #'as yet unclassified' }
+OPDiagramElement >> allOwnedShapesPositionableByUser [
+
+	self isRendered ifFalse: [ ^ #(  ) ].
+	^ self ownedElements flatCollect: #allOwnedShapesPositionableByUser
+]
+
+{ #category : #'as yet unclassified' }
+OPDiagramElement >> allShapesPositionableByUser [
+
+	^ self topMostOwningElement allOwnedShapesPositionableByUser
+]
+
 { #category : #accessing }
 OPDiagramElement >> canvas [
 
@@ -106,6 +119,12 @@ OPDiagramElement >> initialize [
 		               on: self
 		               slot: #targetEdges
 		               oppositeSlot: #target
+]
+
+{ #category : #testing }
+OPDiagramElement >> isPositionableByUser [
+
+	^ false
 ]
 
 { #category : #rendering }
@@ -409,6 +428,14 @@ OPDiagramElement >> targetEdges: aCollection [
 	targetEdges
 		removeAll;
 		addAll: aCollection
+]
+
+{ #category : #'as yet unclassified' }
+OPDiagramElement >> topMostOwningElement [
+
+	^ self owningElement
+		  ifNil: [ self ]
+		  ifNotNil: [ :owner | owner topMostOwningElement ]
 ]
 
 { #category : #'as yet unclassified' }

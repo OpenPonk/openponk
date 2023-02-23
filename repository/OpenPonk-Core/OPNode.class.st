@@ -28,6 +28,13 @@ OPNode >> height [
 	^ self extent y
 ]
 
+{ #category : #testing }
+OPNode >> isPositionableByUser [
+
+	^ self isRendered and: [ 
+		  self roassalShape hasInteraction: OPRSSelectionDraggable ]
+]
+
 { #category : #accessing }
 OPNode >> position [
 

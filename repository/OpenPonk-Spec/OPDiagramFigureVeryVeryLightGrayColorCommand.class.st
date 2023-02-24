@@ -15,7 +15,7 @@ OPDiagramFigureVeryVeryLightGrayColorCommand >> defaultMenuIcon [
 { #category : #'as yet unclassified' }
 OPDiagramFigureVeryVeryLightGrayColorCommand >> defaultMenuItemName [
 
-	^ 'Very Very Light Gray'
+	^ 'Gray'
 ]
 
 { #category : #'as yet unclassified' }

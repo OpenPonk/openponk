@@ -15,7 +15,7 @@ OPDiagramFigurePaleRedColorCommand >> defaultMenuIcon [
 { #category : #'as yet unclassified' }
 OPDiagramFigurePaleRedColorCommand >> defaultMenuItemName [
 
-	^ 'Pale Red'
+	^ 'Red'
 ]
 
 { #category : #'as yet unclassified' }

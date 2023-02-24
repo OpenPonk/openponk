@@ -15,7 +15,7 @@ OPDiagramFigurePaleMagentaColorCommand >> defaultMenuIcon [
 { #category : #'as yet unclassified' }
 OPDiagramFigurePaleMagentaColorCommand >> defaultMenuItemName [
 
-	^ 'Pale Magenta'
+	^ 'Magenta'
 ]
 
 { #category : #'as yet unclassified' }

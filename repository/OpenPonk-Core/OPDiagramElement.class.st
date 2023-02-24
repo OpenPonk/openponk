@@ -160,6 +160,12 @@ OPDiagramElement >> model [
 	^ self modelElement
 ]
 
+{ #category : #initialization }
+OPDiagramElement >> modelChanged [
+
+	self isRendered ifTrue: [ self updateRenderFromModel ]
+]
+
 { #category : #accessing }
 OPDiagramElement >> modelElement [
 
@@ -260,7 +266,7 @@ OPDiagramElement >> renderBasicShapeIn: aCanvas [
 			self error:
 				'Reusing same diagram element for 2 canvases not allowed' ].
 		^ self ].
-	self renderBasicShape.
+	roassalShape := self renderBasicShape.
 	aCanvas add: roassalShape.
 	^ roassalShape
 ]

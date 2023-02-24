@@ -58,15 +58,15 @@ OPBoundary >> printOn: aStream [
 { #category : #'creating - subelements' }
 OPBoundary >> renderBasicShape [
 
-	roassalShape := RSBox new
-		                color: Color transparent;
-		                width: self defaultWidth;
-		                height: self defaultHeight;
-		                yourself.
-	roassalShape borderDo: [ :border | 
-		border
-			color: Color gray;
-			dashArray: #( 4 ) ]
+	^ RSBox new
+		  color: Color transparent;
+		  width: self defaultWidth;
+		  height: self defaultHeight;
+		  borderDo: [ :border | 
+			  border
+				  color: Color gray;
+				  dashArray: #( 4 ) ];
+		  yourself
 ]
 
 { #category : #'creating - subelements' }
@@ -74,7 +74,7 @@ OPBoundary >> renderShapeDetails [
 
 	roassalShape
 		@ OPRSSelectable;
-		@ OPRSSelectionDraggableBorder;
+		@ OPRSSelectionDraggableBorder thatDragsAllInnerShapes;
 		@ OPRSResizable.
 	self renderLabel
 ]

@@ -2,15 +2,56 @@ Class {
 	#name : #OPRSSelectionDraggable,
 	#superclass : #RSDraggable,
 	#instVars : [
-		'draggedShapes'
+		'draggedShapes',
+		'shouldDragInnerShapeBlock'
 	],
 	#category : #'OpenPonk-Roassal3-Interactions'
 }
 
 { #category : #'instance creation' }
+OPRSSelectionDraggable class >> thatDoesNotDragInnerShapes [
+
+	^ self new
+		  doNotDragInnerShapes;
+		  yourself
+]
+
+{ #category : #'instance creation' }
+OPRSSelectionDraggable class >> thatDragsAllInnerShapes [
+
+	"default behavior"
+
+	^ self new
+]
+
+{ #category : #'instance creation' }
+OPRSSelectionDraggable class >> thatDragsInnerShapesOnCondition: aBlock [
+
+	^ self new
+		  shouldDragInnerShapesBlock: aBlock;
+		  yourself
+]
+
+{ #category : #'instance creation' }
 OPRSSelectionDraggable class >> wantsUniqueInstance [
 
 	^ false
+]
+
+{ #category : #initialization }
+OPRSSelectionDraggable >> doNotDragInnerShapes [
+
+	"when dragged, do not drag any shapes inside me"
+
+	self shouldDragInnerShapesBlock: [ :innerShape | false ]
+]
+
+{ #category : #initialization }
+OPRSSelectionDraggable >> dragAllInnerShapes [
+
+	"when dragged, drag also all shapes inside me that have also SelectionDraggable - default behavior"
+
+	self shouldDragInnerShapesBlock: [ :innerShape | true ]
 ]
 
 { #category : #events }
@@ -25,6 +66,13 @@ OPRSSelectionDraggable >> endDrag: anEvent [
 		each announce: event ].
 
 	draggedShapes := #(  )
+]
+
+{ #category : #initialization }
+OPRSSelectionDraggable >> initialize [
+
+	super initialize.
+	self dragAllInnerShapes
 ]
 
 { #category : #hooks }
@@ -57,12 +105,21 @@ OPRSSelectionDraggable >> shapesToDragInside: aShape [
 	| shapeEncompassingRectangle |
 	shapeEncompassingRectangle := aShape encompassingRectangle.
 	^ aShape canvas nodes select: [ :each | 
-		  each isSelected not and: [ 
-			  each isFixed not and: [ 
-				  (shapeEncompassingRectangle containsRect:
-					   each encompassingRectangle) and: [ 
-					  shapeEncompassingRectangle ~= each encompassingRectangle and: [ 
-						  each isSelectionDraggable ] ] ] ] ]
+		  (shouldDragInnerShapeBlock value: each) and: [ 
+			  each isSelected not and: [ 
+				  each isFixed not and: [ 
+					  (shapeEncompassingRectangle containsRect:
+						   each encompassingRectangle) and: [ 
+						  shapeEncompassingRectangle ~= each encompassingRectangle and: [ 
+							  each isSelectionDraggable ] ] ] ] ] ]
+]
+
+{ #category : #initialization }
+OPRSSelectionDraggable >> shouldDragInnerShapesBlock: aBlock [
+
+	"when dragged, drag also all shapes inside me that have also SelectionDraggable and the block returns true when given the inner shape"
+
+	shouldDragInnerShapeBlock := aBlock
 ]
 
 { #category : #events }

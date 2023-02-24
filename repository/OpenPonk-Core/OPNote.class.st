@@ -152,12 +152,12 @@ OPNote >> printOn: aStream [
 { #category : #'as yet unclassified' }
 OPNote >> renderBasicShape [
 
-	roassalShape := RSBox new
-		                color: Color transparent;
-		                borderColor: Color transparent;
-		                width: 150;
-		                height: 100;
-		                yourself
+	^ RSBox new
+		  color: Color transparent;
+		  borderColor: Color transparent;
+		  width: 150;
+		  height: 100;
+		  yourself
 ]
 
 { #category : #'creating - subelements' }
@@ -169,7 +169,7 @@ OPNote >> renderShapeDetails [
 	self createOwnedBorderLines.
 	roassalShape
 		@ OPRSSelectable;
-		@ OPRSSelectionDraggable;
+		@ OPRSSelectionDraggable thatDoesNotDragInnerShapes;
 		@ OPRSResizable.
 	self updateOwnedElements.
 	self roassalShape

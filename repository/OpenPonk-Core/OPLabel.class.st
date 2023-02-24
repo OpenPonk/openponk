@@ -86,15 +86,14 @@ OPLabel >> noText [
 { #category : #rendering }
 OPLabel >> renderBasicShape [
 
-	roassalShape := RSLabel new.
-	roassalShape
-		fontSize: self fontSize;
-		fontName: self fontName;
-		color: self fontColor;
-		text: self text;
-		emphasis: self emphasis;
-		model: self;
-		yourself
+	^ RSLabel new
+		  fontSize: self fontSize;
+		  fontName: self fontName;
+		  color: self fontColor;
+		  text: self text;
+		  emphasis: self emphasis;
+		  model: self;
+		  yourself
 ]
 
 { #category : #accessing }

@@ -91,7 +91,7 @@ OPController >> descriptionName [
 		            read: [ :me | me model name ]
 		            write: [ :me :newValue | 
 			            me model name: newValue.
-			            self diagramElement updateRenderFromModel ].
+			            self diagramElement modelChanged ].
 	^ MAStringDescription new
 		  accessor: accessor;
 		  label: 'Name';
@@ -157,7 +157,7 @@ OPController >> internalSubscribeTo: aModel [
 
 	aModel announcer
 		when: OPElementRenamed
-		do: [ self diagramElement updateRenderFromModel ]
+		do: [ self diagramElement modelChanged ]
 ]
 
 { #category : #announcements }
@@ -210,11 +210,11 @@ OPController >> nameOfType [
 OPController >> refreshFigure [
 
 	self
-		deprecated: 'Use #diagramElement updateRenderFromModel instead'
+		deprecated: 'Use #diagramElement modelChanged instead'
 		transformWith: '`@receiver refreshFigure'
-			-> '`@receiver diagramElement updateRenderFromModel'.
+			-> '`@receiver diagramElement modelChanged'.
 
-	^ self diagramElement updateRenderFromModel
+	^ self diagramElement modelChanged
 ]
 
 { #category : #deprecated }

@@ -15,14 +15,12 @@ OPDiagramFigurePaleBlueColorCommand >> defaultMenuIcon [
 { #category : #'as yet unclassified' }
 OPDiagramFigurePaleBlueColorCommand >> defaultMenuItemName [
 
-	^ 'Pale Blue'
+	^ 'Blue'
 ]
 
 { #category : #'as yet unclassified' }
 OPDiagramFigurePaleBlueColorCommand >> execute [
-
-	controllers do: [ :each | 
-		each diagramElement
-			stylePropertyNamed: #fillColor
-			put: Color paleBlue ]
+	
+	controllers do: [ :each | each diagramElement stylePropertyNamed: #fillColor
+		put: Color paleBlue ]
 ]

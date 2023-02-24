@@ -12,23 +12,20 @@ OPFigureColorMenuGroup class >> generateColorCommands [
 	colors := { 
 		          Color transparent.
 		          Color veryVeryLightGray.
-		          Color white } , ({ 
-		           Color paleYellow.
-		           Color paleBlue.
-		           Color paleRed.
-		           Color paleOrange.
-		           Color paleGreen.
-		           Color paleMagenta } sortedAs: #hue).
+		          Color white.
+		          Color paleYellow.
+		          Color paleBlue.
+		          Color paleRed.
+		          Color paleOrange.
+		          Color paleGreen.
+		          Color paleMagenta }.
 
 
 
 	colors do: [ :each | 
 		| colorName className class niceColorName |
 		colorName := each name.
-		niceColorName := String streamContents: [ :s | 
-			                 colorName capitalized splitOnCapitals
-				                 asStringOn: s
-				                 delimiter: ' ' ].
+		niceColorName := colorName capitalized splitOnCapitals last.
 		className := ('OPDiagramFigure' , colorName capitalized
 		              , 'ColorCommand') asSymbol.
 

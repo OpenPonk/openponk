@@ -27,10 +27,10 @@ OPNoShape >> removeRender [
 { #category : #rendering }
 OPNoShape >> renderBasicShape [
 
-	roassalShape := RSBox new
-		                color: Color transparent;
-		                borderColor: Color transparent;
-		                yourself
+	^ RSBox new
+		  color: Color transparent;
+		  borderColor: Color transparent;
+		  yourself
 ]
 
 { #category : #rendering }

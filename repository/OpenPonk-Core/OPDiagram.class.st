@@ -66,7 +66,7 @@ OPDiagram >> renderBasicShape [
 
 	"diagram cannot be rendered directly now, only its owned elements"
 
-	
+	^ nil
 ]
 
 { #category : #rendering }

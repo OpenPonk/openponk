@@ -1,6 +1,6 @@
 Class {
-	#name : #OPRSAnchorConstraintBalancePosition,
-	#superclass : #OPRSAnchorConstraintPosition,
+	#name : #OPRSAnchorConstraintBalanceReference,
+	#superclass : #OPRSAnchorConstraintReference,
 	#instVars : [
 		'balance'
 	],
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-OPRSAnchorConstraintBalancePosition class >> balance: aNumber [
+OPRSAnchorConstraintBalanceReference class >> balance: aNumber [
 
 	^ self new
 		  balance: aNumber;
@@ -16,7 +16,7 @@ OPRSAnchorConstraintBalancePosition class >> balance: aNumber [
 ]
 
 { #category : #'as yet unclassified' }
-OPRSAnchorConstraintBalancePosition >> anchorSegmentFrom: segments andPointFrom: lenghtFromStart [
+OPRSAnchorConstraintBalanceReference >> anchorSegmentFrom: segments andPointFrom: lenghtFromStart [
 
 	| sum newSum |
 	sum := 0.
@@ -29,19 +29,25 @@ OPRSAnchorConstraintBalancePosition >> anchorSegmentFrom: segments andPointFrom:
 ]
 
 { #category : #accessing }
-OPRSAnchorConstraintBalancePosition >> balance: aNumber [
+OPRSAnchorConstraintBalanceReference >> balance: aNumber [
 
 	balance := aNumber
 ]
 
 { #category : #'as yet unclassified' }
-OPRSAnchorConstraintBalancePosition >> computeAbsoluteBalanceForLength: aNumber [
+OPRSAnchorConstraintBalanceReference >> computeAbsoluteBalanceForLength: aNumber [
 
 	^ aNumber * ((balance min: 1) max: 0)
 ]
 
 { #category : #'as yet unclassified' }
-OPRSAnchorConstraintBalancePosition >> saveShapePositionIn: aConstraint [
+OPRSAnchorConstraintBalanceReference >> guideLineTargetFor: anchorConstraint [
+
+	^ anchorConstraint anchorShape
+]
+
+{ #category : #'as yet unclassified' }
+OPRSAnchorConstraintBalanceReference >> saveShapePositionIn: aConstraint [
 
 	| nearestPointInfo absoluteMinDistance |
 	nearestPointInfo := aConstraint createUpdater nearestPointInfo.

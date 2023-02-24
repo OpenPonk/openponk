@@ -36,6 +36,12 @@ OPShape >> bounds: anObject [
 	bounds := anObject
 ]
 
+{ #category : #accessing }
+OPShape >> extent [
+
+	^ (roassalShape ifNil: [ self bounds ]) extent
+]
+
 { #category : #'as yet unclassified' }
 OPShape >> moveToEmptySpace [
 
@@ -68,6 +74,12 @@ OPShape >> moveToEmptySpace [
 				 each bottom > maxFoundOccupiedY ]) ifTrue: [ 
 				^ self translateTo: filledSpace center ].
 			maxFoundOccupiedY max: each bottom ]
+]
+
+{ #category : #accessing }
+OPShape >> position [
+
+	^ (roassalShape ifNil: [ self bounds ]) t
 ]
 
 { #category : #rendering }

@@ -3,7 +3,6 @@ Class {
 	#superclass : #RSObject,
 	#instVars : [
 		'line',
-		'position',
 		'minDistance',
 		'anchorShape',
 		'shape',
@@ -11,7 +10,8 @@ Class {
 		'segments',
 		'anchorSegment',
 		'anchorPoint',
-		'extraDistance'
+		'extraDistance',
+		'positionReference'
 	],
 	#category : #'OpenPonk-Roassal3-AnchorConstraint'
 }
@@ -40,7 +40,7 @@ OPRSAnchorConstraintUpdater >> anchorShape: aShape [
 OPRSAnchorConstraintUpdater >> computeAnchorSegmentAndPoint [
 
 	| pair |
-	pair := position
+	pair := positionReference
 		        anchorSegmentFrom: self segments
 		        andPointFrom: self lengthFromStartOfBalance.
 	anchorSegment := pair key.
@@ -77,7 +77,7 @@ OPRSAnchorConstraintUpdater >> extraDistance [
 OPRSAnchorConstraintUpdater >> lengthFromStartOfBalance [
 
 	^ absoluteBalance ifNil: [ 
-		  absoluteBalance := position computeAbsoluteBalanceForLength:
+		  absoluteBalance := positionReference computeAbsoluteBalanceForLength:
 			                     self lineLength ]
 ]
 
@@ -206,13 +206,13 @@ OPRSAnchorConstraintUpdater >> nearestSegment [
 ]
 
 { #category : #accessing }
-OPRSAnchorConstraintUpdater >> position [
-	^ position
+OPRSAnchorConstraintUpdater >> positionReference [
+	^ positionReference
 ]
 
 { #category : #accessing }
-OPRSAnchorConstraintUpdater >> position: aConstraintPosition [
-	position := aConstraintPosition
+OPRSAnchorConstraintUpdater >> positionReference: aConstraintReference [
+	positionReference := aConstraintReference
 ]
 
 { #category : #accessing }

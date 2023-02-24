@@ -7,7 +7,7 @@ Class {
 		'guideLine',
 		'shape',
 		'line',
-		'position'
+		'positionReference'
 	],
 	#category : #'OpenPonk-Roassal3-AnchorConstraint'
 }
@@ -19,7 +19,7 @@ OPRSAnchorConstraint >> addAnchorAndGuideLine [
 	shape canvas add: self anchorShape.
 	self guideLine
 		from: shape;
-		to: self anchorShape.
+		to: (positionReference guideLineTargetFor: self).
 	shape canvas add: self guideLine.
 	self moveShape.
 	shape signalUpdate
@@ -39,7 +39,7 @@ OPRSAnchorConstraint >> anchorShape [
 { #category : #accessing }
 OPRSAnchorConstraint >> balance: aNumber [
 
-	position := OPRSAnchorConstraintBalancePosition new
+	positionReference := OPRSAnchorConstraintBalanceReference new
 		            balance: aNumber;
 		            yourself
 ]
@@ -65,7 +65,7 @@ OPRSAnchorConstraint >> createUpdater [
 		  line: line;
 		  shape: shape;
 		  anchorShape: anchorShape;
-		  position: position;
+		  positionReference: positionReference;
 		  minDistance: minDistance;
 		  yourself
 ]
@@ -116,15 +116,9 @@ OPRSAnchorConstraint >> noGuideLine [
 ]
 
 { #category : #accessing }
-OPRSAnchorConstraint >> position: anAnchorConstraintPosition [
-
-	position := anAnchorConstraintPosition
-]
-
-{ #category : #accessing }
 OPRSAnchorConstraint >> positionFromEnd: aNumber [
 
-	position := OPRSAnchorConstraintEndPosition new
+	positionReference := OPRSAnchorConstraintEndDistanceReference new
 		           distance: aNumber;
 		           yourself
 ]
@@ -132,9 +126,15 @@ OPRSAnchorConstraint >> positionFromEnd: aNumber [
 { #category : #accessing }
 OPRSAnchorConstraint >> positionFromStart: aNumber [
 
-	position := OPRSAnchorConstraintStartPosition new
+	positionReference := OPRSAnchorConstraintStartDistanceReference new
 		           distance: aNumber;
 		           yourself
+]
+
+{ #category : #accessing }
+OPRSAnchorConstraint >> positionReference: anAnchorConstraintReference [
+
+	positionReference := anAnchorConstraintReference
 ]
 
 { #category : #building }
@@ -157,7 +157,7 @@ OPRSAnchorConstraint >> removeAnchorAndGuideLine [
 { #category : #updating }
 OPRSAnchorConstraint >> saveShapePosition [
 
-	position saveShapePositionIn: self.
+	positionReference saveShapePositionIn: self.
 	self createUpdater moveAnchor
 ]
 

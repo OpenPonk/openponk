@@ -1,6 +1,6 @@
 Class {
-	#name : #OPRSAnchorConstraintFixedPosition,
-	#superclass : #OPRSAnchorConstraintPosition,
+	#name : #OPRSAnchorConstraintFixedDistanceReference,
+	#superclass : #OPRSAnchorConstraintReference,
 	#instVars : [
 		'distance'
 	],
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-OPRSAnchorConstraintFixedPosition class >> distance: anInteger [
+OPRSAnchorConstraintFixedDistanceReference class >> distance: anInteger [
 
 	^ self new
 		  distance: anInteger;
@@ -16,23 +16,23 @@ OPRSAnchorConstraintFixedPosition class >> distance: anInteger [
 ]
 
 { #category : #accessing }
-OPRSAnchorConstraintFixedPosition >> distance: anInteger [
+OPRSAnchorConstraintFixedDistanceReference >> distance: anInteger [
 
 	distance := anInteger
 ]
 
 { #category : #'as yet unclassified' }
-OPRSAnchorConstraintFixedPosition >> referencePointOfSegment: aSegment [
+OPRSAnchorConstraintFixedDistanceReference >> referencePointOfSegment: aSegment [
 
 	^ self subclassResponsibility
 ]
 
 { #category : #'as yet unclassified' }
-OPRSAnchorConstraintFixedPosition >> saveShapePositionIn: aConstraint [
+OPRSAnchorConstraintFixedDistanceReference >> saveShapePositionIn: aConstraint [
 
 	| segment pointOnLine absoluteMinDistance |
 	segment := self segmentIn: aConstraint.
-	pointOnLine := segment nearestAlongPointTo: aConstraint shape.
+	pointOnLine := segment nearestAlongPointTo: aConstraint shape position.
 	distance := (self referencePointOfSegment: segment) distanceTo:
 		            pointOnLine.
 	absoluteMinDistance := pointOnLine distanceTo:
@@ -42,7 +42,7 @@ OPRSAnchorConstraintFixedPosition >> saveShapePositionIn: aConstraint [
 ]
 
 { #category : #'as yet unclassified' }
-OPRSAnchorConstraintFixedPosition >> segmentIn: aConstraint [
+OPRSAnchorConstraintFixedDistanceReference >> segmentIn: aConstraint [
 
 	^ self subclassResponsibility
 ]

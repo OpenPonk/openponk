@@ -10,7 +10,7 @@ OPEdgeLabel >> anchorToEdge [
 	roassalShape @ RSDraggable.
 	OPRSAnchorConstraint new
 		minDistance: self defaultMinDistance;
-		position: self defaultAnchorConstraintPosition;
+		positionReference: self defaultAnchorConstraintPosition;
 		stick: roassalShape on: self owningElement roassalShape
 ]
 

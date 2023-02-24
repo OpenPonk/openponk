@@ -45,7 +45,7 @@ OPNode >> translateBy: deltaAsPoint [
 
 	"Move a shape by a delta value, expressed as a point"
 
-	roassalShape translateBy: deltaAsPoint
+	(roassalShape ifNil: [ ^ self ]) translateBy: deltaAsPoint
 ]
 
 { #category : #actions }
@@ -53,7 +53,7 @@ OPNode >> translateTo: aPoint [
 
 	"Translate a shape to a new position, expressed as a point"
 
-	roassalShape translateTo: aPoint
+	(roassalShape ifNil: [ ^ self ]) translateTo: aPoint
 ]
 
 { #category : #accessing }

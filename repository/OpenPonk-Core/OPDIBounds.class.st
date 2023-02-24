@@ -76,13 +76,33 @@ OPDIBounds >> position [
 ]
 
 { #category : #accessing }
+OPDIBounds >> position: aPoint [
+
+	"center point"
+
+	self
+		assert: self extent isNotNil
+		description:
+		'Extent (width and height) must be set before setting position (origin x and y)'.
+	self origin: aPoint - (self extent / 2)
+]
+
+{ #category : #accessing }
 OPDIBounds >> position: aPositionPoint extent: anExtentPoint [
 
 	"center point and size"
 
 	self
 		extent: anExtentPoint;
-		origin: aPositionPoint - (anExtentPoint / 2)
+		position: aPositionPoint
+]
+
+{ #category : #accessing }
+OPDIBounds >> translateTo: aPoint [
+
+	"center point"
+
+	self position: aPoint
 ]
 
 { #category : #accessing }

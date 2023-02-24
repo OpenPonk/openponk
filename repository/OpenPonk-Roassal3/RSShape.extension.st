@@ -31,12 +31,6 @@ RSShape >> isSelected [
 ]
 
 { #category : #'*OpenPonk-Roassal3' }
-RSShape >> isSelectionDraggable [
-
-	^ self hasProperty: OPRSSelectionDraggable
-]
-
-{ #category : #'*OpenPonk-Roassal3' }
 RSShape >> shape [
 
 	self

@@ -747,22 +747,21 @@ OPDiagramController >> showAllElements [
 { #category : #rebuilding }
 OPDiagramController >> showDiagramElement: aDiagramElement [
 
-	| controller |
-	controller := self
-		              controllerForModel: aDiagramElement modelElement
-		              ifFound: [ :ctrl | 
-			              ctrl isRendered ifTrue: [ 
-				              aDiagramElement isRendered ifTrue: [ ^ ctrl ].
-				              ^ self error: 'Controller is already rendered' ].
-			              ctrl ]
-		              ifNone: [ 
-		              self newControllerFor: aDiagramElement modelElement ].
-	controller
-		diagramElement: aDiagramElement;
-		showWithoutDependentInDiagram: self.
+	aDiagramElement ownModelElement ifNotNil: [ :modelElement | 
+		| controller |
+		controller := self
+			              controllerForModel: modelElement
+			              ifFound: [ :ctrl | 
+				              ctrl isRendered ifTrue: [ 
+					              aDiagramElement isRendered ifTrue: [ ^ ctrl ].
+					              ^ self error: 'Controller is already rendered' ].
+				              ctrl ]
+			              ifNone: [ self newControllerFor: modelElement ].
+		controller
+			diagramElement: aDiagramElement;
+			showWithoutDependentInDiagram: self ].
 	aDiagramElement ownedElements do: [ :each | 
-		self showDiagramElement: each ].
-	^ controller
+		self showDiagramElement: each ]
 ]
 
 { #category : #rebuilding }
@@ -775,18 +774,20 @@ OPDiagramController >> showElements [
 
 { #category : #figures }
 OPDiagramController >> showInDiagramModel: aModel [
+
 	self controllerForModel: aModel ifFound: [ :ctrl | ^ ctrl ].
 	^ (self newControllerFor: aModel)
-		showInDiagram: self;
-		yourself
+		  showInDiagram: self;
+		  yourself
 ]
 
 { #category : #figures }
 OPDiagramController >> showWithoutDependentInDiagramModel: aModel [
+
 	self controllerForModel: aModel ifFound: [ :ctrl | ^ ctrl ].
 	^ (self newControllerFor: aModel)
-		showWithoutDependentInDiagram: self;
-		yourself
+		  showWithoutDependentInDiagram: self;
+		  yourself
 ]
 
 { #category : #'as yet unclassified' }

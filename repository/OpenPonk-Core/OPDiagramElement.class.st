@@ -23,6 +23,14 @@ OPDiagramElement class >> forModelElement: anObject [
 ]
 
 { #category : #rendering }
+OPDiagramElement class >> in: anOwner [
+
+	^ self new
+		  owningElement: anOwner;
+		  yourself
+]
+
+{ #category : #rendering }
 OPDiagramElement class >> in: anOwner forModelElement: anObject [
 
 	^ self new
@@ -133,6 +141,14 @@ OPDiagramElement >> isRendered [
 	^ roassalShape isNotNil and: [ roassalShape isInACanvas ]
 ]
 
+{ #category : #rendering }
+OPDiagramElement >> isRenderedWithOwnedElements [
+
+	^ self isRendered and: [ 
+		  self ownedElements allSatisfy: [ :each | 
+			  each isRenderedWithOwnedElements ] ]
+]
+
 { #category : #testing }
 OPDiagramElement >> isSelectable [
 
@@ -169,7 +185,8 @@ OPDiagramElement >> modelChanged [
 { #category : #accessing }
 OPDiagramElement >> modelElement [
 
-	^ (self modelElements ifEmpty: [ ^ nil ]) first
+	^ self ownModelElement ifNil: [ self owningElement ifNotNil: #modelElement ]
+		  
 ]
 
 { #category : #accessing }
@@ -188,7 +205,19 @@ OPDiagramElement >> modelElements [
 { #category : #accessing }
 OPDiagramElement >> modelElements: aCollection [
 
+	self
+		assert: (aCollection includesAny:
+				 (self owningElement ifNil: [ #(  ) ] ifNotNil: #modelElements))
+				not
+		description:
+		'It is not allowed to have two diagram elements for the same model element. Ask owner for model element instead'.
 	modelElements := aCollection
+]
+
+{ #category : #accessing }
+OPDiagramElement >> ownModelElement [
+
+	^ self modelElements ifEmpty: [ nil ] ifNotEmpty: #first
 ]
 
 { #category : #'as yet unclassified' }
@@ -224,12 +253,18 @@ OPDiagramElement >> owningElement [
 
 { #category : #accessing }
 OPDiagramElement >> owningElement: aDiagramElement [
+
+	self
+		assert: (aDiagramElement isNil or: [ 
+				 self modelElement ~= aDiagramElement modelElement ])
+		description:
+		'It is not allowed to have two diagram elements for the same model element. Ask owner for model element instead'.
 	owningElement := SRToOneLink
-		on: self
-		slot: #owningElement
-		oppositeSlot: #ownedElements
-		updateFrom: owningElement
-		to: aDiagramElement
+		                 on: self
+		                 slot: #owningElement
+		                 oppositeSlot: #ownedElements
+		                 updateFrom: owningElement
+		                 to: aDiagramElement
 ]
 
 { #category : #removing }

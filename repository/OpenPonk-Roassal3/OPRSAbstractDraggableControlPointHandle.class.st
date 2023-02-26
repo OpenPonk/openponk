@@ -1,5 +1,5 @@
 Class {
-	#name : #OPRSHandle,
+	#name : #OPRSAbstractDraggableControlPointHandle,
 	#superclass : #Object,
 	#instVars : [
 		'clickBox',
@@ -10,17 +10,16 @@ Class {
 }
 
 { #category : #accessing }
-OPRSHandle >> createClickBoxShape [
+OPRSAbstractDraggableControlPointHandle >> createClickBoxShape [
 
 	^ RSCircle new
 		  size: self size + 4;
 		  color: Color transparent;
-		  borderColor: Color transparent;
 		  yourself
 ]
 
 { #category : #accessing }
-OPRSHandle >> createShape [
+OPRSAbstractDraggableControlPointHandle >> createShape [
 
 	^ RSEllipse new
 		  size: self size;
@@ -33,25 +32,26 @@ OPRSHandle >> createShape [
 ]
 
 { #category : #removing }
-OPRSHandle >> remove [
+OPRSAbstractDraggableControlPointHandle >> remove [
 
 	shape remove.
 	clickBox remove.
 	shape announcer unsubscribe: self.
 	clickBox announcer unsubscribe: self.
 	line announcer unsubscribe: self.
+	line from announcer unsubscribe: self.
 	shape := nil.
 	clickBox := nil.
 	line := nil
 ]
 
 { #category : #accessing }
-OPRSHandle >> shape [
+OPRSAbstractDraggableControlPointHandle >> shape [
 	^ shape
 ]
 
 { #category : #accessing }
-OPRSHandle >> size [
+OPRSAbstractDraggableControlPointHandle >> size [
 
 	^ self subclassResponsibility
 ]

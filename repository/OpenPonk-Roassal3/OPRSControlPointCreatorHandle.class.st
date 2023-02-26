@@ -1,6 +1,6 @@
 Class {
-	#name : #OPRSMidpointHandle,
-	#superclass : #OPRSHandle,
+	#name : #OPRSControlPointCreatorHandle,
+	#superclass : #OPRSAbstractDraggableControlPointHandle,
 	#instVars : [
 		'from',
 		'to',
@@ -11,17 +11,17 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-OPRSMidpointHandle >> beNearEnd [
+OPRSControlPointCreatorHandle >> beNearEnd [
 	nearEnd := true
 ]
 
 { #category : #'as yet unclassified' }
-OPRSMidpointHandle >> beNearStart [
+OPRSControlPointCreatorHandle >> beNearStart [
 	nearStart := true
 ]
 
 { #category : #'as yet unclassified' }
-OPRSMidpointHandle >> constraintFor: aShape [
+OPRSControlPointCreatorHandle >> constraintFor: aShape [
 
 	| moveBlock |
 	moveBlock := [ aShape translateTo: self fromPoint + self toPoint / 2 ].
@@ -39,12 +39,12 @@ OPRSMidpointHandle >> constraintFor: aShape [
 ]
 
 { #category : #'as yet unclassified' }
-OPRSMidpointHandle >> from [
+OPRSControlPointCreatorHandle >> from [
 	^ from
 ]
 
 { #category : #'as yet unclassified' }
-OPRSMidpointHandle >> fromPoint [
+OPRSControlPointCreatorHandle >> fromPoint [
 
 	^ nearStart
 		  ifTrue: [ line controlPoints first ]
@@ -52,13 +52,13 @@ OPRSMidpointHandle >> fromPoint [
 ]
 
 { #category : #'as yet unclassified' }
-OPRSMidpointHandle >> initialize [
+OPRSControlPointCreatorHandle >> initialize [
 	super initialize.
 	nearStart := nearEnd := false
 ]
 
 { #category : #'as yet unclassified' }
-OPRSMidpointHandle >> on: aLine between: fromShape and: toShape [
+OPRSControlPointCreatorHandle >> on: aLine between: fromShape and: toShape [
 
 	line := aLine.
 	from := fromShape.
@@ -66,14 +66,14 @@ OPRSMidpointHandle >> on: aLine between: fromShape and: toShape [
 ]
 
 { #category : #'as yet unclassified' }
-OPRSMidpointHandle >> promote [
+OPRSControlPointCreatorHandle >> promote [
 
 	(self fromPoint distanceTo: self toPoint) > 10 ifFalse: [ ^ self ].
-	(line propertyAt: OPRSPolylineHandles) promoteFor: line handle: self
+	(line propertyAt: OPRSDraggableControlPoints) promoteFor: line handle: self
 ]
 
 { #category : #removing }
-OPRSMidpointHandle >> remove [
+OPRSControlPointCreatorHandle >> remove [
 
 	super remove.
 	from announcer unsubscribe: self.
@@ -83,7 +83,7 @@ OPRSMidpointHandle >> remove [
 ]
 
 { #category : #'as yet unclassified' }
-OPRSMidpointHandle >> render [
+OPRSControlPointCreatorHandle >> render [
 
 	shape := self createShape.
 	shape model: line.
@@ -101,18 +101,18 @@ OPRSMidpointHandle >> render [
 ]
 
 { #category : #accessing }
-OPRSMidpointHandle >> size [
+OPRSControlPointCreatorHandle >> size [
 
 	^ 5
 ]
 
 { #category : #'as yet unclassified' }
-OPRSMidpointHandle >> to [
+OPRSControlPointCreatorHandle >> to [
 	^ to
 ]
 
 { #category : #'as yet unclassified' }
-OPRSMidpointHandle >> toPoint [
+OPRSControlPointCreatorHandle >> toPoint [
 
 	^ nearEnd
 		  ifTrue: [ line controlPoints last ]

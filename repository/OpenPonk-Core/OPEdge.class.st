@@ -47,6 +47,15 @@ OPEdge >> remove [
 	self target: nil
 ]
 
+{ #category : #rendering }
+OPEdge >> renderShapeDetails [
+
+	| selectable |
+	selectable := OPRSSelectable new.
+	selectable highlightColor: Color blue.
+	roassalShape @ selectable
+]
+
 { #category : #accessing }
 OPEdge >> source [
 

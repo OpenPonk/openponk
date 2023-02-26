@@ -1,5 +1,5 @@
 Class {
-	#name : #OPRSPolylineHandles,
+	#name : #OPRSDraggableControlPoints,
 	#superclass : #RSInteraction,
 	#instVars : [
 		'handles',
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #private }
-OPRSPolylineHandles >> connectWithCanvas [
+OPRSDraggableControlPoints >> connectWithCanvas [
 
 	| interaction |
 	interaction := canvas propertyAt: OPRSSelectableCanvas ifAbsent: [ 
@@ -31,7 +31,7 @@ OPRSPolylineHandles >> connectWithCanvas [
 ]
 
 { #category : #initialization }
-OPRSPolylineHandles >> enable [
+OPRSDraggableControlPoints >> enable [
 
 	canvas := line canvas.
 	line propertyAt: self class put: self.
@@ -40,7 +40,7 @@ OPRSPolylineHandles >> enable [
 ]
 
 { #category : #initialization }
-OPRSPolylineHandles >> initialize [
+OPRSDraggableControlPoints >> initialize [
 	super initialize.
 	handles := OrderedCollection new.
 	midpointHandles := OrderedCollection new.
@@ -48,7 +48,7 @@ OPRSPolylineHandles >> initialize [
 ]
 
 { #category : #initialization }
-OPRSPolylineHandles >> onShape: aLine [
+OPRSDraggableControlPoints >> onShape: aLine [
 
 	line := aLine.
 	line canvas
@@ -57,7 +57,7 @@ OPRSPolylineHandles >> onShape: aLine [
 ]
 
 { #category : #'as yet unclassified' }
-OPRSPolylineHandles >> promoteFor: aLine handle: aMidpointHandle [
+OPRSDraggableControlPoints >> promoteFor: aLine handle: aMidpointHandle [
 
 	| newPoint |
 	"1. Add point at midpoint's place.
@@ -82,7 +82,7 @@ OPRSPolylineHandles >> promoteFor: aLine handle: aMidpointHandle [
 ]
 
 { #category : #private }
-OPRSPolylineHandles >> rebuild [
+OPRSDraggableControlPoints >> rebuild [
 
 	isActive ifFalse: [ ^ self ].
 	self removeHandles.
@@ -92,7 +92,7 @@ OPRSPolylineHandles >> rebuild [
 ]
 
 { #category : #private }
-OPRSPolylineHandles >> remove [
+OPRSDraggableControlPoints >> remove [
 
 	self removeHandles.
 	line announcer unsubscribe: self.
@@ -101,7 +101,7 @@ OPRSPolylineHandles >> remove [
 ]
 
 { #category : #private }
-OPRSPolylineHandles >> removeHandles [
+OPRSDraggableControlPoints >> removeHandles [
 	isActive
 		ifFalse: [ ^ self ].
 	handles do: #remove.
@@ -113,15 +113,13 @@ OPRSPolylineHandles >> removeHandles [
 ]
 
 { #category : #'as yet unclassified' }
-OPRSPolylineHandles >> showHandles [
+OPRSDraggableControlPoints >> showHandles [
 
 	isActive ifTrue: [ ^ self ].
-	line controlPoints
-		from: 2
-		to: line controlPoints size - 1
-		do: [ :each | 
-			handles add: (OPRSBendHandle new
-					 on: line at: each;
+	(line controlPoints copyFrom: 2 to: line controlPoints size - 1) 
+		withIndexDo: [ :each :index | 
+			handles add: (OPRSDraggableControlPointHandle new
+					 on: line atControlPoint: index + 1;
 					 render;
 					 yourself) ].
 	self showMidpointHandles.
@@ -130,12 +128,14 @@ OPRSPolylineHandles >> showHandles [
 ]
 
 { #category : #'as yet unclassified' }
-OPRSPolylineHandles >> showMidpointHandles [
+OPRSDraggableControlPoints >> showMidpointHandles [
 
+	((line isKindOf: RSBezier) and: [ line controlPoints size >= 4 ]) 
+		ifTrue: [ ^ self ].
 	midpointHandles := { line from }
 	                   , (handles collect: [ :each | each shape ])
 	                   , { line to } overlappingPairsCollect: [ :from :to | 
-		                   OPRSMidpointHandle new
+		                   OPRSControlPointCreatorHandle new
 			                   on: line between: from and: to;
 			                   yourself ].
 	midpointHandles first beNearStart.
@@ -144,7 +144,7 @@ OPRSPolylineHandles >> showMidpointHandles [
 ]
 
 { #category : #initialization }
-OPRSPolylineHandles >> showOnShape: aLine [
+OPRSDraggableControlPoints >> showOnShape: aLine [
 
 	line := aLine.
 	line when: RSMouseLeftClick do: [ self showHandles ].

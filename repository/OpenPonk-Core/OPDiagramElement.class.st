@@ -205,12 +205,12 @@ OPDiagramElement >> modelElements [
 { #category : #accessing }
 OPDiagramElement >> modelElements: aCollection [
 
-	self
-		assert: (aCollection includesAny:
-				 (self owningElement ifNil: [ #(  ) ] ifNotNil: #modelElements))
-				not
-		description:
-		'It is not allowed to have two diagram elements for the same model element. Ask owner for model element instead'.
+	(self owningElement isNotNil and: [ 
+		 aCollection includes: self owningElement modelElement ]) ifTrue: [ 
+		aCollection size > 1 ifTrue: [ 
+			self error: 'Cannot have same modelElement as owningElement has' ].
+		^ self modelElement: nil ].
+
 	modelElements := aCollection
 ]
 
@@ -254,11 +254,12 @@ OPDiagramElement >> owningElement [
 { #category : #accessing }
 OPDiagramElement >> owningElement: aDiagramElement [
 
-	self
-		assert: (aDiagramElement isNil or: [ 
-				 self modelElement ~= aDiagramElement modelElement ])
-		description:
-		'It is not allowed to have two diagram elements for the same model element. Ask owner for model element instead'.
+	(aDiagramElement isNotNil and: [ 
+		 self modelElements includes: aDiagramElement modelElement ]) 
+		ifTrue: [ 
+			self modelElements size > 1 ifTrue: [ 
+				self error: 'Cannot have same modelElement as owningElement has' ].
+			self modelElement: nil ].
 	owningElement := SRToOneLink
 		                 on: self
 		                 slot: #owningElement

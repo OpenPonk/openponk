@@ -17,7 +17,6 @@ OPRSSelectionDraggableBorder >> createDragBoxes [
 	| horizonalBoxShape verticalBoxShape forwardEvent renderDragBoxes |
 	horizonalBoxShape := RSBox new
 		                     color: Color transparent;
-		                     borderColor: Color transparent;
 		                     width: shape width + self dragBoxWidth;
 		                     height: self dragBoxWidth;
 		                     yourself.
@@ -37,19 +36,19 @@ OPRSSelectionDraggableBorder >> createDragBoxes [
 		ifTrue: renderDragBoxes
 		ifFalse: [ shape when: RSShapeAddedEvent do: renderDragBoxes ].
 	shape when: RSShapeRemovedEvent do: [ dragBoxes do: #remove ].
-	forwardEvent := [ :event | shape announce: event copy ].
+	forwardEvent := [ :event | 
+	                | eventForMainShape |
+	                eventForMainShape := event copy.
+	                shape announce: eventForMainShape.
+	                eventForMainShape ].
 	dragBoxes do: [ :each | 
 		each
-			when: RSMouseDragStart do: [ :event | 
-				self startDrag: event.
-				forwardEvent value: event ];
-			when: RSMouseDragging do: [ :event | 
-				self processDrag: (event copy
-							 shape: shape;
-							 yourself) ];
-			when: RSMouseDragEnd do: [ :event | 
-			self endDrag: event.
-			forwardEvent value: event ];
+			when: RSMouseDragStart
+			do: [ :event | self startDrag: (forwardEvent value: event) ];
+			when: RSMouseDragging
+			do: [ :event | self processDrag: (forwardEvent value: event) ];
+			when: RSMouseDragEnd
+			do: [ :event | self endDrag: (forwardEvent value: event) ];
 			when: RSMouseClick do: forwardEvent ].
 	shape
 		when: RSExtentChangedEvent do: [ self updateDragBoxes ];

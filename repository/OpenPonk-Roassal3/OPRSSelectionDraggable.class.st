@@ -124,6 +124,7 @@ OPRSSelectionDraggable >> shapesToDragInside: aContainerShape [
 
 	| shapeEncompassingRectangle |
 	shapeEncompassingRectangle := aContainerShape encompassingRectangle.
+
 	^ ((allowedInnerShapesBlock
 		    cull: aContainerShape canvas nodes
 		    cull: aContainerShape) select: [ :each | 
@@ -135,7 +136,7 @@ OPRSSelectionDraggable >> shapesToDragInside: aContainerShape [
 						   shapeEncompassingRectangle ~= each encompassingRectangle ] ] ] ]) 
 		  flatCollectAsSet: [ :each | 
 			  each
-				  propertyAt: OPRSSelectionDraggable
+				  propertyAt: self propertyKey
 				  ifPresent: [ :innerInteraction | 
 					  (Set with: each) , (innerInteraction shapesToDragInside: each) ]
 				  ifAbsent: [ Set empty ] ]

@@ -154,7 +154,6 @@ OPNote >> renderBasicShape [
 
 	^ RSBox new
 		  color: Color transparent;
-		  borderColor: Color transparent;
 		  width: 150;
 		  height: 100;
 		  yourself

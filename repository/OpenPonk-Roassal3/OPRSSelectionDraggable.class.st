@@ -3,7 +3,7 @@ Class {
 	#superclass : #RSDraggable,
 	#instVars : [
 		'draggedShapes',
-		'shouldDragInnerShapeBlock'
+		'allowedInnerShapesBlock'
 	],
 	#category : #'OpenPonk-Roassal3-Interactions'
 }
@@ -25,10 +25,10 @@ OPRSSelectionDraggable class >> thatDragsAllInnerShapes [
 ]
 
 { #category : #'instance creation' }
-OPRSSelectionDraggable class >> thatDragsInnerShapesOnCondition: aBlock [
+OPRSSelectionDraggable class >> thatDragsInnerShapesProvidedBy: aBlock [
 
 	^ self new
-		  shouldDragInnerShapesBlock: aBlock;
+		  allowedInnerShapesBlock: aBlock;
 		  yourself
 ]
 
@@ -39,11 +39,24 @@ OPRSSelectionDraggable class >> wantsUniqueInstance [
 ]
 
 { #category : #initialization }
+OPRSSelectionDraggable >> allowedInnerShapesBlock: aBlock [
+
+	"When a shape is dragged, move also all other selected shapes, plus shapes returned by this block that meet all following conditions: 
+	- has not the same position and extent as the 'container' shape itself
+	- is actually positioned fully inside the 'container' shape
+	- is not selected along with the 'container' (because it is then moved separately)
+	- is not fixed
+	- have SelectionDraggable interaction"
+
+	allowedInnerShapesBlock := aBlock
+]
+
+{ #category : #initialization }
 OPRSSelectionDraggable >> doNotDragInnerShapes [
 
 	"when dragged, do not drag any shapes inside me"
 
-	self shouldDragInnerShapesBlock: [ :innerShape | false ]
+	self allowedInnerShapesBlock: [ :allNodes :outerShape | #(  ) ]
 ]
 
 { #category : #initialization }
@@ -51,7 +64,7 @@ OPRSSelectionDraggable >> dragAllInnerShapes [
 
 	"when dragged, drag also all shapes inside me that have also SelectionDraggable - default behavior"
 
-	self shouldDragInnerShapesBlock: [ :innerShape | true ]
+	self allowedInnerShapesBlock: [ :allNodes :outerShape | allNodes ]
 ]
 
 { #category : #events }
@@ -100,26 +113,32 @@ OPRSSelectionDraggable >> propertyKey [
 ]
 
 { #category : #events }
-OPRSSelectionDraggable >> shapesToDragInside: aShape [
+OPRSSelectionDraggable >> shapesToDragInside: aContainerShape [
+
+	"When a shape is dragged, move also all other selected shapes, plus shapes returned by allowedInnerShapesBlock that meet all following conditions: 
+	- has not the same position and extent as the 'container' shape itself
+	- is actually positioned fully inside the 'container' shape
+	- is not selected along with the 'container' (because it is then moved separately)
+	- is not fixed
+	- have SelectionDraggable interaction"
 
 	| shapeEncompassingRectangle |
-	shapeEncompassingRectangle := aShape encompassingRectangle.
-	^ aShape canvas nodes select: [ :each | 
-		  (shouldDragInnerShapeBlock value: each) and: [ 
-			  each isSelected not and: [ 
-				  each isFixed not and: [ 
-					  (shapeEncompassingRectangle containsRect:
-						   each encompassingRectangle) and: [ 
-						  shapeEncompassingRectangle ~= each encompassingRectangle and: [ 
-							  each isSelectionDraggable ] ] ] ] ] ]
-]
-
-{ #category : #initialization }
-OPRSSelectionDraggable >> shouldDragInnerShapesBlock: aBlock [
-
-	"when dragged, drag also all shapes inside me that have also SelectionDraggable and the block returns true when given the inner shape"
-
-	shouldDragInnerShapeBlock := aBlock
+	shapeEncompassingRectangle := aContainerShape encompassingRectangle.
+	^ ((allowedInnerShapesBlock
+		    cull: aContainerShape canvas nodes
+		    cull: aContainerShape) select: [ :each | 
+		   each isFixed not and: [ 
+			   (aContainerShape isSelected not or: [ each isSelected not ]) 
+				   and: [ 
+					   (shapeEncompassingRectangle containsRect:
+						    each encompassingRectangle) and: [ 
+						   shapeEncompassingRectangle ~= each encompassingRectangle ] ] ] ]) 
+		  flatCollectAsSet: [ :each | 
+			  each
+				  propertyAt: OPRSSelectionDraggable
+				  ifPresent: [ :innerInteraction | 
+					  (Set with: each) , (innerInteraction shapesToDragInside: each) ]
+				  ifAbsent: [ Set empty ] ]
 ]
 
 { #category : #events }
@@ -134,9 +153,9 @@ OPRSSelectionDraggable >> startDrag: anEvent [
 				                        each hasProperty: self propertyKey ] ]
 		                        ifFalse: [ { anEvent shape } ].
 
-	draggedShapes := selectedShapesToMove flatCollect: [ 
+	draggedShapes := selectedShapesToMove flatCollectAsSet: [ 
 		                 :eachSelectedShape | 
-		                 { eachSelectedShape }
+		                 (Set with: eachSelectedShape)
 		                 , (self shapesToDragInside: eachSelectedShape) ].
 
 	event := OPRSDragFromSelectionStart fromEvent: anEvent.

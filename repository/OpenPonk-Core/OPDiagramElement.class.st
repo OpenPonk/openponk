@@ -303,6 +303,7 @@ OPDiagramElement >> renderBasicShapeIn: aCanvas [
 				'Reusing same diagram element for 2 canvases not allowed' ].
 		^ self ].
 	roassalShape := self renderBasicShape.
+	roassalShape model: self.
 	aCanvas add: roassalShape.
 	^ roassalShape
 ]

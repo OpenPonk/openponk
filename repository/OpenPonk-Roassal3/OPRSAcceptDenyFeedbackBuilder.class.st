@@ -47,13 +47,17 @@ OPRSAcceptDenyFeedbackBuilder >> feedback [
 OPRSAcceptDenyFeedbackBuilder >> feedbackFor: anObject color: aColor [
 
 	(anObject respondsTo: #isShape) ifFalse: [ 
-		self error: 'Cannot provide feedback for ' , anObject className ].
-	(anObject isShape and: [ anObject isNode ]) ifTrue: [ 
-		^ OPRSNodeADFeedback new feedbackFor: anObject color: aColor ].
-	(anObject isShape and: [ anObject isLine ]) ifTrue: [ 
-		^ OPRSLineADFeedback new feedbackFor: anObject color: aColor ].
-	anObject isShape ifFalse: [ 
-		^ OPRSCanvasADFeedback new feedbackFor: anObject color: aColor ]
+		self error:
+			'Can only provide creation feedback for Roassal3 shapes and canvas, not for '
+			, anObject className ].
+	^ (anObject isShape
+		   ifTrue: [ 
+			   anObject isLine
+				   ifTrue: [ OPRSLineADFeedback ]
+				   ifFalse: [ OPRSNodeADFeedback ] ]
+		   ifFalse: [ OPRSCanvasADFeedback ]) new
+		  feedbackFor: anObject
+		  color: aColor
 ]
 
 { #category : #protocol }

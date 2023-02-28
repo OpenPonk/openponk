@@ -5,13 +5,13 @@ Class {
 }
 
 { #category : #private }
-OPRSLineADFeedback >> feedbackFor: anEdge color: aColor [
+OPRSLineADFeedback >> feedbackFor: aLine color: aColor [
 
-	feedback := anEdge.
-	(anEdge hasProperty: self originalColorSymbol) ifTrue: [ ^ self ].
-	anEdge propertyAt: self originalColorSymbol put: anEdge color.
-	anEdge color: aColor.
-	anEdge signalUpdate
+	feedback := aLine.
+	(feedback hasProperty: self originalColorSymbol) ifTrue: [ ^ self ].
+	feedback propertyAt: self originalColorSymbol put: feedback color.
+	feedback color: aColor.
+	feedback signalUpdate
 ]
 
 { #category : #accessing }
@@ -22,8 +22,10 @@ OPRSLineADFeedback >> originalColorSymbol [
 { #category : #protocol }
 OPRSLineADFeedback >> remove [
 
+	feedback ifNil: [ ^ self ].
 	(feedback hasProperty: self originalColorSymbol) ifFalse: [ ^ self ].
 	feedback color: (feedback propertyAt: self originalColorSymbol).
 	feedback removePropertyAt: self originalColorSymbol.
-	feedback signalUpdate
+	feedback signalUpdate.
+	feedback := nil
 ]

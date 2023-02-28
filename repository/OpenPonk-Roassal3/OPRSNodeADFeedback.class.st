@@ -20,10 +20,10 @@ OPRSNodeADFeedback >> feedbackFor: aShape color: aColor [
 		shapes: { feedback };
 		fixedShape: aShape;
 		oversize: 3 @ 3;
-		stickSameSize.
-	RSLocation new stick: feedback on: aShape.
+		sameSize.
+	RSLocation new move: feedback on: aShape.
 	aShape canvas add: feedback.
-	aShape signalUpdate.
+	aShape signalUpdate
 ]
 
 { #category : #protocol }

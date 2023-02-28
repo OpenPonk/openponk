@@ -43,7 +43,7 @@ OPEdgeCreationTargetController >> remove [
 { #category : #hooks }
 OPEdgeCreationTargetController >> render [
 
-	diagramElement := OPNoShape
+	diagramElement := OPInvisibleOnMouseShape
 		                  renderToPosition:
 		                  edgeController source roassalShape position
 		                  onCanvas:

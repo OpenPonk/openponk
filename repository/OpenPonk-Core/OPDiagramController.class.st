@@ -406,20 +406,6 @@ OPDiagramController >> figureContextClicked: anEvent [
 	menu popUpInWorld
 ]
 
-{ #category : #deprecated }
-OPDiagramController >> figureFor: aModel [
-	self
-		deprecated: 'Use figureForModel: instead'
-		on: '8 November 2017'
-		in: 'Pharo-6.0-60519-'.
-	^ self figureForModel: aModel
-]
-
-{ #category : #accessing }
-OPDiagramController >> figureForModel: aModel [
-	^ (self controllerForModel: aModel) figure
-]
-
 { #category : #'ui interaction' }
 OPDiagramController >> form [
 
@@ -703,6 +689,12 @@ OPDiagramController >> rendered: aController [
 OPDiagramController >> roassalShape [
 
 	^ self canvas
+]
+
+{ #category : #accessing }
+OPDiagramController >> roassalShapeForModel: aModel [
+
+	^ (self controllerForModel: aModel) roassalShape
 ]
 
 { #category : #'undo/redo' }

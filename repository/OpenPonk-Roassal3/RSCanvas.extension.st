@@ -22,10 +22,17 @@ RSCanvas >> selectedShapes [
 ]
 
 { #category : #'*OpenPonk-Roassal3' }
-RSCanvas >> view [
+RSCanvas >> shapeWithActionForPositionInPixels: position [
 
-	self
-		deprecated: 'I am the view.'
-		transformWith: '`@receiver view' -> '`@receiver'.
-	^ self
+	| block |
+	block := [ :list :pos | 
+	         (self
+		          propertyAt: #shapesIgnoringMouseMoveBlock
+		          ifPresent: [ :ignoredShapes | 
+		          list copyWithoutAll: ignoredShapes value ]
+		          ifAbsent: [ list ]) reverseDo: [ :s | 
+		         (s shapeWithActionForPosition: pos) ifNotNil: [ :shape | 
+			         ^ shape ] ] ].
+	block value: fixedShapes value: position.
+	block value: shapes value: (self camera fromPixelToSpace: position)
 ]

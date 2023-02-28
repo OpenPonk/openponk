@@ -74,7 +74,7 @@ OPTestRelationControllerTest >> testCreateModel [
 OPTestRelationControllerTest >> testFigureForModel [
 	controller model: model.
 	controller showWithoutDependentInDiagram: diagramController.
-	self assert: (diagramController figureForModel: model) equals: controller figure
+	self assert: (diagramController roassalShapeForModel: model) equals: controller figure
 ]
 
 { #category : #'tests - construction' }

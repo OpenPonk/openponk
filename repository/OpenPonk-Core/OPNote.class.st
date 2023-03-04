@@ -168,7 +168,7 @@ OPNote >> renderShapeDetails [
 	self createOwnedBorderLines.
 	roassalShape
 		@ OPRSSelectable;
-		@ OPRSSelectionDraggable thatDoesNotDragInnerShapes;
+		@ OPRSSelectionDraggable;
 		@ OPRSResizable.
 	self updateOwnedElements.
 	self roassalShape

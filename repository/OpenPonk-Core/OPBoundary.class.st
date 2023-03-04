@@ -74,7 +74,7 @@ OPBoundary >> renderShapeDetails [
 
 	roassalShape
 		@ OPRSSelectable;
-		@ OPRSSelectionDraggableBorder thatDragsAllInnerShapes;
+		@ OPRSSelectionDraggableBorder thatAlsoDragsContainedShapes;
 		@ OPRSResizable.
 	self renderLabel
 ]

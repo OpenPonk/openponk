@@ -3,33 +3,41 @@ Class {
 	#superclass : #RSDraggable,
 	#instVars : [
 		'draggedShapes',
-		'allowedInnerShapesBlock'
+		'innerShapesProvider'
 	],
 	#category : #'OpenPonk-Roassal3-Interactions'
 }
 
 { #category : #'instance creation' }
-OPRSSelectionDraggable class >> thatDoesNotDragInnerShapes [
+OPRSSelectionDraggable class >> thatAlsoDragsContainedShapes [
 
 	^ self new
-		  doNotDragInnerShapes;
+		  dragAlsoContainedShapes;
 		  yourself
 ]
 
 { #category : #'instance creation' }
-OPRSSelectionDraggable class >> thatDragsAllInnerShapes [
-
-	"default behavior"
+OPRSSelectionDraggable class >> thatAlsoDragsShapesProvidedByBlock: aBlock [
 
 	^ self new
+		  dragAlsoShapesProvidedByBlock: aBlock;
+		  yourself
 ]
 
 { #category : #'instance creation' }
-OPRSSelectionDraggable class >> thatDragsInnerShapesProvidedBy: aBlock [
+OPRSSelectionDraggable class >> thatAlsoDragsSmallerOverlappingShapes [
 
 	^ self new
-		  allowedInnerShapesBlock: aBlock;
+		  dragAlsoSmallerOverlappingShapes;
 		  yourself
+]
+
+{ #category : #'instance creation' }
+OPRSSelectionDraggable class >> thatDoesNotDragAnyInnerShapes [
+
+	"default"
+
+	^ self new
 ]
 
 { #category : #'instance creation' }
@@ -38,33 +46,34 @@ OPRSSelectionDraggable class >> wantsUniqueInstance [
 	^ false
 ]
 
-{ #category : #initialization }
-OPRSSelectionDraggable >> allowedInnerShapesBlock: aBlock [
+{ #category : #'inner shapes' }
+OPRSSelectionDraggable >> dragAlsoContainedShapes [
 
-	"When a shape is dragged, move also all other selected shapes, plus shapes returned by this block that meet all following conditions: 
-	- has not the same position and extent as the 'container' shape itself
-	- is actually positioned fully inside the 'container' shape
+	self innerShapesProvider: OPRSSelectionDraggableContainedShapesProvider new
+]
+
+{ #category : #'inner shapes' }
+OPRSSelectionDraggable >> dragAlsoShapesProvidedByBlock: aBlock [
+
+	"When a shape is dragged, move also all other selected shapes, plus shapes that meet all following conditions: 
+	- is returned by innerShapesProvider
 	- is not selected along with the 'container' (because it is then moved separately)
-	- is not fixed
 	- have SelectionDraggable interaction"
 
-	allowedInnerShapesBlock := aBlock
+	self innerShapesProvider:
+		(OPRSSelectionDraggableCustomShapesProvider withBlock: aBlock)
 ]
 
-{ #category : #initialization }
-OPRSSelectionDraggable >> doNotDragInnerShapes [
+{ #category : #'inner shapes' }
+OPRSSelectionDraggable >> dragAlsoSmallerOverlappingShapes [
 
-	"when dragged, do not drag any shapes inside me"
-
-	self allowedInnerShapesBlock: [ :allNodes :outerShape | #(  ) ]
+	self innerShapesProvider: OPRSSelectionDraggableSmallerOverlappingShapesProvider new
 ]
 
-{ #category : #initialization }
-OPRSSelectionDraggable >> dragAllInnerShapes [
+{ #category : #'inner shapes' }
+OPRSSelectionDraggable >> dragNoInnerShapes [
 
-	"when dragged, drag also all shapes inside me that have also SelectionDraggable - default behavior"
-
-	self allowedInnerShapesBlock: [ :allNodes :outerShape | allNodes ]
+	self innerShapesProvider: OPRSSelectionDraggableNoInnerShapesProvider new
 ]
 
 { #category : #events }
@@ -85,7 +94,13 @@ OPRSSelectionDraggable >> endDrag: anEvent [
 OPRSSelectionDraggable >> initialize [
 
 	super initialize.
-	self dragAllInnerShapes
+	self dragNoInnerShapes
+]
+
+{ #category : #accessing }
+OPRSSelectionDraggable >> innerShapesProvider: anInnerShapesProvider [
+
+	innerShapesProvider := anInnerShapesProvider
 ]
 
 { #category : #hooks }
@@ -115,25 +130,14 @@ OPRSSelectionDraggable >> propertyKey [
 { #category : #events }
 OPRSSelectionDraggable >> shapesToDragInside: aContainerShape [
 
-	"When a shape is dragged, move also all other selected shapes, plus shapes returned by allowedInnerShapesBlock that meet all following conditions: 
-	- has not the same position and extent as the 'container' shape itself
-	- is actually positioned fully inside the 'container' shape
+	"When a shape is dragged, move also all other selected shapes, plus shapes that meet all following conditions: 
+	- is returned by innerShapesProvider
 	- is not selected along with the 'container' (because it is then moved separately)
-	- is not fixed
 	- have SelectionDraggable interaction"
 
-	| shapeEncompassingRectangle |
-	shapeEncompassingRectangle := aContainerShape encompassingRectangle.
-
-	^ ((allowedInnerShapesBlock
-		    cull: aContainerShape canvas nodes
-		    cull: aContainerShape) select: [ :each | 
-		   each isFixed not and: [ 
-			   (aContainerShape isSelected not or: [ each isSelected not ]) 
-				   and: [ 
-					   (shapeEncompassingRectangle containsRect:
-						    each encompassingRectangle) and: [ 
-						   shapeEncompassingRectangle ~= each encompassingRectangle ] ] ] ]) 
+	^ ((innerShapesProvider innerShapesFor: aContainerShape) select: [ 
+		   :each | 
+		   aContainerShape isSelected not or: [ each isSelected not ] ]) 
 		  flatCollectAsSet: [ :each | 
 			  each
 				  propertyAt: self propertyKey

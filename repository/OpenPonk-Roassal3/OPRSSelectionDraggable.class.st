@@ -116,6 +116,7 @@ OPRSSelectionDraggable >> onShape: aShape [
 OPRSSelectionDraggable >> processDrag: evt [
 
 	| d |
+	draggedShapes ifNil: [ ^ self ].
 	d := evt camera distanceFromPixelToSpace: evt step.
 	draggedShapes do: [ :each | each translateBy: d ].
 	evt signalUpdate

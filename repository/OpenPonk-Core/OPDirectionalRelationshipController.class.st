@@ -55,13 +55,13 @@ OPDirectionalRelationshipController >> hideSelectionFeedback [
 { #category : #accessing }
 OPDirectionalRelationshipController >> modelSource [
 
-	^ self model memberEnds first type
+	^ self model source
 ]
 
 { #category : #accessing }
 OPDirectionalRelationshipController >> modelTarget [
 
-	^ self model memberEnds second type
+	^ self model target
 ]
 
 { #category : #rendering }

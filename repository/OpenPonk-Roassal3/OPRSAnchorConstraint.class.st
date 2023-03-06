@@ -7,7 +7,8 @@ Class {
 		'guideLine',
 		'shape',
 		'line',
-		'positionReference'
+		'positionReference',
+		'alwaysShowGuideLine'
 	],
 	#category : #'OpenPonk-Roassal3-AnchorConstraint'
 }
@@ -25,13 +26,21 @@ OPRSAnchorConstraint >> addAnchorAndGuideLine [
 	shape signalUpdate
 ]
 
+{ #category : #'as yet unclassified' }
+OPRSAnchorConstraint >> alwaysShowGuideLine [
+
+	alwaysShowGuideLine := true.
+	self guideLine color = (Color gray: 0.9) ifTrue: [ 
+		self guideLine color: Color black ]
+]
+
 { #category : #building }
 OPRSAnchorConstraint >> anchorShape [
 
 	anchorShape ifNotNil: [ ^ anchorShape ].
 	anchorShape := RSBox new.
 	anchorShape
-		size: 1;
+		size: 0;
 		color: Color transparent.
 	^ anchorShape
 ]
@@ -54,8 +63,13 @@ OPRSAnchorConstraint >> build [
 	line to when: RSPositionChangedEvent do: [ self moveShape ].
 	line when: OPRSDraggedControlPointsEvent do: [ self moveShape ].
 	line when: RSPositionChangedEvent do: [ self moveShape ].
-	shape when: RSMouseLeftDragStart do: [ self addAnchorAndGuideLine ].
 	shape when: RSMouseDragging do: [ self saveShapePosition ].
+	alwaysShowGuideLine ifTrue: [ 
+		^ shape isInACanvas
+			  ifTrue: [ self addAnchorAndGuideLine ]
+			  ifFalse: [ 
+			  shape when: RSShapeAddedEvent do: [ self addAnchorAndGuideLine ] ] ].
+	shape when: RSMouseLeftDragStart do: [ self addAnchorAndGuideLine ].
 	shape when: RSMouseDragEnd do: [ self removeAnchorAndGuideLine ]
 ]
 
@@ -76,6 +90,7 @@ OPRSAnchorConstraint >> guideLine [
 
 	guideLine ifNotNil: [ ^ guideLine ].
 	guideLine := RSLine new.
+	guideLine withBorderAttachPoint.
 	^ guideLine
 ]
 
@@ -83,7 +98,8 @@ OPRSAnchorConstraint >> guideLine [
 OPRSAnchorConstraint >> initialize [
 
 	super initialize.
-	self useGuideLine
+	self useGuideLine.
+	alwaysShowGuideLine := false
 ]
 
 { #category : #accessing }

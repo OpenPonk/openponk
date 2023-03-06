@@ -4,31 +4,37 @@ Class {
 	#category : #'OpenPonk-Core-DiagramInterchange'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
+OPEdgeLabel >> addInteractions [
+
+	roassalShape @ RSDraggable
+]
+
+{ #category : #adding }
 OPEdgeLabel >> anchorToEdge [
 
-	roassalShape @ RSDraggable.
 	OPRSAnchorConstraint new
 		minDistance: self defaultMinDistance;
 		positionReference: self defaultAnchorConstraintPosition;
 		stick: roassalShape on: self owningElement roassalShape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 OPEdgeLabel >> defaultAnchorConstraintPosition [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 OPEdgeLabel >> defaultMinDistance [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 OPEdgeLabel >> renderShapeDetails [
 
+	self addInteractions.
 	self anchorToEdge
 ]
 

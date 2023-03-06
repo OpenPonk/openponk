@@ -79,7 +79,7 @@ OPShape >> moveToEmptySpace [
 { #category : #accessing }
 OPShape >> position [
 
-	^ (roassalShape ifNil: [ self bounds ]) t
+	^ (roassalShape ifNil: [ self bounds ]) position
 ]
 
 { #category : #rendering }

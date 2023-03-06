@@ -300,7 +300,10 @@ OPController >> roassalShape [
 
 { #category : #figures }
 OPController >> saveStateOnDragEndFor: aFigure [
-	aFigure when: TRMouseDragEnd do: [ :evt | self diagramController saveState ]
+
+	aFigure
+		when: RSMouseDragEnd
+		do: [ :evt | self diagramController saveState ]
 ]
 
 { #category : #'canvas actions' }

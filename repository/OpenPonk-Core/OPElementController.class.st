@@ -110,14 +110,6 @@ OPElementController >> figureLabel: aLabelName text: aString [
 "	(figure labels at: aLabelName) trachelShape text: aString"
 ]
 
-{ #category : #'canvas actions' }
-OPElementController >> hideSelectionFeedback [
-	self figure view
-		ifNotNil: [ 
-			self figure announce: OPTRUnfocused.
-			self figure view signalUpdate ]
-]
-
 { #category : #testing }
 OPElementController >> isCommon [
 	^ false
@@ -185,11 +177,6 @@ OPElementController >> showInDiagram: aDiagramController [
 	self renderDiagramElement.
 	self dependentElements do: [ :each | 
 		aDiagramController showInDiagramModel: each ]
-]
-
-{ #category : #'canvas actions' }
-OPElementController >> showSelectionFeedback [
-	self figure announce: OPTRFocused
 ]
 
 { #category : #construction }

@@ -147,9 +147,7 @@ OPController >> figure [
 { #category : #'canvas actions' }
 OPController >> hideSelectionFeedback [
 
-	"by default do nothing"
-
-	self deprecated: 'Should be moved to DI'
+	self deprecated: 'This should be done by shapes (diagram elements)'
 ]
 
 { #category : #announcements }
@@ -329,7 +327,5 @@ OPController >> showInDiagram: aDiagramController [
 { #category : #'canvas actions' }
 OPController >> showSelectionFeedback [
 
-	"by default do nothing"
-
-	self deprecated: 'Should be moved to DI'
+	self deprecated: 'This should be done by shapes (diagram elements)'
 ]

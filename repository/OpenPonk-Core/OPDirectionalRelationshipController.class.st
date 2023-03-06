@@ -45,13 +45,6 @@ OPDirectionalRelationshipController >> edgeBuilder [
 		'Depracated without replacement - use Roassal directly or define own figures'
 ]
 
-{ #category : #'canvas actions' }
-OPDirectionalRelationshipController >> hideSelectionFeedback [
-	"by default do nothing"
-
-	
-]
-
 { #category : #accessing }
 OPDirectionalRelationshipController >> modelSource [
 
@@ -68,13 +61,6 @@ OPDirectionalRelationshipController >> modelTarget [
 OPDirectionalRelationshipController >> renderSimplified [
 
 	diagramElement := self diagramElementClass renderSimplifiedForController: self.
-]
-
-{ #category : #'canvas actions' }
-OPDirectionalRelationshipController >> showSelectionFeedback [
-	"by default do nothing"
-
-	
 ]
 
 { #category : #accessing }

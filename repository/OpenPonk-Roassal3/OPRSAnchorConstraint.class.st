@@ -63,6 +63,7 @@ OPRSAnchorConstraint >> build [
 	line to when: RSPositionChangedEvent do: [ self moveShape ].
 	line when: OPRSDraggedControlPointsEvent do: [ self moveShape ].
 	line when: RSPositionChangedEvent do: [ self moveShape ].
+	shape when: RSExtentChangedEvent do: [ self moveShape ].
 	shape when: RSMouseDragging do: [ self saveShapePosition ].
 	alwaysShowGuideLine ifTrue: [ 
 		^ shape isInACanvas

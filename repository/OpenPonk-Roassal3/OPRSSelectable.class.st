@@ -25,6 +25,20 @@ OPRSSelectable >> announceUnHightlight: shape source: shapeOrCanvas [
 ]
 
 { #category : #'as yet unclassified' }
+OPRSSelectable >> highlightAdornments: aBlock [
+
+	"Show adornments (little icons with actions). The block receives an OPRSAdornmentBuilder"
+
+	| builder |
+	builder := OPRSAdornmentBuilder new.
+	aBlock value: builder.
+
+	self
+		when: RSHighlightEvent do: [ :evt | builder showOn: evt shape ];
+		when: RSUnHighlightEvent do: [ :evt | builder hide ]
+]
+
+{ #category : #'as yet unclassified' }
 OPRSSelectable >> highlightBorderColor: aColor [
 
 	"Set the border color"

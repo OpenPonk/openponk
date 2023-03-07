@@ -16,12 +16,12 @@ OPControllerTest >> diagramControllerClass [
 
 { #category : #accessing }
 OPControllerTest >> diagramModelClass [
-	^ Model
+	^ OPTestModel
 ]
 
 { #category : #accessing }
 OPControllerTest >> modelClass [
-	^ Model
+	^ OPTestModel
 ]
 
 { #category : #tests }
@@ -38,14 +38,17 @@ OPControllerTest >> testClassSideModelClass [
 
 { #category : #tests }
 OPControllerTest >> testDescriptionName [
+	| diagramElement |
 	model := Mock new.
 	model stub name willReturn: 'bravo'.
+	diagramElement := Mock new.
 	controller model: model.
+	controller diagramElement: diagramElement.
 	self stubRefresh.
 	controller descriptionName accessor write: 'charlie' to: controller.
 	model should receive name: 'charlie'.
 	self assert: (controller descriptionName accessor read: controller) equals: 'bravo'.
-	controller should receive refreshFigure
+	diagramElement should receive modelChanged 
 ]
 
 { #category : #tests }
@@ -61,7 +64,7 @@ OPControllerTest >> testModelClass [
 { #category : #tests }
 OPControllerTest >> testModelIsSubscribedTo [
 	controller := OPController new.
-	model := Model new.
+	model := self modelClass new.
 	controller model: model.
 	self assert: model announcer subscriptions subscriptions anyOne subscriber equals: controller
 ]

@@ -35,6 +35,20 @@ OPDiagram >> isRendered [
 	^ roassalShape isNotNil
 ]
 
+{ #category : #'as yet unclassified' }
+OPDiagram >> modelElementName [
+
+	^ (self modelElement respondsTo: #name)
+		  ifTrue: [ self modelElement name ]
+		  ifFalse: [ self modelElementType ]
+]
+
+{ #category : #'as yet unclassified' }
+OPDiagram >> modelElementType [
+
+	^ self modelElement className
+]
+
 { #category : #accessing }
 OPDiagram >> name [
 

@@ -355,6 +355,7 @@ OPProjectController >> saveProjectAs [
 
 { #category : #saving }
 OPProjectController >> saveProjectTo: aFile [
+
 	| store projectDirectory |
 	store := FileSystem memory root.
 	projectDirectory := store / 'project'.
@@ -392,39 +393,26 @@ OPProjectController >> selectInDiagram: aModelElement [
 { #category : #opening }
 OPProjectController >> updateDiagram: aDiagram [
 
+	| focusedController |
+	focusedController := workbench focusedEditor ifNotNil: [ :editor | 
+		                     editor diagramController ].
 	controllers
 		detect: [ :ctrl | ctrl diagramElement = aDiagram ]
 		ifFound: [ :ctrl | 
 			aDiagram isOpen: true.
-			aDiagram layout: ctrl layout.
-			aDiagram visibleElements: ctrl visibleElements copy.
-			aDiagram commonElements: ctrl commonElements.
-			aDiagram updateFromRoassalCanvas: ctrl canvas.
-			aDiagram order: (controllers indexOf: ctrl) ]
+			aDiagram isRendered ifTrue: [ aDiagram updateFromRender ].
+			aDiagram isSelected: ctrl = focusedController ]
 		ifNone: [ 
 			aDiagram
 				isOpen: false;
-				order: -1;
 				isSelected: false ]
 ]
 
 { #category : #opening }
 OPProjectController >> updateDiagrams [
 
-	| focusedController |
-	focusedController := workbench focusedEditor ifNotNil: [ :editor | 
-		                     editor diagramController ].
 	self project diagrams do: [ :eachDiagram | 
-		controllers
-			detect: [ :ctrl | ctrl diagramElement = eachDiagram ]
-			ifFound: [ :ctrl | 
-				eachDiagram isOpen: true.
-				eachDiagram updateFromRender.
-				eachDiagram isSelected: ctrl = focusedController ]
-			ifNone: [ 
-				eachDiagram
-					isOpen: false;
-					isSelected: false ] ]
+		self updateDiagram: eachDiagram ]
 ]
 
 { #category : #accessing }

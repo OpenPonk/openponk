@@ -126,7 +126,7 @@ OPDiagramsList >> deleteDiagram: aView [
 { #category : #accessing }
 OPDiagramsList >> diagramsIn: aProject [
 	^ aProject diagrams
-		sorted: #modelType ascending , #modelName ascending
+		sorted: #modelElementType ascending , #modelElementName ascending
 ]
 
 { #category : #retrieving }

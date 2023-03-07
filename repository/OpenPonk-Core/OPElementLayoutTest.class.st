@@ -24,8 +24,35 @@ OPElementLayoutTest >> setUp [
 			{(100 @ 200).
 			(150 @ 200).
 			(150 @ 300)}.
-	elementLayoutJSON := '{"position":{"x":-10,"y":50},"extent":{"x":100,"y":200}}'.
-	relationshipLayoutJSON := '{"path":{"points":[{"x":100,"y":200},{"x":150,"y":200},{"x":150,"y":300}],"source":"element"}}'
+	elementLayoutJSON := '{
+	"extent" : {
+		"x" : 100,
+		"y" : 200
+	},
+	"position" : {
+		"x" : -10,
+		"y" : 50
+	}
+}'.
+	relationshipLayoutJSON := '{
+	"path" : {
+		"points" : [
+			{
+				"x" : 100,
+				"y" : 200
+			},
+			{
+				"x" : 150,
+				"y" : 200
+			},
+			{
+				"x" : 150,
+				"y" : 300
+			}
+		],
+		"source" : "element"
+	}
+}'
 ]
 
 { #category : #tests }
@@ -116,7 +143,7 @@ OPElementLayoutTest >> testRelationshipRoundtripJSON [
 OPElementLayoutTest >> testRelationshipToJSON [
 	| json |
 	json := OPJsonWriter toString: relationshipLayout.
-	self assert: json equals: relationshipLayoutJSON
+	self assert: json equals: relationshipLayoutJSON withUnixLineEndings
 ]
 
 { #category : #tests }
@@ -131,5 +158,5 @@ OPElementLayoutTest >> testRoundtripJSON [
 OPElementLayoutTest >> testToJSON [
 	| json |
 	json := OPJsonWriter toString: elementLayout.
-	self assert: json equals: elementLayoutJSON
+	self assert: json equals: elementLayoutJSON withUnixLineEndings
 ]

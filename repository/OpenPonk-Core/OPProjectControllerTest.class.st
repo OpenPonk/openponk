@@ -58,6 +58,7 @@ OPProjectControllerTest >> testSaveProjectEmpty [
 
 { #category : #tests }
 OPProjectControllerTest >> testSaveProjectWithModel [
+
 	| memoryRoot root |
 	project addModel: OPTestContainerModel new.
 	memoryRoot := FileSystem memory / 'project'.
@@ -68,8 +69,10 @@ OPProjectControllerTest >> testSaveProjectWithModel [
 	self assert: (root / 'project' / 'project.json') exists.
 	self
 		assert: ((root / 'project' / 'models') children collect: #basename)
-		equals: {project models first uuid asString}.
+		equals: { project models first uuid asString }.
 	self
-		assert: ((root / 'project' / 'models') children anyOne children collect: #basename)
-		equals: (Array with: 'model.ston')
+		assertCollection:
+			(((root / 'project' / 'models') children anyOne / 'model') children 
+				 collect: #basename)
+		includesAll: (Array with: 'model.ston')
 ]

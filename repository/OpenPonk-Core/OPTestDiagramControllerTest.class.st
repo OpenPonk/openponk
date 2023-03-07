@@ -57,7 +57,7 @@ OPTestDiagramControllerTest >> testCanBeTargetForEntity [
 OPTestDiagramControllerTest >> testCleanView [
 
 	| view |
-	view := diagramController view.
+	view := diagramController canvas.
 	view add: RTBox new element.
 	self assert: view elements size > 0.
 	diagramController cleanView.

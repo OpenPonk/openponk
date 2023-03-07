@@ -127,8 +127,8 @@ OPWorkbench >> closedTabOfEditor: anEditor [
 		anEditor diagramController diagramElement.
 	anEditor tabDeleted.
 	topToolbar activeEditor: nil.
-	editors removeKey: anEditor diagramController diagram.
-	anEditor diagramController diagram isSelected: false.
+	editors removeKey: anEditor diagramController diagramElement.
+	anEditor diagramController diagramElement isSelected: false.
 	focusedEditor = anEditor ifTrue: [ 
 		focusedEditor := nil.
 		self announce: (OPEditorUnfocused on: anEditor) ].
@@ -224,8 +224,9 @@ OPWorkbench >> notebook [
 
 { #category : #opening }
 OPWorkbench >> openEditorOn: aModel [
-	self
-		openEditorOnDiagram: (project diagrams detect: [ :each | each model = aModel ])
+
+	self openEditorOnDiagram:
+		(project diagrams detect: [ :each | each modelElement = aModel ])
 ]
 
 { #category : #opening }

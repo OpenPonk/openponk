@@ -11,7 +11,7 @@ Class {
 { #category : #tests }
 OPProjectTest >> testAddModel [
 
-	| view visibleElements |
+	| diagram visibleElements |
 	project := OPProject new.
 	self assert: project models isEmpty.
 	self assert: project diagrams isEmpty.
@@ -20,10 +20,8 @@ OPProjectTest >> testAddModel [
 	self assert: project models asArray equals: { model }.
 	project ensureModelsHaveDiagrams.
 	self assert: project diagrams size equals: 1.
-	view := project diagrams first.
-	visibleElements := view visibleElementsOrIfNotSet: [ { 1.2. 3 } ].
-	self assert: visibleElements = { 1.2. 3 }.
-	self assert: view model equals: model
+	diagram := project diagrams first.
+	self assert: diagram modelElement equals: model
 ]
 
 { #category : #tests }

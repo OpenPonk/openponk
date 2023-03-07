@@ -276,7 +276,7 @@ OPEditor >> setModelBeforeInitialization: aPlugin [
 OPEditor >> tabDeleted [
 
 	self workbench projectController updateDiagram:
-		diagramController diagram.
+		diagramController diagramElement.
 	self workbench projectController removeDiagramController:
 		diagramController.
 	self unregisterShortcutsOn: self workbench.

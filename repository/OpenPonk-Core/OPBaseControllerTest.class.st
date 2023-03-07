@@ -48,11 +48,14 @@ OPBaseControllerTest >> newModel [
 
 { #category : #running }
 OPBaseControllerTest >> setUp [
+
 	super setUp.
 	controller := self controllerClass new.
 	diagramController := self diagramControllerClass new.
 	diagramController model: self diagramModelClass new.
-	diagramController canvas: RSCanvas new.
+	diagramController canvasPresenter: (OPCanvasPresenter new
+			 canvas: RSCanvas new;
+			 yourself).
 	model := self newModel
 ]
 

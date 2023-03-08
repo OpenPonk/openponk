@@ -17,6 +17,12 @@ OPTestEntityController >> canBeTargetFor: aController [
 	^ aController modelClass = OPTestRelationModel
 ]
 
+{ #category : #construction }
+OPTestEntityController >> diagramElementClass [
+
+	^ OPTestDiagramElement
+]
+
 { #category : #connecting }
 OPTestEntityController >> modelAsParent [
 	^ self diagramController model
@@ -32,12 +38,4 @@ OPTestEntityController >> removeModel [
 	| ownerModel |
 	ownerModel := self diagramController model.
 	ownerModel entities remove: self model
-]
-
-{ #category : #construction }
-OPTestEntityController >> renderFigureIn: aView [
-	self diagramController willRender: self.
-	figure := RTBox new size: 50; elementOn: self model.
-	aView add: figure.
-	^ self diagramController rendered: self
 ]

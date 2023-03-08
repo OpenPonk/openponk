@@ -213,21 +213,6 @@ OPDiagramController >> canvasPresenter: aCanvasPresenter [
 	self addMouseEventsFor: canvasPresenter canvas
 ]
 
-{ #category : #rebuilding }
-OPDiagramController >> cleanCanvas [
-
-	self editor canvasPresenter cleanCanvas
-]
-
-{ #category : #rebuilding }
-OPDiagramController >> cleanView [
-
-	self
-		deprecated: 'Use #cleanCanvas instead.'
-		transformWith: '`@receiver cleanView' -> '`@receiver cleanCanvas'.
-	^ self cleanCanvas
-]
-
 { #category : #accessing }
 OPDiagramController >> commonElementControllers [
 	^ self controllers select: #isCommon
@@ -447,7 +432,6 @@ OPDiagramController >> hideAllElements [
 
 	[ self controllers isNotEmpty ] whileTrue: [ 
 		self controllers anyOne removeController ].
-	self cleanCanvas.
 	self canvas signalUpdate
 ]
 
@@ -571,23 +555,6 @@ OPDiagramController >> parent [
 { #category : #accessing }
 OPDiagramController >> plugin [
 	^ plugin ifNil: [ OPPluginRegistry default pluginForController: self ]
-]
-
-{ #category : #rebuilding }
-OPDiagramController >> rebuild [
-
-	self deprecated: 'Might cause issues'.
-	controllers := nil.
-	[ :job | 
-	job title: 'Preparing diagram'.
-	diagramElement ifNil: [ 
-		diagramElement := OPOpenPonkDiagram forModelElement: model ].
-	diagramElement removeRender.
-	diagramElement renderIn: self canvas.
-	self showElements.
-	diagramElement layout
-		ifNil: [ self applyDefaultLayout ]
-		ifNotNil: [ :layout | self layout: layout ] ] asJob run
 ]
 
 { #category : #'undo/redo' }

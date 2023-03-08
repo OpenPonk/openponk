@@ -154,7 +154,8 @@ OPElementController >> renderDiagramElement [
 
 	self diagramController willRender: self.
 	self diagramElement renderIn: self diagramController canvas.
-	self diagramController rendered: self
+	self diagramController rendered: self.
+	^ self roassalShape
 ]
 
 { #category : #construction }

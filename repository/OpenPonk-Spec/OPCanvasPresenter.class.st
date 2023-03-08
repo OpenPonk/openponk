@@ -26,21 +26,6 @@ OPCanvasPresenter >> canvas [
 	^ currentCanvas
 ]
 
-{ #category : #private }
-OPCanvasPresenter >> cleanCanvas [
-
-	self canvas shapes copy do: #remove
-]
-
-{ #category : #private }
-OPCanvasPresenter >> cleanView [
-
-	self
-		deprecated: 'Use #cleanCanvas instead.'
-		transformWith: '`@receiver cleanView' -> '`@receiver cleanCanvas'.
-	^ self cleanCanvas
-]
-
 { #category : #'private-focus' }
 OPCanvasPresenter >> createCommandContext [
 	"Subclases should override it if they provide any selection"
@@ -121,7 +106,7 @@ OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aNumber [
 { #category : #toolbar }
 OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aNumber silently: aSilentlyBoolean [
 
-	| gridShape originalGridColor originalZoom zoom approxResolution jobBlock |
+	| originalZoom zoom approxResolution jobBlock |
 	approxResolution := aNumber * aNumber
 	                    * self canvas encompassingRectangle area.
 	zoom := (aNumber squared * self canvas encompassingRectangle area
@@ -140,9 +125,6 @@ OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aNumber silently: a
 			backgroundColor: GrowlMorph theme warningBackgroundColor
 			labelColor: GrowlMorph theme textColor ].
 
-	gridShape := self canvas shapes detect: [ :each | 
-		             each isKindOf: TRCanvasGridShape ].
-	originalGridColor := gridShape color.
 	originalZoom := self canvas camera scale.
 	self diagramController deselectAll.
 
@@ -160,7 +142,6 @@ OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aNumber silently: a
 						             ifTrue: [ 'several seconds' ]
 						             ifFalse: [ 'a few seconds' ] ]).
 	            [ 
-	            gridShape color: Color transparent.
 	            self canvas camera scale: zoom.
 
 	            self canvas pngExporter
@@ -169,7 +150,6 @@ OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aNumber silently: a
 		            job progress: 0.8.
 		            originalZoom ifNotNil: [ 
 			            self canvas camera scale: originalZoom ].
-		            gridShape color: originalGridColor.
 		            self canvas signalUpdate ] ].
 
 	aSilentlyBoolean ifTrue: [ ^ jobBlock value: Job new ].
@@ -207,7 +187,9 @@ OPCanvasPresenter >> exportCanvasToSvg: aFileReference silently: aSilentlyBoolea
 					             amountOfElements > 500
 						             ifTrue: [ 'several seconds' ]
 						             ifFalse: [ 'a few seconds' ] ]).
-
+					
+					aFileReference ensureDelete.
+					
 	            self canvas svgExporter
 		            fileName: aFileReference pathString;
 		            export ].
@@ -272,29 +254,9 @@ OPCanvasPresenter >> lastClickPosition: aPoint [
 	self deprecated: 'Last click is now handled by OPRSEventLogger'
 ]
 
-{ #category : #private }
-OPCanvasPresenter >> loadElementsFromController [
-
-	self deprecated: 'Control reloading from Controller, not Canvas'.
-	[ 
-	self currentWorld activeHand showTemporaryCursor: Cursor wait.
-	self currentWorld doOneCycle.
-	diagramController rebuild.
-	diagramController applyDefaultLayout ] ensure: [ 
-		self currentWorld activeHand showTemporaryCursor: nil ]
-]
-
 { #category : #accessing }
 OPCanvasPresenter >> model [
 	^ diagramController model
-]
-
-{ #category : #signalling }
-OPCanvasPresenter >> reloadView [
-	self deprecated: 'Control reloading from Controller, not Canvas'.
-	self cleanView.
-	diagramController ifNotNil: [ self loadElementsFromController ].
-	diagramController ifNotNil: [ diagramController updateView ]
 ]
 
 { #category : #accessing }

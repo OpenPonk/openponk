@@ -115,7 +115,7 @@ OPEditor class >> toolbarMenu: aBuilder [
 	(aBuilder item: 'Export as PNG...')
 		icon: (self iconNamed: #smallScreenshot);
 		action: [ aBuilder model canvasPresenter exportAsPng ].
-	(aBuilder item: 'Export as SVG (incomplete/simplified)...')
+	(aBuilder item: 'Export as SVG (simplified)...')
 		icon: (self iconNamed: #smallScreenshot);
 		action: [ aBuilder model canvasPresenter exportAsSvg ]
 ]

@@ -33,5 +33,6 @@ OPNoteController >> renderDiagramElement [
 	super renderDiagramElement.
 	diagramElement announcer
 		when: OPElementTextAttributeChanged
-		do: [ diagramElement updateRenderFromSelf ]
+		do: [ diagramElement updateRenderFromSelf ].
+	^ self roassalShape
 ]

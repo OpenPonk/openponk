@@ -16,21 +16,17 @@ BaselineOfOpenPonk >> baseline: spec [
 		self externalProjectsBaseline: spec.
 		self internalProjectsBaseline: spec.
 		spec
-			package: 'OpenPonk-Trachel'
-			with: [ spec requires: #( 'Roassal2' ) ];
-			package: 'OpenPonk-Roassal2'
-			with: [ spec requires: #( 'OpenPonk-Trachel' ) ];
 			package: 'OpenPonk-Roassal3'
 			with: [ spec preLoadDoIt: #loadRoassal3 ];
 			package: 'OpenPonk-Core' with: [ 
 				spec requires:
-						#( 'Magritte' 'Mocketry' 'XMLParser' 'XPath' 'NeoJSON' 'OpenPonk-Roassal2'
-						   'OpenPonk-Roassal3' ) ];
+						#( 'Magritte' 'Mocketry' 'XMLParser' 'XPath' 'NeoJSON' 'OpenPonk-Roassal3' ) ];
 			package: 'OpenPonk-Morphic';
 			package: 'OpenPonk-Spec' with: [ 
-				spec requires:
-						#( 'Moose' 'NewTools' 'Magritte' 'SynchronizedLinks'
-						   'OpenPonk-Morphic' );  preLoadDoIt: #loadPetitParserAndRoassal3 ].
+				spec
+					requires: #( 'Moose' 'NewTools' 'Magritte' 'SynchronizedLinks'
+						   'OpenPonk-Morphic' );
+					preLoadDoIt: #loadPetitParserAndRoassal3 ].
 		spec
 			group: 'default'
 			with: #( 'OpenPonk-Core' 'OpenPonk-Morphic' 'OpenPonk-Spec' ) ]
@@ -47,11 +43,6 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 	spec baseline: 'XPath' with: [ 
 		spec
 			repository: 'github://pharo-contributions/XML-XPath:3450f91/src';
-			loads: #( Core ) ].
-
-	spec baseline: 'Roassal2' with: [ 
-		spec
-			repository: 'github://OpenPonk/Roassal2:Pharo10';
 			loads: #( Core ) ].
 
 	spec baseline: 'Magritte' with: [ 

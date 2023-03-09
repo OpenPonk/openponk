@@ -116,7 +116,7 @@ OPLabel >> text: aString [
 { #category : #rendering }
 OPLabel >> updateRenderFromModel [
 
-	roassalShape text: self defaultText.
+	roassalShape text: self text.
 
 	super updateRenderFromModel.
 

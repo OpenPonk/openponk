@@ -93,7 +93,7 @@ OPElementController >> ensureDiagramElement [
 
 	diagramElement
 		ifNil: [ self createDiagramElement ]
-		ifNotNil: [ diagramElement modelElement: self model ].
+		ifNotNil: [ self linkToExistingDiagramElement ].
 	^ diagramElement
 ]
 
@@ -110,6 +110,14 @@ OPElementController >> figureLabel: aLabelName text: aString [
 "	(figure labels at: aLabelName) trachelShape text: aString"
 ]
 
+{ #category : #accessing }
+OPElementController >> hookDiagramElement [
+
+	"do nothing by default"
+
+	
+]
+
 { #category : #testing }
 OPElementController >> isCommon [
 	^ false
@@ -119,6 +127,12 @@ OPElementController >> isCommon [
 OPElementController >> isRendered [
 
 	^ self diagramElement isNotNil and: [ self diagramElement isRendered ]
+]
+
+{ #category : #construction }
+OPElementController >> linkToExistingDiagramElement [
+
+	self diagramElement modelElement: self model
 ]
 
 { #category : #deprecated }
@@ -153,6 +167,7 @@ OPElementController >> remove [
 OPElementController >> renderDiagramElement [
 
 	self diagramController willRender: self.
+	self hookDiagramElement.
 	self diagramElement renderIn: self diagramController canvas.
 	self diagramController rendered: self.
 	^ self roassalShape

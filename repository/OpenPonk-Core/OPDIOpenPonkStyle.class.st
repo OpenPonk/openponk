@@ -45,19 +45,6 @@ OPDIOpenPonkStyle >> fontColor: aColor [
 ]
 
 { #category : #accessing }
-OPDIOpenPonkStyle >> fontEmphasis [
-
-	| emphasis |
-	emphasis := TextEmphasis normal.
-	self fontBold ifTrue: [ emphasis add: TextEmphasis bold ].
-	self fontItalic ifTrue: [ emphasis add: TextEmphasis italic ].
-	self fontStrikeThrough ifTrue: [ 
-		emphasis add: TextEmphasis struckOut ].
-	self fontUnderline ifTrue: [ emphasis add: TextEmphasis underlined ].
-	^ emphasis
-]
-
-{ #category : #accessing }
 OPDIOpenPonkStyle >> fontItalic [
 	^ self at: #fontItalic
 ]

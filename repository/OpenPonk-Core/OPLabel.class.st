@@ -48,9 +48,17 @@ OPLabel >> defaultText [
 { #category : #accessing }
 OPLabel >> emphasis [
 
-	^ self
-		  stylePropertyNamed: #fontEmphasis
-		  ifAbsent: [ self defaultEmphasis ]
+	| emphasis |
+	emphasis := TextEmphasis normal.
+	(self stylePropertyNamed: #fontBold ifAbsent: [ false ]) ifTrue: [ 
+		emphasis add: TextEmphasis bold ].
+	(self stylePropertyNamed: #fontItalic ifAbsent: [ false ]) ifTrue: [ 
+		emphasis add: TextEmphasis italic ].
+	(self stylePropertyNamed: #fontStrikeThrough ifAbsent: [ false ]) 
+		ifTrue: [ emphasis add: TextEmphasis struckOut ].
+	(self stylePropertyNamed: #fontUnderline ifAbsent: [ false ]) 
+		ifTrue: [ emphasis add: TextEmphasis underlined ].
+	^ emphasis
 ]
 
 { #category : #accessing }
@@ -87,11 +95,7 @@ OPLabel >> noText [
 OPLabel >> renderBasicShape [
 
 	^ RSLabel new
-		  fontSize: self fontSize;
-		  fontName: self fontName;
-		  color: self fontColor;
 		  text: self text;
-		  emphasis: self emphasis;
 		  yourself
 ]
 
@@ -121,4 +125,15 @@ OPLabel >> updateRenderFromModel [
 	super updateRenderFromModel.
 
 	roassalShape signalUpdate
+]
+
+{ #category : #update }
+OPLabel >> updateRenderFromSelf [
+
+	super updateRenderFromSelf.
+	self roassalShape
+		fontSize: self fontSize;
+		fontName: self fontName;
+		color: self fontColor;
+		emphasis: self emphasis
 ]

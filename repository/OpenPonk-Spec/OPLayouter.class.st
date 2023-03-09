@@ -78,7 +78,7 @@ OPLayouter >> basicApplyLayout: aTwoArgBlock [
 OPLayouter >> circleLayout [
 	self
 		applyLayout: [ :boxes :links | 
-			RTWeightedCircleLayout new
+			RSWeightedCircleLayout new
 				scaleBy: 20;
 				on: boxes ]
 ]
@@ -106,11 +106,11 @@ OPLayouter >> dominanceTreeLayout [
 
 { #category : #layouts }
 OPLayouter >> gridLayout [
-	self
-		applyLayout: [ :boxes :links | 
-			RTGridLayout new
-				gapSize: 140;
-				on: boxes ]
+
+	self applyLayout: [ :boxes :links | 
+		RSGridLayout new
+			gapSize: 140;
+			on: boxes ]
 ]
 
 { #category : #accessing }

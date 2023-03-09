@@ -16,12 +16,6 @@ OPLabel class >> stonAllInstVarNames [
 ]
 
 { #category : #accessing }
-OPLabel >> defaultEmphasis [
-
-	^ TextEmphasis normal
-]
-
-{ #category : #accessing }
 OPLabel >> defaultFontColor [
 
 	^ Color black

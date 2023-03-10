@@ -8,10 +8,34 @@ Class {
 	#category : #'OpenPonk-Roassal3-Interactions'
 }
 
+{ #category : #accessing }
+OPRSLabeled >> color: aColor [
+
+	self shapeBuilder labelShape color: aColor
+]
+
+{ #category : #accessing }
+OPRSLabeled >> emphasis: aTextEmphasis [
+
+	self shapeBuilder labelShape emphasis: aTextEmphasis
+]
+
+{ #category : #accessing }
+OPRSLabeled >> fontName: aString [
+
+	self shapeBuilder labelShape fontName: aString
+]
+
 { #category : #hooks }
 OPRSLabeled >> getOrCreateLabel: aShape [
 
 	^ labelShape := super getOrCreateLabel: aShape
+]
+
+{ #category : #accessing }
+OPRSLabeled >> labelShape [
+
+	^ labelShape
 ]
 
 { #category : #hooks }

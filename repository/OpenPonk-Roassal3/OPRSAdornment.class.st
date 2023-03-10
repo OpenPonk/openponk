@@ -117,18 +117,27 @@ OPRSAdornment >> shape [
 ]
 
 { #category : #'as yet unclassified' }
-OPRSAdornment >> showOnShape: aShape horizontal: aHorizontalLocation vertical: aVerticalLocation offset: offset [
+OPRSAdornment >> showOnShape: anOriginalShape horizontal: aHorizontalLocation vertical: aVerticalLocation offset: offset [
 
-	self icon model: aShape.
-	self shape model: aShape.
-	aHorizontalLocation
-		offset: offset;
-		move: self shape on: aShape.
-	aVerticalLocation
-		offset: offset + (shape position x - aShape position x @ 0);
-		stick: self shape on: aShape.
+	| updateBlock |
+	self icon model: anOriginalShape.
+	self shape model: anOriginalShape.
+	updateBlock := [ 
+	               aVerticalLocation
+		               offset: 0 @ offset y;
+		               move: self shape on: anOriginalShape.
+	               aHorizontalLocation
+		               offset:
+			               offset x
+			               @ (shape position y - anOriginalShape position y);
+		               move: self shape on: anOriginalShape ].
+	anOriginalShape
+		when: RSPositionChangedEvent do: updateBlock;
+		when: RSExtentChangedEvent do: updateBlock.
+	updateBlock value.
+
 	self shape
 		when: RSShapeRemovedEvent
-		do: [ aShape announcer unsubscribe: aVerticalLocation ].
-	aShape canvas add: self shape
+		do: [ anOriginalShape announcer unsubscribe: aVerticalLocation ].
+	anOriginalShape canvas add: self shape
 ]

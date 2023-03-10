@@ -115,11 +115,11 @@ OPLabel >> text: aString [
 OPLabel >> updateRenderFromModel [
 
 	self roassalShape
-		text: self text;
 		fontSize: self fontSize;
 		fontName: self fontName;
 		color: self fontColor;
-		emphasis: self emphasis.
+		emphasis: self emphasis;
+		text: self text.
 
 	super updateRenderFromModel.
 

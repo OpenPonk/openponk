@@ -31,17 +31,14 @@ OPLabelTest >> testRoassalShapeEmphasis [
 	self assert: roassalShape emphasis equals: TextEmphasis normal.
 
 	element localStyle fontBold: true.
-	element updateRenderFromSelf.
 	self assert: roassalShape emphasis equals: TextEmphasis bold.
 
 	element localStyle fontUnderline: true.
-	element updateRenderFromSelf.
 	self assert: roassalShape emphasis equals: (TextEmphasis bold
 			 add: TextEmphasis underlined;
 			 yourself).
 
 	element localStyle fontItalic: true.
-	element updateRenderFromSelf.
 	self assert: roassalShape emphasis equals: (TextEmphasis bold
 			 add: TextEmphasis underlined;
 			 add: TextEmphasis italic;

@@ -164,7 +164,8 @@ OPDiagramElement >> localStyle [
 OPDiagramElement >> localStyle: aStyle [
 
 	localStyle ifNotNil: [ localStyle removedFromStyledElement: self ].
-	(localStyle := aStyle) addedAsLocalToStyledElement: self
+	(localStyle := aStyle) addedAsLocalToStyledElement: self.
+	self styleChanged.
 ]
 
 { #category : #accessing }
@@ -364,7 +365,8 @@ OPDiagramElement >> sharedStyle [
 OPDiagramElement >> sharedStyle: aStyle [
 
 	sharedStyle ifNotNil: [ sharedStyle removedFromStyledElement: self ].
-	(sharedStyle := aStyle) addedAsSharedToStyledElement: self
+	(sharedStyle := aStyle) addedAsSharedToStyledElement: self.
+	self styleChanged.
 ]
 
 { #category : #accessing }
@@ -432,6 +434,12 @@ OPDiagramElement >> stonProcessSubObjects: block [
 			put: (block value: (self instVarNamed: each)) ]
 ]
 
+{ #category : #'as yet unclassified' }
+OPDiagramElement >> styleChanged [
+
+	self isRendered ifTrue: [ self updateRenderFromModel ]
+]
+
 { #category : #accessing }
 OPDiagramElement >> stylePropertyNamed: aName ifAbsent: aBlock [
 
@@ -449,10 +457,8 @@ OPDiagramElement >> stylePropertyNamed: aName ifAbsent: aBlock [
 { #category : #accessing }
 OPDiagramElement >> stylePropertyNamed: aName put: aValue [
 
-	self updateFromRender.
 	self localStyle ifNil: [ self localStyle: OPDIOpenPonkStyle new ].
-	self localStyle at: aName asSymbol put: aValue.
-	self updateRenderFromSelf
+	self localStyle at: aName asSymbol put: aValue
 ]
 
 { #category : #'as yet unclassified' }

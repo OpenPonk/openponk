@@ -54,7 +54,9 @@ OPDIStyle >> at: aSymbol ifPresent: aBlock [
 
 { #category : #accessing }
 OPDIStyle >> at: aSymbol put: aValue [
-	properties at: aSymbol put: aValue
+
+	properties at: aSymbol put: aValue.
+	self styledElements do: #styleChanged
 ]
 
 { #category : #initialization }
@@ -67,7 +69,11 @@ OPDIStyle >> initialize [
 
 { #category : #removing }
 OPDIStyle >> removeKey: aSymbol [
-	^ properties removeKey: aSymbol
+
+	| result |
+	result := properties removeKey: aSymbol.
+	self styledElements do: #styleChanged.
+	^ result
 ]
 
 { #category : #accessing }

@@ -29,6 +29,7 @@ OPJsonDiagramSerializer >> formatName [
 
 { #category : #'serialize/materialize' }
 OPJsonDiagramSerializer >> materializeDiagramOf: aModel from: aStream [
+
 	"materialize aStream into a diagram that will be consumed by your controller"
 
 	^ (OPLegacyDiagram ofModel: aModel fromJson: aStream) asOPDiagram

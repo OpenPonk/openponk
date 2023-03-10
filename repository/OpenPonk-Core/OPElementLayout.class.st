@@ -78,11 +78,17 @@ OPElementLayout >> = anOtherLayout [
 OPElementLayout >> applyToDiagramElement: aDiagramElement [
 
 	position
-		ifNil: [ path ifNotNil: [ aDiagramElement waypoints: path points ] ]
+		ifNil: [ 
+			path ifNotNil: [ 
+				aDiagramElement waypoints:
+					{ aDiagramElement roassalShape controlPoints first }
+					, (path points copyFrom: 2 to: path points size - 1)
+					, { aDiagramElement roassalShape controlPoints last } ] ]
 		ifNotNil: [ 
 			aDiagramElement bounds: (OPDIBounds
 					 withPosition: position
-					 extent: (extent ifNil: [ aDiagramElement roassalShape extent ])) ]
+					 extent: (extent ifNil: [ aDiagramElement roassalShape extent ])) ].
+	aDiagramElement updateRenderFromSelf
 ]
 
 { #category : #accessing }

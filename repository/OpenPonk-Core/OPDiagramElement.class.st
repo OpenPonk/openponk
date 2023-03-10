@@ -92,7 +92,7 @@ OPDiagramElement >> canvas [
 { #category : #'as yet unclassified' }
 OPDiagramElement >> createOwnedElementsWithoutController [
 
-	"Might be overriden to add owned diagram elements that have no controller that would create them, for example labels."
+	"Might be overriden to add owned diagram elements that have no controller that would create them, for example labels. Make sure these do not exist yet (that could produce them multiple times)"
 
 	
 ]
@@ -315,8 +315,7 @@ OPDiagramElement >> renderIn: aCanvas [
 	self isRendered ifTrue: [ ^ self ].
 	self renderBasicShapeIn: aCanvas.
 	self renderShapeDetails.
-	self ownedElements ifEmpty: [ 
-		self createOwnedElementsWithoutController ].
+	self createOwnedElementsWithoutController.
 	self ownedElements do: [ :each | each renderIn: aCanvas ].
 	self updateRenderFromModel.
 	self updateRenderFromSelf.

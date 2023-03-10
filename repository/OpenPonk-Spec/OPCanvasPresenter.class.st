@@ -231,9 +231,6 @@ OPCanvasPresenter >> initializeCanvas: aCanvas [
 			self
 				selectedShapes: evt selectedShapes
 				onPosition: evt originalEvent position ].
-	self flag: #TODO_R3.
-	"aCanvas @ (RTGridView new gridSize: 20)."
-
 
 	aCanvas
 		when: RSExtentChangedEvent

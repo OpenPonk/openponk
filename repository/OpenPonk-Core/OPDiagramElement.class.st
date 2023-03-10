@@ -464,7 +464,8 @@ OPDiagramElement >> stylePropertyNamed: aName put: aValue [
 { #category : #'as yet unclassified' }
 OPDiagramElement >> supportsColorChange [
 
-	^ (self respondsTo: #color) and: [ self respondsTo: #color: ]
+	^ OPWorkbench isDevelopmentMode and: [ 
+		  (self respondsTo: #color) and: [ self respondsTo: #color: ] ]
 ]
 
 { #category : #accessing }

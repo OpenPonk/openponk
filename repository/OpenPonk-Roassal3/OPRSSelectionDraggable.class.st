@@ -153,10 +153,13 @@ OPRSSelectionDraggable >> startDrag: anEvent [
 	| selectedShapes selectedShapesToMove event |
 	selectedShapes := anEvent canvas selectedShapes ifEmpty: [ 
 		                  { anEvent shape } ].
-	selectedShapesToMove := (selectedShapes includes: anEvent shape)
+	selectedShapesToMove := OPWorkbench isDevelopmentMode
 		                        ifTrue: [ 
-			                        selectedShapes select: [ :each | 
-				                        each hasProperty: self propertyKey ] ]
+			                        (selectedShapes includes: anEvent shape)
+				                        ifTrue: [ 
+					                        selectedShapes select: [ :each | 
+						                        each hasProperty: self propertyKey ] ]
+				                        ifFalse: [ { anEvent shape } ] ]
 		                        ifFalse: [ { anEvent shape } ].
 
 	draggedShapes := selectedShapesToMove flatCollectAsSet: [ 

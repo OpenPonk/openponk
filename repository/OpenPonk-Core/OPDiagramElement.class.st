@@ -319,7 +319,6 @@ OPDiagramElement >> renderIn: aCanvas [
 	self ownedElements do: [ :each | each renderIn: aCanvas ].
 	self updateRenderFromModel.
 	self updateRenderFromSelf.
-	self updateRenderFromStyles.
 	self owningElement ifNotNil: [ :element | 
 		element ownedElement: self renderedIn: self canvas ].
 	^ roassalShape
@@ -497,7 +496,8 @@ OPDiagramElement >> updateFromRender [
 { #category : #rendering }
 OPDiagramElement >> updateRenderFromModel [
 
-	self ownedElements select: #isRendered thenDo: #updateRenderFromModel
+	self ownedElements select: #isRendered thenDo: #updateRenderFromModel.
+	self updateRenderFromStyles
 ]
 
 { #category : #rendering }

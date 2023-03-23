@@ -7,6 +7,14 @@ Class {
 	#category : #'OpenPonk-Roassal3-Interactions'
 }
 
+{ #category : #public }
+OPRSSelectableCanvas class >> rightLeft [
+
+	^ self new
+		  rightLeft;
+		  yourself
+]
+
 { #category : #'event processing' }
 OPRSSelectableCanvas >> boxEnded: event [
 
@@ -73,11 +81,16 @@ OPRSSelectableCanvas >> initialize [
 { #category : #hooks }
 OPRSSelectableCanvas >> onShape: aCanvas [
 
-	super onShape: aCanvas.
-	aCanvas propertyAt: self class put: self.
+	(aCanvas getInteractionsForClass: RSDraggableCanvasInteraction) do: [ 
+		:each | each mouseEvent: self dragStartEvent ].
 	aCanvas
+		when: self dragStartEvent send: #enableDrag: to: self;
+		when: self boxStartEvent send: #disableDrag: to: self;
+		when: RSMouseDragging send: #processDrag: to: self;
+		when: RSMouseDragEnd send: #processDragEnd: to: self;
 		when: RSMouseLeftClick
-		do: [ :evt | self selectShapes: { aCanvas } byEvent: evt ]
+		do: [ :evt | self selectShapes: { aCanvas } byEvent: evt ].
+	aCanvas propertyAt: self class put: self
 ]
 
 { #category : #hooks }

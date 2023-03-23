@@ -48,7 +48,7 @@ OPRSLabeled >> onShape: aShape [
 { #category : #'public - configuration' }
 OPRSLabeled >> text: aText [
 
-	super text: aText.
+	super text: aText asString.
 
 	self update
 ]

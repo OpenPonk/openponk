@@ -319,6 +319,7 @@ OPDiagramElement >> renderIn: aCanvas [
 	self ownedElements do: [ :each | each renderIn: aCanvas ].
 	self updateRenderFromModel.
 	self updateRenderFromSelf.
+	self updateRenderFromStyles.
 	self owningElement ifNotNil: [ :element | 
 		element ownedElement: self renderedIn: self canvas ].
 	^ roassalShape
@@ -436,7 +437,7 @@ OPDiagramElement >> stonProcessSubObjects: block [
 { #category : #'as yet unclassified' }
 OPDiagramElement >> styleChanged [
 
-	self isRendered ifTrue: [ self updateRenderFromModel ]
+	self isRendered ifTrue: [ self updateRenderFromStyles ]
 ]
 
 { #category : #accessing }
@@ -505,4 +506,12 @@ OPDiagramElement >> updateRenderFromSelf [
 	self isRendered ifFalse: [ ^ self ].
 	self ownedElements do: #updateRenderFromSelf.
 	roassalShape signalUpdate
+]
+
+{ #category : #'as yet unclassified' }
+OPDiagramElement >> updateRenderFromStyles [
+
+	"do nothing by default"
+
+	
 ]

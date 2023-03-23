@@ -127,7 +127,7 @@ OPRSMarkerBuilder class >> example [
 		add: l.
 
 	c @ RSDraggableCanvasInteraction.
-	c @ RSZoomableCanvasInteraction.
+	c @ OPRSZoomableCanvasInteraction.
 
 	c zoomToFit.
 

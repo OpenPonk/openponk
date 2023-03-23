@@ -119,6 +119,6 @@ BaselineOfOpenPonk >> loadRoassal3 [
 		do: [ :warning | warning load ].
 	Metacello new
 		baseline: 'Roassal3Exporters';
-		repository: 'github://ObjectProfile/Roassal3Exporters:264111a';
+		repository: 'github://ObjectProfile/Roassal3Exporters:c5bd596';
 		load
 ]

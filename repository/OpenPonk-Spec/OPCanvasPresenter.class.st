@@ -9,8 +9,36 @@ Class {
 		'onZoomChange',
 		'onExtentChange'
 	],
+	#classInstVars : [
+		'keepCameraOnContent'
+	],
 	#category : #'OpenPonk-Spec-Windows'
 }
+
+{ #category : #accessing }
+OPCanvasPresenter class >> keepCameraOnContent [
+
+	^ keepCameraOnContent ifNil: [ true ]
+]
+
+{ #category : #accessing }
+OPCanvasPresenter class >> keepCameraOnContent: aBoolean [
+
+	keepCameraOnContent := aBoolean
+]
+
+{ #category : #accessing }
+OPCanvasPresenter class >> settingsOn: aBuilder [
+
+	<systemsettings>
+	(aBuilder setting: #keepCameraOnContent)
+		parent: #openponk;
+		target: self;
+		label: 'Prevent moving away from canvas content';
+		description:
+			'When enabled, canvas tries to limit you from zooming/dragging away from area with existing shapes, so at least part of the existing diagram is usually always seen. Only affects newly displayed diagrams.';
+		order: 60
+]
 
 { #category : #accessing }
 OPCanvasPresenter >> attachController: aDiagramController [
@@ -104,52 +132,20 @@ OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aNumber [
 ]
 
 { #category : #toolbar }
-OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aNumber silently: aSilentlyBoolean [
+OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aZoom silently: aSilentlyBoolean [
 
-	| originalZoom zoom approxResolution jobBlock |
-	approxResolution := aNumber * aNumber
-	                    * self canvas encompassingRectangle area.
-	zoom := (aNumber squared * self canvas encompassingRectangle area
-	         > 500000000
-		         ifTrue: [ 
-			         (500000000 / self canvas encompassingRectangle area) sqrt 
-				         roundDownTo: 0.01 ]
-		         ifFalse: [ aNumber ]) max: 0.01.
-
-	(aSilentlyBoolean not and: [ (aNumber - zoom) abs > 0.011 ]) ifTrue: [ 
-		GrowlMorph
-			openWithLabel: 'Warning'
-			contents: 'Export zoom was reduced to '
-				, (zoom * 100 printShowingDecimalPlaces: 0)
-				, ' % zoom due to technical restrictions.'
-			backgroundColor: GrowlMorph theme warningBackgroundColor
-			labelColor: GrowlMorph theme textColor ].
-
+	| originalZoom jobBlock |
 	originalZoom := self canvas camera scale.
 	self diagramController deselectAll.
 
 	jobBlock := [ :job | 
-	            approxResolution := zoom * zoom
-	                                *
-	                                self canvas encompassingRectangle
-		                                area.
-	            job title:
-		            'Exporting diagram - might take '
-		            , (approxResolution > 120000000
-				             ifTrue: [ 'tens of seconds' ]
-				             ifFalse: [ 
-					             approxResolution > 1200000
-						             ifTrue: [ 'several seconds' ]
-						             ifFalse: [ 'a few seconds' ] ]).
+	            job title: 'Exporting diagram'.
 	            [ 
-	            self canvas camera scale: zoom.
-
 	            self canvas pngExporter
+		            cameraSetter: (OPRSCustomScaleCamSetter scale: aZoom);
 		            fileName: aFileReference pathString;
 		            export ] ensure: [ 
 		            job progress: 0.8.
-		            originalZoom ifNotNil: [ 
-			            self canvas camera scale: originalZoom ].
 		            self canvas signalUpdate ] ].
 
 	aSilentlyBoolean ifTrue: [ ^ jobBlock value: Job new ].
@@ -174,23 +170,14 @@ OPCanvasPresenter >> exportCanvasToSvg: aFileReference [
 { #category : #toolbar }
 OPCanvasPresenter >> exportCanvasToSvg: aFileReference silently: aSilentlyBoolean [
 
-	| amountOfElements jobBlock |
+	| jobBlock |
 	self diagramController deselectAll.
 
 	jobBlock := [ :job | 
-	            amountOfElements := self canvas nodes size.
-	            job title:
-		            'Exporting diagram - might take '
-		            , (amountOfElements > 5000
-				             ifTrue: [ 'tens of seconds' ]
-				             ifFalse: [ 
-					             amountOfElements > 500
-						             ifTrue: [ 'several seconds' ]
-						             ifFalse: [ 'a few seconds' ] ]).
-					
-					aFileReference ensureDelete.
-					
+	            job title: 'Exporting diagram'.
+
 	            self canvas svgExporter
+		            zoomToShapes;
 		            fileName: aFileReference pathString;
 		            export ].
 
@@ -219,12 +206,23 @@ OPCanvasPresenter >> initialize [
 { #category : #initialization }
 OPCanvasPresenter >> initializeCanvas: aCanvas [
 
-	aCanvas @ RSKeyNavigationCanvasInteraction.
-	aCanvas @ RSZoomableCanvasInteraction.
-	aCanvas @ RSScrollBarsCanvasInteraction.
-	aCanvas @ (OPRSSelectableCanvas new
-		 rightLeft;
-		 yourself).
+	aCanvas
+		@ (RSCanvasController new
+				 interactionsFromArray: { 
+						 RSDraggableCanvasInteraction new.
+						 RSKeyNavigationCanvasInteraction new.
+						 OPRSZoomableCanvasInteraction new.
+						 RSScrollBarsCanvasInteraction new };
+				 configuration: (OPRSControlConfiguration new
+						  noLegend;
+						  noZoomToFitOnStart;
+						  hasDraggableAnimation: false;
+						  noZoomToFitOnExtendChanged;
+						  hasZoomableAnimation: false;
+						  keepCameraOnContent: self class keepCameraOnContent;
+						  yourself));
+		@ OPRSSelectableCanvas rightLeft.
+
 	(aCanvas propertyAt: OPRSSelectableCanvas)
 		when: OPRSSelectionEndEvent
 		do: [ :evt | 

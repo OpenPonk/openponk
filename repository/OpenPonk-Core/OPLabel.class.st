@@ -114,14 +114,21 @@ OPLabel >> text: aString [
 { #category : #rendering }
 OPLabel >> updateRenderFromModel [
 
+	self roassalShape text: self text.
+
+	super updateRenderFromModel.
+
+	roassalShape signalUpdate
+]
+
+{ #category : #rendering }
+OPLabel >> updateRenderFromStyles [
+
 	self roassalShape
 		fontSize: self fontSize;
 		fontName: self fontName;
 		color: self fontColor;
-		emphasis: self emphasis;
-		text: self text.
-
-	super updateRenderFromModel.
+		emphasis: self emphasis.
 
 	roassalShape signalUpdate
 ]

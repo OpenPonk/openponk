@@ -136,8 +136,9 @@ OPRSAdornment >> showOnShape: anOriginalShape horizontal: aHorizontalLocation ve
 		when: RSExtentChangedEvent do: updateBlock.
 	updateBlock value.
 
+	anOriginalShape when: RSShapeRemovedEvent do: [ self remove ].
 	self shape
 		when: RSShapeRemovedEvent
-		do: [ anOriginalShape announcer unsubscribe: aVerticalLocation ].
+		do: [ anOriginalShape announcer unsubscribe: self ].
 	anOriginalShape canvas add: self shape
 ]

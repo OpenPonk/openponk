@@ -48,22 +48,22 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 	spec baseline: 'Magritte' with: [ 
 		spec
 			repository:
-				'github://JanBliznicenko/magritte:master/source';
+				'github://JanBliznicenko/magritte:master';
 			loads: #( Core 'Magritte-Morph' ) ].
 
 	spec baseline: 'Moose' with: [ 
 		spec
-			repository: 'github://moosetechnology/Moose:v9.0.1/src';
+			repository: 'github://moosetechnology/Moose:v9.0.1';
 			loads: #( Merlin ) ].
 
 	spec
 		baseline: 'Mocketry'
-		with: [ spec repository: 'github://dionisiydk/Mocketry:v7.0.1' ].
+		with: [ spec repository: 'github://dionisiydk/Mocketry:v7.0.2' ].
 
 	spec
 		baseline: 'NeoJSON'
 		with: [ 
-		spec repository: 'github://svenvc/NeoJSON:109d08b/repository' ]
+		spec repository: 'github://svenvc/NeoJSON:a18a783' ]
 ]
 
 { #category : #baselines }
@@ -71,7 +71,7 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 
 	spec baseline: 'NewTools' with: [ 
 		spec
-			repository: 'github://JanBliznicenko/NewTools:Pharo10';
+			repository: 'github://pharo-spec/NewTools:Pharo11';
 			loads: #( FileBrowser ) ].
 	spec
 		baseline: 'SynchronizedLinks'

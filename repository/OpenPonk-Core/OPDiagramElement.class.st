@@ -272,7 +272,7 @@ OPDiagramElement >> owningElement: aDiagramElement [
 { #category : #removing }
 OPDiagramElement >> remove [
 
-	[ self ownedElements isNotEmpty ] whileTrue: [ 
+	[ self ownedElements isNotEmpty ] whileTrue: [
 		self ownedElements anyOne remove ].
 	self removeRender.
 	self owningElement: nil

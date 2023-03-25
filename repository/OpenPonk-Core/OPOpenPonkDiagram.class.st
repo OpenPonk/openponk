@@ -47,6 +47,17 @@ OPOpenPonkDiagram >> isSelected: anObject [
 	isSelected := anObject
 ]
 
+{ #category : #'instance creation' }
+OPOpenPonkDiagram >> newCopy [
+
+	| serializer |
+	self updateFromRender.
+	serializer := OPStonDiagramSerializer new.
+	^ (String streamContents: [ :s |
+		   serializer serializeDiagram: self to: s ]) readStreamDo: [ :s |
+		  serializer materializeDiagramOf: self modelElement from: s ]
+]
+
 { #category : #removing }
 OPOpenPonkDiagram >> removeRender [
 

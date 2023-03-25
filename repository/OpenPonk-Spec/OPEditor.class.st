@@ -191,8 +191,8 @@ OPEditor >> initializePresenters [
 		add: form.
 	self class currentLayout applyOn: self.
 
-	self whenBuiltDo: [ :builtEvent | 
-		self withWindowDo: [ :window | 
+	self whenBuiltDo: [ :builtEvent |
+		self withWindowDo: [ :window |
 			| minimized |
 			minimized := false.
 			window window announcer
@@ -201,14 +201,14 @@ OPEditor >> initializePresenters [
 			window window announcer
 				when: WindowExpanded
 				do: [ minimized := false ].
-			window whenResizingDo: [ :resizeEvent | 
-				minimized ifFalse: [ 
+			window whenResizingDo: [ :resizeEvent |
+				minimized ifFalse: [
 					self class currentLayout
 						resizePanelsOf: builtEvent widget
 						afterWindowResized: resizeEvent ] ].
-			window whenClosedDo: [ 
+			window whenClosedDo: [
 				window window announcer unsubscribe: self.
-				diagramController removeController ] ] ]
+				diagramController removeAllControllers ] ] ]
 ]
 
 { #category : #'diagram handling' }
@@ -280,7 +280,7 @@ OPEditor >> tabDeleted [
 	self workbench projectController removeDiagramController:
 		diagramController.
 	self unregisterShortcutsOn: self workbench.
-	diagramController removeAllControllers
+	diagramController removeRender
 ]
 
 { #category : #shortcuts }

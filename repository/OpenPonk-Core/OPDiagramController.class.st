@@ -598,16 +598,9 @@ OPDiagramController >> removeControllerOf: aModelElement [
 ]
 
 { #category : #destruction }
-OPDiagramController >> removeFigure [
-
-	self removeAllControllers.
-	self figure ifNotNil: [ self figure shapes copy do: #remove ]
-]
-
-{ #category : #destruction }
 OPDiagramController >> removeFromCanvas: aFigure [
 	aFigure ifNil: [ ^ self ].
-	(self controllerForRoassalShape: aFigure) removeFull
+	(self controllerForRoassalShape: aFigure) removeControllerAndModel
 ]
 
 { #category : #deprecated }

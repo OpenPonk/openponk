@@ -233,12 +233,21 @@ OPController >> removeController [
 ]
 
 { #category : #destruction }
+OPController >> removeControllerAndModel [
+
+	self removeDependent.
+	self removeController.
+	self removeModel.
+	self model: nil
+]
+
+{ #category : #destruction }
 OPController >> removeDependent [
 	self dependentControllers
 		do: [ :each | 
 			self diagramController controllers
 				detect: [ :ctrl | ctrl model = each model ]
-				ifFound: #removeFull ]
+				ifFound: #removeControllerAndModel ]
 ]
 
 { #category : #destruction }
@@ -268,15 +277,6 @@ OPController >> removeFigure [
 	self figure remove
 ]
 
-{ #category : #destruction }
-OPController >> removeFull [
-
-	self removeDependent.
-	self removeController.
-	self removeModel.
-	self model: nil
-]
-
 { #category : #private }
 OPController >> removeModel [
 	^ self subclassResponsibility
@@ -288,6 +288,13 @@ OPController >> removeModelElement: aModelElement [
 	self deprecated: 'use #removeModel on the proper controller instead.'.
 
 	(self diagramController controllerForModel: aModelElement) removeModel
+]
+
+{ #category : #destruction }
+OPController >> removeRender [
+
+	self diagramController deselectAll.
+	self diagramElement removeRender
 ]
 
 { #category : #figures }

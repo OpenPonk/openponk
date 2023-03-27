@@ -29,13 +29,7 @@ OPRSControlPointCreatorHandle >> constraintFor: aShape [
 	from when: RSPositionChangedEvent do: moveBlock.
 	to when: RSPositionChangedEvent do: moveBlock.
 	from when: RSExtentChangedEvent do: moveBlock.
-	to when: RSExtentChangedEvent do: moveBlock.
-	from when: RSShapeRemovedEvent do: [ 
-		to announcer unsubscribe: self.
-		from announcer unsubscribe: self ].
-	to when: RSShapeRemovedEvent do: [ 
-		from announcer unsubscribe: self.
-		to announcer unsubscribe: self ]
+	to when: RSExtentChangedEvent do: moveBlock
 ]
 
 { #category : #'as yet unclassified' }

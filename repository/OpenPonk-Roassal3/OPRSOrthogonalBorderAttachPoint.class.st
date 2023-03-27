@@ -7,7 +7,7 @@ Class {
 { #category : #'public - hooks' }
 OPRSOrthogonalBorderAttachPoint >> borderPointFrom: aSource to: aTarget via: aLine [
 
-	| sourceLeft sourceRight sourceTop sourceBottom targetLeft targetRight targetTop targetBottom |
+	| sourceLeft sourceRight sourceTop sourceBottom targetLeft targetRight targetTop targetBottom shift orthogonalityAllowance |
 	sourceLeft := aSource left.
 	sourceRight := aSource right.
 	sourceTop := aSource top.
@@ -17,23 +17,44 @@ OPRSOrthogonalBorderAttachPoint >> borderPointFrom: aSource to: aTarget via: aLi
 	targetTop := aTarget top.
 	targetBottom := aTarget bottom.
 
-	(sourceLeft between: targetLeft + 2 and: targetRight - 2) ifTrue: [
-		^ self orthogonalXBorderPointFrom: aSource to: aTarget ].
-	(sourceRight between: targetLeft + 2 and: targetRight - 2) ifTrue: [
-		^ self orthogonalXBorderPointFrom: aSource to: aTarget ].
-	(targetLeft between: sourceLeft + 2 and: sourceRight - 2) ifTrue: [
-		^ self orthogonalXBorderPointFrom: aSource to: aTarget ].
-	(targetRight between: sourceLeft + 2 and: sourceRight - 2) ifTrue: [
-		^ self orthogonalXBorderPointFrom: aSource to: aTarget ].
+	shift := aLine a * aSource center x + (aLine b * aSource center y)
+	         + aLine c / (aLine a squared + aLine b squared) sqrt.
 
-	(sourceTop between: targetTop + 2 and: targetBottom - 2) ifTrue: [
-		^ self orthogonalYBorderPointFrom: aSource to: aTarget ].
-	(sourceBottom between: targetTop + 2 and: targetBottom - 2) ifTrue: [
-		^ self orthogonalYBorderPointFrom: aSource to: aTarget ].
-	(targetTop between: sourceTop + 2 and: sourceBottom - 2) ifTrue: [
-		^ self orthogonalYBorderPointFrom: aSource to: aTarget ].
-	(targetBottom between: sourceTop + 2 and: sourceBottom - 2) ifTrue: [
-		^ self orthogonalYBorderPointFrom: aSource to: aTarget ].
+	orthogonalityAllowance := 1 + (2 * shift abs).
+
+	(sourceLeft + orthogonalityAllowance
+		 between: targetLeft
+		 and: targetRight) ifTrue: [
+		^ self orthogonalXBorderPointFrom: aSource to: aTarget shift: shift ].
+	(sourceRight - orthogonalityAllowance
+		 between: targetLeft
+		 and: targetRight) ifTrue: [
+		^ self orthogonalXBorderPointFrom: aSource to: aTarget shift: shift ].
+	(targetLeft + orthogonalityAllowance
+		 between: sourceLeft
+		 and: sourceRight) ifTrue: [
+		^ self orthogonalXBorderPointFrom: aSource to: aTarget shift: shift ].
+	(targetRight - orthogonalityAllowance
+		 between: sourceLeft
+		 and: sourceRight) ifTrue: [
+		^ self orthogonalXBorderPointFrom: aSource to: aTarget shift: shift ].
+
+	(sourceTop + orthogonalityAllowance
+		 between: targetTop
+		 and: targetBottom) ifTrue: [
+		^ self orthogonalYBorderPointFrom: aSource to: aTarget shift: shift ].
+	(sourceBottom - orthogonalityAllowance
+		 between: targetTop
+		 and: targetBottom) ifTrue: [
+		^ self orthogonalYBorderPointFrom: aSource to: aTarget shift: shift ].
+	(targetTop + orthogonalityAllowance
+		 between: sourceTop
+		 and: sourceBottom) ifTrue: [
+		^ self orthogonalYBorderPointFrom: aSource to: aTarget shift: shift ].
+	(targetBottom - orthogonalityAllowance
+		 between: sourceTop
+		 and: sourceBottom) ifTrue: [
+		^ self orthogonalYBorderPointFrom: aSource to: aTarget shift: shift ].
 
 	^ super borderPointFrom: aSource to: aTarget via: aLine
 ]
@@ -55,9 +76,9 @@ OPRSOrthogonalBorderAttachPoint >> orthogonalCoordinateFromMin: srcMin max: srcM
 ]
 
 { #category : #'public - hooks' }
-OPRSOrthogonalBorderAttachPoint >> orthogonalXBorderPointFrom: aSource to: aTarget [
+OPRSOrthogonalBorderAttachPoint >> orthogonalXBorderPointFrom: aSource to: aTarget shift: aShift [
 
-	| x y |
+	| x y shift |
 	y := aSource center y > aTarget center y
 		     ifTrue: [ aSource top ]
 		     ifFalse: [ aSource bottom ].
@@ -68,13 +89,16 @@ OPRSOrthogonalBorderAttachPoint >> orthogonalXBorderPointFrom: aSource to: aTarg
 		     toMin: aTarget left
 		     max: aTarget right.
 
-	^ x @ y
+	shift := aShift.
+	aTarget center y < aSource center y ifTrue: [ shift := shift negated ].
+
+	^ x + shift @ y
 ]
 
 { #category : #'public - hooks' }
-OPRSOrthogonalBorderAttachPoint >> orthogonalYBorderPointFrom: aSource to: aTarget [
+OPRSOrthogonalBorderAttachPoint >> orthogonalYBorderPointFrom: aSource to: aTarget shift: aShift [
 
-	| x y |
+	| x y shift |
 	x := aSource center x > aTarget center x
 		     ifTrue: [ aSource left ]
 		     ifFalse: [ aSource right ].
@@ -85,5 +109,8 @@ OPRSOrthogonalBorderAttachPoint >> orthogonalYBorderPointFrom: aSource to: aTarg
 		     toMin: aTarget top
 		     max: aTarget bottom.
 
-	^ x @ y
+	shift := aShift.
+	aSource center x < aTarget center x ifTrue: [ shift := shift negated ].
+
+	^ x @ (y + shift)
 ]

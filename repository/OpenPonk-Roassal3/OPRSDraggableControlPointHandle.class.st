@@ -28,6 +28,18 @@ OPRSDraggableControlPointHandle >> changedPositionBy: anEvent [
 ]
 
 { #category : #'as yet unclassified' }
+OPRSDraggableControlPointHandle >> constraint [
+
+	| moveBlock |
+	moveBlock := [ self updatePosition ].
+	moveBlock value.
+	line from when: RSPositionChangedEvent do: moveBlock.
+	line to when: RSPositionChangedEvent do: moveBlock.
+	line from when: RSExtentChangedEvent do: moveBlock.
+	line to when: RSExtentChangedEvent do: moveBlock
+]
+
+{ #category : #'as yet unclassified' }
 OPRSDraggableControlPointHandle >> controlPoint [
 
 	^ line controlPoints at: indexOfControlPoint
@@ -94,18 +106,16 @@ OPRSDraggableControlPointHandle >> render [
 	line canvas
 		add: shape;
 		add: clickBox.
-	clickBox translateTo: self controlPoint.
+	self constraint.
 	RSLocation new stick: shape on: clickBox.
 	clickBox @ RSDraggable.
 
 	shape
 		when: RSPositionChangedEvent
 		do: [ :event | self changedPositionBy: event ].
-	line from = line to ifTrue: [ 
-		line from when: RSPositionChangedEvent do: [ :event | 
-			clickBox translateBy: event newPosition - event oldPosition ] ].
-	(line from ~= line to or: [ line controlPoints size > 4 ]) ifTrue: [ 
-		shape @ (RSMenuActivable new menuDo: [ :menu :box | 
+
+	(line from ~= line to or: [ line controlPoints size > 4 ]) ifTrue: [
+		shape @ (RSMenuActivable new menuDo: [ :menu :box |
 			 menu
 				 add: 'Remove point'
 				 target: self
@@ -134,4 +144,10 @@ OPRSDraggableControlPointHandle >> straightenConnection [
 			line controlPoints first.
 			line controlPoints last }.
 	(line propertyAt: OPRSDraggableControlPoints) rebuild
+]
+
+{ #category : #'private - layout' }
+OPRSDraggableControlPointHandle >> updatePosition [
+
+	clickBox translateTo: self controlPoint
 ]

@@ -40,6 +40,7 @@ OPRSAbstractDraggableControlPointHandle >> remove [
 	clickBox announcer unsubscribe: self.
 	line announcer unsubscribe: self.
 	line from announcer unsubscribe: self.
+	line to announcer unsubscribe: self.
 	shape := nil.
 	clickBox := nil.
 	line := nil

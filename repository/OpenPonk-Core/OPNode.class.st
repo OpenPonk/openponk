@@ -40,6 +40,15 @@ OPNode >> position [
 	^ roassalShape position
 ]
 
+{ #category : #rendering }
+OPNode >> renderShapeDetails [
+
+	self flag: 'https://github.com/ObjectProfile/Roassal3/issues/510'.
+	roassalShape
+		when: RSExtentChangedEvent
+		do: [ roassalShape updateConnectedLines ]
+]
+
 { #category : #actions }
 OPNode >> translateBy: deltaAsPoint [
 

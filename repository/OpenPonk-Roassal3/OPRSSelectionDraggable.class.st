@@ -2,8 +2,9 @@ Class {
 	#name : #OPRSSelectionDraggable,
 	#superclass : #RSDraggable,
 	#instVars : [
-		'draggedShapes',
-		'innerShapesProvider'
+		'innerShapesProvider',
+		'draggedNodes',
+		'movedLinesWithControlPoints'
 	],
 	#category : #'OpenPonk-Roassal3-Interactions'
 }
@@ -84,10 +85,10 @@ OPRSSelectionDraggable >> endDrag: anEvent [
 	event
 		position: anEvent position;
 		morph: anEvent morph.
-	(draggedShapes copyWithout: anEvent shape) do: [ :each | 
+	(draggedNodes copyWithout: anEvent shape) do: [ :each | 
 		each announce: event ].
 
-	draggedShapes := #(  )
+	draggedNodes := #(  )
 ]
 
 { #category : #initialization }
@@ -103,6 +104,15 @@ OPRSSelectionDraggable >> innerShapesProvider: anInnerShapesProvider [
 	innerShapesProvider := anInnerShapesProvider
 ]
 
+{ #category : #events }
+OPRSSelectionDraggable >> movedLinesWithControlPointsBy: anEvent [
+
+	^ ((draggedNodes flatCollect: #connectedLines as: Bag)
+		   valuesAndCounts associations select: [ :each | each value > 1 ])
+		  collect: #key
+		  as: Set
+]
+
 { #category : #hooks }
 OPRSSelectionDraggable >> onShape: aShape [
 
@@ -116,9 +126,10 @@ OPRSSelectionDraggable >> onShape: aShape [
 OPRSSelectionDraggable >> processDrag: evt [
 
 	| d |
-	draggedShapes ifNil: [ ^ self ].
+	draggedNodes ifNil: [ ^ self ].
 	d := evt camera distanceFromPixelToSpace: evt step.
-	draggedShapes do: [ :each | each translateBy: d ].
+	self translateLinesBy: d.
+	self translateShapesBy: d.
 	evt signalUpdate
 ]
 
@@ -151,26 +162,46 @@ OPRSSelectionDraggable >> shapesToDragInside: aContainerShape [
 OPRSSelectionDraggable >> startDrag: anEvent [
 
 	| selectedShapes selectedShapesToMove event |
-	selectedShapes := anEvent canvas selectedShapes ifEmpty: [ 
+	selectedShapes := anEvent canvas selectedShapes ifEmpty: [
 		                  { anEvent shape } ].
+
 	selectedShapesToMove := OPWorkbench isDevelopmentMode
-		                        ifTrue: [ 
+		                        ifTrue: [
 			                        (selectedShapes includes: anEvent shape)
-				                        ifTrue: [ 
-					                        selectedShapes select: [ :each | 
+				                        ifTrue: [
+					                        selectedShapes select: [ :each |
 						                        each hasProperty: self propertyKey ] ]
 				                        ifFalse: [ { anEvent shape } ] ]
 		                        ifFalse: [ { anEvent shape } ].
 
-	draggedShapes := selectedShapesToMove flatCollectAsSet: [ 
-		                 :eachSelectedShape | 
-		                 (Set with: eachSelectedShape)
-		                 , (self shapesToDragInside: eachSelectedShape) ].
+	draggedNodes := selectedShapesToMove flatCollectAsSet: [
+		                :eachSelectedShape |
+		                (Set with: eachSelectedShape)
+		                , (self shapesToDragInside: eachSelectedShape) ].
+
+	movedLinesWithControlPoints := self movedLinesWithControlPointsBy: anEvent.
 
 	event := OPRSDragFromSelectionStart fromEvent: anEvent.
 	event
 		position: anEvent position;
 		morph: anEvent morph.
-	(draggedShapes copyWithout: anEvent shape) do: [ :each | 
+	(draggedNodes copyWithout: anEvent shape) do: [ :each |
 		each announce: event ]
+]
+
+{ #category : #events }
+OPRSSelectionDraggable >> translateLinesBy: anOffset [
+
+	movedLinesWithControlPoints do: [ :each |
+		each controlPoints: { each controlPoints first }
+			,
+				((each controlPoints copyFrom: 2 to: each controlPoints size - 1)
+					 collect: [ :eachPoint | eachPoint + anOffset ])
+			, { each controlPoints last } ]
+]
+
+{ #category : #events }
+OPRSSelectionDraggable >> translateShapesBy: anOffset [
+
+	draggedNodes do: [ :each | each translateBy: anOffset ]
 ]

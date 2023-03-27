@@ -57,6 +57,8 @@ OPInvisibleOnMouseShape >> renderBasicShape [
 { #category : #rendering }
 OPInvisibleOnMouseShape >> renderShapeDetails [
 
+	super renderShapeDetails.
+
 	roassalShape canvas
 		propertyAt: #shapesIgnoringMouseMoveBlock
 		put: [ roassalShape connectedLines , { roassalShape } ].

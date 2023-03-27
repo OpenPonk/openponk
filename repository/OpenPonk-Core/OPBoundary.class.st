@@ -72,6 +72,8 @@ OPBoundary >> renderBasicShape [
 { #category : #'creating - subelements' }
 OPBoundary >> renderShapeDetails [
 
+	super renderShapeDetails.
+
 	roassalShape
 		@ OPRSSelectable;
 		@ OPRSSelectionDraggableBorder thatAlsoDragsContainedShapes;

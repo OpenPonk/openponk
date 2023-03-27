@@ -34,6 +34,8 @@ OPEdgeLabel >> defaultMinDistance [
 { #category : #adding }
 OPEdgeLabel >> renderShapeDetails [
 
+	super renderShapeDetails.
+
 	self addInteractions.
 	self anchorToEdge
 ]

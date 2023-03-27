@@ -25,6 +25,7 @@ OPTResizableFigureWithText >> renderLabel [
 { #category : #'creating - subelements' }
 OPTResizableFigureWithText >> renderShapeDetails [
 
+	super renderShapeDetails.
 	self renderLabel
 ]
 

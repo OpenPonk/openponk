@@ -162,6 +162,8 @@ OPNote >> renderBasicShape [
 { #category : #'creating - subelements' }
 OPNote >> renderShapeDetails [
 
+	super renderShapeDetails.
+
 	self createOwnedInvisibleBoxes.
 	self createOwnedFillBoxes.
 	self createOwnedCornerTriangle.

@@ -3,7 +3,8 @@ Class {
 	#superclass : #RSObject,
 	#instVars : [
 		'line',
-		'minDistance',
+		'minDistanceToLine',
+		'distanceToLine',
 		'anchorShape',
 		'shape',
 		'absoluteBalance',
@@ -62,9 +63,15 @@ OPRSAnchorConstraintUpdater >> computeExtraDistance [
 					            nearestPointAlongLineFrom: self anchorSegment from
 					            to: self anchorSegment to) ].
 	normals ifEmpty: [ ^ 0 ].
-	^ minDistance sign > 0
+	^ distanceToLine sign > 0
 		  ifTrue: [ normals max ]
 		  ifFalse: [ normals max negated ]
+]
+
+{ #category : #accessing }
+OPRSAnchorConstraintUpdater >> distanceToLine: aNumber [
+
+	distanceToLine := aNumber
 ]
 
 { #category : #accessing }
@@ -94,13 +101,13 @@ OPRSAnchorConstraintUpdater >> lineLength [
 ]
 
 { #category : #accessing }
-OPRSAnchorConstraintUpdater >> minDistance [
-	^ minDistance
+OPRSAnchorConstraintUpdater >> minDistanceToLine [
+	^ minDistanceToLine
 ]
 
 { #category : #accessing }
-OPRSAnchorConstraintUpdater >> minDistance: anInteger [
-	minDistance := anInteger
+OPRSAnchorConstraintUpdater >> minDistanceToLine: aNumber [
+	minDistanceToLine := aNumber
 ]
 
 { #category : #accessing }
@@ -117,7 +124,7 @@ OPRSAnchorConstraintUpdater >> moveAwayFrom: aRectangle via: aVector [
 
 	| vector corners segment |
 	"source and target of the edge on top of each other... ignore"
-	aVector r = 0 ifTrue: [ ^ self ].
+	aVector r isZero ifTrue: [ ^ self ].
 	vector := aVector normalized
 	          * (aRectangle origin distanceTo: aRectangle corner).
 	corners := shape encompassingRectangle corners select: [ :each | 
@@ -136,20 +143,18 @@ OPRSAnchorConstraintUpdater >> moveAwayFrom: aRectangle via: aVector [
 
 { #category : #accessing }
 OPRSAnchorConstraintUpdater >> moveAwayFromSegment: aSegment [
+
 	(aSegment intersectRectangle: shape encompassingRectangle)
-		ifNotEmpty:
-			[ :crossings | 
-			shape
-				translateBy:
-					aSegment vector normal
-						* (minDistance + self extraDistance) negated ]
+		ifNotEmpty: [
+			shape translateBy:
+				aSegment vector normal
+				* (distanceToLine + self extraDistance) negated ]
 ]
 
 { #category : #accessing }
 OPRSAnchorConstraintUpdater >> moveShape [
 
-	shape translateTo: self anchorPoint
-		+ (self anchorSegment vector normal * minDistance negated).
+	shape translateTo: self anchorPoint.
 	self moveShapeAwayFromCollisions
 ]
 
@@ -158,11 +163,12 @@ OPRSAnchorConstraintUpdater >> moveShapeAwayFromCollisions [
 
 	| from to |
 	self moveAwayFromSegment: self anchorSegment.
-	from := line from encompassingRectangle expandBy: minDistance abs.
-	to := line to encompassingRectangle expandBy: minDistance abs.
-	(shape encompassingRectangle intersects: from) ifTrue: [ 
+	from := line from encompassingRectangle expandBy:
+		        minDistanceToLine abs.
+	to := line to encompassingRectangle expandBy: minDistanceToLine abs.
+	(shape encompassingRectangle intersects: from) ifTrue: [
 		self moveAwayFrom: from via: self anchorSegment vector ].
-	(shape encompassingRectangle intersects: to) ifTrue: [ 
+	(shape encompassingRectangle intersects: to) ifTrue: [
 		self moveAwayFrom: to via: self anchorSegment vector negated ]
 ]
 

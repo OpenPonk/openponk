@@ -14,7 +14,7 @@ OPEdgeLabel >> addInteractions [
 OPEdgeLabel >> anchorToEdge [
 
 	OPRSAnchorConstraint new
-		minDistance: self defaultMinDistance;
+		minDistanceToLine: self defaultMinDistance;
 		positionReference: self defaultAnchorConstraintPosition;
 		stick: roassalShape on: self owningElement roassalShape
 ]

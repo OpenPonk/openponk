@@ -18,9 +18,26 @@ OPRSAnchorConstraintNearestPoint >> balance [
 ]
 
 { #category : #calculated }
+OPRSAnchorConstraintNearestPoint >> distanceAlongLineToRectangle: aRectangle [
+
+	| pointAlongLine |
+	pointAlongLine := aRectangle center
+		                  nearestPointAlongLineFrom: segment from
+		                  to: segment to.
+	^ (aRectangle pointNearestTo: pointAlongLine) distanceTo:
+		  pointAlongLine
+]
+
+{ #category : #calculated }
 OPRSAnchorConstraintNearestPoint >> distanceTo: aPoint [
 
 	^ point distanceTo: aPoint
+]
+
+{ #category : #calculated }
+OPRSAnchorConstraintNearestPoint >> distanceToRectangle: aRectangle [
+
+	^ (aRectangle pointNearestTo: point) distanceTo: point
 ]
 
 { #category : #calculated }

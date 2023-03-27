@@ -17,9 +17,9 @@ OPRSAnchorConstraintStartDistanceReference >> computeAbsoluteBalanceForLength: a
 ]
 
 { #category : #'as yet unclassified' }
-OPRSAnchorConstraintStartDistanceReference >> guideLineTargetFor: anchorConstraint [
+OPRSAnchorConstraintStartDistanceReference >> farPointOfSegment: aSegment [
 
-	^ anchorConstraint line startPoint 
+	^ aSegment to
 ]
 
 { #category : #'as yet unclassified' }

@@ -19,7 +19,7 @@ OPRSAnchorConstraintReference >> computeAbsoluteBalanceForLength: aNumber [
 { #category : #'as yet unclassified' }
 OPRSAnchorConstraintReference >> guideLineTargetFor: anchorConstraint [
 
-	^ self subclassResponsibility
+	^ anchorConstraint anchorShape
 ]
 
 { #category : #'as yet unclassified' }

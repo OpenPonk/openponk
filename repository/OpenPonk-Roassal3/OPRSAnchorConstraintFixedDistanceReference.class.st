@@ -22,6 +22,12 @@ OPRSAnchorConstraintFixedDistanceReference >> distance: anInteger [
 ]
 
 { #category : #'as yet unclassified' }
+OPRSAnchorConstraintFixedDistanceReference >> farPointOfSegment: aSegment [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #'as yet unclassified' }
 OPRSAnchorConstraintFixedDistanceReference >> referencePointOfSegment: aSegment [
 
 	^ self subclassResponsibility
@@ -30,15 +36,28 @@ OPRSAnchorConstraintFixedDistanceReference >> referencePointOfSegment: aSegment 
 { #category : #'as yet unclassified' }
 OPRSAnchorConstraintFixedDistanceReference >> saveShapePositionIn: aConstraint [
 
-	| segment pointOnLine absoluteMinDistance |
+	| segment pointAlongLine pointOnLine absoluteDistanceToLine distanceToLine referencePoint |
 	segment := self segmentIn: aConstraint.
-	pointOnLine := segment nearestAlongPointTo: aConstraint shape position.
-	distance := (self referencePointOfSegment: segment) distanceTo:
-		            pointOnLine.
-	absoluteMinDistance := pointOnLine distanceTo:
-		                       aConstraint shape position.
-	aConstraint minDistance: absoluteMinDistance
-		* (segment sideOfPoint: aConstraint shape position)
+
+	pointAlongLine := aConstraint shape position
+		                  nearestPointAlongLineFrom: segment from
+		                  to: segment to.
+
+	absoluteDistanceToLine := (aConstraint shape encompassingRectangle
+		                           pointNearestTo: pointAlongLine)
+		                          distanceTo: pointAlongLine.
+
+	distanceToLine := absoluteDistanceToLine
+	                  * (segment sideOfPoint: aConstraint shape position).
+
+	aConstraint distanceToLine: distanceToLine.
+
+	pointOnLine := pointAlongLine adhereTo:
+		               (segment from rectangle: segment to).
+
+	referencePoint := self referencePointOfSegment: segment.
+
+	distance := pointOnLine distanceTo: referencePoint
 ]
 
 { #category : #'as yet unclassified' }

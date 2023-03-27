@@ -18,9 +18,9 @@ OPRSAnchorConstraintEndDistanceReference >> computeAbsoluteBalanceForLength: aNu
 ]
 
 { #category : #'as yet unclassified' }
-OPRSAnchorConstraintEndDistanceReference >> guideLineTargetFor: anchorConstraint [
+OPRSAnchorConstraintEndDistanceReference >> farPointOfSegment: aSegment [
 
-	^ anchorConstraint line endPoint 
+	^ aSegment from
 ]
 
 { #category : #'as yet unclassified' }

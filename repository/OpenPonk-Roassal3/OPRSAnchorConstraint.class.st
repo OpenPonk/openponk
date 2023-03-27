@@ -2,7 +2,8 @@ Class {
 	#name : #OPRSAnchorConstraint,
 	#superclass : #RSObject,
 	#instVars : [
-		'minDistance',
+		'minDistanceToLine',
+		'distanceToLine',
 		'anchorShape',
 		'guideLine',
 		'shape',
@@ -61,17 +62,21 @@ OPRSAnchorConstraint >> build [
 	line when: RSShapeRemovedEvent do: [ self remove ].
 	line from when: RSPositionChangedEvent do: [ self moveShape ].
 	line to when: RSPositionChangedEvent do: [ self moveShape ].
+	line from when: RSExtentChangedEvent do: [ self moveShape ].
+	line to when: RSExtentChangedEvent do: [ self moveShape ].
 	line when: OPRSDraggedControlPointsEvent do: [ self moveShape ].
 	line when: RSPositionChangedEvent do: [ self moveShape ].
 	shape when: RSExtentChangedEvent do: [ self moveShape ].
 	shape when: RSMouseDragging do: [ self saveShapePosition ].
-	alwaysShowGuideLine ifTrue: [ 
-		^ shape isInACanvas
-			  ifTrue: [ self addAnchorAndGuideLine ]
-			  ifFalse: [ 
-			  shape when: RSShapeAddedEvent do: [ self addAnchorAndGuideLine ] ] ].
-	shape when: RSMouseLeftDragStart do: [ self addAnchorAndGuideLine ].
-	shape when: RSMouseDragEnd do: [ self removeAnchorAndGuideLine ]
+	alwaysShowGuideLine
+		ifTrue: [
+			^ shape isInACanvas
+				  ifTrue: [ self addAnchorAndGuideLine ]
+				  ifFalse: [
+				  shape when: RSShapeAddedEvent do: [ self addAnchorAndGuideLine ] ] ]
+		ifFalse: [
+			shape when: RSMouseLeftDragStart do: [ self addAnchorAndGuideLine ].
+			shape when: RSMouseDragEnd do: [ self removeAnchorAndGuideLine ] ]
 ]
 
 { #category : #accessing }
@@ -82,8 +87,16 @@ OPRSAnchorConstraint >> createUpdater [
 		  shape: shape;
 		  anchorShape: anchorShape;
 		  positionReference: positionReference;
-		  minDistance: minDistance;
+		  distanceToLine: distanceToLine;
+		  minDistanceToLine: minDistanceToLine;
 		  yourself
+]
+
+{ #category : #accessing }
+OPRSAnchorConstraint >> distanceToLine: aNumber [
+	"Current distance to line"
+
+	distanceToLine := aNumber
 ]
 
 { #category : #building }
@@ -100,7 +113,9 @@ OPRSAnchorConstraint >> initialize [
 
 	super initialize.
 	self useGuideLine.
-	alwaysShowGuideLine := false
+	alwaysShowGuideLine := false.
+	minDistanceToLine := 0.
+	distanceToLine := 0
 ]
 
 { #category : #accessing }
@@ -109,16 +124,18 @@ OPRSAnchorConstraint >> line [
 ]
 
 { #category : #accessing }
-OPRSAnchorConstraint >> minDistance [
-	^ minDistance
+OPRSAnchorConstraint >> minDistanceToLine [
+	^ minDistanceToLine
 ]
 
 { #category : #accessing }
-OPRSAnchorConstraint >> minDistance: anInteger [
+OPRSAnchorConstraint >> minDistanceToLine: aNumber [
+	"Attempted distance from line to the right from the line looking from start to end. Positive number means to the left, negative to the right"
 
-	"Attempted distance from line to the right from the line looking from start to end. Negative number means to the right"
-
-	minDistance := anInteger
+	minDistanceToLine := aNumber.
+	self distanceToLine: (distanceToLine abs < aNumber abs
+			 ifTrue: [ aNumber ]
+			 ifFalse: [ distanceToLine ])
 ]
 
 { #category : #updating }

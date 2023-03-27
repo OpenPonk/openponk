@@ -41,19 +41,21 @@ OPRSAnchorConstraintBalanceReference >> computeAbsoluteBalanceForLength: aNumber
 ]
 
 { #category : #'as yet unclassified' }
-OPRSAnchorConstraintBalanceReference >> guideLineTargetFor: anchorConstraint [
-
-	^ anchorConstraint anchorShape
-]
-
-{ #category : #'as yet unclassified' }
 OPRSAnchorConstraintBalanceReference >> saveShapePositionIn: aConstraint [
 
-	| nearestPointInfo absoluteMinDistance |
+	| nearestPointInfo absoluteDistanceToLine distanceToLine |
 	nearestPointInfo := aConstraint createUpdater nearestPointInfo.
-	balance := nearestPointInfo balance.
-	absoluteMinDistance := nearestPointInfo distanceTo:
-		                       aConstraint shape position.
-	aConstraint minDistance: absoluteMinDistance
-		* (nearestPointInfo sideOfPoint: aConstraint shape position)
+
+	absoluteDistanceToLine := nearestPointInfo
+		                          distanceAlongLineToRectangle:
+		                          aConstraint shape encompassingRectangle.
+
+	distanceToLine := absoluteDistanceToLine
+	                  *
+	                  (nearestPointInfo sideOfPoint:
+		                   aConstraint shape position).
+
+	aConstraint distanceToLine: distanceToLine.
+
+	balance := nearestPointInfo balance
 ]

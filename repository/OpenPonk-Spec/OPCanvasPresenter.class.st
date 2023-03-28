@@ -209,7 +209,7 @@ OPCanvasPresenter >> initializeCanvas: aCanvas [
 	aCanvas
 		@ (RSCanvasController new
 				 interactionsFromArray: { 
-						 RSDraggableCanvasInteraction new.
+						 RSDraggableCanvasInteraction right.
 						 RSKeyNavigationCanvasInteraction new.
 						 OPRSZoomableCanvasInteraction new.
 						 RSScrollBarsCanvasInteraction new };

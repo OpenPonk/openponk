@@ -645,6 +645,13 @@ OPDiagramController >> rendered: aController [
 	self addMouseEventsFor: aController roassalShape
 ]
 
+{ #category : #testing }
+OPDiagramController >> requiresControllerToShowDiagramElement: aDiagramElement [
+
+	^ aDiagramElement ownModelElement isNotNil and: [
+		  (aDiagramElement isKindOf: OPEdgeLabel) not ]
+]
+
 { #category : #accessing }
 OPDiagramController >> roassalShape [
 
@@ -699,27 +706,30 @@ OPDiagramController >> showAllElements [
 { #category : #rebuilding }
 OPDiagramController >> showDiagramElement: aDiagramElement [
 
-	aDiagramElement ownModelElement ifNotNil: [ :modelElement | 
-		| controller |
-		controller := self
-			              controllerForModel: modelElement
-			              ifFound: [ :ctrl | 
-				              ctrl isRendered ifTrue: [ 
-					              aDiagramElement isRendered ifTrue: [ ^ ctrl ].
-					              ^ self error: 'Controller is already rendered' ].
-				              ctrl ]
-			              ifNone: [ self newControllerFor: modelElement ].
-		controller
-			diagramElement: aDiagramElement;
-			showWithoutDependentInDiagram: self ].
-	aDiagramElement ownedElements do: [ :each | 
+	(self requiresControllerToShowDiagramElement: aDiagramElement)
+		ifTrue: [
+			| controller |
+			controller := self
+				              controllerForModel: aDiagramElement ownModelElement
+				              ifFound: [ :ctrl |
+					              ctrl isRendered ifTrue: [
+						              aDiagramElement isRendered ifTrue: [ ^ ctrl ].
+						              ^ self error: 'Controller is already rendered' ].
+					              ctrl ]
+				              ifNone: [
+				              self newControllerFor:
+					              aDiagramElement ownModelElement ].
+			controller
+				diagramElement: aDiagramElement;
+				showWithoutDependentInDiagram: self ].
+	aDiagramElement ownedElements do: [ :each |
 		self showDiagramElement: each ]
 ]
 
 { #category : #rebuilding }
 OPDiagramController >> showElements [
 
-	diagramElement ownedElements do: [ :each | 
+	diagramElement ownedElements do: [ :each |
 		self showDiagramElement: each ].
 	diagramElement updateRenderFromSelf
 ]

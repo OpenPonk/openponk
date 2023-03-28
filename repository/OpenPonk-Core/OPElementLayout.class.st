@@ -80,10 +80,8 @@ OPElementLayout >> applyToDiagramElement: aDiagramElement [
 	position
 		ifNil: [
 			path ifNotNil: [
-				aDiagramElement waypoints:
-					{ aDiagramElement roassalShape controlPoints first }
-					, (path points copyFrom: 2 to: path points size - 1)
-					, { aDiagramElement roassalShape controlPoints last } ] ]
+				aDiagramElement innerWaypoints:
+					(path points copyFrom: 2 to: path points size - 1) ] ]
 		ifNotNil: [
 			aDiagramElement bounds: (OPDIBounds
 					 withPosition: position

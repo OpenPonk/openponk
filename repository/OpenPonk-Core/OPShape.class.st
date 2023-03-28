@@ -43,6 +43,12 @@ OPShape >> extent [
 ]
 
 { #category : #'as yet unclassified' }
+OPShape >> isResizableByUser [
+
+	^ true
+]
+
+{ #category : #'as yet unclassified' }
 OPShape >> moveToEmptySpace [
 
 	| spacing neededSpace canvasRectangle possibleCanvas occupiedRectangles |
@@ -87,7 +93,7 @@ OPShape >> renderIn: aCanvas [
 
 	self isRendered ifTrue: [ ^ self ].
 	super renderIn: aCanvas.
-	self bounds ifNil: [ 
+	self bounds ifNil: [
 		self isPositionableByUser ifTrue: [ self moveToEmptySpace ] ].
 	^ roassalShape
 ]
@@ -95,19 +101,20 @@ OPShape >> renderIn: aCanvas [
 { #category : #'as yet unclassified' }
 OPShape >> updateFromRender [
 
-	self bounds: (OPDIBounds
-			 withPosition: roassalShape position
-			 extent: roassalShape extent).
+	self isResizableByUser | self isPositionableByUser ifTrue: [
+		self bounds: (OPDIBounds new
+				 position: roassalShape position
+				 extent: roassalShape extent) ].
 	super updateFromRender
 ]
 
 { #category : #roassal }
 OPShape >> updateRenderFromBounds [
 
-	bounds ifNotNil: [ 
-		roassalShape
-			extent: bounds extent;
-			translateTo: bounds position ]
+	bounds ifNil: [ ^ self ].
+	self isResizableByUser ifTrue: [ roassalShape extent: bounds extent ].
+	self isPositionableByUser ifTrue: [
+		roassalShape translateTo: bounds position ]
 ]
 
 { #category : #roassal }

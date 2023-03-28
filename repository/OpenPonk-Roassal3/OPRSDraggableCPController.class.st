@@ -83,9 +83,7 @@ OPRSDraggableCPController >> initialize [
 OPRSDraggableCPController >> innerControlPointsFor: aLine [
 
 	| oldInnerCPs oldShapeEncompassingRectangle newShapeEncompassingRectangle |
-	oldInnerCPs := aLine controlPoints
-		               copyFrom: 2
-		               to: aLine controlPoints size - 1.
+	oldInnerCPs := aLine innerControlPoints.
 
 	aLine from = aLine to ifFalse: [ ^ oldInnerCPs ].
 
@@ -93,28 +91,28 @@ OPRSDraggableCPController >> innerControlPointsFor: aLine [
 
 	oldShapeEncompassingRectangle := aLine
 		                                 propertyAt: self class
-		                                 ifAbsent: [ 
-		                                 ^ self 
+		                                 ifAbsent: [
+		                                 ^ self
 			                                   defaultInnerSelfControlPointsFor:
 			                                   aLine ].
 
 	newShapeEncompassingRectangle := aLine from encompassingRectangle.
 	aLine propertyAt: self class put: newShapeEncompassingRectangle copy.
 
-	^ oldInnerCPs collect: [ :each | 
+	^ oldInnerCPs collect: [ :each |
 		  each + (Point
 			   x: (each x < oldShapeEncompassingRectangle center x
-					    ifTrue: [ 
+					    ifTrue: [
 						    newShapeEncompassingRectangle left
 						    - oldShapeEncompassingRectangle left ]
-					    ifFalse: [ 
+					    ifFalse: [
 						    newShapeEncompassingRectangle right
 						    - oldShapeEncompassingRectangle right ])
 			   y: (each y > oldShapeEncompassingRectangle center y
-					    ifTrue: [ 
+					    ifTrue: [
 						    newShapeEncompassingRectangle bottom
 						    - oldShapeEncompassingRectangle bottom ]
-					    ifFalse: [ 
+					    ifFalse: [
 						    newShapeEncompassingRectangle top
 						    - oldShapeEncompassingRectangle top ])) ]
 ]

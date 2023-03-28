@@ -29,10 +29,22 @@ OPDiagram >> documentation: anObject [
 	documentation := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+OPDiagram >> isPositionableByUser [
+
+	^ false
+]
+
 { #category : #testing }
 OPDiagram >> isRendered [
 
 	^ roassalShape isNotNil
+]
+
+{ #category : #'as yet unclassified' }
+OPDiagram >> isResizableByUser [
+
+	^ false
 ]
 
 { #category : #'as yet unclassified' }
@@ -118,12 +130,4 @@ OPDiagram >> updateFromRender [
 			 withPosition: 0 @ 0
 			 extent: roassalShape encompassingRectangle extent).
 	self ownedElements do: #updateFromRender
-]
-
-{ #category : #'as yet unclassified' }
-OPDiagram >> updateRenderFromSelf [
-
-	self isRendered ifFalse: [ ^ self ].
-	self ownedElements do: #updateRenderFromSelf.
-	roassalShape signalUpdate
 ]

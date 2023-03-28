@@ -136,13 +136,10 @@ OPRSDraggableControlPointHandle >> size [
 
 { #category : #'as yet unclassified' }
 OPRSDraggableControlPointHandle >> straightenConnection [
-
 	"Remove all the handles of the connection"
 
 	line controlPoints ifEmpty: [ ^ self ].
-	line controlPoints: { 
-			line controlPoints first.
-			line controlPoints last }.
+	line innerControlPoints: #(  ).
 	(line propertyAt: OPRSDraggableControlPoints) rebuild
 ]
 

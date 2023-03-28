@@ -193,11 +193,9 @@ OPRSSelectionDraggable >> startDrag: anEvent [
 OPRSSelectionDraggable >> translateLinesBy: anOffset [
 
 	movedLinesWithControlPoints do: [ :each |
-		each controlPoints: { each controlPoints first }
-			,
-				((each controlPoints copyFrom: 2 to: each controlPoints size - 1)
-					 collect: [ :eachPoint | eachPoint + anOffset ])
-			, { each controlPoints last } ]
+		each innerControlPoints:
+			(each innerControlPoints collect: [ :eachPoint |
+				 eachPoint + anOffset ]) ]
 ]
 
 { #category : #events }

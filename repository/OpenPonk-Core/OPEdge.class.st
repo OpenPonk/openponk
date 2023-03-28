@@ -39,6 +39,21 @@ OPEdge class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #source #target #waypoints )
 ]
 
+{ #category : #accessing }
+OPEdge >> innerWaypoints [
+
+	^ waypoints copyFrom: 2 to: waypoints size - 1
+]
+
+{ #category : #accessing }
+OPEdge >> innerWaypoints: aCollection [
+
+	self isRendered ifTrue: [
+		self waypoints:
+			{ self roassalShape controlPoints first } , aCollection
+			, { self roassalShape controlPoints last } ]
+]
+
 { #category : #removing }
 OPEdge >> remove [
 
@@ -101,7 +116,13 @@ OPEdge >> updateFromRender [
 OPEdge >> updateRenderFromSelf [
 
 	self isRendered ifFalse: [ ^ self ].
-	waypoints ifNotNil: [ roassalShape controlPoints: waypoints ].
+	waypoints ifNotNil: [
+		roassalShape innerControlPoints: self innerWaypoints.
+		roassalShape to announce: (RSPositionChangedEvent new
+				 oldPosition: roassalShape to position;
+				 newPosition: roassalShape to position;
+				 yourself).
+		roassalShape update ].
 	super updateRenderFromSelf
 ]
 

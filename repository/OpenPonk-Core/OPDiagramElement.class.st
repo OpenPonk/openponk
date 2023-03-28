@@ -89,7 +89,7 @@ OPDiagramElement >> canvas [
 	^ roassalShape canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 OPDiagramElement >> createOwnedElementsWithoutController [
 
 	"Might be overriden to add owned diagram elements that have no controller that would create them, for example labels. Make sure these do not exist yet (that could produce them multiple times)"
@@ -221,7 +221,7 @@ OPDiagramElement >> ownModelElement [
 	^ self modelElements ifEmpty: [ nil ] ifNotEmpty: #first
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 OPDiagramElement >> ownedElement: aShape renderedIn: aCanvas [
 
 	self isRendered ifTrue: [ 
@@ -433,7 +433,7 @@ OPDiagramElement >> stonProcessSubObjects: block [
 			put: (block value: (self instVarNamed: each)) ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 OPDiagramElement >> styleChanged [
 
 	self isRendered ifTrue: [ self updateRenderFromStyles ]
@@ -460,7 +460,7 @@ OPDiagramElement >> stylePropertyNamed: aName put: aValue [
 	self localStyle at: aName asSymbol put: aValue
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 OPDiagramElement >> supportsColorChange [
 
 	^ OPWorkbench isDevelopmentMode and: [ 
@@ -479,7 +479,7 @@ OPDiagramElement >> targetEdges: aCollection [
 		addAll: aCollection
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 OPDiagramElement >> topMostOwningElement [
 
 	^ self owningElement
@@ -487,7 +487,7 @@ OPDiagramElement >> topMostOwningElement [
 		  ifNotNil: [ :owner | owner topMostOwningElement ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 OPDiagramElement >> updateFromRender [
 
 	self ownedElements do: #updateFromRender
@@ -508,7 +508,7 @@ OPDiagramElement >> updateRenderFromSelf [
 	roassalShape signalUpdate
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 OPDiagramElement >> updateRenderFromStyles [
 
 	"do nothing by default"

@@ -116,12 +116,11 @@ OPRSDraggableControlPoints >> removeHandles [
 OPRSDraggableControlPoints >> showHandles [
 
 	isActive ifTrue: [ ^ self ].
-	(line controlPoints copyFrom: 2 to: line controlPoints size - 1) 
-		withIndexDo: [ :each :index | 
-			handles add: (OPRSDraggableControlPointHandle new
-					 on: line atControlPoint: index + 1;
-					 render;
-					 yourself) ].
+	line innerControlPoints withIndexDo: [ :each :index |
+		handles add: (OPRSDraggableControlPointHandle new
+				 on: line atControlPoint: index + 1;
+				 render;
+				 yourself) ].
 	self showMidpointHandles.
 	line signalUpdate.
 	isActive := true

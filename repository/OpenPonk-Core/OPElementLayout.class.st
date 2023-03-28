@@ -82,7 +82,7 @@ OPElementLayout >> applyToDiagramElement: aDiagramElement [
 			path ifNotNil: [
 				aDiagramElement waypoints:
 					{ aDiagramElement roassalShape controlPoints first }
-					, path points
+					, (path points copyFrom: 2 to: path points size - 1)
 					, { aDiagramElement roassalShape controlPoints last } ] ]
 		ifNotNil: [
 			aDiagramElement bounds: (OPDIBounds

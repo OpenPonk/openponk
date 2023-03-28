@@ -92,6 +92,13 @@ OPDiagram >> renderBasicShapeIn: aCanvas [
 				'Reusing same diagram element for 2 canvases not allowed' ] ]
 ]
 
+{ #category : #rendering }
+OPDiagram >> renderShapeDetails [
+	"diagram cannot be rendered directly now, only its owned elements"
+
+	^ nil
+]
+
 { #category : #accessing }
 OPDiagram >> resolution [
 

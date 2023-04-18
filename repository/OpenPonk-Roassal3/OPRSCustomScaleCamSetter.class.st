@@ -57,6 +57,9 @@ OPRSCustomScaleCamSetter >> scale: aScale [
 { #category : #initialization }
 OPRSCustomScaleCamSetter >> setCamera [
 
-	super setCamera.
-	canvas camera scale: self scale
+	| rect |
+	rect := canvas encompassingRectangle.
+	canvas camera
+		privateScale: self scale;
+		position: (canvas camera positionFromSpace: rect floatCenter)
 ]

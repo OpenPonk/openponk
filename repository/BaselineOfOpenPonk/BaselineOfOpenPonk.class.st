@@ -105,20 +105,24 @@ BaselineOfOpenPonk >> loadPetitParserAndRoassal3 [
 
 { #category : #baselines }
 BaselineOfOpenPonk >> loadRoassal3 [
-
 	"Roassal3 needs to be loaded this way because different version of it is already included in Pharo 10+"
 
+	| exporters |
 	Smalltalk at: #BaselineOfRoassal3Exporters ifPresent: [ ^ self ].
-	[ 
+
+	exporters := Metacello new.
+	exporters
+		baseline: 'Roassal3Exporters';
+		repository: 'github://OpenPonk/Roassal3Exporters:master';
+		lock;
+		onConflictUseLoaded.
+	[
 	Metacello new
 		baseline: 'Roassal3';
-		repository: 'github://ObjectProfile/Roassal3:732803e';
+		repository: 'github://OpenPonk/Roassal3:master';
 		lock;
 		load: #Full ]
 		on: MCMergeOrLoadWarning
 		do: [ :warning | warning load ].
-	Metacello new
-		baseline: 'Roassal3Exporters';
-		repository: 'github://ObjectProfile/Roassal3Exporters:c5bd596';
-		load
+	exporters load
 ]

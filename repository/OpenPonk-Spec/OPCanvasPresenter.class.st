@@ -208,16 +208,15 @@ OPCanvasPresenter >> initializeCanvas: aCanvas [
 
 	aCanvas
 		@ (RSCanvasController new
-				 interactionsFromArray: { 
-						 RSDraggableCanvasInteraction right.
+				 interactionsFromArray: {
+						 (RSDraggableCanvasInteraction right
+							  hasDraggableAnimation: false;
+							  yourself).
 						 RSKeyNavigationCanvasInteraction new.
 						 OPRSZoomableCanvasInteraction new.
 						 RSScrollBarsCanvasInteraction new };
 				 configuration: (OPRSControlConfiguration new
 						  noLegend;
-						  noZoomToFitOnStart;
-						  hasDraggableAnimation: false;
-						  noZoomToFitOnExtendChanged;
 						  hasZoomableAnimation: false;
 						  keepCameraOnContent: self class keepCameraOnContent;
 						  yourself));
@@ -225,7 +224,7 @@ OPCanvasPresenter >> initializeCanvas: aCanvas [
 
 	(aCanvas propertyAt: OPRSSelectableCanvas)
 		when: OPRSSelectionEndEvent
-		do: [ :evt | 
+		do: [ :evt |
 			self
 				selectedShapes: evt selectedShapes
 				onPosition: evt originalEvent position ].
@@ -233,7 +232,7 @@ OPCanvasPresenter >> initializeCanvas: aCanvas [
 	aCanvas
 		when: RSExtentChangedEvent
 		do: [ :event | onExtentChange value: event ].
-	aCanvas when: RSScaleChangedEvent do: [ :event | 
+	aCanvas when: RSScaleChangedEvent do: [ :event |
 		| zoomText |
 		zoomText := (event newScale < 1
 			             ifTrue: [ '   ' ]

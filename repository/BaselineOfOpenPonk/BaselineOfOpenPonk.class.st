@@ -53,7 +53,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 
 	spec baseline: 'Moose' with: [ 
 		spec
-			repository: 'github://moosetechnology/Moose:v9.0.1';
+			repository: 'github://moosetechnology/Moose:v10.0.x';
 			loads: #( Merlin ) ].
 
 	spec

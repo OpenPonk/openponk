@@ -12,20 +12,20 @@ Class {
 BaselineOfOpenPonk >> baseline: spec [
 
 	<baseline>
-	spec for: #common do: [ 
+	spec for: #common do: [
 		self externalProjectsBaseline: spec.
 		self internalProjectsBaseline: spec.
 		spec
 			package: 'OpenPonk-Roassal3'
 			with: [ spec preLoadDoIt: #loadRoassal3 ];
-			package: 'OpenPonk-Core' with: [ 
+			package: 'OpenPonk-Core' with: [
 				spec requires:
 						#( 'Magritte' 'Mocketry' 'XMLParser' 'XPath' 'NeoJSON' 'OpenPonk-Roassal3' ) ];
 			package: 'OpenPonk-Morphic';
-			package: 'OpenPonk-Spec' with: [ 
+			package: 'OpenPonk-Spec' with: [
 				spec
-					requires: #( 'Moose' 'NewTools' 'Magritte' 'SynchronizedLinks'
-						   'OpenPonk-Morphic' );
+					requires:
+						#( 'NewTools' 'Magritte' 'SynchronizedLinks' 'OpenPonk-Morphic' );
 					preLoadDoIt: #loadPetitParserAndRoassal3 ].
 		spec
 			group: 'default'
@@ -35,26 +35,20 @@ BaselineOfOpenPonk >> baseline: spec [
 { #category : #baselines }
 BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 
-	spec baseline: 'XMLParser' with: [ 
+	spec baseline: 'XMLParser' with: [
 		spec
 			repository: 'github://pharo-contributions/XML-XMLParser:3.5.x/src';
 			loads: #( Core ) ].
 
-	spec baseline: 'XPath' with: [ 
+	spec baseline: 'XPath' with: [
 		spec
 			repository: 'github://pharo-contributions/XML-XPath:3450f91/src';
 			loads: #( Core ) ].
 
-	spec baseline: 'Magritte' with: [ 
+	spec baseline: 'Magritte' with: [
 		spec
-			repository:
-				'github://JanBliznicenko/magritte:master';
+			repository: 'github://JanBliznicenko/magritte:master';
 			loads: #( Core 'Magritte-Morph' ) ].
-
-	spec baseline: 'Moose' with: [ 
-		spec
-			repository: 'github://moosetechnology/Moose:v10.0.x';
-			loads: #( Merlin ) ].
 
 	spec
 		baseline: 'Mocketry'
@@ -62,8 +56,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 
 	spec
 		baseline: 'NeoJSON'
-		with: [ 
-		spec repository: 'github://svenvc/NeoJSON:a18a783' ]
+		with: [ spec repository: 'github://svenvc/NeoJSON:a18a783' ]
 ]
 
 { #category : #baselines }

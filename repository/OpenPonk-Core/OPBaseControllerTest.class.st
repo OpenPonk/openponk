@@ -30,7 +30,7 @@ OPBaseControllerTest >> diagramControllerClass [
 { #category : #construction }
 OPBaseControllerTest >> diagramElementClass [
 
-	^ self subclassResponsibility
+	^ OPTestDiagramElement
 ]
 
 { #category : #accessing }

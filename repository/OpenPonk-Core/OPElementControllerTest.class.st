@@ -6,39 +6,28 @@ Class {
 
 { #category : #accessing }
 OPElementControllerTest >> controllerClass [
-	^ OPController
+	^ OPTestEntityController
 ]
 
 { #category : #accessing }
 OPElementControllerTest >> diagramControllerClass [
-	^ OPDiagramController
+	^ OPTestDiagramController
 ]
 
 { #category : #accessing }
 OPElementControllerTest >> diagramModelClass [
 
-	^ OPTestModel
+	^ OPTestContainerModel
 ]
 
 { #category : #accessing }
 OPElementControllerTest >> modelClass [
-	^ OPTestModel
-]
-
-{ #category : #tests }
-OPElementControllerTest >> testCannotConnectByDefault [
-	controller model: model.
-	self deny: (controller canBeSourceFor: nil).
-	self deny: (controller canBeTargetFor: nil)
+	^ OPTestEntityModel
 ]
 
 { #category : #tests }
 OPElementControllerTest >> testClassSideModelClass [
 
-	self class = OPElementControllerTest ifTrue: [ 
-		^ self
-			  should: [ self controllerClass modelClass ]
-			  raise: SubclassResponsibility ].
 	self assert: self controllerClass modelClass equals: self modelClass
 ]
 
@@ -77,11 +66,6 @@ OPElementControllerTest >> testIsSupported [
 
 	self class = OPElementControllerTest ifTrue: [ ^ self ].
 	super testIsSupported
-]
-
-{ #category : #tests }
-OPElementControllerTest >> testModelClass [
-	self should: [ controller modelClass ] raise: SubclassResponsibility
 ]
 
 { #category : #tests }

@@ -2,6 +2,7 @@ Class {
 	#name : #OPRSSelectionDraggable,
 	#superclass : #RSDraggable,
 	#instVars : [
+		'unusedStep',
 		'innerShapesProvider',
 		'draggedNodes',
 		'movedLinesWithControlPoints'
@@ -125,11 +126,44 @@ OPRSSelectionDraggable >> onShape: aShape [
 { #category : #events }
 OPRSSelectionDraggable >> processDrag: evt [
 
-	| d |
+	| dragAttachmentShapeAmount originalDragStep dragStep primaryShapeRectangle primaryShapePosition closestShapes lines attachmentMargin |
 	draggedNodes ifNil: [ ^ self ].
-	d := evt camera distanceFromPixelToSpace: evt step.
-	self translateLinesBy: d.
-	self translateShapesBy: d.
+	attachmentMargin := 10.
+	dragAttachmentShapeAmount := evt altKeyPressed
+		                             ifTrue: [ 0 ]
+		                             ifFalse: [ 5 ].
+	originalDragStep := (evt camera distanceFromPixelToSpace: evt step)
+	                    + unusedStep.
+	unusedStep := 0 @ 0.
+	primaryShapeRectangle := evt shape encompassingRectangle
+		                         translateBy: originalDragStep.
+	primaryShapePosition := primaryShapeRectangle center.
+	closestShapes := SortedCollection new sortBlock:
+		                 [ :each |
+		                 each position distanceTo: primaryShapePosition ]
+			                 ascending.
+	evt canvas shapes
+		select: [ :each |
+			each isSelectionDraggable and: [ (draggedNodes includes: each) not ] ]
+		thenDo: [ :each |
+			closestShapes add: each.
+			closestShapes size > dragAttachmentShapeAmount ifTrue: [
+				closestShapes removeLast ] ].
+	lines := SortedCollection sortBlock: #adaptationDistance ascending.
+	closestShapes
+		collect: [ :each |
+			primaryShapeRectangle
+				bestAlignmentLineTo: each encompassingRectangle
+				margin: attachmentMargin ]
+		thenDo: [ :each | each ifNotNil: [ lines add: each ] ].
+	dragStep := originalDragStep.
+	lines ifNotEmpty: [ :all |
+		| adaptationLine |
+		adaptationLine := all first.
+		dragStep := originalDragStep + adaptationLine adaptationOffset.
+		unusedStep := adaptationLine adaptationOffset negated ].
+	self translateLinesBy: dragStep.
+	self translateShapesBy: dragStep.
 	evt signalUpdate
 ]
 
@@ -180,6 +214,8 @@ OPRSSelectionDraggable >> startDrag: anEvent [
 		                , (self shapesToDragInside: eachSelectedShape) ].
 
 	movedLinesWithControlPoints := self movedLinesWithControlPointsBy: anEvent.
+	
+	unusedStep := 0@0.
 
 	event := OPRSDragFromSelectionStart fromEvent: anEvent.
 	event

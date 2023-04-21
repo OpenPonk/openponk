@@ -463,8 +463,7 @@ OPDiagramElement >> stylePropertyNamed: aName put: aValue [
 { #category : #initialization }
 OPDiagramElement >> supportsColorChange [
 
-	^ OPWorkbench isDevelopmentMode and: [ 
-		  (self respondsTo: #color) and: [ self respondsTo: #color: ] ]
+	^ (self respondsTo: #color) and: [ self respondsTo: #color: ]
 ]
 
 { #category : #accessing }

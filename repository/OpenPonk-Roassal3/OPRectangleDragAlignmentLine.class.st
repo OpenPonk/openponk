@@ -26,7 +26,7 @@ OPRectangleDragAlignmentLine class >> draggedFirst: draggedFirst draggedSecond: 
 		(self dragged: draggedFirst compared: comparedSecond).
 		(self dragged: draggedSecond compared: comparedFirst).
 		(self dragged: draggedSecond compared: comparedSecond) } do: [ :each |
-		each resultingDistance < best resultingDistance ifTrue: [
+		each resultingDistance > best resultingDistance ifTrue: [
 			best := each ] ].
 	^ best
 ]
@@ -77,6 +77,12 @@ OPRectangleDragAlignmentLine >> dragged: aPoint [
 OPRectangleDragAlignmentLine >> draggedAdapated [
 
 	^ self dragged + self adaptationOffset
+]
+
+{ #category : #'as yet unclassified' }
+OPRectangleDragAlignmentLine >> includeOffsetOf: anotherAlignmentLine [
+
+	dragged := dragged translateBy: anotherAlignmentLine adaptationOffset
 ]
 
 { #category : #accessing }

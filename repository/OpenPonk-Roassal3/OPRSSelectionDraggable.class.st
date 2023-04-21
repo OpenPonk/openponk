@@ -5,7 +5,8 @@ Class {
 		'unusedStep',
 		'innerShapesProvider',
 		'draggedNodes',
-		'movedLinesWithControlPoints'
+		'movedLinesWithControlPoints',
+		'alignmentLineShapes'
 	],
 	#category : #'OpenPonk-Roassal3-Interactions'
 }
@@ -86,10 +87,12 @@ OPRSSelectionDraggable >> endDrag: anEvent [
 	event
 		position: anEvent position;
 		morph: anEvent morph.
-	(draggedNodes copyWithout: anEvent shape) do: [ :each | 
+	(draggedNodes copyWithout: anEvent shape) do: [ :each |
 		each announce: event ].
 
-	draggedNodes := #(  )
+	self replaceAlignmentLinesWith: #(  ).
+	draggedNodes := #(  ).
+	event signalUpdate
 ]
 
 { #category : #initialization }
@@ -126,7 +129,7 @@ OPRSSelectionDraggable >> onShape: aShape [
 { #category : #events }
 OPRSSelectionDraggable >> processDrag: evt [
 
-	| dragAttachmentShapeAmount originalDragStep dragStep primaryShapeRectangle primaryShapePosition closestShapes lines attachmentMargin |
+	| dragAttachmentShapeAmount originalDragStep dragStep primaryShapeRectangle primaryShapePosition closestShapes horizontalLineGroups verticalLineGroups attachmentMargin lineGroupsComparisonBlock |
 	draggedNodes ifNil: [ ^ self ].
 	attachmentMargin := 10.
 	dragAttachmentShapeAmount := evt altKeyPressed
@@ -149,19 +152,47 @@ OPRSSelectionDraggable >> processDrag: evt [
 			closestShapes add: each.
 			closestShapes size > dragAttachmentShapeAmount ifTrue: [
 				closestShapes removeLast ] ].
-	lines := SortedCollection sortBlock: #adaptationDistance ascending.
-	closestShapes
-		collect: [ :each |
-			primaryShapeRectangle
-				bestAlignmentLineTo: each encompassingRectangle
-				margin: attachmentMargin ]
-		thenDo: [ :each | each ifNotNil: [ lines add: each ] ].
+	horizontalLineGroups := SortedCollection sortBlock: [ :a :b |
+		                        a isNotEmpty and: [
+			                        b isEmpty or: [
+				                        a first adaptationDistance
+				                        < b first adaptationDistance ] ] ].
+	verticalLineGroups := horizontalLineGroups copyEmpty.
+	closestShapes do: [ :each |
+		horizontalLineGroups add: (primaryShapeRectangle
+				 horizontalAlignmentLinesTo: each encompassingRectangle
+				 margin: attachmentMargin).
+		verticalLineGroups add: (primaryShapeRectangle
+				 verticalAlignmentLinesTo: each encompassingRectangle
+				 margin: attachmentMargin) ].
 	dragStep := originalDragStep.
-	lines ifNotEmpty: [ :all |
-		| adaptationLine |
-		adaptationLine := all first.
-		dragStep := originalDragStep + adaptationLine adaptationOffset.
-		unusedStep := adaptationLine adaptationOffset negated ].
+	lineGroupsComparisonBlock := [ :groups |
+	                             groups select: [ :each |
+		                             each isNotEmpty and: [
+			                             each first adaptationOffset
+				                             closeTo:
+				                             groups first first adaptationOffset
+				                             absolutePrecision: 0.001 ] ] ].
+	horizontalLineGroups := (horizontalLineGroups ifNotEmpty:
+		                         lineGroupsComparisonBlock) asArray.
+	verticalLineGroups := (verticalLineGroups ifNotEmpty:
+		                       lineGroupsComparisonBlock) asArray.
+	horizontalLineGroups ifNotEmpty: [
+		verticalLineGroups ifNotEmpty: [
+			horizontalLineGroups do: [ :eachGroup |
+				eachGroup do: [ :each |
+					each includeOffsetOf: verticalLineGroups first first ] ].
+			verticalLineGroups do: [ :eachGroup |
+				eachGroup do: [ :each |
+					each includeOffsetOf: horizontalLineGroups first first ] ] ] ].
+	self replaceAlignmentLinesWith:
+		(horizontalLineGroups , verticalLineGroups) flattened.
+	(horizontalLineGroups takeFirst: 1)
+	, (verticalLineGroups takeFirst: 1) do: [ :eachGroup |
+		| offset |
+		offset := eachGroup first adaptationOffset.
+		dragStep := dragStep + offset.
+		unusedStep := unusedStep - offset ].
 	self translateLinesBy: dragStep.
 	self translateShapesBy: dragStep.
 	evt signalUpdate
@@ -171,6 +202,20 @@ OPRSSelectionDraggable >> processDrag: evt [
 OPRSSelectionDraggable >> propertyKey [
 
 	^ OPRSSelectionDraggable
+]
+
+{ #category : #events }
+OPRSSelectionDraggable >> replaceAlignmentLinesWith: alignmentLines [
+
+	alignmentLineShapes do: #remove.
+
+	alignmentLineShapes := alignmentLines collect: [ :each |
+		                       RSLine new
+			                       from: each draggedAdapated;
+			                       to: each compared;
+			                       color: (Color lightOrange alpha: 0.8);
+			                       yourself ].
+	draggedNodes anyOne canvas addAll: alignmentLineShapes
 ]
 
 { #category : #events }
@@ -196,16 +241,15 @@ OPRSSelectionDraggable >> shapesToDragInside: aContainerShape [
 OPRSSelectionDraggable >> startDrag: anEvent [
 
 	| selectedShapes selectedShapesToMove event |
+	alignmentLineShapes := RSGroup new.
+
 	selectedShapes := anEvent canvas selectedShapes ifEmpty: [
 		                  { anEvent shape } ].
 
-	selectedShapesToMove := OPWorkbench isDevelopmentMode
+	selectedShapesToMove := (selectedShapes includes: anEvent shape)
 		                        ifTrue: [
-			                        (selectedShapes includes: anEvent shape)
-				                        ifTrue: [
-					                        selectedShapes select: [ :each |
-						                        each hasProperty: self propertyKey ] ]
-				                        ifFalse: [ { anEvent shape } ] ]
+			                        selectedShapes select: [ :each |
+				                        each hasProperty: self propertyKey ] ]
 		                        ifFalse: [ { anEvent shape } ].
 
 	draggedNodes := selectedShapesToMove flatCollectAsSet: [
@@ -213,9 +257,10 @@ OPRSSelectionDraggable >> startDrag: anEvent [
 		                (Set with: eachSelectedShape)
 		                , (self shapesToDragInside: eachSelectedShape) ].
 
-	movedLinesWithControlPoints := self movedLinesWithControlPointsBy: anEvent.
-	
-	unusedStep := 0@0.
+	movedLinesWithControlPoints := self movedLinesWithControlPointsBy:
+		                               anEvent.
+
+	unusedStep := 0 @ 0.
 
 	event := OPRSDragFromSelectionStart fromEvent: anEvent.
 	event

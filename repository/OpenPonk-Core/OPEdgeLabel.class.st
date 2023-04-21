@@ -43,9 +43,6 @@ OPEdgeLabel >> renderShapeDetails [
 { #category : #'as yet unclassified' }
 OPEdgeLabel >> updateFromRender [
 
-	OPWorkbench isDevelopmentMode ifFalse: [ 
-		^ self ownedElements do: #updateFromRender ].
-	
 	self bounds: (OPDIBounds
 			 withPosition: roassalShape position
 			 extent: roassalShape extent).

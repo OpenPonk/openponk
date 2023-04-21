@@ -58,7 +58,6 @@ OPEditor class >> defaultLayout [
 { #category : #toolbar }
 OPEditor class >> developerToolbarMenu: aBuilder [
 
-	OPWorkbench isDevelopmentMode ifFalse: [ ^ self ].
 	(aBuilder item: 'Inspect Controller...')
 		icon: (self iconNamed: #glamorousInspect);
 		action: [ aBuilder model diagramController inspect ].

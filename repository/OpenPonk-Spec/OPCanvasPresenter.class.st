@@ -9,36 +9,8 @@ Class {
 		'onZoomChange',
 		'onExtentChange'
 	],
-	#classInstVars : [
-		'keepCameraOnContent'
-	],
 	#category : #'OpenPonk-Spec-Windows'
 }
-
-{ #category : #accessing }
-OPCanvasPresenter class >> keepCameraOnContent [
-
-	^ keepCameraOnContent ifNil: [ true ]
-]
-
-{ #category : #accessing }
-OPCanvasPresenter class >> keepCameraOnContent: aBoolean [
-
-	keepCameraOnContent := aBoolean
-]
-
-{ #category : #accessing }
-OPCanvasPresenter class >> settingsOn: aBuilder [
-
-	<systemsettings>
-	(aBuilder setting: #keepCameraOnContent)
-		parent: #openponk;
-		target: self;
-		label: 'Prevent moving away from canvas content';
-		description:
-			'When enabled, canvas tries to limit you from zooming/dragging away from area with existing shapes, so at least part of the existing diagram is usually always seen. Only affects newly displayed diagrams.';
-		order: 60
-]
 
 { #category : #accessing }
 OPCanvasPresenter >> attachController: aDiagramController [
@@ -218,7 +190,6 @@ OPCanvasPresenter >> initializeCanvas: aCanvas [
 				 configuration: (OPRSControlConfiguration new
 						  noLegend;
 						  hasZoomableAnimation: false;
-						  keepCameraOnContent: self class keepCameraOnContent;
 						  yourself));
 		@ OPRSSelectableCanvas rightLeft.
 

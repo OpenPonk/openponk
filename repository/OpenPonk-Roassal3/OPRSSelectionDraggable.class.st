@@ -80,64 +80,23 @@ OPRSSelectionDraggable >> dragNoInnerShapes [
 ]
 
 { #category : #events }
-OPRSSelectionDraggable >> endDrag: anEvent [
+OPRSSelectionDraggable >> dragStepForEvent: evt [
 
-	| event |
-	event := OPRSDragFromSelectionEnd fromEvent: anEvent.
-	event
-		position: anEvent position;
-		morph: anEvent morph.
-	(draggedNodes copyWithout: anEvent shape) do: [ :each |
-		each announce: event ].
-
-	self replaceAlignmentLinesWith: #(  ).
-	draggedNodes := #(  ).
-	event signalUpdate
-]
-
-{ #category : #initialization }
-OPRSSelectionDraggable >> initialize [
-
-	super initialize.
-	self dragNoInnerShapes
-]
-
-{ #category : #accessing }
-OPRSSelectionDraggable >> innerShapesProvider: anInnerShapesProvider [
-
-	innerShapesProvider := anInnerShapesProvider
-]
-
-{ #category : #events }
-OPRSSelectionDraggable >> movedLinesWithControlPointsBy: anEvent [
-
-	^ ((draggedNodes flatCollect: #connectedLines as: Bag)
-		   valuesAndCounts associations select: [ :each | each value > 1 ])
-		  collect: #key
-		  as: Set
-]
-
-{ #category : #hooks }
-OPRSSelectionDraggable >> onShape: aShape [
-
-	super onShape: aShape.
-	aShape when: RSMouseDragStart do: [ :event | self startDrag: event ].
-	aShape when: RSMouseDragEnd do: [ :event | self endDrag: event ].
-	aShape propertyAt: self propertyKey put: self
-]
-
-{ #category : #events }
-OPRSSelectionDraggable >> processDrag: evt [
-
-	| dragAttachmentShapeAmount originalDragStep dragStep primaryShapeRectangle primaryShapePosition closestShapes horizontalLineGroups verticalLineGroups attachmentMargin lineGroupsComparisonBlock |
-	draggedNodes ifNil: [ ^ self ].
-	attachmentMargin := 10.
+	| dragAttachmentShapeAmount originalDragStep dragStep primaryShapeRectangle primaryShapePosition closestShapes horizontalLineGroups verticalLineGroups attachmentMargin lineGroupsComparisonBlock configuration |
+	configuration := evt canvas
+		                 propertyAt: RSCanvasController
+		                 ifPresent: #configuration
+		                 ifAbsent: [ OPRSControlConfiguration new ].
 	dragAttachmentShapeAmount := evt altKeyPressed
 		                             ifTrue: [ 0 ]
-		                             ifFalse: [ 5 ].
+		                             ifFalse: [
+		                             configuration
+			                             dragAttachmentComparisonsAmount ].
+	attachmentMargin := configuration dragAttachmentMargin.
 	originalDragStep := (evt camera distanceFromPixelToSpace: evt step)
 	                    + unusedStep.
 	unusedStep := 0 @ 0.
+	dragAttachmentShapeAmount isZero ifTrue: [ ^ originalDragStep ].
 	primaryShapeRectangle := evt shape encompassingRectangle
 		                         translateBy: originalDragStep.
 	primaryShapePosition := primaryShapeRectangle center.
@@ -193,6 +152,62 @@ OPRSSelectionDraggable >> processDrag: evt [
 		offset := eachGroup first adaptationOffset.
 		dragStep := dragStep + offset.
 		unusedStep := unusedStep - offset ].
+	^ dragStep
+]
+
+{ #category : #events }
+OPRSSelectionDraggable >> endDrag: anEvent [
+
+	| event |
+	event := OPRSDragFromSelectionEnd fromEvent: anEvent.
+	event
+		position: anEvent position;
+		morph: anEvent morph.
+	(draggedNodes copyWithout: anEvent shape) do: [ :each |
+		each announce: event ].
+
+	self replaceAlignmentLinesWith: #(  ).
+	draggedNodes := #(  ).
+	event signalUpdate
+]
+
+{ #category : #initialization }
+OPRSSelectionDraggable >> initialize [
+
+	super initialize.
+	self dragNoInnerShapes
+]
+
+{ #category : #accessing }
+OPRSSelectionDraggable >> innerShapesProvider: anInnerShapesProvider [
+
+	innerShapesProvider := anInnerShapesProvider
+]
+
+{ #category : #events }
+OPRSSelectionDraggable >> movedLinesWithControlPointsBy: anEvent [
+
+	^ ((draggedNodes flatCollect: #connectedLines as: Bag)
+		   valuesAndCounts associations select: [ :each | each value > 1 ])
+		  collect: #key
+		  as: Set
+]
+
+{ #category : #hooks }
+OPRSSelectionDraggable >> onShape: aShape [
+
+	super onShape: aShape.
+	aShape when: RSMouseDragStart do: [ :event | self startDrag: event ].
+	aShape when: RSMouseDragEnd do: [ :event | self endDrag: event ].
+	aShape propertyAt: self propertyKey put: self
+]
+
+{ #category : #events }
+OPRSSelectionDraggable >> processDrag: evt [
+
+	| dragStep |
+	draggedNodes ifNil: [ ^ self ].
+	dragStep := self dragStepForEvent: evt.
 	self translateLinesBy: dragStep.
 	self translateShapesBy: dragStep.
 	evt signalUpdate

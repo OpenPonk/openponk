@@ -27,6 +27,12 @@ OPBaseControllerTest >> diagramControllerClass [
 	^ self subclassResponsibility
 ]
 
+{ #category : #construction }
+OPBaseControllerTest >> diagramElementClass [
+
+	^ OPTestDiagramElement
+]
+
 { #category : #accessing }
 OPBaseControllerTest >> diagramModelClass [
 	^ self subclassResponsibility
@@ -39,20 +45,24 @@ OPBaseControllerTest >> modelClass [
 
 { #category : #'instance creation' }
 OPBaseControllerTest >> newModel [
+
 	| aModel |
 	aModel := self modelClass new.
-	(aModel respondsTo: #name:)
-		ifTrue: [ aModel name: self modelClass name asString ].
+	(aModel respondsTo: #name:) ifTrue: [ 
+		aModel name: self modelClass name asString ].
 	^ aModel
 ]
 
 { #category : #running }
 OPBaseControllerTest >> setUp [
+
 	super setUp.
 	controller := self controllerClass new.
 	diagramController := self diagramControllerClass new.
 	diagramController model: self diagramModelClass new.
-	diagramController view: RTView new.
+	diagramController canvasPresenter: (OPCanvasPresenter new
+			 canvas: RSCanvas new;
+			 yourself).
 	model := self newModel
 ]
 
@@ -60,15 +70,6 @@ OPBaseControllerTest >> setUp [
 OPBaseControllerTest >> stubRefresh [
 	controller stub figure willReturn: Mock new.
 	controller stub refreshFigure willReturn: controller
-]
-
-{ #category : #tests }
-OPBaseControllerTest >> testBuildEditorForm [
-	self skip.
-	"| form |
-	form := OPDynamicForm new.
-	controller model: model.
-	self shouldnt: [ controller buildEditorForm: form ] raise: Error"
 ]
 
 { #category : #tests }

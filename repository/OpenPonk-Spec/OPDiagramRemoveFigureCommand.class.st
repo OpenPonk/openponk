@@ -5,6 +5,13 @@ Class {
 }
 
 { #category : #testing }
+OPDiagramRemoveFigureCommand class >> canBeExecutedInContext: aToolContext [
+
+	^ (super canBeExecutedInContext: aToolContext) and: [ 
+		  aToolContext figures anySatisfy: [ :any | any canvas ~= any ] ]
+]
+
+{ #category : #testing }
 OPDiagramRemoveFigureCommand class >> canvasShortcutActivation [
 	<classAnnotation>
 	^ CmdShortcutActivation by: Character delete meta for: OPCanvasPresenter
@@ -18,12 +25,18 @@ OPDiagramRemoveFigureCommand >> defaultMenuIcon [
 
 { #category : #accessing }
 OPDiagramRemoveFigureCommand >> defaultMenuItemName [
-	^ 'Remove from model'
+
+	^ (models isNil or: [ models size = 1 ])
+		  ifTrue: [ 'Remove from model' ]
+		  ifFalse: [ 'Remove all ' , models size asString , ' from model' ]
 ]
 
 { #category : #execution }
 OPDiagramRemoveFigureCommand >> execute [
+
 	diagramController deselectAll.
-	diagramController removeFromView: figure.
-	view signalUpdate
+	figures do: [ :each | 
+		(diagramController hasControllerForFigure: each) ifTrue: [ 
+			diagramController removeFromCanvas: each ] ].
+	canvas signalUpdate
 ]

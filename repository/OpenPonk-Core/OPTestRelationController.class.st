@@ -10,6 +10,12 @@ Class {
 	#category : #'OpenPonk-Core-Controllers - Tests'
 }
 
+{ #category : #construction }
+OPTestRelationController >> diagramElementClass [
+
+	^ OPTestEdge
+]
+
 { #category : #accessing }
 OPTestRelationController >> modelClass [
 	^ OPTestRelationModel
@@ -20,17 +26,4 @@ OPTestRelationController >> removeModel [
 	| ownerModel |
 	ownerModel := self diagramController model.
 	ownerModel entities remove: self model
-]
-
-{ #category : #construction }
-OPTestRelationController >> renderFigureIn: aView [
-	self diagramController addingFigureFor: self.
-	figure := RTBox new elementOn: self model.
-	aView add: figure.
-	^ self diagramController addedFigureFor: self
-]
-
-{ #category : #accessing }
-OPTestRelationController >> sourceController [
-	^ sourceController
 ]

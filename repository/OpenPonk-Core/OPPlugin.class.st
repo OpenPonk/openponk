@@ -32,11 +32,6 @@ OPPlugin >> diagramControllerClass [
 ]
 
 { #category : #accessing }
-OPPlugin >> diagramSerializerClass [
-	^ OPJsonDiagramSerializer
-]
-
-{ #category : #accessing }
 OPPlugin >> icon [
 	^ OPCoreIcons opFsmDiagramIcon
 ]
@@ -86,9 +81,7 @@ OPPlugin >> newModel [
 
 { #category : #accessing }
 OPPlugin >> serializer [
-	^ OPMementoDirectorySerializer
-		withModelSerializer: self modelSerializerClass new
-		diagramsSerializer: self diagramSerializerClass new
+	^ OPMementoDirectorySerializer forPlugin: self
 ]
 
 { #category : #accessing }

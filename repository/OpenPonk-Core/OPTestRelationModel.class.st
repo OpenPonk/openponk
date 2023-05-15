@@ -3,7 +3,7 @@ I am a mock representing an entity connecting two other entities.
 "
 Class {
 	#name : #OPTestRelationModel,
-	#superclass : #OPTestModel,
+	#superclass : #OPTestAbstractModel,
 	#instVars : [
 		'source',
 		'target'

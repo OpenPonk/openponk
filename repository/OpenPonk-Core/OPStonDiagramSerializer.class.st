@@ -4,6 +4,24 @@ Class {
 	#category : #'OpenPonk-Core-Persistence'
 }
 
+{ #category : #'as yet unclassified' }
+OPStonDiagramSerializer class >> exportVersion [
+
+	^ 1
+]
+
+{ #category : #formatting }
+OPStonDiagramSerializer class >> formatName [
+
+	^ #ston
+]
+
+{ #category : #accessing }
+OPStonDiagramSerializer class >> minImportVersion [
+
+	^ 1
+]
+
 { #category : #accessing }
 OPStonDiagramSerializer >> formatName [
 	^ 'ston'
@@ -11,20 +29,19 @@ OPStonDiagramSerializer >> formatName [
 
 { #category : #'serialize/materialize' }
 OPStonDiagramSerializer >> materializeDiagramOf: aModel from: aStream [
-	^ self stonMaterialize: aStream
-]
 
-{ #category : #'ston - serialize/materialize' }
-OPStonDiagramSerializer >> serialize: anObject [
-	^ STON toStringPretty: anObject
+	| diagram adapters allModelElements |
+	diagram := STON fromStream: aStream.
+	adapters := OPNavigatorAdapters new.
+	allModelElements := ((Set with: aModel)
+	                     , (adapters allChildrenFor: aModel) collect: [ 
+		                     :each | each uuid -> each ]) asDictionary.
+	diagram resolveAllModelElements: allModelElements.
+	^ diagram
 ]
 
 { #category : #'serialize/materialize' }
-OPStonDiagramSerializer >> serializeDiagram: aDiagramMemento [
-	^ self serialize: aDiagramMemento
-]
+OPStonDiagramSerializer >> serializeDiagram: aDiagram to: aStream [
 
-{ #category : #'ston - serialize/materialize' }
-OPStonDiagramSerializer >> stonMaterialize: aString [
-	^ STON fromString: aString
+	^ STON put: aDiagram onStreamPretty: aStream
 ]

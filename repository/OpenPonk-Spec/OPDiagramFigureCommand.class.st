@@ -5,12 +5,12 @@ Class {
 	#name : #OPDiagramFigureCommand,
 	#superclass : #CmdCommand,
 	#instVars : [
-		'figure',
-		'view',
+		'canvas',
 		'diagramController',
 		'figures',
 		'models',
-		'controllers'
+		'controllers',
+		'diagramElements'
 	],
 	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
 }
@@ -48,11 +48,12 @@ OPDiagramFigureCommand class >> isAbstract [
 
 { #category : #execution }
 OPDiagramFigureCommand >> prepareFullExecutionInContext: aToolContext [
+
 	super prepareFullExecutionInContext: aToolContext.
 	diagramController := aToolContext diagramController.
-	view := diagramController view.
+	canvas := diagramController canvas.
 	figures := aToolContext figures.
-	figure := aToolContext figure.
 	models := aToolContext models.
-	controllers := aToolContext controllers
+	controllers := aToolContext controllers.
+	diagramElements := aToolContext diagramElements.
 ]

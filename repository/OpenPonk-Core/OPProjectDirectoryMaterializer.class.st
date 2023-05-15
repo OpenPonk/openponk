@@ -3,18 +3,43 @@ I take a folder and try to materialize a project from it.
 "
 Class {
 	#name : #OPProjectDirectoryMaterializer,
-	#superclass : #Object,
+	#superclass : #OPSerializer,
 	#category : #'OpenPonk-Core-Persistence'
 }
+
+{ #category : #'as yet unclassified' }
+OPProjectDirectoryMaterializer class >> exportSubject [
+
+	^ #project
+]
+
+{ #category : #'as yet unclassified' }
+OPProjectDirectoryMaterializer class >> exportVersion [
+
+	^ 0
+]
+
+{ #category : #formatting }
+OPProjectDirectoryMaterializer class >> formatName [
+
+	^ #directory
+]
+
+{ #category : #accessing }
+OPProjectDirectoryMaterializer class >> maxImportVersion [
+
+	^ 1
+]
+
+{ #category : #accessing }
+OPProjectDirectoryMaterializer class >> minImportVersion [
+
+	^ 1
+]
 
 { #category : #accessing }
 OPProjectDirectoryMaterializer >> exporter [
 	^ 'OpenPonk'
-]
-
-{ #category : #accessing }
-OPProjectDirectoryMaterializer >> exporterVersion [
-	^ OPVersion current fullVersionString
 ]
 
 { #category : #'public - reading' }
@@ -49,19 +74,29 @@ OPProjectDirectoryMaterializer >> pluginForName: aName pluginVersion: aVersion [
 { #category : #reading }
 OPProjectDirectoryMaterializer >> readAllMementosFrom: aRootFolder [
 	| references |
-	references := self readModelReferences: aRootFolder.
+	references := self readModelReferences: aRootFolder.	
 	^ references
 		collect: [ :pair | 
 			self
 				readMementoFrom: aRootFolder / 'models' / pair key asString
-				with: pair value serializer ]
+				asPlugin: pair value ]
 ]
 
 { #category : #reading }
-OPProjectDirectoryMaterializer >> readMementoFrom: aFolder with: aSerializer [
-	^ (aSerializer loadMementoFrom: aFolder)
-		ifNil:
-			[ self error: 'Unable to deserialize memento from ' , aFolder asString ]
+OPProjectDirectoryMaterializer >> readMementoFrom: aFolder asPlugin: aPlugin [
+
+	| materializer |
+	materializer := aFolder files
+		                detect: [ :any | 
+		                any basename = OPExportInfo fileName ]
+		                ifFound: [ :exportInfoFile | 
+			                (OPSerializer forExportInfoFile: exportInfoFile)
+				                plugin: aPlugin;
+				                yourself ]
+		                ifNone: [ aPlugin serializer ].
+	^ (materializer loadMementoFrom: aFolder) ifNil: [ 
+		  self error:
+			  'Unable to deserialize memento from ' , aFolder asString ]
 ]
 
 { #category : #reading }
@@ -81,12 +116,13 @@ OPProjectDirectoryMaterializer >> readModelReferences: aRootFolder [
 
 { #category : #reading }
 OPProjectDirectoryMaterializer >> readProjectInfoFrom: aFile [
-	| project json exporter exporterVersion |
+
+	| project json exporter |
 	json := STON fromStream: aFile readStream.
-	exporter := (json at: 'exporter') at: 'exporter'.
-	exporterVersion := (json at: 'exporter') at: 'exporterVersion'.
-	(exporter = self exporter and: [ exporterVersion = exporterVersion ])
-		ifFalse: [ self error: 'Unsupported exporter ' , exporter , ' version ' , exporterVersion ].
+	exporter := (json at: 'export' ifAbsent: [ json at: 'exporter' ]) 
+		            at: 'exporter'.
+	exporter = self exporter ifFalse: [ 
+		self error: 'Unsupported exporter ' , exporter ].
 	project := OPProject new.
 	project name: ((json at: 'project') at: 'name').
 	project uuid: (UUID fromString: ((json at: 'project') at: 'uuid')).

@@ -58,7 +58,6 @@ OPEditor class >> defaultLayout [
 { #category : #toolbar }
 OPEditor class >> developerToolbarMenu: aBuilder [
 
-	OPWorkbench isDevelopmentMode ifFalse: [ ^ self ].
 	(aBuilder item: 'Inspect Controller...')
 		icon: (self iconNamed: #glamorousInspect);
 		action: [ aBuilder model diagramController inspect ].
@@ -115,7 +114,7 @@ OPEditor class >> toolbarMenu: aBuilder [
 	(aBuilder item: 'Export as PNG...')
 		icon: (self iconNamed: #smallScreenshot);
 		action: [ aBuilder model canvasPresenter exportAsPng ].
-	(aBuilder item: 'Export as SVG (incomplete/simplified)...')
+	(aBuilder item: 'Export as SVG (simplified)...')
 		icon: (self iconNamed: #smallScreenshot);
 		action: [ aBuilder model canvasPresenter exportAsSvg ]
 ]
@@ -191,8 +190,8 @@ OPEditor >> initializePresenters [
 		add: form.
 	self class currentLayout applyOn: self.
 
-	self whenBuiltDo: [ :builtEvent | 
-		self withWindowDo: [ :window | 
+	self whenBuiltDo: [ :builtEvent |
+		self withWindowDo: [ :window |
 			| minimized |
 			minimized := false.
 			window window announcer
@@ -201,14 +200,14 @@ OPEditor >> initializePresenters [
 			window window announcer
 				when: WindowExpanded
 				do: [ minimized := false ].
-			window whenResizingDo: [ :resizeEvent | 
-				minimized ifFalse: [ 
+			window whenResizingDo: [ :resizeEvent |
+				minimized ifFalse: [
 					self class currentLayout
 						resizePanelsOf: builtEvent widget
 						afterWindowResized: resizeEvent ] ].
-			window whenClosedDo: [ 
+			window whenClosedDo: [
 				window window announcer unsubscribe: self.
-				diagramController removeController ] ] ]
+				diagramController removeAllControllers ] ] ]
 ]
 
 { #category : #'diagram handling' }
@@ -226,8 +225,8 @@ OPEditor >> openEmptyModel: aModel [
 	diagramController := self newDiagramControllerFor: aModel.
 	self workbench projectController addDiagramController:
 		diagramController.
-	self rebuildWidget.
-	canvasPresenter attachController: diagramController
+	canvasPresenter attachController: diagramController.
+	self rebuildWidget
 ]
 
 { #category : #'as yet unclassified' }
@@ -272,21 +271,15 @@ OPEditor >> setModelBeforeInitialization: aPlugin [
 	
 ]
 
-{ #category : #'diagram handling' }
-OPEditor >> showDiagram: aDiagram [
-	diagramController diagram: aDiagram.
-	diagramController rebuild
-]
-
 { #category : #updating }
 OPEditor >> tabDeleted [
 
 	self workbench projectController updateDiagram:
-		diagramController diagram.
+		diagramController diagramElement.
 	self workbench projectController removeDiagramController:
 		diagramController.
 	self unregisterShortcutsOn: self workbench.
-	diagramController removeAllControllers
+	diagramController removeRender
 ]
 
 { #category : #shortcuts }

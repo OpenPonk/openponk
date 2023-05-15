@@ -62,7 +62,7 @@ OPDynamicForm class >> settingsOn: aBuilder [
 
 	<systemsettings>
 	(aBuilder setting: #showPriority)
-		parent: #openponk;
+		parent: #'op-dev';
 		target: self;
 		label: 'Show Properties Form Priorities';
 		description:

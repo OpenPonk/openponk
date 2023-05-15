@@ -49,11 +49,12 @@ OPDiagramExplorer >> hideDependentFor: aDataElement [
 
 { #category : #actions }
 OPDiagramExplorer >> hideElement: element [
+
 	diagramController deselectAll.
 	element = diagramController model
 		ifTrue: [ diagramController hideAllElements ]
 		ifFalse: [ diagramController hideModelFromDiagram: element ].
-	diagramController view signalUpdate
+	diagramController canvas signalUpdate
 ]
 
 { #category : #actions }
@@ -61,7 +62,7 @@ OPDiagramExplorer >> hideElements: elements [
 	diagramController deselectAll.
 	elements
 		do: [ :each | diagramController hideModelFromDiagram: each ].
-	diagramController view signalUpdate
+	diagramController canvas signalUpdate
 ]
 
 { #category : #initialization }
@@ -72,7 +73,7 @@ OPDiagramExplorer >> setDiagramController: aDiagramController [
 
 { #category : #actions }
 OPDiagramExplorer >> showAllElements [
-	diagramController rebuild
+	diagramController showInDiagram: diagramController model
 ]
 
 { #category : #actions }
@@ -116,6 +117,5 @@ OPDiagramExplorer >> showElements: aCollectionOfModelObjects [
 			          on: a
 			          in: diagramController model ]) collect: [ :each | 
 		         diagramController showWithoutDependentInDiagramModel: each ].
-	diagramController enableRefresh.
-	ctrls \ existingCtrls do: #refreshFigure
+	diagramController enableRefresh
 ]

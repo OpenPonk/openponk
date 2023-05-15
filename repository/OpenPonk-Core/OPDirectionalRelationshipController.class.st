@@ -13,64 +13,62 @@ Class {
 	#category : #'OpenPonk-Core-Controllers'
 }
 
-{ #category : #hooks }
-OPDirectionalRelationshipController >> connectionFeedback [
-	^ OPInteractiveLine new
-		lineBuilder:
-				[ :fromFigure :toFigure | self createEdgeFrom: fromFigure to: toFigure ];
-		from: source figure
+{ #category : #figures }
+OPDirectionalRelationshipController >> createDiagramElement [
+
+	super createDiagramElement.
+	self diagramElement
+		source: self source ensureDiagramElement;
+		target: self target ensureDiagramElement
 ]
 
 { #category : #hooks }
-OPDirectionalRelationshipController >> createEdgeFrom: fromElement to: toElement [
-	^ self subclassResponsibility
+OPDirectionalRelationshipController >> createLineFrom: fromElement to: toElement [
+
+	self deprecated: 'This is responsibility of DI shapes now'.
 ]
 
 { #category : #construction }
 OPDirectionalRelationshipController >> createModelIn: aParentModel [
+
 	self model: self modelClass new.
-	model source: self source model.
-	model target: self target model.
-	aParentModel add: model.
-	^ model
+	self model source: self source model.
+	self model target: self target model.
+	aParentModel add: self model.
+	^ self model
 ]
 
 { #category : #hooks }
 OPDirectionalRelationshipController >> edgeBuilder [
-	self
-		deprecated:
-			'Depracated without replacement - use Roassal directly or define own figures'.
-	^ self subclassResponsibility
-]
 
-{ #category : #'canvas actions' }
-OPDirectionalRelationshipController >> hideSelectionFeedback [
-	"by default do nothing"
-
-	
+	self deprecated:
+		'Depracated without replacement - use Roassal directly or define own figures'
 ]
 
 { #category : #accessing }
 OPDirectionalRelationshipController >> modelSource [
-	^ model source
+
+	^ self model source
 ]
 
 { #category : #accessing }
 OPDirectionalRelationshipController >> modelTarget [
-	^ model target
+
+	^ self model target
 ]
 
-{ #category : #'canvas actions' }
-OPDirectionalRelationshipController >> showSelectionFeedback [
-	"by default do nothing"
+{ #category : #rendering }
+OPDirectionalRelationshipController >> renderSimplified [
 
-	
+	diagramElement := self diagramElementClass renderSimplifiedForController: self.
 ]
 
 { #category : #accessing }
 OPDirectionalRelationshipController >> source [
-	^ source
-		ifNil: [ diagramController controllerForModel: self modelSource ]
+
+	^ source ifNil: [ 
+		  (diagramController ifNil: [ self target diagramController ]) 
+			  showInDiagramModel: self modelSource ]
 ]
 
 { #category : #accessing }
@@ -80,9 +78,10 @@ OPDirectionalRelationshipController >> source: aSourceController [
 
 { #category : #accessing }
 OPDirectionalRelationshipController >> target [
-	^ target
-		ifNil: [ (diagramController ifNil: [ self source diagramController ])
-				controllerForModel: self modelTarget ]
+
+	^ target ifNil: [ 
+		  (diagramController ifNil: [ self source diagramController ]) 
+			  showInDiagramModel: self modelTarget ]
 ]
 
 { #category : #accessing }

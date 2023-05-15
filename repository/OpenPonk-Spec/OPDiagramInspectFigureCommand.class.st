@@ -12,10 +12,16 @@ OPDiagramInspectFigureCommand >> defaultMenuIcon [
 
 { #category : #accessing }
 OPDiagramInspectFigureCommand >> defaultMenuItemName [
-	^ 'Inspect figure'
+
+	| basicName |
+	basicName := 'Inspect figure'.
+	figures ifNil: [ ^ basicName ].
+	^ figures size pluralize: basicName
 ]
 
 { #category : #execution }
 OPDiagramInspectFigureCommand >> execute [
-	figure inspect
+
+	figures size = 1 ifTrue: [ ^ figures anyOne inspect ].
+	^ figures inspect
 ]

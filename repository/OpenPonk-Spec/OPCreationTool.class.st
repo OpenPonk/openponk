@@ -18,12 +18,22 @@ Class {
 
 { #category : #protocol }
 OPCreationTool >> deselect [
+
 	feedback value: nil
 ]
 
 { #category : #accessing }
 OPCreationTool >> factory: aBlock [
 	factory := aBlock
+]
+
+{ #category : #callbacks }
+OPCreationTool >> hoveredController: aController [
+	feedback
+		value:
+			((aController canBeTargetFor: objectController)
+				ifTrue: [ aController showAcceptFeedbackFor: objectController ]
+				ifFalse: [ aController showDenyFeedbackFor: objectController ])
 ]
 
 { #category : #accessing }
@@ -34,29 +44,24 @@ OPCreationTool >> initialize [
 
 { #category : #protocol }
 OPCreationTool >> select [
+
 	feedback := nil asValueHolder.
-	feedback whenChangedDo: [ :newVal :oldVal | oldVal ifNotNil: [ oldVal remove ] ].
-	objectController := factory value.
-	self diagramController whenHoverChanged: [ :ctrl | self targetEntered: ctrl ].
-	self diagramController whenSelectionChanged: [ :ctrl | self targetSelected: ctrl ]
+	feedback whenChangedDo: [ :newVal :oldVal | 
+		oldVal ifNotNil: [ oldVal remove ] ].
+	objectController := factory value
 ]
 
 { #category : #callbacks }
-OPCreationTool >> targetEntered: aController [
-	feedback
-		value:
-			((aController canBeTargetFor: objectController)
-				ifTrue: [ aController showAcceptFeedbackFor: objectController ]
-				ifFalse: [ aController showDenyFeedbackFor: objectController ])
-]
+OPCreationTool >> selectedControllers: aCollectionOfControllers [
 
-{ #category : #callbacks }
-OPCreationTool >> targetSelected: aController [
-	(aController canBeTargetFor: objectController)
-		ifFalse: [ ^ self ].
-	aController addAsTargetFor: objectController.
-	self palette deselectTool.
-	self palette selectedTool targetSelected: objectController.
+	| targetController |
+	aCollectionOfControllers size = 1 ifFalse: [ ^ self ].
+	targetController := aCollectionOfControllers anyOne.
+	(targetController canBeTargetFor: objectController) ifFalse: [ 
+		^ self ].
+	targetController addAsTargetFor: objectController.
+	self palette selectSelectionTool.
+	self palette selectedTool selectedControllers: { objectController }.
 	onComplete value: objectController.
 	objectController := nil
 ]

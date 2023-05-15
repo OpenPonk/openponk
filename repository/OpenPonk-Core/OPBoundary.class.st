@@ -1,17 +1,33 @@
 Class {
 	#name : #OPBoundary,
-	#superclass : #OPCommonElement,
+	#superclass : #OPDiagramOnlyShape,
+	#traits : 'OPTResizableFigureWithText',
+	#classTraits : 'OPTResizableFigureWithText classTrait',
 	#instVars : [
-		'name'
+		'name',
+		'positionOfMainRelativeToDragBoxes',
+		'dragBoxUpdateBlocks',
+		'dragBoxes'
 	],
 	#category : #'OpenPonk-Core-CommonElements'
 }
 
-{ #category : #'instance creation' }
-OPBoundary class >> named: aString [
-	^ self new
-		name: aString;
-		yourself
+{ #category : #'ston-core' }
+OPBoundary class >> stonAllInstVarNames [
+
+	"Override to encode my instances using a custom set of instance variables or to define their order."
+
+	^ super stonAllInstVarNames , #( #name )
+]
+
+{ #category : #accessing }
+OPBoundary >> defaultHeight [
+	^ 400
+]
+
+{ #category : #accessing }
+OPBoundary >> defaultWidth [
+	^ 500
 ]
 
 { #category : #initialization }
@@ -37,4 +53,44 @@ OPBoundary >> printOn: aStream [
 		nextPutAll: '(''';
 		nextPutAll: self name;
 		nextPutAll: ''')'
+]
+
+{ #category : #'creating - subelements' }
+OPBoundary >> renderBasicShape [
+
+	^ RSBox new
+		  color: Color transparent;
+		  width: self defaultWidth;
+		  height: self defaultHeight;
+		  borderDo: [ :border | 
+			  border
+				  color: Color gray;
+				  dashArray: #( 4 ) ];
+		  yourself
+]
+
+{ #category : #'creating - subelements' }
+OPBoundary >> renderShapeDetails [
+
+	super renderShapeDetails.
+
+	roassalShape
+		@ OPRSSelectable;
+		@ OPRSSelectionDraggableBorder thatAlsoDragsContainedShapes;
+		@ OPRSResizable.
+	self renderLabel
+]
+
+{ #category : #'creating - subelements' }
+OPBoundary >> setupLabelLocation: aLocation [
+
+	aLocation
+		top;
+		center;
+		inner
+]
+
+{ #category : #hooks }
+OPBoundary >> text [
+	^ self name
 ]

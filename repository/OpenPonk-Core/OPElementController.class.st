@@ -5,9 +5,6 @@ It has method which handles the creation of the form for specific element. The c
 Class {
 	#name : #OPElementController,
 	#superclass : #OPController,
-	#instVars : [
-		'figure'
-	],
 	#category : #'OpenPonk-Core-Controllers'
 }
 
@@ -42,6 +39,14 @@ OPElementController >> attachTo: aDiagramController [
 	self attachFigure"
 ]
 
+{ #category : #construction }
+OPElementController >> createDiagramElement [
+
+	diagramElement := self diagramElementClass
+		                  in: self diagramElementOwner
+		                  forModelElement: self model
+]
+
 { #category : #deprecated }
 OPElementController >> createFigure [
 	self deprecated: 'Use renderFigureIn: instead.'.
@@ -57,25 +62,46 @@ OPElementController >> createModel [
 
 { #category : #construction }
 OPElementController >> createModelIn: aParentModel [
+
 	self model: self modelClass new.
-	aParentModel add: model.
-	^ model
+	aParentModel add: self model.
+	^ self model
 ]
 
 { #category : #construction }
 OPElementController >> createModelIn: aParentModel andShowInDiagram: aDiagramController [
+
+	self removeDiagramElement.
 	self createModelIn: aParentModel.
 	self showWithoutDependentInDiagram: aDiagramController
 ]
 
-{ #category : #accessing }
-OPElementController >> figure [
-	^ figure
+{ #category : #construction }
+OPElementController >> diagramElementClass [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #'as yet unclassified' }
+OPElementController >> diagramElementOwner [
+
+	^ self diagramController diagramElement
 ]
 
 { #category : #accessing }
+OPElementController >> ensureDiagramElement [
+
+	diagramElement
+		ifNil: [ self createDiagramElement ]
+		ifNotNil: [ self linkToExistingDiagramElement ].
+	^ diagramElement
+]
+
+{ #category : #figures }
 OPElementController >> figure: aFigure [
-	figure := aFigure
+
+	self deprecated:
+		'Figure (Roassal shape) cannot be set directly anymore.'
 ]
 
 { #category : #deprecated }
@@ -84,12 +110,12 @@ OPElementController >> figureLabel: aLabelName text: aString [
 "	(figure labels at: aLabelName) trachelShape text: aString"
 ]
 
-{ #category : #'canvas actions' }
-OPElementController >> hideSelectionFeedback [
-	self figure view
-		ifNotNil: [ 
-			self figure announce: OPTRUnfocused.
-			self figure view signalUpdate ]
+{ #category : #accessing }
+OPElementController >> hookDiagramElement [
+
+	"do nothing by default"
+
+	
 ]
 
 { #category : #testing }
@@ -97,14 +123,16 @@ OPElementController >> isCommon [
 	^ false
 ]
 
-{ #category : #accessing }
-OPElementController >> layout [
-	^ OPElementLayout withPosition: self figure position
+{ #category : #testing }
+OPElementController >> isRendered [
+
+	^ self diagramElement isNotNil and: [ self diagramElement isRendered ]
 ]
 
-{ #category : #accessing }
-OPElementController >> layout: anElementLayout [
-	self figure translateTo: anElementLayout position
+{ #category : #construction }
+OPElementController >> linkToExistingDiagramElement [
+
+	self diagramElement modelElement: self model
 ]
 
 { #category : #deprecated }
@@ -132,37 +160,47 @@ OPElementController >> remove [
 		deprecated: 'Use #removeController instead.'
 		transformWith: '`@receiver remove' -> '`@receiver removeController'.
 
-	self removeController
+	^ self removeController
 ]
 
 { #category : #construction }
-OPElementController >> renderFigureIn: aView [
-	^ self subclassResponsibility
+OPElementController >> renderDiagramElement [
+
+	self diagramController willRender: self.
+	self hookDiagramElement.
+	self diagramElement renderIn: self diagramController canvas.
+	self diagramController rendered: self.
+	^ self roassalShape
 ]
 
-{ #category : #'ui interaction' }
-OPElementController >> reselect [
-	self diagramController ifNotNil: [ self diagramController selectController: self ]
+{ #category : #construction }
+OPElementController >> renderFigureIn: aCanvas [
+
+	self
+		deprecated: 'Use #createDiagramElement and #renderDiagramElement without parameter.'
+		transformWith: '`@receiver renderFigureIn: `@statements1'
+			-> '`@receiver createDiagramElement; renderDiagramElement'.
+	^ self
+		  createDiagramElement;
+		  renderDiagramElement
 ]
 
 { #category : #construction }
 OPElementController >> showInDiagram: aDiagramController [
-	aDiagramController addController: self.
-	self renderFigureIn: aDiagramController view.
-	self dependentElements
-		do:
-			[ :each | aDiagramController showInDiagramModel: each ]
-]
 
-{ #category : #'canvas actions' }
-OPElementController >> showSelectionFeedback [
-	self figure announce: OPTRFocused
+	aDiagramController addController: self.
+	self ensureDiagramElement.
+	self renderDiagramElement.
+	self dependentElements do: [ :each | 
+		aDiagramController showInDiagramModel: each ]
 ]
 
 { #category : #construction }
 OPElementController >> showWithoutDependentInDiagram: aDiagramController [
+
 	aDiagramController addController: self.
-	self renderFigureIn: aDiagramController view
+	self ensureDiagramElement.
+	self renderDiagramElement
 ]
 
 { #category : #accessing }

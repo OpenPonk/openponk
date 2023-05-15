@@ -110,9 +110,7 @@ OPWorkbenchToolbar >> connectPresenters [
 					item
 						name: 'Project';
 						icon: (self iconNamed: #openIcon);
-						subMenu: self projectMenu ] ].
-	self flag: 'might be removed?'.
-	"toolbar applyTo: self"
+						subMenu: self projectMenu ] ]
 ]
 
 { #category : #'as yet unclassified' }

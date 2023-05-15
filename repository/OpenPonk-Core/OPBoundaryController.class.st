@@ -13,6 +13,7 @@ OPBoundaryController class >> paletteItemName [
 
 { #category : #connecting }
 OPBoundaryController >> addAsTargetFor: aController [
+
 	^ self diagramController addAsTargetFor: aController
 ]
 
@@ -20,10 +21,10 @@ OPBoundaryController >> addAsTargetFor: aController [
 OPBoundaryController >> buildEditorForm: aForm [
 
 	(aForm addText: 'Name')
-		text: self model name;
+		text: self diagramElement name;
 		whenTextChangedDo: [ :newValue | 
-			self model name: newValue asString.
-			self refreshFigure ]
+			self diagramElement name: newValue asString.
+			self diagramElement updateText ]
 ]
 
 { #category : #connecting }
@@ -32,14 +33,17 @@ OPBoundaryController >> canBeTargetFor: aController [
 ]
 
 { #category : #accessing }
-OPBoundaryController >> modelClass [
+OPBoundaryController >> diagramElementClass [
+
 	^ OPBoundary
 ]
 
-{ #category : #construction }
-OPBoundaryController >> renderFigureIn: aView [
-	self diagramController addingFigureFor: self.
-	figure := OPBoundaryFigure on: self model.
-	figure renderIn: aView.
-	^ self diagramController addedFigureFor: self
+{ #category : #announcements }
+OPBoundaryController >> renderDiagramElement [
+
+	super renderDiagramElement.
+	diagramElement announcer
+		when: OPElementTextAttributeChanged
+		do: [ diagramElement updateRenderFromSelf ].
+	^ self roassalShape
 ]

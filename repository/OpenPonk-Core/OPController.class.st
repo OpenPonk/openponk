@@ -6,7 +6,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'model',
-		'diagramController'
+		'diagramController',
+		'diagramElement'
 	],
 	#category : #'OpenPonk-Core-Controllers'
 }
@@ -83,18 +84,19 @@ OPController >> descriptionAccessor: aSymbol [
 
 { #category : #forms }
 OPController >> descriptionName [
+
 	<magritteDescription>
 	| accessor |
 	accessor := MAPluggableAccessor
-		read: [ :me | me model name ]
-		write: [ :me :newValue | 
-			me model name: newValue.
-			self refreshFigure ].
+		            read: [ :me | me model name ]
+		            write: [ :me :newValue | 
+			            me model name: newValue.
+			            self diagramElement modelChanged ].
 	^ MAStringDescription new
-		accessor: accessor;
-		label: 'Name';
-		priority: 1;
-		yourself
+		  accessor: accessor;
+		  label: 'Name';
+		  priority: 1;
+		  yourself
 ]
 
 { #category : #accessing }
@@ -108,30 +110,52 @@ OPController >> diagramController: aDiagramController [
 ]
 
 { #category : #accessing }
+OPController >> diagramElement [
+
+	^ diagramElement
+]
+
+{ #category : #accessing }
+OPController >> diagramElement: aDiagramElement [
+
+	diagramElement := aDiagramElement
+]
+
+{ #category : #accessing }
 OPController >> elementsToShowInside [
 	^ #()
 ]
 
-{ #category : #figures }
-OPController >> figure [
-	^ self subclassResponsibility
+{ #category : #accessing }
+OPController >> ensureDiagramElement [
+
+	self assert: diagramElement isNotNil.
+	diagramElement modelElement: self model.
+	^ diagramElement
 ]
 
 { #category : #figures }
-OPController >> figureDoubleClicked [
-	"do nothing by default"
+OPController >> figure [
+
+	self
+		deprecated: 'Use #diagramElement instead'
+		transformWith: '`@receiver figure' -> '`@receiver diagramElement'.
+
+	^ self diagramElement
 ]
 
 { #category : #'canvas actions' }
 OPController >> hideSelectionFeedback [
-	"by default do nothing"
 
-	
+	self deprecated: 'This should be done by shapes (diagram elements)'
 ]
 
 { #category : #announcements }
 OPController >> internalSubscribeTo: aModel [
-	aModel announcer when: OPElementRenamed do: [ self refreshFigure ]
+
+	aModel announcer
+		when: OPElementRenamed
+		do: [ self diagramElement modelChanged ]
 ]
 
 { #category : #announcements }
@@ -145,22 +169,16 @@ OPController >> isHideable [
 ]
 
 { #category : #accessing }
-OPController >> layout [
-	^ OPElementLayout none
-]
-
-{ #category : #accessing }
-OPController >> layout: anObject [
-	"do nothing"
-]
-
-{ #category : #accessing }
 OPController >> model [
 	^ model
 ]
 
 { #category : #accessing }
 OPController >> model: aModel [
+
+	aModel ifNotNil: [ 
+		aModel uuid ifNil: [ 
+			self error: 'All model objects must have a uuid to be used by OP' ] ].
 	model ifNotNil: [ :m | self internalUnsubscribeFrom: m ].
 	model := aModel.
 	model ifNotNil: [ :m | self internalSubscribeTo: m ]
@@ -168,7 +186,7 @@ OPController >> model: aModel [
 
 { #category : #connecting }
 OPController >> modelAsParent [
-	^ model
+	^ self model
 ]
 
 { #category : #announcements }
@@ -188,25 +206,39 @@ OPController >> nameOfType [
 
 { #category : #figures }
 OPController >> refreshFigure [
-	self figure trachelShape triggerCallbacksForStep: 0 @ 0.
-	self figure signalUpdate.
-	^ self figure
+
+	self
+		deprecated: 'Use #diagramElement modelChanged instead'
+		transformWith: '`@receiver refreshFigure'
+			-> '`@receiver diagramElement modelChanged'.
+
+	^ self diagramElement modelChanged
 ]
 
 { #category : #deprecated }
 OPController >> remove [
+
 	self deprecated: 'Use removeController instead.'.
-	model ifNotNil: [ model announcer unsubscribe: self ]
+	self model ifNotNil: [ self model announcer unsubscribe: self ]
 ]
 
 { #category : #destruction }
 OPController >> removeController [
-	model ifNotNil: [ self removeDependentControllers ].
+
+	self model ifNotNil: [ self removeDependentControllers ].
 	self diagramController ifNil: [ ^ self ].
-	self removeFigure.
-	self diagramController removeController: self.
-	self model: nil.
-	self diagramController: nil
+	self diagramController deselectAll.
+	self removeDiagramElement.
+	self diagramController removeController: self
+]
+
+{ #category : #destruction }
+OPController >> removeControllerAndModel [
+
+	self removeDependent.
+	self removeController.
+	self removeModel.
+	self model: nil
 ]
 
 { #category : #destruction }
@@ -215,7 +247,7 @@ OPController >> removeDependent [
 		do: [ :each | 
 			self diagramController controllers
 				detect: [ :ctrl | ctrl model = each model ]
-				ifFound: #removeFull ]
+				ifFound: #removeControllerAndModel ]
 ]
 
 { #category : #destruction }
@@ -228,16 +260,21 @@ OPController >> removeDependentControllers [
 ]
 
 { #category : #destruction }
-OPController >> removeFigure [
-	self diagramController deselectAll.
-	self figure view ifNotNil: [ self figure remove ]
+OPController >> removeDiagramElement [
+
+	self diagramElement ifNotNil: #remove.
+	diagramElement := nil
 ]
 
 { #category : #destruction }
-OPController >> removeFull [
-	self removeDependent.
-	self removeModel.
-	self removeController
+OPController >> removeFigure [
+
+	self
+		deprecated: 'Use #removeDiagramElement instead'
+		transformWith:
+		'`@receiver removeFigure' -> '`@receiver removeDiagramElement'.
+	self diagramController deselectAll.
+	self figure remove
 ]
 
 { #category : #private }
@@ -253,23 +290,39 @@ OPController >> removeModelElement: aModelElement [
 	(self diagramController controllerForModel: aModelElement) removeModel
 ]
 
+{ #category : #destruction }
+OPController >> removeRender [
+
+	self diagramController deselectAll.
+	self diagramElement removeRender
+]
+
+{ #category : #figures }
+OPController >> roassalShape [
+
+	^ self diagramElement roassalShape
+]
+
 { #category : #figures }
 OPController >> saveStateOnDragEndFor: aFigure [
-	aFigure when: TRMouseDragEnd do: [ :evt | self diagramController saveState ]
+
+	aFigure
+		when: RSMouseDragEnd
+		do: [ :evt | self diagramController saveState ]
 ]
 
 { #category : #'canvas actions' }
 OPController >> showAcceptFeedbackFor: aController [
 	"Return something that understands #remove, or nil to not show any feedback."
 
-	^ OPAcceptDenyFeedbackBuilder acceptFeedbackFor: self figure
+	^ OPRSAcceptDenyFeedbackBuilder acceptFeedbackFor: self roassalShape
 ]
 
 { #category : #'canvas actions' }
 OPController >> showDenyFeedbackFor: aController [
 	"Return something that understands #remove, or nil to not show any feedback."
 
-	^ OPAcceptDenyFeedbackBuilder denyFeedbackFor: self figure
+	^ OPRSAcceptDenyFeedbackBuilder denyFeedbackFor: self roassalShape
 ]
 
 { #category : #construction }
@@ -280,7 +333,6 @@ OPController >> showInDiagram: aDiagramController [
 
 { #category : #'canvas actions' }
 OPController >> showSelectionFeedback [
-	"by default do nothing"
 
-	
+	self deprecated: 'This should be done by shapes (diagram elements)'
 ]

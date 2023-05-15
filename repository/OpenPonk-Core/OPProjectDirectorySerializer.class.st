@@ -3,12 +3,36 @@ My job is to store a project with all the plugins into a provided directory.
 "
 Class {
 	#name : #OPProjectDirectorySerializer,
-	#superclass : #Object,
+	#superclass : #OPSerializer,
 	#instVars : [
 		'directory'
 	],
 	#category : #'OpenPonk-Core-Persistence'
 }
+
+{ #category : #'as yet unclassified' }
+OPProjectDirectorySerializer class >> exportSubject [
+
+	^ #project
+]
+
+{ #category : #'as yet unclassified' }
+OPProjectDirectorySerializer class >> exportVersion [
+
+	^ 1
+]
+
+{ #category : #'as yet unclassified' }
+OPProjectDirectorySerializer class >> formatName [
+
+	^ #directory
+]
+
+{ #category : #accessing }
+OPProjectDirectorySerializer class >> minImportVersion [
+
+	^ Float infinity
+]
 
 { #category : #accessing }
 OPProjectDirectorySerializer >> directory [
@@ -23,11 +47,6 @@ OPProjectDirectorySerializer >> directory: aFolder [
 { #category : #accessing }
 OPProjectDirectorySerializer >> exporter [
 	^ 'OpenPonk'
-]
-
-{ #category : #accessing }
-OPProjectDirectorySerializer >> exporterVersion [
-	^ OPVersion current fullVersionString
 ]
 
 { #category : #writing }
@@ -50,17 +69,15 @@ OPProjectDirectorySerializer >> modelsDirectory [
 
 { #category : #writing }
 OPProjectDirectorySerializer >> projectToJson: aProject [
-	^ STON
-		toJsonStringPretty:
-			{'project'
-				->
-					{'name' -> aProject name.
-					'uuid' -> aProject uuid asString} asDictionary.
-			'exporter'
-				->
-					{'exporter' -> self exporter.
-					'exporterVersion' -> self exporterVersion.
-					'timestamp' -> DateAndTime now truncated asString} asDictionary} asDictionary
+
+	^ STON toJsonStringPretty: { 
+			  ('project' -> { 
+				   ('name' -> aProject name).
+				   ('uuid' -> aProject uuid asString) } asDictionary).
+			  ('export' -> { 
+				   ('exporter' -> self exporter).
+				   ('timestamp' -> DateAndTime now truncated asString) }
+				   asDictionary) } asDictionary
 ]
 
 { #category : #'private - saving' }
@@ -92,15 +109,17 @@ OPProjectDirectorySerializer >> saveMementos: aCollection [
 
 { #category : #'private - saving' }
 OPProjectDirectorySerializer >> saveProject: aProject [
+
 	directory ensureCreateDirectory.
+	self class saveExportInfoTo: directory.
 	(directory / 'models') ensureCreateDirectory.
-	(directory / '.history' / 'models') ensureCreateDirectory.
 	(directory / 'project.json')
 		ensureDelete;
 		writeStreamDo: [ :stream | stream << (self projectToJson: aProject) ].
 	(directory / 'models.json')
 		ensureDelete;
-		writeStreamDo: [ :stream | stream << (self modelReferencesToJson: aProject models) ]
+		writeStreamDo: [ :stream | 
+			stream << (self modelReferencesToJson: aProject models) ]
 ]
 
 { #category : #'public - saving' }

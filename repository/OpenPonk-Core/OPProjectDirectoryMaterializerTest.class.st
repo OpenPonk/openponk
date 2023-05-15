@@ -38,12 +38,6 @@ OPProjectDirectoryMaterializerTest >> tearDown [
 ]
 
 { #category : #tests }
-OPProjectDirectoryMaterializerTest >> testExporterVersion [
-	self assert: reader exporter equals: 'OpenPonk'.
-	self assert: reader exporterVersion equals: OPVersion current fullVersionString
-]
-
-{ #category : #tests }
 OPProjectDirectoryMaterializerTest >> testMissingProject [
 	self should: [ reader loadProjectFrom: FileSystem memory root ] raise: FileDoesNotExistException
 ]
@@ -74,9 +68,7 @@ OPProjectDirectoryMaterializerTest >> testReadMemento [
 	memento := reader
 		           readMementoFrom:
 		           root / 'models' / project models first uuid asString
-		           with: (OPMementoDirectorySerializer
-				            withModelSerializer: OPStonModelSerializer new
-				            diagramsSerializer: OPJsonDiagramSerializer new).
+		           asPlugin: OPTestPlugin new.
 	self
 		assert: memento model className
 		equals: project models first className.

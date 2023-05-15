@@ -53,18 +53,6 @@ OPTestDiagramControllerTest >> testCanBeTargetForEntity [
 				canBeTargetFor: (diagramController newControllerFor: OPTestEntityModel new))
 ]
 
-{ #category : #'tests - rebuilding' }
-OPTestDiagramControllerTest >> testCleanView [
-
-	| view |
-	view := diagramController view.
-	view add: RTBox new element.
-	self assert: view elements size > 0.
-	diagramController cleanView.
-	self assert: view elements asArray equals: #(  ).
-	self assert: view edges asArray equals: #(  )
-]
-
 { #category : #'tests - ui interaction' }
 OPTestDiagramControllerTest >> testInitializePalette [
 	| palette |
@@ -84,30 +72,6 @@ OPTestDiagramControllerTest >> testModelClass [
 	[ OPPluginRegistry setDefault: pluginRegistry.
 	self assert: diagramController modelClass equals: self diagramModelClass ]
 		ensure: [ OPPluginRegistry setDefault: nil ]
-]
-
-{ #category : #'tests - rebuilding' }
-OPTestDiagramControllerTest >> testRebuildEmpty [
-	diagramController
-		layouter: OPNoLayouter new;
-		rebuild.
-	self assert: diagramController controllers asArray equals: {}
-]
-
-{ #category : #'tests - rebuilding' }
-OPTestDiagramControllerTest >> testRebuildNonEmpty [
-	| subModel subController |
-	subModel := OPTestEntityModel new.
-	diagramController model entities add: subModel.
-	diagramController
-		layouter: OPNoLayouter new;
-		rebuild.
-	self assert: diagramController controllers isNotEmpty.
-	self
-		shouldnt: [ subController := diagramController controllerForModel: subModel ]
-		raise: NotFound.
-	self
-		assert: (diagramController view elements includes: subController figure)
 ]
 
 { #category : #'tests - construction' }

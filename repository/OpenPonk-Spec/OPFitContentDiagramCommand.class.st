@@ -25,5 +25,5 @@ OPFitContentDiagramCommand >> defaultMenuItemName [
 
 { #category : #execution }
 OPFitContentDiagramCommand >> execute [
-	diagramPresenter showAllFigures
+	diagramPresenter zoomToFit
 ]

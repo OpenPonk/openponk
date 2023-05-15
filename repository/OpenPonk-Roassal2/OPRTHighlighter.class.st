@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'model'
 	],
-	#category : 'OpenPonk-Roassal2-Builders'
+	#category : #'OpenPonk-Roassal2-Builders'
 }
 
 { #category : #'as yet unclassified' }
@@ -12,6 +12,11 @@ OPRTHighlighter class >> highlight: anElement color: aColor [
 	^ (self allSubclasses detect: [ :each | each isFor: anElement ]) new
 		highlight: anElement
 		color: aColor
+]
+
+{ #category : #testing }
+OPRTHighlighter class >> isDeprecated [
+	^ true
 ]
 
 { #category : #testing }

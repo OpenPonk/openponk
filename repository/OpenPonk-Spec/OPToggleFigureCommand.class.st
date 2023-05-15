@@ -2,8 +2,6 @@ Class {
 	#name : #OPToggleFigureCommand,
 	#superclass : #OPDiagramFigureCommand,
 	#instVars : [
-		'controller',
-		'model',
 		'executor'
 	],
 	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
@@ -17,7 +15,8 @@ OPToggleFigureCommand class >> canBeExecutedInContext: aToolContext [
 
 { #category : #testing }
 OPToggleFigureCommand class >> canBeExecutedInModelContext: aToolContext [
-	^ false
+
+	^ aToolContext controllers anySatisfy: [ :any | any isHideable ]
 ]
 
 { #category : #activation }
@@ -33,9 +32,13 @@ OPToggleFigureCommand >> basicExecute [
 
 { #category : #accessing }
 OPToggleFigureCommand >> defaultMenuItemName [
-	^ ((((self class name withoutPrefix: 'OP')
-		withoutSuffix: 'FigureCommand') splitOnCapitals
-		collect: #asLowercase) joinUsing: ' ') capitalized
+
+	| basicName |
+	basicName := ((((self class name withoutPrefix: 'OP') withoutSuffix:
+		                'FigureCommand') splitOnCapitals collect:
+		               #asLowercase) joinUsing: ' ') capitalized.
+	models ifNil: [ ^ basicName ].
+	^ models size pluralize: basicName
 ]
 
 { #category : #execution }
@@ -57,8 +60,7 @@ OPToggleFigureCommand >> execute [
 
 { #category : #accessing }
 OPToggleFigureCommand >> prepareFullExecutionInContext: aToolContext [
+
 	super prepareFullExecutionInContext: aToolContext.
-	controller := diagramController controllerForFigure: figure.
-	model := controller model.
 	executor := OPDiagramExplorer on: diagramController
 ]

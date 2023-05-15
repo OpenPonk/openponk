@@ -19,6 +19,12 @@ OPModelObjectReference >> = otherModelObject [
 	^ self references: otherModelObject
 ]
 
+{ #category : #comparing }
+OPModelObjectReference >> modelObjectFrom: aDictionary [
+
+	^ aDictionary at: uuid
+]
+
 { #category : #printing }
 OPModelObjectReference >> printOn: aStream [
 	super printOn: aStream.

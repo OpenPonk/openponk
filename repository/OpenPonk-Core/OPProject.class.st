@@ -38,7 +38,7 @@ OPProject >> = anotherProject [
 { #category : #accessing }
 OPProject >> addDiagram: aDiagram [
 
-	(self addModel: aDiagram model) add: aDiagram
+	(self addModel: aDiagram modelElement) add: aDiagram
 ]
 
 { #category : #accessing }
@@ -106,11 +106,11 @@ OPProject >> diagramsOf: aModel [
 
 { #category : #adding }
 OPProject >> ensureModelsHaveDiagrams [
-	self
-		addDiagrams:
-			(self models
-				reject: [ :eachModel | self hasDiagramsModel: eachModel ]
-				thenCollect: [ :eachModel | OPDiagram withWholeModel: eachModel ])
+
+	self addDiagrams: (self models
+			 reject: [ :eachModel | self hasDiagramsModel: eachModel ]
+			 thenCollect: [ :eachModel | 
+			 OPOpenPonkDiagram forModelElement: eachModel ])
 ]
 
 { #category : #adding }
@@ -134,7 +134,6 @@ OPProject >> hash [
 { #category : #initialization }
 OPProject >> initialize [
 
-	uuid := UUID new.
 	modelsAndDiagrams := Dictionary new asValueHolder.
 	name := NewValueHolder value: 'Unnamed project'.
 	dirty := false asValueHolder.
@@ -253,7 +252,8 @@ OPProject >> unsubscribe: aSubscriber [
 
 { #category : #accessing }
 OPProject >> uuid [
-	^ uuid ifNil: [ ^ UUID new ]
+
+	^ uuid ifNil: [ uuid := UUID new ]
 ]
 
 { #category : #accessing }

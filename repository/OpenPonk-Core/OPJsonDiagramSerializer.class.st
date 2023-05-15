@@ -4,6 +4,24 @@ Class {
 	#category : #'OpenPonk-Core-Persistence'
 }
 
+{ #category : #'as yet unclassified' }
+OPJsonDiagramSerializer class >> exportVersion [
+
+	^ 1
+]
+
+{ #category : #formatting }
+OPJsonDiagramSerializer class >> formatName [
+
+	^ #json
+]
+
+{ #category : #accessing }
+OPJsonDiagramSerializer class >> minImportVersion [
+
+	^ 1
+]
+
 { #category : #accessing }
 OPJsonDiagramSerializer >> formatName [
 	^ 'json'
@@ -11,9 +29,10 @@ OPJsonDiagramSerializer >> formatName [
 
 { #category : #'serialize/materialize' }
 OPJsonDiagramSerializer >> materializeDiagramOf: aModel from: aStream [
+
 	"materialize aStream into a diagram that will be consumed by your controller"
 
-	^ OPDiagram ofModel: aModel fromJson: aStream
+	^ (OPLegacyDiagram ofModel: aModel fromJson: aStream) asOPDiagram
 ]
 
 { #category : #'serialize/materialize' }

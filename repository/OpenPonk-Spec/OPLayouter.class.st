@@ -58,7 +58,7 @@ OPLayouter >> basicApplyLayout: aTwoArgBlock [
 		                 selectedElements.
 	isPartialLayout := selectedBoxes size > 1.
 	allNodes := self allNodes.
-	nodes := RTGroup withAll: (isPartialLayout
+	nodes := RSGroup withAll: (isPartialLayout
 			          ifTrue: [ allNodes intersection: selectedBoxes ]
 			          ifFalse: [ allNodes ]).
 	allEdges := self allEdges reject: [ :each | each to = each from ].
@@ -70,15 +70,15 @@ OPLayouter >> basicApplyLayout: aTwoArgBlock [
 	isPartialLayout
 		ifTrue: [ 
 			nodes translateTo: oldEncompassingRectangle center.
-			diagramController view signalUpdate ]
-		ifFalse: [ self updateView ]
+			diagramController canvas signalUpdate ]
+		ifFalse: [ self updateCanvas ]
 ]
 
 { #category : #layouts }
 OPLayouter >> circleLayout [
 	self
 		applyLayout: [ :boxes :links | 
-			RTWeightedCircleLayout new
+			RSWeightedCircleLayout new
 				scaleBy: 20;
 				on: boxes ]
 ]
@@ -95,33 +95,32 @@ OPLayouter >> diagramController: aDiagramController [
 
 { #category : #layouts }
 OPLayouter >> dominanceTreeLayout [
-	self
-		applyLayout: [ :boxes :links | 
-			RTDominanceTreeLayout new
-				verticallyReverse;
-				verticalGap: 100;
-				horizontalGap: 100;
-				doNotAttachPoint;
-				on: boxes edges: links ]
-]
 
-{ #category : #accessing }
-OPLayouter >> figuresFor: aCollection [
-	^ (aCollection
-		collect: [ :model | 
-			diagramController controllers
-				detect: [ :each | each model = model ]
-				ifFound: #figure
-				ifNone: [ nil ] ]) reject: #isNil
+	self applyLayout: [ :boxes :links | 
+		RSDominanceTreeLayout new
+			verticallyReverse;
+			verticalGap: 100;
+			horizontalGap: 100;
+			on: boxes edges: links ]
 ]
 
 { #category : #layouts }
 OPLayouter >> gridLayout [
-	self
-		applyLayout: [ :boxes :links | 
-			RTGridLayout new
-				gapSize: 140;
-				on: boxes ]
+
+	self applyLayout: [ :boxes :links | 
+		RSGridLayout new
+			gapSize: 140;
+			on: boxes ]
+]
+
+{ #category : #accessing }
+OPLayouter >> roassalShapesFor: aCollection [
+	^ (aCollection
+		collect: [ :model | 
+			diagramController controllers
+				detect: [ :each | each model = model ]
+				ifFound: #roassalShape
+				ifNone: [ nil ] ]) reject: #isNil
 ]
 
 { #category : #layouts }
@@ -129,12 +128,11 @@ OPLayouter >> sugiyamaLayout [
 
 	self applyLayout: [ :boxes :links | 
 		| centerY |
-		RTSugiyamaLayout new
-			doNotAttachPoint;
+		RSSugiyamaLayout new
 			verticalGap: 100;
 			horizontalGap: 100;
 			on: boxes edges: links.
-		centerY := (RTGroup withAll: boxes) encompassingRectangle center y.
+		centerY := (RSGroup withAll: boxes) encompassingRectangle center y.
 		boxes do: [ :each | 
 			each translateBy: 0 @ 2 * (centerY - each position y) ] ]
 ]
@@ -149,20 +147,29 @@ OPLayouter >> treeLayout [
 
 	self applyLayout: [ :boxes :links | 
 		| centerY |
-		RTTreeLayout new
+		RSTreeLayout new
 			doNotAttachPoint;
 			verticalGap: 100;
 			horizontalGap: 100;
 			on: boxes edges: links.
-		centerY := (RTGroup withAll: boxes) encompassingRectangle center y.
+		centerY := (RSGroup withAll: boxes) encompassingRectangle center y.
 		boxes do: [ :each | 
 			each translateBy: 0 @ 2 * (centerY - each position y) ] ]
 ]
 
 { #category : #userinterface }
+OPLayouter >> updateCanvas [
+
+	diagramController updateCanvas
+]
+
+{ #category : #userinterface }
 OPLayouter >> updateView [
-	| view |
-	view := diagramController view.
-	view signalUpdate.
-	view canvas camera focusOnCenter
+
+	self
+		deprecated: 'Use #updateCanvas instead.'
+		transformWith:
+		'`@receiver updateView'
+		-> '`@receiver updateCanvas'.
+	^ self updateCanvas
 ]

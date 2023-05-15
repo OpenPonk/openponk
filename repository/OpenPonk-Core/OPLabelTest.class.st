@@ -6,7 +6,7 @@ Class {
 
 { #category : #tests }
 OPLabelTest >> elementClass [
-	^ OPUmlLabel
+	^ OPLabel
 ]
 
 { #category : #tests }

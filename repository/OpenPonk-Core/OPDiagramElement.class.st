@@ -215,6 +215,12 @@ OPDiagramElement >> modelElements: aCollection [
 	modelElements := aCollection
 ]
 
+{ #category : #testing }
+OPDiagramElement >> movesWithOtherShape [
+
+	^ false
+]
+
 { #category : #accessing }
 OPDiagramElement >> ownModelElement [
 

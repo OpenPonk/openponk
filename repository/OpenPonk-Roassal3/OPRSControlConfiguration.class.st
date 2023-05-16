@@ -58,7 +58,7 @@ OPRSControlConfiguration class >> dragAttachmentMarginDefault [
 { #category : #accessing }
 OPRSControlConfiguration class >> keepCameraOnContent [
 
-	^ keepCameraOnContent ifNil: [ true ]
+	^ keepCameraOnContent ifNil: [ false ]
 ]
 
 { #category : #accessing }

@@ -633,15 +633,16 @@ OPDiagramController >> removeModelElement: aModelElement [
 OPDiagramController >> rendered: aController [
 
 	(figuresBeingAdded includes: aController)
-		ifFalse: [ 
+		ifFalse: [
 			self traceCr:
 				'DiagramController>>#addedFigureFor: added figure not previously marked as being added' ]
 		ifTrue: [ figuresBeingAdded remove: aController ].
 
 
-	lastSelectionPosition ifNotNil: [ 
+	lastSelectionPosition ifNotNil: [
 		aController diagramElement addedByMouseClickTo:
-			lastSelectionPosition ].
+			lastSelectionPosition.
+		lastSelectionPosition := nil ].
 	self addMouseEventsFor: aController roassalShape
 ]
 

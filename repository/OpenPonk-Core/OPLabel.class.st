@@ -79,6 +79,12 @@ OPLabel >> fontSize [
 		  ifAbsent: [ self defaultFontSize ]
 ]
 
+{ #category : #'as yet unclassified' }
+OPLabel >> isResizableByUser [
+
+	^ false
+]
+
 { #category : #accessing }
 OPLabel >> noText [
 

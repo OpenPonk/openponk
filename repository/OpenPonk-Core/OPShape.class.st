@@ -61,23 +61,23 @@ OPShape >> moveToEmptySpace [
 			                  +
 			                  ((800 - canvasRectangle width max: 0)
 			                   @ neededSpace y).
-	occupiedRectangles := SortedCollection sortBlock: [ :a :b | 
+	occupiedRectangles := SortedCollection sortBlock: [ :a :b |
 		                      a right > b right ].
 	occupiedRectangles add:
 		(possibleCanvas topLeft corner: possibleCanvas bottomLeft).
 	occupiedRectangles addAll:
-		((self allShapesPositionableByUser copyWithout: self) collect: [ 
+		((self allShapesPositionableByUser copyWithout: self) collect: [
 			 :each | each encompassingRectangle rounded ]).
 
 	occupiedRectangles
 		inject: possibleCanvas top
-		into: [ :maxFoundOccupiedY :each | 
+		into: [ :maxFoundOccupiedY :each |
 			| filledSpace |
 			filledSpace := Rectangle
 				               origin: each right @ maxFoundOccupiedY
 				               extent: neededSpace.
-			(filledSpace corner <= possibleCanvas corner and: [ 
-				 each bottom > maxFoundOccupiedY ]) ifTrue: [ 
+			(filledSpace corner <= possibleCanvas corner and: [
+				 each bottom > maxFoundOccupiedY ]) ifTrue: [
 				^ self translateTo: filledSpace center ].
 			maxFoundOccupiedY max: each bottom ]
 ]
@@ -94,7 +94,7 @@ OPShape >> renderIn: aCanvas [
 	self isRendered ifTrue: [ ^ self ].
 	super renderIn: aCanvas.
 	self bounds ifNil: [
-		self isPositionableByUser ifTrue: [ self moveToEmptySpace ] ].
+		self movesWithOtherShape ifFalse: [ self moveToEmptySpace ] ].
 	^ roassalShape
 ]
 

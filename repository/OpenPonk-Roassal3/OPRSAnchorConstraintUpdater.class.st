@@ -147,8 +147,7 @@ OPRSAnchorConstraintUpdater >> moveAwayFromSegment: aSegment [
 	(aSegment intersectRectangle: shape encompassingRectangle)
 		ifNotEmpty: [
 			shape translateBy:
-				aSegment vector normal
-				* (distanceToLine + self extraDistance) negated ]
+				aSegment vector normal * (distanceToLine + self extraDistance) ]
 ]
 
 { #category : #accessing }

@@ -130,7 +130,7 @@ OPRSAnchorConstraint >> minDistanceToLine [
 
 { #category : #accessing }
 OPRSAnchorConstraint >> minDistanceToLine: aNumber [
-	"Attempted distance from line to the right from the line looking from start to end. Positive number means to the left, negative to the right"
+	"Attempted distance from line to the right from the line looking from start to end. Positive number means to the right, negative to the left"
 
 	minDistanceToLine := aNumber.
 	self distanceToLine: (distanceToLine abs < aNumber abs

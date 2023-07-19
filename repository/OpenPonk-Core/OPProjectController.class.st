@@ -295,12 +295,11 @@ OPProjectController >> recentProjects [
 
 { #category : #removing }
 OPProjectController >> removeDiagram: aDiagram [
+
 	project removeDiagram: aDiagram.
-	self
-		removeDiagramController:
-			(controllers
-				detect: [ :any | any diagram = aDiagram ]
-				ifNone: [ ^ self ])
+	self removeDiagramController: (controllers
+			 detect: [ :any | any diagramElement = aDiagram ]
+			 ifNone: [ ^ self ])
 ]
 
 { #category : #removing }

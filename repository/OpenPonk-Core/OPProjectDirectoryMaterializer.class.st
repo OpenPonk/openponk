@@ -96,7 +96,7 @@ OPProjectDirectoryMaterializer >> readMementoFrom: aFolder asPlugin: aPlugin [
 		                ifNone: [ aPlugin serializer ].
 	^ (materializer loadMementoFrom: aFolder) ifNil: [ 
 		  self error:
-			  'Unable to deserialize memento from ' , aFolder asString ]
+			  'Unable to deserialize memento from ' , aFolder greaseString ]
 ]
 
 { #category : #reading }

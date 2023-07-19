@@ -38,5 +38,6 @@ OPDiagramRemoveFigureCommand >> execute [
 	figures do: [ :each | 
 		(diagramController hasControllerForFigure: each) ifTrue: [ 
 			diagramController removeFromCanvas: each ] ].
+	"diagramController selectedElements do: [ :each | diagramController removeFromCanvas: each]."
 	canvas signalUpdate
 ]

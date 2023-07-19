@@ -192,7 +192,7 @@ OPProject >> name: aString [
 OPProject >> removeDiagram: aDiagram [
 
 	modelsAndDiagrams
-		at: aDiagram model
+		at: aDiagram modelElement
 		ifPresent: [ :diagrams | diagrams remove: aDiagram ]
 ]
 

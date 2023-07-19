@@ -186,6 +186,7 @@ OPCanvasPresenter >> initializeCanvas: aCanvas [
 							  yourself).
 						 RSKeyNavigationCanvasInteraction new.
 						 OPRSZoomableCanvasInteraction new.
+						 OPRSRemoveable new.
 						 RSScrollBarsCanvasInteraction new };
 				 configuration: (OPRSControlConfiguration new
 						  noLegend;

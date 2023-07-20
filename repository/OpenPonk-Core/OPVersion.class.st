@@ -234,7 +234,7 @@ OPVersion >> getRun [
 			'https://api.github.com/repos/openponk/' , self repositoryName
 				, '/actions/runs/' , self githubWorkflowRunId asString.
 	githubToken := OSEnvironment current
-		at: 'GITHUB_TOKEN'
+		at: 'ACTIONS_READ_ACCESS_TOKEN'
 		ifAbsent: [ nil ].
 	githubToken
 		ifNotNil: [ :token | 

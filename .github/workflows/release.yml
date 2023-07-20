@@ -9,7 +9,6 @@ env:
   REPOSITORY_NAME: '${{ github.event.repository.name }}'
   PROJECT_NAME: 'openponk-${{ github.event.repository.name }}'
   VERSION: ${{ github.event.release.tag_name }}
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   RUN_ID: ${{ github.run_id }}
   
 jobs:
@@ -19,8 +18,8 @@ jobs:
       PLATFORM: ${{ github.job }}
     name: 'Test Linux'
     steps:
-      - uses: actions/checkout@v2.4.0
-      - uses: hpi-swa/setup-smalltalkCI@1.3.2
+      - uses: actions/checkout@v3.5.3
+      - uses: hpi-swa/setup-smalltalkCI@1.3.4
         id: smalltalkci
         with:
           smalltalk-image: Pharo64-11
@@ -35,8 +34,8 @@ jobs:
       PLATFORM: ${{ github.job }}
     name: 'Test Windows'
     steps:
-      - uses: actions/checkout@v2.4.0
-      - uses: hpi-swa/setup-smalltalkCI@1.3.2
+      - uses: actions/checkout@v3.5.3
+      - uses: hpi-swa/setup-smalltalkCI@1.3.4
         id: smalltalkci
         with:
           smalltalk-image: Pharo64-11

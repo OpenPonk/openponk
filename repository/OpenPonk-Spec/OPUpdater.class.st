@@ -61,7 +61,6 @@ OPUpdater >> connectPresenters [
 { #category : #'as yet unclassified' }
 OPUpdater >> currentVersionInfoLoaded [
 
-	self halt.
 	[
 	[
 	lastVersion := version getOfLatestRelease.

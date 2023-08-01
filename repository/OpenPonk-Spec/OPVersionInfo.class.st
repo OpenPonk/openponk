@@ -82,6 +82,7 @@ OPVersionInfo >> initializePresenters [
 
 { #category : #enumerating }
 OPVersionInfo >> onInfoDownloadDo: aBlock [
+
 	version needsDownloadInfo
 		ifTrue: [ onInfoDownloadBlock := aBlock ]
 		ifFalse: aBlock

@@ -48,6 +48,13 @@ OPRSSelectableCanvas >> color [
 	^ Color black alpha: 0.2
 ]
 
+{ #category : #'event processing' }
+OPRSSelectableCanvas >> createCameraAnimation: event [
+	"do nothing"
+
+	
+]
+
 { #category : #accessing }
 OPRSSelectableCanvas >> defaultBox [
 
@@ -81,7 +88,7 @@ OPRSSelectableCanvas >> initialize [
 { #category : #hooks }
 OPRSSelectableCanvas >> onShape: aCanvas [
 
-	(aCanvas getInteractionsForClass: RSDraggableCanvasInteraction) do: [ 
+	(aCanvas getInteractionsForClass: RSDraggableCanvasInteraction) do: [
 		:each | each mouseEvent: self dragStartEvent ].
 	aCanvas
 		when: self dragStartEvent send: #enableDrag: to: self;
@@ -89,7 +96,8 @@ OPRSSelectableCanvas >> onShape: aCanvas [
 		when: RSMouseDragging send: #processDrag: to: self;
 		when: RSMouseDragEnd send: #processDragEnd: to: self;
 		when: RSMouseLeftClick
-		do: [ :evt | self selectShapes: { aCanvas } byEvent: evt ].
+		do: [ :evt | self selectShapes: { aCanvas } byEvent: evt ]
+		for: self.
 	aCanvas propertyAt: self class put: self
 ]
 
@@ -104,4 +112,11 @@ OPRSSelectableCanvas >> selectShapes: aGroup byEvent: anEvent [
 			 selectedShapes: (selectedShapes := aGroup);
 			 yourself).
 	self boxEnded: anEvent
+]
+
+{ #category : #'event processing' }
+OPRSSelectableCanvas >> stopCameraAnimation: event [
+	"do nothing"
+
+	
 ]

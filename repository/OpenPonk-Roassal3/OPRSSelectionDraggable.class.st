@@ -197,8 +197,14 @@ OPRSSelectionDraggable >> movedLinesWithControlPointsBy: anEvent [
 OPRSSelectionDraggable >> onShape: aShape [
 
 	super onShape: aShape.
-	aShape when: RSMouseDragStart do: [ :event | self startDrag: event ].
-	aShape when: RSMouseDragEnd do: [ :event | self endDrag: event ].
+	aShape
+		when: RSMouseDragStart
+		do: [ :event | self startDrag: event ]
+		for: self.
+	aShape
+		when: RSMouseDragEnd
+		do: [ :event | self endDrag: event ]
+		for: self.
 	aShape propertyAt: self propertyKey put: self
 ]
 

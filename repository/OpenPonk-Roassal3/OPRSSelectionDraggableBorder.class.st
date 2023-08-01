@@ -25,7 +25,7 @@ OPRSSelectionDraggableBorder >> createDragBoxes [
 		                    height:
 			                    (shape height - self dragBoxWidth max: 0 @ 0);
 		                    yourself.
-	dragBoxes := { 
+	dragBoxes := {
 		             (#top -> horizonalBoxShape).
 		             (#bottom -> horizonalBoxShape copy).
 		             (#left -> verticalBoxShape).
@@ -35,24 +35,30 @@ OPRSSelectionDraggableBorder >> createDragBoxes [
 	shape isInACanvas
 		ifTrue: renderDragBoxes
 		ifFalse: [ shape when: RSShapeAddedEvent do: renderDragBoxes ].
-	shape when: RSShapeRemovedEvent do: [ dragBoxes do: #remove ].
-	forwardEvent := [ :event | 
+	shape
+		when: RSShapeRemovedEvent
+		do: [ dragBoxes do: #remove ]
+		for: self.
+	forwardEvent := [ :event |
 	                | eventForMainShape |
 	                eventForMainShape := event copy.
 	                shape announce: eventForMainShape.
 	                eventForMainShape ].
-	dragBoxes do: [ :each | 
+	dragBoxes do: [ :each |
 		each
 			when: RSMouseDragStart
-			do: [ :event | self startDrag: (forwardEvent value: event) ];
+			do: [ :event | self startDrag: (forwardEvent value: event) ]
+			for: self;
 			when: RSMouseDragging
-			do: [ :event | self processDrag: (forwardEvent value: event) ];
+			do: [ :event | self processDrag: (forwardEvent value: event) ]
+			for: self;
 			when: RSMouseDragEnd
-			do: [ :event | self endDrag: (forwardEvent value: event) ];
-			when: RSMouseClick do: forwardEvent ].
+			do: [ :event | self endDrag: (forwardEvent value: event) ]
+			for: self;
+			when: RSMouseClick do: forwardEvent for: self ].
 	shape
-		when: RSExtentChangedEvent do: [ self updateDragBoxes ];
-		when: RSPositionChangedEvent do: [ self updateDragBoxes ]
+		when: RSExtentChangedEvent do: [ self updateDragBoxes ] for: self;
+		when: RSPositionChangedEvent do: [ self updateDragBoxes ] for: self
 ]
 
 { #category : #hooks }

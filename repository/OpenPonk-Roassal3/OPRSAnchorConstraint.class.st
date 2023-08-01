@@ -58,16 +58,22 @@ OPRSAnchorConstraint >> balance: aNumber [
 OPRSAnchorConstraint >> build [
 
 	shape propertyAt: self class put: self.
-	shape when: RSShapeRemovedEvent do: [ self remove ].
-	line when: RSShapeRemovedEvent do: [ self remove ].
-	line from when: RSPositionChangedEvent do: [ self moveShape ].
-	line to when: RSPositionChangedEvent do: [ self moveShape ].
-	line from when: RSExtentChangedEvent do: [ self moveShape ].
-	line to when: RSExtentChangedEvent do: [ self moveShape ].
-	line when: OPRSDraggedControlPointsEvent do: [ self moveShape ].
-	line when: RSPositionChangedEvent do: [ self moveShape ].
-	shape when: RSExtentChangedEvent do: [ self moveShape ].
-	shape when: RSMouseDragging do: [ self saveShapePosition ].
+	shape when: RSShapeRemovedEvent do: [ self remove ] for: self.
+	line when: RSShapeRemovedEvent do: [ self remove ] for: self.
+	line from
+		when: RSPositionChangedEvent
+		do: [ self moveShape ]
+		for: self.
+	line to when: RSPositionChangedEvent do: [ self moveShape ] for: self.
+	line from when: RSExtentChangedEvent do: [ self moveShape ] for: self.
+	line to when: RSExtentChangedEvent do: [ self moveShape ] for: self.
+	line
+		when: OPRSDraggedControlPointsEvent
+		do: [ self moveShape ]
+		for: self.
+	line when: RSPositionChangedEvent do: [ self moveShape ] for: self.
+	shape when: RSExtentChangedEvent do: [ self moveShape ] for: self.
+	shape when: RSMouseDragging do: [ self saveShapePosition ] for: self.
 	alwaysShowGuideLine
 		ifTrue: [
 			^ shape isInACanvas
@@ -75,8 +81,14 @@ OPRSAnchorConstraint >> build [
 				  ifFalse: [
 				  shape when: RSShapeAddedEvent do: [ self addAnchorAndGuideLine ] ] ]
 		ifFalse: [
-			shape when: RSMouseLeftDragStart do: [ self addAnchorAndGuideLine ].
-			shape when: RSMouseDragEnd do: [ self removeAnchorAndGuideLine ] ]
+			shape
+				when: RSMouseLeftDragStart
+				do: [ self addAnchorAndGuideLine ]
+				for: self.
+			shape
+				when: RSMouseDragEnd
+				do: [ self removeAnchorAndGuideLine ]
+				for: self ]
 ]
 
 { #category : #accessing }

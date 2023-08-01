@@ -97,9 +97,12 @@ OPVersion class >> ofLastestReleaseOf: aRepositoryName [
 ]
 
 { #category : #accessing }
-OPVersion class >> resetCurrent [
+OPVersion class >> reset [
+
 	<script>
-	^ current := self new
+	current := nil.
+	latest := nil.
+	runsCache := nil
 ]
 
 { #category : #'as yet unclassified' }

@@ -55,6 +55,7 @@ OPNode >> renderShapeDetails [
 	roassalShape
 		when: RSExtentChangedEvent
 		do: [ roassalShape updateConnectedLines ]
+		for: self
 ]
 
 { #category : #actions }

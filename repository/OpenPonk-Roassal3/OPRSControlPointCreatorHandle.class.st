@@ -26,10 +26,10 @@ OPRSControlPointCreatorHandle >> constraintFor: aShape [
 	| moveBlock |
 	moveBlock := [ aShape translateTo: self fromPoint + self toPoint / 2 ].
 	moveBlock value.
-	from when: RSPositionChangedEvent do: moveBlock.
-	to when: RSPositionChangedEvent do: moveBlock.
-	from when: RSExtentChangedEvent do: moveBlock.
-	to when: RSExtentChangedEvent do: moveBlock
+	from when: RSPositionChangedEvent do: moveBlock for: self.
+	to when: RSPositionChangedEvent do: moveBlock for: self.
+	from when: RSExtentChangedEvent do: moveBlock for: self.
+	to when: RSExtentChangedEvent do: moveBlock for: self
 ]
 
 { #category : #'as yet unclassified' }
@@ -83,12 +83,18 @@ OPRSControlPointCreatorHandle >> render [
 	shape model: line.
 	clickBox := self createClickBoxShape.
 	clickBox model: line.
-	clickBox @ (OPRSConditionallyDraggable onCondition: [ 
+	clickBox @ (OPRSConditionallyDraggable onCondition: [
 		 (self fromPoint distanceTo: self toPoint) > 10 ]).
 	self constraintFor: clickBox.
 	RSLocation new stick: shape on: clickBox.
-	clickBox when: RSMouseDragStart do: [ :event | self promote ].
-	clickBox when: RSMouseLeftClick do: [ :event | self promote ].
+	clickBox
+		when: RSMouseDragStart
+		do: [ :event | self promote ]
+		for: self.
+	clickBox
+		when: RSMouseLeftClick
+		do: [ :event | self promote ]
+		for: self.
 	line canvas
 		add: shape;
 		add: clickBox

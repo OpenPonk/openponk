@@ -96,7 +96,10 @@ OPRSAdornment >> shape [
 	shape extent: self icon extent + (padding * 2).
 	shape color: Color transparent.
 
-	shape when: RSMouseLeftClick do: self action.
+	shape
+		when: RSMouseLeftClick
+		do: self action
+		for: self action receiver.
 
 	innerBox := RSBox new.
 	innerBox extent: shape extent - 2.
@@ -105,13 +108,19 @@ OPRSAdornment >> shape [
 
 	RSLocation new stick: innerBox on: shape.
 	RSLocation new stick: self icon on: innerBox.
-	shape when: RSShapeAddedEvent do: [ :event | 
-		event canvas
-			add: innerBox;
-			add: self icon ].
-	shape when: RSShapeRemovedEvent do: [ :event | 
-		self icon remove.
-		innerBox remove ].
+	shape
+		when: RSShapeAddedEvent
+		do: [ :event |
+			event canvas
+				add: innerBox;
+				add: self icon ]
+		for: self.
+	shape
+		when: RSShapeRemovedEvent
+		do: [ :event |
+			self icon remove.
+			innerBox remove ]
+		for: self.
 
 	^ shape
 ]
@@ -122,7 +131,7 @@ OPRSAdornment >> showOnShape: anOriginalShape horizontal: aHorizontalLocation ve
 	| updateBlock |
 	self icon model: anOriginalShape.
 	self shape model: anOriginalShape.
-	updateBlock := [ 
+	updateBlock := [
 	               aVerticalLocation
 		               offset: 0 @ offset y;
 		               move: self shape on: anOriginalShape.
@@ -132,13 +141,17 @@ OPRSAdornment >> showOnShape: anOriginalShape horizontal: aHorizontalLocation ve
 			               @ (shape position y - anOriginalShape position y);
 		               move: self shape on: anOriginalShape ].
 	anOriginalShape
-		when: RSPositionChangedEvent do: updateBlock;
-		when: RSExtentChangedEvent do: updateBlock.
+		when: RSPositionChangedEvent do: updateBlock for: self;
+		when: RSExtentChangedEvent do: updateBlock for: self.
 	updateBlock value.
 
-	anOriginalShape when: RSShapeRemovedEvent do: [ self remove ].
+	anOriginalShape
+		when: RSShapeRemovedEvent
+		do: [ self remove ]
+		for: self.
 	self shape
 		when: RSShapeRemovedEvent
-		do: [ anOriginalShape announcer unsubscribe: self ].
+		do: [ anOriginalShape announcer unsubscribe: self ]
+		for: self.
 	anOriginalShape canvas add: self shape
 ]

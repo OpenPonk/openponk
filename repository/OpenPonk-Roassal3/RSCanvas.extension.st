@@ -16,12 +16,6 @@ RSCanvas >> isSelectable [
 ]
 
 { #category : #'*OpenPonk-Roassal3' }
-RSCanvas >> selectedShapes [
-
-	^ self propertyAt: #selected_shapes ifAbsent: [ #(  ) ]
-]
-
-{ #category : #'*OpenPonk-Roassal3' }
 RSCanvas >> shapeWithActionForPositionInPixels: position [
 
 	| block |

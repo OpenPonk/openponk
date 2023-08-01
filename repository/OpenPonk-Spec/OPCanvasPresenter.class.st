@@ -199,19 +199,24 @@ OPCanvasPresenter >> initializeCanvas: aCanvas [
 		do: [ :evt |
 			self
 				selectedShapes: evt selectedShapes
-				onPosition: evt originalEvent position ].
+				onPosition: evt originalEvent position ]
+		for: self.
 
 	aCanvas
 		when: RSExtentChangedEvent
-		do: [ :event | onExtentChange value: event ].
-	aCanvas when: RSScaleChangedEvent do: [ :event |
-		| zoomText |
-		zoomText := (event newScale < 1
-			             ifTrue: [ '   ' ]
-			             ifFalse: [ '' ])
-		            , (event newScale * 100) rounded asString , '%'.
-		onZoomChange value: event.
-		self editor zoomLabel label: ' ' , zoomText ]
+		do: [ :event | onExtentChange value: event ]
+		for: self.
+	aCanvas
+		when: RSScaleChangedEvent
+		do: [ :event |
+			| zoomText |
+			zoomText := (event newScale < 1
+				             ifTrue: [ '   ' ]
+				             ifFalse: [ '' ])
+			            , (event newScale * 100) rounded asString , '%'.
+			onZoomChange value: event.
+			self editor zoomLabel label: ' ' , zoomText ]
+		for: self
 ]
 
 { #category : #events }

@@ -15,19 +15,22 @@ Class {
 OPRSDraggableControlPoints >> connectWithCanvas [
 
 	| interaction |
-	interaction := canvas propertyAt: OPRSSelectableCanvas ifAbsent: [ 
+	interaction := canvas propertyAt: OPRSSelectableCanvas ifAbsent: [
 		               line
 			               when: RSMouseLeftClick
 			               do: [ :event | self showHandles ].
 		               canvas
 			               when: RSMouseLeftClick
-			               do: [ :event | 
+			               do: [ :event |
 			               event shape = line ifFalse: [ self removeHandles ] ].
 		               ^ self ].
-	interaction when: OPRSSelectionEndEvent do: [ :event | 
-		(event selectedShapes includes: line)
-			ifTrue: [ self showHandles ]
-			ifFalse: [ self removeHandles ] ]
+	interaction
+		when: OPRSSelectionEndEvent
+		do: [ :event |
+			(event selectedShapes includes: line)
+				ifTrue: [ self showHandles ]
+				ifFalse: [ self removeHandles ] ]
+		for: self
 ]
 
 { #category : #initialization }
@@ -35,7 +38,7 @@ OPRSDraggableControlPoints >> enable [
 
 	canvas := line canvas.
 	line propertyAt: self class put: self.
-	line when: RSShapeRemovedEvent do: [ self remove ].
+	line when: RSShapeRemovedEvent do: [ self remove ] for: self.
 	self connectWithCanvas
 ]
 
@@ -52,7 +55,7 @@ OPRSDraggableControlPoints >> onShape: aLine [
 
 	line := aLine.
 	line canvas
-		ifNil: [ line when: RSShapeAddedEvent do: [ self enable ] ]
+		ifNil: [ line when: RSShapeAddedEvent do: [ self enable ] for: self ]
 		ifNotNil: [ self enable ]
 ]
 

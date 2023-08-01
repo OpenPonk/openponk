@@ -42,7 +42,7 @@ OPNote >> createOwnedBorderLines [
 		                  color: Color gray;
 		                  width: 1;
 		                  yourself.
-	lines := { 
+	lines := {
 		         (lineShape copy
 			          from: upperTopRightBox;
 			          to: lowerTopRightBox).
@@ -59,7 +59,10 @@ OPNote >> createOwnedBorderLines [
 			          from: topLeftBox;
 			          to: upperTopRightBox) } asGroup.
 	roassalShape canvas addAll: lines.
-	roassalShape when: RSShapeRemovedEvent do: [ lines do: #remove ].
+	roassalShape
+		when: RSShapeRemovedEvent
+		do: [ lines do: #remove ]
+		for: self
 ]
 
 { #category : #'creating - subelements' }
@@ -72,7 +75,10 @@ OPNote >> createOwnedCornerTriangle [
 		            model: self;
 		            yourself.
 	self canvas add: triangle.
-	roassalShape when: RSShapeRemovedEvent do: [ triangle remove ].
+	roassalShape
+		when: RSShapeRemovedEvent
+		do: [ triangle remove ]
+		for: self
 ]
 
 { #category : #'creating - subelements' }
@@ -89,9 +95,12 @@ OPNote >> createOwnedFillBoxes [
 		add: leftFillBox;
 		add: bottomFillBox.
 
-	roassalShape when: RSShapeRemovedEvent do: [ 
-		leftFillBox remove.
-		bottomFillBox remove ]
+	roassalShape
+		when: RSShapeRemovedEvent
+		do: [
+			leftFillBox remove.
+			bottomFillBox remove ]
+		for: self
 ]
 
 { #category : #'creating - subelements' }
@@ -104,12 +113,12 @@ OPNote >> createOwnedInvisibleBoxes [
 		                     width: 1;
 		                     height: 1;
 		                     yourself.
-	invisibleBoxes := { 
+	invisibleBoxes := {
 		                  (topLeftBox := invisibleBoxShape copy model:
 			                                 #topLeft).
-		                  (upperTopRightBox := invisibleBoxShape copy 
+		                  (upperTopRightBox := invisibleBoxShape copy
 			                                       model: #upperTopRight).
-		                  (lowerTopRightBox := invisibleBoxShape copy 
+		                  (lowerTopRightBox := invisibleBoxShape copy
 			                                       model: #lowerTopRight).
 		                  (bottomLeftBox := invisibleBoxShape copy model:
 			                                    #bottomLeft).
@@ -123,6 +132,7 @@ OPNote >> createOwnedInvisibleBoxes [
 	roassalShape
 		when: RSShapeRemovedEvent
 		do: [ invisibleBoxes do: #remove ]
+		for: self
 ]
 
 { #category : #initialization }
@@ -174,8 +184,12 @@ OPNote >> renderShapeDetails [
 		@ OPRSResizable.
 	self updateOwnedElements.
 	self roassalShape
-		when: RSPositionChangedEvent do: [ self updateOwnedElements ];
-		when: RSExtentChangedEvent do: [ self updateOwnedElements ].
+		when: RSPositionChangedEvent
+		do: [ self updateOwnedElements ]
+		for: self;
+		when: RSExtentChangedEvent
+		do: [ self updateOwnedElements ]
+		for: self.
 	self renderLabel
 ]
 

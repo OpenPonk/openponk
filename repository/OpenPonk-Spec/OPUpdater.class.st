@@ -52,31 +52,37 @@ OPUpdater class >> defaultLayout [
 
 { #category : #initialization }
 OPUpdater >> connectPresenters [
-	version needsDownloadInfo
-		ifFalse: [ ^ self currentVersionInfoLoaded ].
-	version canDownloadInfo
-		ifTrue: [ versionInfo onInfoDownloadDo: [ self currentVersionInfoLoaded ] ]
+
+	version needsDownloadInfo ifFalse: [ ^ self currentVersionInfoLoaded ].
+	version canDownloadInfo ifTrue: [
+		versionInfo onInfoDownloadDo: [ self currentVersionInfoLoaded ] ]
 ]
 
 { #category : #'as yet unclassified' }
 OPUpdater >> currentVersionInfoLoaded [
-	[ [ lastVersion := version getOfLatestRelease.
-	lastVersion
-		ifNil: [ lastVersionInfo label: 'Unknown.' ]
-		ifNotNil: [ lastVersionInfo := OPVersionInfo
-				newApplication: self application
-				model: lastVersion.
-			self update ] ]
+
+	self halt.
+	[
+	[
+	lastVersion := version getOfLatestRelease.
+	lastVersion ifNil: [ lastVersionInfo label: 'Unknown.' ] ifNotNil: [
+		lastVersionInfo := OPVersionInfo
+			                   newApplication: self application
+			                   model: lastVersion.
+		self update ] ]
 		on: ZnHttpUnsuccessful
 		do: [ lastVersionInfo label: 'Failed to download info.' ] ]
 		forkAt: Processor userBackgroundPriority
 		named: 'Loading OpenPonk latest release info from GitHub'.
-	[ [ lastNightlyVersion := version getOfLatestNightlyBuild.
+	[
+	[
+	lastNightlyVersion := version getOfLatestNightlyBuild.
 	lastNightlyVersion
 		ifNil: [ lastNightlyVersionInfo label: 'Unknown.' ]
-		ifNotNil: [ lastNightlyVersionInfo := OPVersionInfo
-				newApplication: self application
-				model: lastNightlyVersion.
+		ifNotNil: [
+			lastNightlyVersionInfo := OPVersionInfo
+				                          newApplication: self application
+				                          model: lastNightlyVersion.
 			self update ] ]
 		on: ZnHttpUnsuccessful
 		do: [ lastNightlyVersionInfo label: 'Failed to download info.' ] ]

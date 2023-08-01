@@ -22,16 +22,19 @@ OPRSResizable >> connectWithCanvas [
 	| interaction |
 	interaction := shape canvas
 		               propertyAt: OPRSSelectableCanvas
-		               ifAbsent: [ 
+		               ifAbsent: [
 			               shape announcer
 				               when: RSMouseLeftClick
 				               send: #showHandles:
 				               to: self.
 			               ^ self ].
-	interaction when: OPRSSelectionEndEvent do: [ :event | 
-		(event selectedShapes includes: shape)
-			ifTrue: [ self showHandles: event ]
-			ifFalse: [ self removeHandles: event ] ]
+	interaction
+		when: OPRSSelectionEndEvent
+		do: [ :event |
+			(event selectedShapes includes: shape)
+				ifTrue: [ self showHandles: event ]
+				ifFalse: [ self removeHandles: event ] ]
+		for: self
 ]
 
 { #category : #'accessing - shapes' }
@@ -56,17 +59,20 @@ OPRSResizable >> onShape: aShape [
 	shape := aShape.
 	shape isInACanvas
 		ifTrue: [ self connectWithCanvas ]
-		ifFalse: [ 
+		ifFalse: [
 		shape when: RSShapeAddedEvent do: [ self connectWithCanvas ] ].
 	shape
 		when: RSMouseDragStart send: #disableHandles: to: self;
 		when: RSMouseDragEnd send: #enableHandles: to: self;
 		when: OPRSDragFromSelectionStart send: #disableHandles: to: self;
 		when: OPRSDragFromSelectionEnd send: #enableHandles: to: self.
-	shape when: RSShapeRemovedEvent do: [ :evt | 
-		shape announcer unsubscribe: self.
-		shape removePropertyAt: self key ifAbsent: [  ].
-		self removeHandles: evt ]
+	shape
+		when: RSShapeRemovedEvent
+		do: [ :evt |
+			shape announcer unsubscribe: self.
+			shape removePropertyAt: self key ifAbsent: [  ].
+			self removeHandles: evt ]
+		for: self
 ]
 
 { #category : #private }

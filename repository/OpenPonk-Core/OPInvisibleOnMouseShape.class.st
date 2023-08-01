@@ -65,4 +65,5 @@ OPInvisibleOnMouseShape >> renderShapeDetails [
 	roassalShape canvas
 		when: RSMouseMove
 		do: [ :event | self mouseMovedBy: event ]
+		for: self
 ]

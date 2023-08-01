@@ -19,7 +19,10 @@ OPTResizableFigureWithText >> renderLabel [
 
 	self roassalShape @ labeled.
 
-	self roassalShape when: RSExtentChangedEvent do: [ self updateText ]
+	self roassalShape
+		when: RSExtentChangedEvent
+		do: [ self updateText ]
+		for: self
 ]
 
 { #category : #'creating - subelements' }

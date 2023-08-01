@@ -72,10 +72,12 @@ OPDiagramController >> addMouseEventsFor: aFigure [
 
 	aFigure
 		when: RSMouseRightClick
-		do: [ :event | self figureContextClicked: event ].
+		do: [ :event | self figureContextClicked: event ]
+		for: self.
 	aFigure
 		when: RSMouseEnter
 		do: [ :event | self hoverRoassalShape: event shape ]
+		for: self
 ]
 
 { #category : #rendering }

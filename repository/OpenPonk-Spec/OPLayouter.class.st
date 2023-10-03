@@ -148,7 +148,6 @@ OPLayouter >> treeLayout [
 	self applyLayout: [ :boxes :links | 
 		| centerY |
 		RSTreeLayout new
-			doNotAttachPoint;
 			verticalGap: 100;
 			horizontalGap: 100;
 			on: boxes edges: links.

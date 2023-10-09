@@ -47,7 +47,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 
 	spec baseline: 'Magritte' with: [
 		spec
-			repository: 'github://JanBliznicenko/magritte:master';
+			repository: 'github://magritte-metamodel/magritte:b24afda';
 			loads: #( Core 'Magritte-Morph' ) ].
 
 	spec

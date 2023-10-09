@@ -37,12 +37,12 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 
 	spec baseline: 'XMLParser' with: [
 		spec
-			repository: 'github://pharo-contributions/XML-XMLParser:3.5.x/src';
+			repository: 'github://pharo-contributions/XML-XMLParser:4f9cb10';
 			loads: #( Core ) ].
 
 	spec baseline: 'XPath' with: [
 		spec
-			repository: 'github://pharo-contributions/XML-XPath:3450f91/src';
+			repository: 'github://pharo-contributions/XML-XPath:c063098';
 			loads: #( Core ) ].
 
 	spec baseline: 'Magritte' with: [
@@ -56,7 +56,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 
 	spec
 		baseline: 'NeoJSON'
-		with: [ spec repository: 'github://svenvc/NeoJSON:a18a783' ]
+		with: [ spec repository: 'github://svenvc/NeoJSON:b05162a' ]
 ]
 
 { #category : #baselines }

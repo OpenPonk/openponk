@@ -40,8 +40,10 @@ OPEditElementTextCommand >> announceChange [
 
 { #category : #execute }
 OPEditElementTextCommand >> execute [
+
 	| result |
-	result := UIManager default request: name initialAnswer: get value.
+	result := self doAndReturnFocus: [
+		          UIManager default request: name initialAnswer: get value ].
 	result ifNil: [ ^ self ].
 	set value: result.
 	self announceChange

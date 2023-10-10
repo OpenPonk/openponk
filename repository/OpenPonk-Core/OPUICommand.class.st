@@ -24,6 +24,17 @@ OPUICommand class >> on: anElementController [
 		  yourself
 ]
 
+{ #category : #utilities }
+OPUICommand >> doAndReturnFocus: aBlock [
+
+	| result window wasActive |
+	window := controller diagramController canvasPresenter window window.
+	wasActive := window isActive.
+	result := aBlock value.
+	window activate.
+	^ result
+]
+
 { #category : #execute }
 OPUICommand >> execute [
 	^ self subclassResponsibility

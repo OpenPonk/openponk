@@ -25,9 +25,12 @@ Class {
 OPRenameElementCommand >> execute [
 
 	| result |
-	result := UIManager default request: 'Enter a name' initialAnswer: (controller model name).
+	result := self doAndReturnFocus: [
+		          UIManager default
+			          request: 'Enter a name'
+			          initialAnswer: controller model name ].
 	result ifNil: [ ^ self ].
 	result ifEmpty: [ ^ self ].
 	controller model name: result.
-	controller model announcer announce: OPElementRenamed new.
+	controller model announcer announce: OPElementRenamed new
 ]

@@ -18,11 +18,13 @@ OPRSDraggableControlPoints >> connectWithCanvas [
 	interaction := canvas propertyAt: OPRSSelectableCanvas ifAbsent: [
 		               line
 			               when: RSMouseLeftClick
-			               do: [ :event | self showHandles ].
+			               do: [ :event | self showHandles ]
+			               for: self.
 		               canvas
 			               when: RSMouseLeftClick
 			               do: [ :event |
-			               event shape = line ifFalse: [ self removeHandles ] ].
+			               event shape = line ifFalse: [ self removeHandles ] ]
+			               for: self.
 		               ^ self ].
 	interaction
 		when: OPRSSelectionEndEvent

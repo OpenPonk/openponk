@@ -13,13 +13,38 @@ OPDiagramRemoveFigureCommand class >> canBeExecutedInContext: aToolContext [
 
 { #category : #testing }
 OPDiagramRemoveFigureCommand class >> canvasShortcutActivation [
+
 	<classAnnotation>
-	^ CmdShortcutActivation by: Character delete meta for: OPCanvasPresenter
+	^ CmdShortcutActivation
+		  by: (KMKeyCombinationChoice withShortcuts: {
+					   (KMSingleKeyCombination new key:
+						    (KeyboardKey new withValue: 16rffff andName: #delete)).
+					   ((KMSingleKeyCombination new key:
+						     (KeyboardKey new withValue: 16rffff andName: #delete))
+						    modifiedBy: KMModifier meta) })
+		  for: OPCanvasPresenter
+]
+
+{ #category : #accessing }
+OPDiagramRemoveFigureCommand class >> lastEvent [
+
+	self flag:
+		'Part of ugly hack to find out if ctrl is currently pressed'.
+		
+	^ lastEvent
+]
+
+{ #category : #accessing }
+OPDiagramRemoveFigureCommand class >> lastEvent: anEvent [
+
+	self flag:
+		'Part of ugly hack to find out if ctrl is currently pressed'.
+
+	lastEvent := anEvent
 ]
 
 { #category : #accessing }
 OPDiagramRemoveFigureCommand >> defaultMenuIcon [
-
 	^ self iconNamed: #glamorousTrash
 ]
 
@@ -31,13 +56,50 @@ OPDiagramRemoveFigureCommand >> defaultMenuItemName [
 		  ifFalse: [ 'Remove all ' , models size asString , ' from model' ]
 ]
 
+{ #category : #utilities }
+OPDiagramRemoveFigureCommand >> doAndReturnFocus: aBlock [
+
+	| result window wasActive |
+	window := diagramController canvasPresenter window window.
+	wasActive := window isActive.
+	result := aBlock value.
+	window activate.
+	^ result
+]
+
 { #category : #execution }
 OPDiagramRemoveFigureCommand >> execute [
 
+	| lastEvent |
+	lastEvent := self class lastEvent.
+	(lastEvent isNotNil and: [
+		 lastEvent controlKeyPressed or: [ lastEvent commandKeyPressed ] ])
+		ifTrue: [ self unsafeExecute ]
+		ifFalse: [ self safeExecute ]
+]
+
+{ #category : #execution }
+OPDiagramRemoveFigureCommand >> safeExecute [
+
+	| result |
+	result := self doAndReturnFocus: [
+		          UIManager default
+			          proceed:
+				          'Permanently remove from model? (to skip this confirmation, hold '
+				          , OSPlatform current defaultModifier name
+				          , ' next time)'
+			          title: 'Remove?' ].
+	result ifNil: [ ^ self ].
+	result ifFalse: [ ^ self ].
+	self unsafeExecute
+]
+
+{ #category : #execution }
+OPDiagramRemoveFigureCommand >> unsafeExecute [
+
 	diagramController deselectAll.
-	figures do: [ :each | 
-		(diagramController hasControllerForFigure: each) ifTrue: [ 
+	figures do: [ :each |
+		(diagramController hasControllerForFigure: each) ifTrue: [
 			diagramController removeFromCanvas: each ] ].
-	"diagramController selectedElements do: [ :each | diagramController removeFromCanvas: each]."
 	canvas signalUpdate
 ]

@@ -26,6 +26,16 @@ OPCanvasPresenter >> canvas [
 	^ currentCanvas
 ]
 
+{ #category : #initialization }
+OPCanvasPresenter >> connectPresenters [
+
+	super connectPresenters.
+	onZoomChange := [ :event |  ].
+	onExtentChange := [ :event |  ].
+	self whenBuiltDo: [ :adptr |
+		CmdKMDispatcher attachedTo: adptr widget withCommandsFrom: self ]
+]
+
 { #category : #'private-focus' }
 OPCanvasPresenter >> createCommandContext [
 	"Subclases should override it if they provide any selection"
@@ -48,14 +58,6 @@ OPCanvasPresenter >> diagramController [
 { #category : #accessing }
 OPCanvasPresenter >> editor [
 	^ self owner
-]
-
-{ #category : #'private-focus' }
-OPCanvasPresenter >> ensureKeyBindingsFor: aWidget [
-
-	self flag: 'Does not work in P11'.
-	super ensureKeyBindingsFor: aWidget.
-	^ self enableCommanderShortcutsIn: aWidget
 ]
 
 { #category : #toolbar }
@@ -170,8 +172,6 @@ OPCanvasPresenter >> exportCanvasToSvg: aFileReference silently: aSilentlyBoolea
 OPCanvasPresenter >> initialize [
 
 	super initialize.
-	onZoomChange := [ :event |  ].
-	onExtentChange := [ :event |  ].
 	self script: [ :canvas | self initializeCanvas: canvas ]
 ]
 
@@ -184,9 +184,9 @@ OPCanvasPresenter >> initializeCanvas: aCanvas [
 						 (RSDraggableCanvasInteraction right
 							  hasDraggableAnimation: false;
 							  yourself).
-						 RSKeyNavigationCanvasInteraction new.
+						 OPRSKeyNavigationCanvasInteraction new.
 						 OPRSZoomableCanvasInteraction new.
-						 OPRSRemoveable new.
+						 "OPRSRemoveable new."
 						 RSScrollBarsCanvasInteraction new };
 				 configuration: (OPRSControlConfiguration new
 						  noLegend;

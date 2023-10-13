@@ -12,6 +12,9 @@ Class {
 		'controllers',
 		'diagramElements'
 	],
+	#classInstVars : [
+		'lastEvent'
+	],
 	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
 }
 

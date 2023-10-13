@@ -4,6 +4,12 @@ Class {
 	#category : #'OpenPonk-Roassal3-Interactions'
 }
 
+{ #category : #testing }
+OPRSRemoveable class >> isDeprecated [
+	"does not work with UML"
+	^ true
+]
+
 { #category : #hooks }
 OPRSRemoveable >> onShape: aCanvas [
 	aCanvas

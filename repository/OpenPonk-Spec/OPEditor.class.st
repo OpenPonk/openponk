@@ -11,7 +11,6 @@ Class {
 		'zoomLabel',
 		'diagramController',
 		'plugin',
-		'shortcuts',
 		'canvasPresenter',
 		'canvasMenu',
 		'form',
@@ -129,19 +128,7 @@ OPEditor >> canvasPresenter [
 	^ canvasPresenter
 ]
 
-{ #category : #shortcuts }
-OPEditor >> collectShortcuts [
-	^ ((PragmaCollector
-		filter: [ :prg | 
-	prg selector = #opEditorShortcut:
-		and: [ prg arguments first = self plugin class name ] ])
-		reset;
-		collect:
-				[ :prg | prg methodClass theNonMetaClass perform: prg methodSelector with: self ])
-		flattened
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 OPEditor >> connectPresenters [
 
 	| menu |
@@ -162,20 +149,12 @@ OPEditor >> diagramController [
 	^ diagramController
 ]
 
-{ #category : #'private-focus' }
-OPEditor >> ensureKeyBindingsFor: aWidget [
-
-	self flag: 'Does not work in P11'.
-	super ensureKeyBindingsFor: aWidget.
-	^ self enableCommanderShortcutsIn: aWidget
-]
-
 { #category : #'accessing - spec' }
 OPEditor >> form [
 	^ form
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 OPEditor >> initializePresenters [
 
 	canvasMenu := self newMenuBar.
@@ -229,7 +208,7 @@ OPEditor >> openEmptyModel: aModel [
 	self rebuildWidget
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 OPEditor >> openFormOn: aController [
 
 	form editController: aController
@@ -259,12 +238,6 @@ OPEditor >> rebuildWidget [
 	self update
 ]
 
-{ #category : #shortcuts }
-OPEditor >> registerShortcutsOn: aPresenter [
-	shortcuts := self collectShortcuts.
-	shortcuts do: [ :each | aPresenter bindKeyCombination: each key toAction: each value ]
-]
-
 { #category : #initialization }
 OPEditor >> setModelBeforeInitialization: aPlugin [
 	self plugin: aPlugin
@@ -278,13 +251,7 @@ OPEditor >> tabDeleted [
 		diagramController diagramElement.
 	self workbench projectController removeDiagramController:
 		diagramController.
-	self unregisterShortcutsOn: self workbench.
 	diagramController removeRender
-]
-
-{ #category : #shortcuts }
-OPEditor >> unregisterShortcutsOn: aPresenter [
-	shortcuts do: [ :pair | aPresenter removeKeyCombination: pair key ]
 ]
 
 { #category : #updating }
@@ -308,8 +275,8 @@ OPEditor >> workbench [
 
 { #category : #'accessing - spec' }
 OPEditor >> workbench: aWorkbench [
-	workbench := aWorkbench.
-	self registerShortcutsOn: workbench
+
+	workbench := aWorkbench
 ]
 
 { #category : #'accessing - spec' }

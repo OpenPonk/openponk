@@ -4,53 +4,53 @@ Class {
 	#instVars : [
 		'hasZoomableAnimation',
 		'keepCameraOnContent',
-		'dragAttachmentComparisonsAmount',
-		'dragAttachmentMargin'
+		'dragSnapComparisonsAmount',
+		'dragSnapMargin'
 	],
 	#classInstVars : [
 		'keepCameraOnContent',
 		'dragAttachmentMargin',
-		'dragAttachmentComparisonsAmount'
+		'dragSnapComparisonsAmount'
 	],
 	#category : #'OpenPonk-Roassal3-Interactions'
 }
 
 { #category : #accessing }
-OPRSControlConfiguration class >> dragAttachmentComparisonsAmount [
+OPRSControlConfiguration class >> dragSnapComparisonsAmount [
 
-	^ dragAttachmentComparisonsAmount ifNil: [
-		  self dragAttachmentComparisonsAmountDefault ]
+	^ dragSnapComparisonsAmount ifNil: [
+		  self dragSnapComparisonsAmountDefault ]
 ]
 
 { #category : #accessing }
-OPRSControlConfiguration class >> dragAttachmentComparisonsAmount: anInteger [
+OPRSControlConfiguration class >> dragSnapComparisonsAmount: anInteger [
 
 	self assert: anInteger isInteger.
 	self assert: anInteger >= 0.
-	dragAttachmentComparisonsAmount := anInteger
+	dragSnapComparisonsAmount := anInteger
 ]
 
 { #category : #accessing }
-OPRSControlConfiguration class >> dragAttachmentComparisonsAmountDefault [
+OPRSControlConfiguration class >> dragSnapComparisonsAmountDefault [
 
 	^ 10
 ]
 
 { #category : #accessing }
-OPRSControlConfiguration class >> dragAttachmentMargin [
+OPRSControlConfiguration class >> dragSnapMargin [
 
-	^ dragAttachmentMargin ifNil: [ self dragAttachmentMarginDefault ]
+	^ dragAttachmentMargin ifNil: [ self dragSnapMarginDefault ]
 ]
 
 { #category : #accessing }
-OPRSControlConfiguration class >> dragAttachmentMargin: aNumber [
+OPRSControlConfiguration class >> dragSnapMargin: aNumber [
 
 	self assert: aNumber >= 0.
 	dragAttachmentMargin := aNumber
 ]
 
 { #category : #accessing }
-OPRSControlConfiguration class >> dragAttachmentMarginDefault [
+OPRSControlConfiguration class >> dragSnapMarginDefault [
 
 	^ 5
 ]
@@ -79,46 +79,46 @@ OPRSControlConfiguration class >> settingsOn: aBuilder [
 			'When enabled, canvas tries to limit you from zooming/dragging away from area with existing shapes, so at least part of the existing diagram is usually always seen. Only affects newly displayed diagrams.';
 		order: 60.
 
-	(aBuilder setting: #dragAttachmentComparisonsAmount)
+	(aBuilder setting: #dragSnapComparisonsAmount)
 		parent: #openponk;
 		target: self;
-		label: 'Shapes checked for dragging attachments';
+		label: 'Shapes checked for drag snapping';
 		description:
-			'When dragging a shape, it is compared to this amount of closes shape in order to try to attach to it horizontally or vertically. The more amount of shapes, the more distant ones is it compared to and the slower dragging gets. Use 0 to turn the attaching feature off.';
+			'When dragging a shape, it is compared to this amount of closes shape in order to try to snap to it horizontally or vertically. The more amount of shapes, the more distant ones is it compared to and the slower dragging gets. Use 0 to turn the attaching feature off.';
 		order: 71;
-		default: self dragAttachmentComparisonsAmountDefault.
-	(aBuilder setting: #dragAttachmentMargin)
+		default: self dragSnapComparisonsAmountDefault.
+	(aBuilder setting: #dragSnapMargin)
 		parent: #openponk;
 		target: self;
-		label: 'Margin for dragging attachments';
+		label: 'Margin for srag snapping';
 		description:
-			'When dragging a shape, it attaches to a horizontally or vertically aligned shapes within this margin, ie. in case of horizontal attachment, how much below of above the shapes can be to still attach.';
+			'When dragging a shape, it snaps to a horizontally or vertically aligned shapes within this margin, ie. in case of horizontal snapping, how much below of above the shapes can be to still snap to it.';
 		order: 72;
-		default: self dragAttachmentMarginDefault
+		default: self dragSnapMarginDefault
 ]
 
 { #category : #accessing }
-OPRSControlConfiguration >> dragAttachmentComparisonsAmount [
+OPRSControlConfiguration >> dragSnapComparisonsAmount [
 
-	^ dragAttachmentComparisonsAmount ifNil: [ self class dragAttachmentComparisonsAmount ]
+	^ dragSnapComparisonsAmount ifNil: [ self class dragSnapComparisonsAmount ]
 ]
 
 { #category : #accessing }
-OPRSControlConfiguration >> dragAttachmentComparisonsAmount: anObject [
+OPRSControlConfiguration >> dragSnapComparisonsAmount: anObject [
 
-	dragAttachmentComparisonsAmount := anObject
+	dragSnapComparisonsAmount := anObject
 ]
 
 { #category : #accessing }
-OPRSControlConfiguration >> dragAttachmentMargin [
+OPRSControlConfiguration >> dragSnapMargin [
 
-	^ dragAttachmentMargin ifNil: [ self class dragAttachmentMargin ]
+	^ dragSnapMargin ifNil: [ self class dragSnapMargin ]
 ]
 
 { #category : #accessing }
-OPRSControlConfiguration >> dragAttachmentMargin: anObject [
+OPRSControlConfiguration >> dragSnapMargin: anObject [
 
-	dragAttachmentMargin := anObject
+	dragSnapMargin := anObject
 ]
 
 { #category : #accessing }

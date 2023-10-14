@@ -82,21 +82,21 @@ OPRSSelectionDraggable >> dragNoInnerShapes [
 { #category : #events }
 OPRSSelectionDraggable >> dragStepForEvent: evt [
 
-	| dragAttachmentShapeAmount originalDragStep dragStep primaryShapeRectangle primaryShapePosition closestShapes horizontalLineGroups verticalLineGroups attachmentMargin lineGroupsComparisonBlock configuration |
+	| dragSnapShapeAmount originalDragStep dragStep primaryShapeRectangle primaryShapePosition closestShapes horizontalLineGroups verticalLineGroups snapMargin lineGroupsComparisonBlock configuration |
 	configuration := evt canvas
 		                 propertyAt: RSCanvasController
 		                 ifPresent: #configuration
 		                 ifAbsent: [ OPRSControlConfiguration new ].
-	dragAttachmentShapeAmount := evt altKeyPressed
+	dragSnapShapeAmount := evt altKeyPressed
 		                             ifTrue: [ 0 ]
 		                             ifFalse: [
 		                             configuration
-			                             dragAttachmentComparisonsAmount ].
-	attachmentMargin := configuration dragAttachmentMargin.
+			                             dragSnapComparisonsAmount ].
+	snapMargin := configuration dragSnapMargin.
 	originalDragStep := (evt camera distanceFromPixelToSpace: evt step)
 	                    + unusedStep.
 	unusedStep := 0 @ 0.
-	dragAttachmentShapeAmount isZero ifTrue: [ ^ originalDragStep ].
+	dragSnapShapeAmount isZero ifTrue: [ ^ originalDragStep ].
 	primaryShapeRectangle := evt shape encompassingRectangle
 		                         translateBy: originalDragStep.
 	primaryShapePosition := primaryShapeRectangle center.
@@ -109,7 +109,7 @@ OPRSSelectionDraggable >> dragStepForEvent: evt [
 			each isSelectionDraggable and: [ (draggedNodes includes: each) not ] ]
 		thenDo: [ :each |
 			closestShapes add: each.
-			closestShapes size > dragAttachmentShapeAmount ifTrue: [
+			closestShapes size > dragSnapShapeAmount ifTrue: [
 				closestShapes removeLast ] ].
 	horizontalLineGroups := SortedCollection sortBlock: [ :a :b |
 		                        a isNotEmpty and: [
@@ -120,10 +120,10 @@ OPRSSelectionDraggable >> dragStepForEvent: evt [
 	closestShapes do: [ :each |
 		horizontalLineGroups add: (primaryShapeRectangle
 				 horizontalAlignmentLinesTo: each encompassingRectangle
-				 margin: attachmentMargin).
+				 margin: snapMargin).
 		verticalLineGroups add: (primaryShapeRectangle
 				 verticalAlignmentLinesTo: each encompassingRectangle
-				 margin: attachmentMargin) ].
+				 margin: snapMargin) ].
 	dragStep := originalDragStep.
 	lineGroupsComparisonBlock := [ :groups |
 	                             groups select: [ :each |

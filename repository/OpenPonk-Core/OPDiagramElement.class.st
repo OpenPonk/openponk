@@ -74,6 +74,8 @@ OPDiagramElement >> addEventForwardingFrom: anOriginalRoassalShape to: aTargetRo
 	| forward |
 	forward := [ :event | aTargetRoassalShape announce: event ].
 	anOriginalRoassalShape
+		when: RSMouseEnter do: forward for: self;
+		when: RSMouseLeave do: forward for: self;
 		when: RSMouseClick do: forward for: self;
 		when: RSMouseDragStart do: forward for: self;
 		when: RSMouseDragEnd do: forward for: self;
@@ -390,8 +392,9 @@ OPDiagramElement >> renderIn: aCanvas [
 	self createOwnedElementsWithoutController.
 	self ownedElements do: [ :each | each renderIn: aCanvas ].
 	self updateRenderFromModel.
+	self updateRenderFromStyles.
 	self updateRenderFromSelf.
-	self owningElement ifNotNil: [ :element | 
+	self owningElement ifNotNil: [ :element |
 		element ownedElement: self renderedIn: self canvas ].
 	^ roassalShape
 ]
@@ -566,7 +569,16 @@ OPDiagramElement >> stylePropertyNamed: aName put: aValue [
 { #category : #initialization }
 OPDiagramElement >> supportsColorChange [
 
-	^ (self respondsTo: #color) and: [ self respondsTo: #color: ]
+	^ (self supportsColorChangeOfType: #fillColor) or: [
+		  (self supportsColorChangeOfType: #strokeColor) or: [
+			  self supportsColorChangeOfType: #fontColor ] ]
+]
+
+{ #category : #initialization }
+OPDiagramElement >> supportsColorChangeOfType: aSymbol [
+
+	^ (self respondsTo: aSymbol asSymbol) and: [
+		  self respondsTo: aSymbol asMutator ]
 ]
 
 { #category : #accessing }
@@ -598,8 +610,7 @@ OPDiagramElement >> updateFromRender [
 { #category : #rendering }
 OPDiagramElement >> updateRenderFromModel [
 
-	self ownedElements select: #isRendered thenDo: #updateRenderFromModel.
-	self updateRenderFromStyles
+	self ownedElements select: #isRendered thenDo: #updateRenderFromModel
 ]
 
 { #category : #rendering }

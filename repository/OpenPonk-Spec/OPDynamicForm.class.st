@@ -114,6 +114,7 @@ OPDynamicForm >> addCheckbox: aName [
 
 { #category : #private }
 OPDynamicForm >> addControl: aControl [
+
 	components add: aControl.
 	self focusOrder add: aControl
 ]

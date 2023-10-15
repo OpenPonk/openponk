@@ -1,5 +1,7 @@
 Trait {
 	#name : #OPTDIColoredAsFill,
+	#traits : 'OPTDIColored',
+	#classTraits : 'OPTDIColored classTrait',
 	#category : #'OpenPonk-Core-DiagramInterchange'
 }
 
@@ -7,12 +9,6 @@ Trait {
 OPTDIColoredAsFill >> color [
 
 	^ self fillColor
-]
-
-{ #category : #accessing }
-OPTDIColoredAsFill >> color: aColor [
-
-	^ self fillColor: aColor
 ]
 
 { #category : #accessing }
@@ -25,13 +21,4 @@ OPTDIColoredAsFill >> fillColor [
 OPTDIColoredAsFill >> fillColor: aColor [
 
 	^ self stylePropertyNamed: #fillColor put: aColor
-]
-
-{ #category : #accessing }
-OPTDIColoredAsFill >> updateRenderFromStyles [
-
-	self isRendered ifFalse: [ ^ self ].
-	self roassalShape color: self fillColor.
-	super updateRenderFromStyles.
-	self roassalShape signalUpdate
 ]

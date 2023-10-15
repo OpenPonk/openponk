@@ -5,31 +5,34 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-OPFigureColorMenuGroup class >> generateColorCommands [
+OPFigureColorMenuGroup class >> colors [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #'as yet unclassified' }
+OPFigureColorMenuGroup class >> generateAllColorCommands [
 
 	<script>
-	| colors |
-	colors := { 
-		          Color transparent.
-		          Color veryVeryLightGray.
-		          Color white.
-		          Color paleYellow.
-		          Color paleBlue.
-		          Color paleRed.
-		          Color paleOrange.
-		          Color paleGreen.
-		          Color paleMagenta }.
+	self allSubclassesDo: #generateColorCommands
+]
 
+{ #category : #'as yet unclassified' }
+OPFigureColorMenuGroup class >> generateColorCommands [
 
+	| niceAttributeName superclassName |
+	niceAttributeName := self styleAttribute capitalized.
+	superclassName := ('OPDiagramFigure' , niceAttributeName , 'Command')
+		                  asSymbol.
 
-	colors do: [ :each | 
-		| colorName className class niceColorName |
+	self colors do: [ :each |
+		| colorName niceColorName className class |
 		colorName := each name.
-		niceColorName := colorName capitalized splitOnCapitals last.
-		className := ('OPDiagramFigure' , colorName capitalized
-		              , 'ColorCommand') asSymbol.
+		niceColorName := each name capitalized splitOnCapitals last.
+		className := ('OPDiagramFigure' , niceColorName , niceAttributeName
+		              , 'Command') asSymbol.
 
-		OPDiagramFigureColorCommand
+		(Smalltalk at: superclassName asSymbol)
 			subclass: className
 			instanceVariableNames: ''
 			classVariableNames: ''
@@ -37,30 +40,24 @@ OPFigureColorMenuGroup class >> generateColorCommands [
 
 		class := Smalltalk at: className.
 
-		class compile: 'defaultMenuIcon
+		class compile: 'color
 
-	^ Morph new 
-				color: Color ' , colorName , ';
-				asFormOfSize: 30@20'.
+	^ Color ' , colorName.
 
 		class compile: 'defaultMenuItemName
 
 	^ ''' , niceColorName , ''''.
 
-		class compile: 'execute
-	
-	controllers do: [ :each | each diagramElement stylePropertyNamed: #fillColor
-		put: Color ' , colorName , ' ]' ].
-
-	(Smalltalk at: #OPDiagramFigureTransparentColorCommand) compile:
-		'defaultMenuIcon
+		each = Color transparent ifTrue: [
+			class compile: 'defaultMenuIcon
 
 	^ Morph new 
 				color: Color white;
-				asFormOfSize: 30@20'
+				asFormOfSize: 30@20' ] ]
 ]
 
-{ #category : #accessing }
-OPFigureColorMenuGroup >> name [
-	^ 'Color'
+{ #category : #'as yet unclassified' }
+OPFigureColorMenuGroup class >> styleAttribute [
+
+	^ self subclassResponsibility
 ]

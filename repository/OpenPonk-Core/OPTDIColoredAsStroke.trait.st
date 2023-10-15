@@ -1,25 +1,19 @@
 Trait {
 	#name : #OPTDIColoredAsStroke,
+	#traits : 'OPTDIColored',
+	#classTraits : 'OPTDIColored classTrait',
 	#category : #'OpenPonk-Core-DiagramInterchange'
 }
 
-{ #category : #accessing }
+{ #category : #update }
 OPTDIColoredAsStroke >> color [
 
 	^ self strokeColor
 ]
 
 { #category : #accessing }
-OPTDIColoredAsStroke >> color: aColor [
-
-	^ self strokeColor: aColor
-]
-
-{ #category : #accessing }
 OPTDIColoredAsStroke >> strokeColor [
 
-	(self isRendered and: [ self roassalShape isSelected ]) ifTrue: [
-		^ self roassalShape color ].
 	^ self stylePropertyNamed: #strokeColor ifAbsent: [ Color black ]
 ]
 
@@ -27,13 +21,4 @@ OPTDIColoredAsStroke >> strokeColor [
 OPTDIColoredAsStroke >> strokeColor: aColor [
 
 	^ self stylePropertyNamed: #strokeColor put: aColor
-]
-
-{ #category : #update }
-OPTDIColoredAsStroke >> updateRenderFromStyles [
-
-	self isRendered ifFalse: [ ^ self ].
-	self roassalShape color: self strokeColor.
-	super updateRenderFromStyles.
-	self roassalShape signalUpdate
 ]

@@ -33,7 +33,11 @@ OPEdgeCreationTargetController >> edgeController: aController [
 OPEdgeCreationTargetController >> remove [
 
 	diagramElement ifNil: [ ^ self ].
-	edgeController target = self ifTrue: [ 
+
+	edgeController diagramController roassalShape removeKey:
+		#ignoredElementsForEvents.
+
+	edgeController target = self ifTrue: [
 		edgeController target: nil.
 		edgeController removeDiagramElement ].
 	diagramElement remove.
@@ -52,5 +56,11 @@ OPEdgeCreationTargetController >> render [
 	edgeController target: self.
 	edgeController
 		diagramController: edgeController source diagramController;
-		renderSimplified
+		renderSimplified.
+
+	edgeController diagramController roassalShape
+		propertyAt: #ignoredElementsForEvents
+		put: {
+				diagramElement roassalShape.
+				edgeController roassalShape }
 ]

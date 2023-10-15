@@ -6,8 +6,6 @@ Trait {
 { #category : #accessing }
 OPTDIBorderColoredAsStroke >> strokeColor [
 
-	(self isRendered and: [ self roassalShape isSelected ]) ifTrue: [
-		^ self roassalShape borderColor ].
 	^ self stylePropertyNamed: #strokeColor ifAbsent: [ Color black ]
 ]
 
@@ -21,6 +19,16 @@ OPTDIBorderColoredAsStroke >> strokeColor: aColor [
 OPTDIBorderColoredAsStroke >> updateRenderFromStyles [
 
 	self isRendered ifFalse: [ ^ self ].
+	self roassalShape
+		propertyAt: OPRSSelectable
+		ifPresent: [ :selectable |
+			| key |
+			key := selectable copyKey , 'color'.
+			self roassalShape properties
+				at: key
+				ifPresent: [ :previousBorder |
+					previousBorder color: self strokeColor.
+					^ self ] ].
 	self roassalShape borderColor: self strokeColor.
 	super updateRenderFromStyles.
 	self roassalShape signalUpdate

@@ -31,6 +31,18 @@ RSShape >> isSelected [
 ]
 
 { #category : #'*OpenPonk-Roassal3' }
+RSShape >> shapeWithActionForPosition: position [
+
+	self canvas
+		propertyAt: #ignoredElementsForEvents
+		ifPresent: [ :ignoredOnes |
+		(ignoredOnes includes: self) ifTrue: [ ^ nil ] ].
+	^ (self hasEventCallback and: [ self includesPoint: position ])
+		  ifTrue: [ self ]
+		  ifFalse: [ nil ]
+]
+
+{ #category : #'*OpenPonk-Roassal3' }
 RSShape >> view [
 
 	self

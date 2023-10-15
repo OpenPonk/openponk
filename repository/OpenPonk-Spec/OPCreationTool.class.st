@@ -29,11 +29,10 @@ OPCreationTool >> factory: aBlock [
 
 { #category : #callbacks }
 OPCreationTool >> hoveredController: aController [
-	feedback
-		value:
-			((aController canBeTargetFor: objectController)
-				ifTrue: [ aController showAcceptFeedbackFor: objectController ]
-				ifFalse: [ aController showDenyFeedbackFor: objectController ])
+
+	feedback value: ((aController canBeTargetFor: objectController)
+			 ifTrue: [ aController showAcceptFeedbackFor: objectController ]
+			 ifFalse: [ aController showDenyFeedbackFor: objectController ])
 ]
 
 { #category : #accessing }
@@ -57,12 +56,13 @@ OPCreationTool >> selectedControllers: aCollectionOfControllers [
 	| targetController |
 	aCollectionOfControllers size = 1 ifFalse: [ ^ self ].
 	targetController := aCollectionOfControllers anyOne.
-	(targetController canBeTargetFor: objectController) ifFalse: [ 
+	(targetController canBeTargetFor: objectController) ifFalse: [
 		^ self ].
 	targetController addAsTargetFor: objectController.
 	self palette selectSelectionTool.
 	self palette selectedTool selectedControllers: { objectController }.
 	onComplete value: objectController.
+	self editor openFormOn: objectController.
 	objectController := nil
 ]
 

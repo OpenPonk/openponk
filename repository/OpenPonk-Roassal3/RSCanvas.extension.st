@@ -16,17 +16,14 @@ RSCanvas >> isSelectable [
 ]
 
 { #category : #'*OpenPonk-Roassal3' }
-RSCanvas >> shapeWithActionForPositionInPixels: position [
+RSCanvas >> shapesWithActionForPosition: aPositionInSpace [
 
-	| block |
-	block := [ :list :pos | 
-	         (self
-		          propertyAt: #shapesIgnoringMouseMoveBlock
-		          ifPresent: [ :ignoredShapes | 
-		          list copyWithoutAll: ignoredShapes value ]
-		          ifAbsent: [ list ]) reverseDo: [ :s | 
-		         (s shapeWithActionForPosition: pos) ifNotNil: [ :shape | 
-			         ^ shape ] ] ].
-	block value: fixedShapes value: position.
-	block value: shapes value: (self camera fromPixelToSpace: position)
+	| result |
+	result := self shapeCollection shapesAtPoint: aPositionInSpace.
+
+	result := result select: [ :s | s hasEventCallback ].
+	self canvas
+		propertyAt: #ignoredElementsForEvents
+		ifPresent: [ :ignoredOnes | ^ result difference: ignoredOnes ].
+	^ result
 ]

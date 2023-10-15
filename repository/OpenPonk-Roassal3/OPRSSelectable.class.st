@@ -60,6 +60,33 @@ OPRSSelectable >> announceUnHightlight: shape source: shapeOrCanvas [
 			source: shapeOrCanvas ]
 ]
 
+{ #category : #hooks }
+OPRSSelectable >> clicked: aShape by: anEvent [
+
+	aShape canvas
+		propertyAt: OPRSSelectableCanvas
+		ifPresent: [ :selectableCanvasInteraction |
+			| currentlySelectedShapes |
+			currentlySelectedShapes := selectableCanvasInteraction
+				                           selectedShapes.
+			selectableCanvasInteraction
+				selectShapes: (anEvent metaKeyPressed
+						 ifTrue: [
+							 (currentlySelectedShapes includes: aShape)
+								 ifTrue: [
+								 RSGroup withAll:
+									 (currentlySelectedShapes copyWithout: aShape) ]
+								 ifFalse: [
+									 (RSGroup withAll: currentlySelectedShapes)
+										 add: aShape;
+										 yourself ] ]
+						 ifFalse: [ RSGroup with: aShape ])
+				byEvent: anEvent ]
+		ifAbsent: [
+			self error:
+				'OPRSSelectable requires OPRSSelectableCanvas on canvas' ]
+]
+
 { #category : #'as yet unclassified' }
 OPRSSelectable >> highlightAdornments: aBlock [
 	"Show adornments (little icons with actions). The block receives an OPRSAdornmentBuilder"
@@ -80,14 +107,8 @@ OPRSSelectable >> highlightBorderColor: aColor [
 	"Set the border color"
 
 	self
-		when: RSHighlightEvent do: [ :evt |
-			self
-				record: evt shape
-				selector: #border
-				value:
-					((evt shape border ifNil: [ RSBorder new ] ifNotNil: #copy)
-						 color: aColor;
-						 yourself) ]
+		when: RSHighlightEvent
+		do: [ :evt | self setBorderColorOf: evt shape to: aColor ]
 		for: self;
 		when: RSUnHighlightEvent
 		do: [ :evt | self restore: evt shape selector: #border ]
@@ -100,29 +121,7 @@ OPRSSelectable >> onShape: aShape [
 	aShape propertyAt: self class put: self.
 	aShape
 		when: RSMouseLeftClick
-		do: [ :evt |
-			aShape canvas
-				propertyAt: OPRSSelectableCanvas
-				ifPresent: [ :selectableCanvasInteraction |
-					| currentlySelectedShapes |
-					currentlySelectedShapes := selectableCanvasInteraction
-						                           selectedShapes.
-					selectableCanvasInteraction
-						selectShapes: (evt metaKeyPressed
-								 ifTrue: [
-									 (currentlySelectedShapes includes: aShape)
-										 ifTrue: [
-										 RSGroup withAll:
-											 (currentlySelectedShapes copyWithout: aShape) ]
-										 ifFalse: [
-											 (RSGroup withAll: currentlySelectedShapes)
-												 add: aShape;
-												 yourself ] ]
-								 ifFalse: [ RSGroup with: aShape ])
-						byEvent: evt ]
-				ifAbsent: [
-					self error:
-						'OPRSSelectable requires OPRSSelectableCanvas on canvas' ] ]
+		do: [ :evt | self clicked: aShape by: evt ]
 		for: self
 ]
 
@@ -130,4 +129,18 @@ OPRSSelectable >> onShape: aShape [
 OPRSSelectable >> propertyKey [
 
 	^ propertyKey ifNil: [ propertyKey := #selectedShapes ]
+]
+
+{ #category : #'as yet unclassified' }
+OPRSSelectable >> setBorderColorOf: aShape to: aColor [
+
+	self
+		record: aShape
+		selector: #border
+		value:
+			((aShape border
+				  ifNil: [ RSBorder new ]
+				  ifNotNil: [ :val | val copy ])
+				 color: aColor;
+				 yourself)
 ]

@@ -16,33 +16,20 @@ OPInvisibleOnMouseShape class >> renderToPosition: aPoint onCanvas: aCanvas [
 { #category : #rendering }
 OPInvisibleOnMouseShape >> mouseMovedBy: event [
 
-	| position block |
 	roassalShape
 		translateTo: event position;
-		signalUpdate.
-
-	position := event position.
-
-	block := [ :list :pos | 
-	         list reverseDo: [ :s | 
-		         (s shapeWithActionForPosition: pos) ifNotNil: [ :shape | 
-			         ^ shape announcer announce: event ] ] ].
-	block
-		value: event canvas fixedShapes
-		value: (event camera fromSpaceToPixel: position).
-	block
-		value:
-		(event canvas shapes copyWithoutAll: roassalShape connectedLines)
-		value: position
+		signalUpdate
 ]
 
 { #category : #rendering }
 OPInvisibleOnMouseShape >> removeRender [
 
+	| canvas |
 	self isRendered ifFalse: [ ^ self ].
-	roassalShape canvas announcer unsubscribe: self.
-	roassalShape canvas removeKey: #shapesIgnoringMouseMoveBlock.
-	super removeRender
+	canvas := roassalShape canvas.
+	canvas announcer unsubscribe: self.
+	super removeRender.
+	canvas signalUpdate
 ]
 
 { #category : #rendering }
@@ -58,10 +45,9 @@ OPInvisibleOnMouseShape >> renderBasicShape [
 OPInvisibleOnMouseShape >> renderShapeDetails [
 
 	super renderShapeDetails.
+	
+	roassalShape translateTo: self bounds position.
 
-	roassalShape canvas
-		propertyAt: #shapesIgnoringMouseMoveBlock
-		put: [ roassalShape connectedLines , { roassalShape } ].
 	roassalShape canvas
 		when: RSMouseMove
 		do: [ :event | self mouseMovedBy: event ]

@@ -62,6 +62,71 @@ OPDiagramElement class >> stonAllInstVarNames [
 	     #sharedStyle #localStyle #ownedElements )
 ]
 
+{ #category : #interactions }
+OPDiagramElement >> addDraggableInteraction [
+
+	roassalShape @ RSDraggable
+]
+
+{ #category : #interactions }
+OPDiagramElement >> addEventForwardingFrom: anOriginalRoassalShape to: aTargetRoassalShape [
+
+	| forward |
+	forward := [ :event | aTargetRoassalShape announce: event ].
+	anOriginalRoassalShape
+		when: RSMouseClick do: forward for: self;
+		when: RSMouseDragStart do: forward for: self;
+		when: RSMouseDragEnd do: forward for: self;
+		when: RSMouseDragging do: forward for: self
+]
+
+{ #category : #interactions }
+OPDiagramElement >> addEventForwardingToOwner [
+
+	| ownerRoassalShape |
+	ownerRoassalShape := self owningElement
+		                     ifNil: [ ^ self ]
+		                     ifNotNil: [ :owner |
+		                     owner roassalShape ifNil: [ ^ self ] ].
+	self addEventForwardingFrom: roassalShape to: ownerRoassalShape
+]
+
+{ #category : #interactions }
+OPDiagramElement >> addInteractions [
+
+	self shouldBeResizableByUser ifTrue: [ self addResizableInteraction ].
+
+	self shouldBeSelectable ifTrue: [
+		self addSelectableInteraction.
+		self shouldBePositionableByUser ifTrue: [
+			self addSelectionDraggableInteraction ].
+		^ self ].
+
+	self shouldBePositionableByUser ifTrue: [
+		self addDraggableInteraction.
+		^ self ].
+
+	self addEventForwardingToOwner
+]
+
+{ #category : #interactions }
+OPDiagramElement >> addResizableInteraction [
+
+	self resizableInteractionTarget @ OPRSResizable
+]
+
+{ #category : #interactions }
+OPDiagramElement >> addSelectableInteraction [
+
+	roassalShape @ self selectableInteraction
+]
+
+{ #category : #interactions }
+OPDiagramElement >> addSelectionDraggableInteraction [
+
+	roassalShape @ OPRSSelectionDraggable
+]
+
 { #category : #'as yet unclassified' }
 OPDiagramElement >> addedByMouseClickTo: aPoint [
 
@@ -321,6 +386,7 @@ OPDiagramElement >> renderIn: aCanvas [
 	self isRendered ifTrue: [ ^ self ].
 	self renderBasicShapeIn: aCanvas.
 	self renderShapeDetails.
+	self addInteractions.
 	self createOwnedElementsWithoutController.
 	self ownedElements do: [ :each | each renderIn: aCanvas ].
 	self updateRenderFromModel.
@@ -338,6 +404,12 @@ OPDiagramElement >> renderShapeDetails [
 	"do nothing by default"
 
 	
+]
+
+{ #category : #interactions }
+OPDiagramElement >> resizableInteractionTarget [
+
+	^ roassalShape
 ]
 
 { #category : #serialization }
@@ -361,6 +433,12 @@ OPDiagramElement >> roassalShape [
 	^ roassalShape
 ]
 
+{ #category : #interactions }
+OPDiagramElement >> selectableInteraction [
+
+	^ OPRSNoInteraction
+]
+
 { #category : #accessing }
 OPDiagramElement >> sharedStyle [
 	^ sharedStyle ifNil: [ self owningElement ifNotNil: #sharedStyle ]
@@ -372,6 +450,25 @@ OPDiagramElement >> sharedStyle: aStyle [
 	sharedStyle ifNotNil: [ sharedStyle removedFromStyledElement: self ].
 	(sharedStyle := aStyle) addedAsSharedToStyledElement: self.
 	self styleChanged.
+]
+
+{ #category : #interactions }
+OPDiagramElement >> shouldBePositionableByUser [
+
+	^ false
+]
+
+{ #category : #interactions }
+OPDiagramElement >> shouldBeResizableByUser [
+
+	^ false
+]
+
+{ #category : #interactions }
+OPDiagramElement >> shouldBeSelectable [
+
+	^ self selectableInteraction ~= OPRSNoInteraction and: [
+		  self selectableInteraction class ~= OPRSNoInteraction ]
 ]
 
 { #category : #accessing }

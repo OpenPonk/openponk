@@ -5,12 +5,6 @@ Class {
 }
 
 { #category : #adding }
-OPEdgeLabel >> addInteractions [
-
-	roassalShape @ RSDraggable
-]
-
-{ #category : #adding }
 OPEdgeLabel >> anchorToEdge [
 
 	OPRSAnchorConstraint new
@@ -35,9 +29,13 @@ OPEdgeLabel >> defaultMinDistance [
 OPEdgeLabel >> renderShapeDetails [
 
 	super renderShapeDetails.
-
-	self addInteractions.
 	self anchorToEdge
+]
+
+{ #category : #interactions }
+OPEdgeLabel >> shouldBePositionableByUser [
+
+	^ true
 ]
 
 { #category : #'as yet unclassified' }

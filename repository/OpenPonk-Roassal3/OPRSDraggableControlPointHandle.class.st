@@ -33,10 +33,10 @@ OPRSDraggableControlPointHandle >> constraint [
 	| moveBlock |
 	moveBlock := [ self updatePosition ].
 	moveBlock value.
-	line from when: RSPositionChangedEvent do: moveBlock.
-	line to when: RSPositionChangedEvent do: moveBlock.
-	line from when: RSExtentChangedEvent do: moveBlock.
-	line to when: RSExtentChangedEvent do: moveBlock
+	line from when: RSPositionChangedEvent do: moveBlock for: self.
+	line to when: RSPositionChangedEvent do: moveBlock for: self.
+	line from when: RSExtentChangedEvent do: moveBlock for: self.
+	line to when: RSExtentChangedEvent do: moveBlock for: self
 ]
 
 { #category : #'as yet unclassified' }
@@ -112,7 +112,8 @@ OPRSDraggableControlPointHandle >> render [
 
 	shape
 		when: RSPositionChangedEvent
-		do: [ :event | self changedPositionBy: event ].
+		do: [ :event | self changedPositionBy: event ]
+		for: self.
 
 	(line from ~= line to or: [ line controlPoints size > 4 ]) ifTrue: [
 		shape @ (RSMenuActivable new menuDo: [ :menu :box |
@@ -125,7 +126,7 @@ OPRSDraggableControlPointHandle >> render [
 				 target: self
 				 selector: #straightenConnection
 				 argument: #(  ) ]) ].
-	clickBox when: RSMouseDragEnd do: [ self onDragEnd ]
+	clickBox when: RSMouseDragEnd do: [ self onDragEnd ] for: self
 ]
 
 { #category : #accessing }

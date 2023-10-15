@@ -31,7 +31,7 @@ OPNode >> height [
 { #category : #testing }
 OPNode >> isPositionableByUser [
 
-	^ self isRendered not or: [
+	^ self isRendered and: [
 		  self roassalShape isSelectionDraggable or: [
 			  self roassalShape hasInteraction: RSDraggable ] ]
 ]

@@ -4,6 +4,42 @@ Class {
 	#category : #'OpenPonk-Roassal3-Interactions'
 }
 
+{ #category : #accessing }
+OPRSSelectable class >> highlightAdornments: aBlock [
+
+	^ self new
+		  highlightAdornments: aBlock;
+		  yourself
+]
+
+{ #category : #accessing }
+OPRSSelectable class >> highlightBorderColor: aColor [
+
+	^ self new
+		  highlightBorderColor: aColor;
+		  yourself
+]
+
+{ #category : #accessing }
+OPRSSelectable class >> highlightBorderColorBlue [
+
+	^ self highlightBorderColor: Color blue
+]
+
+{ #category : #accessing }
+OPRSSelectable class >> highlightColor: aColor [
+
+	^ self new
+		  highlightColor: aColor;
+		  yourself
+]
+
+{ #category : #accessing }
+OPRSSelectable class >> highlightColorBlue [
+
+	^ self highlightColor: Color blue
+]
+
 { #category : #announcer }
 OPRSSelectable >> announceHighlight: shape source: shapeOrCanvas [
 

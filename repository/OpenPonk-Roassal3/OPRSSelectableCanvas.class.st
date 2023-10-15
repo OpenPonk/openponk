@@ -7,14 +7,6 @@ Class {
 	#category : #'OpenPonk-Roassal3-Interactions'
 }
 
-{ #category : #public }
-OPRSSelectableCanvas class >> rightLeft [
-
-	^ self new
-		  rightLeft;
-		  yourself
-]
-
 { #category : #'event processing' }
 OPRSSelectableCanvas >> boxEnded: event [
 
@@ -27,6 +19,12 @@ OPRSSelectableCanvas >> boxEnded: event [
 		originalEvent: event.
 	self announce: boxEvent.
 	event signalUpdate
+]
+
+{ #category : #hooks }
+OPRSSelectableCanvas >> boxStartEvent [
+
+	^ RSMouseLeftDragStart
 ]
 
 { #category : #'event processing' }
@@ -69,6 +67,12 @@ OPRSSelectableCanvas >> disableMultiselect [
 	multiselectEnabled := false
 ]
 
+{ #category : #hooks }
+OPRSSelectableCanvas >> dragStartEvent [
+
+	^ RSMouseRightDragStart
+]
+
 { #category : #protocol }
 OPRSSelectableCanvas >> enableMultiselect [
 
@@ -82,7 +86,7 @@ OPRSSelectableCanvas >> initialize [
 	selectedShapes := RSGroup new.
 	self
 		targetShapes: [ :canvas | canvas shapes select: #isSelectable ];
-		enableMultiselect
+		enableMultiselect.
 ]
 
 { #category : #hooks }
@@ -91,14 +95,21 @@ OPRSSelectableCanvas >> onShape: aCanvas [
 	(aCanvas getInteractionsForClass: RSDraggableCanvasInteraction) do: [
 		:each | each mouseEvent: self dragStartEvent ].
 	aCanvas
-		when: self dragStartEvent send: #enableDrag: to: self;
-		when: self boxStartEvent send: #disableDrag: to: self;
-		when: RSMouseDragging send: #processDrag: to: self;
+		when: self boxStartEvent send: #processDragStart: to: self;
+		when: RSMouseDragging send: #processDragging: to: self;
 		when: RSMouseDragEnd send: #processDragEnd: to: self;
 		when: RSMouseLeftClick
 		do: [ :evt | self selectShapes: { aCanvas } byEvent: evt ]
 		for: self.
 	aCanvas propertyAt: self class put: self
+]
+
+{ #category : #'event processing' }
+OPRSSelectableCanvas >> processDragStart: event [
+
+	shouldProcessInteraction := true.
+	self boxStarted: event.
+	self createCameraAnimation: event
 ]
 
 { #category : #hooks }

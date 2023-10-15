@@ -20,6 +20,13 @@ OPBoundary class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #name )
 ]
 
+{ #category : #'creating - subelements' }
+OPBoundary >> addSelectionDraggableInteraction [
+
+	roassalShape
+	@ OPRSSelectionDraggableBorder thatAlsoDragsContainedShapes
+]
+
 { #category : #accessing }
 OPBoundary >> defaultHeight [
 	^ 400
@@ -73,12 +80,13 @@ OPBoundary >> renderBasicShape [
 OPBoundary >> renderShapeDetails [
 
 	super renderShapeDetails.
-
-	roassalShape
-		@ OPRSSelectable;
-		@ OPRSSelectionDraggableBorder thatAlsoDragsContainedShapes;
-		@ OPRSResizable.
 	self renderLabel
+]
+
+{ #category : #'creating - subelements' }
+OPBoundary >> selectableInteraction [
+
+	^ OPRSSelectable
 ]
 
 { #category : #'creating - subelements' }
@@ -88,6 +96,18 @@ OPBoundary >> setupLabelLocation: aLocation [
 		top;
 		center;
 		inner
+]
+
+{ #category : #interactions }
+OPBoundary >> shouldBePositionableByUser [
+
+	^ true
+]
+
+{ #category : #interactions }
+OPBoundary >> shouldBeResizableByUser [
+
+	^ true
 ]
 
 { #category : #hooks }

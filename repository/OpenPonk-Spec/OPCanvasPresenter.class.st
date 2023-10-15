@@ -192,7 +192,7 @@ OPCanvasPresenter >> initializeCanvas: aCanvas [
 						  noLegend;
 						  hasZoomableAnimation: false;
 						  yourself));
-		@ OPRSSelectableCanvas rightLeft.
+		@ OPRSSelectableCanvas.
 
 	(aCanvas propertyAt: OPRSSelectableCanvas)
 		when: OPRSSelectionEndEvent

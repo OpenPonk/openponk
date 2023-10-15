@@ -178,10 +178,6 @@ OPNote >> renderShapeDetails [
 	self createOwnedFillBoxes.
 	self createOwnedCornerTriangle.
 	self createOwnedBorderLines.
-	roassalShape
-		@ OPRSSelectable;
-		@ OPRSSelectionDraggable;
-		@ OPRSResizable.
 	self updateOwnedElements.
 	self roassalShape
 		when: RSPositionChangedEvent
@@ -191,6 +187,24 @@ OPNote >> renderShapeDetails [
 		do: [ self updateOwnedElements ]
 		for: self.
 	self renderLabel
+]
+
+{ #category : #interactions }
+OPNote >> selectableInteraction [
+
+	^ OPRSSelectable
+]
+
+{ #category : #'creating - subelements' }
+OPNote >> shouldBePositionableByUser [
+
+	^ true
+]
+
+{ #category : #interactions }
+OPNote >> shouldBeResizableByUser [
+
+	^ true
 ]
 
 { #category : #accessing }

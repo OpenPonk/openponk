@@ -63,12 +63,9 @@ OPEdge >> remove [
 ]
 
 { #category : #rendering }
-OPEdge >> renderShapeDetails [
+OPEdge >> selectableInteraction [
 
-	| selectable |
-	selectable := OPRSSelectable new.
-	selectable highlightColor: Color blue.
-	roassalShape @ selectable
+	^ OPRSSelectable highlightColorBlue
 ]
 
 { #category : #accessing }

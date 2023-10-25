@@ -16,8 +16,7 @@ BaselineOfOpenPonk >> baseline: spec [
 		self externalProjectsBaseline: spec.
 		self internalProjectsBaseline: spec.
 		spec
-			package: 'OpenPonk-Roassal'
-			with: [ spec preLoadDoIt: #loadRoassal ];
+			package: 'OpenPonk-Roassal' with: [ spec requires: 'Roassal' ];
 			package: 'OpenPonk-Core' with: [
 				spec requires:
 						#( 'Magritte' 'Mocketry' 'XMLParser' 'XPath' 'NeoJSON' 'OpenPonk-Roassal' ) ];
@@ -26,7 +25,7 @@ BaselineOfOpenPonk >> baseline: spec [
 				spec
 					requires:
 						#( 'NewTools' 'Magritte' 'SynchronizedLinks' 'OpenPonk-Morphic' );
-					preLoadDoIt: #loadPetitParserAndRoassal ].
+					preLoadDoIt: #loadPetitParser ].
 		spec
 			group: 'default'
 			with: #( 'OpenPonk-Core' 'OpenPonk-Morphic' 'OpenPonk-Spec' ) ]
@@ -56,7 +55,20 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 
 	spec
 		baseline: 'NeoJSON'
-		with: [ spec repository: 'github://svenvc/NeoJSON:b05162a' ]
+		with: [ spec repository: 'github://pharo-graphics/Roassal:b508334';
+			loads: #Full ].
+
+	spec
+		baseline: 'Roassal'
+		with: [ spec repository: 'github://svenvc/NeoJSON:b05162a' ].
+
+	spec
+		baseline: 'RoassalLayouts'
+		with: [ spec repository: 'github://pharo-graphics/RoassalLayouts:136a902' ].
+
+	spec
+		baseline: 'RoassalExporters'
+		with: [ spec repository: 'github://pharo-graphics/RoassalExporters:v1.01' ].
 ]
 
 { #category : #baselines }

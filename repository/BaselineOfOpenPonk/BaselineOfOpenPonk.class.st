@@ -16,17 +16,15 @@ BaselineOfOpenPonk >> baseline: spec [
 		self externalProjectsBaseline: spec.
 		self internalProjectsBaseline: spec.
 		spec
-			package: 'OpenPonk-Roassal3'
-			with: [ spec preLoadDoIt: #loadRoassal3 ];
+			package: 'OpenPonk-Roassal'
+			with: [ spec requires: #( 'Roassal' 'RoassalExporters' ) ];
 			package: 'OpenPonk-Core' with: [
 				spec requires:
-						#( 'Magritte' 'Mocketry' 'XMLParser' 'XPath' 'NeoJSON' 'OpenPonk-Roassal3' ) ];
+						#( 'Magritte' 'Mocketry' 'XMLParser' 'XPath' 'NeoJSON' 'OpenPonk-Roassal' ) ];
 			package: 'OpenPonk-Morphic';
 			package: 'OpenPonk-Spec' with: [
-				spec
-					requires:
-						#( 'NewTools' 'Magritte' 'SynchronizedLinks' 'OpenPonk-Morphic' );
-					preLoadDoIt: #loadPetitParserAndRoassal3 ].
+				spec requires:
+						#( 'NewTools' 'Magritte' 'SynchronizedLinks' 'OpenPonk-Morphic' ) ].
 		spec
 			group: 'default'
 			with: #( 'OpenPonk-Core' 'OpenPonk-Morphic' 'OpenPonk-Spec' ) ]
@@ -56,7 +54,18 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 
 	spec
 		baseline: 'NeoJSON'
-		with: [ spec repository: 'github://svenvc/NeoJSON:b05162a' ]
+		with: [ spec repository: 'github://svenvc/NeoJSON:b05162a' ].
+
+	spec baseline: 'Roassal' with: [
+		spec
+			repository: 'github://pharo-graphics/Roassal:b508334';
+			loads: #Full;
+			preLoadDoIt: #removeOldRoassal3 ].
+
+	spec
+		baseline: 'RoassalExporters'
+		with: [
+		spec repository: 'github://pharo-graphics/RoassalExporters:v1.01' ]
 ]
 
 { #category : #baselines }
@@ -87,35 +96,62 @@ BaselineOfOpenPonk >> loadPetitParser [
 ]
 
 { #category : #baselines }
-BaselineOfOpenPonk >> loadPetitParserAndRoassal3 [
+BaselineOfOpenPonk >> loadPetitParserAndRoassal [
 
 	"PetitParser is not needed by core OP. It is needed by BormEditor, but due to Pharo bug https://github.com/pharo-project/pharo/issues/9913 it must be always loaded before Roassal in Pharo 10"
 
 	self
 		loadPetitParser;
-		loadRoassal3
+		loadRoassal
 ]
 
 { #category : #baselines }
-BaselineOfOpenPonk >> loadRoassal3 [
+BaselineOfOpenPonk >> loadRoassal [
 	"Roassal3 needs to be loaded this way because different version of it is already included in Pharo 10+"
 
-	| exporters |
-	Smalltalk at: #BaselineOfRoassal3Exporters ifPresent: [ ^ self ].
+	| exporters layouts |
+	
+	Smalltalk at: #BaselineOfRoassalExporters ifPresent: [ ^ self ].
+
+	layouts := Metacello new.
+	layouts
+		baseline: 'RoassalLayouts';
+		repository: 'github://pharo-graphics/RoassalLayouts:136a902';
+		lock;
+		onConflictUseLoaded.
 
 	exporters := Metacello new.
 	exporters
-		baseline: 'Roassal3Exporters';
-		repository: 'github://ObjectProfile/Roassal3Exporters:6c61b1f';
+		baseline: 'RoassalExporters';
+		repository: 'github://pharo-graphics/RoassalExporters:v1.01';
 		lock;
 		onConflictUseLoaded.
+		
 	[
 	Metacello new
-		baseline: 'Roassal3';
-		repository: 'github://ObjectProfile/Roassal3:v1.03';
+		baseline: 'Roassal';
+		repository: 'github://pharo-graphics/Roassal:b508334';
 		lock;
 		load: #Full ]
 		on: MCMergeOrLoadWarning
 		do: [ :warning | warning load ].
+		
+	layouts load.
 	exporters load
+]
+
+{ #category : #baselines }
+BaselineOfOpenPonk >> removeOldRoassal3 [
+
+	#( Roassal3 Numeric ) do: [ :eachName | self removePackage: eachName ]
+]
+
+{ #category : #baselines }
+BaselineOfOpenPonk >> removePackage: aPackageName [
+
+	| regExp packages |
+	regExp := '*' , aPackageName , '*'.
+	packages := RPackageOrganizer default packages select: [ :each |
+		            regExp match: each name ].
+	packages do: [ :each | each removeFromSystem ]
 ]

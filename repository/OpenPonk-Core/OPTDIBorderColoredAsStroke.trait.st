@@ -4,6 +4,12 @@ Trait {
 }
 
 { #category : #accessing }
+OPTDIBorderColoredAsStroke >> borderColor [
+
+	^ self strokeColor
+]
+
+{ #category : #accessing }
 OPTDIBorderColoredAsStroke >> strokeColor [
 
 	^ self stylePropertyNamed: #strokeColor ifAbsent: [ Color black ]
@@ -15,21 +21,27 @@ OPTDIBorderColoredAsStroke >> strokeColor: aColor [
 	^ self stylePropertyNamed: #strokeColor put: aColor
 ]
 
-{ #category : #accessing }
-OPTDIBorderColoredAsStroke >> updateRenderFromStyles [
+{ #category : #update }
+OPTDIBorderColoredAsStroke >> updateBorderColorFromStyles [
 
-	self isRendered ifFalse: [ ^ self ].
 	self roassalShape
 		propertyAt: OPRSSelectable
 		ifPresent: [ :selectable |
 			| key |
-			key := selectable copyKey , 'color'.
+			key := selectable copyKey , 'border'.
 			self roassalShape properties
 				at: key
 				ifPresent: [ :previousBorder |
-					previousBorder color: self strokeColor.
+					previousBorder do: [ :each | each color: self borderColor ].
 					^ self ] ].
-	self roassalShape borderColor: self strokeColor.
+	self roassalShape borderColor: self borderColor
+]
+
+{ #category : #accessing }
+OPTDIBorderColoredAsStroke >> updateRenderFromStyles [
+
+	self isRendered ifFalse: [ ^ self ].
+	self updateBorderColorFromStyles.
 	super updateRenderFromStyles.
 	self roassalShape signalUpdate
 ]

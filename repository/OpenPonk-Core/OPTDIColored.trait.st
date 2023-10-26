@@ -10,9 +10,8 @@ OPTDIColored >> color [
 ]
 
 { #category : #update }
-OPTDIColored >> updateRenderFromStyles [
+OPTDIColored >> updateColorFromStyles [
 
-	self isRendered ifFalse: [ ^ self ].
 	self roassalShape
 		propertyAt: OPRSSelectable
 		ifPresent: [ :selectable |
@@ -23,7 +22,14 @@ OPTDIColored >> updateRenderFromStyles [
 					at: key
 					put: (OrderedCollection with: self color).
 				^ self ] ].
-	self roassalShape color: self color.
+	self roassalShape color: self color
+]
+
+{ #category : #update }
+OPTDIColored >> updateRenderFromStyles [
+
+	self isRendered ifFalse: [ ^ self ].
+	self updateColorFromStyles.
 	super updateRenderFromStyles.
 	self roassalShape signalUpdate
 ]

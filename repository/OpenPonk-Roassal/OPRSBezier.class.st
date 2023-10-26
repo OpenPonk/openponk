@@ -10,7 +10,7 @@ OPRSBezier >> includedRadius [
 	^ super includedRadius + 3
 ]
 
-{ #category : #'*OpenPonk-Roassal3' }
+{ #category : #private }
 OPRSBezier >> lines [
 
 	| c b a via1 via2 start end cp |

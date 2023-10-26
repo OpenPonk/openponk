@@ -16,7 +16,8 @@ BaselineOfOpenPonk >> baseline: spec [
 		self externalProjectsBaseline: spec.
 		self internalProjectsBaseline: spec.
 		spec
-			package: 'OpenPonk-Roassal' with: [ spec requires: 'Roassal' ];
+			package: 'OpenPonk-Roassal'
+			with: [ spec requires: #( 'RoassalExporters' ) ];
 			package: 'OpenPonk-Core' with: [
 				spec requires:
 						#( 'Magritte' 'Mocketry' 'XMLParser' 'XPath' 'NeoJSON' 'OpenPonk-Roassal' ) ];
@@ -60,17 +61,18 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 	spec baseline: 'Roassal' with: [
 		spec
 			repository: 'github://pharo-graphics/Roassal:b508334';
-			loads: #Full ].
+			loads: #Full;
+			preLoadDoIt: #removeOldRoassal3 ].
 
-	spec
-		baseline: 'RoassalLayouts'
-		with: [
-		spec repository: 'github://pharo-graphics/RoassalLayouts:136a902' ].
+	spec baseline: 'RoassalLayouts' with: [
+		spec
+			repository: 'github://pharo-graphics/RoassalLayouts:136a902';
+			requires: 'Roassal' ].
 
-	spec
-		baseline: 'RoassalExporters'
-		with: [
-		spec repository: 'github://pharo-graphics/RoassalExporters:v1.01' ]
+	spec baseline: 'RoassalExporters' with: [
+		spec
+			repository: 'github://pharo-graphics/RoassalExporters:v1.01';
+			requires: 'RoassalLayouts' ]
 ]
 
 { #category : #baselines }
@@ -143,4 +145,14 @@ BaselineOfOpenPonk >> loadRoassal [
 		
 	layouts load.
 	exporters load
+]
+
+{ #category : #baselines }
+BaselineOfOpenPonk >> removePackage: aPackageName [
+
+	| regExp packages |
+	regExp := '*' , aPackageName , '*'.
+	packages := RPackageOrganizer default packages select: [ :each |
+		            regExp match: each name ].
+	packages do: [ :each | each removeFromSystem ]
 ]

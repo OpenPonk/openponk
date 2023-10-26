@@ -144,6 +144,12 @@ BaselineOfOpenPonk >> loadRoassal [
 ]
 
 { #category : #baselines }
+BaselineOfOpenPonk >> removeOldRoassal3 [
+
+	#( Roassal3 Numeric ) do: [ :eachName | self removePackage: eachName ]
+]
+
+{ #category : #baselines }
 BaselineOfOpenPonk >> removePackage: aPackageName [
 
 	| regExp packages |

@@ -18,7 +18,7 @@ BaselineOfOpenPonk >> baseline: spec [
 		spec
 			package: 'OpenPonk-Roassal'
 			with: [
-				spec requires: #( 'Roassal' 'RoassalLayouts' 'RoassalExporters' ) ];
+				spec requires: #( 'Roassal' 'RoassalExporters' ) ];
 			package: 'OpenPonk-Core' with: [
 				spec requires:
 						#( 'Magritte' 'Mocketry' 'XMLParser' 'XPath' 'NeoJSON' 'OpenPonk-Roassal' ) ];
@@ -64,11 +64,6 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 			repository: 'github://pharo-graphics/Roassal:b508334';
 			loads: #Full;
 			preLoadDoIt: #removeOldRoassal3 ].
-
-	spec
-		baseline: 'RoassalLayouts'
-		with: [
-		spec repository: 'github://pharo-graphics/RoassalLayouts:136a902' ].
 
 	spec
 		baseline: 'RoassalExporters'

@@ -58,7 +58,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 
 	spec baseline: 'Roassal' with: [
 		spec
-			repository: 'github://pharo-graphics/Roassal:b508334';
+			repository: 'github://pharo-graphics/Roassal:3a0cdc0';
 			loads: #Full;
 			preLoadDoIt: #removeOldRoassal3 ].
 
@@ -79,65 +79,6 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 		baseline: 'SynchronizedLinks'
 		with: [ 
 		spec repository: 'github://openponk/synchronized-links/repository' ]
-]
-
-{ #category : #baselines }
-BaselineOfOpenPonk >> loadPetitParser [
-
-	"PetitParser is not needed by core OP. It is needed by BormEditor, but due to Pharo bug https://github.com/pharo-project/pharo/issues/9913 it must be always loaded before Roassal2 in Pharo 10"
-
-	Smalltalk at: #BaselineOfPetitParser ifPresent: [ ^ self ].
-	Metacello new
-		baseline: 'PetitParser';
-		repository: 'github://moosetechnology/PetitParser:v3.x.x/src';
-		load:
-			#( 'Core' 'Tests' 'Examples' 'Islands' 'Analyzer' 'Preprocessor'
-			   'Indent' 'Extension' 'TestsExtension' 'Parser' )
-]
-
-{ #category : #baselines }
-BaselineOfOpenPonk >> loadPetitParserAndRoassal [
-
-	"PetitParser is not needed by core OP. It is needed by BormEditor, but due to Pharo bug https://github.com/pharo-project/pharo/issues/9913 it must be always loaded before Roassal in Pharo 10"
-
-	self
-		loadPetitParser;
-		loadRoassal
-]
-
-{ #category : #baselines }
-BaselineOfOpenPonk >> loadRoassal [
-	"Roassal3 needs to be loaded this way because different version of it is already included in Pharo 10+"
-
-	| exporters layouts |
-	
-	Smalltalk at: #BaselineOfRoassalExporters ifPresent: [ ^ self ].
-
-	layouts := Metacello new.
-	layouts
-		baseline: 'RoassalLayouts';
-		repository: 'github://pharo-graphics/RoassalLayouts:136a902';
-		lock;
-		onConflictUseLoaded.
-
-	exporters := Metacello new.
-	exporters
-		baseline: 'RoassalExporters';
-		repository: 'github://pharo-graphics/RoassalExporters:v1.01';
-		lock;
-		onConflictUseLoaded.
-		
-	[
-	Metacello new
-		baseline: 'Roassal';
-		repository: 'github://pharo-graphics/Roassal:b508334';
-		lock;
-		load: #Full ]
-		on: MCMergeOrLoadWarning
-		do: [ :warning | warning load ].
-		
-	layouts load.
-	exporters load
 ]
 
 { #category : #baselines }

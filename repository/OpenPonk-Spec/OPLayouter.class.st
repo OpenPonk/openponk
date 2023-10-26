@@ -35,19 +35,8 @@ OPLayouter >> allNodes [
 
 { #category : #userinterface }
 OPLayouter >> applyLayout: aTwoArgBlock [
-	| oldView newView |
-	"oldView := diagramController viewState."
-	self basicApplyLayout: aTwoArgBlock.
-	"newView := diagramController viewState.
-	diagramController undoManager
-		redoArray:
-			{diagramController.
-			#viewState:.
-			{newView}}
-		undoArray:
-			{diagramController.
-			#viewState:.
-			{oldView}}"
+
+	self basicApplyLayout: aTwoArgBlock
 ]
 
 { #category : #userinterface }
@@ -62,13 +51,14 @@ OPLayouter >> basicApplyLayout: aTwoArgBlock [
 			          ifTrue: [ allNodes intersection: selectedBoxes ]
 			          ifFalse: [ allNodes ]).
 	allEdges := self allEdges reject: [ :each | each to = each from ].
-	edges := allEdges select: [ :each | 
-		         (nodes includes: each from) & (nodes includes: each to) ].
+	edges := (allEdges select: [ :each |
+		          (nodes includes: each from) & (nodes includes: each to) ])
+		         asGroup.
 	oldEncompassingRectangle := nodes encompassingRectangle.
 	aTwoArgBlock value: nodes value: edges.
 	newEncompassingRectangle := nodes encompassingRectangle.
 	isPartialLayout
-		ifTrue: [ 
+		ifTrue: [
 			nodes translateTo: oldEncompassingRectangle center.
 			diagramController canvas signalUpdate ]
 		ifFalse: [ self updateCanvas ]
@@ -115,12 +105,12 @@ OPLayouter >> gridLayout [
 
 { #category : #accessing }
 OPLayouter >> roassalShapesFor: aCollection [
-	^ (aCollection
-		collect: [ :model | 
-			diagramController controllers
-				detect: [ :each | each model = model ]
-				ifFound: #roassalShape
-				ifNone: [ nil ] ]) reject: #isNil
+
+	^ ((aCollection collect: [ :model |
+		    diagramController controllers
+			    detect: [ :each | each model = model ]
+			    ifFound: #roassalShape
+			    ifNone: [ nil ] ]) reject: #isNil) asGroup
 ]
 
 { #category : #layouts }

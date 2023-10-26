@@ -60,7 +60,7 @@ OPEdgeCreationTargetController >> render [
 
 	edgeController diagramController roassalShape
 		propertyAt: #ignoredElementsForEvents
-		put: {
-				diagramElement roassalShape.
-				edgeController roassalShape }
+		put: (Set
+				 with: diagramElement roassalShape
+				 with: edgeController roassalShape)
 ]

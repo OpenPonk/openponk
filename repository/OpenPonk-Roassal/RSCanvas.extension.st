@@ -19,11 +19,13 @@ RSCanvas >> isSelectable [
 RSCanvas >> shapesWithActionForPosition: aPositionInSpace [
 
 	| result |
-	result := self shapeCollection shapesAtPoint: aPositionInSpace.
+	result := self shapeCollection entriesAtPoint: aPositionInSpace.
 
-	result := result select: [ :s | s hasEventCallback ].
 	self canvas
 		propertyAt: #ignoredElementsForEvents
-		ifPresent: [ :ignoredOnes | ^ result difference: ignoredOnes ].
-	^ result
+		ifPresent: [ :ignoredOnes |
+			^ result select: [ :s |
+				  s hasEventCallback and: [ (ignoredOnes includes: s) not ] ] ].
+
+	^ result select: [ :s | s hasEventCallback ]
 ]

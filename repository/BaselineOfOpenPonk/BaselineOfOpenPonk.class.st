@@ -55,20 +55,22 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 
 	spec
 		baseline: 'NeoJSON'
-		with: [ spec repository: 'github://pharo-graphics/Roassal:b508334';
+		with: [ spec repository: 'github://svenvc/NeoJSON:b05162a' ].
+
+	spec baseline: 'Roassal' with: [
+		spec
+			repository: 'github://pharo-graphics/Roassal:b508334';
 			loads: #Full ].
 
 	spec
-		baseline: 'Roassal'
-		with: [ spec repository: 'github://svenvc/NeoJSON:b05162a' ].
-
-	spec
 		baseline: 'RoassalLayouts'
-		with: [ spec repository: 'github://pharo-graphics/RoassalLayouts:136a902' ].
+		with: [
+		spec repository: 'github://pharo-graphics/RoassalLayouts:136a902' ].
 
 	spec
 		baseline: 'RoassalExporters'
-		with: [ spec repository: 'github://pharo-graphics/RoassalExporters:v1.01' ].
+		with: [
+		spec repository: 'github://pharo-graphics/RoassalExporters:v1.01' ]
 ]
 
 { #category : #baselines }

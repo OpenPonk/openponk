@@ -17,17 +17,14 @@ BaselineOfOpenPonk >> baseline: spec [
 		self internalProjectsBaseline: spec.
 		spec
 			package: 'OpenPonk-Roassal'
-			with: [
-				spec requires: #( 'Roassal' 'RoassalExporters' ) ];
+			with: [ spec requires: #( 'Roassal' 'RoassalExporters' ) ];
 			package: 'OpenPonk-Core' with: [
 				spec requires:
 						#( 'Magritte' 'Mocketry' 'XMLParser' 'XPath' 'NeoJSON' 'OpenPonk-Roassal' ) ];
 			package: 'OpenPonk-Morphic';
 			package: 'OpenPonk-Spec' with: [
-				spec
-					requires:
-						#( 'NewTools' 'Magritte' 'SynchronizedLinks' 'OpenPonk-Morphic' );
-					preLoadDoIt: #loadPetitParser ].
+				spec requires:
+						#( 'NewTools' 'Magritte' 'SynchronizedLinks' 'OpenPonk-Morphic' ) ].
 		spec
 			group: 'default'
 			with: #( 'OpenPonk-Core' 'OpenPonk-Morphic' 'OpenPonk-Spec' ) ]

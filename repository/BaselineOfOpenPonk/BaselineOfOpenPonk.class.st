@@ -84,6 +84,8 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 { #category : #baselines }
 BaselineOfOpenPonk >> removeOldRoassal3 [
 
+	(RPackageOrganizer default includesPackageNamed: 'Roassal3')
+		ifFalse: [ ^ self ].
 	#( Roassal3 Numeric ) do: [ :eachName | self removePackage: eachName ]
 ]
 
@@ -93,6 +95,7 @@ BaselineOfOpenPonk >> removePackage: aPackageName [
 	| regExp packages |
 	regExp := '*' , aPackageName , '*'.
 	packages := RPackageOrganizer default packages select: [ :each |
+		            Transcript crShow: 'Removing package ' , each name.
 		            regExp match: each name ].
 	packages do: [ :each | each removeFromSystem ]
 ]

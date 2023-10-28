@@ -7,6 +7,12 @@ RSShape >> asEmptyMarker [
 ]
 
 { #category : #'*OpenPonk-Roassal' }
+RSShape >> extentWithoutBorder [
+
+	^ self extent - (border ifNil: [ 0 ] ifNotNil: [ border width ])
+]
+
+{ #category : #'*OpenPonk-Roassal' }
 RSShape >> isElement [
 
 	self

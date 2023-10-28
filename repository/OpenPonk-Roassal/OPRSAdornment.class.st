@@ -71,7 +71,7 @@ OPRSAdornment >> iconShape: aShape [
 OPRSAdornment >> initialize [
 
 	super initialize.
-	self padding: 3
+	self padding: 2
 ]
 
 { #category : #'as yet unclassified' }
@@ -94,32 +94,22 @@ OPRSAdornment >> shape [
 
 	shape := RSBox new.
 	shape extent: self icon extent + (padding * 2).
-	shape color: Color transparent.
+	shape color: Color white.
+	shape borderColor: Color lightGray.
 
 	shape
 		when: RSMouseLeftClick
 		do: self action
 		for: self action receiver.
 
-	innerBox := RSBox new.
-	innerBox extent: shape extent - 2.
-	innerBox color: Color white.
-	innerBox borderColor: Color lightGray.
-
-	RSLocation new stick: innerBox on: shape.
-	RSLocation new stick: self icon on: innerBox.
+	RSLocation new stick: self icon on: shape.
 	shape
 		when: RSShapeAddedEvent
-		do: [ :event |
-			event canvas
-				add: innerBox;
-				add: self icon ]
+		do: [ :event | event canvas add: self icon ]
 		for: self.
 	shape
 		when: RSShapeRemovedEvent
-		do: [ :event |
-			self icon remove.
-			innerBox remove ]
+		do: [ :event | self icon remove ]
 		for: self.
 
 	^ shape

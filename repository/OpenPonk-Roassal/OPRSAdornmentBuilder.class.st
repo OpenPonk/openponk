@@ -3,7 +3,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'adornments',
-		'firstLocation',
 		'direction',
 		'verticalLocation',
 		'horizontalLocation'
@@ -78,15 +77,13 @@ OPRSAdornmentBuilder >> initialize [
 { #category : #initialization }
 OPRSAdornmentBuilder >> showOn: aShape [
 
-	adornments
-		inject: direction negated
-		into: [ :offset :eachAdornment | 
-			eachAdornment
-				showOnShape: aShape
-				horizontal: self horizontalLocation copy
-				vertical: self verticalLocation copy
-				offset: offset.
-			offset + (eachAdornment shape extent - 2 * direction) ]
+	adornments inject: 0 @ 0 into: [ :offset :eachAdornment |
+		eachAdornment
+			showOnShape: aShape
+			horizontal: self horizontalLocation copy
+			vertical: self verticalLocation copy
+			offset: offset.
+		offset + (eachAdornment shape extentWithoutBorder * direction) ]
 ]
 
 { #category : #initialization }

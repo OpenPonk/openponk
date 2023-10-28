@@ -150,7 +150,7 @@ OPLegacyDiagram >> asJsonTo: stream [
 { #category : #converting }
 OPLegacyDiagram >> asOPDiagram [
 
-	| diagram adapters allModelElements layoutsPerModel diagramController canvas layoutsPerController priority |
+	| diagram adapters allModelElements layoutsPerModel diagramController canvas priority controllersByModels |
 	[ :job |
 	job title: 'Transforming older version of project'.
 	job progress: 0.
@@ -166,9 +166,6 @@ OPLegacyDiagram >> asOPDiagram [
 	                     , commonElements collect: [ :each |
 		                     each uuid -> each ]) asDictionary.
 	job progress: 0.2.
-	visibleElements := visibleElements collect: [ :each |
-		                   each modelObjectFrom: allModelElements ].
-	job progress: 0.3.
 	priority := {
 		            OPUMLPackage.
 		            OPUMLProfile.
@@ -182,12 +179,15 @@ OPLegacyDiagram >> asOPDiagram [
 		            OPUMLProperty.
 		            OPUMLEnumerationLiteral.
 		            OPUMLOperation }.
+	visibleElements := (visibleElements collect: [ :each |
+		                    each modelObjectFrom: allModelElements ])
+		                   sortedAs: [ :each |
+		                   priority indexOf: each class ifAbsent: 100 ].
+	job progress: 0.3.
 	layoutsPerModel := (layout associations collect: [ :each |
 		                    (allModelElements at: each key) -> each value ])
-		                   sortedAs: [ :each |
-		                   priority indexOf: each key class ifAbsent: 100 ].
+		                   asDictionary.
 	job progress: 0.4.
-
 	diagramController := (OPPluginRegistry default pluginFor: model)
 		                     diagramControllerClass new.
 	diagramController
@@ -195,22 +195,26 @@ OPLegacyDiagram >> asOPDiagram [
 		diagramElement: diagram.
 	canvas := RSCanvas new.
 	job progress: 0.5.
-	layoutsPerController := layoutsPerModel collect: [ :each |
-		                        | controller diagramElement |
-		                        controller := diagramController
-			                                      newControllerFor: each key.
-		                        diagramController addController: controller.
-		                        diagramElement := controller
-			                                          ensureDiagramElement.
-		                        diagramElement owningElement ifNil: [
-			                        diagramElement owningElement:
-				                        controller diagramElementOwner ].
-		                        controller -> each value ].
+	controllersByModels := visibleElements collect: [ :each |
+		                       | controller diagramElement |
+		                       controller := diagramController
+			                                     newControllerFor: each.
+		                       diagramController addController: controller.
+		                       diagramElement := controller
+			                                         ensureDiagramElement.
+		                       diagramElement owningElement ifNil: [
+			                       diagramElement owningElement:
+				                       controller diagramElementOwner ].
+		                       each -> controller ].
 	job progress: 0.7.
 	diagram renderIn: canvas.
 	job progress: 0.8.
-	layoutsPerController do: [ :each |
-		each value applyToDiagramElement: each key diagramElement ].
+	controllersByModels do: [ :eachModelAndController |
+		layoutsPerModel
+			at: eachModelAndController key
+			ifPresent: [ :eachLayout |
+				eachLayout applyToDiagramElement:
+					eachModelAndController value diagramElement ] ].
 	job progress: 0.9.
 	diagram removeRender.
 	job progress: 1 ] asJob run.

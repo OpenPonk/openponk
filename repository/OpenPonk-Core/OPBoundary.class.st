@@ -110,7 +110,7 @@ OPBoundary >> shouldBeResizableByUser [
 	^ true
 ]
 
-{ #category : #hooks }
+{ #category : #accessing }
 OPBoundary >> text [
 	^ self name
 ]

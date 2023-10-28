@@ -20,11 +20,11 @@ OPTRelationshipWithPathPointsController >> modelTarget [
 { #category : #accessing }
 OPTRelationshipWithPathPointsController >> source [
 
-	^ self explicitRequirement
+	^ self shouldBeImplemented
 ]
 
 { #category : #accessing }
 OPTRelationshipWithPathPointsController >> target [
 
-	^ self explicitRequirement
+	^ self shouldBeImplemented
 ]

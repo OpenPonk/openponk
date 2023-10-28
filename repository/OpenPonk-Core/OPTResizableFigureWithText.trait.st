@@ -41,9 +41,10 @@ OPTResizableFigureWithText >> setupLabelLocation: aLocation [
 		inner
 ]
 
-{ #category : #hooks }
+{ #category : #accessing }
 OPTResizableFigureWithText >> text [
-	^ self explicitRequirement
+
+	^ self shouldBeImplemented
 ]
 
 { #category : #'creating - subelements' }

@@ -95,7 +95,8 @@ BaselineOfOpenPonk >> removePackage: aPackageName [
 	| regExp packages |
 	regExp := '*' , aPackageName , '*'.
 	packages := RPackageOrganizer default packages select: [ :each |
-		            Transcript crShow: 'Removing package ' , each name.
 		            regExp match: each name ].
-	packages do: [ :each | each removeFromSystem ]
+	packages do: [ :each |
+		Transcript crShow: 'Removing package ' , each name.
+		each removeFromSystem ]
 ]

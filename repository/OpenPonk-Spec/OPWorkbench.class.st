@@ -214,7 +214,10 @@ OPWorkbench >> initializeWindow: aWindow [
 	aWindow
 		windowIcon: OPCoreIcons openponkIcon;
 		title: self title;
-		initialExtent: self class initialExtent
+		initialExtent: self class initialExtent;
+		whenClosedDo: [
+			editors valuesDo: [ :each |
+					self closedTabOfEditor: (each at: #editor) ] ]
 ]
 
 { #category : #'accessing - spec' }

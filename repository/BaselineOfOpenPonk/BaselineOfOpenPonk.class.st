@@ -60,7 +60,8 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 		spec
 			repository: 'github://pharo-graphics/Roassal:b508334';
 			loads: #Full;
-			preLoadDoIt: #removeOldRoassal3 ].
+			preLoadDoIt: #removeOldRoassal3;
+			postLoadDoIt: #removeRoassalExplicitRequirements ].
 
 	spec
 		baseline: 'RoassalExporters'
@@ -82,6 +83,24 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 ]
 
 { #category : #baselines }
+BaselineOfOpenPonk >> removeExplicitRequirementsFromPackage: aPackageName [
+
+	| regExp packages |
+	regExp := '*' , aPackageName , '*'.
+	packages := RPackageOrganizer default packages select: [ :each |
+		            regExp match: each name ].
+	packages do: [ :each |
+		Transcript crShow:
+			'Removing explicitRequirements from package ' , each name.
+		each classes select: #isTrait thenDo: [ :eachClass |
+			eachClass methods
+				select: [ :eachMethod |
+					eachMethod sourceCode includesSubstring:
+						'self explicitRequirement' ]
+				thenDo: #removeFromSystem ] ]
+]
+
+{ #category : #baselines }
 BaselineOfOpenPonk >> removeOldRoassal3 [
 
 	(RPackageOrganizer default includesPackageNamed: 'Roassal3')
@@ -99,4 +118,11 @@ BaselineOfOpenPonk >> removePackage: aPackageName [
 	packages do: [ :each |
 		Transcript crShow: 'Removing package ' , each name.
 		each removeFromSystem ]
+]
+
+{ #category : #baselines }
+BaselineOfOpenPonk >> removeRoassalExplicitRequirements [
+
+	#( Roassal Numeric RTree OpenPonk OP OntoUML ) do: [ :eachName |
+		self removeExplicitRequirementsFromPackage: eachName ]
 ]

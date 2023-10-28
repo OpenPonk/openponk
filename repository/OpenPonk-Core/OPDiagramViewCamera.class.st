@@ -1,6 +1,6 @@
 Class {
 	#name : #OPDiagramViewCamera,
-	#superclass : #OPDiagramCamera,
+	#superclass : #OPLegacyDiagramCamera,
 	#category : #'OpenPonk-Core-Diagrams'
 }
 

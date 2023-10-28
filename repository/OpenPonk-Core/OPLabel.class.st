@@ -1,10 +1,10 @@
 Class {
 	#name : #OPLabel,
-	#superclass : #OPShape,
+	#superclass : #OPBoundNode,
 	#instVars : [
 		'text'
 	],
-	#category : #'OpenPonk-Core-DiagramInterchange'
+	#category : #'OpenPonk-Core-Shapes'
 }
 
 { #category : #'ston-core' }

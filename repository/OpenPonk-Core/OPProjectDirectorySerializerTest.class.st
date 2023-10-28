@@ -38,17 +38,15 @@ OPProjectDirectorySerializerTest >> testDeleteOldModels [
 	| models folder modelsFolder |
 	folder := FileSystem memory root.
 	modelsFolder := folder / 'models'.
-	models := { 
+	models := {
 		          (OPTestEntityModel new uuid: UUID new).
 		          OPTestEntityModel new }.
 	persistence directory: folder.
 	persistence
-		saveMemento:
-		(OPPersistenceMemento model: models first diagrams: #(  ))
+		saveMemento: (OPMemento model: models first diagrams: #(  ))
 		with: (OPMementoDirectorySerializer forPlugin: OPTestPlugin new).
 	persistence
-		saveMemento:
-		(OPPersistenceMemento model: models second diagrams: #(  ))
+		saveMemento: (OPMemento model: models second diagrams: #(  ))
 		with: (OPMementoDirectorySerializer forPlugin: OPTestPlugin new).
 	self assert: modelsFolder children size equals: 2.
 	persistence removeModelsNotIn: models allButLast.

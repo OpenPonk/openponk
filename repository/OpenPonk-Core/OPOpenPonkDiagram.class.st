@@ -6,7 +6,7 @@ Class {
 		'isSelected',
 		'camera'
 	],
-	#category : #'OpenPonk-Core-DiagramInterchange'
+	#category : #'OpenPonk-Core-Shapes'
 }
 
 { #category : #'ston-core' }
@@ -20,7 +20,7 @@ OPOpenPonkDiagram class >> stonAllInstVarNames [
 { #category : #accessing }
 OPOpenPonkDiagram >> camera: aCamera [
 
-	camera := OPDICamera newFrom: aCamera
+	camera := OPDiagramCamera newFrom: aCamera
 ]
 
 { #category : #accessing }

@@ -1,28 +1,28 @@
 Trait {
-	#name : #OPTDIBorderColoredAsStroke,
-	#category : #'OpenPonk-Core-DiagramInterchange'
+	#name : #OPTBorderColoredAsStroke,
+	#category : #'OpenPonk-Core-Shapes'
 }
 
 { #category : #accessing }
-OPTDIBorderColoredAsStroke >> borderColor [
+OPTBorderColoredAsStroke >> borderColor [
 
 	^ self strokeColor
 ]
 
 { #category : #accessing }
-OPTDIBorderColoredAsStroke >> strokeColor [
+OPTBorderColoredAsStroke >> strokeColor [
 
 	^ self stylePropertyNamed: #strokeColor ifAbsent: [ Color black ]
 ]
 
 { #category : #accessing }
-OPTDIBorderColoredAsStroke >> strokeColor: aColor [
+OPTBorderColoredAsStroke >> strokeColor: aColor [
 
 	^ self stylePropertyNamed: #strokeColor put: aColor
 ]
 
 { #category : #update }
-OPTDIBorderColoredAsStroke >> updateBorderColorFromStyles [
+OPTBorderColoredAsStroke >> updateBorderColorFromStyles [
 
 	self roassalShape
 		propertyAt: OPRSSelectable
@@ -38,7 +38,7 @@ OPTDIBorderColoredAsStroke >> updateBorderColorFromStyles [
 ]
 
 { #category : #accessing }
-OPTDIBorderColoredAsStroke >> updateRenderFromStyles [
+OPTBorderColoredAsStroke >> updateRenderFromStyles [
 
 	self isRendered ifFalse: [ ^ self ].
 	self updateBorderColorFromStyles.

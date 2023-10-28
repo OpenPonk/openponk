@@ -15,10 +15,10 @@ Class {
 
 { #category : #running }
 OPElementLayoutTest >> setUp [
-	elementLayout := OPElementLayout
+	elementLayout := OPLegacyElementLayout
 		withPosition: -10 @ 50
 		extent: 100 @ 200.
-	relationshipLayout := OPElementLayout
+	relationshipLayout := OPLegacyElementLayout
 		withPathFromSource: 'element'
 		throughPoints:
 			{(100 @ 200).
@@ -75,7 +75,7 @@ OPElementLayoutTest >> testFromJSON [
 	| newLayout |
 	newLayout := NeoJSONReader
 		fromString: elementLayoutJSON
-		as: OPElementLayout.
+		as: OPLegacyElementLayout.
 	self assert: newLayout position equals: -10 @ 50.
 	self assert: newLayout extent equals: 100 @ 200
 ]
@@ -85,7 +85,7 @@ OPElementLayoutTest >> testJSONWithoutExtent [
 	| json newLayout |
 	elementLayout extent: nil.
 	json := OPJsonWriter toString: elementLayout.
-	newLayout := NeoJSONReader fromString: json as: OPElementLayout.
+	newLayout := NeoJSONReader fromString: json as: OPLegacyElementLayout.
 	self assert: newLayout extent equals: nil.
 	self assert: newLayout equals: elementLayout
 ]
@@ -121,7 +121,7 @@ OPElementLayoutTest >> testRelationshipFromJSON [
 	| newLayout |
 	newLayout := NeoJSONReader
 		fromString: relationshipLayoutJSON
-		as: OPElementLayout.
+		as: OPLegacyElementLayout.
 	self assert: newLayout path source equals: 'element'.
 	self assert: newLayout path points isCollection.
 	self assert: newLayout path points isSequenceable.
@@ -135,7 +135,7 @@ OPElementLayoutTest >> testRelationshipFromJSON [
 OPElementLayoutTest >> testRelationshipRoundtripJSON [
 	| json newLayout |
 	json := OPJsonWriter toString: relationshipLayout.
-	newLayout := NeoJSONReader fromString: json as: OPElementLayout.
+	newLayout := NeoJSONReader fromString: json as: OPLegacyElementLayout.
 	self assert: newLayout equals: relationshipLayout
 ]
 
@@ -150,7 +150,7 @@ OPElementLayoutTest >> testRelationshipToJSON [
 OPElementLayoutTest >> testRoundtripJSON [
 	| json newLayout |
 	json := OPJsonWriter toString: elementLayout.
-	newLayout := NeoJSONReader fromString: json as: OPElementLayout.
+	newLayout := NeoJSONReader fromString: json as: OPLegacyElementLayout.
 	self assert: newLayout equals: elementLayout
 ]
 

@@ -25,7 +25,7 @@ OPLabelTest >> testRoassalShapeEmphasis [
 
 	| roassalShape |
 	element text: 'some text'.
-	element localStyle: OPDIOpenPonkStyle new.
+	element localStyle: OPOpenPonkShapeStyle new.
 	element renderIn: RSCanvas new.
 	roassalShape := element roassalShape.
 	self assert: roassalShape emphasis equals: TextEmphasis normal.

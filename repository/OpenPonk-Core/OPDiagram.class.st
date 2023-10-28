@@ -1,12 +1,12 @@
 Class {
 	#name : #OPDiagram,
-	#superclass : #OPShape,
+	#superclass : #OPBoundNode,
 	#instVars : [
 		'name',
 		'documentation',
 		'resolution'
 	],
-	#category : #'OpenPonk-Core-DiagramInterchange'
+	#category : #'OpenPonk-Core-Shapes'
 }
 
 { #category : #'ston-core' }
@@ -126,7 +126,7 @@ OPDiagram >> resolution: anObject [
 { #category : #'as yet unclassified' }
 OPDiagram >> updateFromRender [
 
-	self bounds: (OPDIBounds
+	self bounds: (OPNodeBounds
 			 withPosition: 0 @ 0
 			 extent: roassalShape encompassingRectangle extent).
 	self ownedElements do: #updateFromRender

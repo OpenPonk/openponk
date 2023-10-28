@@ -1,16 +1,16 @@
 Trait {
-	#name : #OPTDIColored,
-	#category : #'OpenPonk-Core-DiagramInterchange'
+	#name : #OPTColored,
+	#category : #'OpenPonk-Core-Shapes'
 }
 
 { #category : #accessing }
-OPTDIColored >> color [
+OPTColored >> color [
 
 	^ self shouldBeImplemented
 ]
 
 { #category : #update }
-OPTDIColored >> updateColorFromStyles [
+OPTColored >> updateColorFromStyles [
 
 	self roassalShape
 		propertyAt: OPRSSelectable
@@ -26,7 +26,7 @@ OPTDIColored >> updateColorFromStyles [
 ]
 
 { #category : #update }
-OPTDIColored >> updateRenderFromStyles [
+OPTColored >> updateRenderFromStyles [
 
 	self isRendered ifFalse: [ ^ self ].
 	self updateColorFromStyles.

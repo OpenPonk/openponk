@@ -43,7 +43,7 @@ OPLegacyDiagram class >> neoJsonMapping: mapper [
 		for: self do: [ :mapping | 
 			mapping mapInstVars: mapping identifier instVarNames \ #( model ).
 			(mapping mapInstVar: #layout) valueSchema: #UUIDsWithPoints.
-			(mapping mapInstVar: #camera) valueSchema: OPDiagramCamera.
+			(mapping mapInstVar: #camera) valueSchema: OPLegacyDiagramCamera.
 			(mapping mapInstVar: #commonElements) valueSchema: #CommonElements.
 			(mapping mapInstVar: #visibleElements) valueSchema:
 					#ObjectsWithUUIDs ];
@@ -81,7 +81,7 @@ OPLegacyDiagram class >> neoJsonMapping: mapper [
 				map := jsonReader mapClass new.
 				jsonReader parseMapKeysDo: [ :key | 
 						| value |
-						value := jsonReader nextAs: OPElementLayout.
+						value := jsonReader nextAs: OPLegacyElementLayout.
 						map
 							at: ([ UUID fromString: key ]
 									 on: Error
@@ -95,7 +95,7 @@ OPLegacyDiagram class >> neoJsonMapping: mapper [
 								mapWriter
 									writeKey: key asString
 									value: value
-									as: OPElementLayout ] ] ] ]
+									as: OPLegacyElementLayout ] ] ] ]
 ]
 
 { #category : #'instance creation' }
@@ -361,7 +361,7 @@ OPLegacyDiagram >> updateFromInfo: anInfo [
 OPLegacyDiagram >> updateFromRoassalCanvas: aView [
 	self
 		camera:
-			(OPDiagramCamera new
+			(OPLegacyDiagramCamera new
 				offset: aView canvas camera position;
 				zoom: aView canvas camera scale)
 ]

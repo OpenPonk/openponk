@@ -1,20 +1,20 @@
 Class {
-	#name : #OPDIStyle,
+	#name : #OPShapeStyle,
 	#superclass : #Object,
 	#instVars : [
 		'styledElements',
 		'properties'
 	],
-	#category : #'OpenPonk-Core-DiagramInterchange'
+	#category : #'OpenPonk-Core-Shapes'
 }
 
 { #category : #testing }
-OPDIStyle class >> isAbstract [
-	^ self = OPDIStyle
+OPShapeStyle class >> isAbstract [
+	^ self = OPShapeStyle
 ]
 
 { #category : #accessing }
-OPDIStyle >> addedAsLocalToStyledElement: aDiagramElement [
+OPShapeStyle >> addedAsLocalToStyledElement: aDiagramElement [
 
 	aDiagramElement localStyle = self ifFalse: [ 
 		'This style was not added as local style to the element' ].
@@ -24,7 +24,7 @@ OPDIStyle >> addedAsLocalToStyledElement: aDiagramElement [
 ]
 
 { #category : #accessing }
-OPDIStyle >> addedAsSharedToStyledElement: aDiagramElement [
+OPShapeStyle >> addedAsSharedToStyledElement: aDiagramElement [
 
 	aDiagramElement sharedStyle = self ifFalse: [ 
 		'This style was not added as shared style to the element' ].
@@ -35,32 +35,32 @@ OPDIStyle >> addedAsSharedToStyledElement: aDiagramElement [
 ]
 
 { #category : #accessing }
-OPDIStyle >> at: aSymbol [
+OPShapeStyle >> at: aSymbol [
 
 	^ properties at: aSymbol
 ]
 
 { #category : #accessing }
-OPDIStyle >> at: aSymbol ifAbsent: aBlock [
+OPShapeStyle >> at: aSymbol ifAbsent: aBlock [
 
 	^ properties at: aSymbol ifAbsent: aBlock
 ]
 
 { #category : #accessing }
-OPDIStyle >> at: aSymbol ifPresent: aBlock [
+OPShapeStyle >> at: aSymbol ifPresent: aBlock [
 
 	^ properties at: aSymbol ifPresent: aBlock
 ]
 
 { #category : #accessing }
-OPDIStyle >> at: aSymbol put: aValue [
+OPShapeStyle >> at: aSymbol put: aValue [
 
 	properties at: aSymbol put: aValue.
 	self styledElements do: #styleChanged
 ]
 
 { #category : #initialization }
-OPDIStyle >> initialize [
+OPShapeStyle >> initialize [
 
 	super initialize.
 	styledElements := Set new.
@@ -68,7 +68,7 @@ OPDIStyle >> initialize [
 ]
 
 { #category : #removing }
-OPDIStyle >> removeKey: aSymbol [
+OPShapeStyle >> removeKey: aSymbol [
 
 	| result |
 	result := properties removeKey: aSymbol.
@@ -77,13 +77,13 @@ OPDIStyle >> removeKey: aSymbol [
 ]
 
 { #category : #accessing }
-OPDIStyle >> removedFromStyledElement: aDiagramElement [
+OPShapeStyle >> removedFromStyledElement: aDiagramElement [
 
 	styledElements remove: aDiagramElement
 ]
 
 { #category : #accessing }
-OPDIStyle >> styledElements [
+OPShapeStyle >> styledElements [
 
 	^ styledElements
 ]

@@ -1,14 +1,14 @@
 Class {
 	#name : #OPInvisibleOnMouseShape,
-	#superclass : #OPShape,
-	#category : #'OpenPonk-Core-DiagramInterchange'
+	#superclass : #OPBoundNode,
+	#category : #'OpenPonk-Core-Shapes'
 }
 
 { #category : #rendering }
 OPInvisibleOnMouseShape class >> renderToPosition: aPoint onCanvas: aCanvas [
 
 	^ self new
-		  bounds: (OPDIBounds withPosition: aPoint extent: 0 @ 0);
+		  bounds: (OPNodeBounds withPosition: aPoint extent: 0 @ 0);
 		  renderIn: aCanvas;
 		  yourself
 ]

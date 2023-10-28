@@ -1,8 +1,8 @@
 Class {
 	#name : #OPDiagramOnlyShape,
-	#superclass : #OPShape,
-	#traits : 'OPTDIBorderColoredAsStroke - {#updateRenderFromStyles}',
-	#classTraits : 'OPTDIBorderColoredAsStroke classTrait',
+	#superclass : #OPBoundNode,
+	#traits : 'OPTBorderColoredAsStroke - {#updateRenderFromStyles}',
+	#classTraits : 'OPTBorderColoredAsStroke classTrait',
 	#instVars : [
 		'uuid'
 	],

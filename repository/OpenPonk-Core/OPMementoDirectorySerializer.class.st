@@ -53,10 +53,10 @@ OPMementoDirectorySerializer >> loadMementoFrom: aFolder [
 
 	| model modelDir |
 	modelDir := aFolder / 'model'.
-	(modelDir exists and: [ modelDir isDirectory ]) ifFalse: [ 
+	(modelDir exists and: [ modelDir isDirectory ]) ifFalse: [
 		modelDir := aFolder ].
 	model := self loadModelFrom: modelDir.
-	^ OPPersistenceMemento
+	^ OPMemento
 		  model: model
 		  diagrams: (self loadDiagramsOf: model from: aFolder / 'diagrams')
 ]

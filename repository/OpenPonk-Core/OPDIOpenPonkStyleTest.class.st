@@ -6,14 +6,14 @@ Class {
 
 { #category : #accessing }
 OPDIOpenPonkStyleTest >> elementClass [
-	^ OPDIOpenPonkStyle
+	^ OPOpenPonkShapeStyle
 ]
 
 { #category : #accessing }
 OPDIOpenPonkStyleTest >> testLocalStyleNotInherited [
 	| a b |
-	a := OPDiagramElement new.
-	(b := OPDiagramElement new) owningElement: a.
+	a := OPShape new.
+	(b := OPShape new) owningElement: a.
 	self assert: a localStyle equals: nil.
 	self assert: b localStyle equals: nil.
 	a localStyle: element.
@@ -25,9 +25,9 @@ OPDIOpenPonkStyleTest >> testLocalStyleNotInherited [
 OPDIOpenPonkStyleTest >> testPropertyInheritance [
 
 	| a b aStyle bShared bLocal |
-	a := OPDiagramElement new.
-	(b := OPDiagramElement new) owningElement: a.
-	(aStyle := OPDIOpenPonkStyle new) fontSize: 15.
+	a := OPShape new.
+	(b := OPShape new) owningElement: a.
+	(aStyle := OPOpenPonkShapeStyle new) fontSize: 15.
 	self
 		assert: (b stylePropertyNamed: #fontSize ifAbsent: [ 1 ])
 		equals: 1.
@@ -35,7 +35,7 @@ OPDIOpenPonkStyleTest >> testPropertyInheritance [
 	self
 		assert: (b stylePropertyNamed: #fontSize ifAbsent: [ 1 ])
 		equals: 15.
-	bShared := OPDIOpenPonkStyle new.
+	bShared := OPOpenPonkShapeStyle new.
 	b sharedStyle: bShared.
 	self
 		assert: (b stylePropertyNamed: #fontSize ifAbsent: [ 1 ])
@@ -44,7 +44,7 @@ OPDIOpenPonkStyleTest >> testPropertyInheritance [
 	self
 		assert: (b stylePropertyNamed: #fontSize ifAbsent: [ 1 ])
 		equals: 20.
-	bLocal := OPDIOpenPonkStyle new.
+	bLocal := OPOpenPonkShapeStyle new.
 	b localStyle: bLocal.
 	self
 		assert: (b stylePropertyNamed: #fontSize ifAbsent: [ 1 ])
@@ -67,8 +67,8 @@ OPDIOpenPonkStyleTest >> testPropertyInheritance [
 OPDIOpenPonkStyleTest >> testSharedStyleIsInherited [
 
 	| a b |
-	a := OPDiagramElement new.
-	(b := OPDiagramElement new) owningElement: a.
+	a := OPShape new.
+	(b := OPShape new) owningElement: a.
 	element fontSize: 5.
 	self
 		assert: (a stylePropertyNamed: #fontSize ifAbsent: [ 1 ])
@@ -89,8 +89,8 @@ OPDIOpenPonkStyleTest >> testSharedStyleIsInherited [
 OPDIOpenPonkStyleTest >> testSharedStyleOverriden [
 
 	| a b newStyle |
-	a := OPDiagramElement new.
-	(b := OPDiagramElement new) owningElement: a.
+	a := OPShape new.
+	(b := OPShape new) owningElement: a.
 	element fontSize: 5.
 	a sharedStyle: element.
 	self

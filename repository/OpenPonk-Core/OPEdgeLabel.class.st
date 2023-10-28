@@ -1,7 +1,7 @@
 Class {
 	#name : #OPEdgeLabel,
 	#superclass : #OPLabel,
-	#category : #'OpenPonk-Core-DiagramInterchange'
+	#category : #'OpenPonk-Core-Shapes'
 }
 
 { #category : #adding }
@@ -41,7 +41,7 @@ OPEdgeLabel >> shouldBePositionableByUser [
 { #category : #'as yet unclassified' }
 OPEdgeLabel >> updateFromRender [
 
-	self bounds: (OPDIBounds
+	self bounds: (OPNodeBounds
 			 withPosition: roassalShape position
 			 extent: roassalShape extent).
 	super updateFromRender

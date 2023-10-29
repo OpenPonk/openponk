@@ -340,7 +340,7 @@ OPVersion >> repositoryName [
 			                   ((Smalltalk globals includesKey:
 				                     #BaselineOfPetriNets) ifTrue: [ #petrinets ]).
 			                   ((Smalltalk globals includesKey: #BaselineOfBPMN) 
-				                    ifTrue: [ #'OpenPonk-BPMN' ]) } reject: #isNil.
+				                    ifTrue: [ #'BPMN' ]) } reject: #isNil.
 		  repositoryName := activePlugins size >= 4
 			                    ifTrue: [ #plugins ]
 			                    ifFalse: [ 
@@ -363,7 +363,7 @@ OPVersion >> repositoryNotationName [
 		                 (#'borm-editor' -> 'BORM').
 		                 (#'fsm-editor' -> 'FSM').
 		                 (#petrinets -> 'Petri nets').
-		                 (#'OpenPonk-BPMN' -> 'BPMN').
+		                 (#'BPMN' -> 'BPMN').
 		                 (#plugins -> 'All plugins') } asDictionary.
 	^ notationNames
 		  at: self repositoryName

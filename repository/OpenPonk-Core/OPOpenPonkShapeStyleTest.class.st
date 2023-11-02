@@ -1,28 +1,38 @@
 Class {
-	#name : #OPDIOpenPonkStyleTest,
-	#superclass : #OPDiagramElementTestCase,
+	#name : #OPOpenPonkShapeStyleTest,
+	#superclass : #TestCase,
+	#instVars : [
+		'style'
+	],
 	#category : #'OpenPonk-Core-Tests'
 }
 
-{ #category : #accessing }
-OPDIOpenPonkStyleTest >> elementClass [
+{ #category : #running }
+OPOpenPonkShapeStyleTest >> setUp [
+
+	super setUp.
+	style := OPOpenPonkShapeStyle new
+]
+
+{ #category : #hooks }
+OPOpenPonkShapeStyleTest >> shapeClass [
 	^ OPOpenPonkShapeStyle
 ]
 
-{ #category : #accessing }
-OPDIOpenPonkStyleTest >> testLocalStyleNotInherited [
+{ #category : #tests }
+OPOpenPonkShapeStyleTest >> testLocalStyleNotInherited [
 	| a b |
 	a := OPShape new.
 	(b := OPShape new) owningElement: a.
 	self assert: a localStyle equals: nil.
 	self assert: b localStyle equals: nil.
-	a localStyle: element.
-	self assert: a localStyle equals: element.
+	a localStyle: style.
+	self assert: a localStyle equals: style.
 	self assert: b localStyle equals: nil
 ]
 
-{ #category : #accessing }
-OPDIOpenPonkStyleTest >> testPropertyInheritance [
+{ #category : #tests }
+OPOpenPonkShapeStyleTest >> testPropertyInheritance [
 
 	| a b aStyle bShared bLocal |
 	a := OPShape new.
@@ -63,20 +73,20 @@ OPDIOpenPonkStyleTest >> testPropertyInheritance [
 		equals: 15
 ]
 
-{ #category : #accessing }
-OPDIOpenPonkStyleTest >> testSharedStyleIsInherited [
+{ #category : #tests }
+OPOpenPonkShapeStyleTest >> testSharedStyleIsInherited [
 
 	| a b |
 	a := OPShape new.
 	(b := OPShape new) owningElement: a.
-	element fontSize: 5.
+	style fontSize: 5.
 	self
 		assert: (a stylePropertyNamed: #fontSize ifAbsent: [ 1 ])
 		equals: 1.
 	self
 		assert: (b stylePropertyNamed: #fontSize ifAbsent: [ 1 ])
 		equals: 1.
-	a sharedStyle: element.
+	a sharedStyle: style.
 	self
 		assert: (a stylePropertyNamed: #fontSize ifAbsent: [ 1 ])
 		equals: 5.
@@ -85,21 +95,21 @@ OPDIOpenPonkStyleTest >> testSharedStyleIsInherited [
 		equals: 5
 ]
 
-{ #category : #accessing }
-OPDIOpenPonkStyleTest >> testSharedStyleOverriden [
+{ #category : #tests }
+OPOpenPonkShapeStyleTest >> testSharedStyleOverriden [
 
 	| a b newStyle |
 	a := OPShape new.
 	(b := OPShape new) owningElement: a.
-	element fontSize: 5.
-	a sharedStyle: element.
+	style fontSize: 5.
+	a sharedStyle: style.
 	self
 		assert: (a stylePropertyNamed: #fontSize ifAbsent: [ 1 ])
 		equals: 5.
 	self
 		assert: (b stylePropertyNamed: #fontSize ifAbsent: [ 1 ])
 		equals: 5.
-	newStyle := self elementClass new.
+	newStyle := self shapeClass new.
 	newStyle fontSize: 10.
 	b localStyle: newStyle.
 	self

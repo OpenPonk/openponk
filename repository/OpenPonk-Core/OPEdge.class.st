@@ -24,7 +24,6 @@ OPEdge class >> renderForController: aController [
 OPEdge class >> renderSimplifiedForController: aController [
 
 	^ self new
-		  modelElement: aController model;
 		  source: aController source diagramElement;
 		  target: aController target diagramElement;
 		  renderBasicShapeIn: aController diagramController canvas;

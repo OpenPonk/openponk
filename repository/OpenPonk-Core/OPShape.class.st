@@ -53,6 +53,14 @@ OPShape class >> renderForController: aController [
 		  yourself
 ]
 
+{ #category : #rendering }
+OPShape class >> renderSimplifiedForController: aController [
+
+	^ self new
+		  renderBasicShapeIn: aController diagramController canvas;
+		  yourself
+]
+
 { #category : #'ston-core' }
 OPShape class >> stonAllInstVarNames [
 
@@ -363,7 +371,7 @@ OPShape >> removeRender [
 { #category : #rendering }
 OPShape >> renderBasicShape [
 
-	"should render a simple shape without any interactivity and complexity (for example for outlining the shape when being created before it is fully added)"
+	"should render a simple shape without using any modelElement info and any advanced shape complexity"
 
 	^ self subclassResponsibility
 ]

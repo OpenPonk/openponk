@@ -1,5 +1,5 @@
 Class {
 	#name : #OPRSDraggedControlPointsEvent,
-	#superclass : #RSPositionChangedEvent,
+	#superclass : #RSShapeEvent,
 	#category : #'OpenPonk-Roassal-Polyline'
 }

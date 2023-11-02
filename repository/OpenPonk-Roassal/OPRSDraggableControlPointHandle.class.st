@@ -21,10 +21,7 @@ OPRSDraggableControlPointHandle >> changedPositionBy: anEvent [
 		propertyAt: OPRSDraggableCPController
 		put: line from encompassingRectangle copy.
 
-	line announce: (OPRSDraggedControlPointsEvent new
-			 oldPosition: anEvent oldPosition;
-			 newPosition: anEvent newPosition;
-			 yourself)
+	line announce: OPRSDraggedControlPointsEvent new
 ]
 
 { #category : #'as yet unclassified' }

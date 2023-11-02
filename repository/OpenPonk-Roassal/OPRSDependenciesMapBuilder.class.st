@@ -1,5 +1,5 @@
 Class {
-	#name : #OPRSMapBuilder,
+	#name : #OPRSDependenciesMapBuilder,
 	#superclass : #RSThemedMapBuilder,
 	#classInstVars : [
 		'openPonkBaselines'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-OPRSMapBuilder class >> open [
+OPRSDependenciesMapBuilder class >> open [
 
 	<script>
 	| canvas |
@@ -23,7 +23,7 @@ OPRSMapBuilder class >> open [
 ]
 
 { #category : #accessing }
-OPRSMapBuilder class >> openPonkBaselines [
+OPRSDependenciesMapBuilder class >> openPonkBaselines [
 
 	^ openPonkBaselines ifNil: [
 		  openPonkBaselines := #( OpenPonk OpenPonkPlugins PetriNets
@@ -40,27 +40,27 @@ OPRSMapBuilder class >> openPonkBaselines [
 ]
 
 { #category : #accessing }
-OPRSMapBuilder class >> resetOpenPonkBaselines [
+OPRSDependenciesMapBuilder class >> resetOpenPonkBaselines [
 
 	<script>
 	openPonkBaselines := nil
 ]
 
 { #category : #'hooks - model' }
-OPRSMapBuilder >> computeModels [
+OPRSDependenciesMapBuilder >> computeModels [
 
 	| verResults |
 	verResults := Smalltalk globals
-		              at: #VerificationResults
+		              at: #BaselineOfOntoUMLVerificationFramework
 		              ifAbsent: [ ^ super computeModels ].
 	[
-	Smalltalk globals removeKey: #VerificationResults.
+	Smalltalk globals removeKey: #BaselineOfOntoUMLVerificationFramework.
 	super computeModels ] ensure: [
-		Smalltalk globals at: #VerificationResults put: verResults ]
+		Smalltalk globals at: #BaselineOfOntoUMLVerificationFramework put: verResults ]
 ]
 
 { #category : #'hooks - model' }
-OPRSMapBuilder >> dependenciesFrom: aBMBaselineModel [
+OPRSDependenciesMapBuilder >> dependenciesFrom: aBMBaselineModel [
 
 	^ aBMBaselineModel baselineClass version projects
 		  collect: #constructClassName
@@ -72,7 +72,7 @@ OPRSMapBuilder >> dependenciesFrom: aBMBaselineModel [
 ]
 
 { #category : #hooks }
-OPRSMapBuilder >> layoutOn: aCanvas [
+OPRSDependenciesMapBuilder >> layoutOn: aCanvas [
 
 	OPRSBaselineDominanceTreeLayout new
 		horizontalGap: 50;
@@ -81,7 +81,7 @@ OPRSMapBuilder >> layoutOn: aCanvas [
 ]
 
 { #category : #'instance creation' }
-OPRSMapBuilder >> newBorderFor: model [
+OPRSDependenciesMapBuilder >> newBorderFor: model [
 
 	| border shortName |
 	border := RSBorder new
@@ -98,14 +98,14 @@ OPRSMapBuilder >> newBorderFor: model [
 ]
 
 { #category : #'instance creation' }
-OPRSMapBuilder >> newBox [
+OPRSDependenciesMapBuilder >> newBox [
 	^ super newBox
 		color: Color white;
 		yourself
 ]
 
 { #category : #'instance creation' }
-OPRSMapBuilder >> newLabelFor: model [
+OPRSDependenciesMapBuilder >> newLabelFor: model [
 
 	| label shortName |
 	shortName := model name allButFirst: 10.
@@ -122,7 +122,7 @@ OPRSMapBuilder >> newLabelFor: model [
 ]
 
 { #category : #hooks }
-OPRSMapBuilder >> renderLinesOn: aCanvas [
+OPRSDependenciesMapBuilder >> renderLinesOn: aCanvas [
 
 	self newLineBuilder
 		canvas: aCanvas;

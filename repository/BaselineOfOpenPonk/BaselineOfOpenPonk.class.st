@@ -20,7 +20,7 @@ BaselineOfOpenPonk >> baseline: spec [
 			with: [ spec requires: #( 'Roassal' 'RoassalExporters' ) ];
 			package: 'OpenPonk-Core' with: [
 				spec requires:
-						#( 'Magritte' 'Mocketry' 'XMLParser' 'XPath' 'NeoJSON' 'OpenPonk-Roassal' ) ];
+						#( 'Magritte' 'Mocketry' 'XPath' 'NeoJSON' 'OpenPonk-Roassal' ) ];
 			package: 'OpenPonk-Morphic';
 			package: 'OpenPonk-Spec' with: [
 				spec requires:
@@ -33,15 +33,10 @@ BaselineOfOpenPonk >> baseline: spec [
 { #category : #baselines }
 BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 
-	spec baseline: 'XMLParser' with: [
-		spec
-			repository: 'github://pharo-contributions/XML-XMLParser:3.5.x';
-			loads: #( Core ) ].
-
-	spec baseline: 'XPath' with: [
-		spec
-			repository: 'github://pharo-contributions/XML-XPath:c063098';
-			loads: #( Core ) ].
+	spec
+		baseline: 'XPath'
+		with: [
+		spec repository: 'github://pharo-contributions/XML-XPath:c063098' ].
 
 	spec baseline: 'Magritte' with: [
 		spec

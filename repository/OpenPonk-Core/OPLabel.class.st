@@ -39,7 +39,7 @@ OPLabel >> defaultText [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #emphasis }
 OPLabel >> emphasis [
 
 	^ self stylesEmphasis
@@ -95,7 +95,7 @@ OPLabel >> resetText [
 	self text: nil
 ]
 
-{ #category : #accessing }
+{ #category : #emphasis }
 OPLabel >> stylesEmphasis [
 
 	| emphasis |

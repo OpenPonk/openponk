@@ -42,17 +42,7 @@ OPLabel >> defaultText [
 { #category : #accessing }
 OPLabel >> emphasis [
 
-	| emphasis |
-	emphasis := TextEmphasis normal.
-	(self stylePropertyNamed: #fontBold ifAbsent: [ false ]) ifTrue: [ 
-		emphasis add: TextEmphasis bold ].
-	(self stylePropertyNamed: #fontItalic ifAbsent: [ false ]) ifTrue: [ 
-		emphasis add: TextEmphasis italic ].
-	(self stylePropertyNamed: #fontStrikeThrough ifAbsent: [ false ]) 
-		ifTrue: [ emphasis add: TextEmphasis struckOut ].
-	(self stylePropertyNamed: #fontUnderline ifAbsent: [ false ]) 
-		ifTrue: [ emphasis add: TextEmphasis underlined ].
-	^ emphasis
+	^ self stylesEmphasis
 ]
 
 { #category : #accessing }
@@ -79,7 +69,7 @@ OPLabel >> fontSize [
 		  ifAbsent: [ self defaultFontSize ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 OPLabel >> isResizableByUser [
 
 	^ false
@@ -106,6 +96,22 @@ OPLabel >> resetText [
 ]
 
 { #category : #accessing }
+OPLabel >> stylesEmphasis [
+
+	| emphasis |
+	emphasis := TextEmphasis normal.
+	(self stylePropertyNamed: #fontBold ifAbsent: [ false ]) ifTrue: [ 
+		emphasis add: TextEmphasis bold ].
+	(self stylePropertyNamed: #fontItalic ifAbsent: [ false ]) ifTrue: [ 
+		emphasis add: TextEmphasis italic ].
+	(self stylePropertyNamed: #fontStrikeThrough ifAbsent: [ false ]) 
+		ifTrue: [ emphasis add: TextEmphasis struckOut ].
+	(self stylePropertyNamed: #fontUnderline ifAbsent: [ false ]) 
+		ifTrue: [ emphasis add: TextEmphasis underlined ].
+	^ emphasis
+]
+
+{ #category : #accessing }
 OPLabel >> text [
 
 	^ text ifNil: [ self defaultText ]
@@ -122,21 +128,23 @@ OPLabel >> updateRenderFromModel [
 
 	super updateRenderFromModel.
 
+	self roassalShape emphasis: self emphasis.
+
 	self roassalShape text: self text.
 
 	roassalShape signalUpdate
 ]
 
-{ #category : #rendering }
+{ #category : #initialization }
 OPLabel >> updateRenderFromStyles [
 
 	self isRendered ifFalse: [ ^ self ].
-
+	
 	self roassalShape
 		fontSize: self fontSize;
 		fontName: self fontName;
 		color: self fontColor;
-		emphasis: self emphasis.
+		emphasis: self stylesEmphasis.
 
 	roassalShape signalUpdate
 ]

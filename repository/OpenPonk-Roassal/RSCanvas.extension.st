@@ -1,6 +1,16 @@
 Extension { #name : #RSCanvas }
 
 { #category : #'*OpenPonk-Roassal' }
+RSCanvas >> deepShapes [
+	"Return the list of all the shapes contained in the visualization"
+	| result |
+	result := OrderedCollection new.
+	self shapes do: [ :n |
+		n addRecursivelyIn: result ].
+	^ result
+]
+
+{ #category : #'*OpenPonk-Roassal' }
 RSCanvas >> elements [
 
 	self

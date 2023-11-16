@@ -82,7 +82,7 @@ OPElementController >> diagramElementClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'diagram elements' }
 OPElementController >> diagramElementOwner [
 
 	^ self diagramController diagramElement

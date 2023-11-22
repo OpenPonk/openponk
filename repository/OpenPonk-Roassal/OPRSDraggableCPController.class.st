@@ -89,15 +89,27 @@ OPRSDraggableCPController >> innerControlPointsFor: aLine [
 
 	"self-loop"
 
-	oldShapeEncompassingRectangle := aLine
-		                                 propertyAt: self class
-		                                 ifAbsent: [
-		                                 ^ self
-			                                   defaultInnerSelfControlPointsFor:
-			                                   aLine ].
+	newShapeEncompassingRectangle := aLine from encompassingRectangle
+		                                 copy.
+	oldShapeEncompassingRectangle := oldInnerCPs
+		                                 ifEmpty: [
+			                                 aLine
+				                                 propertyAt: self class
+				                                 put:
+				                                 newShapeEncompassingRectangle.
+			                                 ^ self
+				                                   defaultInnerSelfControlPointsFor:
+				                                   aLine ]
+		                                 ifNotEmpty: [
+			                                 aLine
+				                                 propertyAt: self class
+				                                 ifAbsent: [
+				                                 newShapeEncompassingRectangle ] ].
 
-	newShapeEncompassingRectangle := aLine from encompassingRectangle.
-	aLine propertyAt: self class put: newShapeEncompassingRectangle copy.
+	aLine propertyAt: self class put: newShapeEncompassingRectangle.
+
+	oldShapeEncompassingRectangle = newShapeEncompassingRectangle
+		ifTrue: [ ^ oldInnerCPs ].
 
 	^ oldInnerCPs collect: [ :each |
 		  each + (Point

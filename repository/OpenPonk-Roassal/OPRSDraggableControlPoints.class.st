@@ -70,13 +70,13 @@ OPRSDraggableControlPoints >> promoteFor: aLine handle: aMidpointHandle [
 	 3. Do full reload."
 	newPoint := aMidpointHandle shape position.
 	aLine from = aMidpointHandle from
-		ifTrue: [ 
-			aLine controlPoints: { 
+		ifTrue: [
+			aLine controlPoints: {
 					aLine controlPoints first.
 					newPoint } , aLine controlPoints allButFirst ]
-		ifFalse: [ 
+		ifFalse: [
 			| indexOfMidpointHandle |
-			indexOfMidpointHandle := handles detectIndex: [ :each | 
+			indexOfMidpointHandle := handles detectIndex: [ :each |
 				                         each shape = aMidpointHandle from ].
 			aLine controlPoints:
 				(aLine controlPoints first: indexOfMidpointHandle + 1)

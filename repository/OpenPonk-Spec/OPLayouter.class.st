@@ -85,7 +85,9 @@ OPLayouter >> diagramController: aDiagramController [
 { #category : #layouts }
 OPLayouter >> dominanceTreeLayout [
 
-	self applyLayout: [ :boxes :links | 
+	self applyLayout: [ :boxes :links |
+		(OPLayoutLoopDetector popupHaveLoopsBoxes: boxes links: links)
+			ifTrue: [ ^ self treeLayout ].
 		RSDominanceTreeLayout new
 			verticallyReverse;
 			verticalGap: 100;

@@ -168,25 +168,28 @@ OPProjectController >> mergeFromFile [
 OPProjectController >> mergeModelsAndDiagramsIntoOne [
 
 	| showError plugins models plugin |
-	showError := [ :text | 
+	showError := [ :text |
 	             ^ (GrowlMorph
 		                label: 'Unable to merge models'
 		                contents: text)
 		               backgroundColor:
 			               GrowlMorph theme dangerBackgroundColor;
+		               labelColor: GrowlMorph theme textColor;
+		               textColor:
+			               GrowlMorph theme textColorForNonStandardBackground;
 		               openInWorld ].
 	models := self project models.
 	models ifEmpty: [ ^ showError value: 'There are no models' ].
-	(self project diagrams size < 2 and: [ models size < 2 ]) ifTrue: [ 
+	(self project diagrams size < 2 and: [ models size < 2 ]) ifTrue: [
 		^ showError value:
 			  'The model is as merged as it can be - there have to be at least 2 models or 2 diagrams' ].
-	plugins := models collect: [ :each | 
+	plugins := models collect: [ :each |
 		           OPPluginRegistry default pluginFor: each ].
-	plugins asSet size = 1 ifFalse: [ 
+	plugins asSet size = 1 ifFalse: [
 		^ showError value:
 			  'All models must be of the same type/metamodel/plugin' ].
 	plugin := plugins anyOne.
-	plugin supportsMergingModels ifFalse: [ 
+	plugin supportsMergingModels ifFalse: [
 		^ showError value: 'Plugin of these models does not support merging' ].
 
 	SpConfirmDialog new
@@ -195,10 +198,10 @@ OPProjectController >> mergeModelsAndDiagramsIntoOne [
 			'This is irreversible and original models and diagrams will be lost.';
 		acceptLabel: 'Yes, merge them';
 		cancelLabel: 'Cancel';
-		onAccept: [ 
+		onAccept: [
 			| model diagram layouter |
 			model := plugin mergeModels: models.
-			self project diagrams do: [ :eachDiagram | 
+			self project diagrams do: [ :eachDiagram |
 					workbench closeEditorOfDiagram: eachDiagram ].
 			models do: [ :eachModel | self removeModel: eachModel ].
 			diagram := OPOpenPonkDiagram forModelElement: model.

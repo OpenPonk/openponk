@@ -36,10 +36,8 @@ OPExportImageDialog >> confirmed [
 	file ifNil: [ ^ self ].
 	zoomNumber := (NumberParser
 		               parse: zoomText text
-		               onError: [ 
-		               TRCamera basicNew defaultCameraScale * 100 ]) / 100.
-	zoomNumber < 0.01 ifTrue: [ 
-		zoomNumber := TRCamera basicNew defaultCameraScale ].
+		               onError: [ RSCamera new scale * 100 ]) / 100.
+	zoomNumber < 0.01 ifTrue: [ zoomNumber := RSCamera new scale ].
 
 	okAction cull: file cull: zoomNumber
 ]

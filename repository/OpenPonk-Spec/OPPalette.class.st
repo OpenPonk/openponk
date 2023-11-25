@@ -222,15 +222,6 @@ OPPalette >> newCreationTool: aFactoryBlock with: aToolConfigBlock [
 	^ item
 ]
 
-{ #category : #protocol }
-OPPalette >> newModelCreationTool: aFactoryBlock [
-	| entry |
-	entry := self addEntry.
-	entry tool: (OPModelCreationTool new palette: self).
-	entry factory: aFactoryBlock.
-	^ entry
-]
-
 { #category : #private }
 OPPalette >> newSelectionTool [
 

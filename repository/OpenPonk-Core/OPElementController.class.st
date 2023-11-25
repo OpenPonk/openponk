@@ -49,9 +49,8 @@ OPElementController >> createDiagramElement [
 
 { #category : #deprecated }
 OPElementController >> createFigure [
-	self deprecated: 'Use renderFigureIn: instead.'.
 
-"	^ OPRTCallbackBuilder block: [ :view | self createFigureInView: view ]"
+	self deprecated: 'Use renderFigureIn: instead.'
 ]
 
 { #category : #deprecated }

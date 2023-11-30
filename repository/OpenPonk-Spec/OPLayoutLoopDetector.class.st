@@ -90,9 +90,9 @@ OPLayoutLoopDetector >> popupHaveLoops [
 	^ self haveLoops
 		  ifTrue: [
 			  (GrowlMorph
-				   label: 'Unable to use dominance tree layout'
+				   label: 'Failed to lay out'
 				   contents:
-					   'Unable to use dominance tree layout as the diagram contains loops. Trying tree layout...')
+					   'OpenPonk failed to lay out shapes. Using simple grid layout...')
 				  backgroundColor: GrowlMorph theme warningBackgroundColor;
 				  labelColor: GrowlMorph theme textColor;
 				  textColor: GrowlMorph theme textColorForNonStandardBackground;

@@ -87,7 +87,7 @@ OPLayouter >> dominanceTreeLayout [
 
 	self applyLayout: [ :boxes :links |
 		(OPLayoutLoopDetector popupHaveLoopsBoxes: boxes links: links)
-			ifTrue: [ ^ self treeLayout ].
+			ifTrue: [ ^ self gridLayout ].
 		RSDominanceTreeLayout new
 			verticallyReverse;
 			verticalGap: 100;
@@ -136,14 +136,16 @@ OPLayouter >> supports: aLayoutCommand [
 { #category : #layouts }
 OPLayouter >> treeLayout [
 
-	self applyLayout: [ :boxes :links | 
+	self applyLayout: [ :boxes :links |
 		| centerY |
+		(OPLayoutLoopDetector popupHaveLoopsBoxes: boxes links: links)
+			ifTrue: [ ^ self gridLayout ].
 		RSTreeLayout new
 			verticalGap: 100;
 			horizontalGap: 100;
 			on: boxes edges: links.
 		centerY := (RSGroup withAll: boxes) encompassingRectangle center y.
-		boxes do: [ :each | 
+		boxes do: [ :each |
 			each translateBy: 0 @ 2 * (centerY - each position y) ] ]
 ]
 

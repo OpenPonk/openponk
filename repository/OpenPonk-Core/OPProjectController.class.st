@@ -226,9 +226,7 @@ OPProjectController >> mergeWith: aProject [
 { #category : #saving }
 OPProjectController >> modelMementoFor: aModel [
 
-	^ OPMemento model: aModel diagrams: (controllers
-			   select: [ :each | each model = aModel ]
-			   thenCollect: [ :each | each diagramElement ])
+	^ OPMemento model: aModel diagrams: (project diagramsOf: aModel)
 ]
 
 { #category : #saving }

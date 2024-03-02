@@ -150,11 +150,11 @@ OPLegacyDiagram >> asJsonTo: stream [
 { #category : #converting }
 OPLegacyDiagram >> asOPDiagram [
 
-	| diagram adapters allModelElements layoutsPerModel diagramController canvas priority controllersByModels |
+	| diagram adapters allModelElements layoutsPerModel diagramController canvas controllersByModels |
+	diagram := OPOpenPonkDiagram forModelElement: self model.
 	[ :job |
 	job title: 'Transforming older version of project'.
 	job progress: 0.
-	diagram := OPOpenPonkDiagram forModelElement: self model.
 	diagram name: self name.
 	diagram isOpen: self isOpen.
 	diagram isSelected: self isSelected.
@@ -166,23 +166,10 @@ OPLegacyDiagram >> asOPDiagram [
 	                     , commonElements collect: [ :each |
 		                     each uuid -> each ]) asDictionary.
 	job progress: 0.2.
-	priority := {
-		            OPUMLPackage.
-		            OPUMLProfile.
-		            OPUMLClass.
-		            OPUMLStereotype.
-		            OPUMLEnumeration.
-		            OPUMLPackageImport.
-		            OPUMLGeneralization.
-		            OPUMLAssociation.
-		            OPUMLExtension.
-		            OPUMLProperty.
-		            OPUMLEnumerationLiteral.
-		            OPUMLOperation }.
 	visibleElements := (visibleElements collect: [ :each |
 		                    each modelObjectFrom: allModelElements ])
-		                   sortedAs: [ :each |
-		                   priority indexOf: each class ifAbsent: 100 ].
+		                   sorted: [ :a :b |
+		                   adapters dependsTypeOf: b on: a in: model ].
 	job progress: 0.3.
 	layoutsPerModel := (layout associations collect: [ :each |
 		                    (allModelElements at: each key) -> each value ])
@@ -195,7 +182,8 @@ OPLegacyDiagram >> asOPDiagram [
 		diagramElement: diagram.
 	canvas := RSCanvas new.
 	job progress: 0.5.
-	controllersByModels := visibleElements collect: [ :each |
+	controllersByModels := (visibleElements copyWithout: model) collect: [
+		                       :each |
 		                       | controller diagramElement |
 		                       controller := diagramController
 			                                     newControllerFor: each.

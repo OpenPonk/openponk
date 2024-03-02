@@ -66,9 +66,9 @@ OPDirectionalRelationshipController >> renderSimplified [
 { #category : #accessing }
 OPDirectionalRelationshipController >> source [
 
-	^ source ifNil: [ 
-		  (diagramController ifNil: [ self target diagramController ]) 
-			  showInDiagramModel: self modelSource ]
+	^ source ifNil: [
+		  (diagramController ifNil: [ self target diagramController ])
+			  ensureControllerFor: self modelSource ]
 ]
 
 { #category : #accessing }
@@ -79,9 +79,9 @@ OPDirectionalRelationshipController >> source: aSourceController [
 { #category : #accessing }
 OPDirectionalRelationshipController >> target [
 
-	^ target ifNil: [ 
-		  (diagramController ifNil: [ self source diagramController ]) 
-			  showInDiagramModel: self modelTarget ]
+	^ target ifNil: [
+		  (diagramController ifNil: [ self source diagramController ])
+			  ensureControllerFor: self modelTarget ]
 ]
 
 { #category : #accessing }

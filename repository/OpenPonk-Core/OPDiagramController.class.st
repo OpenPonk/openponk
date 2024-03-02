@@ -363,6 +363,16 @@ OPDiagramController >> enableRefresh [
 	self flag: #todo
 ]
 
+{ #category : #figures }
+OPDiagramController >> ensureControllerFor: aModel [
+
+	| controller |
+	self controllerForModel: aModel ifFound: [ :ctrl | ^ ctrl ].
+	controller := self newControllerFor: aModel.
+	self addController: controller.
+	^ controller
+]
+
 { #category : #accessing }
 OPDiagramController >> figure [
 	^ self canvas

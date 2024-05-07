@@ -1,15 +1,17 @@
 Trait {
-	#name : #OPTColored,
-	#category : #'OpenPonk-Core-Shapes'
+	#name : 'OPTColored',
+	#category : 'OpenPonk-Core-Shapes',
+	#package : 'OpenPonk-Core',
+	#tag : 'Shapes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTColored >> color [
 
 	^ self shouldBeImplemented
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 OPTColored >> updateColorFromStyles [
 
 	self roassalShape
@@ -25,7 +27,7 @@ OPTColored >> updateColorFromStyles [
 	self roassalShape color: self color
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 OPTColored >> updateRenderFromStyles [
 
 	self isRendered ifFalse: [ ^ self ].

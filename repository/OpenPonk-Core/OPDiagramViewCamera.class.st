@@ -1,10 +1,12 @@
 Class {
-	#name : #OPDiagramViewCamera,
-	#superclass : #OPLegacyDiagramCamera,
-	#category : #'OpenPonk-Core-Diagrams'
+	#name : 'OPDiagramViewCamera',
+	#superclass : 'OPLegacyDiagramCamera',
+	#category : 'OpenPonk-Core-Diagrams',
+	#package : 'OpenPonk-Core',
+	#tag : 'Diagrams'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPDiagramViewCamera class >> isDeprecated [
 	"renamed to OPDiagramCamera"
 

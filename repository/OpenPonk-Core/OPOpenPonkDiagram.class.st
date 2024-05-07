@@ -1,15 +1,17 @@
 Class {
-	#name : #OPOpenPonkDiagram,
-	#superclass : #OPDiagram,
+	#name : 'OPOpenPonkDiagram',
+	#superclass : 'OPDiagram',
 	#instVars : [
 		'isOpen',
 		'isSelected',
 		'camera'
 	],
-	#category : #'OpenPonk-Core-Shapes'
+	#category : 'OpenPonk-Core-Shapes',
+	#package : 'OpenPonk-Core',
+	#tag : 'Shapes'
 }
 
-{ #category : #'ston-core' }
+{ #category : 'ston-core' }
 OPOpenPonkDiagram class >> stonAllInstVarNames [
 
 	"Override to encode my instances using a custom set of instance variables or to define their order."
@@ -17,37 +19,37 @@ OPOpenPonkDiagram class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #isOpen #isSelected #camera )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPOpenPonkDiagram >> camera: aCamera [
 
 	camera := OPDiagramCamera newFrom: aCamera
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPOpenPonkDiagram >> isOpen [
 
 	^ isOpen ifNil: [ true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPOpenPonkDiagram >> isOpen: anObject [
 
 	isOpen := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPOpenPonkDiagram >> isSelected [
 
 	^ isSelected ifNil: [ false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPOpenPonkDiagram >> isSelected: anObject [
 
 	isSelected := anObject
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPOpenPonkDiagram >> newCopy [
 
 	| serializer |
@@ -58,21 +60,21 @@ OPOpenPonkDiagram >> newCopy [
 		  serializer materializeDiagramOf: self modelElement from: s ]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 OPOpenPonkDiagram >> removeRender [
 
 	self ownedElements do: #removeRender.
 	roassalShape := nil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPOpenPonkDiagram >> updateFromRender [
 
 	super updateFromRender.
 	self camera: roassalShape camera
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPOpenPonkDiagram >> updateRenderFromSelf [
 
 	self isRendered ifFalse: [ ^ self ].

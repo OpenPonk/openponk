@@ -2,23 +2,25 @@
 I am Spec model to embed Roassal2 into DCEditor.
 "
 Class {
-	#name : #OPCanvasPresenter,
-	#superclass : #SpRoassalPresenter,
+	#name : 'OPCanvasPresenter',
+	#superclass : 'SpRoassalPresenter',
 	#instVars : [
 		'diagramController',
 		'onZoomChange',
 		'onExtentChange'
 	],
-	#category : #'OpenPonk-Spec-Windows'
+	#category : 'OpenPonk-Spec-Windows',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Windows'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCanvasPresenter >> attachController: aDiagramController [
 
 	(diagramController := aDiagramController) canvasPresenter: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCanvasPresenter >> canvas [
 
 	currentCanvas ifNil: [ 
@@ -26,7 +28,7 @@ OPCanvasPresenter >> canvas [
 	^ currentCanvas
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPCanvasPresenter >> connectPresenters [
 
 	super connectPresenters.
@@ -36,31 +38,31 @@ OPCanvasPresenter >> connectPresenters [
 		CmdKMDispatcher attachedTo: adptr widget withCommandsFrom: self ]
 ]
 
-{ #category : #'private-focus' }
+{ #category : 'private-focus' }
 OPCanvasPresenter >> createCommandContext [
 	"Subclases should override it if they provide any selection"
 
 	^ self createCommandContextForSelection: self selectedElements
 ]
 
-{ #category : #'private-focus' }
+{ #category : 'private-focus' }
 OPCanvasPresenter >> createCommandContextForSelection: selectedItems [
 	"simple context has no information about selected items"
 
 	^ OPDiagramFigureContext for: self of: selectedItems
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCanvasPresenter >> diagramController [
 	^ diagramController
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCanvasPresenter >> editor [
 	^ self owner
 ]
 
-{ #category : #toolbar }
+{ #category : 'toolbar' }
 OPCanvasPresenter >> exportAsPng [
 
 	self flag: 'default name not supported in file browser'.
@@ -71,7 +73,7 @@ OPCanvasPresenter >> exportAsPng [
 		open
 ]
 
-{ #category : #toolbar }
+{ #category : 'toolbar' }
 OPCanvasPresenter >> exportAsSvg [
 
 	self flag: 'default name not supported in file browser'.
@@ -84,13 +86,13 @@ OPCanvasPresenter >> exportAsSvg [
 			open
 ]
 
-{ #category : #toolbar }
+{ #category : 'toolbar' }
 OPCanvasPresenter >> exportCanvasToPng: aFile [
 
 	self exportCanvasToPng: aFile silently: false
 ]
 
-{ #category : #toolbar }
+{ #category : 'toolbar' }
 OPCanvasPresenter >> exportCanvasToPng: aFile silently: aSilentlyBoolean [
 
 	self
@@ -99,13 +101,13 @@ OPCanvasPresenter >> exportCanvasToPng: aFile silently: aSilentlyBoolean [
 		silently: aSilentlyBoolean
 ]
 
-{ #category : #toolbar }
+{ #category : 'toolbar' }
 OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aNumber [
 
 	self exportCanvasToPng: aFileReference zoom: aNumber silently: false
 ]
 
-{ #category : #toolbar }
+{ #category : 'toolbar' }
 OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aZoom silently: aSilentlyBoolean [
 
 	| originalZoom jobBlock |
@@ -135,13 +137,13 @@ OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aZoom silently: aSi
 		actionOnClick: [ aFileReference openInOSFileBrowser ]
 ]
 
-{ #category : #toolbar }
+{ #category : 'toolbar' }
 OPCanvasPresenter >> exportCanvasToSvg: aFileReference [
 
 	self exportCanvasToSvg: aFileReference silently: false
 ]
 
-{ #category : #toolbar }
+{ #category : 'toolbar' }
 OPCanvasPresenter >> exportCanvasToSvg: aFileReference silently: aSilentlyBoolean [
 
 	| jobBlock |
@@ -168,14 +170,14 @@ OPCanvasPresenter >> exportCanvasToSvg: aFileReference silently: aSilentlyBoolea
 		actionOnClick: [ aFileReference openInOSFileBrowser ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPCanvasPresenter >> initialize [
 
 	super initialize.
 	self script: [ :canvas | self initializeCanvas: canvas ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPCanvasPresenter >> initializeCanvas: aCanvas [
 
 	aCanvas
@@ -219,18 +221,18 @@ OPCanvasPresenter >> initializeCanvas: aCanvas [
 		for: self
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OPCanvasPresenter >> lastClickPosition: aPoint [
 
 	self deprecated: 'Last click is now handled by OPRSEventLogger'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCanvasPresenter >> model [
 	^ diagramController model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCanvasPresenter >> roassalView [
 
 	self
@@ -240,38 +242,38 @@ OPCanvasPresenter >> roassalView [
 	^ self canvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCanvasPresenter >> selectedElements [
 
 	^ self diagramController selectedElements
 ]
 
-{ #category : #'selection handling' }
+{ #category : 'selection handling' }
 OPCanvasPresenter >> selectedShapes: shapes onPosition: aPoint [
 	self diagramController selectedShapes: shapes onPosition: aPoint
 ]
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 OPCanvasPresenter >> signalUpdate [
 	self canvas signalUpdate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCanvasPresenter >> whenExtentChangedDo:  aOneArgBlock [
 	onExtentChange := aOneArgBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCanvasPresenter >> whenZoomChanged: aOneArgBlock [
 	onZoomChange := aOneArgBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCanvasPresenter >> workbench [
 	^ self editor workbench
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCanvasPresenter >> zoom [
 	"1: default zoom
 	 2: zoomed in to 200%"
@@ -279,7 +281,7 @@ OPCanvasPresenter >> zoom [
 	^ self canvas camera scale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCanvasPresenter >> zoom: aScale [
 	"1: default zoom
 	 2: zoomed in to 200%"
@@ -290,7 +292,7 @@ OPCanvasPresenter >> zoom: aScale [
 	self canvas signalUpdate
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPCanvasPresenter >> zoomToFit [
 
 	self canvas shapes

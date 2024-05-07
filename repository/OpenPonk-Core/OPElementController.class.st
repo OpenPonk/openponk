@@ -3,19 +3,21 @@ A DCElementController an abstract class which should be a parent for all element
 It has method which handles the creation of the form for specific element. The controller is also responsible for specification of the view of an element. The precise definition of the form and the view is done by descendants.
 "
 Class {
-	#name : #OPElementController,
-	#superclass : #OPController,
-	#category : #'OpenPonk-Core-Controllers'
+	#name : 'OPElementController',
+	#superclass : 'OPController',
+	#category : 'OpenPonk-Core-Controllers',
+	#package : 'OpenPonk-Core',
+	#tag : 'Controllers'
 }
 
-{ #category : #deprecated }
+{ #category : 'deprecated' }
 OPElementController >> attach [
 	self deprecated: 'Use createInModel:andShowInDiagram: instead.'.
 "	self registerModelEvents: model.
 	self attachFigure"
 ]
 
-{ #category : #deprecated }
+{ #category : 'deprecated' }
 OPElementController >> attachFigure [
 	"add figure to the view"
 
@@ -28,7 +30,7 @@ OPElementController >> attachFigure [
 	self refreshFigure"
 ]
 
-{ #category : #deprecated }
+{ #category : 'deprecated' }
 OPElementController >> attachTo: aDiagramController [
 	self deprecated: 'Use createInModel:andShowInDiagram: instead.'.
 	"self diagramController: aDiagramController.
@@ -39,7 +41,7 @@ OPElementController >> attachTo: aDiagramController [
 	self attachFigure"
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPElementController >> createDiagramElement [
 
 	diagramElement := self diagramElementClass
@@ -47,19 +49,19 @@ OPElementController >> createDiagramElement [
 		                  forModelElement: self model
 ]
 
-{ #category : #deprecated }
+{ #category : 'deprecated' }
 OPElementController >> createFigure [
 
 	self deprecated: 'Use renderFigureIn: instead.'
 ]
 
-{ #category : #deprecated }
+{ #category : 'deprecated' }
 OPElementController >> createModel [
 	self deprecated: 'Use createModelIn: instead.'
 "	^ self model ifNil: [ self modelClass new ]"
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPElementController >> createModelIn: aParentModel [
 
 	self model: self modelClass new.
@@ -67,7 +69,7 @@ OPElementController >> createModelIn: aParentModel [
 	^ self model
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPElementController >> createModelIn: aParentModel andShowInDiagram: aDiagramController [
 
 	self removeDiagramElement.
@@ -75,19 +77,19 @@ OPElementController >> createModelIn: aParentModel andShowInDiagram: aDiagramCon
 	self showWithoutDependentInDiagram: aDiagramController
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPElementController >> diagramElementClass [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'diagram elements' }
+{ #category : 'diagram elements' }
 OPElementController >> diagramElementOwner [
 
 	^ self diagramController diagramElement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPElementController >> ensureDiagramElement [
 
 	diagramElement
@@ -96,20 +98,20 @@ OPElementController >> ensureDiagramElement [
 	^ diagramElement
 ]
 
-{ #category : #figures }
+{ #category : 'figures' }
 OPElementController >> figure: aFigure [
 
 	self deprecated:
 		'Figure (Roassal shape) cannot be set directly anymore.'
 ]
 
-{ #category : #deprecated }
+{ #category : 'deprecated' }
 OPElementController >> figureLabel: aLabelName text: aString [
 	self deprecated: 'Method will be removed without replacement.'
 "	(figure labels at: aLabelName) trachelShape text: aString"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPElementController >> hookDiagramElement [
 
 	"do nothing by default"
@@ -117,31 +119,31 @@ OPElementController >> hookDiagramElement [
 	
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPElementController >> isCommon [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPElementController >> isRendered [
 
 	^ self diagramElement isNotNil and: [ self diagramElement isRendered ]
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPElementController >> linkToExistingDiagramElement [
 
 	self diagramElement modelElement: self model
 ]
 
-{ #category : #deprecated }
+{ #category : 'deprecated' }
 OPElementController >> loadModel [
 	self deprecated: 'Method will be removed without replacement.'
 "	self model ifNil: [ self model: self createModel ].
 	^ self model"
 ]
 
-{ #category : #deprecated }
+{ #category : 'deprecated' }
 OPElementController >> registerModelEvents: aModel [
 	self deprecated: 'Use model: and internalSubscribeTo: instead.'.
 "	super registerModelEvents: aModel.
@@ -152,7 +154,7 @@ OPElementController >> registerModelEvents: aModel [
 				ifTrue: [ self refreshFigure ] ]"
 ]
 
-{ #category : #deprecated }
+{ #category : 'deprecated' }
 OPElementController >> remove [
 
 	self
@@ -162,7 +164,7 @@ OPElementController >> remove [
 	^ self removeController
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPElementController >> renderDiagramElement [
 
 	self diagramController willRender: self.
@@ -172,7 +174,7 @@ OPElementController >> renderDiagramElement [
 	^ self roassalShape
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPElementController >> renderFigureIn: aCanvas [
 
 	self
@@ -184,7 +186,7 @@ OPElementController >> renderFigureIn: aCanvas [
 		  renderDiagramElement
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPElementController >> showInDiagram: aDiagramController [
 
 	aDiagramController addController: self.
@@ -194,7 +196,7 @@ OPElementController >> showInDiagram: aDiagramController [
 		aDiagramController showInDiagramModel: each ]
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPElementController >> showWithoutDependentInDiagram: aDiagramController [
 
 	aDiagramController addController: self.
@@ -202,7 +204,7 @@ OPElementController >> showWithoutDependentInDiagram: aDiagramController [
 	self renderDiagramElement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPElementController >> target: aController [
 	"do nothing"
 

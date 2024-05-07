@@ -4,26 +4,28 @@ I am a clickable button entry of the palette.
 You can configure both the underlying button and the palette tool through me.
 "
 Class {
-	#name : #OPPaletteEntry,
-	#superclass : #SpButtonPresenter,
+	#name : 'OPPaletteEntry',
+	#superclass : 'SpButtonPresenter',
 	#instVars : [
 		'tool'
 	],
-	#category : #'OpenPonk-Spec-Palettes'
+	#category : 'OpenPonk-Spec-Palettes',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Palettes'
 }
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPPaletteEntry >> deselect [
 	tool deselect.
 	self state: false
 ]
 
-{ #category : #'tool api' }
+{ #category : 'tool api' }
 OPPaletteEntry >> factory: aFactoryBlock [
 	tool factory: aFactoryBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPPaletteEntry >> initialize [
 	super initialize.
 	self action: [ self palette selectEntry: self ].
@@ -31,12 +33,12 @@ OPPaletteEntry >> initialize [
 		(self iconNamed: #blank)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPaletteEntry >> palette [
 	^ self owner
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPPaletteEntry >> registerShortcut: newShortcut [
 
 	| receiver |
@@ -52,13 +54,13 @@ OPPaletteEntry >> registerShortcut: newShortcut [
 				ifFalse: [ self performAction ] ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPPaletteEntry >> select [
 	tool select.
 	self state: true
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 OPPaletteEntry >> shouldIgnoreEvent: aWindow [
 
 	| writeablePresenters |
@@ -75,22 +77,22 @@ OPPaletteEntry >> shouldIgnoreEvent: aWindow [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPaletteEntry >> tool [
 	^ tool
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPaletteEntry >> tool: aTool [
 	tool := aTool
 ]
 
-{ #category : #'tool api' }
+{ #category : 'tool api' }
 OPPaletteEntry >> whenCreated: aOneArgBlock [
 	tool whenCreated: aOneArgBlock
 ]
 
-{ #category : #'tool api' }
+{ #category : 'tool api' }
 OPPaletteEntry >> whenCreatedSetup [
 
 	self whenCreated: [ :ctrl | 

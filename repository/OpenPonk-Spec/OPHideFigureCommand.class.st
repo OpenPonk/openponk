@@ -1,16 +1,18 @@
 Class {
-	#name : #OPHideFigureCommand,
-	#superclass : #OPToggleFigureCommand,
-	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
+	#name : 'OPHideFigureCommand',
+	#superclass : 'OPToggleFigureCommand',
+	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Diagram-Figure-Commands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPHideFigureCommand class >> canvasShortcutActivation [
 	<classAnnotation>
 	^ CmdShortcutActivation by: $h meta for: OPCanvasPresenter
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPHideFigureCommand >> basicExecute [
 
 	executor hideElements:

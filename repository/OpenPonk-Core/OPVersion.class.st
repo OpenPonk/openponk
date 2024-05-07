@@ -2,8 +2,8 @@
 I hold the current version of OpenPonk.
 "
 Class {
-	#name : #OPVersion,
-	#superclass : #Object,
+	#name : 'OPVersion',
+	#superclass : 'Object',
 	#traits : 'TComparable',
 	#classTraits : 'TComparable classTrait',
 	#instVars : [
@@ -19,22 +19,24 @@ Class {
 		'latest',
 		'runsCache'
 	],
-	#category : #'OpenPonk-Core-Persistence'
+	#category : 'OpenPonk-Core-Persistence',
+	#package : 'OpenPonk-Core',
+	#tag : 'Persistence'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion class >> current [
 	^ current ifNil: [ current := self new ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPVersion class >> current: aVersion [
 	current := aVersion.
 	latest := nil.
 	^ current
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPVersion class >> currentWithRunId: anId projectName: aProjectName [
 	^ self
 		current:
@@ -45,17 +47,17 @@ OPVersion class >> currentWithRunId: anId projectName: aProjectName [
 				yourself)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPVersion class >> currentWithRunId: anId repositoryName: aRepositoryName [
 	^ self currentWithRunId: anId projectName: aRepositoryName
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPVersion class >> fromRunJson: aRun [
 	^ self new fromRunJson: aRun
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPVersion class >> getRunsOf: aRepositoryName workflowName: aWorkflowName [
 
 	^ self runsCache
@@ -72,13 +74,13 @@ OPVersion class >> getRunsOf: aRepositoryName workflowName: aWorkflowName [
 			  (STONJSON fromString: response entity string) at: #workflow_runs ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion class >> latest [
 	current ifNil: [ ^ nil ].
 	^ latest ifNil: [ latest := self current getOfLatest ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPVersion class >> ofLastestNightlyOf: aRepositoryName [
 	^ self
 		fromRunJson:
@@ -87,7 +89,7 @@ OPVersion class >> ofLastestNightlyOf: aRepositoryName [
 				ifNotEmpty: [ :runs | runs first ])
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPVersion class >> ofLastestReleaseOf: aRepositoryName [
 	^ self
 		fromRunJson:
@@ -96,7 +98,7 @@ OPVersion class >> ofLastestReleaseOf: aRepositoryName [
 				ifNotEmpty: [ :runs | runs first ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion class >> reset [
 
 	<script>
@@ -105,23 +107,23 @@ OPVersion class >> reset [
 	runsCache := nil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPVersion class >> runsCache [
 	^ runsCache
 		ifNil: [ runsCache := TTLCache new timeToLive: 30 minutes ]
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OPVersion class >> semanticVersionRegex [
 	^ 'v(\d+)\.(\d+)\.(\d+)'
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OPVersion class >> unknownRepositoryName [
 	^ 'Unknown / custom'
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPVersion >> < aComparable [
 	(self isRelease xor: [ aComparable isRelease ])
 		ifTrue: [ ^ false ].
@@ -130,57 +132,57 @@ OPVersion >> < aComparable [
 	^ self releaseName < aComparable releaseName
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPVersion >> = aComparable [
 	^ self isRelease = aComparable isRelease
 		and: [ self releaseName = aComparable releaseName
 				and: [ self isRelease or: [ self commit = aComparable commit ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> buildDate [
 	buildDate ifNil: [ self downloadInfo ].
 	^ buildDate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> buildDate: aDateAndTime [
 	buildDate := aDateAndTime
 ]
 
-{ #category : #downloading }
+{ #category : 'downloading' }
 OPVersion >> canDownloadInfo [
 	^ githubWorkflowRunId isNotNil and: [ self repositoryName isNotNil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> commit [
 	commit ifNil: [ self downloadInfo ].
 	^ commit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> commit: aString [
 	commit := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> commitDate [
 	^ commitDate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> commitDate: anObject [
 	commitDate := anObject
 ]
 
-{ #category : #downloading }
+{ #category : 'downloading' }
 OPVersion >> downloadInfo [
 	self githubWorkflowRunId ifNil: [ ^ self ].
 	^ self fromRunJson: self getRun
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPVersion >> fromRunJson: aRun [
 	| runCommit repository runReleaseName |
 	runCommit := aRun at: #head_commit.
@@ -197,7 +199,7 @@ OPVersion >> fromRunJson: aRun [
 		buildDate: (aRun at: #created_at) asDateAndTime asLocal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> fullVersionString [
 	(repositoryName isNil or: [ githubWorkflowRunId isNil ])
 		ifTrue: [ ^ 'unknown' ].
@@ -208,24 +210,24 @@ OPVersion >> fullVersionString [
 				ifFalse: [ stream << '-' << self commit ] ]
 ]
 
-{ #category : #downloading }
+{ #category : 'downloading' }
 OPVersion >> getOfLatest [
 	^ self isRelease
 		ifTrue: [ self getOfLatestRelease ]
 		ifFalse: [ self getOfLatestNightlyBuild ]
 ]
 
-{ #category : #downloading }
+{ #category : 'downloading' }
 OPVersion >> getOfLatestNightlyBuild [
 	^ self class ofLastestNightlyOf: self repositoryName
 ]
 
-{ #category : #downloading }
+{ #category : 'downloading' }
 OPVersion >> getOfLatestRelease [
 	^ self class ofLastestReleaseOf: self repositoryName
 ]
 
-{ #category : #downloading }
+{ #category : 'downloading' }
 OPVersion >> getRun [
 	| response client githubToken |
 	client := ZnClient new.
@@ -273,56 +275,56 @@ OPVersion >> getRun [
 		ifFalse: [ ^ STONJSON fromString: response entity string ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> githubWorkflowRunId [
 	^ githubWorkflowRunId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> githubWorkflowRunId: anObject [
 	githubWorkflowRunId := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPVersion >> hash [
 	self isRelease
 		ifFalse: [ ^ self commit hash ].
 	^ self releaseName hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPVersion >> isMostRecent [
 	^ self getOfLatest = self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> isRelease [
 	^ self releaseName isNotNil
 		and: [ self releaseName matchesRegex: self class semanticVersionRegex ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> isRepositoryNameKnown [
 	^ self repositoryName ~= self class unknownRepositoryName
 ]
 
-{ #category : #downloading }
+{ #category : 'downloading' }
 OPVersion >> needsDownloadInfo [
 	^ commit isNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> releaseName [
 	releaseName ifNil: [ self downloadInfo ].
 	^ releaseName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> releaseName: aString [
 	releaseName := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> repositoryName [
 
 	^ repositoryName ifNil: [ 
@@ -349,12 +351,12 @@ OPVersion >> repositoryName [
 					                    ifFalse: [ self class unknownRepositoryName ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> repositoryName: aString [
 	repositoryName := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> repositoryNotationName [
 
 	| notationNames |

@@ -1,22 +1,24 @@
 Class {
-	#name : #OPEditElementTextCommand,
-	#superclass : #OPUICommand,
+	#name : 'OPEditElementTextCommand',
+	#superclass : 'OPUICommand',
 	#instVars : [
 		'get',
 		'set',
 		'name'
 	],
-	#category : #'OpenPonk-Core-UICommands'
+	#category : 'OpenPonk-Core-UICommands',
+	#package : 'OpenPonk-Core',
+	#tag : 'UICommands'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPEditElementTextCommand class >> accessor: anAccessor on: anObject [
 	^ self new
 		accessor: anAccessor;
 		on: anObject
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPEditElementTextCommand class >> executeAccessor: anAccessor on: anObject [
 	^ self new
 		accessor: anAccessor;
@@ -24,21 +26,21 @@ OPEditElementTextCommand class >> executeAccessor: anAccessor on: anObject [
 		execute
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEditElementTextCommand >> accessor: anAccessor [
 	self getSelector: anAccessor.
 	self setSelector: anAccessor , ':'.
 	self name: (anAccessor capitalized splitOnCapitals joinUsing: ' ')
 ]
 
-{ #category : #execute }
+{ #category : 'execute' }
 OPEditElementTextCommand >> announceChange [
 
 	controller model announcer announce:
 		OPElementTextAttributeChanged new
 ]
 
-{ #category : #execute }
+{ #category : 'execute' }
 OPEditElementTextCommand >> execute [
 
 	| result |
@@ -49,50 +51,50 @@ OPEditElementTextCommand >> execute [
 	self announceChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEditElementTextCommand >> get [
 	^ get
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEditElementTextCommand >> get: anObject [
 	get := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEditElementTextCommand >> getSelector: anAccessor [
 
 	self get: [ 
 		(MessageSend receiver: controller model selector: anAccessor) value ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPEditElementTextCommand >> initialize [
 	super initialize.
 	self accessor: #text
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEditElementTextCommand >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEditElementTextCommand >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEditElementTextCommand >> set [
 	^ set
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEditElementTextCommand >> set: anObject [
 	set := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEditElementTextCommand >> setSelector: anAccessor [
 
 	self set: [ :argument | 

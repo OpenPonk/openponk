@@ -1,37 +1,39 @@
 Class {
-	#name : #OPElementControllerTest,
-	#superclass : #OPBaseControllerTest,
-	#category : #'OpenPonk-Core-Controllers - Tests'
+	#name : 'OPElementControllerTest',
+	#superclass : 'OPBaseControllerTest',
+	#category : 'OpenPonk-Core-Controllers - Tests',
+	#package : 'OpenPonk-Core',
+	#tag : 'Controllers - Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPElementControllerTest >> controllerClass [
 	^ OPTestEntityController
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPElementControllerTest >> diagramControllerClass [
 	^ OPTestDiagramController
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPElementControllerTest >> diagramModelClass [
 
 	^ OPTestContainerModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPElementControllerTest >> modelClass [
 	^ OPTestEntityModel
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPElementControllerTest >> testClassSideModelClass [
 
 	self assert: self controllerClass modelClass equals: self modelClass
 ]
 
-{ #category : #'tests - creation' }
+{ #category : 'tests - creation' }
 OPElementControllerTest >> testCreateDiagramElement [
 
 	self diagramControllerClass = self controllerClass ifTrue: [ 
@@ -46,7 +48,7 @@ OPElementControllerTest >> testCreateDiagramElement [
 		equals: self diagramElementClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPElementControllerTest >> testDescriptionName [
 	| diagramElement |
 	model := Mock new.
@@ -61,14 +63,14 @@ OPElementControllerTest >> testDescriptionName [
 	diagramElement should receive modelChanged 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPElementControllerTest >> testIsSupported [
 
 	self class = OPElementControllerTest ifTrue: [ ^ self ].
 	super testIsSupported
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPElementControllerTest >> testModelIsSubscribedTo [
 	controller := OPController new.
 	model := self modelClass new.

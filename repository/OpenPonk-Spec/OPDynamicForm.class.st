@@ -8,29 +8,31 @@ Creating form controls (text boxes, checkboxes, etc) for editing a controller's 
 ==DCController>>buildEditorForm:==
 "
 Class {
-	#name : #OPDynamicForm,
-	#superclass : #SpPresenter,
+	#name : 'OPDynamicForm',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'components',
 		'whenAccepted',
 		'controller'
 	],
-	#category : #'OpenPonk-Spec-Form'
+	#category : 'OpenPonk-Spec-Form',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Form'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPDynamicForm class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 OPDynamicForm class >> initialWidth [
 
 	^ 260
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 OPDynamicForm class >> installLink [
 	| link |
 	self isLinkInstalled
@@ -46,18 +48,18 @@ OPDynamicForm class >> installLink [
 	self visitAst link: link
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 OPDynamicForm class >> isLinkInstalled [
 	^ self visitAst links ifNil: [ false ] ifNotNil: #isNotEmpty
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 OPDynamicForm class >> minWidth [
 
 	^ 180
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 OPDynamicForm class >> settingsOn: aBuilder [
 
 	<systemsettings>
@@ -70,29 +72,29 @@ OPDynamicForm class >> settingsOn: aBuilder [
 		order: 60
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 OPDynamicForm class >> showPriority [
 	^ self isLinkInstalled
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 OPDynamicForm class >> showPriority: aBoolean [
 	aBoolean
 		ifTrue: [ self installLink ]
 		ifFalse: [ self uninstallLink ]
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 OPDynamicForm class >> uninstallLink [
 	self visitAst links ifNotNil: [ :links | links asSet do: #uninstall ]
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 OPDynamicForm class >> visitAst [
 	^ (OPDynamicFormMagritteVisitor >> #visit:) ast
 ]
 
-{ #category : #'public - adding' }
+{ #category : 'public - adding' }
 OPDynamicForm >> addButton: aName [
 	| control |
 	control := self newButton.
@@ -102,7 +104,7 @@ OPDynamicForm >> addButton: aName [
 	^ control
 ]
 
-{ #category : #'public - adding' }
+{ #category : 'public - adding' }
 OPDynamicForm >> addCheckbox: aName [
 	| control |
 	control := self newCheckBox.
@@ -112,14 +114,14 @@ OPDynamicForm >> addCheckbox: aName [
 	^ control
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPDynamicForm >> addControl: aControl [
 
 	components add: aControl.
 	self focusOrder add: aControl
 ]
 
-{ #category : #'public - adding' }
+{ #category : 'public - adding' }
 OPDynamicForm >> addDroplist: aName [
 	| control |
 	self addLabel: aName.
@@ -130,7 +132,7 @@ OPDynamicForm >> addDroplist: aName [
 	^ control
 ]
 
-{ #category : #'public - adding' }
+{ #category : 'public - adding' }
 OPDynamicForm >> addEditableDroplist: aName [
 
 	| control |
@@ -140,7 +142,7 @@ OPDynamicForm >> addEditableDroplist: aName [
 	^ control
 ]
 
-{ #category : #'public - adding' }
+{ #category : 'public - adding' }
 OPDynamicForm >> addEntity: aName [
 	| control |
 	self addLabel: aName.
@@ -149,7 +151,7 @@ OPDynamicForm >> addEntity: aName [
 	^ control
 ]
 
-{ #category : #'public - adding' }
+{ #category : 'public - adding' }
 OPDynamicForm >> addLabel: aLabel [
 
 	| control |
@@ -162,7 +164,7 @@ OPDynamicForm >> addLabel: aLabel [
 	^ control
 ]
 
-{ #category : #'public - adding' }
+{ #category : 'public - adding' }
 OPDynamicForm >> addList: aName [
 	| control |
 	self addLabel: aName.
@@ -173,7 +175,7 @@ OPDynamicForm >> addList: aName [
 	^ control
 ]
 
-{ #category : #'public - adding' }
+{ #category : 'public - adding' }
 OPDynamicForm >> addLongText: aName [
 
 	| control |
@@ -185,7 +187,7 @@ OPDynamicForm >> addLongText: aName [
 	^ control
 ]
 
-{ #category : #'public - adding' }
+{ #category : 'public - adding' }
 OPDynamicForm >> addNumberInput: aName [
 
 	| control |
@@ -197,12 +199,12 @@ OPDynamicForm >> addNumberInput: aName [
 	^ control
 ]
 
-{ #category : #'public - adding' }
+{ #category : 'public - adding' }
 OPDynamicForm >> addSeparator [
 	self addLabel: ''
 ]
 
-{ #category : #'public - adding' }
+{ #category : 'public - adding' }
 OPDynamicForm >> addText: aName [
 
 	| control |
@@ -214,7 +216,7 @@ OPDynamicForm >> addText: aName [
 	^ control
 ]
 
-{ #category : #'public - adding' }
+{ #category : 'public - adding' }
 OPDynamicForm >> addTextInput: aName [
 
 	| control |
@@ -226,7 +228,7 @@ OPDynamicForm >> addTextInput: aName [
 	^ control
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 OPDynamicForm >> editController: aController [
 	components ifNotEmpty: [ self reset ].
 	controller := aController.
@@ -236,7 +238,7 @@ OPDynamicForm >> editController: aController [
 		takeKeyboardFocus
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPDynamicForm >> forcedHeights [
 
 	^ { 
@@ -245,7 +247,7 @@ OPDynamicForm >> forcedHeights [
 		  (SpTextPresenter -> 60) } asDictionary
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 OPDynamicForm >> fromMagritteDescriptions: aContainer [
 	| visitor |
 	visitor := OPDynamicFormMagritteVisitor new.
@@ -254,14 +256,14 @@ OPDynamicForm >> fromMagritteDescriptions: aContainer [
 	visitor visit: aContainer
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPDynamicForm >> initialize [
 	self reset.
 	super initialize.
 	whenAccepted := [  ]
 ]
 
-{ #category : #'private - building widgets' }
+{ #category : 'private - building widgets' }
 OPDynamicForm >> initializeLayout [
 
 	| itemsLayout |
@@ -275,20 +277,20 @@ OPDynamicForm >> initializeLayout [
 	self layout: itemsLayout
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPDynamicForm >> initializePresenters [
 
 	super initializePresenters.
 	self initializeLayout
 ]
 
-{ #category : #'private - building widgets' }
+{ #category : 'private - building widgets' }
 OPDynamicForm >> rebuildWidget [
 
 	self initializeLayout
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPDynamicForm >> reset [
 
 	components := OrderedCollection new

@@ -1,19 +1,21 @@
 Class {
-	#name : #OPShapeStyle,
-	#superclass : #Object,
+	#name : 'OPShapeStyle',
+	#superclass : 'Object',
 	#instVars : [
 		'styledElements',
 		'properties'
 	],
-	#category : #'OpenPonk-Core-Shapes'
+	#category : 'OpenPonk-Core-Shapes',
+	#package : 'OpenPonk-Core',
+	#tag : 'Shapes'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPShapeStyle class >> isAbstract [
 	^ self = OPShapeStyle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShapeStyle >> addedAsLocalToStyledElement: aDiagramElement [
 
 	aDiagramElement localStyle = self ifFalse: [ 
@@ -23,7 +25,7 @@ OPShapeStyle >> addedAsLocalToStyledElement: aDiagramElement [
 	styledElements add: aDiagramElement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShapeStyle >> addedAsSharedToStyledElement: aDiagramElement [
 
 	aDiagramElement sharedStyle = self ifFalse: [ 
@@ -34,32 +36,32 @@ OPShapeStyle >> addedAsSharedToStyledElement: aDiagramElement [
 	styledElements add: aDiagramElement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShapeStyle >> at: aSymbol [
 
 	^ properties at: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShapeStyle >> at: aSymbol ifAbsent: aBlock [
 
 	^ properties at: aSymbol ifAbsent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShapeStyle >> at: aSymbol ifPresent: aBlock [
 
 	^ properties at: aSymbol ifPresent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShapeStyle >> at: aSymbol put: aValue [
 
 	properties at: aSymbol put: aValue.
 	self styledElements do: #styleChanged
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPShapeStyle >> initialize [
 
 	super initialize.
@@ -67,7 +69,7 @@ OPShapeStyle >> initialize [
 	properties := Dictionary new
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 OPShapeStyle >> removeKey: aSymbol [
 
 	| result |
@@ -76,13 +78,13 @@ OPShapeStyle >> removeKey: aSymbol [
 	^ result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShapeStyle >> removedFromStyledElement: aDiagramElement [
 
 	styledElements remove: aDiagramElement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShapeStyle >> styledElements [
 
 	^ styledElements

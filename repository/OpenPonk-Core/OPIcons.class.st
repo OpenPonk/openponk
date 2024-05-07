@@ -1,13 +1,15 @@
 Class {
-	#name : #OPIcons,
-	#superclass : #Object,
+	#name : 'OPIcons',
+	#superclass : 'Object',
 	#classInstVars : [
 		'Icons'
 	],
-	#category : #'OpenPonk-Core-Icons'
+	#category : 'OpenPonk-Core-Icons',
+	#package : 'OpenPonk-Core',
+	#tag : 'Icons'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPIcons class >> at: aName ifAbsent: aBlock [
 
 	Icons ifNil: [ Icons := Dictionary new ].
@@ -18,13 +20,13 @@ OPIcons class >> at: aName ifAbsent: aBlock [
 			  do: [ ^ aBlock value ] ]
 ]
 
-{ #category : #'GT-InspectorExtensions' }
+{ #category : 'GT-InspectorExtensions' }
 OPIcons class >> iconSelectors [
 
 	^ self class selectorsInCategory: 'accessing - icons'
 ]
 
-{ #category : #'GT-InspectorExtensions' }
+{ #category : 'GT-InspectorExtensions' }
 OPIcons class >> inspectionIcons [
 
 	<inspectorPresentationOrder: 40 title: 'Icons'>
@@ -55,7 +57,7 @@ OPIcons class >> inspectionIcons [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPIcons class >> resetIcons [
 	<script>
 	^ Icons := nil

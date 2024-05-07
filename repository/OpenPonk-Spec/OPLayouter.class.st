@@ -2,15 +2,17 @@
 I am base class for layouters to see what commonalities they have and should be eventually extracted up to OpenPonk.
 "
 Class {
-	#name : #OPLayouter,
-	#superclass : #Object,
+	#name : 'OPLayouter',
+	#superclass : 'Object',
 	#instVars : [
 		'diagramController'
 	],
-	#category : #'OpenPonk-Spec-Layouting'
+	#category : 'OpenPonk-Spec-Layouting',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Layouting'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPLayouter class >> supportedLayoutCommands [
 	^ {OPDominanceTreeLayoutCommand.
 	OPGridLayoutCommand.
@@ -18,28 +20,28 @@ OPLayouter class >> supportedLayoutCommands [
 	OPTreeLayoutCommand}
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPLayouter class >> supports: aLayoutCommand [
 	^ self supportedLayoutCommands includes: aLayoutCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLayouter >> allEdges [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLayouter >> allNodes [
 	^ self subclassResponsibility
 ]
 
-{ #category : #userinterface }
+{ #category : 'userinterface' }
 OPLayouter >> applyLayout: aTwoArgBlock [
 
 	self basicApplyLayout: aTwoArgBlock
 ]
 
-{ #category : #userinterface }
+{ #category : 'userinterface' }
 OPLayouter >> basicApplyLayout: aTwoArgBlock [
 
 	| selectedBoxes allNodes nodes allEdges edges isPartialLayout oldEncompassingRectangle newEncompassingRectangle |
@@ -63,7 +65,7 @@ OPLayouter >> basicApplyLayout: aTwoArgBlock [
 		ifFalse: [ self updateCanvas ]
 ]
 
-{ #category : #layouts }
+{ #category : 'layouts' }
 OPLayouter >> circleLayout [
 	self
 		applyLayout: [ :boxes :links | 
@@ -72,17 +74,17 @@ OPLayouter >> circleLayout [
 				on: boxes ]
 ]
 
-{ #category : #layouts }
+{ #category : 'layouts' }
 OPLayouter >> defaultLayout [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLayouter >> diagramController: aDiagramController [
 	diagramController := aDiagramController
 ]
 
-{ #category : #layouts }
+{ #category : 'layouts' }
 OPLayouter >> dominanceTreeLayout [
 
 	self applyLayout: [ :boxes :links |
@@ -95,7 +97,7 @@ OPLayouter >> dominanceTreeLayout [
 			on: boxes edges: links ]
 ]
 
-{ #category : #layouts }
+{ #category : 'layouts' }
 OPLayouter >> gridLayout [
 
 	self applyLayout: [ :boxes :links | 
@@ -104,7 +106,7 @@ OPLayouter >> gridLayout [
 			on: boxes ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLayouter >> roassalShapesFor: aCollection [
 
 	^ ((aCollection collect: [ :model |
@@ -114,7 +116,7 @@ OPLayouter >> roassalShapesFor: aCollection [
 			    ifNone: [ nil ] ]) reject: #isNil) asGroup
 ]
 
-{ #category : #layouts }
+{ #category : 'layouts' }
 OPLayouter >> sugiyamaLayout [
 
 	self applyLayout: [ :boxes :links | 
@@ -128,12 +130,12 @@ OPLayouter >> sugiyamaLayout [
 			each translateBy: 0 @ 2 * (centerY - each position y) ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPLayouter >> supports: aLayoutCommand [
 	^ self class supports: aLayoutCommand
 ]
 
-{ #category : #layouts }
+{ #category : 'layouts' }
 OPLayouter >> treeLayout [
 
 	self applyLayout: [ :boxes :links |
@@ -149,13 +151,13 @@ OPLayouter >> treeLayout [
 			each translateBy: 0 @ 2 * (centerY - each position y) ] ]
 ]
 
-{ #category : #userinterface }
+{ #category : 'userinterface' }
 OPLayouter >> updateCanvas [
 
 	diagramController updateCanvas
 ]
 
-{ #category : #userinterface }
+{ #category : 'userinterface' }
 OPLayouter >> updateView [
 
 	self

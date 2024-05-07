@@ -1,6 +1,6 @@
 Class {
-	#name : #OPUpdater,
-	#superclass : #SpPresenter,
+	#name : 'OPUpdater',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'version',
 		'lastVersion',
@@ -14,10 +14,12 @@ Class {
 		'lastVersionInfo',
 		'lastNightlyVersionInfo'
 	],
-	#category : #'OpenPonk-Spec-Dialogs'
+	#category : 'OpenPonk-Spec-Dialogs',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Dialogs'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPUpdater class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -50,7 +52,7 @@ OPUpdater class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPUpdater >> connectPresenters [
 
 	version needsDownloadInfo ifFalse: [ ^ self currentVersionInfoLoaded ].
@@ -58,7 +60,7 @@ OPUpdater >> connectPresenters [
 		versionInfo onInfoDownloadDo: [ self currentVersionInfoLoaded ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPUpdater >> currentVersionInfoLoaded [
 
 	[
@@ -89,7 +91,7 @@ OPUpdater >> currentVersionInfoLoaded [
 		named: 'Loading OpenPonk nightly build info from GitHub'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPUpdater >> initializePresenters [
 	repositoryNameLabel := self newLabel.
 	repositoryNameLabel label: 'Plugin build / repository: '.
@@ -124,7 +126,7 @@ OPUpdater >> initializePresenters [
 	lastNightlyVersionInfo := self newLabel label: 'Unable to determine.'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPUpdater >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 		title: 'OpenPonk version info';

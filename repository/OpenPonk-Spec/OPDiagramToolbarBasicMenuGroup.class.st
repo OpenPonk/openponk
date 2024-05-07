@@ -1,20 +1,22 @@
 Class {
-	#name : #OPDiagramToolbarBasicMenuGroup,
-	#superclass : #CmdMenuGroup,
-	#category : #'OpenPonk-Spec-Diagram-Toolbar-Commands'
+	#name : 'OPDiagramToolbarBasicMenuGroup',
+	#superclass : 'CmdMenuGroup',
+	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Diagram-Toolbar-Commands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPDiagramToolbarBasicMenuGroup >> isInlined [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramToolbarBasicMenuGroup >> name [
 	^ 'Basic actions'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramToolbarBasicMenuGroup >> order [
 	^ 1
 ]

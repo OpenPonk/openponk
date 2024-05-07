@@ -1,15 +1,17 @@
 Class {
-	#name : #OPDiagram,
-	#superclass : #OPBoundNode,
+	#name : 'OPDiagram',
+	#superclass : 'OPBoundNode',
 	#instVars : [
 		'name',
 		'documentation',
 		'resolution'
 	],
-	#category : #'OpenPonk-Core-Shapes'
+	#category : 'OpenPonk-Core-Shapes',
+	#package : 'OpenPonk-Core',
+	#tag : 'Shapes'
 }
 
-{ #category : #'ston-core' }
+{ #category : 'ston-core' }
 OPDiagram class >> stonAllInstVarNames [
 
 	"Override to encode my instances using a custom set of instance variables or to define their order."
@@ -17,37 +19,37 @@ OPDiagram class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #name #documentation #resolution )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagram >> documentation [
 
 	^ documentation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagram >> documentation: anObject [
 
 	documentation := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPDiagram >> isPositionableByUser [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPDiagram >> isRendered [
 
 	^ roassalShape isNotNil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPDiagram >> isResizableByUser [
 
 	^ false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPDiagram >> modelElementName [
 
 	^ (self modelElement respondsTo: #name)
@@ -55,25 +57,25 @@ OPDiagram >> modelElementName [
 		  ifFalse: [ self modelElementType ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPDiagram >> modelElementType [
 
 	^ self modelElement className
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagram >> name [
 
 	^ name ifNil: [ self modelElement name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagram >> name: anObject [
 
 	name := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPDiagram >> ownedElement: aShape renderedIn: aCanvas [
 
 	self isRendered ifTrue: [ 
@@ -87,7 +89,7 @@ OPDiagram >> ownedElement: aShape renderedIn: aCanvas [
 	self updateRenderFromSelf
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPDiagram >> renderBasicShape [
 
 	"diagram cannot be rendered directly now, only its owned elements"
@@ -95,7 +97,7 @@ OPDiagram >> renderBasicShape [
 	^ nil
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPDiagram >> renderBasicShapeIn: aCanvas [
 
 	self isRendered ifTrue: [ 
@@ -104,26 +106,26 @@ OPDiagram >> renderBasicShapeIn: aCanvas [
 				'Reusing same diagram element for 2 canvases not allowed' ] ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPDiagram >> renderShapeDetails [
 	"diagram cannot be rendered directly now, only its owned elements"
 
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagram >> resolution [
 
 	^ resolution
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagram >> resolution: anObject [
 
 	resolution := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPDiagram >> updateFromRender [
 
 	self bounds: (OPNodeBounds

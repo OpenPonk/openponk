@@ -2,18 +2,20 @@
 An OPElementLayoutTest is a test class for testing the behavior of OPElementLayout
 "
 Class {
-	#name : #OPElementLayoutTest,
-	#superclass : #TestCase,
+	#name : 'OPElementLayoutTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'elementLayout',
 		'relationshipLayout',
 		'elementLayoutJSON',
 		'relationshipLayoutJSON'
 	],
-	#category : #'OpenPonk-Core-Tests'
+	#category : 'OpenPonk-Core-Tests',
+	#package : 'OpenPonk-Core',
+	#tag : 'Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 OPElementLayoutTest >> setUp [
 	elementLayout := OPLegacyElementLayout
 		withPosition: -10 @ 50
@@ -55,7 +57,7 @@ OPElementLayoutTest >> setUp [
 }'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPElementLayoutTest >> testContentFromJSON [
 	| newLayout |
 	newLayout := NeoJSONReader fromString: elementLayoutJSON.
@@ -70,7 +72,7 @@ OPElementLayoutTest >> testContentFromJSON [
 	self assert: ((newLayout at: #extent) at: #y) equals: 200
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPElementLayoutTest >> testFromJSON [
 	| newLayout |
 	newLayout := NeoJSONReader
@@ -80,7 +82,7 @@ OPElementLayoutTest >> testFromJSON [
 	self assert: newLayout extent equals: 100 @ 200
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPElementLayoutTest >> testJSONWithoutExtent [
 	| json newLayout |
 	elementLayout extent: nil.
@@ -90,7 +92,7 @@ OPElementLayoutTest >> testJSONWithoutExtent [
 	self assert: newLayout equals: elementLayout
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPElementLayoutTest >> testRelationshipContentFromJSON [
 	| newLayout path |
 	newLayout := NeoJSONReader fromString: relationshipLayoutJSON.
@@ -116,7 +118,7 @@ OPElementLayoutTest >> testRelationshipContentFromJSON [
 	self assert: (((path at: #points) at: 3) at: #y) equals: 300
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPElementLayoutTest >> testRelationshipFromJSON [
 	| newLayout |
 	newLayout := NeoJSONReader
@@ -131,7 +133,7 @@ OPElementLayoutTest >> testRelationshipFromJSON [
 	self assert: (newLayout path points at: 3) equals: 150 @ 300
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPElementLayoutTest >> testRelationshipRoundtripJSON [
 	| json newLayout |
 	json := OPJsonWriter toString: relationshipLayout.
@@ -139,14 +141,14 @@ OPElementLayoutTest >> testRelationshipRoundtripJSON [
 	self assert: newLayout equals: relationshipLayout
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPElementLayoutTest >> testRelationshipToJSON [
 	| json |
 	json := OPJsonWriter toString: relationshipLayout.
 	self assert: json equals: relationshipLayoutJSON withUnixLineEndings
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPElementLayoutTest >> testRoundtripJSON [
 	| json newLayout |
 	json := OPJsonWriter toString: elementLayout.
@@ -154,7 +156,7 @@ OPElementLayoutTest >> testRoundtripJSON [
 	self assert: newLayout equals: elementLayout
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPElementLayoutTest >> testToJSON [
 	| json |
 	json := OPJsonWriter toString: elementLayout.

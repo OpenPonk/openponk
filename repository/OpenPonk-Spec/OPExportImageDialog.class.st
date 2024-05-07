@@ -1,15 +1,17 @@
 Class {
-	#name : #OPExportImageDialog,
-	#superclass : #StFBSaveFileDialog,
+	#name : 'OPExportImageDialog',
+	#superclass : 'StFBSaveFileDialog',
 	#instVars : [
 		'zoomLabel',
 		'zoomText',
 		'zoomPercentageLabel'
 	],
-	#category : #'OpenPonk-Spec-Dialogs'
+	#category : 'OpenPonk-Spec-Dialogs',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Dialogs'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPExportImageDialog class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -28,7 +30,7 @@ OPExportImageDialog class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPExportImageDialog >> confirmed [
 
 	| zoomNumber file |
@@ -42,14 +44,14 @@ OPExportImageDialog >> confirmed [
 	okAction cull: file cull: zoomNumber
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPExportImageDialog >> connectPresenters [
 
 	super connectPresenters.
 	self initializeZoom
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPExportImageDialog >> initializePresenters [
 
 	super initializePresenters.
@@ -58,7 +60,7 @@ OPExportImageDialog >> initializePresenters [
 	(zoomPercentageLabel := self newLabel) label: ' %'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPExportImageDialog >> initializeZoom [
 
 	zoomText
@@ -69,19 +71,19 @@ OPExportImageDialog >> initializeZoom [
 			zoomText text: (digits first: (4 min: digits size)) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPExportImageDialog >> zoomLabel [
 
 	^ zoomLabel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPExportImageDialog >> zoomPercentageLabel [
 
 	^ zoomPercentageLabel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPExportImageDialog >> zoomText [
 
 	^ zoomText

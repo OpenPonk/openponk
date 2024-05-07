@@ -1,37 +1,39 @@
 Class {
-	#name : #OPCherryPickShowHidePresenter,
-	#superclass : #OPShowHideTabContentPresenter,
-	#category : #'OpenPonk-Spec-Dialogs'
+	#name : 'OPCherryPickShowHidePresenter',
+	#superclass : 'OPShowHideTabContentPresenter',
+	#category : 'OpenPonk-Spec-Dialogs',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Dialogs'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCherryPickShowHidePresenter >> childrenFor: aModelObject [
 	^ adapters
 		sort: (adapters dependentFor: aModelObject in: diagramController model)
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OPCherryPickShowHidePresenter >> findSelectedItems [
 	^ diagramController allVisibleShowableElements
 		ifNotEmpty: [ :newElements | newElements copyWith: diagramController model ]
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OPCherryPickShowHidePresenter >> iconFor: aModelObject [
 	^ adapters iconFor: aModelObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPCherryPickShowHidePresenter >> initialRoots [
 	^ {diagramController model}
 ]
 
-{ #category : #general }
+{ #category : 'general' }
 OPCherryPickShowHidePresenter >> nameFor: anObject [
 	^ adapters displayFor: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCherryPickShowHidePresenter >> selected: added [
 	| executor |
 	executor := OPDiagramExplorer on: diagramController.
@@ -39,7 +41,7 @@ OPCherryPickShowHidePresenter >> selected: added [
 	^ {added}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCherryPickShowHidePresenter >> unselected: removed [
 	| executor |
 	executor := OPDiagramExplorer on: diagramController.

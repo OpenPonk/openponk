@@ -5,8 +5,8 @@ DCPalette>>newConnectionCreationTool:
 
 "
 Class {
-	#name : #OPConnectionCreationTool,
-	#superclass : #OPPaletteTool,
+	#name : 'OPConnectionCreationTool',
+	#superclass : 'OPPaletteTool',
 	#instVars : [
 		'connectionController',
 		'factory',
@@ -16,10 +16,12 @@ Class {
 		'selectionAction',
 		'edgeCreationTargetController'
 	],
-	#category : #'OpenPonk-Spec-Palettes'
+	#category : 'OpenPonk-Spec-Palettes',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Palettes'
 }
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPConnectionCreationTool >> deselect [
 	feedback value: nil.
 	edgeCreationTargetController
@@ -28,18 +30,18 @@ OPConnectionCreationTool >> deselect [
 			edgeCreationTargetController := nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPConnectionCreationTool >> factory: aBlock [
 	factory := aBlock
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPConnectionCreationTool >> hoveredController: aController [
 
 	^ hoverAction value: aController
 ]
 
-{ #category : #callbacks }
+{ #category : 'callbacks' }
 OPConnectionCreationTool >> hoveredSourceController: aController [
 
 	feedback value: ((aController canBeSourceFor: connectionController)
@@ -47,7 +49,7 @@ OPConnectionCreationTool >> hoveredSourceController: aController [
 			 ifFalse: [ aController showDenyFeedbackFor: connectionController ])
 ]
 
-{ #category : #callbacks }
+{ #category : 'callbacks' }
 OPConnectionCreationTool >> hoveredTargetController: aController [
 
 	feedback value: ((aController canBeTargetFor: connectionController)
@@ -55,7 +57,7 @@ OPConnectionCreationTool >> hoveredTargetController: aController [
 			 ifFalse: [ aController showDenyFeedbackFor: connectionController ])
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPConnectionCreationTool >> initialize [
 
 	super initialize.
@@ -63,7 +65,7 @@ OPConnectionCreationTool >> initialize [
 	onComplete := [ :ctrl |  ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPConnectionCreationTool >> select [
 
 	feedback := nil asValueHolder.
@@ -75,7 +77,7 @@ OPConnectionCreationTool >> select [
 	self selectSource
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPConnectionCreationTool >> selectSource [
 
 	hoverAction := [ :controller | self hoveredSourceController: controller ].
@@ -83,7 +85,7 @@ OPConnectionCreationTool >> selectSource [
 	                   self selectedSourceControllers: controllers ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPConnectionCreationTool >> selectTarget [
 
 	hoverAction := [ :controller | self hoveredTargetController: controller ].
@@ -91,13 +93,13 @@ OPConnectionCreationTool >> selectTarget [
 	                   self selectedTargetControllers: controllers ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPConnectionCreationTool >> selectedControllers: aCollectionOfControllers [
 
 	^ selectionAction value: aCollectionOfControllers
 ]
 
-{ #category : #callbacks }
+{ #category : 'callbacks' }
 OPConnectionCreationTool >> selectedSourceControllers: aCollectionOfControllers [
 
 	| targetController |
@@ -112,7 +114,7 @@ OPConnectionCreationTool >> selectedSourceControllers: aCollectionOfControllers 
 	self selectTarget
 ]
 
-{ #category : #callbacks }
+{ #category : 'callbacks' }
 OPConnectionCreationTool >> selectedTargetControllers: aCollectionOfControllers [
 
 	| targetController |
@@ -129,7 +131,7 @@ OPConnectionCreationTool >> selectedTargetControllers: aCollectionOfControllers 
 	self deselect
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPConnectionCreationTool >> whenCreated: aOneArgBlock [
 	onComplete := aOneArgBlock
 ]

@@ -1,6 +1,6 @@
 Class {
-	#name : #OPNote,
-	#superclass : #OPDiagramOnlyShape,
+	#name : 'OPNote',
+	#superclass : 'OPDiagramOnlyShape',
 	#traits : 'OPTResizableFigureWithText',
 	#classTraits : 'OPTResizableFigureWithText classTrait',
 	#instVars : [
@@ -19,10 +19,12 @@ Class {
 		'invisibleBoxes',
 		'baseShape'
 	],
-	#category : #'OpenPonk-Core-CommonElements'
+	#category : 'OpenPonk-Core-CommonElements',
+	#package : 'OpenPonk-Core',
+	#tag : 'CommonElements'
 }
 
-{ #category : #'ston-core' }
+{ #category : 'ston-core' }
 OPNote class >> stonAllInstVarNames [
 
 	"Override to encode my instances using a custom set of instance variables or to define their order."
@@ -30,7 +32,7 @@ OPNote class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #text )
 ]
 
-{ #category : #'creating - subelements' }
+{ #category : 'creating - subelements' }
 OPNote >> createOwnedBorderLines [
 
 	| lineShape innerLineShape |
@@ -65,7 +67,7 @@ OPNote >> createOwnedBorderLines [
 		for: self
 ]
 
-{ #category : #'creating - subelements' }
+{ #category : 'creating - subelements' }
 OPNote >> createOwnedCornerTriangle [
 
 	triangle := RSSVGPath new
@@ -81,7 +83,7 @@ OPNote >> createOwnedCornerTriangle [
 		for: self
 ]
 
-{ #category : #'creating - subelements' }
+{ #category : 'creating - subelements' }
 OPNote >> createOwnedFillBoxes [
 
 	| fillBoxShape |
@@ -103,7 +105,7 @@ OPNote >> createOwnedFillBoxes [
 		for: self
 ]
 
-{ #category : #'creating - subelements' }
+{ #category : 'creating - subelements' }
 OPNote >> createOwnedInvisibleBoxes [
 
 	| invisibleBoxShape |
@@ -135,13 +137,13 @@ OPNote >> createOwnedInvisibleBoxes [
 		for: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPNote >> initialize [
 	super initialize.
 	text := ''
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 OPNote >> printOn: aStream [
 
 	super printOn: aStream.
@@ -159,7 +161,7 @@ OPNote >> printOn: aStream [
 	aStream nextPutAll: ')'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPNote >> renderBasicShape [
 
 	^ RSBox new
@@ -169,7 +171,7 @@ OPNote >> renderBasicShape [
 		  yourself
 ]
 
-{ #category : #'creating - subelements' }
+{ #category : 'creating - subelements' }
 OPNote >> renderShapeDetails [
 
 	super renderShapeDetails.
@@ -189,36 +191,36 @@ OPNote >> renderShapeDetails [
 	self renderLabel
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 OPNote >> selectableInteraction [
 
 	^ OPRSSelectable
 ]
 
-{ #category : #'creating - subelements' }
+{ #category : 'creating - subelements' }
 OPNote >> shouldBePositionableByUser [
 
 	^ true
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 OPNote >> shouldBeResizableByUser [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNote >> text [
 	^ text
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNote >> text: aString [
 
 	text := aString
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPNote >> updateOwnedElements [
 
 	bottomRightBox translateTo:

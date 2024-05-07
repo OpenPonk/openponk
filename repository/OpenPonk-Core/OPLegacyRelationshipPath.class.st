@@ -1,16 +1,18 @@
 Class {
-	#name : #OPLegacyRelationshipPath,
-	#superclass : #Object,
+	#name : 'OPLegacyRelationshipPath',
+	#superclass : 'Object',
 	#traits : 'TComparable',
 	#classTraits : 'TComparable classTrait',
 	#instVars : [
 		'source',
 		'points'
 	],
-	#category : #'OpenPonk-Core-Diagrams'
+	#category : 'OpenPonk-Core-Diagrams',
+	#package : 'OpenPonk-Core',
+	#tag : 'Diagrams'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPLegacyRelationshipPath class >> fromSource: anId throughPoints: anArrayOfPoints [
 	^ self new
 		points: anArrayOfPoints;
@@ -18,14 +20,14 @@ OPLegacyRelationshipPath class >> fromSource: anId throughPoints: anArrayOfPoint
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPLegacyRelationshipPath class >> isDeprecated [
 	"no longer tested and used"
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyRelationshipPath class >> neoJsonMapping: mapper [
 	mapper
 		for: self
@@ -45,7 +47,7 @@ OPLegacyRelationshipPath class >> neoJsonMapping: mapper [
 		mapAllInstVarsFor: Point
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPLegacyRelationshipPath >> < aComparable [
 
 	"Answer whether the receiver is less than the argument."
@@ -55,7 +57,7 @@ OPLegacyRelationshipPath >> < aComparable [
 			  self points < aComparable points ] ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPLegacyRelationshipPath >> = aComparable [
 
 	"Compare the receiver with the argument and answer with true if the 
@@ -65,7 +67,7 @@ OPLegacyRelationshipPath >> = aComparable [
 		  self points = aComparable points ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPLegacyRelationshipPath >> hash [
 
 	"Hash must be redefined whenever = is redefined."
@@ -75,22 +77,22 @@ OPLegacyRelationshipPath >> hash [
 	^ self source hash bitXor: self points second hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyRelationshipPath >> points [
 	^ points
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyRelationshipPath >> points: anArrayOfPoints [
 	points := anArrayOfPoints
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyRelationshipPath >> source [
 	^ source
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyRelationshipPath >> source: anId [
 	source := anId
 ]

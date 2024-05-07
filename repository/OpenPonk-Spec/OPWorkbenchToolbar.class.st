@@ -2,16 +2,18 @@
 I am top menu toolbar for Workbench.
 "
 Class {
-	#name : #OPWorkbenchToolbar,
-	#superclass : #SpPresenter,
+	#name : 'OPWorkbenchToolbar',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'toolbar',
 		'activeEditor'
 	],
-	#category : #'OpenPonk-Spec-Windows'
+	#category : 'OpenPonk-Spec-Windows',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Windows'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPWorkbenchToolbar class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -19,7 +21,7 @@ OPWorkbenchToolbar class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #'menus for editor' }
+{ #category : 'menus for editor' }
 OPWorkbenchToolbar >> activeEditor: anEditor [
 
 	activeEditor := anEditor.
@@ -29,7 +31,7 @@ OPWorkbenchToolbar >> activeEditor: anEditor [
 	self update
 ]
 
-{ #category : #'menus for editor' }
+{ #category : 'menus for editor' }
 OPWorkbenchToolbar >> addEditorMenu [
 	self removeEditorMenu.
 	toolbar menuGroups first
@@ -40,7 +42,7 @@ OPWorkbenchToolbar >> addEditorMenu [
 				subMenu: self addEditorMenuItems ]
 ]
 
-{ #category : #'menus for editor' }
+{ #category : 'menus for editor' }
 OPWorkbenchToolbar >> addEditorMenuItems [
 
 	| menu |
@@ -64,7 +66,7 @@ OPWorkbenchToolbar >> addEditorMenuItems [
 	^ menu
 ]
 
-{ #category : #'menus for editor' }
+{ #category : 'menus for editor' }
 OPWorkbenchToolbar >> addEditorMenuItems: menuRegistrations to: spMenu [
 
 	| itemEndingGroupIndex |
@@ -94,7 +96,7 @@ OPWorkbenchToolbar >> addEditorMenuItems: menuRegistrations to: spMenu [
 		  to: spMenu
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPWorkbenchToolbar >> connectPresenters [
 
 	toolbar
@@ -113,12 +115,12 @@ OPWorkbenchToolbar >> connectPresenters [
 						subMenu: self projectMenu ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPWorkbenchToolbar >> initializePresenters [
 	toolbar := self newMenuBar
 ]
 
-{ #category : #'menus for project' }
+{ #category : 'menus for project' }
 OPWorkbenchToolbar >> opMenu [
 
 	| menu browser path |
@@ -153,12 +155,12 @@ OPWorkbenchToolbar >> opMenu [
 	^ menu
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPWorkbenchToolbar >> projectController [
 	^ self workbench projectController
 ]
 
-{ #category : #'menus for project' }
+{ #category : 'menus for project' }
 OPWorkbenchToolbar >> projectMenu [
 	| menu cmdMenu |
 	menu := self newMenu.
@@ -167,24 +169,24 @@ OPWorkbenchToolbar >> projectMenu [
 	^ menu
 ]
 
-{ #category : #'menus for editor' }
+{ #category : 'menus for editor' }
 OPWorkbenchToolbar >> removeEditorMenu [
 	toolbar menuGroups first menuItems size > 2
 		ifTrue: [ toolbar menuGroups first menuItems removeLast ]
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPWorkbenchToolbar >> toolbar [
 	^ toolbar
 ]
 
-{ #category : #'menus for project' }
+{ #category : 'menus for project' }
 OPWorkbenchToolbar >> updateProjectMenu [
 	toolbar menuGroups first menuItems second subMenu: self projectMenu.
 	self update
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPWorkbenchToolbar >> workbench [
 	^ self owner
 ]

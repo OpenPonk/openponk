@@ -1,46 +1,48 @@
 Class {
-	#name : #OPDiagramFigureContext,
-	#superclass : #CmdToolContext,
+	#name : 'OPDiagramFigureContext',
+	#superclass : 'CmdToolContext',
 	#instVars : [
 		'figure',
 		'model',
 		'figures',
 		'controllers'
 	],
-	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
+	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Diagram-Figure-Commands'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPDiagramFigureContext class >> for: aPresenter of: figures [
 	^ (self for: aPresenter) figures: figures
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramFigureContext >> canvas [
 	^ self tool canvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramFigureContext >> controllers [
 	^ controllers
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramFigureContext >> diagramController [
 	^ self tool diagramController
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramFigureContext >> diagramElements [
 	^ self controllers collect: #diagramElement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramFigureContext >> figures [
 	^ figures
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramFigureContext >> figures: aCollection [
 
 	figures := aCollection.
@@ -48,36 +50,36 @@ OPDiagramFigureContext >> figures: aCollection [
 		               self diagramController controllerForRoassalShape: each ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramFigureContext >> models [
 	^ self controllers collect: #model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramFigureContext >> plugin [
 	^ self diagramController plugin
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPDiagramFigureContext >> representsControllers: aCollection [
 	figures ifEmpty: [ ^ false ].
 	^ self controllers
 		allSatisfy: [ :each | aCollection anySatisfy: [ :cls | each isKindOf: cls ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPDiagramFigureContext >> representsModel: aModelClass [
 	figures ifEmpty: [ ^ false ].
 	^ self models allSatisfy: [ :each | each isKindOf: aModelClass ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPDiagramFigureContext >> representsModels: aCollection [
 	figures ifEmpty: [ ^ false ].
 	^ self models allSatisfy: [ :each | aCollection anySatisfy: [ :cls | each isKindOf: cls ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPDiagramFigureContext >> representsSimpleAnnotationUser: aToolClass [
 	^ tool isKindOf: aToolClass
 ]

@@ -1,17 +1,19 @@
 Class {
-	#name : #OPDiagramRemoveFigureCommand,
-	#superclass : #OPDiagramFigureCommand,
-	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
+	#name : 'OPDiagramRemoveFigureCommand',
+	#superclass : 'OPDiagramFigureCommand',
+	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Diagram-Figure-Commands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPDiagramRemoveFigureCommand class >> canBeExecutedInContext: aToolContext [
 
 	^ (super canBeExecutedInContext: aToolContext) and: [ 
 		  aToolContext figures anySatisfy: [ :any | any canvas ~= any ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPDiagramRemoveFigureCommand class >> canvasShortcutActivation [
 
 	<classAnnotation>
@@ -25,7 +27,7 @@ OPDiagramRemoveFigureCommand class >> canvasShortcutActivation [
 		  for: OPCanvasPresenter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramRemoveFigureCommand class >> lastEvent [
 
 	self flag:
@@ -34,7 +36,7 @@ OPDiagramRemoveFigureCommand class >> lastEvent [
 	^ lastEvent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramRemoveFigureCommand class >> lastEvent: anEvent [
 
 	self flag:
@@ -43,12 +45,12 @@ OPDiagramRemoveFigureCommand class >> lastEvent: anEvent [
 	lastEvent := anEvent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramRemoveFigureCommand >> defaultMenuIcon [
 	^ self iconNamed: #glamorousTrash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramRemoveFigureCommand >> defaultMenuItemName [
 
 	^ (models isNil or: [ models size = 1 ])
@@ -56,7 +58,7 @@ OPDiagramRemoveFigureCommand >> defaultMenuItemName [
 		  ifFalse: [ 'Remove all ' , models size asString , ' from model' ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 OPDiagramRemoveFigureCommand >> doAndReturnFocus: aBlock [
 
 	| result window wasActive |
@@ -67,7 +69,7 @@ OPDiagramRemoveFigureCommand >> doAndReturnFocus: aBlock [
 	^ result
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPDiagramRemoveFigureCommand >> execute [
 
 	| lastEvent |
@@ -78,7 +80,7 @@ OPDiagramRemoveFigureCommand >> execute [
 		ifFalse: [ self safeExecute ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPDiagramRemoveFigureCommand >> safeExecute [
 
 	| result |
@@ -94,7 +96,7 @@ OPDiagramRemoveFigureCommand >> safeExecute [
 	self unsafeExecute
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPDiagramRemoveFigureCommand >> unsafeExecute [
 
 	diagramController deselectAll.

@@ -1,16 +1,18 @@
 Class {
-	#name : #OPMorphicEditableDropListAdapter,
-	#superclass : #SpMorphicDropListAdapter,
-	#category : #'OpenPonk-Spec-Form'
+	#name : 'OPMorphicEditableDropListAdapter',
+	#superclass : 'SpMorphicDropListAdapter',
+	#category : 'OpenPonk-Spec-Form',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Form'
 }
 
-{ #category : #factory }
+{ #category : 'factory' }
 OPMorphicEditableDropListAdapter >> addToList: anItem [
 
 	self model addAndSelectItemLabeled: anItem copy do: [  ]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OPMorphicEditableDropListAdapter >> buildWidget [
 
 	self model model whenChangedDo: [ 

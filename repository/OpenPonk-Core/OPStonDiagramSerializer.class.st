@@ -1,33 +1,35 @@
 Class {
-	#name : #OPStonDiagramSerializer,
-	#superclass : #OPDiagramSerializer,
-	#category : #'OpenPonk-Core-Persistence'
+	#name : 'OPStonDiagramSerializer',
+	#superclass : 'OPDiagramSerializer',
+	#category : 'OpenPonk-Core-Persistence',
+	#package : 'OpenPonk-Core',
+	#tag : 'Persistence'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPStonDiagramSerializer class >> exportVersion [
 
 	^ 1
 ]
 
-{ #category : #formatting }
+{ #category : 'formatting' }
 OPStonDiagramSerializer class >> formatName [
 
 	^ #ston
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPStonDiagramSerializer class >> minImportVersion [
 
 	^ 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPStonDiagramSerializer >> formatName [
 	^ 'ston'
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 OPStonDiagramSerializer >> materializeDiagramOf: aModel from: aStream [
 
 	| diagram adapters allModelElements |
@@ -40,7 +42,7 @@ OPStonDiagramSerializer >> materializeDiagramOf: aModel from: aStream [
 	^ diagram
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 OPStonDiagramSerializer >> serializeDiagram: aDiagram to: aStream [
 
 	^ STON put: aDiagram onStreamPretty: aStream

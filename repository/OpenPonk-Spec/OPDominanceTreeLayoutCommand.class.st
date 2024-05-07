@@ -1,15 +1,17 @@
 Class {
-	#name : #OPDominanceTreeLayoutCommand,
-	#superclass : #OPLayoutDiagramCommand,
-	#category : #'OpenPonk-Spec-Layouting'
+	#name : 'OPDominanceTreeLayoutCommand',
+	#superclass : 'OPLayoutDiagramCommand',
+	#category : 'OpenPonk-Spec-Layouting',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Layouting'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDominanceTreeLayoutCommand >> defaultMenuItemName [
 	^ 'Dominance Tree'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDominanceTreeLayoutCommand >> execute [
 	layouter dominanceTreeLayout
 ]

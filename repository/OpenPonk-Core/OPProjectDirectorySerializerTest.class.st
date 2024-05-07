@@ -1,25 +1,27 @@
 Class {
-	#name : #OPProjectDirectorySerializerTest,
-	#superclass : #TestCase,
+	#name : 'OPProjectDirectorySerializerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'persistence'
 	],
-	#category : #'OpenPonk-Core-Tests'
+	#category : 'OpenPonk-Core-Tests',
+	#package : 'OpenPonk-Core',
+	#tag : 'Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 OPProjectDirectorySerializerTest >> setUp [
 	super setUp.
 	persistence := OPProjectDirectorySerializer new.
 	OPPluginRegistry setDefault: (OPPluginRegistry new add: OPTestPlugin new)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OPProjectDirectorySerializerTest >> tearDown [
 	OPPluginRegistry resetDefault
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPProjectDirectorySerializerTest >> testCreateFolderStructure [
 
 	| root |
@@ -32,7 +34,7 @@ OPProjectDirectorySerializerTest >> testCreateFolderStructure [
 	self assert: (root / 'models') isDirectory
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPProjectDirectorySerializerTest >> testDeleteOldModels [
 
 	| models folder modelsFolder |
@@ -56,7 +58,7 @@ OPProjectDirectorySerializerTest >> testDeleteOldModels [
 		equals: models first uuid asString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPProjectDirectorySerializerTest >> testModelReferences [
 	| result models |
 	models := OPPluginRegistry default plugins collect: [ :each | each modelClass new ].
@@ -65,7 +67,7 @@ OPProjectDirectorySerializerTest >> testModelReferences [
 	self assert: (result collect: [ :each | each at: #plugin ]) asSet equals: (OPPluginRegistry default plugins collect: #className) asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPProjectDirectorySerializerTest >> testNoModelReferences [
 	| result |
 	result := String
@@ -73,7 +75,7 @@ OPProjectDirectorySerializerTest >> testNoModelReferences [
 	self assert: (STON fromString: result) equals: #()
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPProjectDirectorySerializerTest >> testProjectFile [
 
 	| result resultString |

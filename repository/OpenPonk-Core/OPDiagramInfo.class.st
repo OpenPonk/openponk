@@ -2,8 +2,8 @@
 I represent a basic info about the view that is detached from its actual content. I exist mainly to separate per-application info about what is opened/how the views are ordered.
 "
 Class {
-	#name : #OPDiagramInfo,
-	#superclass : #Object,
+	#name : 'OPDiagramInfo',
+	#superclass : 'Object',
 	#instVars : [
 		'modelName',
 		'modelType',
@@ -12,17 +12,19 @@ Class {
 		'order',
 		'diagramName'
 	],
-	#category : #'OpenPonk-Core-Diagrams'
+	#category : 'OpenPonk-Core-Diagrams',
+	#package : 'OpenPonk-Core',
+	#tag : 'Diagrams'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPDiagramInfo class >> isDeprecated [
 	"no longer tested and used"
 
 	^ true
 ]
 
-{ #category : #serializing }
+{ #category : 'serializing' }
 OPDiagramInfo >> asJson [
 	^ String
 		<< [ :stream | 
@@ -31,44 +33,44 @@ OPDiagramInfo >> asJson [
 				nextPut: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramInfo >> diagramName [
 	^ diagramName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramInfo >> diagramName: anObject [
 	diagramName := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPDiagramInfo >> isForDiagram: aDiagram [
 	^ aDiagram modelType = self modelType
 		& (aDiagram modelName = self modelName)
 		& (aDiagram name = self diagramName)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramInfo >> isOpen [
 	^ isOpen
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramInfo >> isOpen: anObject [
 	isOpen := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramInfo >> isSelected [
 	^ isSelected
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramInfo >> isSelected: anObject [
 	isSelected := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramInfo >> model [
 	self deprecated: 'We no longer have means to find the project'.
 	
@@ -82,37 +84,37 @@ OPDiagramInfo >> model [
 					[ each name = self modelName and: [ each version = self modelVersion ] ] ]"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramInfo >> modelName [
 	^ modelName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramInfo >> modelName: anObject [
 	modelName := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramInfo >> modelType [
 	^ modelType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramInfo >> modelType: anObject [
 	modelType := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramInfo >> order [
 	^ order
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramInfo >> order: anObject [
 	order := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 OPDiagramInfo >> printOn: aStream [
 
 	super printOn: aStream.

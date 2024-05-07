@@ -1,10 +1,12 @@
 Class {
-	#name : #OPRelationshipController,
-	#superclass : #OPDirectionalRelationshipController,
-	#category : #'OpenPonk-Core-Controllers'
+	#name : 'OPRelationshipController',
+	#superclass : 'OPDirectionalRelationshipController',
+	#category : 'OpenPonk-Core-Controllers',
+	#package : 'OpenPonk-Core',
+	#tag : 'Controllers'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPRelationshipController class >> isDeprecated [
 	"Use my superclass instead"
 

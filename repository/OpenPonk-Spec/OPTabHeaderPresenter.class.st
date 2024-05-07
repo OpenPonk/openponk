@@ -1,16 +1,18 @@
 Class {
-	#name : #OPTabHeaderPresenter,
-	#superclass : #SpLabelPresenter,
-	#category : #'OpenPonk-Spec-Windows'
+	#name : 'OPTabHeaderPresenter',
+	#superclass : 'SpLabelPresenter',
+	#category : 'OpenPonk-Spec-Windows',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Windows'
 }
 
-{ #category : #specs }
+{ #category : 'specs' }
 OPTabHeaderPresenter class >> adapterName [
 
 	^ #OPTabHeaderAdapter
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 OPTabHeaderPresenter class >> example [
 
 	"This example opens a spec window with a label."
@@ -20,7 +22,7 @@ OPTabHeaderPresenter class >> example [
 		  open
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPTabHeaderPresenter class >> labelled: aString [
 
 	^ self new
@@ -28,7 +30,7 @@ OPTabHeaderPresenter class >> labelled: aString [
 		  yourself
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 OPTabHeaderPresenter class >> title [
 
 	^ 'Tab header'

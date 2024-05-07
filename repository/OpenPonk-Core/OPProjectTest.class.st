@@ -1,14 +1,16 @@
 Class {
-	#name : #OPProjectTest,
-	#superclass : #TestCase,
+	#name : 'OPProjectTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'project',
 		'model'
 	],
-	#category : #'OpenPonk-Core-Tests'
+	#category : 'OpenPonk-Core-Tests',
+	#package : 'OpenPonk-Core',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPProjectTest >> testAddModel [
 
 	| diagram visibleElements |
@@ -24,7 +26,7 @@ OPProjectTest >> testAddModel [
 	self assert: diagram modelElement equals: model
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPProjectTest >> testRemoveModel [
 	project := OPProject new.
 	model := OPTestContainerModel new.

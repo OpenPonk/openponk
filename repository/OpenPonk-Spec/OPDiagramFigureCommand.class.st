@@ -2,8 +2,8 @@
 I am command for figure context menu.
 "
 Class {
-	#name : #OPDiagramFigureCommand,
-	#superclass : #CmdCommand,
+	#name : 'OPDiagramFigureCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'canvas',
 		'diagramController',
@@ -15,16 +15,18 @@ Class {
 	#classInstVars : [
 		'lastEvent'
 	],
-	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
+	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Diagram-Figure-Commands'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 OPDiagramFigureCommand class >> contextMenuActivation [
 	<classAnnotation>
 	^ CmdContextMenuActivation byRootGroupItemFor: OPCanvasPresenter
 ]
 
-{ #category : #example }
+{ #category : 'example' }
 OPDiagramFigureCommand class >> example [
 	| proj model |
 	proj := OPProject new.
@@ -34,7 +36,7 @@ OPDiagramFigureCommand class >> example [
 	proj open
 ]
 
-{ #category : #example }
+{ #category : 'example' }
 OPDiagramFigureCommand class >> example2 [
 	| c a |
 	c := OPCanvasPresenter new.
@@ -44,12 +46,12 @@ OPDiagramFigureCommand class >> example2 [
 	a openInWindow
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPDiagramFigureCommand class >> isAbstract [
 	^ self = OPDiagramFigureCommand
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPDiagramFigureCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.

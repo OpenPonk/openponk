@@ -6,60 +6,62 @@ I manage autosaving and undo/redo operations of a single controller.
 As I manage only a single controller, do not rely on this for cross-model operations (such as instance modeling), as changes in the ""linked-to"" model can make your model invalid if you undo/redo/recover only the instance.
 "
 Class {
-	#name : #OPAutosaveManager,
-	#superclass : #Object,
+	#name : 'OPAutosaveManager',
+	#superclass : 'Object',
 	#instVars : [
 		'history',
 		'current',
 		'future',
 		'serializer'
 	],
-	#category : #'OpenPonk-Core-Persistence'
+	#category : 'OpenPonk-Core-Persistence',
+	#package : 'OpenPonk-Core',
+	#tag : 'Persistence'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPAutosaveManager class >> on: aSerializer [
 	^ self new
 		serializer: aSerializer;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPAutosaveManager >> autosaveFileFor: aUUID [
 	self autosavePath ensureCreateDirectory.
 	^ self autosavePath / aUUID asString , 'ston'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPAutosaveManager >> autosavePath [
 	^ FileLocator imageDirectory asFileReference / 'autosave'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPAutosaveManager >> futureIsEmpty [
 	^ future isEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPAutosaveManager >> historyIsEmpty [
 	^ history isEmpty
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPAutosaveManager >> initialize [
 	super initialize.
 	history := OrderedCollection new.
 	future := OrderedCollection new
 ]
 
-{ #category : #'save/load' }
+{ #category : 'save/load' }
 OPAutosaveManager >> loadCurrent [
 	current ifNil: [ ^ nil ].
 	^ current
 		readStreamDo: [ :stream | self serializer materializeFrom: stream ]
 ]
 
-{ #category : #'save/load' }
+{ #category : 'save/load' }
 OPAutosaveManager >> loadNext [
 	future ifEmpty: [ ^ nil ].
 	history addLast: current.
@@ -68,7 +70,7 @@ OPAutosaveManager >> loadNext [
 		readStreamDo: [ :stream | self serializer materializeFrom: stream ]
 ]
 
-{ #category : #'save/load' }
+{ #category : 'save/load' }
 OPAutosaveManager >> loadPrevious [
 	history ifEmpty: [ ^ nil ].
 	future addLast: current.
@@ -77,7 +79,7 @@ OPAutosaveManager >> loadPrevious [
 		readStreamDo: [ :stream | self serializer materializeFrom: stream ]
 ]
 
-{ #category : #'save/load' }
+{ #category : 'save/load' }
 OPAutosaveManager >> saveState: aMemento [
 	future reset.
 	current ifNotNil: [ history addLast: current ].
@@ -91,12 +93,12 @@ OPAutosaveManager >> saveState: aMemento [
 				nextPutAll: current ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPAutosaveManager >> serializer [
 	^ serializer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPAutosaveManager >> serializer: aSerializer [
 	serializer := aSerializer
 ]

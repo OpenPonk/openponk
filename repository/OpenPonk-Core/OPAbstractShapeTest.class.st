@@ -1,24 +1,26 @@
 Class {
-	#name : #OPAbstractShapeTest,
-	#superclass : #TestCase,
+	#name : 'OPAbstractShapeTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'canvas',
 		'shape'
 	],
-	#category : #'OpenPonk-Core-Tests'
+	#category : 'OpenPonk-Core-Tests',
+	#package : 'OpenPonk-Core',
+	#tag : 'Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPAbstractShapeTest class >> isAbstract [
 	^ self name includesSubstring: 'Abstract'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPAbstractShapeTest >> newShapeInstance [
 	^ self shapeClass new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OPAbstractShapeTest >> setUp [
 
 	super setUp.
@@ -26,12 +28,12 @@ OPAbstractShapeTest >> setUp [
 	canvas := RSCanvas new
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPAbstractShapeTest >> shapeClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPAbstractShapeTest >> testRenderSimplifiedForController [
 
 	| diagramController controller |

@@ -1,6 +1,6 @@
-Extension { #name : #CmdMenuItem }
+Extension { #name : 'CmdMenuItem' }
 
-{ #category : #'*OpenPonk-Spec' }
+{ #category : '*OpenPonk-Spec' }
 CmdMenuItem >> buildSpecMenuOn: aMenu [
 	self subclassResponsibility
 ]

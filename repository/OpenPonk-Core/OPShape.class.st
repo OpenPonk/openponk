@@ -1,6 +1,6 @@
 Class {
-	#name : #OPShape,
-	#superclass : #Object,
+	#name : 'OPShape',
+	#superclass : 'Object',
 	#instVars : [
 		'modelElements',
 		'owningElement',
@@ -11,10 +11,12 @@ Class {
 		'ownedElements',
 		'roassalShape'
 	],
-	#category : #'OpenPonk-Core-Shapes'
+	#category : 'OpenPonk-Core-Shapes',
+	#package : 'OpenPonk-Core',
+	#tag : 'Shapes'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPShape class >> forModelElement: anObject [
 
 	^ self new
@@ -22,7 +24,7 @@ OPShape class >> forModelElement: anObject [
 		  yourself
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPShape class >> in: anOwner [
 
 	^ self new
@@ -30,7 +32,7 @@ OPShape class >> in: anOwner [
 		  yourself
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPShape class >> in: anOwner forModelElement: anObject [
 
 	^ self new
@@ -39,12 +41,12 @@ OPShape class >> in: anOwner forModelElement: anObject [
 		  yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPShape class >> isAbstract [
 	^ self = OPShape
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPShape class >> renderForController: aController [
 
 	^ self new
@@ -53,7 +55,7 @@ OPShape class >> renderForController: aController [
 		  yourself
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPShape class >> renderSimplifiedForController: aController [
 
 	^ self new
@@ -61,7 +63,7 @@ OPShape class >> renderSimplifiedForController: aController [
 		  yourself
 ]
 
-{ #category : #'ston-core' }
+{ #category : 'ston-core' }
 OPShape class >> stonAllInstVarNames [
 
 	"Override to encode my instances using a custom set of instance variables or to define their order."
@@ -70,13 +72,13 @@ OPShape class >> stonAllInstVarNames [
 	     #sharedStyle #localStyle #ownedElements )
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 OPShape >> addDraggableInteraction [
 
 	roassalShape @ RSDraggable
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 OPShape >> addEventForwardingFrom: anOriginalRoassalShape to: aTargetRoassalShape [
 
 	| forward |
@@ -90,7 +92,7 @@ OPShape >> addEventForwardingFrom: anOriginalRoassalShape to: aTargetRoassalShap
 		when: RSMouseDragging do: forward for: self
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 OPShape >> addEventForwardingToOwner [
 
 	| ownerRoassalShape |
@@ -101,7 +103,7 @@ OPShape >> addEventForwardingToOwner [
 	self addEventForwardingFrom: roassalShape to: ownerRoassalShape
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 OPShape >> addInteractions [
 
 	self shouldBeResizableByUser ifTrue: [ self addResizableInteraction ].
@@ -119,25 +121,25 @@ OPShape >> addInteractions [
 	self addEventForwardingToOwner
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 OPShape >> addResizableInteraction [
 
 	self resizableInteractionTarget @ OPRSResizable
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 OPShape >> addSelectableInteraction [
 
 	roassalShape @ self selectableInteraction
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 OPShape >> addSelectionDraggableInteraction [
 
 	roassalShape @ OPRSSelectionDraggable
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPShape >> addedByMouseClickTo: aPoint [
 
 	"Do nothing by default. The given point is position where user clicked by mouse in order to create the element. If the shape was not added by a mouse click, this method is not called. May be overriden to translate to that position or react in any other way."
@@ -145,26 +147,26 @@ OPShape >> addedByMouseClickTo: aPoint [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPShape >> allOwnedShapesPositionableByUser [
 
 	self isRendered ifFalse: [ ^ #(  ) ].
 	^ self ownedElements flatCollect: #allOwnedShapesPositionableByUser
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPShape >> allShapesPositionableByUser [
 
 	^ self topMostOwningElement allOwnedShapesPositionableByUser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShape >> canvas [
 
 	^ roassalShape canvas
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPShape >> createOwnedElementsWithoutController [
 
 	"Might be overriden to add owned diagram elements that have no controller that would create them, for example labels. Make sure these do not exist yet (that could produce them multiple times)"
@@ -172,7 +174,7 @@ OPShape >> createOwnedElementsWithoutController [
 	
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPShape >> fromSton: stonReader [
 
 	stonReader parseMapDo: [ :instVarName :value | 
@@ -185,7 +187,7 @@ OPShape >> fromSton: stonReader [
 			ifFalse: [ self instVarNamed: instVarName asString put: value ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPShape >> initialize [
 
 	super initialize.
@@ -204,19 +206,19 @@ OPShape >> initialize [
 		               oppositeSlot: #target
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPShape >> isPositionableByUser [
 
 	^ false
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPShape >> isRendered [
 
 	^ roassalShape isNotNil and: [ roassalShape isInACanvas ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPShape >> isRenderedWithOwnedElements [
 
 	^ self isRendered and: [ 
@@ -224,18 +226,18 @@ OPShape >> isRenderedWithOwnedElements [
 			  each isRenderedWithOwnedElements ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPShape >> isSelectable [
 
 	^ roassalShape isSelectable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShape >> localStyle [
 	^ localStyle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShape >> localStyle: aStyle [
 
 	localStyle ifNotNil: [ localStyle removedFromStyledElement: self ].
@@ -243,7 +245,7 @@ OPShape >> localStyle: aStyle [
 	self styleChanged.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShape >> model [
 
 	self
@@ -252,33 +254,33 @@ OPShape >> model [
 	^ self modelElement
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPShape >> modelChanged [
 
 	self isRendered ifTrue: [ self updateRenderFromModel ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShape >> modelElement [
 
 	^ self ownModelElement ifNil: [ self owningElement ifNotNil: #modelElement ]
 		  
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShape >> modelElement: anObject [
 
 	anObject ifNil: [ ^ self modelElements: #(  ) ].
 	self modelElements: { anObject }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShape >> modelElements [
 
 	^ modelElements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShape >> modelElements: aCollection [
 
 	(self owningElement isNotNil and: [ 
@@ -290,19 +292,19 @@ OPShape >> modelElements: aCollection [
 	modelElements := aCollection
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPShape >> movesWithOtherShape [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShape >> ownModelElement [
 
 	^ self modelElements ifEmpty: [ nil ] ifNotEmpty: #first
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPShape >> ownedElement: aShape renderedIn: aCanvas [
 
 	self isRendered ifTrue: [ 
@@ -315,12 +317,12 @@ OPShape >> ownedElement: aShape renderedIn: aCanvas [
 	self renderIn: aCanvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShape >> ownedElements [
 	^ ownedElements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShape >> ownedElements: aCollection [
 
 	ownedElements
@@ -328,12 +330,12 @@ OPShape >> ownedElements: aCollection [
 		addAll: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShape >> owningElement [
 	^ owningElement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShape >> owningElement: aDiagramElement [
 
 	(aDiagramElement isNotNil and: [ 
@@ -350,7 +352,7 @@ OPShape >> owningElement: aDiagramElement [
 		                 to: aDiagramElement
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 OPShape >> remove [
 
 	[ self ownedElements isNotEmpty ] whileTrue: [
@@ -359,7 +361,7 @@ OPShape >> remove [
 	self owningElement: nil
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 OPShape >> removeRender [
 
 	self ownedElements do: #removeRender.
@@ -368,7 +370,7 @@ OPShape >> removeRender [
 	roassalShape := nil
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPShape >> renderBasicShape [
 
 	"should render a simple shape without using any modelElement info and any advanced shape complexity"
@@ -376,7 +378,7 @@ OPShape >> renderBasicShape [
 	^ self subclassResponsibility
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPShape >> renderBasicShapeIn: aCanvas [
 
 	self isRendered ifTrue: [ 
@@ -390,7 +392,7 @@ OPShape >> renderBasicShapeIn: aCanvas [
 	^ roassalShape
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPShape >> renderIn: aCanvas [
 
 	self isRendered ifTrue: [ ^ self ].
@@ -407,7 +409,7 @@ OPShape >> renderIn: aCanvas [
 	^ roassalShape
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPShape >> renderShapeDetails [
 
 	"Should render details of a shape created by renderBasicShape. This method is there to add interactivity and complexity like adding labels, actions on click etc. that have no own diagram elements (that labels usually have!)."
@@ -417,13 +419,13 @@ OPShape >> renderShapeDetails [
 	
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 OPShape >> resizableInteractionTarget [
 
 	^ roassalShape
 ]
 
-{ #category : #serialization }
+{ #category : 'serialization' }
 OPShape >> resolveAllModelElements: aDictionary [
 
 	self resolveModelElements: aDictionary.
@@ -431,31 +433,31 @@ OPShape >> resolveAllModelElements: aDictionary [
 		each resolveAllModelElements: aDictionary ]
 ]
 
-{ #category : #serialization }
+{ #category : 'serialization' }
 OPShape >> resolveModelElements: aDictionary [
 
 	self modelElements: (self modelElements collect: [ :each | 
 			 each modelObjectFrom: aDictionary ])
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPShape >> roassalShape [
 
 	^ roassalShape
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 OPShape >> selectableInteraction [
 
 	^ OPRSNoInteraction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShape >> sharedStyle [
 	^ sharedStyle ifNil: [ self owningElement ifNotNil: #sharedStyle ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShape >> sharedStyle: aStyle [
 
 	sharedStyle ifNotNil: [ sharedStyle removedFromStyledElement: self ].
@@ -463,38 +465,38 @@ OPShape >> sharedStyle: aStyle [
 	self styleChanged.
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 OPShape >> shouldBePositionableByUser [
 
 	^ false
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 OPShape >> shouldBeResizableByUser [
 
 	^ false
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 OPShape >> shouldBeSelectable [
 
 	^ self selectableInteraction ~= OPRSNoInteraction and: [
 		  self selectableInteraction class ~= OPRSNoInteraction ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShape >> sourceEdges [
 	^ sourceEdges
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShape >> sourceEdges: aCollection [
 	sourceEdges
 		removeAll;
 		addAll: aCollection
 ]
 
-{ #category : #'ston persistence' }
+{ #category : 'ston persistence' }
 OPShape >> stonOn: stonWriter [
 
 	stonWriter writeObject: self streamMap: [ :dictionary | 
@@ -509,7 +511,7 @@ OPShape >> stonOn: stonWriter [
 			value ifNotNil: [ dictionary at: each asSymbol put: value ] ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPShape >> stonPostReferenceResolution [
 
 	"Hook that is called when references were resolved processing this object or one of its sub objects. This will most probably influence hash values. Override to take appropriate action."
@@ -534,7 +536,7 @@ OPShape >> stonPostReferenceResolution [
 		               yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPShape >> stonProcessSubObjects: block [
 
 	"Execute block to (potentially) change each of my subObjects.
@@ -547,13 +549,13 @@ OPShape >> stonProcessSubObjects: block [
 			put: (block value: (self instVarNamed: each)) ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPShape >> styleChanged [
 
 	self isRendered ifTrue: [ self updateRenderFromStyles ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShape >> stylePropertyNamed: aName ifAbsent: aBlock [
 
 	| nameSymbol |
@@ -567,14 +569,14 @@ OPShape >> stylePropertyNamed: aName ifAbsent: aBlock [
 	^ aBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShape >> stylePropertyNamed: aName put: aValue [
 
 	self localStyle ifNil: [ self localStyle: OPOpenPonkShapeStyle new ].
 	self localStyle at: aName asSymbol put: aValue
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPShape >> supportsColorChange [
 
 	^ (self supportsColorChangeOfType: #fillColor) or: [
@@ -582,26 +584,26 @@ OPShape >> supportsColorChange [
 			  self supportsColorChangeOfType: #fontColor ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPShape >> supportsColorChangeOfType: aSymbol [
 
 	^ (self respondsTo: aSymbol asSymbol) and: [
 		  self respondsTo: aSymbol asMutator ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShape >> targetEdges [
 	^ targetEdges
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShape >> targetEdges: aCollection [
 	targetEdges
 		removeAll;
 		addAll: aCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPShape >> topMostOwningElement [
 
 	^ self owningElement
@@ -609,19 +611,19 @@ OPShape >> topMostOwningElement [
 		  ifNotNil: [ :owner | owner topMostOwningElement ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPShape >> updateFromRender [
 
 	self ownedElements do: #updateFromRender
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPShape >> updateRenderFromModel [
 
 	self ownedElements select: #isRendered thenDo: #updateRenderFromModel
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPShape >> updateRenderFromSelf [
 
 	self isRendered ifFalse: [ ^ self ].
@@ -629,7 +631,7 @@ OPShape >> updateRenderFromSelf [
 	roassalShape signalUpdate
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPShape >> updateRenderFromStyles [
 
 	"do nothing by default"

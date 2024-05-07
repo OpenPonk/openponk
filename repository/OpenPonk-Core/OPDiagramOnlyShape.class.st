@@ -1,15 +1,17 @@
 Class {
-	#name : #OPDiagramOnlyShape,
-	#superclass : #OPBoundNode,
+	#name : 'OPDiagramOnlyShape',
+	#superclass : 'OPBoundNode',
 	#traits : 'OPTBorderColoredAsStroke - {#updateRenderFromStyles}',
 	#classTraits : 'OPTBorderColoredAsStroke classTrait',
 	#instVars : [
 		'uuid'
 	],
-	#category : #'OpenPonk-Core-CommonElements'
+	#category : 'OpenPonk-Core-CommonElements',
+	#package : 'OpenPonk-Core',
+	#tag : 'CommonElements'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramOnlyShape class >> neoJsonMapping: mapper [
 
 	mapper
@@ -30,7 +32,7 @@ OPDiagramOnlyShape class >> neoJsonMapping: mapper [
 						do: [ string ] ] ]
 ]
 
-{ #category : #'ston-core' }
+{ #category : 'ston-core' }
 OPDiagramOnlyShape class >> stonAllInstVarNames [
 
 	"Override to encode my instances using a custom set of instance variables or to define their order."
@@ -38,45 +40,45 @@ OPDiagramOnlyShape class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #uuid )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramOnlyShape >> announcer [
 
 	^ roassalShape ifNotNil: #announcer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramOnlyShape >> initialize [
 
 	super initialize.
 	uuid := UUID new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramOnlyShape >> modelElements [
 
 	^ { self }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramOnlyShape >> modelElements: aCollection [
 
 	(aCollection noneSatisfy: [ :any | any ~= self ]) ifTrue: [ ^ self ].
 	self shouldNotImplement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramOnlyShape >> strokeColor: aColor [
 
 	"ignore for now"
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPDiagramOnlyShape >> updateRenderFromModel [
 
 	"do nothing - there is no model"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramOnlyShape >> uuid [
 
 	^ uuid

@@ -1,6 +1,6 @@
 Class {
-	#name : #OPModelTypeSelector,
-	#superclass : #SpPresenter,
+	#name : 'OPModelTypeSelector',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'projectController',
 		'addModelButton',
@@ -11,10 +11,12 @@ Class {
 		'pluginsLabel',
 		'nameChanged'
 	],
-	#category : #'OpenPonk-Spec-Windows'
+	#category : 'OpenPonk-Spec-Windows',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Windows'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPModelTypeSelector class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -42,7 +44,7 @@ OPModelTypeSelector class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPModelTypeSelector >> addModel [
 
 	| model diagram selectedPlugin |
@@ -58,7 +60,7 @@ OPModelTypeSelector >> addModel [
 	self withWindowDo: #close
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPModelTypeSelector >> connectPresenters [
 
 	addModelButton action: [ self addModel ].
@@ -75,14 +77,14 @@ OPModelTypeSelector >> connectPresenters [
 	plugins items ifNotEmpty: [ plugins selectFirst ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPModelTypeSelector >> ensureButtonActivation [
 
 	addModelButton enabled: (projectNameInput text isNotEmpty and: [ 
 			 plugins selectedItem isNotNil ])
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPModelTypeSelector >> initialize [
 
 	pluginRegistry := OPPluginRegistry default.
@@ -90,7 +92,7 @@ OPModelTypeSelector >> initialize [
 	super initialize
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPModelTypeSelector >> initializePresenters [
 
 	pluginsLabel := self newLabel label: 'Select model type:'.
@@ -101,7 +103,7 @@ OPModelTypeSelector >> initializePresenters [
 	addModelButton := self newButton label: 'Create'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPModelTypeSelector >> initializeWindow: aWindow [
 	aWindow
 		title: 'OpenPonk - Add new model to project';
@@ -109,7 +111,7 @@ OPModelTypeSelector >> initializeWindow: aWindow [
 		windowIcon: OPCoreIcons openponkIcon
 ]
 
-{ #category : #'accessing model' }
+{ #category : 'accessing model' }
 OPModelTypeSelector >> setModelBeforeInitialization: aProjectController [
 	projectController := aProjectController
 ]

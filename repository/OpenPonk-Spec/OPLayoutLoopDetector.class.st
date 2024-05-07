@@ -1,15 +1,17 @@
 Class {
-	#name : #OPLayoutLoopDetector,
-	#superclass : #Object,
+	#name : 'OPLayoutLoopDetector',
+	#superclass : 'Object',
 	#instVars : [
 		'boxes',
 		'links',
 		'processedBoxes'
 	],
-	#category : #'OpenPonk-Spec-Layouting'
+	#category : 'OpenPonk-Spec-Layouting',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Layouting'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPLayoutLoopDetector class >> haveLoopsBoxes: boxes links: links [
 
 	^ self new
@@ -18,7 +20,7 @@ OPLayoutLoopDetector class >> haveLoopsBoxes: boxes links: links [
 		  haveLoops
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPLayoutLoopDetector class >> popupHaveLoopsBoxes: boxes links: links [
 
 	^ self new
@@ -27,19 +29,19 @@ OPLayoutLoopDetector class >> popupHaveLoopsBoxes: boxes links: links [
 		  popupHaveLoops
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLayoutLoopDetector >> boxes [
 
 	^ boxes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLayoutLoopDetector >> boxes: anObject [
 
 	boxes := Array withAll: anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPLayoutLoopDetector >> hasBox: box loopsBackTo: loopsTo [
 
 	| toBoxes |
@@ -56,13 +58,13 @@ OPLayoutLoopDetector >> hasBox: box loopsBackTo: loopsTo [
 			  self hasBox: any loopsBackTo: loopsTo , { box } ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPLayoutLoopDetector >> haveLoops [
 
 	^ boxes anySatisfy: [ :box | self hasBox: box loopsBackTo: Set new ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPLayoutLoopDetector >> initialize [
 
 	super initialize.
@@ -72,19 +74,19 @@ OPLayoutLoopDetector >> initialize [
 	processedBoxes := Set new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLayoutLoopDetector >> links [
 
 	^ links
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLayoutLoopDetector >> links: anObject [
 
 	links addAll: anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPLayoutLoopDetector >> popupHaveLoops [
 
 	^ self haveLoops

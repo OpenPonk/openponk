@@ -2,12 +2,14 @@
 A bunch of examples demonstrating Form options.
 "
 Class {
-	#name : #OPDynamicFormExamples,
-	#superclass : #Object,
-	#category : #'OpenPonk-Spec-Form'
+	#name : 'OPDynamicFormExamples',
+	#superclass : 'Object',
+	#category : 'OpenPonk-Spec-Form',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Form'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 OPDynamicFormExamples >> exampleAllWidgets [
 
 	<gtExample>

@@ -1,15 +1,17 @@
 Class {
-	#name : #OPAbstractLabelTest,
-	#superclass : #OPAbstractShapeTest,
-	#category : #'OpenPonk-Core-Tests'
+	#name : 'OPAbstractLabelTest',
+	#superclass : 'OPAbstractShapeTest',
+	#category : 'OpenPonk-Core-Tests',
+	#package : 'OpenPonk-Core',
+	#tag : 'Tests'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPAbstractLabelTest >> shapeClass [
 	^ OPTestLabel
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPAbstractLabelTest >> testRoassalShape [
 
 	| roassalShape |
@@ -20,7 +22,7 @@ OPAbstractLabelTest >> testRoassalShape [
 	self assert: roassalShape text equals: 'some text'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPAbstractLabelTest >> testRoassalShapeEmphasis [
 
 	| roassalShape |

@@ -1,10 +1,12 @@
 Class {
-	#name : #OPInvisibleOnMouseShape,
-	#superclass : #OPBoundNode,
-	#category : #'OpenPonk-Core-Shapes'
+	#name : 'OPInvisibleOnMouseShape',
+	#superclass : 'OPBoundNode',
+	#category : 'OpenPonk-Core-Shapes',
+	#package : 'OpenPonk-Core',
+	#tag : 'Shapes'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPInvisibleOnMouseShape class >> renderToPosition: aPoint onCanvas: aCanvas [
 
 	^ self new
@@ -13,7 +15,7 @@ OPInvisibleOnMouseShape class >> renderToPosition: aPoint onCanvas: aCanvas [
 		  yourself
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPInvisibleOnMouseShape >> mouseMovedBy: event [
 
 	roassalShape
@@ -21,7 +23,7 @@ OPInvisibleOnMouseShape >> mouseMovedBy: event [
 		signalUpdate
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPInvisibleOnMouseShape >> removeRender [
 
 	| canvas |
@@ -32,7 +34,7 @@ OPInvisibleOnMouseShape >> removeRender [
 	canvas signalUpdate
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPInvisibleOnMouseShape >> renderBasicShape [
 
 	^ RSBox new
@@ -41,7 +43,7 @@ OPInvisibleOnMouseShape >> renderBasicShape [
 		  yourself
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPInvisibleOnMouseShape >> renderShapeDetails [
 
 	super renderShapeDetails.

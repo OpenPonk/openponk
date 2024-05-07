@@ -1,14 +1,16 @@
 Class {
-	#name : #OPDiagramCamera,
-	#superclass : #Object,
+	#name : 'OPDiagramCamera',
+	#superclass : 'Object',
 	#instVars : [
 		'scale',
 		'position'
 	],
-	#category : #'OpenPonk-Core-Shapes'
+	#category : 'OpenPonk-Core-Shapes',
+	#package : 'OpenPonk-Core',
+	#tag : 'Shapes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPDiagramCamera class >> newFrom: aCamera [
 
 	^ self new
@@ -17,23 +19,23 @@ OPDiagramCamera class >> newFrom: aCamera [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramCamera >> position [
 	^ position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramCamera >> position: aPoint [
 
 	position := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramCamera >> scale: aNumber [ 
 	scale := aNumber
 ]
 
-{ #category : #roassal }
+{ #category : 'roassal' }
 OPDiagramCamera >> updateRoassalCamera: aRSCamera [
 
 	scale ifNotNil: [ aRSCamera scale: scale ].

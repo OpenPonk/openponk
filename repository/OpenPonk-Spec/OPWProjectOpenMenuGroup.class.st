@@ -1,15 +1,17 @@
 Class {
-	#name : #OPWProjectOpenMenuGroup,
-	#superclass : #CmdMenuGroup,
-	#category : #'OpenPonk-Spec-Commands'
+	#name : 'OPWProjectOpenMenuGroup',
+	#superclass : 'CmdMenuGroup',
+	#category : 'OpenPonk-Spec-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Commands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPWProjectOpenMenuGroup >> isInlined [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPWProjectOpenMenuGroup >> order [
 	^ 10
 ]

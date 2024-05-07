@@ -1,16 +1,18 @@
 Class {
-	#name : #OPDiagramInspectDiagramElementCommand,
-	#superclass : #OPDiagramFigureDevCommand,
-	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
+	#name : 'OPDiagramInspectDiagramElementCommand',
+	#superclass : 'OPDiagramFigureDevCommand',
+	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Diagram-Figure-Commands'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramInspectDiagramElementCommand >> defaultMenuIcon [
 
 	^ self iconNamed: #glamorousInspect
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramInspectDiagramElementCommand >> defaultMenuItemName [
 
 	| basicName |
@@ -19,7 +21,7 @@ OPDiagramInspectDiagramElementCommand >> defaultMenuItemName [
 	^ figures size pluralize: basicName
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPDiagramInspectDiagramElementCommand >> execute [
 
 	diagramElements size = 1 ifTrue: [ ^ diagramElements anyOne inspect ].

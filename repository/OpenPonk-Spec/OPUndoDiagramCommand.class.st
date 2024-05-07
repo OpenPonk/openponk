@@ -1,10 +1,12 @@
 Class {
-	#name : #OPUndoDiagramCommand,
-	#superclass : #OPDiagramToolbarCommand,
-	#category : #'OpenPonk-Spec-Diagram-Toolbar-Commands'
+	#name : 'OPUndoDiagramCommand',
+	#superclass : 'OPDiagramToolbarCommand',
+	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Diagram-Toolbar-Commands'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 OPUndoDiagramCommand class >> toolbarMenuActivation [
 	"	<classAnnotation>
 	^ OPDiagramToolbarActivation byRootGroupItemOrder: 10 for: OPCanvasModel"
@@ -12,18 +14,18 @@ OPUndoDiagramCommand class >> toolbarMenuActivation [
 	
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPUndoDiagramCommand >> defaultMenuIcon [
 
 	^ self iconNamed: #smallUndo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPUndoDiagramCommand >> defaultMenuItemName [
 	^ 'Undo'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPUndoDiagramCommand >> execute [
 	diagramPresenter diagramController undo
 ]

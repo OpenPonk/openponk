@@ -1,13 +1,15 @@
 Class {
-	#name : #OPTabHeaderAdapter,
-	#superclass : #SpAbstractMorphicAdapter,
+	#name : 'OPTabHeaderAdapter',
+	#superclass : 'SpAbstractMorphicAdapter',
 	#instVars : [
 		'morph'
 	],
-	#category : #'OpenPonk-Spec-Windows'
+	#category : 'OpenPonk-Spec-Windows',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Windows'
 }
 
-{ #category : #factory }
+{ #category : 'factory' }
 OPTabHeaderAdapter >> buildWidget [
 
 	morph := OPTabLabelMorph new.
@@ -25,7 +27,7 @@ OPTabHeaderAdapter >> buildWidget [
 	^ morph
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OPTabHeaderAdapter >> selectedTab [
 
 	^ morph

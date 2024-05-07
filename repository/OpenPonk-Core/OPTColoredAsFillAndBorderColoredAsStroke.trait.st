@@ -1,11 +1,13 @@
 Trait {
-	#name : #OPTColoredAsFillAndBorderColoredAsStroke,
+	#name : 'OPTColoredAsFillAndBorderColoredAsStroke',
 	#traits : 'OPTColoredAsFill + OPTBorderColoredAsStroke',
 	#classTraits : 'OPTColoredAsFill classTrait + OPTBorderColoredAsStroke classTrait',
-	#category : #'OpenPonk-Core-Shapes'
+	#category : 'OpenPonk-Core-Shapes',
+	#package : 'OpenPonk-Core',
+	#tag : 'Shapes'
 }
 
-{ #category : #update }
+{ #category : 'update' }
 OPTColoredAsFillAndBorderColoredAsStroke >> updateRenderFromStyles [
 
 	self isRendered ifFalse: [ ^ self ].

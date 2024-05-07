@@ -16,12 +16,14 @@ DCCanvasModel
 DCNavigator
 "
 Class {
-	#name : #OPRenameElementCommand,
-	#superclass : #OPUICommand,
-	#category : #'OpenPonk-Core-UICommands'
+	#name : 'OPRenameElementCommand',
+	#superclass : 'OPUICommand',
+	#category : 'OpenPonk-Core-UICommands',
+	#package : 'OpenPonk-Core',
+	#tag : 'UICommands'
 }
 
-{ #category : #execute }
+{ #category : 'execute' }
 OPRenameElementCommand >> execute [
 
 	| result |

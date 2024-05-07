@@ -1,13 +1,15 @@
 Class {
-	#name : #OPLegacyDiagramTest,
-	#superclass : #TestCase,
+	#name : 'OPLegacyDiagramTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'view'
 	],
-	#category : #'OpenPonk-Core-Diagrams'
+	#category : 'OpenPonk-Core-Diagrams',
+	#package : 'OpenPonk-Core',
+	#tag : 'Diagrams'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPLegacyDiagramTest >> testAsJsonComplex [
 	view := OPLegacyDiagram new
 		camera:
@@ -36,7 +38,7 @@ OPLegacyDiagramTest >> testAsJsonComplex [
 		"visibleElements" : [  ] }')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPLegacyDiagramTest >> testAsJsonModel [
 	| model |
 	model := Mock new.
@@ -48,7 +50,7 @@ OPLegacyDiagramTest >> testAsJsonModel [
 		equals: (STON fromString: '{ "commonElements" : [], "visibleElements" : [ ] }')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPLegacyDiagramTest >> testAsJsonModel2 [
 	view := OPLegacyDiagram new model: OPTestContainerModel new.
 	self
@@ -56,7 +58,7 @@ OPLegacyDiagramTest >> testAsJsonModel2 [
 		equals: (STON fromString: '{ "commonElements" : [], "visibleElements" : [ ] }')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPLegacyDiagramTest >> testFromJsonComplex [
 
 	| personUUID personUUIDstring person |
@@ -84,7 +86,7 @@ OPLegacyDiagramTest >> testFromJsonComplex [
 		equals: person
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPLegacyDiagramTest >> testModel [
 	| model project |
 	model := OPTestContainerModel new.
@@ -100,7 +102,7 @@ OPLegacyDiagramTest >> testModel [
 	self assert: view model equals: model
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPLegacyDiagramTest >> testNewCopy [
 	| model project newView |
 	model := OPTestContainerModel new.
@@ -123,7 +125,7 @@ OPLegacyDiagramTest >> testNewCopy [
 	view
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPLegacyDiagramTest >> testUpdateFromRoassalView [
 	| roassalCanvas |
 	view := OPLegacyDiagram new.

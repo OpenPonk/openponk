@@ -1,30 +1,32 @@
 Class {
-	#name : #OPTestDiagramControllerTest,
-	#superclass : #OPBaseControllerTest,
-	#category : #'OpenPonk-Core-Controllers - Tests'
+	#name : 'OPTestDiagramControllerTest',
+	#superclass : 'OPBaseControllerTest',
+	#category : 'OpenPonk-Core-Controllers - Tests',
+	#package : 'OpenPonk-Core',
+	#tag : 'Controllers - Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTestDiagramControllerTest >> controllerClass [
 	^ OPTestDiagramController
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTestDiagramControllerTest >> diagramControllerClass [
 	^ OPTestDiagramController
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTestDiagramControllerTest >> diagramModelClass [
 	^ OPTestContainerModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTestDiagramControllerTest >> modelClass [
 	^ OPTestContainerModel
 ]
 
-{ #category : #'tests - connecting' }
+{ #category : 'tests - connecting' }
 OPTestDiagramControllerTest >> testAddAsTargetForEntity [
 	| entityController |
 	entityController := diagramController newControllerFor: OPTestEntityModel new.
@@ -33,7 +35,7 @@ OPTestDiagramControllerTest >> testAddAsTargetForEntity [
 	self assert: diagramController controllers asArray equals: {entityController}
 ]
 
-{ #category : #'tests - ui interaction' }
+{ #category : 'tests - ui interaction' }
 OPTestDiagramControllerTest >> testAttachEditor [
 	| editor workbench plugin |
 	plugin := OPPlugin new.
@@ -45,7 +47,7 @@ OPTestDiagramControllerTest >> testAttachEditor [
 	self assert: diagramController form isNotNil
 ]
 
-{ #category : #'tests - connecting' }
+{ #category : 'tests - connecting' }
 OPTestDiagramControllerTest >> testCanBeTargetForEntity [
 	self
 		assert:
@@ -53,7 +55,7 @@ OPTestDiagramControllerTest >> testCanBeTargetForEntity [
 				canBeTargetFor: (diagramController newControllerFor: OPTestEntityModel new))
 ]
 
-{ #category : #'tests - ui interaction' }
+{ #category : 'tests - ui interaction' }
 OPTestDiagramControllerTest >> testInitializePalette [
 	| palette |
 	palette := OPPalette new.
@@ -62,7 +64,7 @@ OPTestDiagramControllerTest >> testInitializePalette [
 	self assert: palette items size = 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPTestDiagramControllerTest >> testModelClass [
 	| plugin pluginRegistry |
 	plugin := OPPlugin new.
@@ -74,14 +76,14 @@ OPTestDiagramControllerTest >> testModelClass [
 		ensure: [ OPPluginRegistry setDefault: nil ]
 ]
 
-{ #category : #'tests - construction' }
+{ #category : 'tests - construction' }
 OPTestDiagramControllerTest >> testShowModelInDiagram [
 	| entity |
 	entity := OPTestEntityModel new.
 	diagramController showWithoutDependentInDiagramModel: entity
 ]
 
-{ #category : #'tests - construction' }
+{ #category : 'tests - construction' }
 OPTestDiagramControllerTest >> testShowModelInDiagramAttachesController [
 	| entity |
 	entity := OPTestEntityModel new.

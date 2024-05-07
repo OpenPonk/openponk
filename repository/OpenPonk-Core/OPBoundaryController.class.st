@@ -1,23 +1,25 @@
 Class {
-	#name : #OPBoundaryController,
-	#superclass : #OPCommonElementController,
+	#name : 'OPBoundaryController',
+	#superclass : 'OPCommonElementController',
 	#traits : 'OPTResizableFigureController',
 	#classTraits : 'OPTResizableFigureController classTrait',
-	#category : #'OpenPonk-Core-CommonElements'
+	#category : 'OpenPonk-Core-CommonElements',
+	#package : 'OpenPonk-Core',
+	#tag : 'CommonElements'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPBoundaryController class >> paletteItemName [
 	^ #boundary
 ]
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPBoundaryController >> addAsTargetFor: aController [
 
 	^ self diagramController addAsTargetFor: aController
 ]
 
-{ #category : #forms }
+{ #category : 'forms' }
 OPBoundaryController >> buildEditorForm: aForm [
 
 	(aForm addText: 'Name')
@@ -27,18 +29,18 @@ OPBoundaryController >> buildEditorForm: aForm [
 			self diagramElement updateText ]
 ]
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPBoundaryController >> canBeTargetFor: aController [
 	^ self diagramController canBeTargetFor: aController
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPBoundaryController >> diagramElementClass [
 
 	^ OPBoundary
 ]
 
-{ #category : #announcements }
+{ #category : 'announcements' }
 OPBoundaryController >> renderDiagramElement [
 
 	super renderDiagramElement.

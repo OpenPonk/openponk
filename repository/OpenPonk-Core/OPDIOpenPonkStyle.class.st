@@ -1,17 +1,19 @@
 Class {
-	#name : #OPDIOpenPonkStyle,
-	#superclass : #OPOpenPonkShapeStyle,
-	#category : #'OpenPonk-Core-Shapes'
+	#name : 'OPDIOpenPonkStyle',
+	#superclass : 'OPOpenPonkShapeStyle',
+	#category : 'OpenPonk-Core-Shapes',
+	#package : 'OpenPonk-Core',
+	#tag : 'Shapes'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPDIOpenPonkStyle class >> isDeprecated [
 	"replaced by superclass"
 
 	^ true
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPDIOpenPonkStyle class >> new [
 
 	^ self superclass new

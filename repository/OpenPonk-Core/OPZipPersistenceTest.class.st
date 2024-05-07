@@ -1,19 +1,21 @@
 Class {
-	#name : #OPZipPersistenceTest,
-	#superclass : #TestCase,
+	#name : 'OPZipPersistenceTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'persistence'
 	],
-	#category : #'OpenPonk-Core-Tests'
+	#category : 'OpenPonk-Core-Tests',
+	#package : 'OpenPonk-Core',
+	#tag : 'Tests'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPZipPersistenceTest >> setUp [
 	super setUp.
 	persistence := OPZipPersistence new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPZipPersistenceTest >> testNonASCII [
 	| root loaded zipFile |
 	root := FileSystem memory root.
@@ -26,7 +28,7 @@ OPZipPersistenceTest >> testNonASCII [
 	self assert: (loaded / 'file.txt') contents equals: 'ěščřžýáíéůú'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPZipPersistenceTest >> testRoundTrip [
 	| root loaded zipFile |
 	root := FileSystem memory root.

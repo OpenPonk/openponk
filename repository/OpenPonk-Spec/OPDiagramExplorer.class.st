@@ -1,21 +1,23 @@
 Class {
-	#name : #OPDiagramExplorer,
-	#superclass : #Object,
+	#name : 'OPDiagramExplorer',
+	#superclass : 'Object',
 	#instVars : [
 		'diagramController',
 		'adapters'
 	],
-	#category : #'OpenPonk-Spec-Dialogs'
+	#category : 'OpenPonk-Spec-Dialogs',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Dialogs'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPDiagramExplorer class >> on: aDiagramController [
 	^ self new
 		setDiagramController: aDiagramController;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramExplorer >> adapters [
 
 	^ adapters ifNil: [ 
@@ -26,28 +28,28 @@ OPDiagramExplorer >> adapters [
 					              navigatorAdapters ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramExplorer >> dependentFor: aModelObject [
 
 	^ self adapters dependentFor: aModelObject in: diagramController model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramExplorer >> diagramController [
 	^ diagramController
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPDiagramExplorer >> hideAllElements [
 	diagramController hideAllElements
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPDiagramExplorer >> hideDependentFor: aDataElement [
 	self hideElements: (self dependentFor: aDataElement)
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPDiagramExplorer >> hideElement: element [
 
 	diagramController deselectAll.
@@ -57,7 +59,7 @@ OPDiagramExplorer >> hideElement: element [
 	diagramController canvas signalUpdate
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPDiagramExplorer >> hideElements: elements [
 	diagramController deselectAll.
 	elements
@@ -65,23 +67,23 @@ OPDiagramExplorer >> hideElements: elements [
 	diagramController canvas signalUpdate
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPDiagramExplorer >> setDiagramController: aDiagramController [
 
 	diagramController := aDiagramController
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPDiagramExplorer >> showAllElements [
 	diagramController showInDiagram: diagramController model
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPDiagramExplorer >> showDependentFor: aModelObject [
 	self showElements: (self dependentFor: aModelObject)
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPDiagramExplorer >> showElement: aModelObject [
 	| existingCtrl ctrl |
 	self diagramController deselectAll.
@@ -98,7 +100,7 @@ OPDiagramExplorer >> showElement: aModelObject [
 	ctrl refreshFigure
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPDiagramExplorer >> showElements: aCollectionOfModelObjects [
 
 	| ctrls existingCtrls |

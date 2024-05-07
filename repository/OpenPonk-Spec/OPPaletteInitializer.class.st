@@ -1,14 +1,16 @@
 Class {
-	#name : #OPPaletteInitializer,
-	#superclass : #Object,
+	#name : 'OPPaletteInitializer',
+	#superclass : 'Object',
 	#instVars : [
 		'palette',
 		'diagramController'
 	],
-	#category : #'OpenPonk-Spec-Palettes'
+	#category : 'OpenPonk-Spec-Palettes',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Palettes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPPaletteInitializer class >> addAllToPalette: aPalette forController: aDiagramController [
 
 	^ self new
@@ -17,14 +19,14 @@ OPPaletteInitializer class >> addAllToPalette: aPalette forController: aDiagramC
 		  addAll
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPPaletteInitializer >> addAll [
 	diagramController initializePalette: palette.
 	palette newSeparator.
 	self filteredCommonItems do: #value
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OPPaletteInitializer >> allCommonItemsByName [
 
 	^ { 
@@ -40,12 +42,12 @@ OPPaletteInitializer >> allCommonItemsByName [
 			   whenCreatedSetup ]) } asDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPaletteInitializer >> diagramController: aDiagramController [
 	diagramController := aDiagramController
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPPaletteInitializer >> filteredCommonItems [
 	| filteredItemsByName |
 	filteredItemsByName := self allCommonItemsByName.
@@ -60,7 +62,7 @@ OPPaletteInitializer >> filteredCommonItems [
 	^ filteredItemsByName values
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPaletteInitializer >> palette: anOPPalette [ 
 	palette := anOPPalette 
 ]

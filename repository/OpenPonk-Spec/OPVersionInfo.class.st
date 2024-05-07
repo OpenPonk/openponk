@@ -1,6 +1,6 @@
 Class {
-	#name : #OPVersionInfo,
-	#superclass : #SpPresenter,
+	#name : 'OPVersionInfo',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'version',
 		'releaseNameLabel',
@@ -13,10 +13,12 @@ Class {
 		'commitDate',
 		'onInfoDownloadBlock'
 	],
-	#category : #'OpenPonk-Spec-Dialogs'
+	#category : 'OpenPonk-Spec-Dialogs',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Dialogs'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPVersionInfo class >> defaultLayout [
 	^ SpGridLayout new
 		borderWidth: 0;
@@ -33,7 +35,7 @@ OPVersionInfo class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPVersionInfo >> connectPresenters [
 	(version needsDownloadInfo and: [ version canDownloadInfo ])
 		ifTrue: [ [ version downloadInfo.
@@ -44,13 +46,13 @@ OPVersionInfo >> connectPresenters [
 				named: 'Loading OpenPonk version info from GitHub' ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPVersionInfo >> initialize [
 	onInfoDownloadBlock := [  ].
 	super initialize
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPVersionInfo >> initializePresenters [
 	| unknownLabel |
 	releaseNameLabel := self newLabel.
@@ -80,7 +82,7 @@ OPVersionInfo >> initializePresenters [
 	commitDate label: unknownLabel
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 OPVersionInfo >> onInfoDownloadDo: aBlock [
 
 	version needsDownloadInfo
@@ -88,7 +90,7 @@ OPVersionInfo >> onInfoDownloadDo: aBlock [
 		ifFalse: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPVersionInfo >> refreshInfo [
 	version needsDownloadInfo
 		ifTrue: [ ^ self ].
@@ -107,7 +109,7 @@ OPVersionInfo >> refreshInfo [
 	onInfoDownloadBlock value
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPVersionInfo >> setFailedInfo [
 	| label |
 	label := 'failed to download'.
@@ -117,7 +119,7 @@ OPVersionInfo >> setFailedInfo [
 	commitDate label: label
 ]
 
-{ #category : #'accessing model' }
+{ #category : 'accessing model' }
 OPVersionInfo >> setModelBeforeInitialization: aVersion [
 	version := aVersion
 ]

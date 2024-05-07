@@ -1,16 +1,18 @@
 Class {
-	#name : #OPIdeaGraphIcons,
-	#superclass : #OPIcons,
-	#category : #'OpenPonk-Core-Icons'
+	#name : 'OPIdeaGraphIcons',
+	#superclass : 'OPIcons',
+	#category : 'OpenPonk-Core-Icons',
+	#package : 'OpenPonk-Core',
+	#tag : 'Icons'
 }
 
-{ #category : #'accessing - icons' }
+{ #category : 'accessing - icons' }
 OPIdeaGraphIcons class >> actualZoomIcon [
 
 	^ Form fromBinaryStream: self actualZoomIconContents base64Decoded asByteArray readStream
 ]
 
-{ #category : #'private - contents' }
+{ #category : 'private - contents' }
 OPIdeaGraphIcons class >> actualZoomIconContents [
 	"Private - Method generated with the content of the file File @ D:\OpenPonk\icons\idea\actualZoom.png"
 	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA20lEQVR42sWTMQrCMBSGg9i6
@@ -21,13 +23,13 @@ kS7gwXNiE1SrvAI5uJGcWWoIE5vAR2JKPvrjHBLVzuIbgWKrXlbnJ91wOP9wZ6i6AAAAAElF
 TkSuQmCC'
 ]
 
-{ #category : #'accessing - icons' }
+{ #category : 'accessing - icons' }
 OPIdeaGraphIcons class >> exportIcon [
 
 	^ Form fromBinaryStream: self exportIconContents base64Decoded asByteArray readStream
 ]
 
-{ #category : #'private - contents' }
+{ #category : 'private - contents' }
 OPIdeaGraphIcons class >> exportIconContents [
 	"Private - Method generated with the content of the file File @ D:\OpenPonk\icons\idea\export.png"
 	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABP0lEQVR42mP4//8/Awh3dXXh
@@ -39,13 +41,13 @@ gjTmO/3XWeH5X3Ou016SDJBq0bFTnGj6SmOhw3/NxU5fAybGZBFlgESDhqFUi/YsuV7DN8oz
 LE+ozbNty+orTAIlLrICEYrPwNSQa8B/YgwgBlPPAABeEDpGXrZK1gAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'accessing - icons' }
+{ #category : 'accessing - icons' }
 OPIdeaGraphIcons class >> fitContentIcon [
 
 	^ Form fromBinaryStream: self fitContentIconContents base64Decoded asByteArray readStream
 ]
 
-{ #category : #'private - contents' }
+{ #category : 'private - contents' }
 OPIdeaGraphIcons class >> fitContentIconContents [
 	"Private - Method generated with the content of the file File @ D:\OpenPonk\icons\idea\fitContent.png"
 	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAdklEQVR42mP4//8/AyUYTERG
@@ -54,13 +56,13 @@ ZMB/ssMA6j9cfiZswOZm//+7ewJRMEiM1Fj4T41o/D/g0chASTSSnZTJz0yUYABuiwC/tz/3
 ZwAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'accessing - icons' }
+{ #category : 'accessing - icons' }
 OPIdeaGraphIcons class >> layoutIcon [
 
 	^ Form fromBinaryStream: self layoutIconContents base64Decoded asByteArray readStream
 ]
 
-{ #category : #'private - contents' }
+{ #category : 'private - contents' }
 OPIdeaGraphIcons class >> layoutIconContents [
 	"Private - Method generated with the content of the file File @ D:\OpenPonk\icons\idea\layout.png"
 	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA6UlEQVR42mP4//8/AyWYITIy
@@ -71,13 +73,13 @@ AIcYAIoKYhINkgFB0ChHGEBMooFqMIImtiRUFxCRaICK9wPxKyAuRQ4PsAHEJhpsmIHS7AwA
 I+sBKc+7H3oAAAAASUVORK5CYII='
 ]
 
-{ #category : #'accessing - icons' }
+{ #category : 'accessing - icons' }
 OPIdeaGraphIcons class >> zoomInIcon [
 
 	^ Form fromBinaryStream: self zoomInIconContents base64Decoded asByteArray readStream
 ]
 
-{ #category : #'private - contents' }
+{ #category : 'private - contents' }
 OPIdeaGraphIcons class >> zoomInIconContents [
 	"Private - Method generated with the content of the file File @ D:\OpenPonk\icons\idea\zoomIn.png"
 	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA1UlEQVR42rWTPQ6CQBCFqbBR
@@ -87,13 +89,13 @@ DDNWE9xZTILGDqjNmblNFbR/2YI/xObDITbMZOF78IIZr8jfhKy2ICa4gQsoNcGYhyTND44L
 TeAf1BZU4EoqzpU9YaEJvlH0JaP+uAGJbGf9i0DYSbOMn9sDVPxgE0dlAAAAAElFTkSuQmCC'
 ]
 
-{ #category : #'accessing - icons' }
+{ #category : 'accessing - icons' }
 OPIdeaGraphIcons class >> zoomOutIcon [
 
 	^ Form fromBinaryStream: self zoomOutIconContents base64Decoded asByteArray readStream
 ]
 
-{ #category : #'private - contents' }
+{ #category : 'private - contents' }
 OPIdeaGraphIcons class >> zoomOutIconContents [
 	"Private - Method generated with the content of the file File @ D:\OpenPonk\icons\idea\zoomOut.png"
 	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA1UlEQVR42rWTMQ6CQBBFqaBR

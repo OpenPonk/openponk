@@ -1,25 +1,27 @@
 Class {
-	#name : #OPShowHideElementsInDiagramCommand,
-	#superclass : #OPDiagramToolbarCommand,
-	#category : #'OpenPonk-Spec-Diagram-Toolbar-Commands'
+	#name : 'OPShowHideElementsInDiagramCommand',
+	#superclass : 'OPDiagramToolbarCommand',
+	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Diagram-Toolbar-Commands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPShowHideElementsInDiagramCommand class >> canBeExecutedInContext: aToolContext [
 	^ aToolContext editor plugin supportsHidingElements
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPShowHideElementsInDiagramCommand >> defaultMenuIcon [
 	^ OPIdeaActionsIcons propertiesIcon
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPShowHideElementsInDiagramCommand >> defaultMenuItemName [
 	^ 'Show/Hide Elements'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPShowHideElementsInDiagramCommand >> execute [
 
 	(OPShowHidePresenter

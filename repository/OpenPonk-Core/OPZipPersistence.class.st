@@ -2,12 +2,14 @@
 I store a MemoryStore into a specified zip file and vice versa.
 "
 Class {
-	#name : #OPZipPersistence,
-	#superclass : #Object,
-	#category : #'OpenPonk-Core-Persistence'
+	#name : 'OPZipPersistence',
+	#superclass : 'Object',
+	#category : 'OpenPonk-Core-Persistence',
+	#package : 'OpenPonk-Core',
+	#tag : 'Persistence'
 }
 
-{ #category : #'load and saving' }
+{ #category : 'load and saving' }
 OPZipPersistence >> loadFrom: aZipFile [
 	| root |
 	root := FileSystem memory root.
@@ -15,7 +17,7 @@ OPZipPersistence >> loadFrom: aZipFile [
 	^ root
 ]
 
-{ #category : #'load and saving' }
+{ #category : 'load and saving' }
 OPZipPersistence >> save: aRoot to: aZipFile [
 	| archive |
 	archive := ZipArchive new.

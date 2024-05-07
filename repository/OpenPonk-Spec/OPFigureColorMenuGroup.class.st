@@ -1,23 +1,25 @@
 Class {
-	#name : #OPFigureColorMenuGroup,
-	#superclass : #CmdMenuGroup,
-	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
+	#name : 'OPFigureColorMenuGroup',
+	#superclass : 'CmdMenuGroup',
+	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Diagram-Figure-Commands'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPFigureColorMenuGroup class >> colors [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPFigureColorMenuGroup class >> generateAllColorCommands [
 
 	<script>
 	self allSubclassesDo: #generateColorCommands
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPFigureColorMenuGroup class >> generateColorCommands [
 
 	| niceAttributeName superclassName |
@@ -56,7 +58,7 @@ OPFigureColorMenuGroup class >> generateColorCommands [
 				asFormOfSize: 30@20' ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPFigureColorMenuGroup class >> styleAttribute [
 
 	^ self subclassResponsibility

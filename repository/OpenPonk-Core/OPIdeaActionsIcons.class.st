@@ -1,16 +1,18 @@
 Class {
-	#name : #OPIdeaActionsIcons,
-	#superclass : #OPIcons,
-	#category : #'OpenPonk-Core-Icons'
+	#name : 'OPIdeaActionsIcons',
+	#superclass : 'OPIcons',
+	#category : 'OpenPonk-Core-Icons',
+	#package : 'OpenPonk-Core',
+	#tag : 'Icons'
 }
 
-{ #category : #'accessing - icons' }
+{ #category : 'accessing - icons' }
 OPIdeaActionsIcons class >> propertiesIcon [
 
 	^ Form fromBinaryStream: self propertiesIconContents base64Decoded asByteArray readStream
 ]
 
-{ #category : #'private - contents' }
+{ #category : 'private - contents' }
 OPIdeaActionsIcons class >> propertiesIconContents [
 	"Private - Method generated with the content of the file File @ D:\OpenPonk\icons\idea\actions\properties.png"
 	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAuUlEQVR42mP4//8/AyUYTERG

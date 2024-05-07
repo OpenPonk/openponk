@@ -1,34 +1,36 @@
 Class {
-	#name : #OPNode,
-	#superclass : #OPShape,
-	#category : #'OpenPonk-Core-Shapes'
+	#name : 'OPNode',
+	#superclass : 'OPShape',
+	#category : 'OpenPonk-Core-Shapes',
+	#package : 'OpenPonk-Core',
+	#tag : 'Shapes'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPNode >> addedByMouseClickTo: aPoint [
 
 	self translateTo: aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNode >> encompassingRectangle [
 
 	^ roassalShape encompassingRectangle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNode >> extent [
 
 	^ roassalShape extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNode >> height [
 
 	^ self extent y
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPNode >> isPositionableByUser [
 
 	^ self isRendered and: [
@@ -36,19 +38,19 @@ OPNode >> isPositionableByUser [
 			  self roassalShape hasInteraction: RSDraggable ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPNode >> movesWithOtherShape [
 
 	^ self isRendered not or: [ roassalShape isSelectionDraggable not ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNode >> position [
 
 	^ roassalShape position
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPNode >> renderShapeDetails [
 
 	self flag: 'https://github.com/ObjectProfile/Roassal3/issues/510'.
@@ -58,7 +60,7 @@ OPNode >> renderShapeDetails [
 		for: self
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPNode >> translateBy: deltaAsPoint [
 
 	"Move a shape by a delta value, expressed as a point"
@@ -66,7 +68,7 @@ OPNode >> translateBy: deltaAsPoint [
 	(roassalShape ifNil: [ ^ self ]) translateBy: deltaAsPoint
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPNode >> translateTo: aPoint [
 
 	"Translate a shape to a new position, expressed as a point"
@@ -74,7 +76,7 @@ OPNode >> translateTo: aPoint [
 	(roassalShape ifNil: [ ^ self ]) translateTo: aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNode >> width [
 
 	^ self extent x

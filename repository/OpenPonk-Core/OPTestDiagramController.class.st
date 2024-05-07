@@ -2,29 +2,31 @@
 I am a mock class for testing ""diagram"" model controllers.
 "
 Class {
-	#name : #OPTestDiagramController,
-	#superclass : #OPDiagramController,
-	#category : #'OpenPonk-Core-Controllers - Tests'
+	#name : 'OPTestDiagramController',
+	#superclass : 'OPDiagramController',
+	#category : 'OpenPonk-Core-Controllers - Tests',
+	#package : 'OpenPonk-Core',
+	#tag : 'Controllers - Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPTestDiagramController >> canBeTargetFor: aController [
 	^ aController class = OPTestEntityController
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTestDiagramController >> controllerFactory [
 	^ super controllerFactory
 		register: OPTestEntityController forModel: OPTestEntityModel;
 		register: OPTestRelationController forModel: OPTestRelationModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTestDiagramController >> elementsToShowInside [
 	^ model entities
 ]
 
-{ #category : #destruction }
+{ #category : 'destruction' }
 OPTestDiagramController >> initializePalette: aPalette [
 	(aPalette newCreationEntry: [ OPTestEntityController new ]) label: 'Entity'
 ]

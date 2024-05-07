@@ -1,10 +1,12 @@
 Class {
-	#name : #OPEdgeLabel,
-	#superclass : #OPLabel,
-	#category : #'OpenPonk-Core-Shapes'
+	#name : 'OPEdgeLabel',
+	#superclass : 'OPLabel',
+	#category : 'OpenPonk-Core-Shapes',
+	#package : 'OpenPonk-Core',
+	#tag : 'Shapes'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 OPEdgeLabel >> anchorToEdge [
 
 	OPRSAnchorConstraint new
@@ -13,32 +15,32 @@ OPEdgeLabel >> anchorToEdge [
 		stick: roassalShape on: self owningElement roassalShape
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 OPEdgeLabel >> defaultAnchorConstraintPosition [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 OPEdgeLabel >> defaultMinDistance [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 OPEdgeLabel >> renderShapeDetails [
 
 	super renderShapeDetails.
 	self anchorToEdge
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 OPEdgeLabel >> shouldBePositionableByUser [
 
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPEdgeLabel >> updateFromRender [
 
 	self bounds: (OPNodeBounds
@@ -47,7 +49,7 @@ OPEdgeLabel >> updateFromRender [
 	super updateFromRender
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPEdgeLabel >> updateRenderFromModel [
 
 	roassalShape text: self defaultText.
@@ -57,7 +59,7 @@ OPEdgeLabel >> updateRenderFromModel [
 	super updateRenderFromModel
 ]
 
-{ #category : #roassal }
+{ #category : 'roassal' }
 OPEdgeLabel >> updateRenderFromSelf [
 
 	self isRendered ifFalse: [ ^ self ].

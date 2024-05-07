@@ -1,47 +1,49 @@
 Class {
-	#name : #OPShowHideFacade,
-	#superclass : #Object,
+	#name : 'OPShowHideFacade',
+	#superclass : 'Object',
 	#instVars : [
 		'diagramController',
 		'executor'
 	],
-	#category : #'OpenPonk-Spec-Dialogs'
+	#category : 'OpenPonk-Spec-Dialogs',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Dialogs'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPShowHideFacade class >> on: aDiagramController [
 	^ self new
 		setDiagramController: aDiagramController;
 		yourself
 ]
 
-{ #category : #showing }
+{ #category : 'showing' }
 OPShowHideFacade >> hide: aCollection [
 	executor hideElements: aCollection
 ]
 
-{ #category : #normalizing }
+{ #category : 'normalizing' }
 OPShowHideFacade >> hideAll [
 	executor hideAllElements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShowHideFacade >> layout [
 	^ diagramController layouter
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPShowHideFacade >> setDiagramController: aDiagramController [
 	diagramController := aDiagramController.
 	executor := OPDiagramExplorer on: aDiagramController
 ]
 
-{ #category : #normalizing }
+{ #category : 'normalizing' }
 OPShowHideFacade >> showAll [
 	executor showAllElements
 ]
 
-{ #category : #showing }
+{ #category : 'showing' }
 OPShowHideFacade >> showElements: aCollection [
 	executor showElements: aCollection
 ]

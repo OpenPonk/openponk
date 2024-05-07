@@ -5,29 +5,31 @@ DCPalette>>newCreationTool:
 
 "
 Class {
-	#name : #OPCreationTool,
-	#superclass : #OPPaletteTool,
+	#name : 'OPCreationTool',
+	#superclass : 'OPPaletteTool',
 	#instVars : [
 		'factory',
 		'objectController',
 		'feedback',
 		'onComplete'
 	],
-	#category : #'OpenPonk-Spec-Palettes'
+	#category : 'OpenPonk-Spec-Palettes',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Palettes'
 }
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPCreationTool >> deselect [
 
 	feedback value: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCreationTool >> factory: aBlock [
 	factory := aBlock
 ]
 
-{ #category : #callbacks }
+{ #category : 'callbacks' }
 OPCreationTool >> hoveredController: aController [
 
 	feedback value: ((aController canBeTargetFor: objectController)
@@ -35,13 +37,13 @@ OPCreationTool >> hoveredController: aController [
 			 ifFalse: [ aController showDenyFeedbackFor: objectController ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCreationTool >> initialize [
 	super initialize.
 	onComplete := [ :ctrl |  ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPCreationTool >> select [
 
 	feedback := nil asValueHolder.
@@ -50,7 +52,7 @@ OPCreationTool >> select [
 	objectController := factory value
 ]
 
-{ #category : #callbacks }
+{ #category : 'callbacks' }
 OPCreationTool >> selectedControllers: aCollectionOfControllers [
 
 	| targetController |
@@ -66,7 +68,7 @@ OPCreationTool >> selectedControllers: aCollectionOfControllers [
 	objectController := nil
 ]
 
-{ #category : #callbacks }
+{ #category : 'callbacks' }
 OPCreationTool >> whenCreated: aOneArgBlock [
 	onComplete := aOneArgBlock
 ]

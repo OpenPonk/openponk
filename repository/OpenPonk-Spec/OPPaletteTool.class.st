@@ -3,38 +3,40 @@ An abstract base class for all palette tools.
 To create new tool override >>select  (and optionaly >>deselect) methods.
 "
 Class {
-	#name : #OPPaletteTool,
-	#superclass : #Object,
+	#name : 'OPPaletteTool',
+	#superclass : 'Object',
 	#instVars : [
 		'palette'
 	],
-	#category : #'OpenPonk-Spec-Palettes'
+	#category : 'OpenPonk-Spec-Palettes',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Palettes'
 }
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPPaletteTool >> deselect [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPaletteTool >> diagramController [
 	^ palette diagramController
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPPaletteTool >> disableMultiselect [
 
 	(self diagramController canvas propertyAt: OPRSSelectableCanvas)
 		disableMultiselect
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPaletteTool >> editor [
 	^ palette editor
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPPaletteTool >> enableMultiselect [
 
 	self diagramController canvas
@@ -42,36 +44,36 @@ OPPaletteTool >> enableMultiselect [
 		ifPresent: [ :selectableCanvas | selectableCanvas enableMultiselect ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPPaletteTool >> hoveredController: aController [
 
 	"do nothing by default"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPaletteTool >> palette [
 	^ palette
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPaletteTool >> palette: aPalette [
 
 	palette := aPalette
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPPaletteTool >> select [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPPaletteTool >> selectedControllers: aCollectionOfControllers [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPaletteTool >> workbench [
 	^ palette workbench
 ]

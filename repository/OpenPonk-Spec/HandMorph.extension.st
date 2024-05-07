@@ -1,6 +1,6 @@
-Extension { #name : #HandMorph }
+Extension { #name : 'HandMorph' }
 
-{ #category : #'*OpenPonk-Spec' }
+{ #category : '*OpenPonk-Spec' }
 HandMorph >> sendKeyboardEvent: anEvent [
 
 	self flag:
@@ -17,7 +17,7 @@ HandMorph >> sendKeyboardEvent: anEvent [
 		clear: [self keyboardFocus: nil]
 ]
 
-{ #category : #'*OpenPonk-Spec' }
+{ #category : '*OpenPonk-Spec' }
 HandMorph >> sendMouseEvent: anEvent [
 
 	self flag:

@@ -1,26 +1,28 @@
 Class {
-	#name : #OPProjectOpenCommand,
-	#superclass : #OPProjectCommand,
-	#category : #'OpenPonk-Spec-Commands'
+	#name : 'OPProjectOpenCommand',
+	#superclass : 'OPProjectCommand',
+	#category : 'OpenPonk-Spec-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Commands'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectOpenCommand class >> toolbarMenuActivation [
 	<classAnnotation>
 	^ OPWorkbenchActivation byItemOf: OPWProjectOpenMenuGroup order: 10 for: OPWorkbenchToolbar
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectOpenCommand >> defaultMenuIcon [
 	^ self iconNamed: #smallOpen
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectOpenCommand >> defaultMenuItemName [
 	^ 'Open Project...'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectOpenCommand >> execute [
 	OPProjectController openFromFile
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #CmdRootMenuGroup }
+Extension { #name : 'CmdRootMenuGroup' }
 
-{ #category : #'*OpenPonk-Spec' }
+{ #category : '*OpenPonk-Spec' }
 CmdRootMenuGroup >> buildSpecMenuOn: aMenu [
 	self contents
 		do: [ :each | 

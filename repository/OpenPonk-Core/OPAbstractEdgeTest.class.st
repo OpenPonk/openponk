@@ -1,10 +1,12 @@
 Class {
-	#name : #OPAbstractEdgeTest,
-	#superclass : #OPAbstractShapeTest,
-	#category : #'OpenPonk-Core-Tests'
+	#name : 'OPAbstractEdgeTest',
+	#superclass : 'OPAbstractShapeTest',
+	#category : 'OpenPonk-Core-Tests',
+	#package : 'OpenPonk-Core',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPAbstractEdgeTest >> testRenderSimplifiedForController [
 
 	| diagramController controller connectedController rsBox connectedShape |

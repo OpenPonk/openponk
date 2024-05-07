@@ -1,6 +1,6 @@
-Extension { #name : #SpDropListPresenter }
+Extension { #name : 'SpDropListPresenter' }
 
-{ #category : #'*OpenPonk-Spec' }
+{ #category : '*OpenPonk-Spec' }
 SpDropListPresenter >> addAndSelectItemLabeled: aString do: aBlock [
 
 	"Select the item. If it was not in the list, add it first - silently"
@@ -10,7 +10,7 @@ SpDropListPresenter >> addAndSelectItemLabeled: aString do: aBlock [
 	self selectItem: aString
 ]
 
-{ #category : #'*OpenPonk-Spec' }
+{ #category : '*OpenPonk-Spec' }
 SpDropListPresenter >> addSilentlyItemLabeled: aString do: aBlock [
 
 	| item |

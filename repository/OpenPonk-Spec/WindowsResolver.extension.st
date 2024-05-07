@@ -1,6 +1,6 @@
-Extension { #name : #WindowsResolver }
+Extension { #name : 'WindowsResolver' }
 
-{ #category : #'*OpenPonk-Spec' }
+{ #category : '*OpenPonk-Spec' }
 WindowsResolver >> home [
 
 	"Value of the $USERPROFILE environment variable. If HOME_PATH is set, use this (FIT CTU specific)"

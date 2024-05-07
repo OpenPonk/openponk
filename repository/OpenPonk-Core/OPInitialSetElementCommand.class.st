@@ -1,10 +1,12 @@
 Class {
-	#name : #OPInitialSetElementCommand,
-	#superclass : #OPUICommand,
-	#category : #'OpenPonk-Core-UICommands'
+	#name : 'OPInitialSetElementCommand',
+	#superclass : 'OPUICommand',
+	#category : 'OpenPonk-Core-UICommands',
+	#package : 'OpenPonk-Core',
+	#tag : 'UICommands'
 }
 
-{ #category : #execute }
+{ #category : 'execute' }
 OPInitialSetElementCommand >> execute [
 
 	controller diagramController editor workbench projectController

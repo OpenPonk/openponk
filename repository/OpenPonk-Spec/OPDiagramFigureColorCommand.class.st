@@ -1,13 +1,15 @@
 Class {
-	#name : #OPDiagramFigureColorCommand,
-	#superclass : #OPDiagramFigureCommand,
+	#name : 'OPDiagramFigureColorCommand',
+	#superclass : 'OPDiagramFigureCommand',
 	#instVars : [
 		'niceColorName'
 	],
-	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
+	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Diagram-Figure-Commands'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPDiagramFigureColorCommand class >> canBeExecutedInContext: aToolContext [
 
 	^ (super canBeExecutedInContext: aToolContext) and: [
@@ -15,31 +17,31 @@ OPDiagramFigureColorCommand class >> canBeExecutedInContext: aToolContext [
 			  any diagramElement supportsColorChangeOfType: self colorAttribute ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramFigureColorCommand class >> colorAttribute [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPDiagramFigureColorCommand class >> isAbstract [
 
 	^ self = OPDiagramFigureColorCommand or: [
 		  self superclass = OPDiagramFigureColorCommand ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramFigureColorCommand >> color [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramFigureColorCommand >> colorAttribute [
 	^ self class colorAttribute
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramFigureColorCommand >> defaultMenuIcon [
 
 	^ Morph new 
@@ -47,13 +49,13 @@ OPDiagramFigureColorCommand >> defaultMenuIcon [
 				asFormOfSize: 30@20
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramFigureColorCommand >> defaultMenuItemName [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramFigureColorCommand >> execute [
 
 	controllers collect: #diagramElement thenDo: [ :each |

@@ -1,13 +1,15 @@
 Class {
-	#name : #OPPragmaPluginMenuBuilder,
-	#superclass : #PragmaMenuBuilder,
+	#name : 'OPPragmaPluginMenuBuilder',
+	#superclass : 'PragmaMenuBuilder',
 	#instVars : [
 		'testBlock'
 	],
-	#category : #'OpenPonk-Spec-Utils'
+	#category : 'OpenPonk-Spec-Utils',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Utils'
 }
 
-{ #category : #'registrations handling' }
+{ #category : 'registrations handling' }
 OPPragmaPluginMenuBuilder >> collectRegistrations [
 
 	"Retrieve all pragma methods and evaluate them by passing the 
@@ -28,19 +30,19 @@ OPPragmaPluginMenuBuilder >> collectRegistrations [
 	self interpretRegistration: menu
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPPragmaPluginMenuBuilder >> hasCorrectArguments: aPragma [
 	^ aPragma numArgs = 0 or: [ testBlock value: aPragma ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPragmaPluginMenuBuilder >> model: anObject [
 
 	super model: anObject.
 	testBlock := self testBlockFor: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPragmaPluginMenuBuilder >> testBlockFor: aModel [
 
 	| blocks |

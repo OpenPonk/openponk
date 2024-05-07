@@ -1,14 +1,16 @@
 Class {
-	#name : #OPShowHidePresenter,
-	#superclass : #SpPresenter,
+	#name : 'OPShowHidePresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'diagramController',
 		'notebook'
 	],
-	#category : #'OpenPonk-Spec-Dialogs'
+	#category : 'OpenPonk-Spec-Dialogs',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Dialogs'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPShowHidePresenter class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -16,21 +18,21 @@ OPShowHidePresenter class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPShowHidePresenter >> cherryPickPage [
 	^ SpNotebookPage
 		title: 'By dependency'
 		provider: [ OPCherryPickShowHidePresenter owner: self on: diagramController ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPShowHidePresenter >> connectPresenters [
 	super connectPresenters.
 	notebook
 		whenSelectedPageChangedDo: [ :selectedPage | self refreshPage: selectedPage ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPShowHidePresenter >> initializePresenters [
 	notebook := self newNotebook.
 	notebook
@@ -38,7 +40,7 @@ OPShowHidePresenter >> initializePresenters [
 		addPage: self typesPage
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPShowHidePresenter >> initializeWindow: aWindowPresenter [
 
 	aWindowPresenter title:
@@ -48,24 +50,24 @@ OPShowHidePresenter >> initializeWindow: aWindowPresenter [
 	aWindowPresenter windowIcon: OPCoreIcons openponkIcon
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPShowHidePresenter >> refreshCurrentPage [
 	notebook selectedPage
 		ifNotNil: [ :selectedPage | self refreshPage: selectedPage ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPShowHidePresenter >> refreshPage: aPage [
 	aPage activePresenter
 		ifNotNil: [ :presenter | presenter updateSelectedItems ]
 ]
 
-{ #category : #'accessing model' }
+{ #category : 'accessing model' }
 OPShowHidePresenter >> setModelBeforeInitialization: aDiagramController [
 	diagramController := aDiagramController
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPShowHidePresenter >> typesPage [
 	^ SpNotebookPage
 		title: 'By type'

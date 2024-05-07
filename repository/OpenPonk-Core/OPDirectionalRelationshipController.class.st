@@ -2,18 +2,20 @@
 A DCRelationshipController is the parent class to all line based element controllers.
 "
 Class {
-	#name : #OPDirectionalRelationshipController,
-	#superclass : #OPElementController,
+	#name : 'OPDirectionalRelationshipController',
+	#superclass : 'OPElementController',
 	#traits : 'OPTRelationshipWithPathPointsController',
 	#classTraits : 'OPTRelationshipWithPathPointsController classTrait',
 	#instVars : [
 		'source',
 		'target'
 	],
-	#category : #'OpenPonk-Core-Controllers'
+	#category : 'OpenPonk-Core-Controllers',
+	#package : 'OpenPonk-Core',
+	#tag : 'Controllers'
 }
 
-{ #category : #figures }
+{ #category : 'figures' }
 OPDirectionalRelationshipController >> createDiagramElement [
 
 	super createDiagramElement.
@@ -22,13 +24,13 @@ OPDirectionalRelationshipController >> createDiagramElement [
 		target: self target ensureDiagramElement
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPDirectionalRelationshipController >> createLineFrom: fromElement to: toElement [
 
 	self deprecated: 'This is responsibility of DI shapes now'.
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPDirectionalRelationshipController >> createModelIn: aParentModel [
 
 	self model: self modelClass new.
@@ -38,32 +40,32 @@ OPDirectionalRelationshipController >> createModelIn: aParentModel [
 	^ self model
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPDirectionalRelationshipController >> edgeBuilder [
 
 	self deprecated:
 		'Depracated without replacement - use Roassal directly or define own figures'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDirectionalRelationshipController >> modelSource [
 
 	^ self model source
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDirectionalRelationshipController >> modelTarget [
 
 	^ self model target
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPDirectionalRelationshipController >> renderSimplified [
 
 	diagramElement := self diagramElementClass renderSimplifiedForController: self.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDirectionalRelationshipController >> source [
 
 	^ source ifNil: [
@@ -71,12 +73,12 @@ OPDirectionalRelationshipController >> source [
 			  ensureControllerFor: self modelSource ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDirectionalRelationshipController >> source: aSourceController [
 	source := aSourceController
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDirectionalRelationshipController >> target [
 
 	^ target ifNil: [
@@ -84,7 +86,7 @@ OPDirectionalRelationshipController >> target [
 			  ensureControllerFor: self modelTarget ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDirectionalRelationshipController >> target: aTargetController [
 	target := aTargetController
 ]

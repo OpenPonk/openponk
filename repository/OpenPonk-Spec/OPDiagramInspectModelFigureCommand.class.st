@@ -1,22 +1,24 @@
 Class {
-	#name : #OPDiagramInspectModelFigureCommand,
-	#superclass : #OPDiagramFigureCommand,
-	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
+	#name : 'OPDiagramInspectModelFigureCommand',
+	#superclass : 'OPDiagramFigureCommand',
+	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Diagram-Figure-Commands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPDiagramInspectModelFigureCommand class >> canvasShortcutActivation [
 	<classAnnotation>
 	^ CmdShortcutActivation by: $i meta for: OPCanvasPresenter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramInspectModelFigureCommand >> defaultMenuIcon [
 
 	^ self iconNamed: #glamorousInspect
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPDiagramInspectModelFigureCommand >> defaultMenuItemName [
 
 	| basicName |
@@ -25,7 +27,7 @@ OPDiagramInspectModelFigureCommand >> defaultMenuItemName [
 	^ models size pluralize: basicName
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPDiagramInspectModelFigureCommand >> execute [
 
 	models size = 1 ifTrue: [ ^ models anyOne inspect ].

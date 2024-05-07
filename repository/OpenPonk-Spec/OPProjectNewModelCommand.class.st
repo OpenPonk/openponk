@@ -1,26 +1,28 @@
 Class {
-	#name : #OPProjectNewModelCommand,
-	#superclass : #OPProjectCommand,
-	#category : #'OpenPonk-Spec-Commands'
+	#name : 'OPProjectNewModelCommand',
+	#superclass : 'OPProjectCommand',
+	#category : 'OpenPonk-Spec-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Commands'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 OPProjectNewModelCommand class >> toolbarMenuActivation [
 	<classAnnotation>
 	^ OPWorkbenchActivation byItemOf: OPWProjectModelsMenuGroup order: 20 for: OPWorkbenchToolbar
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectNewModelCommand >> defaultMenuIcon [
 	^ self iconNamed: #glamorousAdd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectNewModelCommand >> defaultMenuItemName [
 	^ 'New model...'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPProjectNewModelCommand >> execute [
 
 	OPPluginRegistry default plugins ifEmpty: [

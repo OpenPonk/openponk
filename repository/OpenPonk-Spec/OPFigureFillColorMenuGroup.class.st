@@ -1,10 +1,12 @@
 Class {
-	#name : #OPFigureFillColorMenuGroup,
-	#superclass : #OPFigureColorMenuGroup,
-	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
+	#name : 'OPFigureFillColorMenuGroup',
+	#superclass : 'OPFigureColorMenuGroup',
+	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Diagram-Figure-Commands'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPFigureFillColorMenuGroup class >> colors [
 
 	^ {
@@ -19,13 +21,13 @@ OPFigureFillColorMenuGroup class >> colors [
 		  Color paleMagenta }
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPFigureFillColorMenuGroup class >> styleAttribute [
 
 	^ #fillColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPFigureFillColorMenuGroup >> name [
 
 	^ 'Fill color'

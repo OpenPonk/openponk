@@ -1,10 +1,12 @@
 Class {
-	#name : #OPProjectMergeModelsCommand,
-	#superclass : #OPProjectCommand,
-	#category : #'OpenPonk-Spec-Commands'
+	#name : 'OPProjectMergeModelsCommand',
+	#superclass : 'OPProjectCommand',
+	#category : 'OpenPonk-Spec-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Commands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPProjectMergeModelsCommand class >> canBeExecutedInContext: aToolContext [
 
 	| workbench pluginRegistry |
@@ -16,24 +18,24 @@ OPProjectMergeModelsCommand class >> canBeExecutedInContext: aToolContext [
 		  any supportsMergingModels ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 OPProjectMergeModelsCommand class >> toolbarMenuActivation [
 	<classAnnotation>
 	^ OPWorkbenchActivation byItemOf: OPWProjectModelsMenuGroup order: 40 for: OPWorkbenchToolbar
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectMergeModelsCommand >> defaultMenuIcon [
 
 	^ self iconNamed: #hierarchy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectMergeModelsCommand >> defaultMenuItemName [
 	^ 'Merge all models/diagrams'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPProjectMergeModelsCommand >> execute [
 
 	projectController mergeModelsAndDiagramsIntoOne

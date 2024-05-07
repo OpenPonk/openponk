@@ -1,6 +1,6 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*OpenPonk-Core' }
+{ #category : '*OpenPonk-Core' }
 Object >> modelObjectFrom: aDictionary [
 
 	^ self

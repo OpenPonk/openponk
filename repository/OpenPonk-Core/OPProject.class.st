@@ -2,8 +2,8 @@
 I represent a collection of diagrams and settings opened in editor.
 "
 Class {
-	#name : #OPProject,
-	#superclass : #Object,
+	#name : 'OPProject',
+	#superclass : 'Object',
 	#instVars : [
 		'uuid',
 		'dirty',
@@ -12,41 +12,43 @@ Class {
 		'name',
 		'modelsAndDiagrams'
 	],
-	#category : #'OpenPonk-Core-Models'
+	#category : 'OpenPonk-Core-Models',
+	#package : 'OpenPonk-Core',
+	#tag : 'Models'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPProject class >> name: aString [
 	^ self new
 		name: aString;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPProject class >> named: aString [
 	^ self new
 		name: aString;
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPProject >> = anotherProject [
 
 	^ self uuid = anotherProject uuid
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProject >> addDiagram: aDiagram [
 
 	(self addModel: aDiagram modelElement) add: aDiagram
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProject >> addDiagrams: aCollection [
 	aCollection do: [ :each | self addDiagram: each ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 OPProject >> addModel: aModel [
 
 	| diagrams |
@@ -57,17 +59,17 @@ OPProject >> addModel: aModel [
 	^ diagrams
 ]
 
-{ #category : #announcements }
+{ #category : 'announcements' }
 OPProject >> changed [
 	dirty value: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProject >> controllerClass [
 	^ OPProjectController
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 OPProject >> copyDiagram: aDiagram [
 	| newDiagram |
 	newDiagram := aDiagram newCopy.
@@ -75,7 +77,7 @@ OPProject >> copyDiagram: aDiagram [
 	^ newDiagram
 ]
 
-{ #category : #descriptions }
+{ #category : 'descriptions' }
 OPProject >> descriptionName [
 	<magritteDescription>
 	^ MAStringDescription new
@@ -85,26 +87,26 @@ OPProject >> descriptionName [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProject >> diagrams [
 
 	^ modelsAndDiagrams flattened
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProject >> diagrams: aCollection [
 
 	modelsAndDiagrams do: [ :each | each removeAll ].
 	self addDiagrams: aCollection
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 OPProject >> diagramsOf: aModel [
 
 	^ modelsAndDiagrams at: aModel ifAbsent: [ OrderedCollection new ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 OPProject >> ensureModelsHaveDiagrams [
 
 	self addDiagrams: (self models
@@ -113,25 +115,25 @@ OPProject >> ensureModelsHaveDiagrams [
 			 OPOpenPonkDiagram forModelElement: eachModel ])
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 OPProject >> hasDiagramsModel: aModel [
 
 	^ (modelsAndDiagrams at: aModel ifAbsent: [ ^ false ]) isNotEmpty
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 OPProject >> hasModel: aModel [
 
 	^ self models includes: aModel
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPProject >> hash [
 
 	^ self uuid hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPProject >> initialize [
 
 	modelsAndDiagrams := Dictionary new asValueHolder.
@@ -141,7 +143,7 @@ OPProject >> initialize [
 	name whenChangedDo: [ dirty value: true ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPProject >> inspectionItems [
 
 	<inspectorPresentationOrder: 100 title: 'Models and Diagrams'>
@@ -156,7 +158,7 @@ OPProject >> inspectionItems [
 		  yourself
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 OPProject >> mergeWith: aProject [
 
 	| otherModels otherDiagrams |
@@ -166,29 +168,29 @@ OPProject >> mergeWith: aProject [
 	self addDiagrams: otherDiagrams
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProject >> models [
 
 	^ modelsAndDiagrams keys
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProject >> modelsAndDiagrams [
 
 	^ modelsAndDiagrams value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProject >> name [
 	^ name value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProject >> name: aString [
 	name := aString
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 OPProject >> removeDiagram: aDiagram [
 
 	modelsAndDiagrams
@@ -196,18 +198,18 @@ OPProject >> removeDiagram: aDiagram [
 		ifPresent: [ :diagrams | diagrams remove: aDiagram ]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 OPProject >> removeDiagramsOf: aModel [
 
 	(modelsAndDiagrams at: aModel) removeAll
 ]
 
-{ #category : #persistence }
+{ #category : 'persistence' }
 OPProject >> removeFromImage [
 	OPProjectStorage default remove: self
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 OPProject >> removeModel: aModel [
 
 	modelsAndDiagrams removeKey: aModel.
@@ -216,53 +218,53 @@ OPProject >> removeModel: aModel [
 	(aModel respondsTo: #project:) ifTrue: [ aModel project: nil ]
 ]
 
-{ #category : #persistence }
+{ #category : 'persistence' }
 OPProject >> saveInImage [
 	OPProjectStorage default add: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProject >> storageFile [
 	^ storageFile
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProject >> storageFile: anObject [
 	storageFile := anObject.
 	^ storageFile
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProject >> storageFolder [
 	"A folder where the project data is stored."
 
 	^ storageFolder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProject >> storageFolder: aFilePath [
 	storageFolder := aFilePath
 ]
 
-{ #category : #announcements }
+{ #category : 'announcements' }
 OPProject >> unsubscribe: aSubscriber [
 
 	dirty announcer unsubscribe: aSubscriber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProject >> uuid [
 
 	^ uuid ifNil: [ uuid := UUID new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProject >> uuid: aUUID [
 	uuid := aUUID
 ]
 
-{ #category : #announcements }
+{ #category : 'announcements' }
 OPProject >> whenChanged: aBlock [
 
-	dirty announcer when: ValueChanged do: aBlock
+	dirty announcer when: ValueChanged do: aBlock for: aBlock receiver
 ]

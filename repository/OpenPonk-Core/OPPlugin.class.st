@@ -10,15 +10,17 @@ Describe general info and access points of a plugin.
 DCPluginRegistry
 "
 Class {
-	#name : #OPPlugin,
-	#superclass : #Object,
+	#name : 'OPPlugin',
+	#superclass : 'Object',
 	#instVars : [
 		'layouter'
 	],
-	#category : #'OpenPonk-Core-Plugin'
+	#category : 'OpenPonk-Core-Plugin',
+	#package : 'OpenPonk-Core',
+	#tag : 'Plugin'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPlugin >> diagramClass [
 	self
 		deprecated: 'Use #modelClass'
@@ -26,86 +28,86 @@ OPPlugin >> diagramClass [
 	^ self modelClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPlugin >> diagramControllerClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPlugin >> icon [
 	^ OPCoreIcons opFsmDiagramIcon
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPPlugin >> isForController: aDiagramController [
 	^ self diagramControllerClass = aDiagramController class
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPPlugin >> isPluginFor: aModel [
 	^ self modelClass = aModel class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPlugin >> layouterClass [
 	"Create your own subclass of OPLayouter or use OPNoLayouter which does nothing"
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPPlugin >> mergeModels: aModelsCollection [
 
 	self notYetImplemented
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPlugin >> modelClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPlugin >> modelSerializerClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPlugin >> name [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPPlugin >> newModel [
 	^ self modelClass new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPlugin >> serializer [
 	^ OPMementoDirectorySerializer forPlugin: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPlugin >> simpleName [
 	^ self name capitalized
 		select: [ :each | each isLetter and: [ each asciiValue <= 127 ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPlugin >> singleStringSerializer [
 	^ self serializer
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPPlugin >> supportsHidingElements [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPPlugin >> supportsMergingModels [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPlugin >> version [
 	^ '0.0.0+unknown'
 ]

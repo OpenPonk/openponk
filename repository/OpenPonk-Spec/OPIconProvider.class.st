@@ -1,10 +1,12 @@
 Class {
-	#name : #OPIconProvider,
-	#superclass : #SpIconProvider,
-	#category : #'OpenPonk-Spec-Application'
+	#name : 'OPIconProvider',
+	#superclass : 'SpIconProvider',
+	#category : 'OpenPonk-Spec-Application',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Application'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPIconProvider >> iconNamed: aName ifAbsent: aBlock [
 
 	aName ifNil: [ ^ aBlock value ].

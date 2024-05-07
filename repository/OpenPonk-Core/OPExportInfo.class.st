@@ -1,57 +1,59 @@
 Class {
-	#name : #OPExportInfo,
-	#superclass : #Object,
+	#name : 'OPExportInfo',
+	#superclass : 'Object',
 	#instVars : [
 		'subject',
 		'version',
 		'format'
 	],
-	#category : #'OpenPonk-Core-Persistence'
+	#category : 'OpenPonk-Core-Persistence',
+	#package : 'OpenPonk-Core',
+	#tag : 'Persistence'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPExportInfo class >> fileName [
 
 	^ 'export-info.json'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPExportInfo class >> neoJsonMapping: mapper [
 
 	mapper for: self do: [ :mapping | mapping mapAllInstVars ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPExportInfo >> format [
 
 	^ format
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPExportInfo >> format: anObject [
 
 	format := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPExportInfo >> subject [
 
 	^ subject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPExportInfo >> subject: anObject [
 
 	subject := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPExportInfo >> version [
 
 	^ version
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPExportInfo >> version: anObject [
 
 	version := anObject

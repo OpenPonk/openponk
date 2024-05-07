@@ -2,8 +2,8 @@
 I am not actually a controller, but I do manage a Project.
 "
 Class {
-	#name : #OPProjectController,
-	#superclass : #Object,
+	#name : 'OPProjectController',
+	#superclass : 'Object',
 	#instVars : [
 		'workbench',
 		'project',
@@ -16,10 +16,12 @@ Class {
 	#classVars : [
 		'RecentProjects'
 	],
-	#category : #'OpenPonk-Core-Controllers'
+	#category : 'OpenPonk-Core-Controllers',
+	#package : 'OpenPonk-Core',
+	#tag : 'Controllers'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPProjectController class >> fromDirectory: aFolder [
 
 	^ [ :job | 
@@ -34,7 +36,7 @@ OPProjectController class >> fromDirectory: aFolder [
 	  materializer loadProjectFrom: aFolder asFileReference ] asJob run
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 OPProjectController class >> fromDirectoryDo: aBlock [
 
 	StFBOpenDirectoryDialog new
@@ -43,7 +45,7 @@ OPProjectController class >> fromDirectoryDo: aBlock [
 		open
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPProjectController class >> fromFile: aFile [
 
 	| newProject store aFileReference |
@@ -54,7 +56,7 @@ OPProjectController class >> fromFile: aFile [
 	^ newProject
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 OPProjectController class >> fromFileDo: aBlock [
 
 	StFBOpenFileDialog new
@@ -64,7 +66,7 @@ OPProjectController class >> fromFileDo: aBlock [
 		open
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 OPProjectController class >> modalFromFile [
 
 	^ StFBOpenFileDialog new
@@ -73,25 +75,25 @@ OPProjectController class >> modalFromFile [
 		  openModal
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 OPProjectController class >> openFromFile [
 
 	self fromFileDo: [ :project | project open ]
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 OPProjectController class >> openModalFromFile [
 
 	^ (self fromFile: (self modalFromFile ifNil: [ ^ nil ])) open
 		  projectController
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 OPProjectController >> addDiagramController: aController [
 	controllers add: aController
 ]
 
-{ #category : #saving }
+{ #category : 'saving' }
 OPProjectController >> canProjectBeSavedToFile: aFileReference [
 	aFileReference ifNil: [ ^ false ].
 	[ aFileReference createFile ]
@@ -102,69 +104,69 @@ OPProjectController >> canProjectBeSavedToFile: aFileReference [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectController >> controllers [
 	^ controllers
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectController >> enabledPlugins [
 	^ OPPluginRegistry default plugins
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPProjectController >> hasDiagram: aDiagram [
 
 	^ controllers anySatisfy: [ :each | each diagramElement = aDiagram ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 OPProjectController >> hasModel: aModel [
 
 	^ project hasModel: aModel
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 OPProjectController >> hasModel: aModel diagram: aDiagram [
 	^ controllers
 		anySatisfy: [ :each | each model = aModel and: [ each diagram = aDiagram ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPProjectController >> initialize [
 	super initialize.
 	controllers := OrderedCollection new
 ]
 
-{ #category : #saving }
+{ #category : 'saving' }
 OPProjectController >> initializeProjectFolder: aFolder [
 	(aFolder / 'models') ensureCreateDirectory
 ]
 
-{ #category : #saving }
+{ #category : 'saving' }
 OPProjectController >> lastSave [
 	^ lastSave
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 OPProjectController >> loadStateFrom: aFile [
 	^ STON fromStream: aFile readStream
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 OPProjectController >> mergeFrom: aFile [
 
 	self mergeWith: (self class fromFile: aFile)
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 OPProjectController >> mergeFromFile [
 
 	self class fromFileDo: [ :otherProject | 
 		self mergeWith: otherProject ]
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 OPProjectController >> mergeModelsAndDiagramsIntoOne [
 
 	| showError plugins models plugin |
@@ -214,7 +216,7 @@ OPProjectController >> mergeModelsAndDiagramsIntoOne [
 		openDialog
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 OPProjectController >> mergeWith: aProject [
 
 	| otherProjectDiagrams |
@@ -223,24 +225,24 @@ OPProjectController >> mergeWith: aProject [
 	otherProjectDiagrams do: [ :each | self openEditorOnDiagram: each ]
 ]
 
-{ #category : #saving }
+{ #category : 'saving' }
 OPProjectController >> modelMementoFor: aModel [
 
 	^ OPMemento model: aModel diagrams: (project diagramsOf: aModel)
 ]
 
-{ #category : #saving }
+{ #category : 'saving' }
 OPProjectController >> modelMementos [
 	^ self project models collect: [ :each | self modelMementoFor: each ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectController >> navigatorAdapters [
 
 	^ navigatorAdapters ifNil: [ OPNavigatorAdapters new ]
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 OPProjectController >> openDiagrams [
 
 	| selected |
@@ -258,28 +260,28 @@ OPProjectController >> openDiagrams [
 			workbench openEditorOnDiagram: eachDiagram ] ]
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 OPProjectController >> openEditorOnDiagram: aDiagram [
 
 	^ workbench openEditorOnDiagram: aDiagram
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectController >> persistenceManager [
 	^ persistenceManager ifNil: [ persistenceManager := OPProjectDirectorySerializer new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectController >> project [
 	^ project
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectController >> project: aProject [
 	project := aProject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectController >> projectFolder [
 	self project storageFolder
 		ifNil: [ self project
@@ -289,12 +291,12 @@ OPProjectController >> projectFolder [
 	^ self project storageFolder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectController >> recentProjects [
 	^ RecentProjects ifNil: [ RecentProjects := OrderedDictionary new ]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 OPProjectController >> removeDiagram: aDiagram [
 
 	project removeDiagram: aDiagram.
@@ -303,13 +305,13 @@ OPProjectController >> removeDiagram: aDiagram [
 			 ifNone: [ ^ self ])
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 OPProjectController >> removeDiagramController: aController [
 
 	controllers remove: aController
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 OPProjectController >> removeModel: aModel [
 
 	(controllers select: [ :any | any model = aModel ]) do: [ :each | 
@@ -317,7 +319,7 @@ OPProjectController >> removeModel: aModel [
 	project removeModel: aModel
 ]
 
-{ #category : #saving }
+{ #category : 'saving' }
 OPProjectController >> replaceWritableProjectFile [
 
 	^ self project storageFile: ((StFBSaveFileDialog new
@@ -326,7 +328,7 @@ OPProjectController >> replaceWritableProjectFile [
 			    openModal) ifNil: [ OPProjectSaveCanceledException signal ])
 ]
 
-{ #category : #saving }
+{ #category : 'saving' }
 OPProjectController >> saveProject [
 
 	| file |
@@ -345,7 +347,7 @@ OPProjectController >> saveProject [
 		actionOnClick: [ file openInOSFileBrowser ]
 ]
 
-{ #category : #saving }
+{ #category : 'saving' }
 OPProjectController >> saveProjectAs [
 	[ self replaceWritableProjectFile ]
 		on: OPProjectSaveCanceledException
@@ -353,7 +355,7 @@ OPProjectController >> saveProjectAs [
 	self saveProject
 ]
 
-{ #category : #saving }
+{ #category : 'saving' }
 OPProjectController >> saveProjectTo: aFile [
 
 	| store projectDirectory |
@@ -369,14 +371,14 @@ OPProjectController >> saveProjectTo: aFile [
 	workbench updateTitle
 ]
 
-{ #category : #saving }
+{ #category : 'saving' }
 OPProjectController >> saveState: saveData to: aFile [
 	aFile
 		ensureDelete;
 		writeStreamDo: [ :stream | stream nextPutAll: (STON toJsonStringPretty: saveData) ]
 ]
 
-{ #category : #'diagram selecting' }
+{ #category : 'diagram selecting' }
 OPProjectController >> selectInDiagram: aModelElement [
 
 	controllers do: [ :dctrl | 
@@ -391,7 +393,7 @@ OPProjectController >> selectInDiagram: aModelElement [
 				^ self ] ] ]
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 OPProjectController >> updateDiagram: aDiagram [
 
 	| focusedController |
@@ -409,19 +411,19 @@ OPProjectController >> updateDiagram: aDiagram [
 				isSelected: false ]
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 OPProjectController >> updateDiagrams [
 
 	self project diagrams do: [ :eachDiagram | 
 		self updateDiagram: eachDiagram ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectController >> workbench: aWorkbench [
 	workbench := aWorkbench 
 ]
 
-{ #category : #saving }
+{ #category : 'saving' }
 OPProjectController >> writableProjectFile [
 	[ self canProjectBeSavedToFile: self project storageFile ]
 		whileFalse: [ self project storageFile

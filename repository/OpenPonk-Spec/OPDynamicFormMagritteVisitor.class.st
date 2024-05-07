@@ -2,55 +2,57 @@
 I convert magritte descriptions into DynamicForm widgets.
 "
 Class {
-	#name : #OPDynamicFormMagritteVisitor,
-	#superclass : #MAVisitor,
+	#name : 'OPDynamicFormMagritteVisitor',
+	#superclass : 'MAVisitor',
 	#instVars : [
 		'form',
 		'controller'
 	],
-	#category : #'OpenPonk-Spec-Form'
+	#category : 'OpenPonk-Spec-Form',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Form'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDynamicFormMagritteVisitor >> controller [
 	^ controller
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDynamicFormMagritteVisitor >> controller: anObject [
 	controller := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDynamicFormMagritteVisitor >> form [
 	^ form
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDynamicFormMagritteVisitor >> form: anObject [
 	form := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPDynamicFormMagritteVisitor >> shouldIncludeLabelFor: aContainer [
 	"container priority = 0 is the root container"
 
 	^ aContainer priority > 0 & aContainer label isNotNil
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visit: anObject [
 	((anObject respondsTo: #isVisible) and: [ anObject isVisible not ])
 		ifTrue: [ ^ self ].
 	^ super visit: anObject
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visitActionDescription: aDescription [
 	(form addButton: aDescription label) action: aDescription action
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visitBooleanDescription: aBooleanDescription [
 
 	(form addCheckbox: aBooleanDescription label)
@@ -59,14 +61,14 @@ OPDynamicFormMagritteVisitor >> visitBooleanDescription: aBooleanDescription [
 			aBooleanDescription accessor write: newValue to: controller ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visitLabelDescription: aStringDescription [
 
 	form addLabel: aStringDescription label.
 	form addLabel: (aStringDescription accessor read: controller)
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visitMemoDescription: aMemoDescription [
 
 	(aMemoDescription lineCount > aMemoDescription class defaultLineCount
@@ -77,7 +79,7 @@ OPDynamicFormMagritteVisitor >> visitMemoDescription: aMemoDescription [
 			aMemoDescription accessor write: newValue asString to: controller ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visitMultipleOptionDescription: aMultipleOptionDescription [
 
 	| dropList |
@@ -97,7 +99,7 @@ OPDynamicFormMagritteVisitor >> visitMultipleOptionDescription: aMultipleOptionD
 			selection accessor write: selection selectedItems to: controller ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visitPriorityContainer: aContainer [
 	(self shouldIncludeLabelFor: aContainer)
 		ifTrue: [ form addLabel: aContainer label ].
@@ -105,7 +107,7 @@ OPDynamicFormMagritteVisitor >> visitPriorityContainer: aContainer [
 	form addSeparator
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visitSingleOptionDescription: aSingleOptionDescription [
 
 	| dropList |
@@ -127,7 +129,7 @@ OPDynamicFormMagritteVisitor >> visitSingleOptionDescription: aSingleOptionDescr
 			aSingleOptionDescription accessor write: newValue to: controller ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visitStringDescription: aStringDescription [
 
 	aStringDescription isReadOnly ifTrue: [ 
@@ -150,7 +152,7 @@ OPDynamicFormMagritteVisitor >> visitStringDescription: aStringDescription [
 								openInWorld ] ] ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visitToManyRelationDescription: aMAToManyRelationDescription [
 	form addLabel: aMAToManyRelationDescription label.
 	(form addButton: 'Edit ') action: [ controller maEdit ]

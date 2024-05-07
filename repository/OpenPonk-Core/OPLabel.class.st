@@ -1,13 +1,15 @@
 Class {
-	#name : #OPLabel,
-	#superclass : #OPBoundNode,
+	#name : 'OPLabel',
+	#superclass : 'OPBoundNode',
 	#instVars : [
 		'text'
 	],
-	#category : #'OpenPonk-Core-Shapes'
+	#category : 'OpenPonk-Core-Shapes',
+	#package : 'OpenPonk-Core',
+	#tag : 'Shapes'
 }
 
-{ #category : #'ston-core' }
+{ #category : 'ston-core' }
 OPLabel class >> stonAllInstVarNames [
 
 	"Override to encode my instances using a custom set of instance variables or to define their order."
@@ -15,37 +17,37 @@ OPLabel class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #text )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLabel >> defaultFontColor [
 
 	^ Color black
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLabel >> defaultFontName [
 
 	^ RSLabel defaultFont familyName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLabel >> defaultFontSize [
 
 	^ 10
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLabel >> defaultText [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 OPLabel >> emphasis [
 
 	^ self stylesEmphasis
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLabel >> fontColor [
 
 	^ self
@@ -53,7 +55,7 @@ OPLabel >> fontColor [
 		  ifAbsent: [ self defaultFontColor ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLabel >> fontName [
 
 	^ self
@@ -61,7 +63,7 @@ OPLabel >> fontName [
 		  ifAbsent: [ self defaultFontName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLabel >> fontSize [
 
 	^ self
@@ -69,19 +71,19 @@ OPLabel >> fontSize [
 		  ifAbsent: [ self defaultFontSize ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPLabel >> isResizableByUser [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLabel >> noText [
 
 	self text: ''
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPLabel >> renderBasicShape [
 
 	^ RSLabel new
@@ -89,13 +91,13 @@ OPLabel >> renderBasicShape [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLabel >> resetText [
 
 	self text: nil
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 OPLabel >> stylesEmphasis [
 
 	| emphasis |
@@ -111,19 +113,19 @@ OPLabel >> stylesEmphasis [
 	^ emphasis
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLabel >> text [
 
 	^ text ifNil: [ self defaultText ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLabel >> text: aString [
 
 	text := aString
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPLabel >> updateRenderFromModel [
 
 	super updateRenderFromModel.
@@ -135,7 +137,7 @@ OPLabel >> updateRenderFromModel [
 	roassalShape signalUpdate
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPLabel >> updateRenderFromStyles [
 
 	self isRendered ifFalse: [ ^ self ].

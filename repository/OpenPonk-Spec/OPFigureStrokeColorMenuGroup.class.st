@@ -1,10 +1,12 @@
 Class {
-	#name : #OPFigureStrokeColorMenuGroup,
-	#superclass : #OPFigureColorMenuGroup,
-	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
+	#name : 'OPFigureStrokeColorMenuGroup',
+	#superclass : 'OPFigureColorMenuGroup',
+	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Diagram-Figure-Commands'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPFigureStrokeColorMenuGroup class >> colors [
 
 	^ {
@@ -19,13 +21,13 @@ OPFigureStrokeColorMenuGroup class >> colors [
 		  Color magenta }
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPFigureStrokeColorMenuGroup class >> styleAttribute [
 
 	^ #strokeColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPFigureStrokeColorMenuGroup >> name [
 
 	^ 'Stroke color'

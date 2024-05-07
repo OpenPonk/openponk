@@ -1,23 +1,25 @@
 Trait {
-	#name : #OPTColoredAsFont,
+	#name : 'OPTColoredAsFont',
 	#traits : 'OPTColored',
 	#classTraits : 'OPTColored classTrait',
-	#category : #'OpenPonk-Core-Shapes'
+	#category : 'OpenPonk-Core-Shapes',
+	#package : 'OpenPonk-Core',
+	#tag : 'Shapes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTColoredAsFont >> color [
 
 	^ self fontColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTColoredAsFont >> fontColor [
 
 	^ self stylePropertyNamed: #fontColor ifAbsent: [ Color black ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTColoredAsFont >> fontColor: aColor [
 
 	^ self stylePropertyNamed: #fontColor put: aColor

@@ -1,35 +1,37 @@
 Class {
-	#name : #OPMAActionDescription,
-	#superclass : #MAElementDescription,
-	#category : #'OpenPonk-Spec-Form'
+	#name : 'OPMAActionDescription',
+	#superclass : 'MAElementDescription',
+	#category : 'OpenPonk-Spec-Form',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Form'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPMAActionDescription class >> defaultAction [
 	^ [  ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPMAActionDescription class >> isAbstract [
 	^ false
 ]
 
-{ #category : #'accessing-properties' }
+{ #category : 'accessing-properties' }
 OPMAActionDescription class >> label [
 	^ 'Action'
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OPMAActionDescription >> acceptMagritte: aVisitor [
 	aVisitor visitActionDescription: self
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OPMAActionDescription >> action [
 	^ self propertyAt: #action ifAbsent: [ self class defaultAction ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OPMAActionDescription >> action: aBlock [
 	self propertyAt: #action put: aBlock
 ]

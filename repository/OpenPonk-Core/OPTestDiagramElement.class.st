@@ -1,10 +1,12 @@
 Class {
-	#name : #OPTestDiagramElement,
-	#superclass : #OPShape,
-	#category : #'OpenPonk-Core-Controllers - Tests'
+	#name : 'OPTestDiagramElement',
+	#superclass : 'OPShape',
+	#category : 'OpenPonk-Core-Controllers - Tests',
+	#package : 'OpenPonk-Core',
+	#tag : 'Controllers - Tests'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPTestDiagramElement >> renderBasicShape [
 
 	^ RSBox new

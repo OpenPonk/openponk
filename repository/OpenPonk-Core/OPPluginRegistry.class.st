@@ -6,47 +6,49 @@ I am a container for all plugins.
 DCPlugin
 "
 Class {
-	#name : #OPPluginRegistry,
-	#superclass : #Object,
+	#name : 'OPPluginRegistry',
+	#superclass : 'Object',
 	#instVars : [
 		'plugins'
 	],
 	#classVars : [
 		'Default'
 	],
-	#category : #'OpenPonk-Core-Plugin'
+	#category : 'OpenPonk-Core-Plugin',
+	#package : 'OpenPonk-Core',
+	#tag : 'Plugin'
 }
 
-{ #category : #singleton }
+{ #category : 'singleton' }
 OPPluginRegistry class >> default [
 	^ Default ifNil: [ Default := self withAll ]
 ]
 
-{ #category : #singleton }
+{ #category : 'singleton' }
 OPPluginRegistry class >> resetDefault [
 	<script>
 	^ Default := nil
 ]
 
-{ #category : #singleton }
+{ #category : 'singleton' }
 OPPluginRegistry class >> setDefault: aDefault [
 	<script>
 	^ Default := aDefault
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPPluginRegistry class >> withAll [
 	^ self new
 		addAll;
 		yourself
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 OPPluginRegistry >> add: aPlugin [
 	plugins add: aPlugin
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 OPPluginRegistry >> addAll [
 	plugins := OrderedCollection new.
 	OPPlugin
@@ -56,33 +58,33 @@ OPPluginRegistry >> addAll [
 		startingLevel: 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPluginRegistry >> hasPluginFor: aModel [
 	^ plugins anySatisfy: [ :each | each isPluginFor: aModel ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPPluginRegistry >> initialize [
 	super initialize.
 	plugins := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPluginRegistry >> pluginFor: aModel [
 	^ plugins detect: [ :each | each isPluginFor: aModel ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPluginRegistry >> pluginForController: aController [
 	^ plugins detect: [ :each | each isForController: aController ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPluginRegistry >> plugins [
 	^ plugins
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 OPPluginRegistry >> pluginsDo: aBlock [
 	plugins do: aBlock
 ]

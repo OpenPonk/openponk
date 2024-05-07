@@ -2,38 +2,40 @@
 I am a mock class for testing ""regular"" model controllers.
 "
 Class {
-	#name : #OPTestEntityController,
-	#superclass : #OPElementController,
-	#category : #'OpenPonk-Core-Controllers - Tests'
+	#name : 'OPTestEntityController',
+	#superclass : 'OPElementController',
+	#category : 'OpenPonk-Core-Controllers - Tests',
+	#package : 'OpenPonk-Core',
+	#tag : 'Controllers - Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPTestEntityController >> canBeSourceFor: aController [
 	^ aController modelClass = OPTestRelationModel
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPTestEntityController >> canBeTargetFor: aController [
 	^ aController modelClass = OPTestRelationModel
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPTestEntityController >> diagramElementClass [
 
 	^ OPTestDiagramElement
 ]
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPTestEntityController >> modelAsParent [
 	^ self diagramController model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTestEntityController >> modelClass [
 	^ OPTestEntityModel
 ]
 
-{ #category : #destruction }
+{ #category : 'destruction' }
 OPTestEntityController >> removeModel [
 	| ownerModel |
 	ownerModel := self diagramController model.

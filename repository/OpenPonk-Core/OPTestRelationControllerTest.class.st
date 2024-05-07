@@ -1,30 +1,32 @@
 Class {
-	#name : #OPTestRelationControllerTest,
-	#superclass : #OPBaseControllerTest,
-	#category : #'OpenPonk-Core-Controllers - Tests'
+	#name : 'OPTestRelationControllerTest',
+	#superclass : 'OPBaseControllerTest',
+	#category : 'OpenPonk-Core-Controllers - Tests',
+	#package : 'OpenPonk-Core',
+	#tag : 'Controllers - Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTestRelationControllerTest >> controllerClass [
 	^ OPTestRelationController
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTestRelationControllerTest >> diagramControllerClass [
 	^ OPTestDiagramController
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTestRelationControllerTest >> diagramModelClass [
 	^ OPTestContainerModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTestRelationControllerTest >> modelClass [
 	^ OPTestRelationModel
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPTestRelationControllerTest >> setUp [
 
 	| sourceController targetController |
@@ -37,7 +39,7 @@ OPTestRelationControllerTest >> setUp [
 	controller target: targetController
 ]
 
-{ #category : #'tests - controllers' }
+{ #category : 'tests - controllers' }
 OPTestRelationControllerTest >> testAddController [
 	controller model: model.
 	diagramController addController: controller.
@@ -45,7 +47,7 @@ OPTestRelationControllerTest >> testAddController [
 	self assert: controller diagramController equals: diagramController
 ]
 
-{ #category : #'tests - construction' }
+{ #category : 'tests - construction' }
 OPTestRelationControllerTest >> testCreateAndShow [
 
 	| subModel sourceController targetController |
@@ -67,7 +69,7 @@ OPTestRelationControllerTest >> testCreateAndShow [
 		(diagramController canvas lines includes: controller roassalShape)
 ]
 
-{ #category : #'tests - construction' }
+{ #category : 'tests - construction' }
 OPTestRelationControllerTest >> testCreateModel [
 	| sourceController targetController |
 	sourceController := diagramController
@@ -84,7 +86,7 @@ OPTestRelationControllerTest >> testCreateModel [
 	self assert: controller model target equals: targetController model
 ]
 
-{ #category : #'tests - controllers' }
+{ #category : 'tests - controllers' }
 OPTestRelationControllerTest >> testFigureForModel [
 
 	controller model: model.
@@ -94,7 +96,7 @@ OPTestRelationControllerTest >> testFigureForModel [
 		equals: controller roassalShape
 ]
 
-{ #category : #'tests - construction' }
+{ #category : 'tests - construction' }
 OPTestRelationControllerTest >> testFigureWasRendered [
 
 	controller model: model.
@@ -103,7 +105,7 @@ OPTestRelationControllerTest >> testFigureWasRendered [
 		(diagramController canvas lines includes: controller roassalShape)
 ]
 
-{ #category : #'tests - controllers' }
+{ #category : 'tests - controllers' }
 OPTestRelationControllerTest >> testModelForFigure [
 
 	controller model: model.
@@ -114,13 +116,13 @@ OPTestRelationControllerTest >> testModelForFigure [
 		equals: model
 ]
 
-{ #category : #'tests - controllers' }
+{ #category : 'tests - controllers' }
 OPTestRelationControllerTest >> testNewController [
 	controller := diagramController newControllerFor: model.
 	self assert: controller class equals: self controllerClass
 ]
 
-{ #category : #'tests - ui interaction' }
+{ #category : 'tests - ui interaction' }
 OPTestRelationControllerTest >> testOpenInForm [
 
 	| form |
@@ -132,7 +134,7 @@ OPTestRelationControllerTest >> testOpenInForm [
 	self assert: form layout children isNotEmpty
 ]
 
-{ #category : #'tests - destruction' }
+{ #category : 'tests - destruction' }
 OPTestRelationControllerTest >> testRemoveController [
 
 	controller model: model.
@@ -144,7 +146,7 @@ OPTestRelationControllerTest >> testRemoveController [
 	self assert: diagramController canvas nodes asArray equals: {  }
 ]
 
-{ #category : #'tests - destruction' }
+{ #category : 'tests - destruction' }
 OPTestRelationControllerTest >> testRemoveFigureAndModel [
 
 	diagramController model entities add: model.
@@ -155,7 +157,7 @@ OPTestRelationControllerTest >> testRemoveFigureAndModel [
 	self assert: diagramController model entities asArray equals: {  }
 ]
 
-{ #category : #'tests - construction' }
+{ #category : 'tests - construction' }
 OPTestRelationControllerTest >> testShowInDiagram [
 
 	controller model: model.

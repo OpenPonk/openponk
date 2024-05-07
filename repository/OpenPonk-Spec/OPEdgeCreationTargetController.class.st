@@ -1,14 +1,15 @@
 Class {
-	#name : #OPEdgeCreationTargetController,
-	#superclass : #Object,
+	#name : 'OPEdgeCreationTargetController',
+	#superclass : 'Object',
 	#instVars : [
 		'edgeController',
 		'diagramElement'
 	],
-	#category : #'OpenPonk-Spec'
+	#category : 'OpenPonk-Spec',
+	#package : 'OpenPonk-Spec'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPEdgeCreationTargetController class >> renderForEdgeController: aController [
 
 	^ self new
@@ -17,19 +18,19 @@ OPEdgeCreationTargetController class >> renderForEdgeController: aController [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEdgeCreationTargetController >> diagramElement [
 
 	^ diagramElement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEdgeCreationTargetController >> edgeController: aController [
 
 	edgeController := aController
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEdgeCreationTargetController >> remove [
 
 	diagramElement ifNil: [ ^ self ].
@@ -44,7 +45,7 @@ OPEdgeCreationTargetController >> remove [
 	diagramElement := nil
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPEdgeCreationTargetController >> render [
 
 	diagramElement := OPInvisibleOnMouseShape

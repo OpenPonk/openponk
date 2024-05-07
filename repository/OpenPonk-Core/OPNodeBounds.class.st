@@ -1,16 +1,18 @@
 Class {
-	#name : #OPNodeBounds,
-	#superclass : #Object,
+	#name : 'OPNodeBounds',
+	#superclass : 'Object',
 	#instVars : [
 		'x',
 		'y',
 		'width',
 		'height'
 	],
-	#category : #'OpenPonk-Core-Shapes'
+	#category : 'OpenPonk-Core-Shapes',
+	#package : 'OpenPonk-Core',
+	#tag : 'Shapes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPNodeBounds class >> withEncompassingRectangle: aRectangle [
 
 	^ self new
@@ -19,7 +21,7 @@ OPNodeBounds class >> withEncompassingRectangle: aRectangle [
 		  yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPNodeBounds class >> withPosition: aPositionPoint extent: anExtentPoint [
 
 	^ self new
@@ -27,13 +29,13 @@ OPNodeBounds class >> withPosition: aPositionPoint extent: anExtentPoint [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNodeBounds >> extent [
 
 	^ self width @ self height
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNodeBounds >> extent: aPoint [
 
 	self
@@ -41,25 +43,25 @@ OPNodeBounds >> extent: aPoint [
 		height: aPoint y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNodeBounds >> height [
 
 	^ height
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNodeBounds >> height: anObject [
 
 	height := anObject rounded
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNodeBounds >> origin [
 
 	^ self x @ self y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNodeBounds >> origin: aPoint [
 
 	self
@@ -67,7 +69,7 @@ OPNodeBounds >> origin: aPoint [
 		y: aPoint y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNodeBounds >> position [
 
 	"center point"
@@ -75,7 +77,7 @@ OPNodeBounds >> position [
 	^ self origin + (self extent / 2)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNodeBounds >> position: aPoint [
 
 	"center point"
@@ -87,7 +89,7 @@ OPNodeBounds >> position: aPoint [
 	self origin: aPoint - (self extent / 2)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNodeBounds >> position: aPositionPoint extent: anExtentPoint [
 
 	"center point and size"
@@ -97,7 +99,7 @@ OPNodeBounds >> position: aPositionPoint extent: anExtentPoint [
 		position: aPositionPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNodeBounds >> translateTo: aPoint [
 
 	"center point"
@@ -105,37 +107,37 @@ OPNodeBounds >> translateTo: aPoint [
 	self position: aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNodeBounds >> width [
 
 	^ width
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNodeBounds >> width: anObject [
 
 	width := anObject rounded
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNodeBounds >> x [
 
 	^ x
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNodeBounds >> x: anObject [
 
 	x := anObject rounded
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNodeBounds >> y [
 
 	^ y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNodeBounds >> y: anObject [
 
 	y := anObject rounded

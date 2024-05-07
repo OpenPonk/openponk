@@ -1,10 +1,12 @@
 Class {
-	#name : #OPSerializer,
-	#superclass : #Object,
-	#category : #'OpenPonk-Core-Persistence'
+	#name : 'OPSerializer',
+	#superclass : 'Object',
+	#category : 'OpenPonk-Core-Persistence',
+	#package : 'OpenPonk-Core',
+	#tag : 'Persistence'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPSerializer class >> exportInfo [
 
 	^ OPExportInfo new
@@ -13,19 +15,19 @@ OPSerializer class >> exportInfo [
 		  format: self formatName
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPSerializer class >> exportSubject [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPSerializer class >> exportVersion [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPSerializer class >> forExportInfo: anExportInfo [
 
 	| possibleClasses |
@@ -39,32 +41,32 @@ OPSerializer class >> forExportInfo: anExportInfo [
 			   ifFalse: [ a maxImportVersion > b maxImportVersion ] ]) first new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPSerializer class >> forExportInfoFile: aFile [
 
 	^ self forExportInfo: (aFile asFileReference readStreamDo: [ :s | 
 			   (NeoJSONReader on: s) nextAs: OPExportInfo ])
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPSerializer class >> formatName [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPSerializer class >> maxImportVersion [
 
 	^ self exportVersion
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPSerializer class >> minImportVersion [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPSerializer class >> saveExportInfoTo: aDirectory [
 
 	| exportInfo exportInfoFile |
@@ -74,7 +76,7 @@ OPSerializer class >> saveExportInfoTo: aDirectory [
 		(OPJsonWriter on: s) nextPut: exportInfo ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPSerializer class >> supportsExportInfo: anExportInfo [
 
 	^ [ 

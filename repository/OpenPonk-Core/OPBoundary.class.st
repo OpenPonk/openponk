@@ -1,6 +1,6 @@
 Class {
-	#name : #OPBoundary,
-	#superclass : #OPDiagramOnlyShape,
+	#name : 'OPBoundary',
+	#superclass : 'OPDiagramOnlyShape',
 	#traits : 'OPTResizableFigureWithText',
 	#classTraits : 'OPTResizableFigureWithText classTrait',
 	#instVars : [
@@ -9,10 +9,12 @@ Class {
 		'dragBoxUpdateBlocks',
 		'dragBoxes'
 	],
-	#category : #'OpenPonk-Core-CommonElements'
+	#category : 'OpenPonk-Core-CommonElements',
+	#package : 'OpenPonk-Core',
+	#tag : 'CommonElements'
 }
 
-{ #category : #'ston-core' }
+{ #category : 'ston-core' }
 OPBoundary class >> stonAllInstVarNames [
 
 	"Override to encode my instances using a custom set of instance variables or to define their order."
@@ -20,40 +22,40 @@ OPBoundary class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #name )
 ]
 
-{ #category : #'creating - subelements' }
+{ #category : 'creating - subelements' }
 OPBoundary >> addSelectionDraggableInteraction [
 
 	roassalShape
 	@ OPRSSelectionDraggableBorder thatAlsoDragsContainedShapes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPBoundary >> defaultHeight [
 	^ 400
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPBoundary >> defaultWidth [
 	^ 500
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPBoundary >> initialize [
 	super initialize.
 	name := ''
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPBoundary >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPBoundary >> name: aString [
 	name := aString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 OPBoundary >> printOn: aStream [
 	super printOn: aStream.
 	aStream
@@ -62,7 +64,7 @@ OPBoundary >> printOn: aStream [
 		nextPutAll: ''')'
 ]
 
-{ #category : #'creating - subelements' }
+{ #category : 'creating - subelements' }
 OPBoundary >> renderBasicShape [
 
 	^ RSBox new
@@ -76,20 +78,20 @@ OPBoundary >> renderBasicShape [
 		  yourself
 ]
 
-{ #category : #'creating - subelements' }
+{ #category : 'creating - subelements' }
 OPBoundary >> renderShapeDetails [
 
 	super renderShapeDetails.
 	self renderLabel
 ]
 
-{ #category : #'creating - subelements' }
+{ #category : 'creating - subelements' }
 OPBoundary >> selectableInteraction [
 
 	^ OPRSSelectable
 ]
 
-{ #category : #'creating - subelements' }
+{ #category : 'creating - subelements' }
 OPBoundary >> setupLabelLocation: aLocation [
 
 	aLocation
@@ -98,19 +100,19 @@ OPBoundary >> setupLabelLocation: aLocation [
 		inner
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 OPBoundary >> shouldBePositionableByUser [
 
 	^ true
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 OPBoundary >> shouldBeResizableByUser [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPBoundary >> text [
 	^ self name
 ]

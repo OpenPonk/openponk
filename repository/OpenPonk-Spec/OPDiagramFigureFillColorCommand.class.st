@@ -1,16 +1,18 @@
 Class {
-	#name : #OPDiagramFigureFillColorCommand,
-	#superclass : #OPDiagramFigureColorCommand,
-	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
+	#name : 'OPDiagramFigureFillColorCommand',
+	#superclass : 'OPDiagramFigureColorCommand',
+	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Diagram-Figure-Commands'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramFigureFillColorCommand class >> colorAttribute [
 
 	^ #fillColor
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPDiagramFigureFillColorCommand class >> contextMenuActivation [
 
 	<classAnnotation>

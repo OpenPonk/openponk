@@ -1,20 +1,22 @@
 Class {
-	#name : #OPNavigatorAdaptersTest,
-	#superclass : #TestCase,
+	#name : 'OPNavigatorAdaptersTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'adapters'
 	],
-	#category : #'OpenPonk-Spec-Tests'
+	#category : 'OpenPonk-Spec-Tests',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 OPNavigatorAdaptersTest >> setUp [
 	super setUp.
 	adapters := OPNavigatorAdapters new.
 	adapters adapters: { OPDefaultNavigatorAdapter new }.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OPNavigatorAdaptersTest >> testChildrenForProject [
 	| project |
 	project := OPProject new.
@@ -22,14 +24,14 @@ OPNavigatorAdaptersTest >> testChildrenForProject [
 	self assert: (adapters childrenFor: project) asArray equals: project models asArray
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OPNavigatorAdaptersTest >> testDisplayForProject [
 	| project |
 	project := OPProject new name: 'My Project'.
 	self assert: (adapters displayFor: project) equals: 'My Project (Project)'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OPNavigatorAdaptersTest >> testIconForProject [
 	self
 		assert: (adapters iconFor: OPProject new) bits

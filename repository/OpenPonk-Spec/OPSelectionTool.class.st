@@ -3,22 +3,24 @@ A palette item used for selecting items in the view.
 This class should not be used directly and is created automatically with every DCPalette.
 "
 Class {
-	#name : #OPSelectionTool,
-	#superclass : #OPPaletteTool,
+	#name : 'OPSelectionTool',
+	#superclass : 'OPPaletteTool',
 	#instVars : [
 		'selectedControllers'
 	],
-	#category : #'OpenPonk-Spec-Palettes'
+	#category : 'OpenPonk-Spec-Palettes',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Palettes'
 }
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPSelectionTool >> deselect [
 
 	self disableMultiselect.
 	self selectedControllers: {  }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPSelectionTool >> palette: aPalette [
 
 	palette ifNotNil: [ 
@@ -27,14 +29,14 @@ OPSelectionTool >> palette: aPalette [
 	super palette: aPalette
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPSelectionTool >> select [
 
 	self enableMultiselect.
 	selectedControllers := {  }
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPSelectionTool >> selectedControllers: aCollectionOfControllers [
 
 	| originalFigures newFigures |

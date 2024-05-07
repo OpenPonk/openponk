@@ -3,8 +3,8 @@ I represent a view of a model. The content of the model can be filtered, explici
 Further I contain the layout of the entities in the view, and layout/configuration of the view itself.
 "
 Class {
-	#name : #OPLegacyDiagram,
-	#superclass : #Object,
+	#name : 'OPLegacyDiagram',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'isOpen',
@@ -16,10 +16,12 @@ Class {
 		'model',
 		'commonElements'
 	],
-	#category : #'OpenPonk-Core-Diagrams'
+	#category : 'OpenPonk-Core-Diagrams',
+	#package : 'OpenPonk-Core',
+	#tag : 'Diagrams'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPLegacyDiagram class >> emptyOfModel: aModel [
 	^ self new
 		name: aModel name;
@@ -29,14 +31,14 @@ OPLegacyDiagram class >> emptyOfModel: aModel [
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPLegacyDiagram class >> isDeprecated [
 	"Use OPDiagram instead"
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram class >> neoJsonMapping: mapper [
 
 	mapper
@@ -98,31 +100,31 @@ OPLegacyDiagram class >> neoJsonMapping: mapper [
 									as: OPLegacyElementLayout ] ] ] ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPLegacyDiagram class >> ofModel: aModel fromJson: aStream [
 	^ ((NeoJSONReader on: aStream) nextAs: self)
 		model: aModel;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPLegacyDiagram class >> ofModel: aModel fromJsonString: aString [
 	^ self ofModel: aModel fromJson: aString readStream
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPLegacyDiagram class >> withWholeModel: aModel [
 	^ (self emptyOfModel: aModel)
 		setAllElementsVisible;
 		yourself
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 OPLegacyDiagram >> = otherDiagram [
 	^ self asJson = otherDiagram asJson
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 OPLegacyDiagram >> asInfo [
 	self deprecated: 'OPDiagramInfo is no longer used'.
 	
@@ -136,18 +138,18 @@ OPLegacyDiagram >> asInfo [
 		yourself
 ]
 
-{ #category : #serializing }
+{ #category : 'serializing' }
 OPLegacyDiagram >> asJson [
 
 	^ String streamContents: [ :stream | self asJsonTo: stream ]
 ]
 
-{ #category : #serializing }
+{ #category : 'serializing' }
 OPLegacyDiagram >> asJsonTo: stream [
 	^ (OPJsonWriter on: stream) nextPut: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 OPLegacyDiagram >> asOPDiagram [
 
 	| diagram adapters allModelElements layoutsPerModel diagramController canvas controllersByModels |
@@ -209,66 +211,66 @@ OPLegacyDiagram >> asOPDiagram [
 	^ diagram
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> camera [
 	^ camera
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> camera: aCameraSettings [
 	camera := aCameraSettings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> commonElements [
 	^ commonElements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> commonElements: anObject [
 	commonElements := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPLegacyDiagram >> initialize [
 	super initialize.
 	commonElements := #().
 	visibleElements := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> isOpen [
 	^ isOpen
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> isOpen: aBoolean [
 	isOpen := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> isSelected [
 	^ isSelected
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> isSelected: aBoolean [
 	isSelected := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> layout [
 	^ layout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> layout: aCollection [
 
 	layout := (aCollection associations sorted: [ :a :b | 
 		           a value < b value ]) asOrderedDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> model [
 	^ model
 		"ifNil: [ self project models
@@ -276,36 +278,36 @@ OPLegacyDiagram >> model [
 					[ :each | each class name = self modelType and: [ each name = self modelName ] ] ]"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> model: aModel [
 	model := aModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> modelName [
 	^ (model respondsTo: #name)
 		ifTrue: [ model name ]
 		ifFalse: [ model className ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> modelType [
 	^ (model respondsTo: #typeName)
 		ifTrue: [ model typeName ]
 		ifFalse: [ model className ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> name: aName [
 	name := aName
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 OPLegacyDiagram >> newCopy [
 	| newView |
 	newView := self class ofModel: model fromJsonString: self asJson.
@@ -313,17 +315,17 @@ OPLegacyDiagram >> newCopy [
 	^ newView
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> order [
 	^ order ifNil: [ 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> order: anOrder [
 	order := anOrder
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 OPLegacyDiagram >> printOn: aStream [
 
 	super printOn: aStream.
@@ -334,13 +336,13 @@ OPLegacyDiagram >> printOn: aStream [
 	aStream << ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> setAllElementsVisible [
 
 	visibleElements := nil
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 OPLegacyDiagram >> updateFromInfo: anInfo [
 	self deprecated: 'OPDiagramInfo is no longer used'.
 	
@@ -349,7 +351,7 @@ OPLegacyDiagram >> updateFromInfo: anInfo [
 	self order: anInfo order
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> updateFromRoassalCanvas: aView [
 	self
 		camera:
@@ -358,7 +360,7 @@ OPLegacyDiagram >> updateFromRoassalCanvas: aView [
 				zoom: aView canvas camera scale)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> visibleElements [
 
 	self deprecated:
@@ -367,12 +369,12 @@ OPLegacyDiagram >> visibleElements [
 	^ self visibleElementsOrIfNotSet: [ {  } ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> visibleElements: aCollection [
 	visibleElements := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagram >> visibleElementsOrIfNotSet: aBlock [
 
 	visibleElements ifNil: [ visibleElements := aBlock value ].

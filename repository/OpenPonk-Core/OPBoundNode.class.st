@@ -1,13 +1,15 @@
 Class {
-	#name : #OPBoundNode,
-	#superclass : #OPNode,
+	#name : 'OPBoundNode',
+	#superclass : 'OPNode',
 	#instVars : [
 		'bounds'
 	],
-	#category : #'OpenPonk-Core-Shapes'
+	#category : 'OpenPonk-Core-Shapes',
+	#package : 'OpenPonk-Core',
+	#tag : 'Shapes'
 }
 
-{ #category : #'ston-core' }
+{ #category : 'ston-core' }
 OPBoundNode class >> stonAllInstVarNames [
 
 	"Override to encode my instances using a custom set of instance variables or to define their order."
@@ -15,7 +17,7 @@ OPBoundNode class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #bounds )
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPBoundNode >> allOwnedShapesPositionableByUser [
 
 	self isRendered ifFalse: [ ^ #(  ) ].
@@ -24,31 +26,31 @@ OPBoundNode >> allOwnedShapesPositionableByUser [
 	^ { self } , super allOwnedShapesPositionableByUser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPBoundNode >> bounds [
 
 	^ bounds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPBoundNode >> bounds: anObject [
 
 	bounds := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPBoundNode >> extent [
 
 	^ (roassalShape ifNil: [ self bounds ]) extent
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPBoundNode >> isResizableByUser [
 
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPBoundNode >> moveToEmptySpace [
 
 	| spacing neededSpace canvasRectangle possibleCanvas occupiedRectangles |
@@ -82,13 +84,13 @@ OPBoundNode >> moveToEmptySpace [
 			maxFoundOccupiedY max: each bottom ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPBoundNode >> position [
 
 	^ (roassalShape ifNil: [ self bounds ]) position
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPBoundNode >> renderIn: aCanvas [
 
 	self isRendered ifTrue: [ ^ self ].
@@ -98,7 +100,7 @@ OPBoundNode >> renderIn: aCanvas [
 	^ roassalShape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPBoundNode >> updateFromRender [
 
 	self isResizableByUser | self isPositionableByUser ifTrue: [
@@ -108,7 +110,7 @@ OPBoundNode >> updateFromRender [
 	super updateFromRender
 ]
 
-{ #category : #roassal }
+{ #category : 'roassal' }
 OPBoundNode >> updateRenderFromBounds [
 
 	bounds ifNil: [ ^ self ].
@@ -117,7 +119,7 @@ OPBoundNode >> updateRenderFromBounds [
 		roassalShape translateTo: bounds position ]
 ]
 
-{ #category : #roassal }
+{ #category : 'roassal' }
 OPBoundNode >> updateRenderFromSelf [
 
 	self isRendered ifFalse: [ ^ self ].

@@ -1,27 +1,29 @@
 Class {
-	#name : #OPRedoDiagramCommand,
-	#superclass : #OPDiagramToolbarCommand,
-	#category : #'OpenPonk-Spec-Diagram-Toolbar-Commands'
+	#name : 'OPRedoDiagramCommand',
+	#superclass : 'OPDiagramToolbarCommand',
+	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Diagram-Toolbar-Commands'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 OPRedoDiagramCommand class >> toolbarMenuActivation [
 	"<classAnnotation>
 	^ OPDiagramToolbarActivation byRootGroupItemOrder: 11 for: OPCanvasModel"
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPRedoDiagramCommand >> defaultMenuIcon [
 
 	^ self iconNamed: #smallRedo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRedoDiagramCommand >> defaultMenuItemName [
 	^ 'Redo'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPRedoDiagramCommand >> execute [
 		 diagramPresenter diagramController redo
 ]

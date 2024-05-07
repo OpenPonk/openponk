@@ -1,14 +1,16 @@
 Trait {
-	#name : #OPTResizableFigureWithText,
+	#name : 'OPTResizableFigureWithText',
 	#instVars : [
 		'renderedWrapWidth',
 		'renderedText',
 		'labeled'
 	],
-	#category : #'OpenPonk-Core-CommonElements'
+	#category : 'OpenPonk-Core-CommonElements',
+	#package : 'OpenPonk-Core',
+	#tag : 'CommonElements'
 }
 
-{ #category : #'creating - subelements' }
+{ #category : 'creating - subelements' }
 OPTResizableFigureWithText >> renderLabel [
 
 	labeled := OPRSLabeled new.
@@ -25,14 +27,14 @@ OPTResizableFigureWithText >> renderLabel [
 		for: self
 ]
 
-{ #category : #'creating - subelements' }
+{ #category : 'creating - subelements' }
 OPTResizableFigureWithText >> renderShapeDetails [
 
 	super renderShapeDetails.
 	self renderLabel
 ]
 
-{ #category : #'creating - subelements' }
+{ #category : 'creating - subelements' }
 OPTResizableFigureWithText >> setupLabelLocation: aLocation [
 
 	aLocation
@@ -41,18 +43,18 @@ OPTResizableFigureWithText >> setupLabelLocation: aLocation [
 		inner
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTResizableFigureWithText >> text [
 
 	^ self shouldBeImplemented
 ]
 
-{ #category : #'creating - subelements' }
+{ #category : 'creating - subelements' }
 OPTResizableFigureWithText >> textPadding [
 	^ 8
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 OPTResizableFigureWithText >> updateRenderFromSelf [
 
 	self isRendered ifFalse: [ ^ self ].
@@ -62,7 +64,7 @@ OPTResizableFigureWithText >> updateRenderFromSelf [
 	super updateRenderFromSelf
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 OPTResizableFigureWithText >> updateText [
 
 	self isRendered ifFalse: [ ^ self ].
@@ -72,7 +74,7 @@ OPTResizableFigureWithText >> updateText [
 	self roassalShape signalUpdate
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 OPTResizableFigureWithText >> updateTextLabelContents [
 
 	labeled
@@ -80,7 +82,7 @@ OPTResizableFigureWithText >> updateTextLabelContents [
 		text: self text
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPTResizableFigureWithText >> wrapMaxWidth [
 
 	^ self width - (self textPadding * 2) max: 20

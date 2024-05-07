@@ -1,10 +1,12 @@
 Class {
-	#name : #OPZoomOutDiagramCommand,
-	#superclass : #OPDiagramToolbarCommand,
-	#category : #'OpenPonk-Spec-Diagram-Toolbar-Commands'
+	#name : 'OPZoomOutDiagramCommand',
+	#superclass : 'OPDiagramToolbarCommand',
+	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Diagram-Toolbar-Commands'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 OPZoomOutDiagramCommand class >> toolbarMenuActivation [
 	<classAnnotation>
 	^ OPDiagramToolbarActivation
@@ -13,17 +15,17 @@ OPZoomOutDiagramCommand class >> toolbarMenuActivation [
 		for: OPCanvasPresenter
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPZoomOutDiagramCommand >> defaultMenuIcon [
 	^ OPIdeaGraphIcons zoomOutIcon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPZoomOutDiagramCommand >> defaultMenuItemName [
 	^ ''
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPZoomOutDiagramCommand >> execute [
 	diagramPresenter zoom: diagramPresenter zoom * 0.8
 ]

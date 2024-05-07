@@ -1,6 +1,6 @@
-Extension { #name : #ToggleMenuItemShortcut }
+Extension { #name : 'ToggleMenuItemShortcut' }
 
-{ #category : #'*OpenPonk-Spec' }
+{ #category : '*OpenPonk-Spec' }
 ToggleMenuItemShortcut class >> keyTextShortcuts [
 	^ #('cmd'. 'alt'. 'shift'.'ctrl'. 'meta' '⌘' '⇧' 'delete')
 ]

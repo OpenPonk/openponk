@@ -1,10 +1,12 @@
 Class {
-	#name : #OPHideDependentFigureCommand,
-	#superclass : #OPToggleFigureCommand,
-	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
+	#name : 'OPHideDependentFigureCommand',
+	#superclass : 'OPToggleFigureCommand',
+	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Diagram-Figure-Commands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPHideDependentFigureCommand >> basicExecute [
 
 	controllers

@@ -4,8 +4,8 @@ I consist of canvas (Roassal's RTView) and a palette which depends on the type o
 I am bound with a diagram package and cannot live without it.
 "
 Class {
-	#name : #OPEditor,
-	#superclass : #SpPresenter,
+	#name : 'OPEditor',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'workbench',
 		'zoomLabel',
@@ -19,42 +19,44 @@ Class {
 	#classInstVars : [
 		'currentLayout'
 	],
-	#category : #'OpenPonk-Spec-Windows'
+	#category : 'OpenPonk-Spec-Windows',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Windows'
 }
 
-{ #category : #settings }
+{ #category : 'settings' }
 OPEditor class >> availableLayoutNames [
 
 	^ self availableLayouts collect: #name
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OPEditor class >> availableLayouts [
 
 	^ OPEditorLayout all
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OPEditor class >> canvasSectionWidth [
 
 	^ OPWorkbench initialExtent x - OPWorkbench initialListsWidth
 	  - OPPalette initialWidth - OPDynamicForm initialWidth
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OPEditor class >> currentLayout [
 
 	currentLayout ifNil: [ self setDefaultLayout ].
 	^ currentLayout
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OPEditor class >> defaultLayout [
 
 	^ OPEditorLayout default
 ]
 
-{ #category : #toolbar }
+{ #category : 'toolbar' }
 OPEditor class >> developerToolbarMenu: aBuilder [
 
 	(aBuilder item: 'Inspect Controller...')
@@ -63,13 +65,13 @@ OPEditor class >> developerToolbarMenu: aBuilder [
 	aBuilder withSeparatorAfter
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OPEditor class >> layoutName [
 
 	^ self currentLayout name
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OPEditor class >> layoutName: aLayoutName [
 
 	currentLayout := OPEditorLayout named: aLayoutName.
@@ -83,14 +85,14 @@ OPEditor class >> layoutName: aLayoutName [
 			currentLayout applyOn: each ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OPEditor class >> setDefaultLayout [
 
 	<script>
 	self layoutName: self defaultLayout name
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OPEditor class >> settingsOn: aBuilder [
 
 	<systemsettings>
@@ -105,7 +107,7 @@ OPEditor class >> settingsOn: aBuilder [
 		order: 40
 ]
 
-{ #category : #toolbar }
+{ #category : 'toolbar' }
 OPEditor class >> toolbarMenu: aBuilder [
 
 	<opEditorToolbarMenu>
@@ -118,17 +120,17 @@ OPEditor class >> toolbarMenu: aBuilder [
 		action: [ aBuilder model canvasPresenter exportAsSvg ]
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPEditor >> canvasMenu [
 	^ canvasMenu
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPEditor >> canvasPresenter [
 	^ canvasPresenter
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPEditor >> connectPresenters [
 
 	| menu |
@@ -137,24 +139,24 @@ OPEditor >> connectPresenters [
 	menu buildSpecMenuOn: canvasMenu
 ]
 
-{ #category : #'private-focus' }
+{ #category : 'private-focus' }
 OPEditor >> createCommandContext [
 	"Subclases should override it if they provide any selection"
 
 	^ canvasPresenter createCommandContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEditor >> diagramController [
 	^ diagramController
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPEditor >> form [
 	^ form
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPEditor >> initializePresenters [
 
 	canvasMenu := self newMenuBar.
@@ -175,10 +177,12 @@ OPEditor >> initializePresenters [
 			minimized := false.
 			window window announcer
 				when: WindowCollapsed
-				do: [ minimized := true ].
+				do: [ minimized := true ]
+				for: self.
 			window window announcer
 				when: WindowExpanded
-				do: [ minimized := false ].
+				do: [ minimized := false ]
+				for: self.
 			window whenResizingDo: [ :resizeEvent |
 				minimized ifFalse: [
 					self class currentLayout
@@ -189,7 +193,7 @@ OPEditor >> initializePresenters [
 				diagramController removeAllControllers ] ] ]
 ]
 
-{ #category : #'diagram handling' }
+{ #category : 'diagram handling' }
 OPEditor >> newDiagramControllerFor: aModel [
 	^ plugin diagramControllerClass new
 		model: aModel;
@@ -198,7 +202,7 @@ OPEditor >> newDiagramControllerFor: aModel [
 		yourself
 ]
 
-{ #category : #'diagram handling' }
+{ #category : 'diagram handling' }
 OPEditor >> openEmptyModel: aModel [
 
 	diagramController := self newDiagramControllerFor: aModel.
@@ -208,29 +212,29 @@ OPEditor >> openEmptyModel: aModel [
 	self rebuildWidget
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPEditor >> openFormOn: aController [
 
 	form editController: aController
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEditor >> palette [
 
 	^ palette
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEditor >> plugin [
 	^ plugin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEditor >> plugin: aPlugin [
 	plugin := aPlugin
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 OPEditor >> rebuildWidget [
 
 	diagramController ifNotNil: [ 
@@ -238,13 +242,13 @@ OPEditor >> rebuildWidget [
 	self update
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPEditor >> setModelBeforeInitialization: aPlugin [
 	self plugin: aPlugin
 	
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 OPEditor >> tabDeleted [
 
 	self workbench projectController updateDiagram:
@@ -254,7 +258,7 @@ OPEditor >> tabDeleted [
 	diagramController removeRender
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 OPEditor >> updateUndoRedo [
 	self flag: #unused.
 	"
@@ -268,18 +272,18 @@ OPEditor >> updateUndoRedo [
 		changed: #enabled with: {self diagramController hasRedo}"
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPEditor >> workbench [
 	^ workbench
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPEditor >> workbench: aWorkbench [
 
 	workbench := aWorkbench
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPEditor >> zoomLabel [
 	^ zoomLabel
 ]

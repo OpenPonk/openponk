@@ -1,38 +1,40 @@
 Class {
-	#name : #OPMementoDirectorySerializer,
-	#superclass : #OPMementoSerializer,
+	#name : 'OPMementoDirectorySerializer',
+	#superclass : 'OPMementoSerializer',
 	#instVars : [
 		'rootFolder'
 	],
-	#category : #'OpenPonk-Core-Persistence'
+	#category : 'OpenPonk-Core-Persistence',
+	#package : 'OpenPonk-Core',
+	#tag : 'Persistence'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPMementoDirectorySerializer class >> exportVersion [
 
 	^ 1
 ]
 
-{ #category : #formatting }
+{ #category : 'formatting' }
 OPMementoDirectorySerializer class >> formatName [
 
 	^ #directory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPMementoDirectorySerializer class >> minImportVersion [
 
 	^ 1
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 OPMementoDirectorySerializer >> loadDiagramOf: aModel from: aFile by: aDiagramMaterializer [
 	^ aDiagramMaterializer
 		materializeDiagramOf: aModel
 		from: aFile readStream
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 OPMementoDirectorySerializer >> loadDiagramsOf: aModel from: aFolder [
 
 	| materializer |
@@ -48,7 +50,7 @@ OPMementoDirectorySerializer >> loadDiagramsOf: aModel from: aFolder [
 		  self loadDiagramOf: aModel from: eachFile by: materializer ]
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 OPMementoDirectorySerializer >> loadMementoFrom: aFolder [
 
 	| model modelDir |
@@ -61,7 +63,7 @@ OPMementoDirectorySerializer >> loadMementoFrom: aFolder [
 		  diagrams: (self loadDiagramsOf: model from: aFolder / 'diagrams')
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 OPMementoDirectorySerializer >> loadModelFrom: aFolder [
 
 	| modelFile materializer |
@@ -76,7 +78,7 @@ OPMementoDirectorySerializer >> loadModelFrom: aFolder [
 		  materializer materializeModelFrom: stream ]
 ]
 
-{ #category : #saving }
+{ #category : 'saving' }
 OPMementoDirectorySerializer >> saveDiagram: aDiagram to: aFolder index: aNumber [
 
 	| diagramSerializer |
@@ -89,7 +91,7 @@ OPMementoDirectorySerializer >> saveDiagram: aDiagram to: aFolder index: aNumber
 			stream nextPutAll: (diagramSerializer serializeDiagram: aDiagram) ]
 ]
 
-{ #category : #saving }
+{ #category : 'saving' }
 OPMementoDirectorySerializer >> saveDiagramsOf: aMemento to: aFolder [
 
 	aMemento diagrams ifEmpty: [ ^ self ].
@@ -99,7 +101,7 @@ OPMementoDirectorySerializer >> saveDiagramsOf: aMemento to: aFolder [
 		self saveDiagram: each to: aFolder index: index ]
 ]
 
-{ #category : #saving }
+{ #category : 'saving' }
 OPMementoDirectorySerializer >> saveMemento: aMemento to: aFolder [
 
 	| modelDirectory |
@@ -111,7 +113,7 @@ OPMementoDirectorySerializer >> saveMemento: aMemento to: aFolder [
 	self saveDiagramsOf: aMemento to: aFolder / 'diagrams'
 ]
 
-{ #category : #saving }
+{ #category : 'saving' }
 OPMementoDirectorySerializer >> saveModelOf: aMemento to: aFolder [
 
 	| modelSerializer |

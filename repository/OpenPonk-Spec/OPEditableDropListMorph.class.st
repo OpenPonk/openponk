@@ -1,28 +1,30 @@
 Class {
-	#name : #OPEditableDropListMorph,
-	#superclass : #EditableDropListMorph,
-	#category : #'OpenPonk-Spec-Form'
+	#name : 'OPEditableDropListMorph',
+	#superclass : 'EditableDropListMorph',
+	#category : 'OpenPonk-Spec-Form',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Form'
 }
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 OPEditableDropListMorph >> configureWith: displayModel item: itemPresenter [
 	displayModel configureDropList: self item: itemPresenter
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPEditableDropListMorph >> hasKeyboardFocus [
 
 	^ (contentMorph ifNil: [ ^ false ]) hasKeyboardFocus
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPEditableDropListMorph >> listHeight [
 	"Answer the height for the list."
 
 	^ super listHeight + 12
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPEditableDropListMorph >> newListMorph [
 
 	"Answer a new list morph"
@@ -43,7 +45,7 @@ OPEditableDropListMorph >> newListMorph [
 		  yourself
 ]
 
-{ #category : #wrapping }
+{ #category : 'wrapping' }
 OPEditableDropListMorph >> wrapItem: anItem index: anIndex [
 
 	^ self model wrapItem: anItem index: anIndex

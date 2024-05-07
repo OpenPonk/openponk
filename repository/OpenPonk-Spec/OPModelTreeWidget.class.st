@@ -2,17 +2,19 @@
 I present model entities in a hierarchical tree-like structure.
 "
 Class {
-	#name : #OPModelTreeWidget,
-	#superclass : #SpPresenter,
+	#name : 'OPModelTreeWidget',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'tree',
 		'project',
 		'refreshButton'
 	],
-	#category : #'OpenPonk-Spec-Windows'
+	#category : 'OpenPonk-Spec-Windows',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Windows'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPModelTreeWidget class >> contextMenu: aBuilder [
 	<opModelNavigatorContextMenu>
 	| navigator |
@@ -20,7 +22,7 @@ OPModelTreeWidget class >> contextMenu: aBuilder [
 	(aBuilder item: 'Inspect') action: [ navigator selectedItem inspect ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPModelTreeWidget class >> defaultLayout [
 
 	^ SpTabLayout new
@@ -36,37 +38,37 @@ OPModelTreeWidget class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPModelTreeWidget class >> openOn: aProject [
 	^ self new
 		openOn: aProject;
 		openWithSpec
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 OPModelTreeWidget class >> withoutHeadingSpec [
 	^ SpBoxLayout newTopToBottom
 		add: #tree;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPModelTreeWidget >> adapters [
 
 	^ self workbench projectController navigatorAdapters
 ]
 
-{ #category : #'menu commands' }
+{ #category : 'menu commands' }
 OPModelTreeWidget >> deleteDiagramCommand: aModelElement [
 	^ self notYetImplemented
 ]
 
-{ #category : #'menu commands' }
+{ #category : 'menu commands' }
 OPModelTreeWidget >> deleteElementCommand: aModelElement [
 	aModelElement owner remove: aModelElement
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPModelTreeWidget >> doubleClick [
 
 	| element |
@@ -79,12 +81,12 @@ OPModelTreeWidget >> doubleClick [
 		ifNone: [  ]
 ]
 
-{ #category : #'menu commands' }
+{ #category : 'menu commands' }
 OPModelTreeWidget >> editElementCommand: aModelElement [
 	UIManager default inform: 'Editing from tree is disabled'	"disabled due to not having controller at our disposal atm"	"	self openInForm: (self findControllerByModel: aModelElement)"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPModelTreeWidget >> initializePresenters [
 
 	self initializeTree.
@@ -94,7 +96,7 @@ OPModelTreeWidget >> initializePresenters [
 		action: [ self refresh ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPModelTreeWidget >> initializeTree [
 
 	tree := self newTree.
@@ -115,23 +117,23 @@ OPModelTreeWidget >> initializeTree [
 		expandRoots
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 OPModelTreeWidget >> initializeWindow: aWindow [
 
 	aWindow initialExtent: 600 @ 800
 ]
 
-{ #category : #'menu commands' }
+{ #category : 'menu commands' }
 OPModelTreeWidget >> inspectCommand: anObject [
 	anObject inspect
 ]
 
-{ #category : #'menu commands' }
+{ #category : 'menu commands' }
 OPModelTreeWidget >> openCommand: aDiagram [
 	UIManager default showWaitCursorWhile: [ self workbench openEditorOn: aDiagram ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPModelTreeWidget >> openOn: aProject [
 
 	self workbench announcer when: OPEditorFocused do: [ :event | 
@@ -142,12 +144,12 @@ OPModelTreeWidget >> openOn: aProject [
 	tree expandRoots
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPModelTreeWidget >> projectController [
 	^ self workbench projectController
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPModelTreeWidget >> refresh [
 
 	tree
@@ -156,23 +158,23 @@ OPModelTreeWidget >> refresh [
 	"tree refresh"
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPModelTreeWidget >> refreshButton [
 	^ refreshButton
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPModelTreeWidget >> selectedItem [
 
 	^ tree selectedItem
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPModelTreeWidget >> tree [
 	^ tree
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPModelTreeWidget >> workbench [
 	^ owner workbench
 ]

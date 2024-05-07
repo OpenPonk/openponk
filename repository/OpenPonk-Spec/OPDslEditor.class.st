@@ -2,8 +2,8 @@
 I am an editor for UML DSL.
 "
 Class {
-	#name : #OPDslEditor,
-	#superclass : #SpPresenter,
+	#name : 'OPDslEditor',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'editor',
 		'autoUpdate',
@@ -17,10 +17,12 @@ Class {
 		'modelClass',
 		'highlighter'
 	],
-	#category : #'OpenPonk-Spec-Windows'
+	#category : 'OpenPonk-Spec-Windows',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Windows'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPDslEditor class >> defaultLayout [
 	^ SpecColumnLayout new
 		add: SpBoxLayout newLeftToRight:  [ :row | row add: #toolbar ] height: self toolbarHeight;
@@ -29,12 +31,12 @@ OPDslEditor class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPDslEditor >> autoUpdate [
 	^ autoUpdate
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPDslEditor >> buildToolbar: aMenu [
 	aMenu
 		addGroup:
@@ -78,28 +80,28 @@ OPDslEditor >> buildToolbar: aMenu [
 							OPWorkbench openModel: model ] ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPDslEditor >> connectPresenters [
 	super connectPresenters.
 	editor whenTextIsAccepted: [ self textUpdated: editor text ]
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPDslEditor >> editor [
 	^ editor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDslEditor >> exporter [
 	^ exporter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDslEditor >> exporter: anExporter [
 	exporter := anExporter
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPDslEditor >> highlight: aText [
 	| tokens |
 	highlighter ifNil: [ ^ aText ].
@@ -113,12 +115,12 @@ OPDslEditor >> highlight: aText [
 				ifFalse: [ aText makeColor: each value from: each key start to: each key stop ] ]
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPDslEditor >> highlighter: aHighlighterParser [
 	highlighter := aHighlighterParser
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPDslEditor >> initializePresenters [
 	toolbar := self newMenu.
 	self buildToolbar: toolbar.
@@ -134,27 +136,27 @@ OPDslEditor >> initializePresenters [
 		add: autoUpdate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDslEditor >> model: aModel [
 	model := aModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDslEditor >> modelClass [
 	^ modelClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDslEditor >> modelClass: aModelClass [
 	modelClass := aModelClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPDslEditor >> newModel [
 	^ self modelClass new
 ]
 
-{ #category : #'save/load' }
+{ #category : 'save/load' }
 OPDslEditor >> openFromFile [
 
 	| filename |
@@ -169,17 +171,17 @@ OPDslEditor >> openFromFile [
 	editor text: location contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDslEditor >> parser [
 	^ parser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDslEditor >> parser: aParser [
 	parser := aParser
 ]
 
-{ #category : #'save/load' }
+{ #category : 'save/load' }
 OPDslEditor >> saveToFile: aPath [
 	| newLocation |
 	newLocation := aPath.
@@ -192,22 +194,22 @@ OPDslEditor >> saveToFile: aPath [
 	self updateModel
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 OPDslEditor >> textUpdated: aString [
 	location ifNil: [ self updateModel ] ifNotNil: [ self saveToFile: location ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 OPDslEditor >> title [
 	^ 'DSL Editor'
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPDslEditor >> toolbar [
 	^ toolbar
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 OPDslEditor >> updateFromModel [
 	| text |
 	model ifNil: [ ^ self ].
@@ -216,7 +218,7 @@ OPDslEditor >> updateFromModel [
 	editor text: text
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 OPDslEditor >> updateModel [
 
 	| statements text |

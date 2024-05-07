@@ -1,20 +1,22 @@
 Class {
-	#name : #OPTypesShowHidePresenter,
-	#superclass : #OPShowHideTabContentPresenter,
-	#category : #'OpenPonk-Spec-Dialogs'
+	#name : 'OPTypesShowHidePresenter',
+	#superclass : 'OPShowHideTabContentPresenter',
+	#category : 'OpenPonk-Spec-Dialogs',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Dialogs'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPTypesShowHidePresenter >> allElements [
 	^ diagramController allShowableElements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTypesShowHidePresenter >> childrenFor: aNode [
 	^ aNode children
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OPTypesShowHidePresenter >> findSelectedItems [
 	| visibleElements hidableElementTypes |
 	visibleElements := diagramController allVisibleShowableElements.
@@ -31,12 +33,12 @@ OPTypesShowHidePresenter >> findSelectedItems [
 		ifNotEmpty: [ :newNodes | newNodes copyWith: (OPModelObjectTypeNode named: 'All') ]
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OPTypesShowHidePresenter >> getAllNodes [
 	^ self getRootNode withAllChildren
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OPTypesShowHidePresenter >> getRootNode [
 	^ OPModelObjectTypeNode
 		named: 'All'
@@ -45,22 +47,22 @@ OPTypesShowHidePresenter >> getRootNode [
 				collect: [ :each | diagramController typeOfModel: each ])
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPTypesShowHidePresenter >> initialRoots [
 	^ {self getRootNode}
 ]
 
-{ #category : #general }
+{ #category : 'general' }
 OPTypesShowHidePresenter >> nameFor: aNode [
 	^ aNode name
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPTypesShowHidePresenter >> possibleTypeLeafNames [
 	^ self getRootNode leafNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTypesShowHidePresenter >> selected: added [
 	| typesToShow elementsToShow executor |
 	typesToShow := added leafNames.
@@ -73,7 +75,7 @@ OPTypesShowHidePresenter >> selected: added [
 	^ elementsToShow
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPTypesShowHidePresenter >> selectedLeafNames [
 	| allTypeLeafNames visibleElements |
 	allTypeLeafNames := self possibleTypeLeafNames.
@@ -86,7 +88,7 @@ OPTypesShowHidePresenter >> selectedLeafNames [
 					[ :each | (diagramController typeOfModel: each) mostSpecificName = eachName ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTypesShowHidePresenter >> unselected: removed [
 	| typesToHide elementsToHide executor |
 	typesToHide := removed leafNames.

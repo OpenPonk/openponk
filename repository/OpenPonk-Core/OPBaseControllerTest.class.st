@@ -2,48 +2,50 @@
 I provide basic scaffolding and utility functions to ease the testing of controllers.
 "
 Class {
-	#name : #OPBaseControllerTest,
-	#superclass : #TestCase,
+	#name : 'OPBaseControllerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'controller',
 		'diagramController',
 		'model'
 	],
-	#category : #'OpenPonk-Core-Controllers - Tests'
+	#category : 'OpenPonk-Core-Controllers - Tests',
+	#package : 'OpenPonk-Core',
+	#tag : 'Controllers - Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPBaseControllerTest class >> isAbstract [
 	^ self = OPBaseControllerTest
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPBaseControllerTest >> controllerClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPBaseControllerTest >> diagramControllerClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPBaseControllerTest >> diagramElementClass [
 
 	^ OPTestDiagramElement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPBaseControllerTest >> diagramModelClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPBaseControllerTest >> modelClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPBaseControllerTest >> newModel [
 
 	| aModel |
@@ -53,7 +55,7 @@ OPBaseControllerTest >> newModel [
 	^ aModel
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OPBaseControllerTest >> setUp [
 
 	super setUp.
@@ -66,20 +68,20 @@ OPBaseControllerTest >> setUp [
 	model := self newModel
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 OPBaseControllerTest >> stubRefresh [
 	controller stub figure willReturn: Mock new.
 	controller stub refreshFigure willReturn: controller
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPBaseControllerTest >> testIsSupported [
 	self diagramControllerClass = self controllerClass
 		ifTrue: [ ^ self ].
 	self assert: (diagramController hasSupportForModel: model)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPBaseControllerTest >> testModelClass [
 	self diagramControllerClass = self controllerClass
 		ifTrue: [ ^ self ].

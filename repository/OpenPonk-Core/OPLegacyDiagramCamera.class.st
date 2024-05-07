@@ -2,23 +2,25 @@
 I represent camera positioning over the view.
 "
 Class {
-	#name : #OPLegacyDiagramCamera,
-	#superclass : #Object,
+	#name : 'OPLegacyDiagramCamera',
+	#superclass : 'Object',
 	#instVars : [
 		'offset',
 		'zoom'
 	],
-	#category : #'OpenPonk-Core-Diagrams'
+	#category : 'OpenPonk-Core-Diagrams',
+	#package : 'OpenPonk-Core',
+	#tag : 'Diagrams'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPLegacyDiagramCamera class >> isDeprecated [
 	"no longer tested and used"
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagramCamera class >> neoJsonMapping: mapper [
 	mapper
 		for: self
@@ -28,32 +30,32 @@ OPLegacyDiagramCamera class >> neoJsonMapping: mapper [
 		mapInstVarsFor: Point
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagramCamera >> offset [
 	^ offset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagramCamera >> offset: anObject [
 	offset := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagramCamera >> position [
 	^ self offset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagramCamera >> scale [
 	^ self zoom
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagramCamera >> zoom [
 	^ zoom
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyDiagramCamera >> zoom: anObject [
 	zoom := anObject
 ]

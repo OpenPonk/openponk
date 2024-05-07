@@ -1,20 +1,22 @@
 Class {
-	#name : #OPNoLayouter,
-	#superclass : #OPLayouter,
-	#category : #'OpenPonk-Spec-Layouting'
+	#name : 'OPNoLayouter',
+	#superclass : 'OPLayouter',
+	#category : 'OpenPonk-Spec-Layouting',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Layouting'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNoLayouter >> allEdges [
 	^ #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNoLayouter >> allNodes [
 	^ #()
 ]
 
-{ #category : #layouts }
+{ #category : 'layouts' }
 OPNoLayouter >> defaultLayout [
 	"do nothing"
 ]

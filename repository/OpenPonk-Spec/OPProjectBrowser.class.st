@@ -6,8 +6,8 @@ DCProjectBrowser open
 ]]]
 "
 Class {
-	#name : #OPProjectBrowser,
-	#superclass : #SpPresenter,
+	#name : 'OPProjectBrowser',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'recentLabel',
 		'recentList',
@@ -18,10 +18,12 @@ Class {
 		'createProjectButton',
 		'openProjectButton'
 	],
-	#category : #'OpenPonk-Spec-Windows'
+	#category : 'OpenPonk-Spec-Windows',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Windows'
 }
 
-{ #category : #'System-FileRegistry' }
+{ #category : 'System-FileRegistry' }
 OPProjectBrowser class >> fileReaderServicesForFile: fullName suffix: suffix [
 
 	"Answers a collection of services that can handle the file and suffixes"
@@ -31,7 +33,7 @@ OPProjectBrowser class >> fileReaderServicesForFile: fullName suffix: suffix [
 	^ {  }
 ]
 
-{ #category : #'world menu' }
+{ #category : 'world menu' }
 OPProjectBrowser class >> menuCommandOn: aBuilder [
 
 	<worldMenu>
@@ -42,13 +44,13 @@ OPProjectBrowser class >> menuCommandOn: aBuilder [
 		order: 200
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPProjectBrowser class >> open [
 	<script>
 	^ self new open
 ]
 
-{ #category : #'System-FileRegistry' }
+{ #category : 'System-FileRegistry' }
 OPProjectBrowser class >> serviceOpen [
 
 	"answers a service for opening the project window from project file"
@@ -60,7 +62,7 @@ OPProjectBrowser class >> serviceOpen [
 		  description: 'Open OpenPonk project'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPProjectBrowser >> connectPresenters [
 
 	super connectPresenters.
@@ -77,7 +79,7 @@ OPProjectBrowser >> connectPresenters [
 	openProjectButton action: [ self openProjectFromFile ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPProjectBrowser >> createProject [
 
 	| project |
@@ -91,19 +93,19 @@ OPProjectBrowser >> createProject [
 	self openProject: project
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPProjectBrowser >> createProjectButton [
 	^ createProjectButton
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPProjectBrowser >> initialize [
 	diagramOptions := Dictionary new.
 	pluginRegistry := OPPluginRegistry default.
 	super initialize
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPProjectBrowser >> initializeLayout [
 
 	| rightColumn |
@@ -130,7 +132,7 @@ OPProjectBrowser >> initializeLayout [
 			 yourself)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPProjectBrowser >> initializePresenters [
 
 	| radioButtons |
@@ -152,7 +154,7 @@ OPProjectBrowser >> initializePresenters [
 		radioButtons copyWithoutFirst
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPProjectBrowser >> initializeWindow: aWindow [
 
 	aWindow
@@ -161,7 +163,7 @@ OPProjectBrowser >> initializeWindow: aWindow [
 		initialExtent: 400 @ 400
 ]
 
-{ #category : #'project handling' }
+{ #category : 'project handling' }
 OPProjectBrowser >> openProject: project [
 
 	project saveInImage.
@@ -169,32 +171,32 @@ OPProjectBrowser >> openProject: project [
 	self delete
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPProjectBrowser >> openProjectButton [
 	^ openProjectButton
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPProjectBrowser >> openProjectFromDirectory [
 
 	^ OPProjectController fromDirectoryDo: [ :aProject | 
 		  self openProject: aProject ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPProjectBrowser >> openProjectFromFile [
 
 	^ OPProjectController fromFileDo: [ :aProject | 
 		  self openProject: aProject ]
 ]
 
-{ #category : #'project handling' }
+{ #category : 'project handling' }
 OPProjectBrowser >> openProjectFromFile: aFile [
 
 	^ self openProject: (OPProjectController fromFile: aFile)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPProjectBrowser >> projectMenu: aMenuPresenter [
 
 	self
@@ -202,7 +204,7 @@ OPProjectBrowser >> projectMenu: aMenuPresenter [
 		for: (recentList selectedItem ifNil: [ ^ aMenuPresenter ])
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPProjectBrowser >> projectMenu: aMenuPresenter for: aProject [
 
 	aProject ifNil: [ ^ aMenuPresenter ].
@@ -215,27 +217,27 @@ OPProjectBrowser >> projectMenu: aMenuPresenter for: aProject [
 	^ aMenuPresenter
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPProjectBrowser >> projectNameInput [
 	^ projectNameInput
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPProjectBrowser >> quickStartLabel [
 	^ quickStartLabel
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPProjectBrowser >> recentLabel [
 	^ recentLabel
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPProjectBrowser >> recentList [
 	^ recentList
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPProjectBrowser >> updateRecentList [
 	^ recentList
 		items: OPProjectStorage default projects;

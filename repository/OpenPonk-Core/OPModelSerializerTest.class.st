@@ -1,30 +1,32 @@
 Class {
-	#name : #OPModelSerializerTest,
-	#superclass : #TestCase,
+	#name : 'OPModelSerializerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'model',
 		'serializer',
 		'stream'
 	],
-	#category : #'OpenPonk-Core-Tests'
+	#category : 'OpenPonk-Core-Tests',
+	#package : 'OpenPonk-Core',
+	#tag : 'Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPModelSerializerTest class >> isAbstract [
 	^ self = OPModelSerializerTest
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPModelSerializerTest >> newModel [
 	^ OPTestEntityModel new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPModelSerializerTest >> serializerClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPModelSerializerTest >> setUp [
 	super setUp.
 	serializer := self serializerClass new.
@@ -32,7 +34,7 @@ OPModelSerializerTest >> setUp [
 	stream := WriteStream on: ''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPModelSerializerTest >> testRoundtrip [
 	| newModel |
 	serializer serializeModel: model to: stream.

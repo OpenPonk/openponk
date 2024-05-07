@@ -1,15 +1,17 @@
 Class {
-	#name : #OPEdge,
-	#superclass : #OPShape,
+	#name : 'OPEdge',
+	#superclass : 'OPShape',
 	#instVars : [
 		'source',
 		'target',
 		'waypoints'
 	],
-	#category : #'OpenPonk-Core-Shapes'
+	#category : 'OpenPonk-Core-Shapes',
+	#package : 'OpenPonk-Core',
+	#tag : 'Shapes'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPEdge class >> renderForController: aController [
 
 	^ self new
@@ -20,7 +22,7 @@ OPEdge class >> renderForController: aController [
 		  yourself
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPEdge class >> renderSimplifiedForController: aController [
 
 	^ self new
@@ -30,7 +32,7 @@ OPEdge class >> renderSimplifiedForController: aController [
 		  yourself
 ]
 
-{ #category : #'ston-core' }
+{ #category : 'ston-core' }
 OPEdge class >> stonAllInstVarNames [
 
 	"Override to encode my instances using a custom set of instance variables or to define their order."
@@ -38,13 +40,13 @@ OPEdge class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #source #target #waypoints )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEdge >> innerWaypoints [
 
 	^ waypoints copyFrom: 2 to: waypoints size - 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEdge >> innerWaypoints: aCollection [
 
 	self isRendered ifTrue: [
@@ -53,7 +55,7 @@ OPEdge >> innerWaypoints: aCollection [
 			, { self roassalShape controlPoints last } ]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 OPEdge >> remove [
 
 	super remove.
@@ -61,19 +63,19 @@ OPEdge >> remove [
 	self target: nil
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPEdge >> selectableInteraction [
 
 	^ OPRSSelectable highlightColorBlue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEdge >> source [
 
 	^ source
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEdge >> source: anElement [
 
 	source := SRToOneLink
@@ -84,13 +86,13 @@ OPEdge >> source: anElement [
 		          to: anElement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEdge >> target [
 
 	^ target
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEdge >> target: anElement [
 
 	target := SRToOneLink
@@ -101,14 +103,14 @@ OPEdge >> target: anElement [
 		          to: anElement
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPEdge >> updateFromRender [
 
 	self waypoints: roassalShape controlPoints.
 	super updateFromRender
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPEdge >> updateRenderFromSelf [
 
 	self isRendered ifFalse: [ ^ self ].
@@ -122,13 +124,13 @@ OPEdge >> updateRenderFromSelf [
 	super updateRenderFromSelf
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEdge >> waypoints [
 
 	^ waypoints
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEdge >> waypoints: anObject [
 
 	waypoints := anObject

@@ -1,11 +1,11 @@
-Extension { #name : #OPProject }
+Extension { #name : 'OPProject' }
 
-{ #category : #'*OpenPonk-Spec' }
+{ #category : '*OpenPonk-Spec' }
 OPProject >> open [
 	^ OPWorkbench openProject: self
 ]
 
-{ #category : #'*OpenPonk-Spec' }
+{ #category : '*OpenPonk-Spec' }
 OPProject class >> openOnModel: aModel [
 	^ self new
 		name: aModel name;

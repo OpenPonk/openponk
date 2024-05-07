@@ -1,11 +1,11 @@
-Extension { #name : #CmdMenuGroup }
+Extension { #name : 'CmdMenuGroup' }
 
-{ #category : #'*OpenPonk-Spec' }
+{ #category : '*OpenPonk-Spec' }
 CmdMenuGroup >> buildSpecMenuInlineOn: aGroup [
 	self contents do: [ :each | each buildSpecMenuOn: aGroup ]
 ]
 
-{ #category : #'*OpenPonk-Spec' }
+{ #category : '*OpenPonk-Spec' }
 CmdMenuGroup >> buildSpecMenuOn: aMenu [
 	aMenu
 		addGroup: [ :group | 
@@ -19,7 +19,7 @@ CmdMenuGroup >> buildSpecMenuOn: aMenu [
 							self buildSpecSubMenuOn: item ] ] ]
 ]
 
-{ #category : #'*OpenPonk-Spec' }
+{ #category : '*OpenPonk-Spec' }
 CmdMenuGroup >> buildSpecSubMenuOn: aMenuItem [
 	| menu |
 	menu := SpMenuPresenter new.

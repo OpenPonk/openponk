@@ -1,18 +1,20 @@
 Class {
-	#name : #OPControllerFactoryTest,
-	#superclass : #TestCase,
+	#name : 'OPControllerFactoryTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'factory'
 	],
-	#category : #'OpenPonk-Core-Controllers - Tests'
+	#category : 'OpenPonk-Core-Controllers - Tests',
+	#package : 'OpenPonk-Core',
+	#tag : 'Controllers - Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 OPControllerFactoryTest >> setUp [
 	factory := OPControllerFactory new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPControllerFactoryTest >> testNewControllerFor [
 	factory register: OPTestRelationController forModel: OPTestRelationModel.
 	self
@@ -20,7 +22,7 @@ OPControllerFactoryTest >> testNewControllerFor [
 		equals: OPTestRelationController
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPControllerFactoryTest >> testNewControllerForWithPriority [
 	factory
 		register: OPTestEntityController
@@ -35,7 +37,7 @@ OPControllerFactoryTest >> testNewControllerForWithPriority [
 		equals: OPTestEntityController
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPControllerFactoryTest >> testRegister [
 	self deny: (factory hasControllerFor: OPTestEntityModel new).
 	factory register: OPTestEntityController forModel: OPTestEntityModel.

@@ -1,17 +1,19 @@
 Class {
-	#name : #OPNoteController,
-	#superclass : #OPCommonElementController,
+	#name : 'OPNoteController',
+	#superclass : 'OPCommonElementController',
 	#traits : 'OPTResizableFigureController',
 	#classTraits : 'OPTResizableFigureController classTrait',
-	#category : #'OpenPonk-Core-CommonElements'
+	#category : 'OpenPonk-Core-CommonElements',
+	#package : 'OpenPonk-Core',
+	#tag : 'CommonElements'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPNoteController class >> paletteItemName [
 	^ #note
 ]
 
-{ #category : #forms }
+{ #category : 'forms' }
 OPNoteController >> buildEditorForm: aForm [
 
 	(aForm addLongText: 'Text')
@@ -21,13 +23,13 @@ OPNoteController >> buildEditorForm: aForm [
 			self diagramElement updateText ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNoteController >> diagramElementClass [
 
 	^ OPNote
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OPNoteController >> renderDiagramElement [
 
 	super renderDiagramElement.

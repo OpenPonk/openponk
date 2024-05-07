@@ -1,6 +1,6 @@
 Class {
-	#name : #OPLegacyElementLayout,
-	#superclass : #Object,
+	#name : 'OPLegacyElementLayout',
+	#superclass : 'Object',
 	#traits : 'TComparable',
 	#classTraits : 'TComparable classTrait',
 	#instVars : [
@@ -11,17 +11,19 @@ Class {
 	#classInstVars : [
 		'none'
 	],
-	#category : #'OpenPonk-Core-Diagrams'
+	#category : 'OpenPonk-Core-Diagrams',
+	#package : 'OpenPonk-Core',
+	#tag : 'Diagrams'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPLegacyElementLayout class >> isDeprecated [
 	"no longer tested and used"
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyElementLayout class >> neoJsonMapping: mapper [
 	mapper
 		for: self
@@ -32,32 +34,32 @@ OPLegacyElementLayout class >> neoJsonMapping: mapper [
 		mapAllInstVarsFor: Point
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPLegacyElementLayout class >> none [
 	^ none ifNil: [ none := self new ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPLegacyElementLayout class >> withPath: aRelationshipPath [
 	^ self new
 		path: aRelationshipPath;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPLegacyElementLayout class >> withPathFromSource: anId throughPoints: anArrayOfPoints [
 	^ self
 		withPath: (OPLegacyRelationshipPath fromSource: anId throughPoints: anArrayOfPoints)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPLegacyElementLayout class >> withPosition: aPoint [
 	^ self new
 		position: aPoint;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPLegacyElementLayout class >> withPosition: aPoint extent: anExtentPoint [
 	^ self new
 		position: aPoint;
@@ -65,7 +67,7 @@ OPLegacyElementLayout class >> withPosition: aPoint extent: anExtentPoint [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPLegacyElementLayout >> < anOtherLayout [
 
 	^ (self position isNotNil and: [ anOtherLayout position isNil ]) or: [ 
@@ -73,7 +75,7 @@ OPLegacyElementLayout >> < anOtherLayout [
 			  self path isNotNil and: [ anOtherLayout path isNil ] ] ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPLegacyElementLayout >> = anOtherLayout [
 
 	self position ifNil: [ ^ self path = anOtherLayout path ].
@@ -81,7 +83,7 @@ OPLegacyElementLayout >> = anOtherLayout [
 		  extent = anOtherLayout extent ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 OPLegacyElementLayout >> applyToDiagramElement: aDiagramElement [
 
 	position
@@ -96,54 +98,54 @@ OPLegacyElementLayout >> applyToDiagramElement: aDiagramElement [
 	aDiagramElement updateRenderFromSelf
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyElementLayout >> extent [
 	^ extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyElementLayout >> extent: aPoint [ 
 	extent := aPoint
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPLegacyElementLayout >> hasExtent [
 	^ extent isNotNil
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPLegacyElementLayout >> hash [
 
 	self position ifNil: [ ^ self path hash ].
 	^ position hash bitXor: extent hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPLegacyElementLayout >> isNone [
 	^ position isNil & extent isNil & path isNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyElementLayout >> path [
 	^ path
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyElementLayout >> path: aRelationshipPath [
 	path := aRelationshipPath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyElementLayout >> position [
 	^ position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPLegacyElementLayout >> position: aPoint [ 
 	position := aPoint
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 OPLegacyElementLayout >> printOn: aStream [
 	super printOn: aStream.
 	position

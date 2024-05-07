@@ -1,16 +1,18 @@
 Class {
-	#name : #OPEditorPaletteRightLayout,
-	#superclass : #OPEditorLayout,
-	#category : #'OpenPonk-Spec-Windows'
+	#name : 'OPEditorPaletteRightLayout',
+	#superclass : 'OPEditorLayout',
+	#category : 'OpenPonk-Spec-Windows',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Windows'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEditorPaletteRightLayout >> name [
 
 	^ 'Palette on right'
 ]
 
-{ #category : #applying }
+{ #category : 'applying' }
 OPEditorPaletteRightLayout >> resizePanelsOf: aMorph afterWindowResized: aResizeEvent [
 
 	| editorFormLayoutPolicy canvasPaletteLayoutPolicy diff canvasWidth canvasWithPaletteWidth paletteWidth formWidth formLackOfWidth paletteLackOfWidth |
@@ -34,7 +36,7 @@ OPEditorPaletteRightLayout >> resizePanelsOf: aMorph afterWindowResized: aResize
 		canvasWidth + diff - paletteLackOfWidth
 ]
 
-{ #category : #applying }
+{ #category : 'applying' }
 OPEditorPaletteRightLayout >> spLayoutFor: anEditor [
 
 	"[ [ Canvas | Palette ] | Form ]"

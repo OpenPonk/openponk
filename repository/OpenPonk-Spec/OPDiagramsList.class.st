@@ -4,8 +4,8 @@ I show a list of available diagram views for editing.
 Right-clicking on a view shows additional options.
 "
 Class {
-	#name : #OPDiagramsList,
-	#superclass : #SpPresenter,
+	#name : 'OPDiagramsList',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'list',
 		'heading',
@@ -19,10 +19,12 @@ Class {
 		'notebook',
 		'adapters'
 	],
-	#category : #'OpenPonk-Spec-Windows'
+	#category : 'OpenPonk-Spec-Windows',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Windows'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPDiagramsList class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -33,20 +35,20 @@ OPDiagramsList class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramsList >> adapters [
 
 	^ adapters ifNil: [ 
 		  adapters := self workbench projectController navigatorAdapters ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPDiagramsList >> connectPresenters [
 	super connectPresenters.
 	self initializeList
 ]
 
-{ #category : #retrieving }
+{ #category : 'retrieving' }
 OPDiagramsList >> contextMenu: aMenuPresenter for: aDiagram [
 
 	aDiagram ifNil: [ ^ aMenuPresenter ].
@@ -78,7 +80,7 @@ OPDiagramsList >> contextMenu: aMenuPresenter for: aDiagram [
 	^ aMenuPresenter
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPDiagramsList >> copyDiagram: aView [
 	| name newView |
 	[ name := UIManager default
@@ -93,7 +95,7 @@ OPDiagramsList >> copyDiagram: aView [
 	self workbench openEditorOnDiagram: newView
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPDiagramsList >> createDiagram [
 
 	| name diagram openModel |
@@ -113,7 +115,7 @@ OPDiagramsList >> createDiagram [
 	self workbench openEditorOnDiagram: diagram
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPDiagramsList >> deleteDiagram: aView [
 	(UIManager default
 		confirm: 'Delete view "' , (self displayFor: aView) , '"?'
@@ -123,20 +125,20 @@ OPDiagramsList >> deleteDiagram: aView [
 	self updateContent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramsList >> diagramsIn: aProject [
 	^ aProject diagrams
 		sorted: #modelElementType ascending , #modelElementName ascending
 ]
 
-{ #category : #retrieving }
+{ #category : 'retrieving' }
 OPDiagramsList >> displayFor: aDiagramView [
 
 	^ '[' , aDiagramView name , '] '
 	  , (self adapters displayFor: aDiagramView modelElement)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPDiagramsList >> displayRowFor: aDiagram [
 
 	| name nameMorph modelMorph container modelName |
@@ -157,12 +159,12 @@ OPDiagramsList >> displayRowFor: aDiagram [
 	^ self theme newRowIn: self currentWorld for: container
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPDiagramsList >> heading [
 	^ heading
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPDiagramsList >> initializeList [
 
 	list
@@ -176,7 +178,7 @@ OPDiagramsList >> initializeList [
 			self contextMenu: self newMenu for: list selectedItem ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPDiagramsList >> initializePresenters [
 
 	list := self newList.
@@ -185,7 +187,7 @@ OPDiagramsList >> initializePresenters [
 	self initializeToolbar
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPDiagramsList >> initializeToolbar [
 	toolbar
 		addGroup: [ :group | 
@@ -221,44 +223,47 @@ OPDiagramsList >> initializeToolbar [
 						action: [ self selectedItem ifNotNil: [ :i | self deleteDiagram: i ] ] ] ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPDiagramsList >> isDeleteAllowedFor: aDiagram [
 
 	^ project isNotNil and: [ 
 		  (project diagramsOf: aDiagram modelElement) size > 1 ]
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPDiagramsList >> list [
 	^ list
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPDiagramsList >> openDiagram: aView [
 	UIManager default showWaitCursorWhile: [ self workbench openEditorOnDiagram: aView ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramsList >> project [
 	^ project
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramsList >> project: aProject [
 
 	project := aProject.
 	project whenChanged: [ self updateContent ].
-	self withWindowDo: [ :window | window whenClosedDo: [ project unsubscribe: self ] ].
+	self withWindowDo: [ :window |
+		window whenClosedDo: [ project unsubscribe: self ] ].
 	self updateContent.
 	self workbench announcer
 		when: OPEditorUnfocused
-		do: [ :event | list resetListSelection ].
+		do: [ :event | list resetListSelection ]
+		for: self.
 	self workbench announcer
 		when: OPEditorFocused
 		do: [ :event | self updateContent ]
+		for: self
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPDiagramsList >> renameDiagram: aView [
 
 	| name |
@@ -273,7 +278,7 @@ OPDiagramsList >> renameDiagram: aView [
 	list updateList
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPDiagramsList >> selectedDiagram: aDiagram [
 	deleteButton
 		enabled: (self isDeleteAllowedFor: aDiagram);
@@ -286,23 +291,23 @@ OPDiagramsList >> selectedDiagram: aDiagram [
 		changed: #enabled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramsList >> selectedItem [
 	^ list selectedItem
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPDiagramsList >> selectionChanged: aDiagram [
 	aDiagram ifNil: [ ^ self unselectedDiagram ].
 	self selectedDiagram: aDiagram
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPDiagramsList >> toolbar [
 	^ toolbar
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPDiagramsList >> unselectedDiagram [
 	deleteButton
 		enabled: false;
@@ -315,7 +320,7 @@ OPDiagramsList >> unselectedDiagram [
 		changed: #enabled
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPDiagramsList >> updateContent [
 
 	| diagrams |
@@ -326,7 +331,7 @@ OPDiagramsList >> updateContent [
 		ifFound: [ :view | list selectItem: view ]
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPDiagramsList >> workbench [
 	^ owner workbench
 ]

@@ -1,48 +1,50 @@
 Class {
-	#name : #OPModelObjectReference,
-	#superclass : #Object,
+	#name : 'OPModelObjectReference',
+	#superclass : 'Object',
 	#instVars : [
 		'uuid'
 	],
-	#category : #'OpenPonk-Core-Diagrams'
+	#category : 'OpenPonk-Core-Diagrams',
+	#package : 'OpenPonk-Core',
+	#tag : 'Diagrams'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPModelObjectReference class >> withUUID: aUUID [
 	^ self new
 		uuid: aUUID;
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPModelObjectReference >> = otherModelObject [
 	^ self references: otherModelObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPModelObjectReference >> modelObjectFrom: aDictionary [
 
 	^ aDictionary at: uuid
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 OPModelObjectReference >> printOn: aStream [
 	super printOn: aStream.
 	uuid ifNil: [ ^ self ].
 	aStream << '(' << uuid asString << ')'
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPModelObjectReference >> references: otherModelObject [
 	^ uuid = otherModelObject uuid
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPModelObjectReference >> uuid [
 	^ uuid
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPModelObjectReference >> uuid: aUUID [
 	uuid := aUUID
 ]

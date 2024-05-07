@@ -2,8 +2,8 @@
 I am the topmost window of an opened Project.
 "
 Class {
-	#name : #OPWorkbench,
-	#superclass : #SpPresenter,
+	#name : 'OPWorkbench',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'project',
 		'projectController',
@@ -18,10 +18,12 @@ Class {
 	#classInstVars : [
 		'isDevelopmentMode'
 	],
-	#category : #'OpenPonk-Spec-Windows'
+	#category : 'OpenPonk-Spec-Windows',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Windows'
 }
 
-{ #category : #specs }
+{ #category : 'specs' }
 OPWorkbench class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -42,7 +44,7 @@ OPWorkbench class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OPWorkbench class >> developerSettingsOn: aBuilder [
 
 	<systemsettings>
@@ -57,35 +59,35 @@ OPWorkbench class >> developerSettingsOn: aBuilder [
 		description: 'Add extra options useful for developers.'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 OPWorkbench class >> initialExtent [
 
 	^ self currentWorld extent * 0.8 min: 1600 @ 1000
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 OPWorkbench class >> initialListsWidth [
 
 	^ 250
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OPWorkbench class >> isDevelopmentMode [
 	^ isDevelopmentMode ifNil: [ false ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OPWorkbench class >> isDevelopmentMode: aBoolean [
 	isDevelopmentMode := aBoolean
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPWorkbench class >> open [
 
 	^ (self newApplication: OPApplication new) open
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPWorkbench class >> openModel: aModel [
 	| project |
 	project := OPProject new.
@@ -96,7 +98,7 @@ OPWorkbench class >> openModel: aModel [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPWorkbench class >> openProject: aProject [
 
 	^ (self newApplication: OPApplication new)
@@ -104,14 +106,14 @@ OPWorkbench class >> openProject: aProject [
 		  yourself
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OPWorkbench class >> settingsOn: aBuilder [
 
 	<systemsettings>
 	(aBuilder group: #openponk) label: 'OpenPonk'
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 OPWorkbench >> closeEditorOfDiagram: aDiagram [
 
 	editors
@@ -120,7 +122,7 @@ OPWorkbench >> closeEditorOfDiagram: aDiagram [
 		notebook removePage: (editorInfo at: #page) ]
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 OPWorkbench >> closedTabOfEditor: anEditor [
 
 	self projectController updateDiagram:
@@ -135,7 +137,7 @@ OPWorkbench >> closedTabOfEditor: anEditor [
 	self announce: (OPEditorClosed on: anEditor)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPWorkbench >> connectPresenters [
 
 	super connectPresenters.
@@ -146,18 +148,18 @@ OPWorkbench >> connectPresenters [
 		whenPageRemovedDo: [ :page | self pageRemoved: page ]
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPWorkbench >> deleteDiagram: aDiagram [
 	self closeEditorOfDiagram: aDiagram.
 	self projectController removeDiagram: aDiagram
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPWorkbench >> diagramsList [
 	^ diagramsList
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 OPWorkbench >> focusEditorOf: aDiagram [
 
 	| editorTabInfo |
@@ -182,19 +184,19 @@ OPWorkbench >> focusEditorOf: aDiagram [
 	focusedEditor diagramController showElements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPWorkbench >> focusedEditor [
 	^ focusedEditor
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPWorkbench >> initialize [
 	pluginRegistry := OPPluginRegistry default.
 	editors := IdentityDictionary new.
 	super initialize
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPWorkbench >> initializePresenters [
 
 	topToolbar := self instantiate: OPWorkbenchToolbar.
@@ -208,7 +210,7 @@ OPWorkbench >> initializePresenters [
 		add: notebook
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPWorkbench >> initializeWindow: aWindow [
 
 	aWindow
@@ -220,19 +222,19 @@ OPWorkbench >> initializeWindow: aWindow [
 					self closedTabOfEditor: (each at: #editor) ] ]
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPWorkbench >> notebook [
 	^ notebook
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 OPWorkbench >> openEditorOn: aModel [
 
 	self openEditorOnDiagram:
 		(project diagrams detect: [ :each | each modelElement = aModel ])
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 OPWorkbench >> openEditorOnDiagram: aDiagram [
 
 	| editor notebookPage plugin model |
@@ -263,7 +265,7 @@ OPWorkbench >> openEditorOnDiagram: aDiagram [
 	^ editor
 ]
 
-{ #category : #'project handling' }
+{ #category : 'project handling' }
 OPWorkbench >> openProject: aProject [
 
 	project := aProject.
@@ -281,7 +283,7 @@ OPWorkbench >> openProject: aProject [
 	projectController openDiagrams
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPWorkbench >> pageRemoved: aPage [
 
 	"activePresenter is editor"
@@ -289,22 +291,22 @@ OPWorkbench >> pageRemoved: aPage [
 	self closedTabOfEditor: aPage activePresenter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPWorkbench >> pluginRegistry [
 	^ pluginRegistry
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPWorkbench >> projectController [
 	^ projectController
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPWorkbench >> projectTree [
 	^ projectTree
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPWorkbench >> showAllElementsInAllDiagrams [
 
 	self projectController controllers do: [ :each | 
@@ -318,7 +320,7 @@ OPWorkbench >> showAllElementsInAllDiagrams [
 	self projectController controllers do: #zoomToFit
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPWorkbench >> title [
 	^ project
 		  ifNil: [ 'OpenPonk' ]
@@ -327,18 +329,18 @@ OPWorkbench >> title [
 									 	ifNotNil: [ project storageFile path pathString, ' - ', project name, ' - OpenPonk' ] ]
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPWorkbench >> topToolbar [
 	^ topToolbar
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPWorkbench >> updateTitle [
 
 	^ self withWindowDo: [ :window | window title: self title ]
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPWorkbench >> workbench [
 	^ self
 ]

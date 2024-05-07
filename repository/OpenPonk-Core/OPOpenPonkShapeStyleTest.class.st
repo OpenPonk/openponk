@@ -1,25 +1,27 @@
 Class {
-	#name : #OPOpenPonkShapeStyleTest,
-	#superclass : #TestCase,
+	#name : 'OPOpenPonkShapeStyleTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'style'
 	],
-	#category : #'OpenPonk-Core-Tests'
+	#category : 'OpenPonk-Core-Tests',
+	#package : 'OpenPonk-Core',
+	#tag : 'Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 OPOpenPonkShapeStyleTest >> setUp [
 
 	super setUp.
 	style := OPOpenPonkShapeStyle new
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPOpenPonkShapeStyleTest >> shapeClass [
 	^ OPOpenPonkShapeStyle
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPOpenPonkShapeStyleTest >> testLocalStyleNotInherited [
 	| a b |
 	a := OPShape new.
@@ -31,7 +33,7 @@ OPOpenPonkShapeStyleTest >> testLocalStyleNotInherited [
 	self assert: b localStyle equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPOpenPonkShapeStyleTest >> testPropertyInheritance [
 
 	| a b aStyle bShared bLocal |
@@ -73,7 +75,7 @@ OPOpenPonkShapeStyleTest >> testPropertyInheritance [
 		equals: 15
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPOpenPonkShapeStyleTest >> testSharedStyleIsInherited [
 
 	| a b |
@@ -95,7 +97,7 @@ OPOpenPonkShapeStyleTest >> testSharedStyleIsInherited [
 		equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPOpenPonkShapeStyleTest >> testSharedStyleOverriden [
 
 	| a b newStyle |

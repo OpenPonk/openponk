@@ -2,22 +2,24 @@
 I hold a collection of navigator adapters applicable to a concrete editor.
 "
 Class {
-	#name : #OPNavigatorAdapters,
-	#superclass : #Object,
+	#name : 'OPNavigatorAdapters',
+	#superclass : 'Object',
 	#instVars : [
 		'adapters',
 		'modelToAdapterMapping'
 	],
-	#category : #'OpenPonk-Spec-Utils'
+	#category : 'OpenPonk-Spec-Utils',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Utils'
 }
 
-{ #category : #'accessing - private' }
+{ #category : 'accessing - private' }
 OPNavigatorAdapters >> adapterFor: aModelObject [
 
 	^ self adapterFor: aModelObject in: (OPProject new uuid: UUID nilUUID)
 ]
 
-{ #category : #'accessing - private' }
+{ #category : 'accessing - private' }
 OPNavigatorAdapters >> adapterFor: aModelObject in: aModel [
 
 	^ modelToAdapterMapping
@@ -31,12 +33,12 @@ OPNavigatorAdapters >> adapterFor: aModelObject in: aModel [
 						  , aModel printString ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNavigatorAdapters >> adapters: aCollection [
 	adapters := aCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPNavigatorAdapters >> allAdapters [
 
 	"Return default navigator last, because it has the lowest priority."
@@ -44,19 +46,19 @@ OPNavigatorAdapters >> allAdapters [
 	^ OPNavigatorAdapter allSubclasses sortedAs: #priority
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNavigatorAdapters >> allChildrenFor: anObject [
 
 	^ (self adapterFor: anObject) allChildrenFor: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNavigatorAdapters >> childrenFor: anObject [
 
 	^ (self adapterFor: anObject) childrenFor: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNavigatorAdapters >> contextMenuFor: anObject projectController: aProjectController inside: aMenuPresenter [
 
 	| contextMenuGroups |
@@ -95,7 +97,7 @@ OPNavigatorAdapters >> contextMenuFor: anObject projectController: aProjectContr
 	^ aMenuPresenter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNavigatorAdapters >> dependentFor: anObject in: aModel [
 
 	^ (self adapterFor: anObject in: aModel)
@@ -103,7 +105,7 @@ OPNavigatorAdapters >> dependentFor: anObject in: aModel [
 		  in: aModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNavigatorAdapters >> dependsTypeOf: firstObject on: secondObject in: aModel [
 
 	^ (self adapterFor: firstObject in: aModel)
@@ -112,19 +114,19 @@ OPNavigatorAdapters >> dependsTypeOf: firstObject on: secondObject in: aModel [
 		  in: aModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNavigatorAdapters >> displayFor: anObject [
 
 	^ (self adapterFor: anObject) displayFor: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNavigatorAdapters >> iconFor: anObject [
 
 	^ (self adapterFor: anObject) iconFor: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNavigatorAdapters >> initialSetupFor: anObject in: aDiagramController [
 
 	^ (self adapterFor: anObject in: aDiagramController model)
@@ -132,7 +134,7 @@ OPNavigatorAdapters >> initialSetupFor: anObject in: aDiagramController [
 		  in: aDiagramController
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPNavigatorAdapters >> initialize [
 
 	super initialize.
@@ -140,7 +142,7 @@ OPNavigatorAdapters >> initialize [
 	modelToAdapterMapping := Dictionary new
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 OPNavigatorAdapters >> sort: modelObjects [
 
 	modelObjects ifEmpty: [ ^ modelObjects ].

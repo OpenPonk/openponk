@@ -2,47 +2,49 @@
 I take a folder and try to materialize a project from it.
 "
 Class {
-	#name : #OPProjectDirectoryMaterializer,
-	#superclass : #OPSerializer,
-	#category : #'OpenPonk-Core-Persistence'
+	#name : 'OPProjectDirectoryMaterializer',
+	#superclass : 'OPSerializer',
+	#category : 'OpenPonk-Core-Persistence',
+	#package : 'OpenPonk-Core',
+	#tag : 'Persistence'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPProjectDirectoryMaterializer class >> exportSubject [
 
 	^ #project
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPProjectDirectoryMaterializer class >> exportVersion [
 
 	^ 0
 ]
 
-{ #category : #formatting }
+{ #category : 'formatting' }
 OPProjectDirectoryMaterializer class >> formatName [
 
 	^ #directory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectDirectoryMaterializer class >> maxImportVersion [
 
 	^ 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectDirectoryMaterializer class >> minImportVersion [
 
 	^ 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectDirectoryMaterializer >> exporter [
 	^ 'OpenPonk'
 ]
 
-{ #category : #'public - reading' }
+{ #category : 'public - reading' }
 OPProjectDirectoryMaterializer >> loadProjectFrom: aFolder [
 	| project |
 	project := self readProjectInfoFrom: aFolder / 'project.json'.
@@ -53,7 +55,7 @@ OPProjectDirectoryMaterializer >> loadProjectFrom: aFolder [
 	^ project
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectDirectoryMaterializer >> modelIdFrom: aString [
 	aString size = 36
 		ifTrue: [ ^ UUID fromString: aString ].
@@ -62,7 +64,7 @@ OPProjectDirectoryMaterializer >> modelIdFrom: aString [
 	^ aString
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 OPProjectDirectoryMaterializer >> pluginForName: aName pluginVersion: aVersion [
 	| plugin |
 	plugin := OPPluginRegistry default plugins
@@ -71,7 +73,7 @@ OPProjectDirectoryMaterializer >> pluginForName: aName pluginVersion: aVersion [
 	^ plugin
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 OPProjectDirectoryMaterializer >> readAllMementosFrom: aRootFolder [
 	| references |
 	references := self readModelReferences: aRootFolder.	
@@ -82,7 +84,7 @@ OPProjectDirectoryMaterializer >> readAllMementosFrom: aRootFolder [
 				asPlugin: pair value ]
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 OPProjectDirectoryMaterializer >> readMementoFrom: aFolder asPlugin: aPlugin [
 
 	| materializer |
@@ -99,7 +101,7 @@ OPProjectDirectoryMaterializer >> readMementoFrom: aFolder asPlugin: aPlugin [
 			  'Unable to deserialize memento from ' , aFolder greaseString ]
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 OPProjectDirectoryMaterializer >> readModelReferences: aRootFolder [
 	| references |
 	references := STON
@@ -114,7 +116,7 @@ OPProjectDirectoryMaterializer >> readModelReferences: aRootFolder [
 			uuid -> model ]
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 OPProjectDirectoryMaterializer >> readProjectInfoFrom: aFile [
 
 	| project json exporter |

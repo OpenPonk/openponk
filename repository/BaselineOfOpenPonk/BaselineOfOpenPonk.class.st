@@ -36,11 +36,11 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 	spec
 		baseline: 'XPath'
 		with: [
-		spec repository: 'github://pharo-contributions/XML-XPath:c063098' ].
+		spec repository: 'github://pharo-contributions/XML-XPath:2aa720c' ].
 
 	spec baseline: 'Magritte' with: [
 		spec
-			repository: 'github://magritte-metamodel/magritte:b24afda';
+			repository: 'github://JanBliznicenko/magritte:master';
 			loads: #( Core 'Magritte-Morph' ) ].
 
 	spec
@@ -49,19 +49,18 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 
 	spec
 		baseline: 'NeoJSON'
-		with: [ spec repository: 'github://svenvc/NeoJSON:b05162a' ].
+		with: [ spec repository: 'github://svenvc/NeoJSON:17efabc' ].
 
 	spec baseline: 'Roassal' with: [
 		spec
-			repository: 'github://pharo-graphics/Roassal:b508334';
+			repository: 'github://pharo-graphics/Roassal:3af02a4';
 			loads: #Full;
-			preLoadDoIt: #removeOldRoassal3;
 			postLoadDoIt: #removeRoassalExplicitRequirements ].
 
 	spec
 		baseline: 'RoassalExporters'
 		with: [
-		spec repository: 'github://pharo-graphics/RoassalExporters:v1.01' ]
+		spec repository: 'github://pharo-graphics/RoassalExporters:v1.02' ]
 ]
 
 { #category : #baselines }
@@ -93,14 +92,6 @@ BaselineOfOpenPonk >> removeExplicitRequirementsFromPackage: aPackageName [
 					eachMethod sourceCode includesSubstring:
 						'self explicitRequirement' ]
 				thenDo: #removeFromSystem ] ]
-]
-
-{ #category : #baselines }
-BaselineOfOpenPonk >> removeOldRoassal3 [
-
-	(RPackageOrganizer default includesPackageNamed: 'Roassal3')
-		ifFalse: [ ^ self ].
-	#( Roassal3 Numeric ) do: [ :eachName | self removePackage: eachName ]
 ]
 
 { #category : #baselines }

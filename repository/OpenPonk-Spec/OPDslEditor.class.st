@@ -48,7 +48,7 @@ OPDslEditor >> buildToolbar: aMenu [
 						name: 'New';
 						description: 'New Diagram';
 						icon: (self iconNamed: #addIcon);
-						action: [ self class new openWithSpec ] ];
+						action: [ self class new open ] ];
 				addItem:
 						[ :item | 
 					item

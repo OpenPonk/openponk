@@ -38,20 +38,6 @@ OPModelTreeWidget class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : 'as yet unclassified' }
-OPModelTreeWidget class >> openOn: aProject [
-	^ self new
-		openOn: aProject;
-		openWithSpec
-]
-
-{ #category : 'specs' }
-OPModelTreeWidget class >> withoutHeadingSpec [
-	^ SpBoxLayout newTopToBottom
-		add: #tree;
-		yourself
-]
-
 { #category : 'accessing' }
 OPModelTreeWidget >> adapters [
 

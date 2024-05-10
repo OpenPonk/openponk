@@ -89,13 +89,14 @@ OPWorkbench class >> open [
 
 { #category : 'instance creation' }
 OPWorkbench class >> openModel: aModel [
+
 	| project |
 	project := OPProject new.
-	project name: 'Click Project'.
+	project name: 'New Project'.
 	project addModel: aModel.
-	^ self open
-		openProject: project;
-		yourself
+	^ self
+		  openProject: project;
+		  yourself
 ]
 
 { #category : 'instance creation' }
@@ -272,15 +273,15 @@ OPWorkbench >> openProject: aProject [
 	(projectController := aProject controllerClass new)
 		project: project;
 		workbench: self.
-	self hasWindow ifFalse: [ self open ].
-	self updateTitle.
 	topToolbar updateProjectMenu.
 	project whenChanged: [ self updateTitle ].
-	self withWindowDo: [ :window | 
-		window whenClosedDo: [ project unsubscribe: self ] ].
 	diagramsList project: project.
 	projectTree openOn: project.
-	projectController openDiagrams
+	projectController openDiagrams.
+	self hasWindow ifFalse: [ self open ].
+	self withWindowDo: [ :window | 
+		window whenClosedDo: [ project unsubscribe: self ] ].
+	self updateTitle.
 ]
 
 { #category : 'as yet unclassified' }

@@ -1,64 +1,66 @@
 Class {
-	#name : #OPRSAdornmentBuilder,
-	#superclass : #Object,
+	#name : 'OPRSAdornmentBuilder',
+	#superclass : 'Object',
 	#instVars : [
 		'adornments',
 		'direction',
 		'verticalLocation',
 		'horizontalLocation'
 	],
-	#category : #'OpenPonk-Roassal-Interactions'
+	#category : 'OpenPonk-Roassal-Interactions',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Interactions'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 OPRSAdornmentBuilder >> addIconForm: anIcon action: aBlock [
 
 	adornments add: (OPRSAdornment withIconForm: anIcon action: aBlock)
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 OPRSAdornmentBuilder >> addIconShape: aShape action: aBlock [
 
 	adornments add: (OPRSAdornment withIconShape: aShape action: aBlock)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSAdornmentBuilder >> directionDown [
 
 	direction := 0 @ 1
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSAdornmentBuilder >> directionLeft [
 
 	direction := -1 @ 0
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSAdornmentBuilder >> directionRight [
 
 	direction := 1 @ 0
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSAdornmentBuilder >> directionUp [
 
 	direction := 0 @ -1
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSAdornmentBuilder >> hide [
 
 	adornments do: #remove
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSAdornmentBuilder >> horizontalLocation [
 
 	^ horizontalLocation
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSAdornmentBuilder >> initialize [
 
 	super initialize.
@@ -74,7 +76,7 @@ OPRSAdornmentBuilder >> initialize [
 	adornments := RSGroup new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSAdornmentBuilder >> showOn: aShape [
 
 	adornments inject: 0 @ 0 into: [ :offset :eachAdornment |
@@ -87,7 +89,7 @@ OPRSAdornmentBuilder >> showOn: aShape [
 		offset + (eachAdornment shape extent"WithoutBorder" * direction)  ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSAdornmentBuilder >> verticalLocation [
 
 	^ verticalLocation

@@ -1,6 +1,6 @@
-Extension { #name : #RSCanvas }
+Extension { #name : 'RSCanvas' }
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSCanvas >> deepShapes [
 	"Return the list of all the shapes contained in the visualization"
 	| result |
@@ -10,7 +10,7 @@ RSCanvas >> deepShapes [
 	^ result
 ]
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSCanvas >> elements [
 
 	self
@@ -19,13 +19,13 @@ RSCanvas >> elements [
 	^ self nodes
 ]
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSCanvas >> isSelectable [
 
 	^ false
 ]
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSCanvas >> shapesWithActionForPosition: aPositionInSpace [
 
 	| result |

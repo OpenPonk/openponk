@@ -1,18 +1,18 @@
-Extension { #name : #RSShape }
+Extension { #name : 'RSShape' }
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSShape >> asEmptyMarker [
 
 	^ self asMarker asEmptyMarker
 ]
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSShape >> extentWithoutBorder [
 
 	^ self extent - (border ifNil: [ 0 ] ifNotNil: [ border width ])
 ]
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSShape >> isElement [
 
 	self
@@ -21,13 +21,13 @@ RSShape >> isElement [
 	^ self isNode
 ]
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSShape >> isSelectable [
 
 	^ self hasProperty: OPRSSelectable
 ]
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSShape >> isSelected [
 
 	^ self canvas
@@ -36,7 +36,7 @@ RSShape >> isSelected [
 		  currentCanvas selectedShapes includes: self ]
 ]
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSShape >> shapeWithActionForPosition: position [
 
 	self canvas
@@ -48,7 +48,7 @@ RSShape >> shapeWithActionForPosition: position [
 		  ifFalse: [ nil ]
 ]
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSShape >> view [
 
 	self

@@ -1,13 +1,15 @@
 Class {
-	#name : #OPRSDependenciesMapBuilder,
-	#superclass : #RSThemedMapBuilder,
+	#name : 'OPRSDependenciesMapBuilder',
+	#superclass : 'RSThemedMapBuilder',
 	#classInstVars : [
 		'openPonkBaselines'
 	],
-	#category : #'OpenPonk-Roassal-Meta'
+	#category : 'OpenPonk-Roassal-Meta',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Meta'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPRSDependenciesMapBuilder class >> open [
 
 	<script>
@@ -22,7 +24,7 @@ OPRSDependenciesMapBuilder class >> open [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSDependenciesMapBuilder class >> openPonkBaselines [
 
 	^ openPonkBaselines ifNil: [
@@ -39,14 +41,14 @@ OPRSDependenciesMapBuilder class >> openPonkBaselines [
 		                          OpenPonkGit ) asSet ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSDependenciesMapBuilder class >> resetOpenPonkBaselines [
 
 	<script>
 	openPonkBaselines := nil
 ]
 
-{ #category : #'hooks - model' }
+{ #category : 'hooks - model' }
 OPRSDependenciesMapBuilder >> computeModels [
 
 	| verResults |
@@ -59,7 +61,7 @@ OPRSDependenciesMapBuilder >> computeModels [
 		Smalltalk globals at: #BaselineOfOntoUMLVerificationFramework put: verResults ]
 ]
 
-{ #category : #'hooks - model' }
+{ #category : 'hooks - model' }
 OPRSDependenciesMapBuilder >> dependenciesFrom: aBMBaselineModel [
 
 	^ aBMBaselineModel baselineClass version projects
@@ -71,7 +73,7 @@ OPRSDependenciesMapBuilder >> dependenciesFrom: aBMBaselineModel [
 						   Character space }) not ] ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSDependenciesMapBuilder >> layoutOn: aCanvas [
 
 	OPRSBaselineDominanceTreeLayout new
@@ -80,7 +82,7 @@ OPRSDependenciesMapBuilder >> layoutOn: aCanvas [
 		on: aCanvas nodes
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPRSDependenciesMapBuilder >> newBorderFor: model [
 
 	| border shortName |
@@ -97,14 +99,14 @@ OPRSDependenciesMapBuilder >> newBorderFor: model [
 	^ border
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPRSDependenciesMapBuilder >> newBox [
 	^ super newBox
 		color: Color white;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPRSDependenciesMapBuilder >> newLabelFor: model [
 
 	| label shortName |
@@ -121,7 +123,7 @@ OPRSDependenciesMapBuilder >> newLabelFor: model [
 	^ label
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSDependenciesMapBuilder >> renderLinesOn: aCanvas [
 
 	self newLineBuilder

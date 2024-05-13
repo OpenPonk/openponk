@@ -1,6 +1,6 @@
-Extension { #name : #Color }
+Extension { #name : 'Color' }
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 Color >> withTransparencyAsWhite [
 
 	^ self class

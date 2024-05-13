@@ -1,49 +1,51 @@
 Class {
-	#name : #OPRSAcceptDenyFeedbackBuilder,
-	#superclass : #RSObject,
+	#name : 'OPRSAcceptDenyFeedbackBuilder',
+	#superclass : 'RSObject',
 	#instVars : [
 		'feedback'
 	],
-	#category : #'OpenPonk-Roassal-CreationFeedback'
+	#category : 'OpenPonk-Roassal-CreationFeedback',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'CreationFeedback'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSAcceptDenyFeedbackBuilder class >> acceptFeedbackFor: anObject [
 	^ self new acceptFeedbackFor: anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSAcceptDenyFeedbackBuilder class >> denyFeedbackFor: anObject [
 	^ self new denyFeedbackFor: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAcceptDenyFeedbackBuilder >> acceptColor [
 	^ Color green
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPRSAcceptDenyFeedbackBuilder >> acceptFeedbackFor: anObject [
 	^ self feedbackFor: anObject color: self acceptColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAcceptDenyFeedbackBuilder >> denyColor [
 	^ Color red
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPRSAcceptDenyFeedbackBuilder >> denyFeedbackFor: anObject [
 	^ self feedbackFor: anObject color: self denyColor
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPRSAcceptDenyFeedbackBuilder >> feedback [
 
 	^ feedback
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPRSAcceptDenyFeedbackBuilder >> feedbackFor: anObject color: aColor [
 
 	(anObject respondsTo: #isShape) ifFalse: [ 
@@ -60,7 +62,7 @@ OPRSAcceptDenyFeedbackBuilder >> feedbackFor: anObject color: aColor [
 		  color: aColor
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPRSAcceptDenyFeedbackBuilder >> remove [
 	^ self subclassResponsibility
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #RSBoundingShape }
+Extension { #name : 'RSBoundingShape' }
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSBoundingShape >> element [
 
 	self
@@ -9,7 +9,7 @@ RSBoundingShape >> element [
 	^ self
 ]
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSBoundingShape >> elementOn: aModel [
 
 	self

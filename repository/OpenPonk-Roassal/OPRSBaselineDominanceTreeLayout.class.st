@@ -1,10 +1,12 @@
 Class {
-	#name : #OPRSBaselineDominanceTreeLayout,
-	#superclass : #RSHorizontalDominanceTreeLayout,
-	#category : #'OpenPonk-Roassal-Meta'
+	#name : 'OPRSBaselineDominanceTreeLayout',
+	#superclass : 'RSHorizontalDominanceTreeLayout',
+	#category : 'OpenPonk-Roassal-Meta',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Meta'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSBaselineDominanceTreeLayout >> nestingLevelFor: aNodeFigure [
 
 	| parents parentsNesting |
@@ -16,7 +18,7 @@ OPRSBaselineDominanceTreeLayout >> nestingLevelFor: aNodeFigure [
 		  ifFalse: [ parentsNesting max + 1 ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSBaselineDominanceTreeLayout >> parentsFor: aNode [
 
 	^ self cachedParents at: aNode ifAbsentPut: [

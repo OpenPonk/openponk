@@ -1,6 +1,6 @@
 Class {
-	#name : #OPRSAnchorConstraint,
-	#superclass : #RSObject,
+	#name : 'OPRSAnchorConstraint',
+	#superclass : 'RSObject',
 	#instVars : [
 		'minDistanceToLine',
 		'distanceToLine',
@@ -11,10 +11,12 @@ Class {
 		'positionReference',
 		'alwaysShowGuideLine'
 	],
-	#category : #'OpenPonk-Roassal-AnchorConstraint'
+	#category : 'OpenPonk-Roassal-AnchorConstraint',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'AnchorConstraint'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 OPRSAnchorConstraint >> addAnchorAndGuideLine [
 
 	self anchorShape isInACanvas ifTrue: [ ^ self ].
@@ -27,7 +29,7 @@ OPRSAnchorConstraint >> addAnchorAndGuideLine [
 	shape signalUpdate
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSAnchorConstraint >> alwaysShowGuideLine [
 
 	alwaysShowGuideLine := true.
@@ -35,7 +37,7 @@ OPRSAnchorConstraint >> alwaysShowGuideLine [
 		self guideLine color: Color black ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 OPRSAnchorConstraint >> anchorShape [
 
 	anchorShape ifNotNil: [ ^ anchorShape ].
@@ -46,7 +48,7 @@ OPRSAnchorConstraint >> anchorShape [
 	^ anchorShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraint >> balance: aNumber [
 
 	positionReference := OPRSAnchorConstraintBalanceReference new
@@ -54,7 +56,7 @@ OPRSAnchorConstraint >> balance: aNumber [
 		            yourself
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 OPRSAnchorConstraint >> build [
 
 	shape propertyAt: self class put: self.
@@ -91,7 +93,7 @@ OPRSAnchorConstraint >> build [
 				for: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraint >> createUpdater [
 
 	^ OPRSAnchorConstraintUpdater new
@@ -104,14 +106,14 @@ OPRSAnchorConstraint >> createUpdater [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraint >> distanceToLine: aNumber [
 	"Current distance to line"
 
 	distanceToLine := aNumber
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 OPRSAnchorConstraint >> guideLine [
 
 	guideLine ifNotNil: [ ^ guideLine ].
@@ -120,7 +122,7 @@ OPRSAnchorConstraint >> guideLine [
 	^ guideLine
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 OPRSAnchorConstraint >> initialize [
 
 	super initialize.
@@ -130,17 +132,17 @@ OPRSAnchorConstraint >> initialize [
 	distanceToLine := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraint >> line [
 	^ line
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraint >> minDistanceToLine [
 	^ minDistanceToLine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraint >> minDistanceToLine: aNumber [
 	"Attempted distance from line to the right from the line looking from start to end. Positive number means to the right, negative to the left"
 
@@ -150,19 +152,19 @@ OPRSAnchorConstraint >> minDistanceToLine: aNumber [
 			 ifFalse: [ distanceToLine ])
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 OPRSAnchorConstraint >> moveShape [
 
 	self createUpdater update
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSAnchorConstraint >> noGuideLine [
 
 	self guideLine color: Color transparent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraint >> positionFromEnd: aNumber [
 
 	positionReference := OPRSAnchorConstraintEndDistanceReference new
@@ -170,7 +172,7 @@ OPRSAnchorConstraint >> positionFromEnd: aNumber [
 		           yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraint >> positionFromStart: aNumber [
 
 	positionReference := OPRSAnchorConstraintStartDistanceReference new
@@ -178,13 +180,13 @@ OPRSAnchorConstraint >> positionFromStart: aNumber [
 		           yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraint >> positionReference: anAnchorConstraintReference [
 
 	positionReference := anAnchorConstraintReference
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 OPRSAnchorConstraint >> remove [
 
 	shape announcer unsubscribe: self.
@@ -193,7 +195,7 @@ OPRSAnchorConstraint >> remove [
 	self removeAnchorAndGuideLine
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 OPRSAnchorConstraint >> removeAnchorAndGuideLine [
 
 	anchorShape ifNotNil: [ anchorShape remove ].
@@ -201,19 +203,19 @@ OPRSAnchorConstraint >> removeAnchorAndGuideLine [
 	shape signalUpdate
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 OPRSAnchorConstraint >> saveShapePosition [
 
 	positionReference saveShapePositionIn: self.
 	self createUpdater moveAnchor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraint >> shape [
 	^ shape
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 OPRSAnchorConstraint >> stick: aShape on: aLine [
 
 	shape := aShape.
@@ -221,7 +223,7 @@ OPRSAnchorConstraint >> stick: aShape on: aLine [
 	self build
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSAnchorConstraint >> useGuideLine [
 
 	self guideLine color: (Color gray: 0.9)

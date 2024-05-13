@@ -1,6 +1,6 @@
 Class {
-	#name : #OPRSDraggableControlPoints,
-	#superclass : #RSInteraction,
+	#name : 'OPRSDraggableControlPoints',
+	#superclass : 'RSInteraction',
 	#instVars : [
 		'handles',
 		'midpointHandles',
@@ -8,10 +8,12 @@ Class {
 		'line',
 		'canvas'
 	],
-	#category : #'OpenPonk-Roassal-Polyline'
+	#category : 'OpenPonk-Roassal-Polyline',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Polyline'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 OPRSDraggableControlPoints >> connectWithCanvas [
 
 	| interaction |
@@ -35,7 +37,7 @@ OPRSDraggableControlPoints >> connectWithCanvas [
 		for: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSDraggableControlPoints >> enable [
 
 	canvas := line canvas.
@@ -44,7 +46,7 @@ OPRSDraggableControlPoints >> enable [
 	self connectWithCanvas
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSDraggableControlPoints >> initialize [
 	super initialize.
 	handles := OrderedCollection new.
@@ -52,7 +54,7 @@ OPRSDraggableControlPoints >> initialize [
 	isActive := false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSDraggableControlPoints >> onShape: aLine [
 
 	line := aLine.
@@ -61,7 +63,7 @@ OPRSDraggableControlPoints >> onShape: aLine [
 		ifNotNil: [ self enable ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSDraggableControlPoints >> promoteFor: aLine handle: aMidpointHandle [
 
 	| newPoint |
@@ -86,7 +88,7 @@ OPRSDraggableControlPoints >> promoteFor: aLine handle: aMidpointHandle [
 	aLine canvas morph resetShapeBeingDragged
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPRSDraggableControlPoints >> rebuild [
 
 	isActive ifFalse: [ ^ self ].
@@ -96,7 +98,7 @@ OPRSDraggableControlPoints >> rebuild [
 	line signalUpdate
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPRSDraggableControlPoints >> remove [
 
 	self removeHandles.
@@ -105,7 +107,7 @@ OPRSDraggableControlPoints >> remove [
 	canvas announcer unsubscribe: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPRSDraggableControlPoints >> removeHandles [
 	isActive
 		ifFalse: [ ^ self ].
@@ -117,7 +119,7 @@ OPRSDraggableControlPoints >> removeHandles [
 	isActive := false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSDraggableControlPoints >> showHandles [
 
 	isActive ifTrue: [ ^ self ].
@@ -131,7 +133,7 @@ OPRSDraggableControlPoints >> showHandles [
 	isActive := true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSDraggableControlPoints >> showMidpointHandles [
 
 	((line isKindOf: RSBezier) and: [ line controlPoints size >= 4 ]) 
@@ -147,7 +149,7 @@ OPRSDraggableControlPoints >> showMidpointHandles [
 	midpointHandles do: #render
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSDraggableControlPoints >> showOnShape: aLine [
 
 	line := aLine.

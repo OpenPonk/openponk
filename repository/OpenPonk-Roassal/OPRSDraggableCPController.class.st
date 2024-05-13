@@ -1,13 +1,15 @@
 Class {
-	#name : #OPRSDraggableCPController,
-	#superclass : #RSAbstractCPController,
+	#name : 'OPRSDraggableCPController',
+	#superclass : 'RSAbstractCPController',
 	#instVars : [
 		'selfLineDistance'
 	],
-	#category : #'OpenPonk-Roassal-Polyline'
+	#category : 'OpenPonk-Roassal-Polyline',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Polyline'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPRSDraggableCPController class >> withSelfLineDistance: aNumber [
 
 	^ self new
@@ -15,7 +17,7 @@ OPRSDraggableCPController class >> withSelfLineDistance: aNumber [
 		  yourself
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSDraggableCPController >> controlPointsFor: aLine [
 
 	| lineAttachPoint innerCPs firstSegmentTo lastSegmentFrom firstSegmentLine lastSegmentLine fromPoint toPoint |
@@ -55,7 +57,7 @@ OPRSDraggableCPController >> controlPointsFor: aLine [
 	^ { fromPoint } , innerCPs , { toPoint }
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSDraggableCPController >> defaultInnerSelfControlPointsFor: aLine [
 
 	| delta encompassingRectangle |
@@ -72,14 +74,14 @@ OPRSDraggableCPController >> defaultInnerSelfControlPointsFor: aLine [
 		  with: encompassingRectangle rightCenter + (delta @ 0)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSDraggableCPController >> initialize [
 
 	super initialize.
 	selfLineDistance := 35
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSDraggableCPController >> innerControlPointsFor: aLine [
 
 	| oldInnerCPs oldShapeEncompassingRectangle newShapeEncompassingRectangle |
@@ -129,7 +131,7 @@ OPRSDraggableCPController >> innerControlPointsFor: aLine [
 						    - oldShapeEncompassingRectangle top ])) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSDraggableCPController >> selfLineDistance: aNumber [
 
 	selfLineDistance := aNumber

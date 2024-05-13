@@ -1,23 +1,25 @@
 Class {
-	#name : #OPRSAnchorConstraintNearestPoint,
-	#superclass : #RSObject,
+	#name : 'OPRSAnchorConstraintNearestPoint',
+	#superclass : 'RSObject',
 	#instVars : [
 		'segment',
 		'point',
 		'previousSegmentsLength',
 		'lineLength'
 	],
-	#category : #'OpenPonk-Roassal-AnchorConstraint'
+	#category : 'OpenPonk-Roassal-AnchorConstraint',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'AnchorConstraint'
 }
 
-{ #category : #calculated }
+{ #category : 'calculated' }
 OPRSAnchorConstraintNearestPoint >> balance [
 
 	lineLength isZero ifTrue: [ ^ 0.5 ].
 	^ self lengthFromLineStart / lineLength
 ]
 
-{ #category : #calculated }
+{ #category : 'calculated' }
 OPRSAnchorConstraintNearestPoint >> distanceAlongLineToRectangle: aRectangle [
 
 	| pointAlongLine |
@@ -28,55 +30,55 @@ OPRSAnchorConstraintNearestPoint >> distanceAlongLineToRectangle: aRectangle [
 		  pointAlongLine
 ]
 
-{ #category : #calculated }
+{ #category : 'calculated' }
 OPRSAnchorConstraintNearestPoint >> distanceTo: aPoint [
 
 	^ point distanceTo: aPoint
 ]
 
-{ #category : #calculated }
+{ #category : 'calculated' }
 OPRSAnchorConstraintNearestPoint >> distanceToRectangle: aRectangle [
 
 	^ (aRectangle pointNearestTo: point) distanceTo: point
 ]
 
-{ #category : #calculated }
+{ #category : 'calculated' }
 OPRSAnchorConstraintNearestPoint >> lengthFromLineStart [
 
 	^ previousSegmentsLength + self lengthFromSegmentStart
 ]
 
-{ #category : #calculated }
+{ #category : 'calculated' }
 OPRSAnchorConstraintNearestPoint >> lengthFromSegmentStart [
 
 	^ segment from distanceTo: point
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraintNearestPoint >> lineLength: anObject [
 
 	lineLength := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraintNearestPoint >> point: anObject [
 
 	point := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraintNearestPoint >> previousSegmentsLength: anObject [
 
 	previousSegmentsLength := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraintNearestPoint >> segment: anObject [
 
 	segment := anObject
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 OPRSAnchorConstraintNearestPoint >> sideOfPoint: aPoint [
 
 	^ segment sideOfPoint: aPoint

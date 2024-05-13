@@ -1,6 +1,6 @@
 Class {
-	#name : #OPRSAnchorConstraintUpdater,
-	#superclass : #RSObject,
+	#name : 'OPRSAnchorConstraintUpdater',
+	#superclass : 'RSObject',
 	#instVars : [
 		'line',
 		'minDistanceToLine',
@@ -14,30 +14,32 @@ Class {
 		'extraDistance',
 		'positionReference'
 	],
-	#category : #'OpenPonk-Roassal-AnchorConstraint'
+	#category : 'OpenPonk-Roassal-AnchorConstraint',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'AnchorConstraint'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 OPRSAnchorConstraintUpdater >> anchorPoint [
 
 	anchorPoint ifNil: [ self computeAnchorSegmentAndPoint ].
 	^ anchorPoint
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 OPRSAnchorConstraintUpdater >> anchorSegment [
 
 	anchorSegment ifNil: [ self computeAnchorSegmentAndPoint ].
 	^ anchorSegment
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 OPRSAnchorConstraintUpdater >> anchorShape: aShape [
 
 	anchorShape := aShape
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 OPRSAnchorConstraintUpdater >> computeAnchorSegmentAndPoint [
 
 	| pair |
@@ -48,7 +50,7 @@ OPRSAnchorConstraintUpdater >> computeAnchorSegmentAndPoint [
 	anchorPoint := pair value
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSAnchorConstraintUpdater >> computeExtraDistance [
 
 	"Compute the extra distance required to move the element to not overlap the segment."
@@ -68,19 +70,19 @@ OPRSAnchorConstraintUpdater >> computeExtraDistance [
 		  ifFalse: [ normals max negated ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraintUpdater >> distanceToLine: aNumber [
 
 	distanceToLine := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraintUpdater >> extraDistance [
 
 	^ extraDistance ifNil: [ extraDistance := self computeExtraDistance ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 OPRSAnchorConstraintUpdater >> lengthFromStartOfBalance [
 
 	^ absoluteBalance ifNil: [ 
@@ -88,36 +90,36 @@ OPRSAnchorConstraintUpdater >> lengthFromStartOfBalance [
 			                     self lineLength ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 OPRSAnchorConstraintUpdater >> line: aLine [
 
 	line := aLine
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 OPRSAnchorConstraintUpdater >> lineLength [
 
 	^ self segments sumNumbers: [ :segment | segment length ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraintUpdater >> minDistanceToLine [
 	^ minDistanceToLine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraintUpdater >> minDistanceToLine: aNumber [
 	minDistanceToLine := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraintUpdater >> moveAnchor [
 
 	anchorShape ifNil: [ ^ self ].
 	anchorShape translateTo: self anchorPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraintUpdater >> moveAwayFrom: aRectangle via: aVector [
 
 	"There should be minDistance between the start and the element. Move it in the direction fo the current segment"
@@ -141,7 +143,7 @@ OPRSAnchorConstraintUpdater >> moveAwayFrom: aRectangle via: aVector [
 	segment ifNotNil: [ shape translateBy: segment vector ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraintUpdater >> moveAwayFromSegment: aSegment [
 
 	(aSegment intersectRectangle: shape encompassingRectangle)
@@ -150,14 +152,14 @@ OPRSAnchorConstraintUpdater >> moveAwayFromSegment: aSegment [
 				aSegment vector normal * (distanceToLine + self extraDistance) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraintUpdater >> moveShape [
 
 	shape translateTo: self anchorPoint.
 	self moveShapeAwayFromCollisions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraintUpdater >> moveShapeAwayFromCollisions [
 
 	| from to |
@@ -171,7 +173,7 @@ OPRSAnchorConstraintUpdater >> moveShapeAwayFromCollisions [
 		self moveAwayFrom: to via: self anchorSegment vector negated ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 OPRSAnchorConstraintUpdater >> nearestPointInfo [
 
 	| currentNearest totalLengthFromStart |
@@ -196,7 +198,7 @@ OPRSAnchorConstraintUpdater >> nearestPointInfo [
 	^ currentNearest
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSAnchorConstraintUpdater >> nearestSegment [
 
 	| segmentsWithDistances |
@@ -210,17 +212,17 @@ OPRSAnchorConstraintUpdater >> nearestSegment [
 				   ifFalse: [ nearest ] ]) key
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraintUpdater >> positionReference [
 	^ positionReference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraintUpdater >> positionReference: aConstraintReference [
 	positionReference := aConstraintReference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraintUpdater >> segments [
 
 	^ segments ifNil: [ 
@@ -228,13 +230,13 @@ OPRSAnchorConstraintUpdater >> segments [
 			              OPRSAnchorConstraintSegment from: a to: b ] ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 OPRSAnchorConstraintUpdater >> shape: aShape [
 
 	shape := aShape
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 OPRSAnchorConstraintUpdater >> update [
 
 	self moveAnchor.

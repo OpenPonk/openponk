@@ -96,7 +96,7 @@ OPWorkbenchToolbar >> addEditorMenuItems: menuRegistrations to: spMenu [
 		  to: spMenu
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPWorkbenchToolbar >> connectPresenters [
 
 	toolbar
@@ -111,11 +111,11 @@ OPWorkbenchToolbar >> connectPresenters [
 				addItem: [ :item | 
 					item
 						name: 'Project';
-						icon: (self iconNamed: #openIcon);
+						icon: (self iconNamed: #open);
 						subMenu: self projectMenu ] ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPWorkbenchToolbar >> initializePresenters [
 	toolbar := self newMenuBar
 ]

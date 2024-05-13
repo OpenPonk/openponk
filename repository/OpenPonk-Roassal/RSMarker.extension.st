@@ -1,6 +1,6 @@
-Extension { #name : #RSMarker }
+Extension { #name : 'RSMarker' }
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSMarker >> asEmptyMarker [
 
 	self shape color: Color white.

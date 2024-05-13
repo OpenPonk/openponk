@@ -1,15 +1,17 @@
 Class {
-	#name : #OPRSCanvasADFeedback,
-	#superclass : #OPRSAcceptDenyFeedbackBuilder,
-	#category : #'OpenPonk-Roassal-CreationFeedback'
+	#name : 'OPRSCanvasADFeedback',
+	#superclass : 'OPRSAcceptDenyFeedbackBuilder',
+	#category : 'OpenPonk-Roassal-CreationFeedback',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'CreationFeedback'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 OPRSCanvasADFeedback >> feedbackFor: anEdge color: aColor [
 	"not implemented"
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPRSCanvasADFeedback >> remove [
 	"not implemented"
 ]

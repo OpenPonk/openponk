@@ -1,13 +1,15 @@
 Class {
-	#name : #OPRSAnchorConstraintFixedDistanceReference,
-	#superclass : #OPRSAnchorConstraintReference,
+	#name : 'OPRSAnchorConstraintFixedDistanceReference',
+	#superclass : 'OPRSAnchorConstraintReference',
 	#instVars : [
 		'distance'
 	],
-	#category : #'OpenPonk-Roassal-AnchorConstraint'
+	#category : 'OpenPonk-Roassal-AnchorConstraint',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'AnchorConstraint'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraintFixedDistanceReference class >> distance: anInteger [
 
 	^ self new
@@ -15,25 +17,25 @@ OPRSAnchorConstraintFixedDistanceReference class >> distance: anInteger [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraintFixedDistanceReference >> distance: anInteger [
 
 	distance := anInteger
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSAnchorConstraintFixedDistanceReference >> farPointOfSegment: aSegment [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSAnchorConstraintFixedDistanceReference >> referencePointOfSegment: aSegment [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSAnchorConstraintFixedDistanceReference >> saveShapePositionIn: aConstraint [
 
 	| segment pointAlongLine pointOnLine absoluteDistanceToLine distanceToLine referencePoint |
@@ -60,7 +62,7 @@ OPRSAnchorConstraintFixedDistanceReference >> saveShapePositionIn: aConstraint [
 	distance := pointOnLine distanceTo: referencePoint
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSAnchorConstraintFixedDistanceReference >> segmentIn: aConstraint [
 
 	^ self subclassResponsibility

@@ -47,35 +47,35 @@ OPDslEditor >> buildToolbar: aMenu [
 					item
 						name: 'New';
 						description: 'New Diagram';
-						icon: (self iconNamed: #addIcon);
+						icon: (self iconNamed: #add);
 						action: [ self class new open ] ];
 				addItem:
 						[ :item | 
 					item
 						name: 'Save';
 						description: 'Save Diagram';
-						icon: (self iconNamed: #smallSaveIcon);
+						icon: (self iconNamed: #smallSave);
 						action: [ self saveToFile: location ] ];
 				addItem:
 						[ :item | 
 					item
 						name: 'Save as...';
 						description: 'Save Diagram As...';
-						icon: (self iconNamed: #smallSaveIcon);
+						icon: (self iconNamed: #smallSave);
 						action: [ self saveToFile: nil ] ];
 				addItem:
 						[ :item | 
 					item
 						name: 'Open';
 						description: 'Open...';
-						icon: (self iconNamed: #openIcon);
+						icon: (self iconNamed: #open);
 						action: [ self openFromFile ] ];
 				addItem:
 						[ :item | 
 					item
 						name: 'Open Editor';
 						description: 'Open Editor';
-						icon: (self iconNamed: #openIcon);
+						icon: (self iconNamed: #open);
 						action: [ model ifNil: [ self updateModel ].
 							OPWorkbench openModel: model ] ] ]
 ]

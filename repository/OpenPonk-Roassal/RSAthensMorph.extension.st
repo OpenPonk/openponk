@@ -1,8 +1,7 @@
-Extension { #name : #RSAthensMorph }
+Extension { #name : 'RSAthensMorph' }
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSAthensMorph >> resetShapeBeingDragged [
 
-	eventBeginingDragging ifNil: [ ^ self ].
-	self eventMouseDragStart: eventBeginingDragging
+	eventProcessor resetShapeBeingDragged
 ]

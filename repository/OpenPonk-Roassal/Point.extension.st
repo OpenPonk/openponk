@@ -1,6 +1,6 @@
-Extension { #name : #Point }
+Extension { #name : 'Point' }
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 Point >> closeTo: aPoint absolutePrecision: aPrecision [
 
 	^ (x closeTo: aPoint x absolutePrecision: aPrecision) and: [ 

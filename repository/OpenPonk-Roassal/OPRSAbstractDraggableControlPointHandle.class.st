@@ -1,15 +1,17 @@
 Class {
-	#name : #OPRSAbstractDraggableControlPointHandle,
-	#superclass : #Object,
+	#name : 'OPRSAbstractDraggableControlPointHandle',
+	#superclass : 'Object',
 	#instVars : [
 		'clickBox',
 		'line',
 		'shape'
 	],
-	#category : #'OpenPonk-Roassal-Polyline'
+	#category : 'OpenPonk-Roassal-Polyline',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Polyline'
 }
 
-{ #category : #accessing }
+{ #category : 'shapes' }
 OPRSAbstractDraggableControlPointHandle >> createClickBoxShape [
 
 	^ RSCircle new
@@ -18,7 +20,7 @@ OPRSAbstractDraggableControlPointHandle >> createClickBoxShape [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'shapes' }
 OPRSAbstractDraggableControlPointHandle >> createShape [
 
 	^ RSEllipse new
@@ -31,7 +33,7 @@ OPRSAbstractDraggableControlPointHandle >> createShape [
 		  yourself
 ]
 
-{ #category : #removing }
+{ #category : 'actions' }
 OPRSAbstractDraggableControlPointHandle >> remove [
 
 	shape remove.
@@ -46,12 +48,12 @@ OPRSAbstractDraggableControlPointHandle >> remove [
 	line := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAbstractDraggableControlPointHandle >> shape [
 	^ shape
 ]
 
-{ #category : #accessing }
+{ #category : 'shapes' }
 OPRSAbstractDraggableControlPointHandle >> size [
 
 	^ self subclassResponsibility

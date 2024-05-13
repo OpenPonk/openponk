@@ -1,6 +1,6 @@
-Extension { #name : #RSEvent }
+Extension { #name : 'RSEvent' }
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSEvent >> element [
 
 	self
@@ -9,7 +9,7 @@ RSEvent >> element [
 	^ self shape
 ]
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSEvent >> view [
 
 	self

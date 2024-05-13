@@ -1,18 +1,18 @@
-Extension { #name : #Rectangle }
+Extension { #name : 'Rectangle' }
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 Rectangle >> floatCenterX [
 
 	^ origin x + corner x / 2.0
 ]
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 Rectangle >> floatCenterY [
 
 	^ origin y + corner y / 2.0
 ]
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 Rectangle >> horizontalAlignmentLinesTo: otherRectangle margin: margin [
 
 	^ self
@@ -21,7 +21,7 @@ Rectangle >> horizontalAlignmentLinesTo: otherRectangle margin: margin [
 		  in: margin
 ]
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 Rectangle >> possibleHorizontalAlignmentLinesTo: otherRectangle [
 
 	^ Array
@@ -44,7 +44,7 @@ Rectangle >> possibleHorizontalAlignmentLinesTo: otherRectangle [
 				   comparedSecond: otherRectangle bottomRight)
 ]
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 Rectangle >> possibleVerticalAlignmentLinesTo: otherRectangle [
 
 	^ Array
@@ -66,7 +66,7 @@ Rectangle >> possibleVerticalAlignmentLinesTo: otherRectangle [
 				   comparedSecond: otherRectangle bottomRight)
 ]
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 Rectangle >> selectAlignmentLinesFrom: alignmentLines in: margin [
 
 	| best |
@@ -85,7 +85,7 @@ Rectangle >> selectAlignmentLinesFrom: alignmentLines in: margin [
 	^ best
 ]
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 Rectangle >> verticalAlignmentLinesTo: otherRectangle margin: margin [
 
 	^ self

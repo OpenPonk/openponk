@@ -1,6 +1,6 @@
-Extension { #name : #Number }
+Extension { #name : 'Number' }
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 Number >> closeTo: num absolutePrecision: aPrecision [
 	"are these two numbers close?"
 

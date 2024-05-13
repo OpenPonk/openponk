@@ -1,14 +1,16 @@
 Class {
-	#name : #OPRSCustomScaleCamSetter,
-	#superclass : #RSZoomToShapesSetter,
+	#name : 'OPRSCustomScaleCamSetter',
+	#superclass : 'RSZoomToShapesSetter',
 	#instVars : [
 		'scale',
 		'padding'
 	],
-	#category : #'OpenPonk-Roassal-Exports'
+	#category : 'OpenPonk-Roassal-Exports',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Exports'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSCustomScaleCamSetter class >> scale: aNumber [
 
 	^ self new
@@ -16,13 +18,13 @@ OPRSCustomScaleCamSetter class >> scale: aNumber [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSCustomScaleCamSetter >> extent [
 
 	^ canvas encompassingRectangle extent * self scale + self padding
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSCustomScaleCamSetter >> initialize [
 
 	super initialize.
@@ -30,31 +32,31 @@ OPRSCustomScaleCamSetter >> initialize [
 	padding := 25
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSCustomScaleCamSetter >> padding [
 
 	^ padding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSCustomScaleCamSetter >> padding: aNumber [
 
 	padding := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSCustomScaleCamSetter >> scale [
 
 	^ scale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSCustomScaleCamSetter >> scale: aScale [
 
 	scale := aScale
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSCustomScaleCamSetter >> setCamera [
 
 	| rect |

@@ -1,14 +1,16 @@
 Class {
-	#name : #RSBorderColoringComposite,
-	#superclass : #RSComposite,
+	#name : 'RSBorderColoringComposite',
+	#superclass : 'RSComposite',
 	#instVars : [
 		'shapesToUseBorderColor',
 		'borderColoredShapesColorBlock'
 	],
-	#category : #'OpenPonk-Roassal-Markers'
+	#category : 'OpenPonk-Roassal-Markers',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Markers'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBorderColoringComposite >> borderColor: aColor [
 
 	self shapesToUsePaint do: [ :each | each borderColor: aColor ].
@@ -16,14 +18,14 @@ RSBorderColoringComposite >> borderColor: aColor [
 		each color: (borderColoredShapesColorBlock value: aColor) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBorderColoringComposite >> color: aColor [
 
 	aColor ifNil: [ ^ super color: aColor ].
 	self shapesToUsePaint do: [ :each | each color: aColor ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSBorderColoringComposite >> initialize [
 
 	super initialize.
@@ -31,52 +33,52 @@ RSBorderColoringComposite >> initialize [
 	self paintWhiteForTransparentBorder
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSBorderColoringComposite >> keepPaintTransparencyFromBorder [
 
 	borderColoredShapesColorBlock := #yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBorderColoringComposite >> noPaint [
 
 	super noPaint.
 	self shapesToUsePaint do: [ :each | each noPaint ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBorderColoringComposite >> paint: aPaint [
 
 	aPaint ifNil: [ ^ super paint: aPaint ].
 	self shapesToUsePaint do: [ :each | each paint: aPaint ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSBorderColoringComposite >> paintWhiteForTransparentBorder [
 
 	borderColoredShapesColorBlock := [ :color | 
 	                                 color withTransparencyAsWhite ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSBorderColoringComposite >> removeShape: aShape [
 
 	shapesToUseBorderColor remove: aShape ifAbsent: [  ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSBorderColoringComposite >> shapesToUseBorderColor [
 
 	^ shapesToUseBorderColor
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSBorderColoringComposite >> shapesToUsePaint [
 
 	^ self shapes difference: self shapesToUseBorderColor
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RSBorderColoringComposite >> useBorderColorAsPaintFor: aShape [
 
 	(self shapes includes: aShape) ifFalse: [ self add: aShape ].

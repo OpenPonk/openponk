@@ -1,16 +1,18 @@
 Class {
-	#name : #OPRSEmptyMarkerBuilder,
-	#superclass : #OPRSMarkerBuilder,
-	#category : #'OpenPonk-Roassal-Markers'
+	#name : 'OPRSEmptyMarkerBuilder',
+	#superclass : 'OPRSMarkerBuilder',
+	#category : 'OpenPonk-Roassal-Markers',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Markers'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 OPRSEmptyMarkerBuilder class >> example [
 
 	^ super example
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPRSEmptyMarkerBuilder class >> fromShape: aShape [
 
 	^ (super fromShape: aShape) asEmptyMarker

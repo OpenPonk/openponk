@@ -1,6 +1,6 @@
-Extension { #name : #RSComposite }
+Extension { #name : 'RSComposite' }
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSComposite >> isOrComposesOf: aShape [
 
 	^ (super isOrComposesOf: aShape) or: [ 

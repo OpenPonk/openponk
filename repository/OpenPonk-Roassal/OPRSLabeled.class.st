@@ -1,51 +1,53 @@
 Class {
-	#name : #OPRSLabeled,
-	#superclass : #RSLabeled,
+	#name : 'OPRSLabeled',
+	#superclass : 'RSLabeled',
 	#instVars : [
 		'shape',
 		'labelShape'
 	],
-	#category : #'OpenPonk-Roassal-Interactions'
+	#category : 'OpenPonk-Roassal-Interactions',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Interactions'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSLabeled >> color: aColor [
 
 	self shapeBuilder labelShape color: aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSLabeled >> emphasis: aTextEmphasis [
 
 	self shapeBuilder labelShape emphasis: aTextEmphasis
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSLabeled >> fontName: aString [
 
 	self shapeBuilder labelShape fontName: aString
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSLabeled >> getOrCreateLabel: aShape [
 
 	^ labelShape := super getOrCreateLabel: aShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSLabeled >> labelShape [
 
 	^ labelShape
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSLabeled >> onShape: aShape [
 
 	shape := aShape.
 	super onShape: aShape
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 OPRSLabeled >> text: aText [
 
 	super text: aText asString.
@@ -53,7 +55,7 @@ OPRSLabeled >> text: aText [
 	self update
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSLabeled >> update [
 
 	labelShape ifNil: [ ^ self ].
@@ -64,7 +66,7 @@ OPRSLabeled >> update [
 	self getOrCreateLabel: shape
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 OPRSLabeled >> wrapMaxWidth: aNumber [
 
 	shapeBuilder wrapStrategy wrapMaxWidth: aNumber.

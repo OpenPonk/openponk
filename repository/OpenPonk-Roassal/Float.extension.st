@@ -1,6 +1,6 @@
-Extension { #name : #Float }
+Extension { #name : 'Float' }
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 Float >> closeTo: num absolutePrecision: aPrecision [
 
 	"Tell whether the receiver and arguments are close from each other given a absolute precision"

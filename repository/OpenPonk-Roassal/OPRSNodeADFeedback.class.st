@@ -1,10 +1,12 @@
 Class {
-	#name : #OPRSNodeADFeedback,
-	#superclass : #OPRSAcceptDenyFeedbackBuilder,
-	#category : #'OpenPonk-Roassal-CreationFeedback'
+	#name : 'OPRSNodeADFeedback',
+	#superclass : 'OPRSAcceptDenyFeedbackBuilder',
+	#category : 'OpenPonk-Roassal-CreationFeedback',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'CreationFeedback'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 OPRSNodeADFeedback >> feedbackFor: aShape color: aColor [
 
 	aShape isNode ifFalse: [ ^ self ].
@@ -26,7 +28,7 @@ OPRSNodeADFeedback >> feedbackFor: aShape color: aColor [
 	aShape signalUpdate
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPRSNodeADFeedback >> remove [
 
 	| canvas |

@@ -1,12 +1,12 @@
-Extension { #name : #RSControlConfiguration }
+Extension { #name : 'RSControlConfiguration' }
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSControlConfiguration >> hasZoomableAnimation [
 
 	^ true
 ]
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSControlConfiguration >> keepCameraOnContent [
 
 	^ true

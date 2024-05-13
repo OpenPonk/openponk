@@ -1,13 +1,15 @@
 Class {
-	#name : #OPRSAnchorConstraintBalanceReference,
-	#superclass : #OPRSAnchorConstraintReference,
+	#name : 'OPRSAnchorConstraintBalanceReference',
+	#superclass : 'OPRSAnchorConstraintReference',
 	#instVars : [
 		'balance'
 	],
-	#category : #'OpenPonk-Roassal-AnchorConstraint'
+	#category : 'OpenPonk-Roassal-AnchorConstraint',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'AnchorConstraint'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPRSAnchorConstraintBalanceReference class >> balance: aNumber [
 
 	^ self new
@@ -15,7 +17,7 @@ OPRSAnchorConstraintBalanceReference class >> balance: aNumber [
 		  yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSAnchorConstraintBalanceReference >> anchorSegmentFrom: segments andPointFrom: lenghtFromStart [
 
 	| sum newSum |
@@ -28,19 +30,19 @@ OPRSAnchorConstraintBalanceReference >> anchorSegmentFrom: segments andPointFrom
 	self error: 'failed to find a segment'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAnchorConstraintBalanceReference >> balance: aNumber [
 
 	balance := aNumber
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSAnchorConstraintBalanceReference >> computeAbsoluteBalanceForLength: aNumber [
 
 	^ aNumber * ((balance min: 1) max: 0)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSAnchorConstraintBalanceReference >> saveShapePositionIn: aConstraint [
 
 	| nearestPointInfo absoluteDistanceToLine distanceToLine |

@@ -1,13 +1,15 @@
 Class {
-	#name : #OPRSDraggableControlPointHandle,
-	#superclass : #OPRSAbstractDraggableControlPointHandle,
+	#name : 'OPRSDraggableControlPointHandle',
+	#superclass : 'OPRSAbstractDraggableControlPointHandle',
 	#instVars : [
 		'indexOfControlPoint'
 	],
-	#category : #'OpenPonk-Roassal-Polyline'
+	#category : 'OpenPonk-Roassal-Polyline',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Polyline'
 }
 
-{ #category : #accessing }
+{ #category : 'actions' }
 OPRSDraggableControlPointHandle >> changedPositionBy: anEvent [
 
 	line
@@ -24,7 +26,7 @@ OPRSDraggableControlPointHandle >> changedPositionBy: anEvent [
 	line announce: OPRSDraggedControlPointsEvent new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'rendering' }
 OPRSDraggableControlPointHandle >> constraint [
 
 	| moveBlock |
@@ -36,20 +38,20 @@ OPRSDraggableControlPointHandle >> constraint [
 	line to when: RSExtentChangedEvent do: moveBlock for: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'accessing' }
 OPRSDraggableControlPointHandle >> controlPoint [
 
 	^ line controlPoints at: indexOfControlPoint
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'accessing' }
 OPRSDraggableControlPointHandle >> on: aLine atControlPoint: anIndex [
 
 	line := aLine.
 	indexOfControlPoint := anIndex
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'actions' }
 OPRSDraggableControlPointHandle >> onDragEnd [
 
 	| previous next |
@@ -62,23 +64,23 @@ OPRSDraggableControlPointHandle >> onDragEnd [
 		 to: next
 		 within: (next distanceTo: previous) * 0.03 + 4) ifTrue: [ 
 		^ self removePoint ].
-	shape pushFront
+	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'actions' }
 OPRSDraggableControlPointHandle >> remove [
 
 	self removeConnectedEdges.
 	super remove
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'actions' }
 OPRSDraggableControlPointHandle >> removeConnectedEdges [
 	"remove connected edges without triggering removal cascade"
 	shape connectedLines removeAll
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'actions' }
 OPRSDraggableControlPointHandle >> removePoint [
 
 	"destroy the handle and the underlying point"
@@ -93,7 +95,7 @@ OPRSDraggableControlPointHandle >> removePoint [
 	(line propertyAt: OPRSDraggableControlPoints) rebuild
 ]
 
-{ #category : #accessing }
+{ #category : 'rendering' }
 OPRSDraggableControlPointHandle >> render [
 
 	shape := self createShape.
@@ -126,13 +128,13 @@ OPRSDraggableControlPointHandle >> render [
 	clickBox when: RSMouseDragEnd do: [ self onDragEnd ] for: self
 ]
 
-{ #category : #accessing }
+{ #category : 'shapes' }
 OPRSDraggableControlPointHandle >> size [
 
 	^ 9
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'actions' }
 OPRSDraggableControlPointHandle >> straightenConnection [
 	"Remove all the handles of the connection"
 
@@ -141,7 +143,7 @@ OPRSDraggableControlPointHandle >> straightenConnection [
 	(line propertyAt: OPRSDraggableControlPoints) rebuild
 ]
 
-{ #category : #'private - layout' }
+{ #category : 'actions' }
 OPRSDraggableControlPointHandle >> updatePosition [
 
 	clickBox translateTo: self controlPoint

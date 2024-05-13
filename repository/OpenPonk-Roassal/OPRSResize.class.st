@@ -1,32 +1,34 @@
 Class {
-	#name : #OPRSResize,
-	#superclass : #RSResize,
+	#name : 'OPRSResize',
+	#superclass : 'RSResize',
 	#instVars : [
 		'oversize'
 	],
-	#category : #'OpenPonk-Roassal-Interactions'
+	#category : 'OpenPonk-Roassal-Interactions',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Interactions'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSResize >> oversize [
 
 	^ oversize ifNil: [ 0 @ 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSResize >> oversize: anExtent [
 
 	oversize := anExtent
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 OPRSResize >> sameSize [
 
 	self ifNoFixedShapeThen: [ self useBiggestShape ].
 	shapes do: [ :e | e extent: self fixedShape extent + self oversize ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSResize >> stickSameSize [
 
 	| block |

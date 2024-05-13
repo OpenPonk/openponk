@@ -1,16 +1,18 @@
 Class {
-	#name : #OPRSAdornment,
-	#superclass : #Object,
+	#name : 'OPRSAdornment',
+	#superclass : 'Object',
 	#instVars : [
 		'action',
 		'icon',
 		'shape',
 		'padding'
 	],
-	#category : #'OpenPonk-Roassal-Interactions'
+	#category : 'OpenPonk-Roassal-Interactions',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Interactions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPRSAdornment class >> withIconForm: aForm action: aBlock [
 
 	^ self new
@@ -19,7 +21,7 @@ OPRSAdornment class >> withIconForm: aForm action: aBlock [
 		  yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPRSAdornment class >> withIconShape: aShape action: aBlock [
 
 	^ self new
@@ -28,26 +30,26 @@ OPRSAdornment class >> withIconShape: aShape action: aBlock [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAdornment >> action [
 
 	^ action ifNil: [ [ "do nothing" ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAdornment >> action: anObject [
 
 	action := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAdornment >> icon [
 
 	icon ifNil: [ self iconName: #smallDoIt ].
 	^ icon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAdornment >> iconForm: aForm [
 
 	self iconShape: (RSBitmap new
@@ -55,38 +57,38 @@ OPRSAdornment >> iconForm: aForm [
 			 yourself)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAdornment >> iconName: aSymbol [
 
 	self iconForm: (self iconNamed: aSymbol)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSAdornment >> iconShape: aShape [
 
 	icon := aShape copy
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSAdornment >> initialize [
 
 	super initialize.
 	self padding: 2
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSAdornment >> padding: aNumber [
 
 	padding := aNumber
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSAdornment >> remove [
 
 	self shape remove
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSAdornment >> shape [
 
 	| innerBox |
@@ -115,7 +117,7 @@ OPRSAdornment >> shape [
 	^ shape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSAdornment >> showOnShape: anOriginalShape horizontal: aHorizontalLocation vertical: aVerticalLocation offset: offset [
 
 	| updateBlock |

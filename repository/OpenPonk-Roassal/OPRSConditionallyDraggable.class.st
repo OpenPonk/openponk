@@ -1,13 +1,15 @@
 Class {
-	#name : #OPRSConditionallyDraggable,
-	#superclass : #RSDraggable,
+	#name : 'OPRSConditionallyDraggable',
+	#superclass : 'RSDraggable',
 	#instVars : [
 		'conditionBlock'
 	],
-	#category : #'OpenPonk-Roassal-Interactions'
+	#category : 'OpenPonk-Roassal-Interactions',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Interactions'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSConditionallyDraggable class >> onCondition: aBlock [
 
 	^ self new
@@ -15,20 +17,20 @@ OPRSConditionallyDraggable class >> onCondition: aBlock [
 		  yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSConditionallyDraggable >> conditionBlock: aBlock [
 
 	conditionBlock := aBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSConditionallyDraggable >> initialize [
 
 	super initialize.
 	conditionBlock := [ true ]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OPRSConditionallyDraggable >> processDrag: evt [
 
 	conditionBlock value ifFalse: [ ^ self ].

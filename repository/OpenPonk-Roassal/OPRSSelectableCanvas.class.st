@@ -1,13 +1,15 @@
 Class {
-	#name : #OPRSSelectableCanvas,
-	#superclass : #RSElasticBoxInteraction,
+	#name : 'OPRSSelectableCanvas',
+	#superclass : 'RSElasticBoxInteraction',
 	#instVars : [
 		'multiselectEnabled'
 	],
-	#category : #'OpenPonk-Roassal-Interactions'
+	#category : 'OpenPonk-Roassal-Interactions',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Interactions'
 }
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 OPRSSelectableCanvas >> boxEnded: event [
 
 	| boxEvent |
@@ -21,39 +23,39 @@ OPRSSelectableCanvas >> boxEnded: event [
 	event signalUpdate
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSSelectableCanvas >> boxStartEvent [
 
 	^ RSMouseLeftDragStart
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 OPRSSelectableCanvas >> boxStarted: event [
 
 	multiselectEnabled ifFalse: [ ^ self ].
 	^ super boxStarted: event
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 OPRSSelectableCanvas >> boxUpdated: event [
 
 	multiselectEnabled ifFalse: [ ^ self ].
 	^ super boxUpdated: event
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSSelectableCanvas >> color [
 	^ Color black alpha: 0.2
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 OPRSSelectableCanvas >> createCameraAnimation: event [
 	"do nothing"
 
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSSelectableCanvas >> defaultBox [
 
 	^ super defaultBox
@@ -61,25 +63,25 @@ OPRSSelectableCanvas >> defaultBox [
 		  yourself
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPRSSelectableCanvas >> disableMultiselect [
 
 	multiselectEnabled := false
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSSelectableCanvas >> dragStartEvent [
 
 	^ RSMouseRightDragStart
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPRSSelectableCanvas >> enableMultiselect [
 
 	multiselectEnabled := true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSSelectableCanvas >> initialize [
 
 	super initialize.
@@ -89,7 +91,7 @@ OPRSSelectableCanvas >> initialize [
 		enableMultiselect.
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSSelectableCanvas >> onShape: aCanvas [
 
 	(aCanvas getInteractionsForClass: RSDraggableCanvasInteraction) do: [
@@ -104,7 +106,7 @@ OPRSSelectableCanvas >> onShape: aCanvas [
 	aCanvas propertyAt: self class put: self
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 OPRSSelectableCanvas >> processDragStart: event [
 
 	shouldProcessInteraction := true.
@@ -112,7 +114,7 @@ OPRSSelectableCanvas >> processDragStart: event [
 	self createCameraAnimation: event
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSSelectableCanvas >> selectShapes: aGroup byEvent: anEvent [
 
 	(multiselectEnabled not and: [ aGroup size > 1 ]) ifTrue: [ ^ self ].
@@ -125,7 +127,7 @@ OPRSSelectableCanvas >> selectShapes: aGroup byEvent: anEvent [
 	self boxEnded: anEvent
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 OPRSSelectableCanvas >> stopCameraAnimation: event [
 	"do nothing"
 

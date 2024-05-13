@@ -1,10 +1,12 @@
 Class {
-	#name : #OPRSLineADFeedback,
-	#superclass : #OPRSAcceptDenyFeedbackBuilder,
-	#category : #'OpenPonk-Roassal-CreationFeedback'
+	#name : 'OPRSLineADFeedback',
+	#superclass : 'OPRSAcceptDenyFeedbackBuilder',
+	#category : 'OpenPonk-Roassal-CreationFeedback',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'CreationFeedback'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 OPRSLineADFeedback >> feedbackFor: aLine color: aColor [
 
 	feedback := aLine.
@@ -14,12 +16,12 @@ OPRSLineADFeedback >> feedbackFor: aLine color: aColor [
 	feedback signalUpdate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSLineADFeedback >> originalColorSymbol [
 	^ #adFeedbackOriginalColor
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPRSLineADFeedback >> remove [
 
 	feedback ifNil: [ ^ self ].

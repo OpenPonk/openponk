@@ -1,13 +1,15 @@
 Class {
-	#name : #OPRSSelectionDraggableCustomShapesProvider,
-	#superclass : #OPRSSelectionDraggableInnerShapesProvider,
+	#name : 'OPRSSelectionDraggableCustomShapesProvider',
+	#superclass : 'OPRSSelectionDraggableInnerShapesProvider',
 	#instVars : [
 		'block'
 	],
-	#category : #'OpenPonk-Roassal-Interactions'
+	#category : 'OpenPonk-Roassal-Interactions',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Interactions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPRSSelectionDraggableCustomShapesProvider class >> withBlock: aFullBlockClosure [
 
 	^ self new
@@ -15,20 +17,20 @@ OPRSSelectionDraggableCustomShapesProvider class >> withBlock: aFullBlockClosure
 		  yourself
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 OPRSSelectionDraggableCustomShapesProvider >> block: aBlock [
 
 	block := aBlock
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 OPRSSelectionDraggableCustomShapesProvider >> initialize [
 
 	super initialize.
 	self block: [ Set empty ]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 OPRSSelectionDraggableCustomShapesProvider >> innerShapesFor: aContainerShape [
 
 	^ block cull: aContainerShape canvas nodes cull: aContainerShape

@@ -1,26 +1,28 @@
 Class {
-	#name : #OPRSControlPointCreatorHandle,
-	#superclass : #OPRSAbstractDraggableControlPointHandle,
+	#name : 'OPRSControlPointCreatorHandle',
+	#superclass : 'OPRSAbstractDraggableControlPointHandle',
 	#instVars : [
 		'from',
 		'to',
 		'nearStart',
 		'nearEnd'
 	],
-	#category : #'OpenPonk-Roassal-Polyline'
+	#category : 'OpenPonk-Roassal-Polyline',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Polyline'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'accessing' }
 OPRSControlPointCreatorHandle >> beNearEnd [
 	nearEnd := true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'accessing' }
 OPRSControlPointCreatorHandle >> beNearStart [
 	nearStart := true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'rendering' }
 OPRSControlPointCreatorHandle >> constraintFor: aShape [
 
 	| moveBlock |
@@ -32,12 +34,12 @@ OPRSControlPointCreatorHandle >> constraintFor: aShape [
 	to when: RSExtentChangedEvent do: moveBlock for: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'accessing' }
 OPRSControlPointCreatorHandle >> from [
 	^ from
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'accessing' }
 OPRSControlPointCreatorHandle >> fromPoint [
 
 	^ nearStart
@@ -45,13 +47,13 @@ OPRSControlPointCreatorHandle >> fromPoint [
 		  ifFalse: [ from position ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'initialization' }
 OPRSControlPointCreatorHandle >> initialize [
 	super initialize.
 	nearStart := nearEnd := false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'accessing' }
 OPRSControlPointCreatorHandle >> on: aLine between: fromShape and: toShape [
 
 	line := aLine.
@@ -59,14 +61,14 @@ OPRSControlPointCreatorHandle >> on: aLine between: fromShape and: toShape [
 	to := toShape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'actions' }
 OPRSControlPointCreatorHandle >> promote [
 
 	(self fromPoint distanceTo: self toPoint) > 10 ifFalse: [ ^ self ].
 	(line propertyAt: OPRSDraggableControlPoints) promoteFor: line handle: self
 ]
 
-{ #category : #removing }
+{ #category : 'actions' }
 OPRSControlPointCreatorHandle >> remove [
 
 	super remove.
@@ -76,7 +78,7 @@ OPRSControlPointCreatorHandle >> remove [
 	to := nil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'rendering' }
 OPRSControlPointCreatorHandle >> render [
 
 	shape := self createShape.
@@ -100,18 +102,18 @@ OPRSControlPointCreatorHandle >> render [
 		add: clickBox
 ]
 
-{ #category : #accessing }
+{ #category : 'shapes' }
 OPRSControlPointCreatorHandle >> size [
 
 	^ 5
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'accessing' }
 OPRSControlPointCreatorHandle >> to [
 	^ to
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'accessing' }
 OPRSControlPointCreatorHandle >> toPoint [
 
 	^ nearEnd

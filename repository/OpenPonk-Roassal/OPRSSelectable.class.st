@@ -1,10 +1,12 @@
 Class {
-	#name : #OPRSSelectable,
-	#superclass : #RSHighlightable,
-	#category : #'OpenPonk-Roassal-Interactions'
+	#name : 'OPRSSelectable',
+	#superclass : 'RSHighlightable',
+	#category : 'OpenPonk-Roassal-Interactions',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Interactions'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSSelectable class >> highlightAdornments: aBlock [
 
 	^ self new
@@ -12,7 +14,7 @@ OPRSSelectable class >> highlightAdornments: aBlock [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSSelectable class >> highlightBorderColor: aColor [
 
 	^ self new
@@ -20,13 +22,13 @@ OPRSSelectable class >> highlightBorderColor: aColor [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSSelectable class >> highlightBorderColorBlue [
 
 	^ self highlightBorderColor: Color blue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSSelectable class >> highlightColor: aColor [
 
 	^ self new
@@ -34,13 +36,13 @@ OPRSSelectable class >> highlightColor: aColor [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSSelectable class >> highlightColorBlue [
 
 	^ self highlightColor: Color blue
 ]
 
-{ #category : #announcer }
+{ #category : 'announcer' }
 OPRSSelectable >> announceHighlight: shape source: shapeOrCanvas [
 
 	(shape propertyAt: self class ifAbsent: [ ^ self ]) announce: [ 
@@ -50,7 +52,7 @@ OPRSSelectable >> announceHighlight: shape source: shapeOrCanvas [
 			source: shapeOrCanvas ]
 ]
 
-{ #category : #announcer }
+{ #category : 'announcer' }
 OPRSSelectable >> announceUnHightlight: shape source: shapeOrCanvas [
 
 	(shape propertyAt: self class ifAbsent: [ ^ self ]) announce: [ 
@@ -60,7 +62,7 @@ OPRSSelectable >> announceUnHightlight: shape source: shapeOrCanvas [
 			source: shapeOrCanvas ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSSelectable >> clicked: aShape by: anEvent [
 
 	aShape canvas
@@ -87,7 +89,7 @@ OPRSSelectable >> clicked: aShape by: anEvent [
 				'OPRSSelectable requires OPRSSelectableCanvas on canvas' ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSSelectable >> highlightAdornments: aBlock [
 	"Show adornments (little icons with actions). The block receives an OPRSAdornmentBuilder"
 
@@ -102,7 +104,7 @@ OPRSSelectable >> highlightAdornments: aBlock [
 		when: RSUnHighlightEvent do: [ :evt | builder hide ] for: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSSelectable >> highlightBorderColor: aColor [
 	"Set the border color"
 
@@ -115,7 +117,7 @@ OPRSSelectable >> highlightBorderColor: aColor [
 		for: self
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSSelectable >> onShape: aShape [
 
 	aShape propertyAt: self class put: self.
@@ -125,13 +127,13 @@ OPRSSelectable >> onShape: aShape [
 		for: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSSelectable >> propertyKey [
 
 	^ propertyKey ifNil: [ propertyKey := #selectedShapes ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRSSelectable >> setBorderColorOf: aShape to: aColor [
 
 	self

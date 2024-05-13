@@ -1,16 +1,18 @@
 Class {
-	#name : #OPRSEmptyMarker,
-	#superclass : #RSMarker,
-	#category : #'OpenPonk-Roassal-Markers'
+	#name : 'OPRSEmptyMarker',
+	#superclass : 'RSMarker',
+	#category : 'OpenPonk-Roassal-Markers',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Markers'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 OPRSEmptyMarker >> asEmptyMarker [
 
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSEmptyMarker >> shape [
 
 	^ OPRSEmptyShapeProxy new

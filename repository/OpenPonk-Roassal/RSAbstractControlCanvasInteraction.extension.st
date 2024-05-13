@@ -1,6 +1,6 @@
-Extension { #name : #RSAbstractControlCanvasInteraction }
+Extension { #name : 'RSAbstractControlCanvasInteraction' }
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSAbstractControlCanvasInteraction >> correctRectangle: rectangle camera: camera [
 
 	| visibleRectangle correctX correctY |

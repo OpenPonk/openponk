@@ -1,15 +1,17 @@
 Class {
-	#name : #OPRSDraggableCPControllerTest,
-	#superclass : #TestCase,
+	#name : 'OPRSDraggableCPControllerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'controller',
 		'boxFrom',
 		'selfLine'
 	],
-	#category : #'OpenPonk-Roassal-Tests'
+	#category : 'OpenPonk-Roassal-Tests',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 OPRSDraggableCPControllerTest >> setUp [
 
 	super setUp.
@@ -23,14 +25,14 @@ OPRSDraggableCPControllerTest >> setUp [
 		to: boxFrom
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPRSDraggableCPControllerTest >> testSelfLoopInitial [
 
 	selfLine update.
 	self assert: selfLine controlPoints size equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPRSDraggableCPControllerTest >> testSelfLoopPreset [
 
 	selfLine controlPoints: {

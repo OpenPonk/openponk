@@ -1,6 +1,6 @@
 Class {
-	#name : #OPRSSelectionDraggable,
-	#superclass : #RSDraggable,
+	#name : 'OPRSSelectionDraggable',
+	#superclass : 'RSDraggable',
 	#instVars : [
 		'unusedStep',
 		'innerShapesProvider',
@@ -8,10 +8,12 @@ Class {
 		'movedLinesWithControlPoints',
 		'alignmentLineShapes'
 	],
-	#category : #'OpenPonk-Roassal-Interactions'
+	#category : 'OpenPonk-Roassal-Interactions',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Interactions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPRSSelectionDraggable class >> thatAlsoDragsContainedShapes [
 
 	^ self new
@@ -19,7 +21,7 @@ OPRSSelectionDraggable class >> thatAlsoDragsContainedShapes [
 		  yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPRSSelectionDraggable class >> thatAlsoDragsShapesProvidedByBlock: aBlock [
 
 	^ self new
@@ -27,7 +29,7 @@ OPRSSelectionDraggable class >> thatAlsoDragsShapesProvidedByBlock: aBlock [
 		  yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPRSSelectionDraggable class >> thatAlsoDragsSmallerOverlappingShapes [
 
 	^ self new
@@ -35,7 +37,7 @@ OPRSSelectionDraggable class >> thatAlsoDragsSmallerOverlappingShapes [
 		  yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPRSSelectionDraggable class >> thatDoesNotDragAnyInnerShapes [
 
 	"default"
@@ -43,19 +45,19 @@ OPRSSelectionDraggable class >> thatDoesNotDragAnyInnerShapes [
 	^ self new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPRSSelectionDraggable class >> wantsUniqueInstance [
 
 	^ false
 ]
 
-{ #category : #'inner shapes' }
+{ #category : 'inner shapes' }
 OPRSSelectionDraggable >> dragAlsoContainedShapes [
 
 	self innerShapesProvider: OPRSSelectionDraggableContainedShapesProvider new
 ]
 
-{ #category : #'inner shapes' }
+{ #category : 'inner shapes' }
 OPRSSelectionDraggable >> dragAlsoShapesProvidedByBlock: aBlock [
 
 	"When a shape is dragged, move also all other selected shapes, plus shapes that meet all following conditions: 
@@ -67,19 +69,19 @@ OPRSSelectionDraggable >> dragAlsoShapesProvidedByBlock: aBlock [
 		(OPRSSelectionDraggableCustomShapesProvider withBlock: aBlock)
 ]
 
-{ #category : #'inner shapes' }
+{ #category : 'inner shapes' }
 OPRSSelectionDraggable >> dragAlsoSmallerOverlappingShapes [
 
 	self innerShapesProvider: OPRSSelectionDraggableSmallerOverlappingShapesProvider new
 ]
 
-{ #category : #'inner shapes' }
+{ #category : 'inner shapes' }
 OPRSSelectionDraggable >> dragNoInnerShapes [
 
 	self innerShapesProvider: OPRSSelectionDraggableNoInnerShapesProvider new
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OPRSSelectionDraggable >> dragStepForEvent: evt [
 
 	| dragSnapShapeAmount originalDragStep dragStep primaryShapeRectangle primaryShapePosition closestShapes horizontalLineGroups verticalLineGroups snapMargin lineGroupsComparisonBlock configuration |
@@ -155,7 +157,7 @@ OPRSSelectionDraggable >> dragStepForEvent: evt [
 	^ dragStep
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OPRSSelectionDraggable >> endDrag: anEvent [
 
 	| event |
@@ -171,20 +173,20 @@ OPRSSelectionDraggable >> endDrag: anEvent [
 	event signalUpdate
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSSelectionDraggable >> initialize [
 
 	super initialize.
 	self dragNoInnerShapes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSSelectionDraggable >> innerShapesProvider: anInnerShapesProvider [
 
 	innerShapesProvider := anInnerShapesProvider
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OPRSSelectionDraggable >> movedLinesWithControlPointsBy: anEvent [
 
 	^ ((draggedNodes flatCollect: #connectedLines as: Bag)
@@ -193,7 +195,7 @@ OPRSSelectionDraggable >> movedLinesWithControlPointsBy: anEvent [
 		  as: Set
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSSelectionDraggable >> onShape: aShape [
 
 	super onShape: aShape.
@@ -208,7 +210,7 @@ OPRSSelectionDraggable >> onShape: aShape [
 	aShape propertyAt: self propertyKey put: self
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OPRSSelectionDraggable >> processDrag: evt [
 
 	| dragStep |
@@ -219,13 +221,13 @@ OPRSSelectionDraggable >> processDrag: evt [
 	evt signalUpdate
 ]
 
-{ #category : #'accessing - keys' }
+{ #category : 'accessing - keys' }
 OPRSSelectionDraggable >> propertyKey [
 
 	^ OPRSSelectionDraggable
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OPRSSelectionDraggable >> replaceAlignmentLinesWith: alignmentLines [
 
 	alignmentLineShapes do: #remove.
@@ -239,7 +241,7 @@ OPRSSelectionDraggable >> replaceAlignmentLinesWith: alignmentLines [
 	draggedNodes anyOne canvas addAll: alignmentLineShapes
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OPRSSelectionDraggable >> shapesToDragInside: aContainerShape [
 
 	"When a shape is dragged, move also all other selected shapes, plus shapes that meet all following conditions: 
@@ -258,7 +260,7 @@ OPRSSelectionDraggable >> shapesToDragInside: aContainerShape [
 				  ifAbsent: [ Set empty ] ]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OPRSSelectionDraggable >> startDrag: anEvent [
 
 	| selectedShapes selectedShapesToMove event |
@@ -291,7 +293,7 @@ OPRSSelectionDraggable >> startDrag: anEvent [
 		each announce: event ]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OPRSSelectionDraggable >> translateLinesBy: anOffset [
 
 	movedLinesWithControlPoints do: [ :each |
@@ -300,7 +302,7 @@ OPRSSelectionDraggable >> translateLinesBy: anOffset [
 				 eachPoint + anOffset ]) ]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OPRSSelectionDraggable >> translateShapesBy: anOffset [
 
 	draggedNodes do: [ :each | each translateBy: anOffset ]

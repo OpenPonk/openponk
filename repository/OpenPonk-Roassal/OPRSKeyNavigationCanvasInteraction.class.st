@@ -1,10 +1,12 @@
 Class {
-	#name : #OPRSKeyNavigationCanvasInteraction,
-	#superclass : #RSKeyNavigationCanvasInteraction,
-	#category : #'OpenPonk-Roassal-Interactions'
+	#name : 'OPRSKeyNavigationCanvasInteraction',
+	#superclass : 'RSKeyNavigationCanvasInteraction',
+	#category : 'OpenPonk-Roassal-Interactions',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Interactions'
 }
 
-{ #category : #events }
+{ #category : 'events' }
 OPRSKeyNavigationCanvasInteraction >> processKeyDown: evt [
 
 	| keyName |

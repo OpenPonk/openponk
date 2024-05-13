@@ -1,14 +1,16 @@
 Class {
-	#name : #OPRSResizable,
-	#superclass : #RSTransformable,
+	#name : 'OPRSResizable',
+	#superclass : 'RSTransformable',
 	#instVars : [
 		'shape',
 		'handles'
 	],
-	#category : #'OpenPonk-Roassal-Interactions'
+	#category : 'OpenPonk-Roassal-Interactions',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Interactions'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSResizable >> boxShape [
 
 	^ super boxShape
@@ -16,7 +18,7 @@ OPRSResizable >> boxShape [
 		  yourself
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSResizable >> connectWithCanvas [
 
 	| interaction |
@@ -37,7 +39,7 @@ OPRSResizable >> connectWithCanvas [
 		for: self
 ]
 
-{ #category : #'accessing - shapes' }
+{ #category : 'accessing - shapes' }
 OPRSResizable >> createHandleFor: association [
 
 	| handle |
@@ -52,7 +54,7 @@ OPRSResizable >> createHandleFor: association [
 	^ handle
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSResizable >> onShape: aShape [
 
 	aShape isNode ifFalse: [ ^ self ].
@@ -75,14 +77,14 @@ OPRSResizable >> onShape: aShape [
 		for: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPRSResizable >> registerCanvasEventsIfNecessary: evt [
 
 	(evt canvas hasProperty: OPRSSelectableCanvas) ifTrue: [ ^ self ].
 	^ super registerCanvasEventsIfNecessary: evt
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPRSResizable >> removeHandles: evt [
 
 	| canvas |
@@ -94,18 +96,18 @@ OPRSResizable >> removeHandles: evt [
 	canvas ifNotNil: #signalUpdate
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPRSResizable >> saveCurrentShapeState [
 	"do nothing"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPRSResizable >> saveHandles: newHandles evt: evt [
 
 	handles := newHandles
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 OPRSResizable >> showHandles: evt [
 
 	| parent |
@@ -119,7 +121,7 @@ OPRSResizable >> showHandles: evt [
 	evt signalUpdate
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPRSResizable >> updateCurrentShape: evt [
 
 	| handle newRec rect |
@@ -140,7 +142,7 @@ OPRSResizable >> updateCurrentShape: evt [
 	evt signalUpdate
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPRSResizable >> updateHandles: evt [
 
 	| canvas rect base points circles matrix |

@@ -1,16 +1,18 @@
 Class {
-	#name : #OPRSBezier,
-	#superclass : #RSBezier,
-	#category : #'OpenPonk-Roassal-Polyline'
+	#name : 'OPRSBezier',
+	#superclass : 'RSBezier',
+	#category : 'OpenPonk-Roassal-Polyline',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Polyline'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSBezier >> includedRadius [
 
 	^ super includedRadius + 3
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPRSBezier >> lines [
 
 	| c b a via1 via2 start end cp |

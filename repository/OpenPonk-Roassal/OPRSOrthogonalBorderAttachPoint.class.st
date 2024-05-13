@@ -1,10 +1,12 @@
 Class {
-	#name : #OPRSOrthogonalBorderAttachPoint,
-	#superclass : #RSBorderAttachPoint,
-	#category : #'OpenPonk-Roassal-AttachPoints'
+	#name : 'OPRSOrthogonalBorderAttachPoint',
+	#superclass : 'RSBorderAttachPoint',
+	#category : 'OpenPonk-Roassal-AttachPoints',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'AttachPoints'
 }
 
-{ #category : #'public - hooks' }
+{ #category : 'public - hooks' }
 OPRSOrthogonalBorderAttachPoint >> borderPointFrom: aSource to: aTarget via: aLine [
 
 	| sourceLeft sourceRight sourceTop sourceBottom targetLeft targetRight targetTop targetBottom shift orthogonalityAllowance |
@@ -59,7 +61,7 @@ OPRSOrthogonalBorderAttachPoint >> borderPointFrom: aSource to: aTarget via: aLi
 	^ super borderPointFrom: aSource to: aTarget via: aLine
 ]
 
-{ #category : #'public - hooks' }
+{ #category : 'public - hooks' }
 OPRSOrthogonalBorderAttachPoint >> orthogonalCoordinateFromMin: srcMin max: srcMax toMin: tgtMin max: tgtMax [
 
 	| srcWidth tgtWidth srcCenter tgtCenter centersDiff ratio |
@@ -75,7 +77,7 @@ OPRSOrthogonalBorderAttachPoint >> orthogonalCoordinateFromMin: srcMin max: srcM
 	^ centersDiff * ratio + srcCenter
 ]
 
-{ #category : #'public - hooks' }
+{ #category : 'public - hooks' }
 OPRSOrthogonalBorderAttachPoint >> orthogonalXBorderPointFrom: aSource to: aTarget shift: aShift [
 
 	| x y shift |
@@ -95,7 +97,7 @@ OPRSOrthogonalBorderAttachPoint >> orthogonalXBorderPointFrom: aSource to: aTarg
 	^ x + shift @ y
 ]
 
-{ #category : #'public - hooks' }
+{ #category : 'public - hooks' }
 OPRSOrthogonalBorderAttachPoint >> orthogonalYBorderPointFrom: aSource to: aTarget shift: aShift [
 
 	| x y shift |

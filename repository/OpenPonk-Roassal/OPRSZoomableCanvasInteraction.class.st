@@ -1,10 +1,12 @@
 Class {
-	#name : #OPRSZoomableCanvasInteraction,
-	#superclass : #RSZoomableCanvasInteraction,
-	#category : #'OpenPonk-Roassal-Interactions'
+	#name : 'OPRSZoomableCanvasInteraction',
+	#superclass : 'RSZoomableCanvasInteraction',
+	#category : 'OpenPonk-Roassal-Interactions',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Interactions'
 }
 
-{ #category : #events }
+{ #category : 'events' }
 OPRSZoomableCanvasInteraction class >> zoomMove: aCanvas newScale: newScale [
 
 	| scale camera position morphPosition newPosition zero |

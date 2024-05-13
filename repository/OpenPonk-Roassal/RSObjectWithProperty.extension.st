@@ -1,12 +1,12 @@
-Extension { #name : #RSObjectWithProperty }
+Extension { #name : 'RSObjectWithProperty' }
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSObjectWithProperty >> isOrComposesOf: aShape [
 
 	^ self = aShape
 ]
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 RSObjectWithProperty >> isSelectionDraggable [
 
 	^ self hasProperty: OPRSSelectionDraggable

@@ -1,14 +1,16 @@
 Class {
-	#name : #OPRectangleDragAlignmentLine,
-	#superclass : #Object,
+	#name : 'OPRectangleDragAlignmentLine',
+	#superclass : 'Object',
 	#instVars : [
 		'dragged',
 		'compared'
 	],
-	#category : #'OpenPonk-Roassal-Interactions'
+	#category : 'OpenPonk-Roassal-Interactions',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Interactions'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRectangleDragAlignmentLine class >> dragged: dragged compared: compared [
 
 	^ self new
@@ -17,7 +19,7 @@ OPRectangleDragAlignmentLine class >> dragged: dragged compared: compared [
 		  yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRectangleDragAlignmentLine class >> draggedFirst: draggedFirst draggedSecond: draggedSecond comparedFirst: comparedFirst comparedSecond: comparedSecond [
 
 	| best |
@@ -31,67 +33,67 @@ OPRectangleDragAlignmentLine class >> draggedFirst: draggedFirst draggedSecond: 
 	^ best
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRectangleDragAlignmentLine >> adaptation2dOffset [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRectangleDragAlignmentLine >> adaptationDistance [
 
 	^ self adaptation2dOffset abs
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRectangleDragAlignmentLine >> adaptationOffset [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRectangleDragAlignmentLine >> compared [
 
 	^ compared
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRectangleDragAlignmentLine >> compared: aPoint [
 
 	compared := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRectangleDragAlignmentLine >> dragged [
 
 	^ dragged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRectangleDragAlignmentLine >> dragged: aPoint [
 
 	dragged := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRectangleDragAlignmentLine >> draggedAdapated [
 
 	^ self dragged + self adaptationOffset
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRectangleDragAlignmentLine >> includeOffsetOf: anotherAlignmentLine [
 
 	dragged := dragged translateBy: anotherAlignmentLine adaptationOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRectangleDragAlignmentLine >> normalized [
 
 	^ (self dragged - self draggedAdapted) normalized
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPRectangleDragAlignmentLine >> resultingDistance [
 
 	^ self subclassResponsibility

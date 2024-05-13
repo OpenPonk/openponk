@@ -1,6 +1,6 @@
 Class {
-	#name : #OPRSControlConfiguration,
-	#superclass : #RSControlConfiguration,
+	#name : 'OPRSControlConfiguration',
+	#superclass : 'RSControlConfiguration',
 	#instVars : [
 		'hasZoomableAnimation',
 		'keepCameraOnContent',
@@ -12,17 +12,19 @@ Class {
 		'dragAttachmentMargin',
 		'dragSnapComparisonsAmount'
 	],
-	#category : #'OpenPonk-Roassal-Interactions'
+	#category : 'OpenPonk-Roassal-Interactions',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Interactions'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSControlConfiguration class >> dragSnapComparisonsAmount [
 
 	^ dragSnapComparisonsAmount ifNil: [
 		  self dragSnapComparisonsAmountDefault ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSControlConfiguration class >> dragSnapComparisonsAmount: anInteger [
 
 	self assert: anInteger isInteger.
@@ -30,44 +32,44 @@ OPRSControlConfiguration class >> dragSnapComparisonsAmount: anInteger [
 	dragSnapComparisonsAmount := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSControlConfiguration class >> dragSnapComparisonsAmountDefault [
 
 	^ 10
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSControlConfiguration class >> dragSnapMargin [
 
 	^ dragAttachmentMargin ifNil: [ self dragSnapMarginDefault ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSControlConfiguration class >> dragSnapMargin: aNumber [
 
 	self assert: aNumber >= 0.
 	dragAttachmentMargin := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSControlConfiguration class >> dragSnapMarginDefault [
 
 	^ 5
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSControlConfiguration class >> keepCameraOnContent [
 
 	^ keepCameraOnContent ifNil: [ false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSControlConfiguration class >> keepCameraOnContent: aBoolean [
 
 	keepCameraOnContent := aBoolean
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OPRSControlConfiguration class >> settingsOn: aBuilder [
 
 	<systemsettings>
@@ -97,49 +99,49 @@ OPRSControlConfiguration class >> settingsOn: aBuilder [
 		default: self dragSnapMarginDefault
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSControlConfiguration >> dragSnapComparisonsAmount [
 
 	^ dragSnapComparisonsAmount ifNil: [ self class dragSnapComparisonsAmount ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSControlConfiguration >> dragSnapComparisonsAmount: anObject [
 
 	dragSnapComparisonsAmount := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSControlConfiguration >> dragSnapMargin [
 
 	^ dragSnapMargin ifNil: [ self class dragSnapMargin ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSControlConfiguration >> dragSnapMargin: anObject [
 
 	dragSnapMargin := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSControlConfiguration >> hasZoomableAnimation [
 
 	^ hasZoomableAnimation ifNil: [ true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSControlConfiguration >> hasZoomableAnimation: anObject [
 
 	hasZoomableAnimation := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSControlConfiguration >> keepCameraOnContent [
 
 	^ keepCameraOnContent ifNil: [ self class keepCameraOnContent ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSControlConfiguration >> keepCameraOnContent: anObject [
 
 	keepCameraOnContent := anObject

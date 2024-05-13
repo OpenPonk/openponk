@@ -1,19 +1,21 @@
 Class {
-	#name : #OPRSSelectionEndEvent,
-	#superclass : #RSSelectionEndEvent,
+	#name : 'OPRSSelectionEndEvent',
+	#superclass : 'RSSelectionEndEvent',
 	#instVars : [
 		'originalEvent'
 	],
-	#category : #'OpenPonk-Roassal-Interactions'
+	#category : 'OpenPonk-Roassal-Interactions',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Interactions'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSSelectionEndEvent >> originalEvent [
 
 	^ originalEvent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSSelectionEndEvent >> originalEvent: anObject [
 
 	originalEvent := anObject

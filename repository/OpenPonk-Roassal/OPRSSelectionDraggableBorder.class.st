@@ -1,6 +1,6 @@
 Class {
-	#name : #OPRSSelectionDraggableBorder,
-	#superclass : #OPRSSelectionDraggable,
+	#name : 'OPRSSelectionDraggableBorder',
+	#superclass : 'OPRSSelectionDraggable',
 	#instVars : [
 		'shape',
 		'dragBoxes',
@@ -8,10 +8,12 @@ Class {
 		'positionOfMainRelativeToDragBoxes',
 		'dragBoxWidth'
 	],
-	#category : #'OpenPonk-Roassal-Interactions'
+	#category : 'OpenPonk-Roassal-Interactions',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Interactions'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSSelectionDraggableBorder >> createDragBoxes [
 
 	| horizonalBoxShape verticalBoxShape forwardEvent renderDragBoxes |
@@ -61,7 +63,7 @@ OPRSSelectionDraggableBorder >> createDragBoxes [
 		when: RSPositionChangedEvent do: [ self updateDragBoxes ] for: self
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSSelectionDraggableBorder >> dragBoxUpdateBlocks [
 
 	^ dragBoxUpdateBlocks ifNil: [ 
@@ -94,13 +96,13 @@ OPRSSelectionDraggableBorder >> dragBoxUpdateBlocks [
 			                         asDictionary ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSSelectionDraggableBorder >> dragBoxWidth [
 
 	^ dragBoxWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPRSSelectionDraggableBorder >> dragBoxWidth: aNumber [
 
 	"Thickness of dragboxes. Has no effect once applied on shape"
@@ -108,14 +110,14 @@ OPRSSelectionDraggableBorder >> dragBoxWidth: aNumber [
 	dragBoxWidth := aNumber
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPRSSelectionDraggableBorder >> initialize [
 
 	super initialize.
 	dragBoxWidth := 10
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSSelectionDraggableBorder >> onShape: aShape [
 
 	shape := aShape.
@@ -124,7 +126,7 @@ OPRSSelectionDraggableBorder >> onShape: aShape [
 	self createDragBoxes
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSSelectionDraggableBorder >> positionOfMainRelativeToDragBoxes [
 
 	^ positionOfMainRelativeToDragBoxes ifNil: [ 
@@ -152,13 +154,13 @@ OPRSSelectionDraggableBorder >> positionOfMainRelativeToDragBoxes [
 			                                       asDictionary ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSSelectionDraggableBorder >> updateDragBoxBlock: anAssociation [
 
 	anAssociation value value: (dragBoxes at: anAssociation key)
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 OPRSSelectionDraggableBorder >> updateDragBoxes [
 
 	self dragBoxUpdateBlocks associationsDo: [ :each | 

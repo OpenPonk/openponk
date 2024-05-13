@@ -1,10 +1,12 @@
 Class {
-	#name : #OPRSSelectionDraggableSmallerOverlappingShapesProvider,
-	#superclass : #OPRSSelectionDraggableInnerShapesProvider,
-	#category : #'OpenPonk-Roassal-Interactions'
+	#name : 'OPRSSelectionDraggableSmallerOverlappingShapesProvider',
+	#superclass : 'OPRSSelectionDraggableInnerShapesProvider',
+	#category : 'OpenPonk-Roassal-Interactions',
+	#package : 'OpenPonk-Roassal',
+	#tag : 'Interactions'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 OPRSSelectionDraggableSmallerOverlappingShapesProvider >> innerShapesFor: aContainerShape [
 
 	| containerRectangle |

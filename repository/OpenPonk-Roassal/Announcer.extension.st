@@ -1,6 +1,6 @@
-Extension { #name : #Announcer }
+Extension { #name : 'Announcer' }
 
-{ #category : #'*OpenPonk-Roassal' }
+{ #category : '*OpenPonk-Roassal' }
 Announcer >> suspendAllOf: anObject while: aBlock [
 
 	| originalSubscriptions result |

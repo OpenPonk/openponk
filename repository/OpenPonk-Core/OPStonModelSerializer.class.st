@@ -16,7 +16,7 @@ Class {
 { #category : 'as yet unclassified' }
 OPStonModelSerializer class >> exportVersion [
 
-	^ 1
+	^ 2
 ]
 
 { #category : 'formatting' }

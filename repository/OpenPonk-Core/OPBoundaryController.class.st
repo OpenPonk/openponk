@@ -34,13 +34,13 @@ OPBoundaryController >> canBeTargetFor: aController [
 	^ self diagramController canBeTargetFor: aController
 ]
 
-{ #category : 'accessing' }
+{ #category : 'construction' }
 OPBoundaryController >> diagramElementClass [
 
 	^ OPBoundary
 ]
 
-{ #category : 'announcements' }
+{ #category : 'construction' }
 OPBoundaryController >> renderDiagramElement [
 
 	super renderDiagramElement.

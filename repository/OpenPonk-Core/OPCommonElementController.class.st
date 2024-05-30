@@ -57,7 +57,7 @@ OPCommonElementController >> modelClass [
 	^ self diagramElementClass 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'constants' }
 OPCommonElementController >> paletteItemName [
 	^ self class paletteItemName
 ]

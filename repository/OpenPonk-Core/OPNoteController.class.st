@@ -23,18 +23,19 @@ OPNoteController >> buildEditorForm: aForm [
 			self diagramElement updateText ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'construction' }
 OPNoteController >> diagramElementClass [
 
 	^ OPNote
 ]
 
-{ #category : 'rendering' }
+{ #category : 'construction' }
 OPNoteController >> renderDiagramElement [
 
 	super renderDiagramElement.
 	diagramElement announcer
 		when: OPElementTextAttributeChanged
-		do: [ diagramElement updateRenderFromSelf ].
+		send: #updateRenderFromSelf
+		to: diagramElement.
 	^ self roassalShape
 ]

@@ -9,7 +9,7 @@ Class {
 { #category : 'as yet unclassified' }
 OPStonDiagramSerializer class >> exportVersion [
 
-	^ 1
+	^ 2
 ]
 
 { #category : 'formatting' }

@@ -177,10 +177,10 @@ OPShape >> createOwnedElementsWithoutController [
 { #category : 'instance creation' }
 OPShape >> fromSton: stonReader [
 
-	stonReader parseMapDo: [ :instVarName :value | 
+	stonReader parseMapDo: [ :instVarName :value |
 		instVarName = #modelElements
-			ifTrue: [ 
-				self modelElements: (value collect: [ :each | 
+			ifTrue: [
+				self modelElements: (value collect: [ :each |
 						 OPModelObjectReference withUUID: ([ UUID fromString: each ]
 								  on: Error
 								  do: [ each ]) ]) ]

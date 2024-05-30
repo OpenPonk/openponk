@@ -31,14 +31,16 @@ OPSerializer class >> exportVersion [
 OPSerializer class >> forExportInfo: anExportInfo [
 
 	| possibleClasses |
-	possibleClasses := self withAllSubclasses select: [ :each | 
+	possibleClasses := self withAllSubclasses select: [ :each |
 		                   each supportsExportInfo: anExportInfo ].
-	possibleClasses ifEmpty: [ 
-		self error: 'This export format/version is not supported' ].
-	^ (possibleClasses sorted: [ :a :b | 
+	possibleClasses ifEmpty: [
+		self error:
+			'This version of OpenPonk does not support given format/version of project file. Try loading the project in latest build' ].
+	^ (possibleClasses sorted: [ :a :b |
 		   a maxImportVersion = b maxImportVersion
 			   ifTrue: [ a minImportVersion > b minImportVersion ]
-			   ifFalse: [ a maxImportVersion > b maxImportVersion ] ]) first new
+			   ifFalse: [ a maxImportVersion > b maxImportVersion ] ]) first
+		  new
 ]
 
 { #category : 'as yet unclassified' }

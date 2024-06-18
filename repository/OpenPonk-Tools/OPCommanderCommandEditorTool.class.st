@@ -1,20 +1,21 @@
 Class {
-	#name : #OPCommanderCommandEditorTool,
-	#superclass : #ClyBrowserTool,
+	#name : 'OPCommanderCommandEditorTool',
+	#superclass : 'ClyBrowserTool',
 	#instVars : [
 		'commandClass'
 	],
-	#category : #'OpenPonk-Tools'
+	#category : 'OpenPonk-Tools',
+	#package : 'OpenPonk-Tools'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPCommanderCommandEditorTool class >> classTabActivation [
 	<classAnnotation>
 	
 	^ClyTabActivationStrategy for: ClyClass asCalypsoItemContext
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 OPCommanderCommandEditorTool class >> shouldBeActivatedInContext: aBrowserContext [
 	| item |
 	aBrowserContext isClassSelected
@@ -23,12 +24,12 @@ OPCommanderCommandEditorTool class >> shouldBeActivatedInContext: aBrowserContex
 	^ item isKindOf: CmdCommand class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCommanderCommandEditorTool class >> tabOrder [
 	^ 11
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPCommanderCommandEditorTool >> build [
 	| composite presentation morph desc |
 	composite := GLMCompositePresentation new.
@@ -42,29 +43,29 @@ OPCommanderCommandEditorTool >> build [
 	self addMorph: morph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCommanderCommandEditorTool >> commandClass [
 	^ commandClass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPCommanderCommandEditorTool >> defaultIconName [
 	^ #glamorousTable
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPCommanderCommandEditorTool >> defaultTitle [
 	^ 'Command Info'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPCommanderCommandEditorTool >> isSimilarTo: anotherBrowserTool [
 	(super isSimilarTo: anotherBrowserTool)
 		ifFalse: [ ^ false ].
 	^ commandClass = anotherBrowserTool commandClass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPCommanderCommandEditorTool >> setUpModelFromContext [
 	super setUpModelFromContext.
 

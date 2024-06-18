@@ -1,6 +1,6 @@
-Extension { #name : #OSWindowMorphicEventHandler }
+Extension { #name : 'OSWindowMorphicEventHandler' }
 
-{ #category : #'*OpenPonk-Morphic' }
+{ #category : '*OpenPonk-Morphic' }
 OSWindowMorphicEventHandler >> dispatchMorphicEvent: anEvent [
 
 	(anEvent isKindOf: MouseMoveEvent) ifTrue: [ 

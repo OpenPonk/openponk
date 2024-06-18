@@ -1,6 +1,6 @@
 Class {
-	#name : #DCOCQueueEntry,
-	#superclass : #Object,
+	#name : 'DCOCQueueEntry',
+	#superclass : 'Object',
 	#instVars : [
 		'node',
 		'direction',
@@ -9,40 +9,42 @@ Class {
 		'parent',
 		'cost'
 	],
-	#category : 'DynaCASE-Layouting-OCR'
+	#category : 'DynaCASE-Layouting-OCR',
+	#package : 'DynaCASE-Layouting',
+	#tag : 'OCR'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCOCQueueEntry >> bends [
 	^ bends
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCOCQueueEntry >> bends: anObject [
 	bends := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCOCQueueEntry >> cost [
 	^ cost
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCOCQueueEntry >> cost: anObject [
 	cost := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCOCQueueEntry >> direction [
 	^ direction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCOCQueueEntry >> direction: anObject [
 	direction := anObject
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 DCOCQueueEntry >> estimateTo: aDestination [
 	| isSame isOpposite isOrthogonal isExpected isExact isDestExpected |
 	isSame := self direction = aDestination direction.
@@ -64,33 +66,33 @@ DCOCQueueEntry >> estimateTo: aDestination [
 		ifTrue: [ ^ 4 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCOCQueueEntry >> length [
 	parent ifNil: [ ^ 0 ].
 	^ self parent length + (self node distanceTo: self parent node)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCOCQueueEntry >> node [
 	^ node
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCOCQueueEntry >> node: anObject [
 	node := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCOCQueueEntry >> parent [
 	^ parent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCOCQueueEntry >> parent: anObject [
 	parent := anObject
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 DCOCQueueEntry >> priorityFrom: aSource to: aDestination [
 	false
 		ifTrue:
@@ -99,7 +101,7 @@ DCOCQueueEntry >> priorityFrom: aSource to: aDestination [
 		ifFalse: [ ^ self node distanceTo: aDestination ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCOCQueueEntry >> route [
 	| route step |
 	route := OrderedCollection new.

@@ -1,13 +1,14 @@
 Class {
-	#name : #OPDownloadStats,
-	#superclass : #Object,
+	#name : 'OPDownloadStats',
+	#superclass : 'Object',
 	#classInstVars : [
 		'resultPlatformColumnLetters'
 	],
-	#category : #'OpenPonk-Releaser'
+	#category : 'OpenPonk-Releaser',
+	#package : 'OpenPonk-Releaser'
 }
 
-{ #category : #processing }
+{ #category : 'processing' }
 OPDownloadStats class >> downloadStats [
 
 	<script>
@@ -29,7 +30,7 @@ OPDownloadStats class >> downloadStats [
 					s lf ] ]
 ]
 
-{ #category : #processing }
+{ #category : 'processing' }
 OPDownloadStats class >> downloadStatsOfRepo: repo year: year [
 
 	<script: 'self downloadStatsOfRepo: ''class-editor'' year: 2023'>
@@ -57,7 +58,7 @@ OPDownloadStats class >> downloadStatsOfRepo: repo year: year [
 	^ yearDicts
 ]
 
-{ #category : #processing }
+{ #category : 'processing' }
 OPDownloadStats class >> getContentsOfLink: anUrl [
 
 	^ ZnClient new
@@ -65,25 +66,25 @@ OPDownloadStats class >> getContentsOfLink: anUrl [
 		  get
 ]
 
-{ #category : #'result-columns' }
+{ #category : 'result-columns' }
 OPDownloadStats class >> nonPlatformColumns [
 
 	^ 2
 ]
 
-{ #category : #'result-columns' }
+{ #category : 'result-columns' }
 OPDownloadStats class >> platformColumns [
 
 	^ self platforms size
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OPDownloadStats class >> platforms [
 
 	^ #( linux mac 'mac-ARM' win )
 ]
 
-{ #category : #processing }
+{ #category : 'processing' }
 OPDownloadStats class >> printRowSumOf: rowIndex to: s [
 
 	s << '=SUMA(' << self resultPlatformColumnLetters first
@@ -91,13 +92,13 @@ OPDownloadStats class >> printRowSumOf: rowIndex to: s [
 	<< rowIndex asString << ')'
 ]
 
-{ #category : #'result-columns' }
+{ #category : 'result-columns' }
 OPDownloadStats class >> resultColumns [
 
 	^ 2 + self platforms size
 ]
 
-{ #category : #'result-columns' }
+{ #category : 'result-columns' }
 OPDownloadStats class >> resultPlatformColumnLetters [
 
 	^ resultPlatformColumnLetters ifNil: [
@@ -108,13 +109,13 @@ OPDownloadStats class >> resultPlatformColumnLetters [
 				                                 $A charCode + each ] ]
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OPDownloadStats class >> separator [
 
 	^ ';'
 ]
 
-{ #category : #processing }
+{ #category : 'processing' }
 OPDownloadStats class >> writeCSV: csv toTime: to index: i toStream: s [
 
 	| lines itemsByLines fromIso from |
@@ -134,7 +135,7 @@ OPDownloadStats class >> writeCSV: csv toTime: to index: i toStream: s [
 	self printRowSumOf: i + 1 to: s
 ]
 
-{ #category : #processing }
+{ #category : 'processing' }
 OPDownloadStats class >> writeFromDictionaries: dictionaries repo: repo toStream: s [
 
 	| lastRow sumRow |
@@ -156,7 +157,7 @@ OPDownloadStats class >> writeFromDictionaries: dictionaries repo: repo toStream
 	self printRowSumOf: sumRow to: s
 ]
 
-{ #category : #processing }
+{ #category : 'processing' }
 OPDownloadStats class >> writeFromDictionary: dictionary index: i toStream: s [
 
 	| link fileName to csv |
@@ -181,7 +182,7 @@ OPDownloadStats class >> writeFromDictionary: dictionary index: i toStream: s [
 		toStream: s
 ]
 
-{ #category : #processing }
+{ #category : 'processing' }
 OPDownloadStats class >> writeItemsByLines: itemsByLines platform: platform toStream: s [
 
 	| sum |

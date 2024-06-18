@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfOpenPonk }
+Package { #name : 'BaselineOfOpenPonk' }

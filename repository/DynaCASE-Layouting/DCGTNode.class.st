@@ -1,88 +1,90 @@
 Class {
-	#name : #DCGTNode,
-	#superclass : #Object,
+	#name : 'DCGTNode',
+	#superclass : 'Object',
 	#instVars : [
 		'edges',
 		'model'
 	],
-	#category : 'DynaCASE-Layouting-DGT'
+	#category : 'DynaCASE-Layouting-DGT',
+	#package : 'DynaCASE-Layouting',
+	#tag : 'DGT'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DCGTNode class >> model: aModel [
 	^ self new
 		model: aModel;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DCGTNode class >> on: aModel [
 	^ self new
 		model: aModel;
 		yourself
 ]
 
-{ #category : #'adding/removing' }
+{ #category : 'adding/removing' }
 DCGTNode >> addEdge: aDCGTEdge [
 	(edges includes: aDCGTEdge)
 		ifTrue: [ ^ self ].
 	edges add: aDCGTEdge
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 DCGTNode >> degree [
 	^ self edges size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCGTNode >> edges [
 	<DCAssociation: ''>
 	^ edges
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCGTNode >> edges: aCollection [
 	[ edges isNotEmpty ] whileTrue: [ self removeEdge: edges anyOne ].
 	aCollection do: [ :each | self addEdge: each ]
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 DCGTNode >> inDegree [
 	^ self incoming size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCGTNode >> incoming [
 	^ self edges select: [ :each | each to = self ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DCGTNode >> initialize [
 	super initialize.
 	edges := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCGTNode >> model [
 	^ model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCGTNode >> model: anObject [
 	model := anObject
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 DCGTNode >> outDegree [
 	^ self outgoing size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCGTNode >> outgoing [
 	^ self edges select: [ :each | each from = self ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCGTNode >> printOn: aStream [
 	aStream nextPutAll: 'N'.
 	aStream nextPut: $(.
@@ -90,7 +92,7 @@ DCGTNode >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #'adding/removing' }
+{ #category : 'adding/removing' }
 DCGTNode >> removeEdge: aDCGTEdge [
 	(edges includes: aDCGTEdge)
 		ifFalse: [ ^ self ].

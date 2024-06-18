@@ -1,14 +1,16 @@
 Class {
-	#name : #DCGTEdge,
-	#superclass : #Object,
+	#name : 'DCGTEdge',
+	#superclass : 'Object',
 	#instVars : [
 		'from',
 		'to'
 	],
-	#category : 'DynaCASE-Layouting-DGT'
+	#category : 'DynaCASE-Layouting-DGT',
+	#package : 'DynaCASE-Layouting',
+	#tag : 'DGT'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DCGTEdge class >> from: aSource to: aTarget [
 	^ self new
 		from: aSource;
@@ -16,13 +18,13 @@ DCGTEdge class >> from: aSource to: aTarget [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCGTEdge >> from [
 	<DCAssociation: ''>
 	^ from
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCGTEdge >> from: aDCGTNode [
 	|oldRef|
 	from = aDCGTNode ifTrue: [ ^ self ].
@@ -32,7 +34,7 @@ DCGTEdge >> from: aDCGTNode [
 	from ifNotNil: [ from addEdge: self ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCGTEdge >> printOn: aStream [
 	aStream nextPutAll: '{ '.
 	self from printOn: aStream.
@@ -41,13 +43,13 @@ DCGTEdge >> printOn: aStream [
 	aStream nextPutAll: ' }'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCGTEdge >> to [
 	<DCAssociation: ''>
 	^ to
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCGTEdge >> to: aDCGTNode [
 	|oldRef|
 	to = aDCGTNode ifTrue: [ ^ self ].

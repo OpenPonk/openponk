@@ -1,14 +1,16 @@
 Class {
-	#name : #DCGraphVizLayout,
-	#superclass : #RTLayout,
+	#name : 'DCGraphVizLayout',
+	#superclass : 'RTLayout',
 	#instVars : [
 		'directed',
 		'undirected'
 	],
-	#category : 'DynaCASE-Layouting-GraphViz'
+	#category : 'DynaCASE-Layouting-GraphViz',
+	#package : 'DynaCASE-Layouting',
+	#tag : 'GraphViz'
 }
 
-{ #category : #hook }
+{ #category : 'hook' }
 DCGraphVizLayout >> addEdgesTo: gv for: els [
 	directed
 		withIndexDo:
@@ -28,7 +30,7 @@ DCGraphVizLayout >> addEdgesTo: gv for: els [
 					(#id -> (#E , (directed size + i) asString))} ]
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 DCGraphVizLayout >> addNodesTo: gv for: els [
 	els
 		withIndexDo:
@@ -41,13 +43,13 @@ DCGraphVizLayout >> addNodesTo: gv for: els [
 					(#height -> (self pixelToInch: each height))} ]
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 DCGraphVizLayout >> applyLayout: aCollection to: els [
 	aCollection
 		collect: [ :each | (els at: (self nodeIndexFor: each)) translateTo: (self nodePositionFor: each) ]
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 DCGraphVizLayout >> applyLayoutToEdges: aCollection [
 	| allEdges |
 	allEdges := directed , undirected.
@@ -72,7 +74,7 @@ DCGraphVizLayout >> applyLayoutToEdges: aCollection [
 	allEdges ifNotEmpty: [ allEdges anyOne view signalUpdate ]
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 DCGraphVizLayout >> createEmptyGraph [
 	| gv |
 	(gv := GraphViz new)
@@ -85,7 +87,7 @@ DCGraphVizLayout >> createEmptyGraph [
 	^ gv
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 DCGraphVizLayout >> doExecute: els [
 	| gv group layout |
 	gv := self createEmptyGraph.
@@ -100,7 +102,7 @@ DCGraphVizLayout >> doExecute: els [
 	self applyLayoutToEdges: (layout xPath: '//g[@class="edge"]')
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 DCGraphVizLayout >> edgeLayoutToRoute: anEdge [
 	^ DCOCRouter
 		collinearizeRoute:
@@ -108,29 +110,29 @@ DCGraphVizLayout >> edgeLayoutToRoute: anEdge [
 				convertPathData flatCollect: #second)
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DCGraphVizLayout >> inchToPixel: aNumber [
 	^ aNumber * 72
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 DCGraphVizLayout >> indexFor: aNodeOrEdge [
 	^ (aNodeOrEdge attributeAt: #id) allButFirst asNumber
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 DCGraphVizLayout >> initialize [
 	super initialize.
 	directed := #().
 	undirected := #()
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 DCGraphVizLayout >> nodeIndexFor: aNode [
 	^ (aNode attributeAt: #id) allButFirst asNumber
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 DCGraphVizLayout >> nodePositionFor: aNode [
 	| corners |
 	corners := (((aNode / #polygon) first attributeAt: #points) splitOn: ' ')
@@ -138,24 +140,24 @@ DCGraphVizLayout >> nodePositionFor: aNode [
 	^ (corners min corner: corners max) center
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 DCGraphVizLayout >> on: el directed: directedEdges undirected: undirectedEdges [
 	directed := directedEdges.
 	undirected := undirectedEdges.
 	^ self applyOn: el
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DCGraphVizLayout >> pixelToInch: aNumber [
 	^ (aNumber / 72.0) asFloat
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DCGraphVizLayout >> pointToPixel: aNumber [
 	^ aNumber * 96
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 DCGraphVizLayout >> positionFrom: aStringPair [
 	| pos |
 	pos := aStringPair splitOn: ','.

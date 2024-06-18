@@ -1,6 +1,6 @@
 Class {
-	#name : #DCRTEdgeLabelLayoutVisualizer,
-	#superclass : #Object,
+	#name : 'DCRTEdgeLabelLayoutVisualizer',
+	#superclass : 'Object',
 	#instVars : [
 		'layouter',
 		'view'
@@ -8,15 +8,17 @@ Class {
 	#classVars : [
 		'Configuration'
 	],
-	#category : 'DynaCASE-Layouting-GlobalEdgeLabels'
+	#category : 'DynaCASE-Layouting-GlobalEdgeLabels',
+	#package : 'DynaCASE-Layouting',
+	#tag : 'GlobalEdgeLabels'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayoutVisualizer class >> Configuration [
 	^ Configuration ifNil: [ Configuration := self defaultConfiguration ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayoutVisualizer class >> defaultConfiguration [
 	^ Dictionary new
 		at: #edgeMarks put: true;
@@ -31,7 +33,7 @@ DCRTEdgeLabelLayoutVisualizer class >> defaultConfiguration [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayoutVisualizer class >> openConfiguration [
 	<script>
 	| ui options specLayout |
@@ -68,7 +70,7 @@ DCRTEdgeLabelLayoutVisualizer class >> openConfiguration [
 	ui openWithSpecLayout: specLayout
 ]
 
-{ #category : #visualization }
+{ #category : 'visualization' }
 DCRTEdgeLabelLayoutVisualizer >> addBoundingBoxFor: anElement [
 	| bb |
 	bb := RTBox new
@@ -85,22 +87,22 @@ DCRTEdgeLabelLayoutVisualizer >> addBoundingBoxFor: anElement [
 				ifFalse: [ anElement trachelShape ])
 ]
 
-{ #category : #visualization }
+{ #category : 'visualization' }
 DCRTEdgeLabelLayoutVisualizer >> highlightLabels [
 	layouter batchOfUnassignedLabels do: [ :each | self addBoundingBoxFor: each ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTEdgeLabelLayoutVisualizer >> layouter [
 	^ layouter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTEdgeLabelLayoutVisualizer >> layouter: aLayout [
 	layouter := aLayout
 ]
 
-{ #category : #visualization }
+{ #category : 'visualization' }
 DCRTEdgeLabelLayoutVisualizer >> showClusters: clusterGraphs labeled: aString [
 	| b bg lbl |
 	b := RTMondrian new.
@@ -131,7 +133,7 @@ DCRTEdgeLabelLayoutVisualizer >> showClusters: clusterGraphs labeled: aString [
 	bg translateBy: 0 @ 100
 ]
 
-{ #category : #visualization }
+{ #category : 'visualization' }
 DCRTEdgeLabelLayoutVisualizer >> showEdgeMarks: aDictionary [
 	| el line normal normalSeg |
 	aDictionary
@@ -158,7 +160,7 @@ DCRTEdgeLabelLayoutVisualizer >> showEdgeMarks: aDictionary [
 					view add: el ] ]
 ]
 
-{ #category : #visualization }
+{ #category : 'visualization' }
 DCRTEdgeLabelLayoutVisualizer >> showLabelPositions: aDictionary [
 	| el |
 	aDictionary
@@ -179,7 +181,7 @@ DCRTEdgeLabelLayoutVisualizer >> showLabelPositions: aDictionary [
 					el @ RTLabelled new center ] ]
 ]
 
-{ #category : #visualization }
+{ #category : 'visualization' }
 DCRTEdgeLabelLayoutVisualizer >> showLabelPositions: aDictionary labeled: aTwoArgBlock [
 	| el |
 	aDictionary
@@ -200,7 +202,7 @@ DCRTEdgeLabelLayoutVisualizer >> showLabelPositions: aDictionary labeled: aTwoAr
 					el @ RTLabelled new center ] ]
 ]
 
-{ #category : #visualization }
+{ #category : 'visualization' }
 DCRTEdgeLabelLayoutVisualizer >> showMatchingGraph: aGraph labeled: aString [
 	| b bg lbl |
 	b := RTMondrian new.
@@ -242,7 +244,7 @@ DCRTEdgeLabelLayoutVisualizer >> showMatchingGraph: aGraph labeled: aString [
 	bg translateBy: 0 @ 100
 ]
 
-{ #category : #visualization }
+{ #category : 'visualization' }
 DCRTEdgeLabelLayoutVisualizer >> showOverlapGraph: aGraph labeled: aString [
 	| b bg lbl |
 	b := RTMondrian new.
@@ -279,12 +281,12 @@ DCRTEdgeLabelLayoutVisualizer >> showOverlapGraph: aGraph labeled: aString [
 	bg translateBy: 0 @ 100
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTEdgeLabelLayoutVisualizer >> view [
 	^ view
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTEdgeLabelLayoutVisualizer >> view: aView [
 	view := aView
 ]

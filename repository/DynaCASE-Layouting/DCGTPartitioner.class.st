@@ -2,12 +2,14 @@
 I am the second phase of GT
 "
 Class {
-	#name : #DCGTPartitioner,
-	#superclass : #Object,
-	#category : 'DynaCASE-Layouting-DGT'
+	#name : 'DCGTPartitioner',
+	#superclass : 'Object',
+	#category : 'DynaCASE-Layouting-DGT',
+	#package : 'DynaCASE-Layouting',
+	#tag : 'DGT'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCGTPartitioner >> independentSetFor: aGraph [
 	| set graph v |
 	set := OrderedCollection new.
@@ -21,7 +23,7 @@ DCGTPartitioner >> independentSetFor: aGraph [
 	^ set
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCGTPartitioner >> overlapGraphFor: aGraph ordering: anOrdering [
 	| overlap one another a b c d tmp |
 	overlap := DCGTGraph new.
@@ -47,7 +49,7 @@ DCGTPartitioner >> overlapGraphFor: aGraph ordering: anOrdering [
 	^ overlap
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCGTPartitioner >> partition: aGraph ordering: anOrdering [
 	| overlap left right rest |
 	overlap := self overlapGraphFor: aGraph ordering: anOrdering.

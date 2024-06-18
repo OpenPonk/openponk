@@ -1,25 +1,27 @@
 Class {
-	#name : #DCRTLBipartiteGraph,
-	#superclass : #Object,
+	#name : 'DCRTLBipartiteGraph',
+	#superclass : 'Object',
 	#instVars : [
 		'leftNodes',
 		'rightNodes',
 		'edges'
 	],
-	#category : 'DynaCASE-Layouting-GlobalEdgeLabels'
+	#category : 'DynaCASE-Layouting-GlobalEdgeLabels',
+	#package : 'DynaCASE-Layouting',
+	#tag : 'GlobalEdgeLabels'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLBipartiteGraph >> edges [
 	^ edges
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLBipartiteGraph >> edges: aCollection [
 	edges := aCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DCRTLBipartiteGraph >> initialize [
 	super initialize.
 	edges := OrderedCollection new.
@@ -27,27 +29,27 @@ DCRTLBipartiteGraph >> initialize [
 	rightNodes := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLBipartiteGraph >> leftNodes [
 	^ leftNodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLBipartiteGraph >> leftNodes: aCollection [
 	leftNodes := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLBipartiteGraph >> nodes [
 	^ leftNodes , rightNodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLBipartiteGraph >> rightNodes [
 	^ rightNodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLBipartiteGraph >> rightNodes: aCollection [
 	rightNodes := aCollection
 ]

@@ -1,10 +1,12 @@
 Class {
-	#name : #OPTabLabelMorph,
-	#superclass : #TabLabelMorph,
-	#category : #'OpenPonk-Morphic-Morphic'
+	#name : 'OPTabLabelMorph',
+	#superclass : 'TabLabelMorph',
+	#category : 'OpenPonk-Morphic-Morphic',
+	#package : 'OpenPonk-Morphic',
+	#tag : 'Morphic'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTabLabelMorph >> borderStyleToUse [
 
 	"Answer the borderStyle that should be used for the receiver."
@@ -12,7 +14,7 @@ OPTabLabelMorph >> borderStyleToUse [
 	^ self borderStyle
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 OPTabLabelMorph >> selectedFillStyle [
 
 	^ super selectedFillStyle

@@ -1,6 +1,6 @@
 Class {
-	#name : #OPReleaser,
-	#superclass : #Object,
+	#name : 'OPReleaser',
+	#superclass : 'Object',
 	#instVars : [
 		'repository',
 		'repositoryName',
@@ -14,17 +14,18 @@ Class {
 		'minorTag',
 		'majorTag'
 	],
-	#category : #'OpenPonk-Releaser'
+	#category : 'OpenPonk-Releaser',
+	#package : 'OpenPonk-Releaser'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPReleaser class >> releaseRepositories: aCollectionOfString asVersion: anArrayOfNumbers [
 
 	aCollectionOfString do: [ :each |
 		self releaseRepository: each asVersion: anArrayOfNumbers ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPReleaser class >> releaseRepository: aName asVersion: anArrayOfNumbers [
 
 	^ self new
@@ -33,7 +34,7 @@ OPReleaser class >> releaseRepository: aName asVersion: anArrayOfNumbers [
 		  inspectGitCommands
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPReleaser class >> releaseRepository: aName branch: aString asVersion: anArrayOfNumbers [
 
 	^ self new
@@ -43,7 +44,7 @@ OPReleaser class >> releaseRepository: aName branch: aString asVersion: anArrayO
 		  inspectGitCommands
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPReleaser >> commitAndPush [
 	"------------- HANDLE OPEN WINDOWS IF ANY ----------------"
 	"------- MAKE NECESSARY CHANGES BY HAND IN THE BASELINE/CODE -------"
@@ -61,14 +62,14 @@ OPReleaser >> commitAndPush [
 	releaseBranch pushTo: remoteBranch remote
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 OPReleaser >> confirmToContinue: aText [
 
 	(UIManager default proceed: aText) ifFalse: [
 		self notify: 'Release script cancelled' ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPReleaser >> createRelease [
 
 	self getRepo.
@@ -79,7 +80,7 @@ OPReleaser >> createRelease [
 	^ self getGitCommands
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPReleaser >> createTags [
 	"preparing tags"
 
@@ -116,7 +117,7 @@ OPReleaser >> createTags [
 	commitToTag createTag: majorTag
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPReleaser >> getGitCommands [
 
 	^ gitCommands := String streamContents: [ :s |
@@ -130,7 +131,7 @@ OPReleaser >> getGitCommands [
 		                 s lf ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPReleaser >> getLocalReleaseBranch [
 	"pull to ensure it is up to date"
 
@@ -148,7 +149,7 @@ OPReleaser >> getLocalReleaseBranch [
 	masterBranchModel previewMerge: IceTipMergeType direct
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPReleaser >> getRemoteReleaseBranch [
 	"grab remote branch"
 
@@ -170,7 +171,7 @@ OPReleaser >> getRemoteReleaseBranch [
 		'If any window opened, handle checkout release_base, then proceed'
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPReleaser >> getRepo [
 
 	repo := IceRepository registry detect: [ :each |
@@ -178,14 +179,14 @@ OPReleaser >> getRepo [
 	repoModel := IceTipRepositoryModel on: repo
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPReleaser >> initialize [
 
 	super initialize.
 	nightlyBranchName := 'master'
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OPReleaser >> inspectGitCommands [
 
 	^ (gitCommands ifNil: [ self createRelease ])
@@ -193,13 +194,13 @@ OPReleaser >> inspectGitCommands [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPReleaser >> repositoryName: aString [
 
 	repositoryName := aString
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 OPReleaser >> versionArray: aCollection [
 
 	versionArray := aCollection

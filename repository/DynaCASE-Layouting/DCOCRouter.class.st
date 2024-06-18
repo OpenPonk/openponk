@@ -10,12 +10,14 @@ I route edges of a graph in an orthogonal style for vertices with fixed position
 ] [1]M. Wybrow, K. Marriott, and P. J. Stuckey, “Orthogonal connector routing,” in Graph Drawing, 2010, pp. 219–231.
 "
 Class {
-	#name : #DCOCRouter,
-	#superclass : #Object,
-	#category : 'DynaCASE-Layouting-OCR'
+	#name : 'DCOCRouter',
+	#superclass : 'Object',
+	#category : 'DynaCASE-Layouting-OCR',
+	#package : 'DynaCASE-Layouting',
+	#tag : 'OCR'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCRouter class >> collinearizeRoute: aRoute [
 	| newRoute direction step |
 	newRoute := OrderedCollection with: aRoute first with: aRoute second.
@@ -34,7 +36,7 @@ DCOCRouter class >> collinearizeRoute: aRoute [
 	^ newRoute asArray
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 DCOCRouter class >> exampleRouting [
 |v es router visGraph g el seg conn conn2 r1 r2 routes ordering|
 v := RTView new.
@@ -113,7 +115,7 @@ v @ RTDraggableView @ RTZoomableView.
 ^ v
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 DCOCRouter class >> exampleVisibility [
 	|v es router visGraph g e seg|
 v := RTView new.
@@ -154,7 +156,7 @@ v @ RTDraggableView @ RTZoomableView.
 ^ v
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCRouter >> applyRoute: aPath to: anEdge [
 	anEdge shape router points: aPath.
 	anEdge update.
@@ -162,28 +164,28 @@ DCOCRouter >> applyRoute: aPath to: anEdge [
 	anEdge view signalUpdate
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCRouter >> collinearizeRoutes: routes [
 	^ routes collect: [ :each | self class collinearizeRoute: each ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCRouter >> determineRoutes: elements [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCRouter >> determineRoutesFor: edges [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCRouter >> generateSegments: aGraph boxes: boxes [
 	self generateSegments: aGraph boxes: boxes fixedAxis: #x.
 	self generateSegments: aGraph boxes: boxes fixedAxis: #y
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCRouter >> generateSegments: aGraph boxes: boxes fixedAxis: anAxis [
 	| fixed lines seg otherAxis |
 	otherAxis := anAxis = #x
@@ -206,7 +208,7 @@ DCOCRouter >> generateSegments: aGraph boxes: boxes fixedAxis: anAxis [
 						ifNone: [ aGraph addEdge: (DCGTEdge from: a to: b) ] ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCRouter >> interestingPointFor: anElement [
 	"Retrieve an interesting point for an element. This are corners of the element and some fixed number of connectors (for now centres)."
 
@@ -215,18 +217,18 @@ DCOCRouter >> interestingPointFor: anElement [
 	^ (r corners , (self sideCentersFor: r)) asSet
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCRouter >> interestingPointsFor: elements [
 	^ elements collect: [ :each | each -> (self interestingPointFor: each) ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCRouter >> orderingFor: routes [
 	| overlapGraph |
 	overlapGraph := self overlapGraphFor: routes.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCRouter >> overlapGraphFor: routes [
 	| overlapGraph nodesLookup candidates |
 	overlapGraph := DCGTGraph new.
@@ -252,7 +254,7 @@ DCOCRouter >> overlapGraphFor: routes [
 	^ overlapGraph
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCRouter >> routeFor: anEdge visibility: visGraph [
 	| starts ends paths |
 	starts := (self sideCentersFor: (anEdge from encompassingRectangle expandBy: 10))
@@ -265,7 +267,7 @@ DCOCRouter >> routeFor: anEdge visibility: visGraph [
 	^ (paths detectMin: #length) route
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCRouter >> routeFrom: src to: dst visibility: aVisGraph [
 	| queue srcEntry next reached top closed |
 	queue := Heap new.
@@ -299,14 +301,14 @@ DCOCRouter >> routeFrom: src to: dst visibility: aVisGraph [
 	^ top
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCRouter >> routesFor: edges visibility: visGraph [
 	| routes |
 	routes := edges collect: [ :each | each -> (self routeFor: each visibility: visGraph) ].
 	routes do: [ :pair | self applyRoute: pair value to: pair key ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 DCOCRouter >> run [
 	self visibilityGraph.
 	self determineRoutes.
@@ -314,7 +316,7 @@ DCOCRouter >> run [
 	self visualRepresentation"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCRouter >> segmentizeRoutes: routes [
 	| segments |
 	segments := Dictionary new.
@@ -326,7 +328,7 @@ DCOCRouter >> segmentizeRoutes: routes [
 	^ segments
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCRouter >> separateRoutes: routes [
 	| segments |
 	segments := self segmentizeRoutes: routes.
@@ -334,7 +336,7 @@ DCOCRouter >> separateRoutes: routes [
 	^ routes
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCRouter >> sideCentersFor: aRectangle [
 	^ Array
 		with: aRectangle topCenter
@@ -343,7 +345,7 @@ DCOCRouter >> sideCentersFor: aRectangle [
 		with: aRectangle leftCenter
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCRouter >> visibilityGraphFor: elements [
 	| boundaries i xi yi boxes nodes graph |
 	boxes := elements collect: [ :each | each encompassingRectangle expandBy: 9 ].

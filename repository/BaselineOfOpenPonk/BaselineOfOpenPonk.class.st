@@ -3,12 +3,13 @@ I am baseline for the core and all-in-one dynacase.
 https://dynacase.github.io/
 "
 Class {
-	#name : #BaselineOfOpenPonk,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfOpenPonk
+	#name : 'BaselineOfOpenPonk',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfOpenPonk',
+	#package : 'BaselineOfOpenPonk'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfOpenPonk >> baseline: spec [
 
 	<baseline>
@@ -30,7 +31,7 @@ BaselineOfOpenPonk >> baseline: spec [
 			with: #( 'OpenPonk-Core' 'OpenPonk-Morphic' 'OpenPonk-Spec' ) ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 
 	spec
@@ -63,7 +64,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 		spec repository: 'github://pharo-graphics/RoassalExporters:v1.02' ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 
 	spec baseline: 'NewTools' with: [ 
@@ -76,7 +77,7 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 		spec repository: 'github://openponk/synchronized-links/repository' ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfOpenPonk >> removeExplicitRequirementsFromPackage: aPackageName [
 
 	| regExp packages |
@@ -94,7 +95,7 @@ BaselineOfOpenPonk >> removeExplicitRequirementsFromPackage: aPackageName [
 				thenDo: #removeFromSystem ] ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfOpenPonk >> removePackage: aPackageName [
 
 	| regExp packages |
@@ -106,7 +107,7 @@ BaselineOfOpenPonk >> removePackage: aPackageName [
 		each removeFromSystem ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfOpenPonk >> removeRoassalExplicitRequirements [
 
 	#( Roassal Numeric RTree OpenPonk OP OntoUML ) do: [ :eachName |

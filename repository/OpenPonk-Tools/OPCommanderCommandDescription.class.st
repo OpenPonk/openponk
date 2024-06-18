@@ -1,39 +1,40 @@
 Class {
-	#name : #OPCommanderCommandDescription,
-	#superclass : #Object,
+	#name : 'OPCommanderCommandDescription',
+	#superclass : 'Object',
 	#instVars : [
 		'commandClass',
 		'command'
 	],
-	#category : #'OpenPonk-Tools'
+	#category : 'OpenPonk-Tools',
+	#package : 'OpenPonk-Tools'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCommanderCommandDescription >> command [
 	^ command ifNil: [ command := self commandClass new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCommanderCommandDescription >> commandClass [
 	^ commandClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCommanderCommandDescription >> commandClass: aClass [
 	commandClass := aClass
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 OPCommanderCommandDescription >> compileInfo: aSource [
 	self commandClass compile: aSource withSqueakLineEndings classified: 'accessing'
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 OPCommanderCommandDescription >> compileInfo: aSource classified: aProtocol [
 	self commandClass compile: aSource withSqueakLineEndings classified: aProtocol
 ]
 
-{ #category : #descriptions }
+{ #category : 'descriptions' }
 OPCommanderCommandDescription >> descriptionDefaultMenuIcon [
 	<magritteDescription>
 	^ MAStringDescription new
@@ -46,7 +47,7 @@ OPCommanderCommandDescription >> descriptionDefaultMenuIcon [
 		yourself
 ]
 
-{ #category : #descriptions }
+{ #category : 'descriptions' }
 OPCommanderCommandDescription >> descriptionDefaultMenuItemName [
 	<magritteDescription>
 	^ MAStringDescription new
@@ -59,7 +60,7 @@ OPCommanderCommandDescription >> descriptionDefaultMenuItemName [
 		yourself
 ]
 
-{ #category : #descriptions }
+{ #category : 'descriptions' }
 OPCommanderCommandDescription >> descriptionExecute [
 	<magritteDescription>
 	^ MAMemoDescription new
@@ -77,12 +78,12 @@ OPCommanderCommandDescription >> descriptionExecute [
 		yourself
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 OPCommanderCommandDescription >> ensureRemoveSelector: aSelector [
 	self commandClass removeSelector: aSelector
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 OPCommanderCommandDescription >> readBody: aKey [
 	^ self command class methodDictionary
 		at: aKey
@@ -94,14 +95,14 @@ OPCommanderCommandDescription >> readBody: aKey [
 		ifAbsent: [ '' ]
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 OPCommanderCommandDescription >> readProperty: aKey [
 	^ [ aKey value: self command ]
 		on: SubclassResponsibility
 		do: [ :e | '' ]
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 OPCommanderCommandDescription >> readReturn: aKey [
 	^ self command class methodDictionary
 		at: aKey

@@ -145,5 +145,9 @@ OPShowHideTabContentPresenter >> updateSelectedItems [
 
 { #category : 'enumerating' }
 OPShowHideTabContentPresenter >> whenSelectionChangedDo: aBlock [
-	^ self announcer when: OPShowHideSelectionChanged do: aBlock
+
+	^ self announcer
+		  when: OPShowHideSelectionChanged
+		  do: aBlock
+		  for: (aBlock receiver ifNil: [ self ])
 ]

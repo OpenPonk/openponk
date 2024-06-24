@@ -31,14 +31,13 @@ OPController >> addAsSourceFor: aController [
 
 { #category : 'connecting' }
 OPController >> addAsTargetFor: aController [
-	(self canBeTargetFor: aController)
-		ifFalse: [ self
-				error:
-					self class asString , ' cannot be target for '
-						, aController class asString ].
+
+	(self canBeTargetFor: aController) ifFalse: [
+		self error: self class asString , ' cannot be target for '
+			, aController class asString ].
 	aController target: self.
 	aController
-		createModelIn: self modelAsParent
+		createModelIn: (self parentWhenTargetFor: aController)
 		andShowInDiagram: self diagramController
 ]
 
@@ -171,6 +170,12 @@ OPController >> isHideable [
 	^ false
 ]
 
+{ #category : 'testing' }
+OPController >> isTargetUsedAsContainer [
+
+	^ true
+]
+
 { #category : 'accessing' }
 OPController >> model [
 	^ model
@@ -187,11 +192,6 @@ OPController >> model: aModel [
 	model ifNotNil: [ :m | self internalSubscribeTo: m ]
 ]
 
-{ #category : 'connecting' }
-OPController >> modelAsParent [
-	^ self model
-]
-
 { #category : 'announcements' }
 OPController >> modelChanged [
 	self figure ifNotNil: [ self refreshFigure ]
@@ -205,6 +205,21 @@ OPController >> modelClass [
 { #category : 'accessing' }
 OPController >> nameOfType [
 	^ (self diagramController typeOfModel: self model) name
+]
+
+{ #category : 'connecting' }
+OPController >> parentContainerModel [
+	"Redefine to answer model that acts as a primary container of my model and other elements on my model's level. If I am always directly inside diagramController without any intermediate structure, this may answer self diagramController model"
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'connecting' }
+OPController >> parentWhenTargetFor: aCreatedController [
+
+	^ aCreatedController isTargetUsedAsContainer
+		  ifTrue: [ self model ]
+		  ifFalse: [ self parentContainerModel ]
 ]
 
 { #category : 'figures' }
@@ -303,7 +318,7 @@ OPController >> removeRender [
 { #category : 'figures' }
 OPController >> roassalShape [
 
-	^ self diagramElement roassalShape
+	^ self diagramElement ifNotNil: [ :found | found roassalShape ]
 ]
 
 { #category : 'figures' }
@@ -330,12 +345,20 @@ OPController >> showDenyFeedbackFor: aController [
 
 { #category : 'construction' }
 OPController >> showInDiagram: aDiagramController [
-	^ self dependentElements
-		do: [ :each | aDiagramController showInDiagramModel: each ]
+
+	self showWithoutDependentInDiagram: aDiagramController.
+	^ self dependentElements do: [ :each |
+		  aDiagramController showInDiagramModel: each ]
 ]
 
 { #category : 'canvas actions' }
 OPController >> showSelectionFeedback [
 
 	self deprecated: 'This should be done by shapes (diagram elements)'
+]
+
+{ #category : 'construction' }
+OPController >> showWithoutDependentInDiagram: aDiagramController [
+
+	self subclassResponsibility
 ]

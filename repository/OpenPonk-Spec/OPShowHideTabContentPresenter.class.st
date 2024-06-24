@@ -27,6 +27,7 @@ OPShowHideTabContentPresenter >> childrenFor: anItem [
 
 { #category : 'initialization' }
 OPShowHideTabContentPresenter >> connectPresenters [
+
 	self whenSelectionChangedDo: [ self updateSelectedItems ]
 ]
 
@@ -134,12 +135,9 @@ OPShowHideTabContentPresenter >> unselected: aRemovedItem [
 
 { #category : 'accessing' }
 OPShowHideTabContentPresenter >> updateSelectedItems [
+
 	selectedItems := self findSelectedItems.
-	tree adapter
-		ifNotNil: [ :treeAdapter | 
-			treeAdapter widget dataSource
-				updateData;
-				expandAll ].
+	tree refresh.
 	^ selectedItems
 ]
 

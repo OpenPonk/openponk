@@ -15,13 +15,14 @@ Class {
 	#tag : 'Controllers'
 }
 
-{ #category : 'figures' }
+{ #category : 'construction' }
 OPDirectionalRelationshipController >> createDiagramElement [
 
 	super createDiagramElement.
-	self diagramElement
-		source: self source ensureDiagramElement;
-		target: self target ensureDiagramElement
+	^ self diagramElement
+		  source: self source ensureDiagramElement;
+		  target: self target ensureDiagramElement;
+		  yourself
 ]
 
 { #category : 'hooks' }
@@ -31,13 +32,17 @@ OPDirectionalRelationshipController >> createLineFrom: fromElement to: toElement
 ]
 
 { #category : 'construction' }
-OPDirectionalRelationshipController >> createModelIn: aParentModel [
+OPDirectionalRelationshipController >> dependingOnElements [
 
-	self model: self modelClass new.
-	self model source: self source model.
-	self model target: self target model.
-	aParentModel add: self model.
-	^ self model
+	^ super dependingOnElements , (Set
+		   with: ((self model
+				     ifNil: [ self source model ]
+				     ifNotNil: [ self modelSource ]) ifNil: [
+				    self error: 'There is no source of ' , self model asString ])
+		   with: ((self model
+				     ifNil: [ self target model ]
+				     ifNotNil: [ self modelTarget ]) ifNil: [
+				    self error: 'There is no target of ' , self model asString ]))
 ]
 
 { #category : 'hooks' }
@@ -47,16 +52,68 @@ OPDirectionalRelationshipController >> edgeBuilder [
 		'Depracated without replacement - use Roassal directly or define own figures'
 ]
 
-{ #category : 'accessing' }
-OPDirectionalRelationshipController >> modelSource [
+{ #category : 'construction' }
+OPDirectionalRelationshipController >> ensureShownDependenciesInDiagram: aDiagramController [
 
-	^ self model source
+	self ensureSourceIn: aDiagramController.
+	self ensureTargetIn: aDiagramController.
+	super ensureShownDependenciesInDiagram: aDiagramController
 ]
 
 { #category : 'accessing' }
-OPDirectionalRelationshipController >> modelTarget [
+OPDirectionalRelationshipController >> ensureSourceIn: aDiagramController [
 
-	^ self model target
+	^ source ifNil: [
+		  self source:
+			  (aDiagramController showWithoutDependentInDiagramModel:
+				   self modelSource) ]
+]
+
+{ #category : 'accessing' }
+OPDirectionalRelationshipController >> ensureTargetIn: aDiagramController [
+
+	^ target ifNil: [
+		  self target:
+			  (aDiagramController showWithoutDependentInDiagramModel:
+				   self modelTarget) ]
+]
+
+{ #category : 'testing' }
+OPDirectionalRelationshipController >> isTargetUsedAsContainer [
+
+	^ false
+]
+
+{ #category : 'accessing' }
+OPDirectionalRelationshipController >> modelSource: aModel in: aParentModel [
+	"answers whether model's source has been changed"
+
+	self modelSource = aModel ifTrue: [ ^ false ].
+	model source: aModel.
+	^ true
+]
+
+{ #category : 'accessing' }
+OPDirectionalRelationshipController >> modelTarget: aModel in: aParentModel [
+	"answers whether model's target has been changed"
+
+	self modelTarget = aModel ifTrue: [ ^ false ].
+	model target: aModel.
+	^ true
+]
+
+{ #category : 'construction' }
+OPDirectionalRelationshipController >> registerInSourceAndTargetInContainer: aParentModel [
+
+	self modelSource: self source model in: aParentModel.
+	self modelTarget: self target model in: aParentModel
+]
+
+{ #category : 'construction' }
+OPDirectionalRelationshipController >> registerModelIn: aParentModel [
+
+	self registerInSourceAndTargetInContainer: aParentModel.
+	super registerModelIn: aParentModel
 ]
 
 { #category : 'rendering' }
@@ -68,25 +125,23 @@ OPDirectionalRelationshipController >> renderSimplified [
 { #category : 'accessing' }
 OPDirectionalRelationshipController >> source [
 
-	^ source ifNil: [
-		  (diagramController ifNil: [ self target diagramController ])
-			  ensureControllerFor: self modelSource ]
+	^ source
 ]
 
 { #category : 'accessing' }
 OPDirectionalRelationshipController >> source: aSourceController [
-	source := aSourceController
+
+	^ source := aSourceController
 ]
 
 { #category : 'accessing' }
 OPDirectionalRelationshipController >> target [
 
-	^ target ifNil: [
-		  (diagramController ifNil: [ self source diagramController ])
-			  ensureControllerFor: self modelTarget ]
+	^ target
 ]
 
 { #category : 'accessing' }
 OPDirectionalRelationshipController >> target: aTargetController [
-	target := aTargetController
+
+	^ target := aTargetController
 ]

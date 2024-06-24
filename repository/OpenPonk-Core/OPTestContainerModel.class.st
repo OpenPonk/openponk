@@ -9,14 +9,21 @@ Class {
 		'uuid',
 		'name'
 	],
-	#category : 'OpenPonk-Core-Controllers - Tests',
+	#category : 'OpenPonk-Core-Controllers-Tests',
 	#package : 'OpenPonk-Core',
-	#tag : 'Controllers - Tests'
+	#tag : 'Controllers-Tests'
 }
 
 { #category : 'accessing' }
 OPTestContainerModel >> add: anEntity [
+
 	^ entities add: anEntity
+]
+
+{ #category : 'accessing' }
+OPTestContainerModel >> allElements [
+
+	^ self entities
 ]
 
 { #category : 'accessing' }

@@ -63,14 +63,40 @@ OPCanvasPresenter >> editor [
 ]
 
 { #category : 'toolbar' }
+OPCanvasPresenter >> exportAsPdf [
+
+	self flag: 'default name not supported in file browser'.
+	OPExportImageDialog new
+		title: 'Choose a PDF file to export the diagram';
+		okAction: [ :file :zoom |
+			OPCanvasPDFExporter
+				exportDiagramController: diagramController
+				to: file ];
+		extensions: #( pdf ) named: 'PDF documents';
+		open
+]
+
+{ #category : 'toolbar' }
 OPCanvasPresenter >> exportAsPng [
 
 	self flag: 'default name not supported in file browser'.
 	OPExportImageDialog new
 		title: 'Choose a PNG file to export the diagram';
-		okAction: [ :file :zoom | self exportCanvasToPng: file zoom: zoom ];
+		okAction: [ :file :zoom |
+			OPCanvasPNGExporter
+				exportDiagramController: diagramController
+				to: file
+				zoom: zoom ];
 		extensions: #( png ) named: 'PNG images';
 		open
+]
+
+{ #category : 'toolbar' }
+OPCanvasPresenter >> exportAsPng: aFile [
+
+	OPCanvasPNGExporter
+		exportDiagramController: diagramController
+		to: aFile
 ]
 
 { #category : 'toolbar' }
@@ -79,95 +105,14 @@ OPCanvasPresenter >> exportAsSvg [
 	self flag: 'default name not supported in file browser'.
 	StFBSaveFileDialog new
 		title: 'Choose a SVG file to export the diagram';
-		okAction: [ :file | self exportCanvasToSvg: file ];
+		okAction: [ :file |
+			OPCanvasSVGExporter
+				exportDiagramController: diagramController
+				to: file ];
 		extensions: #( svg ) named: 'SVG images';
 		"defaultName:
 			self editor diagramController model name asFileName , '.svg';"
 			open
-]
-
-{ #category : 'toolbar' }
-OPCanvasPresenter >> exportCanvasToPng: aFile [
-
-	self exportCanvasToPng: aFile silently: false
-]
-
-{ #category : 'toolbar' }
-OPCanvasPresenter >> exportCanvasToPng: aFile silently: aSilentlyBoolean [
-
-	self
-		exportCanvasToPng: aFile
-		zoom: 1.0
-		silently: aSilentlyBoolean
-]
-
-{ #category : 'toolbar' }
-OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aNumber [
-
-	self exportCanvasToPng: aFileReference zoom: aNumber silently: false
-]
-
-{ #category : 'toolbar' }
-OPCanvasPresenter >> exportCanvasToPng: aFileReference zoom: aZoom silently: aSilentlyBoolean [
-
-	| originalZoom jobBlock |
-	originalZoom := self canvas camera scale.
-	self diagramController deselectAll.
-
-	jobBlock := [ :job | 
-	            job title: 'Exporting diagram'.
-	            [ 
-	            self canvas pngExporter
-		            cameraSetter: (OPRSCustomScaleCamSetter scale: aZoom);
-		            fileName: aFileReference pathString;
-		            export ] ensure: [ 
-		            job progress: 0.8.
-		            self canvas signalUpdate ] ].
-
-	aSilentlyBoolean ifTrue: [ ^ jobBlock value: Job new ].
-	jobBlock asJob run.
-
-	UIManager default
-		inform: (String streamContents: [ :s | 
-				 s << 'Image saved to ' << aFileReference pathString.
-				 s
-					 cr;
-					 cr.
-				 s << 'Click to open location' ])
-		actionOnClick: [ aFileReference openInOSFileBrowser ]
-]
-
-{ #category : 'toolbar' }
-OPCanvasPresenter >> exportCanvasToSvg: aFileReference [
-
-	self exportCanvasToSvg: aFileReference silently: false
-]
-
-{ #category : 'toolbar' }
-OPCanvasPresenter >> exportCanvasToSvg: aFileReference silently: aSilentlyBoolean [
-
-	| jobBlock |
-	self diagramController deselectAll.
-
-	jobBlock := [ :job | 
-	            job title: 'Exporting diagram'.
-
-	            self canvas svgExporter
-		            zoomToShapes;
-		            fileName: aFileReference pathString;
-		            export ].
-
-	aSilentlyBoolean ifTrue: [ ^ jobBlock value: Job new ].
-	jobBlock asJob run.
-
-	UIManager default
-		inform: (String streamContents: [ :s | 
-				 s << 'Image saved to ' << aFileReference pathString.
-				 s
-					 cr;
-					 cr.
-				 s << 'Click to open location' ])
-		actionOnClick: [ aFileReference openInOSFileBrowser ]
 ]
 
 { #category : 'initialization' }

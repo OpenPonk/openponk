@@ -65,6 +65,24 @@ OPEditor class >> developerToolbarMenu: aBuilder [
 	aBuilder withSeparatorAfter
 ]
 
+{ #category : 'toolbar' }
+OPEditor class >> diagramExportMenu: aBuilder [
+
+	(aBuilder item: #diagramExport)
+		label: 'Export diagram as...';
+		icon: (self iconNamed: #smallScreenshot).
+
+	(aBuilder item: 'Export as PNG...')
+		parent: #diagramExport;
+		action: [ aBuilder model canvasPresenter exportAsPng ].
+	(aBuilder item: 'Export as SVG...')
+		parent: #diagramExport;
+		action: [ aBuilder model canvasPresenter exportAsSvg ].
+	(aBuilder item: 'Export as PDF...')
+		parent: #diagramExport;
+		action: [ aBuilder model canvasPresenter exportAsPdf ]
+]
+
 { #category : 'settings' }
 OPEditor class >> layoutName [
 
@@ -112,12 +130,7 @@ OPEditor class >> toolbarMenu: aBuilder [
 
 	<opEditorToolbarMenu>
 	self developerToolbarMenu: aBuilder.
-	(aBuilder item: 'Export as PNG...')
-		icon: (self iconNamed: #smallScreenshot);
-		action: [ aBuilder model canvasPresenter exportAsPng ].
-	(aBuilder item: 'Export as SVG...')
-		icon: (self iconNamed: #smallScreenshot);
-		action: [ aBuilder model canvasPresenter exportAsSvg ]
+	self diagramExportMenu: aBuilder
 ]
 
 { #category : 'accessing - spec' }

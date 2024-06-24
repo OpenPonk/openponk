@@ -541,6 +541,12 @@ OPDiagramController >> modelToControllerMapping [
 	^ self controllerFactory 
 ]
 
+{ #category : 'controllers management' }
+OPDiagramController >> modelsWithController [
+
+	^ self controllers collect: #model
+]
+
 { #category : 'as yet unclassified' }
 OPDiagramController >> nameOfTypeForModel: aModel [
 	self
@@ -561,9 +567,11 @@ OPDiagramController >> openInForm: aController [
 	self form editController: aController
 ]
 
-{ #category : 'accessing' }
-OPDiagramController >> parent [
-	^ self
+{ #category : 'connecting' }
+OPDiagramController >> parentContainerModel [
+	"I do not have any further parent"
+
+	^ self model
 ]
 
 { #category : 'accessing' }
@@ -613,8 +621,11 @@ OPDiagramController >> removeControllerOf: aModelElement [
 
 { #category : 'destruction' }
 OPDiagramController >> removeFromCanvas: aFigure [
-	aFigure ifNil: [ ^ self ].
-	(self controllerForRoassalShape: aFigure) removeControllerAndModel
+
+	self
+		deprecated: 'use removeModelOfRoassalShape: instead'
+		transformWith: '`@rcv removeFromCanvas: `@arg'
+			-> '`@rcv removeModelOfRoassalShape: `@arg'
 ]
 
 { #category : 'deprecated' }
@@ -641,6 +652,12 @@ OPDiagramController >> removeModelElement: aModelElement [
 "	model remove: aModelElement"
 
 	(self controllerForModel: aModelElement) removeModel
+]
+
+{ #category : 'destruction' }
+OPDiagramController >> removeModelOfRoassalShape: aFigure [
+	aFigure ifNil: [ ^ self ].
+	(self controllerForRoassalShape: aFigure) removeControllerAndModel
 ]
 
 { #category : 'accessing' }
@@ -756,6 +773,14 @@ OPDiagramController >> showInDiagramModel: aModel [
 	^ (self newControllerFor: aModel)
 		  showInDiagram: self;
 		  yourself
+]
+
+{ #category : 'construction' }
+OPDiagramController >> showWithoutDependentInDiagram: aDiagramController [
+
+	self = aDiagramController ifFalse: [ self error: 'Cannot show a diagram inside another diagram' ]
+	
+	"do nothing"
 ]
 
 { #category : 'figures' }

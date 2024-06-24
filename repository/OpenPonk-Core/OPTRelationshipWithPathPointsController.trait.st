@@ -7,16 +7,14 @@ Trait {
 
 { #category : 'accessing' }
 OPTRelationshipWithPathPointsController >> modelSource [
-	^ self source
-		ifNil: [ self model source ]
-		ifNotNil: [ self source model ]
+
+	^ self model ifNotNil: [ :foundModel | foundModel source ]
 ]
 
 { #category : 'accessing' }
 OPTRelationshipWithPathPointsController >> modelTarget [
-	^ self target
-		ifNil: [ self model target ]
-		ifNotNil: [ self target model ]
+
+	^ self model ifNotNil: [ :foundModel | foundModel target ]
 ]
 
 { #category : 'accessing' }

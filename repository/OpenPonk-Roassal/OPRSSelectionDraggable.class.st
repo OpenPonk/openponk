@@ -90,15 +90,17 @@ OPRSSelectionDraggable >> dragStepForEvent: evt [
 		                 ifPresent: #configuration
 		                 ifAbsent: [ OPRSControlConfiguration new ].
 	dragSnapShapeAmount := evt altKeyPressed
-		                             ifTrue: [ 0 ]
-		                             ifFalse: [
-		                             configuration
-			                             dragSnapComparisonsAmount ].
-	snapMargin := configuration dragSnapMargin.
+		                       ifTrue: [ 0 ]
+		                       ifFalse: [
+		                       configuration dragSnapComparisonsAmount ].
 	originalDragStep := (evt camera distanceFromPixelToSpace: evt step)
 	                    + unusedStep.
 	unusedStep := 0 @ 0.
-	dragSnapShapeAmount isZero ifTrue: [ ^ originalDragStep ].
+	dragSnapShapeAmount isZero ifTrue: [
+		self replaceAlignmentLinesWith: #(  ).
+		^ originalDragStep ].
+
+	snapMargin := configuration dragSnapMargin.
 	primaryShapeRectangle := evt shape encompassingRectangle
 		                         translateBy: originalDragStep.
 	primaryShapePosition := primaryShapeRectangle center.

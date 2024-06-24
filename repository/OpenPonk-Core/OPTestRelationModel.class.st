@@ -8,9 +8,9 @@ Class {
 		'source',
 		'target'
 	],
-	#category : 'OpenPonk-Core-Controllers - Tests',
+	#category : 'OpenPonk-Core-Controllers-Tests',
 	#package : 'OpenPonk-Core',
-	#tag : 'Controllers - Tests'
+	#tag : 'Controllers-Tests'
 }
 
 { #category : 'accessing' }

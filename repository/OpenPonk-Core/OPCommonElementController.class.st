@@ -62,6 +62,14 @@ OPCommonElementController >> paletteItemName [
 	^ self class paletteItemName
 ]
 
+{ #category : 'construction' }
+OPCommonElementController >> registerModelInContainer: aParentModel [
+
+	"do nothing - common model elements are not part of any model"
+
+	
+]
+
 { #category : 'private' }
 OPCommonElementController >> removeModel [
 

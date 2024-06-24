@@ -32,7 +32,7 @@ OPRSSelectionDraggableBorder >> createDragBoxes [
 		             (#bottom -> horizonalBoxShape copy).
 		             (#left -> verticalBoxShape).
 		             (#right -> verticalBoxShape copy) } asDictionary.
-	dragBoxes associationsDo: [ :each | each value model: shape ].
+	dragBoxes associationsDo: [ :each | each value model: shape model ].
 	renderDragBoxes := [ shape canvas addAll: dragBoxes ].
 	shape isInACanvas
 		ifTrue: renderDragBoxes

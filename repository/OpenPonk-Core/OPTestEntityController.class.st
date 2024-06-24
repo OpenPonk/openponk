@@ -4,9 +4,9 @@ I am a mock class for testing ""regular"" model controllers.
 Class {
 	#name : 'OPTestEntityController',
 	#superclass : 'OPElementController',
-	#category : 'OpenPonk-Core-Controllers - Tests',
+	#category : 'OpenPonk-Core-Controllers-Tests',
 	#package : 'OpenPonk-Core',
-	#tag : 'Controllers - Tests'
+	#tag : 'Controllers-Tests'
 }
 
 { #category : 'testing' }
@@ -25,14 +25,15 @@ OPTestEntityController >> diagramElementClass [
 	^ OPTestDiagramElement
 ]
 
-{ #category : 'connecting' }
-OPTestEntityController >> modelAsParent [
-	^ self diagramController model
-]
-
 { #category : 'accessing' }
 OPTestEntityController >> modelClass [
 	^ OPTestEntityModel
+]
+
+{ #category : 'connecting' }
+OPTestEntityController >> parentContainerModel [
+
+	^ self diagramController model
 ]
 
 { #category : 'destruction' }

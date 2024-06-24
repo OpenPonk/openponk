@@ -44,9 +44,9 @@ OPElementController >> attachTo: aDiagramController [
 { #category : 'construction' }
 OPElementController >> createDiagramElement [
 
-	diagramElement := self diagramElementClass
-		                  in: self diagramElementOwner
-		                  forModelElement: self model
+	^ diagramElement := self diagramElementClass
+		                    in: self diagramElementOwner
+		                    forModelElement: self model
 ]
 
 { #category : 'deprecated' }
@@ -65,7 +65,7 @@ OPElementController >> createModel [
 OPElementController >> createModelIn: aParentModel [
 
 	self model: self modelClass new.
-	aParentModel add: self model.
+	self registerModelIn: aParentModel.
 	^ self model
 ]
 
@@ -75,6 +75,12 @@ OPElementController >> createModelIn: aParentModel andShowInDiagram: aDiagramCon
 	self removeDiagramElement.
 	self createModelIn: aParentModel.
 	self showWithoutDependentInDiagram: aDiagramController
+]
+
+{ #category : 'construction' }
+OPElementController >> dependingOnElements [
+
+	^ Set empty
 ]
 
 { #category : 'construction' }
@@ -96,6 +102,13 @@ OPElementController >> ensureDiagramElement [
 		ifNil: [ self createDiagramElement ]
 		ifNotNil: [ self linkToExistingDiagramElement ].
 	^ diagramElement
+]
+
+{ #category : 'construction' }
+OPElementController >> ensureShownDependenciesInDiagram: aDiagramController [
+
+	^ self dependingOnElements do: [ :each |
+		  aDiagramController showWithoutDependentInDiagramModel: each ]
 ]
 
 { #category : 'figures' }
@@ -143,6 +156,13 @@ OPElementController >> loadModel [
 	^ self model"
 ]
 
+{ #category : 'connecting' }
+OPElementController >> parentContainerModel [
+	"Redefine to answer model that acts as a primary container of my model and other elements on my model's level. If I am always directly inside diagramController without any intermediate structure, this may answer self diagramController model"
+
+	^ self model owner
+]
+
 { #category : 'deprecated' }
 OPElementController >> registerModelEvents: aModel [
 	self deprecated: 'Use model: and internalSubscribeTo: instead.'.
@@ -152,6 +172,18 @@ OPElementController >> registerModelEvents: aModel [
 		do: [ :event | 
 			aModel owner isNotNil & figure isNotNil
 				ifTrue: [ self refreshFigure ] ]"
+]
+
+{ #category : 'construction' }
+OPElementController >> registerModelIn: aParentModel [
+
+	self registerModelInContainer: aParentModel
+]
+
+{ #category : 'construction' }
+OPElementController >> registerModelInContainer: aParentModel [
+
+	aParentModel add: self model
 ]
 
 { #category : 'deprecated' }
@@ -187,18 +219,9 @@ OPElementController >> renderFigureIn: aCanvas [
 ]
 
 { #category : 'construction' }
-OPElementController >> showInDiagram: aDiagramController [
-
-	aDiagramController addController: self.
-	self ensureDiagramElement.
-	self renderDiagramElement.
-	self dependentElements do: [ :each | 
-		aDiagramController showInDiagramModel: each ]
-]
-
-{ #category : 'construction' }
 OPElementController >> showWithoutDependentInDiagram: aDiagramController [
 
+	self ensureShownDependenciesInDiagram: aDiagramController.
 	aDiagramController addController: self.
 	self ensureDiagramElement.
 	self renderDiagramElement

@@ -23,7 +23,7 @@ OPExportImageDialog class >> defaultLayout [
 		  add: (SpBoxLayout newLeftToRight
 				   add: SpNullPresenter new;
 				   add: #zoomLabel expand: false;
-				   add: #zoomText expand: false;
+				   add: #zoomText width: 30;
 				   add: #zoomPercentageLabel expand: false;
 				   yourself)
 		  expand: false;

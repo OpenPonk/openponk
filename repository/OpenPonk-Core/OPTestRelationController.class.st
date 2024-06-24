@@ -4,12 +4,9 @@ I am a mock controller for model entities representing relationships.
 Class {
 	#name : 'OPTestRelationController',
 	#superclass : 'OPDirectionalRelationshipController',
-	#instVars : [
-		'sourceController'
-	],
-	#category : 'OpenPonk-Core-Controllers - Tests',
+	#category : 'OpenPonk-Core-Controllers-Tests',
 	#package : 'OpenPonk-Core',
-	#tag : 'Controllers - Tests'
+	#tag : 'Controllers-Tests'
 }
 
 { #category : 'construction' }
@@ -25,7 +22,6 @@ OPTestRelationController >> modelClass [
 
 { #category : 'destruction' }
 OPTestRelationController >> removeModel [
-	| ownerModel |
-	ownerModel := self diagramController model.
-	ownerModel entities remove: self model
+
+	self diagramController model entities remove: self model
 ]

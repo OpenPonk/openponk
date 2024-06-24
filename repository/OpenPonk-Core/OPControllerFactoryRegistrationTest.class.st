@@ -1,27 +1,29 @@
 Class {
 	#name : 'OPControllerFactoryRegistrationTest',
 	#superclass : 'TestCase',
-	#instVars : [
-		'factory',
-		'registration'
-	],
-	#category : 'OpenPonk-Core-Controllers - Tests',
+	#category : 'OpenPonk-Core-Controllers-Tests',
 	#package : 'OpenPonk-Core',
-	#tag : 'Controllers - Tests'
+	#tag : 'Controllers-Tests'
 }
 
 { #category : 'running' }
 OPControllerFactoryRegistrationTest >> testIsForModel [
-	registration := OPControllerFactoryRegistration new modelClass: OPTestEntityModel.
+
+	| registration |
+	registration := OPControllerFactoryRegistration new modelClass:
+		                OPTestEntityModel.
 	self assert: (registration isForModel: OPTestEntityModel new).
 	self deny: (registration isForModel: OPTestRelationModel new)
 ]
 
 { #category : 'running' }
 OPControllerFactoryRegistrationTest >> testIsForModelWithCondition [
+
+	| registration |
 	registration := OPControllerFactoryRegistration new
-		modelClass: OPTestRelationModel;
-		condition: [ :aModel | aModel source isNotNil ].
+		                modelClass: OPTestRelationModel;
+		                condition: [ :aModel | aModel source isNotNil ].
 	self deny: (registration isForModel: OPTestRelationModel new).
-	self assert: (registration isForModel: (OPTestRelationModel new source: 12))
+	self assert:
+		(registration isForModel: (OPTestRelationModel new source: 12))
 ]

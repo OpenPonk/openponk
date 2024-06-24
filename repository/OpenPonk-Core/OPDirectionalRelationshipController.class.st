@@ -15,13 +15,14 @@ Class {
 	#tag : 'Controllers'
 }
 
-{ #category : 'figures' }
+{ #category : 'construction' }
 OPDirectionalRelationshipController >> createDiagramElement [
 
 	super createDiagramElement.
-	self diagramElement
-		source: self source ensureDiagramElement;
-		target: self target ensureDiagramElement
+	^ self diagramElement
+		  source: self source ensureDiagramElement;
+		  target: self target ensureDiagramElement;
+		  yourself
 ]
 
 { #category : 'hooks' }
@@ -48,15 +49,33 @@ OPDirectionalRelationshipController >> edgeBuilder [
 ]
 
 { #category : 'accessing' }
+OPDirectionalRelationshipController >> ensureSourceIn: aDiagramController [
+
+	^ source ifNil: [
+		  self source:
+			  (aDiagramController showWithoutDependentInDiagramModel:
+				   self modelSource) ]
+]
+
+{ #category : 'accessing' }
+OPDirectionalRelationshipController >> ensureTargetIn: aDiagramController [
+
+	^ target ifNil: [
+		  self target:
+			  (aDiagramController showWithoutDependentInDiagramModel:
+				   self modelTarget) ]
+]
+
+{ #category : 'accessing' }
 OPDirectionalRelationshipController >> modelSource [
 
-	^ self model source
+	^ model source
 ]
 
 { #category : 'accessing' }
 OPDirectionalRelationshipController >> modelTarget [
 
-	^ self model target
+	^ model target
 ]
 
 { #category : 'rendering' }
@@ -65,28 +84,36 @@ OPDirectionalRelationshipController >> renderSimplified [
 	diagramElement := self diagramElementClass renderSimplifiedForController: self.
 ]
 
+{ #category : 'construction' }
+OPDirectionalRelationshipController >> showWithoutDependentInDiagram: aDiagramController [
+
+	self ensureSourceIn: aDiagramController.
+	self ensureTargetIn: aDiagramController.
+	^ super showWithoutDependentInDiagram: aDiagramController
+]
+
 { #category : 'accessing' }
 OPDirectionalRelationshipController >> source [
 
-	^ source ifNil: [
-		  (diagramController ifNil: [ self target diagramController ])
-			  ensureControllerFor: self modelSource ]
+	^ self ensureSourceIn:
+		  (self diagramController ifNil: [ self target diagramController ])
 ]
 
 { #category : 'accessing' }
 OPDirectionalRelationshipController >> source: aSourceController [
-	source := aSourceController
+
+	^ source := aSourceController
 ]
 
 { #category : 'accessing' }
 OPDirectionalRelationshipController >> target [
 
-	^ target ifNil: [
-		  (diagramController ifNil: [ self source diagramController ])
-			  ensureControllerFor: self modelTarget ]
+	^ self ensureTargetIn:
+		  (self diagramController ifNil: [ self source diagramController ])
 ]
 
 { #category : 'accessing' }
 OPDirectionalRelationshipController >> target: aTargetController [
-	target := aTargetController
+
+	^ target := aTargetController
 ]

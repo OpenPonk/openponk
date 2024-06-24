@@ -44,9 +44,9 @@ OPElementController >> attachTo: aDiagramController [
 { #category : 'construction' }
 OPElementController >> createDiagramElement [
 
-	diagramElement := self diagramElementClass
-		                  in: self diagramElementOwner
-		                  forModelElement: self model
+	^ diagramElement := self diagramElementClass
+		                    in: self diagramElementOwner
+		                    forModelElement: self model
 ]
 
 { #category : 'deprecated' }
@@ -189,11 +189,8 @@ OPElementController >> renderFigureIn: aCanvas [
 { #category : 'construction' }
 OPElementController >> showInDiagram: aDiagramController [
 
-	aDiagramController addController: self.
-	self ensureDiagramElement.
-	self renderDiagramElement.
-	self dependentElements do: [ :each | 
-		aDiagramController showInDiagramModel: each ]
+	self showWithoutDependentInDiagram: aDiagramController.
+	super showInDiagram: aDiagramController
 ]
 
 { #category : 'construction' }

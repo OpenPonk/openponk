@@ -21,7 +21,10 @@ OPTestAbstractModel >> name [
 
 { #category : 'accessing' }
 OPTestAbstractModel >> uuid [
-	^ uuid ifNil: [ uuid := '6875c7ff-b858-0d00-9c00-47750005dc5d' ]
+
+	^ uuid ifNil: [
+		  uuid := '6875c7ff-b858-0d00-9c00-4775'
+		          , self hash printStringHex asLowercase ]
 ]
 
 { #category : 'accessing' }

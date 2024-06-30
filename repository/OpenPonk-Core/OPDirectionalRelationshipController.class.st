@@ -41,11 +41,31 @@ OPDirectionalRelationshipController >> createModelIn: aParentModel [
 	^ self model
 ]
 
+{ #category : 'construction' }
+OPDirectionalRelationshipController >> dependingOnElements [
+
+	^ super dependingOnElements , (Set
+		   with: (self model
+				    ifNil: [ self source model ]
+				    ifNotNil: [ self modelSource ])
+		   with: (self model
+				    ifNil: [ self target model ]
+				    ifNotNil: [ self modelTarget ]))
+]
+
 { #category : 'hooks' }
 OPDirectionalRelationshipController >> edgeBuilder [
 
 	self deprecated:
 		'Depracated without replacement - use Roassal directly or define own figures'
+]
+
+{ #category : 'construction' }
+OPDirectionalRelationshipController >> ensureShownDependenciesInDiagram: aDiagramController [
+
+	self ensureSourceIn: aDiagramController.
+	self ensureTargetIn: aDiagramController.
+	super ensureShownDependenciesInDiagram: aDiagramController
 ]
 
 { #category : 'accessing' }
@@ -84,19 +104,10 @@ OPDirectionalRelationshipController >> renderSimplified [
 	diagramElement := self diagramElementClass renderSimplifiedForController: self.
 ]
 
-{ #category : 'construction' }
-OPDirectionalRelationshipController >> showWithoutDependentInDiagram: aDiagramController [
-
-	self ensureSourceIn: aDiagramController.
-	self ensureTargetIn: aDiagramController.
-	^ super showWithoutDependentInDiagram: aDiagramController
-]
-
 { #category : 'accessing' }
 OPDirectionalRelationshipController >> source [
 
-	^ self ensureSourceIn:
-		  (self diagramController ifNil: [ self target diagramController ])
+	^ source
 ]
 
 { #category : 'accessing' }
@@ -108,8 +119,7 @@ OPDirectionalRelationshipController >> source: aSourceController [
 { #category : 'accessing' }
 OPDirectionalRelationshipController >> target [
 
-	^ self ensureTargetIn:
-		  (self diagramController ifNil: [ self source diagramController ])
+	^ target
 ]
 
 { #category : 'accessing' }

@@ -613,8 +613,11 @@ OPDiagramController >> removeControllerOf: aModelElement [
 
 { #category : 'destruction' }
 OPDiagramController >> removeFromCanvas: aFigure [
-	aFigure ifNil: [ ^ self ].
-	(self controllerForRoassalShape: aFigure) removeControllerAndModel
+
+	self
+		deprecated: 'use removeModelOfRoassalShape: instead'
+		transformWith: '`@rcv removeFromCanvas: `@arg'
+			-> '`@rcv removeModelOfRoassalShape: `@arg'
 ]
 
 { #category : 'deprecated' }
@@ -641,6 +644,12 @@ OPDiagramController >> removeModelElement: aModelElement [
 "	model remove: aModelElement"
 
 	(self controllerForModel: aModelElement) removeModel
+]
+
+{ #category : 'destruction' }
+OPDiagramController >> removeModelOfRoassalShape: aFigure [
+	aFigure ifNil: [ ^ self ].
+	(self controllerForRoassalShape: aFigure) removeControllerAndModel
 ]
 
 { #category : 'accessing' }

@@ -78,6 +78,12 @@ OPElementController >> createModelIn: aParentModel andShowInDiagram: aDiagramCon
 ]
 
 { #category : 'construction' }
+OPElementController >> dependingOnElements [
+
+	^ Set empty
+]
+
+{ #category : 'construction' }
 OPElementController >> diagramElementClass [
 
 	^ self subclassResponsibility
@@ -96,6 +102,13 @@ OPElementController >> ensureDiagramElement [
 		ifNil: [ self createDiagramElement ]
 		ifNotNil: [ self linkToExistingDiagramElement ].
 	^ diagramElement
+]
+
+{ #category : 'construction' }
+OPElementController >> ensureShownDependenciesInDiagram: aDiagramController [
+
+	^ self dependingOnElements do: [ :each |
+		  aDiagramController showWithoutDependentInDiagramModel: each ]
 ]
 
 { #category : 'figures' }
@@ -196,6 +209,7 @@ OPElementController >> showInDiagram: aDiagramController [
 { #category : 'construction' }
 OPElementController >> showWithoutDependentInDiagram: aDiagramController [
 
+	self ensureShownDependenciesInDiagram: aDiagramController.
 	aDiagramController addController: self.
 	self ensureDiagramElement.
 	self renderDiagramElement

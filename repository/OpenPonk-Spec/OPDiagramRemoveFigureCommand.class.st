@@ -102,6 +102,6 @@ OPDiagramRemoveFigureCommand >> unsafeExecute [
 	diagramController deselectAll.
 	figures do: [ :each |
 		(diagramController hasControllerForFigure: each) ifTrue: [
-			diagramController removeFromCanvas: each ] ].
+			diagramController removeModelOfRoassalShape: each ] ].
 	canvas signalUpdate
 ]

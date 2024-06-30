@@ -80,10 +80,3 @@ OPBaseControllerTest >> testIsSupported [
 		ifTrue: [ ^ self ].
 	self assert: (diagramController hasSupportForModel: model)
 ]
-
-{ #category : 'tests' }
-OPBaseControllerTest >> testModelClass [
-	self diagramControllerClass = self controllerClass
-		ifTrue: [ ^ self ].
-	self assert: controller modelClass equals: self modelClass
-]

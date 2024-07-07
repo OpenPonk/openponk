@@ -163,7 +163,7 @@ OPRSSelectionDraggableBorder >> updateDragBoxBlock: anAssociation [
 { #category : 'hooks' }
 OPRSSelectionDraggableBorder >> updateDragBoxes [
 
-	self dragBoxUpdateBlocks associationsDo: [ :each | 
+	self dragBoxUpdateBlocks associationsDo: [ :each |
 		self updateDragBoxBlock: each ].
 	shape pushBack
 ]

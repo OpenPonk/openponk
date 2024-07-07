@@ -23,5 +23,6 @@ OPTestRelationController >> modelClass [
 { #category : 'destruction' }
 OPTestRelationController >> removeModel [
 
-	self diagramController model entities remove: self model
+	self diagramController model entities remove: self model.
+	super removeModel
 ]

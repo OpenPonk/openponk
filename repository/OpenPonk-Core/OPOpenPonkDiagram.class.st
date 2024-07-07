@@ -53,7 +53,7 @@ OPOpenPonkDiagram >> isSelected: anObject [
 OPOpenPonkDiagram >> newCopy [
 
 	| serializer |
-	self updateFromRender.
+	self isRendered ifTrue: [ self updateFromRender ].
 	serializer := OPStonDiagramSerializer new.
 	^ (String streamContents: [ :s |
 		   serializer serializeDiagram: self to: s ]) readStreamDo: [ :s |

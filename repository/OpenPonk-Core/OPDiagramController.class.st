@@ -344,6 +344,17 @@ OPDiagramController >> diagramController: aController [
 	self error: 'Cannot assign diagramController to diagramController'
 ]
 
+{ #category : 'rebuilding' }
+OPDiagramController >> diagramFocused [
+
+	self isRendered ifTrue: [ ^ self updateAfterDiagramFocused ].
+
+	diagramElement canvas: self canvas.
+	diagramElement ownedElements do: [ :each |
+		self showDiagramElement: each ].
+	diagramElement updateRenderFromSelf
+]
+
 { #category : 'userinterface' }
 OPDiagramController >> disableRefresh [
 	self flag: #todo
@@ -358,6 +369,15 @@ OPDiagramController >> editor [
 { #category : 'ui interaction' }
 OPDiagramController >> editor: anEditor [
 	editor := anEditor
+]
+
+{ #category : 'as yet unclassified' }
+OPDiagramController >> elementRemoved [
+
+	self editor ifNotNil: [ :foundEditor |
+		foundEditor workbench ifNotNil: [ :workbench |
+			workbench projectTree ifNotNil: [ :projectTree |
+				projectTree refresh ] ] ]
 ]
 
 { #category : 'userinterface' }
@@ -758,14 +778,6 @@ OPDiagramController >> showDiagramElement: aDiagramElement [
 		self showDiagramElement: each ]
 ]
 
-{ #category : 'rebuilding' }
-OPDiagramController >> showElements [
-
-	diagramElement ownedElements do: [ :each |
-		self showDiagramElement: each ].
-	diagramElement updateRenderFromSelf
-]
-
 { #category : 'figures' }
 OPDiagramController >> showInDiagramModel: aModel [
 
@@ -804,6 +816,17 @@ OPDiagramController >> typeOfModel: aModel [
 OPDiagramController >> undo [
 	self assert: [ self hasUndo ].
 	self loadState: self autosaveManager loadPrevious
+]
+
+{ #category : 'event handling' }
+OPDiagramController >> updateAfterDiagramFocused [
+
+	| showableElements |
+	showableElements := self allShowableElements asIdentitySet.
+	self controllers do: [ :each |
+		(showableElements includes: each model)
+			ifTrue: [ each updateAfterDiagramFocused ]
+			ifFalse: [ each removeController ] ]
 ]
 
 { #category : 'userinterface' }

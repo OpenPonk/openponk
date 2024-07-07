@@ -304,7 +304,8 @@ OPController >> removeFigure [
 
 { #category : 'private' }
 OPController >> removeModel [
-	^ self subclassResponsibility
+
+	self diagramController elementRemoved
 ]
 
 { #category : 'deprecated' }
@@ -366,6 +367,12 @@ OPController >> showSelectionFeedback [
 
 { #category : 'construction' }
 OPController >> showWithoutDependentInDiagram: aDiagramController [
+
+	self subclassResponsibility
+]
+
+{ #category : 'event handling' }
+OPController >> updateAfterDiagramFocused [
 
 	self subclassResponsibility
 ]

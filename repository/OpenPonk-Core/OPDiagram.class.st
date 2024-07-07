@@ -19,6 +19,19 @@ OPDiagram class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #name #documentation #resolution )
 ]
 
+{ #category : 'as yet unclassified' }
+OPDiagram >> canvas: aCanvas [
+
+	self isRendered ifTrue: [
+		self
+			assert: roassalShape canvas = aCanvas
+			description:
+			'Reusing same diagram element for 2 canvases not allowed'.
+		^ false ].
+	roassalShape := aCanvas.
+	^ true
+]
+
 { #category : 'accessing' }
 OPDiagram >> documentation [
 
@@ -78,14 +91,7 @@ OPDiagram >> name: anObject [
 { #category : 'as yet unclassified' }
 OPDiagram >> ownedElement: aShape renderedIn: aCanvas [
 
-	self isRendered ifTrue: [ 
-		self
-			assert: roassalShape canvas = aCanvas
-			description:
-			'Reusing same diagram element for 2 canvases not allowed'.
-		^ self owningElement ifNotNil: [ :owner | 
-			  owner ownedElement: aShape renderedIn: aCanvas ] ].
-	roassalShape := aCanvas.
+	(self canvas: aCanvas) ifFalse: [ ^ self ].
 	self updateRenderFromSelf
 ]
 

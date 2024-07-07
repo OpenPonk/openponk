@@ -124,7 +124,7 @@ OPElementController >> figureLabel: aLabelName text: aString [
 "	(figure labels at: aLabelName) trachelShape text: aString"
 ]
 
-{ #category : 'accessing' }
+{ #category : 'construction' }
 OPElementController >> hookDiagramElement [
 
 	"do nothing by default"
@@ -226,4 +226,11 @@ OPElementController >> target: aController [
 	"do nothing"
 
 	
+]
+
+{ #category : 'event handling' }
+OPElementController >> updateAfterDiagramFocused [
+
+	self isRendered ifFalse: [ ^ self ].
+	self diagramElement updateRenderFromModel
 ]

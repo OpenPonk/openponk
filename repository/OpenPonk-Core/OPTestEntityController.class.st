@@ -38,7 +38,9 @@ OPTestEntityController >> parentContainerModel [
 
 { #category : 'destruction' }
 OPTestEntityController >> removeModel [
+
 	| ownerModel |
 	ownerModel := self diagramController model.
-	ownerModel entities remove: self model
+	ownerModel entities remove: self model.
+	super removeModel
 ]

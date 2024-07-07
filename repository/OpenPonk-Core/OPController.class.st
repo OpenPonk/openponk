@@ -302,7 +302,7 @@ OPController >> removeFigure [
 	self figure remove
 ]
 
-{ #category : 'private' }
+{ #category : 'destruction' }
 OPController >> removeModel [
 
 	self diagramController elementRemoved

@@ -212,13 +212,13 @@ OPShape >> isPositionableByUser [
 	^ false
 ]
 
-{ #category : 'rendering' }
+{ #category : 'testing' }
 OPShape >> isRendered [
 
 	^ roassalShape isNotNil and: [ roassalShape isInACanvas ]
 ]
 
-{ #category : 'rendering' }
+{ #category : 'testing' }
 OPShape >> isRenderedWithOwnedElements [
 
 	^ self isRendered and: [ 

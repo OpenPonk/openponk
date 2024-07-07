@@ -85,8 +85,7 @@ OPRSAdornmentBuilder >> showOn: aShape [
 			horizontal: self horizontalLocation copy
 			vertical: self verticalLocation copy
 			offset: offset.
-		self flag: 'Uncomment after Roassal update'.
-		offset + (eachAdornment shape extent"WithoutBorder" * direction)  ]
+		offset + (eachAdornment shape extentWithoutBorder * direction) ]
 ]
 
 { #category : 'initialization' }

@@ -338,12 +338,12 @@ OPProjectController >> saveProject [
 	self project saveInImage.
 	self saveProjectTo: file.
 	UIManager default
-		inform: (String streamContents: [ :s | 
+		inform: (String streamContents: [ :s |
 				 s << 'Project saved to ' << file pathString.
 				 s
 					 cr;
 					 cr.
-				 s << 'Click to open location' ])
+				 s << 'Click to open the directory' ])
 		actionOnClick: [ file openInOSFileBrowser ]
 ]
 

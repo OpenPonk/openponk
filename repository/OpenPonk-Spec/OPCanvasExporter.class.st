@@ -109,7 +109,7 @@ OPCanvasExporter >> showFinishedPopup [
 				 s
 					 cr;
 					 cr.
-					 "s << 'Click to open location' commented as it does not work" ])
+				 s << 'Click to open the directory' ])
 		actionOnClick: [ file openInOSFileBrowser ]
 ]
 

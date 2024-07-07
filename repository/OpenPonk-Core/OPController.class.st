@@ -171,6 +171,12 @@ OPController >> isHideable [
 ]
 
 { #category : 'testing' }
+OPController >> isRendered [
+
+	^ self diagramElement isNotNil and: [ self diagramElement isRendered ]
+]
+
+{ #category : 'testing' }
 OPController >> isTargetUsedAsContainer [
 
 	^ true
@@ -280,7 +286,8 @@ OPController >> removeDependentControllers [
 { #category : 'destruction' }
 OPController >> removeDiagramElement [
 
-	self diagramElement ifNotNil: #remove.
+	self diagramElement ifNil: [ ^ self ].
+	diagramElement remove.
 	diagramElement := nil
 ]
 

@@ -137,12 +137,6 @@ OPElementController >> isCommon [
 	^ false
 ]
 
-{ #category : 'testing' }
-OPElementController >> isRendered [
-
-	^ self diagramElement isNotNil and: [ self diagramElement isRendered ]
-]
-
 { #category : 'construction' }
 OPElementController >> linkToExistingDiagramElement [
 

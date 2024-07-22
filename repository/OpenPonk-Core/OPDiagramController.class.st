@@ -84,8 +84,7 @@ OPDiagramController >> addMouseEventsFor: aFigure [
 
 { #category : 'rendering' }
 OPDiagramController >> allShowableElements [
-
-	"Should return all elements that could be directly hidden on diagram"
+	"all elements that could be directly hidden on diagram"
 
 	^ (Set with: model) , self elementsToShowInside
 ]
@@ -546,11 +545,6 @@ OPDiagramController >> modelClass [
 { #category : 'accessing' }
 OPDiagramController >> modelForFigure: aFigure [
 	^ (self controllerForRoassalShape: aFigure) model
-]
-
-{ #category : 'events handling' }
-OPDiagramController >> modelRemoved: aModel [
-	self controllerForModel: aModel ifFound: #removeController
 ]
 
 { #category : 'accessing' }

@@ -71,6 +71,8 @@ OPController >> dependentControllers [
 
 { #category : 'accessing' }
 OPController >> dependentElements [
+	"model elements that require this one to be rendered in order to render itself"
+
 	^ self elementsToShowInside
 ]
 
@@ -124,7 +126,9 @@ OPController >> diagramElement: aDiagramElement [
 
 { #category : 'accessing' }
 OPController >> elementsToShowInside [
-	^ #()
+	"model elements that should be shown (rendered) automatically when this one is rendered"
+
+	^ #(  )
 ]
 
 { #category : 'accessing' }

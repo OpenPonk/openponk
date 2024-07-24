@@ -7,7 +7,7 @@ Trait {
 	#tag : 'Shapes'
 }
 
-{ #category : 'update' }
+{ #category : 'accessing' }
 OPTColoredAsStroke >> color [
 
 	^ self strokeColor

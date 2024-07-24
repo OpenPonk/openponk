@@ -7,7 +7,7 @@ Trait {
 	#tag : 'Shapes'
 }
 
-{ #category : 'update' }
+{ #category : 'initialization' }
 OPTColoredAsFillAndBorderColoredAsStroke >> updateRenderFromStyles [
 
 	self isRendered ifFalse: [ ^ self ].

@@ -23,7 +23,7 @@ OPTBorderColoredAsStroke >> strokeColor: aColor [
 	^ self stylePropertyNamed: #strokeColor put: aColor
 ]
 
-{ #category : 'update' }
+{ #category : 'initialization' }
 OPTBorderColoredAsStroke >> updateBorderColorFromStyles [
 
 	self roassalShape

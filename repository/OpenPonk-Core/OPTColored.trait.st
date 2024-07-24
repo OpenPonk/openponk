@@ -11,7 +11,7 @@ OPTColored >> color [
 	^ self shouldBeImplemented
 ]
 
-{ #category : 'update' }
+{ #category : 'initialization' }
 OPTColored >> updateColorFromStyles [
 
 	self roassalShape
@@ -27,7 +27,7 @@ OPTColored >> updateColorFromStyles [
 	self roassalShape color: self color
 ]
 
-{ #category : 'update' }
+{ #category : 'initialization' }
 OPTColored >> updateRenderFromStyles [
 
 	self isRendered ifFalse: [ ^ self ].

@@ -24,16 +24,14 @@ Class {
 { #category : 'instance creation' }
 OPProjectController class >> fromDirectory: aFolder [
 
-	^ [ :job | 
-	  | materializer |
-	  job title: 'Reading project from file'.
-	  materializer := aFolder files
-		                  detect: [ :any | 
-		                  any basename = OPExportInfo fileName ]
-		                  ifFound: [ :exportInfoFile | 
-		                  OPSerializer forExportInfoFile: exportInfoFile ]
-		                  ifNone: [ OPProjectDirectoryMaterializer new ].
-	  materializer loadProjectFrom: aFolder asFileReference ] asJob run
+	| materializer |
+	materializer := aFolder files
+		                detect: [ :any |
+		                any basename = OPExportInfo fileName ]
+		                ifFound: [ :exportInfoFile |
+		                OPSerializer forExportInfoFile: exportInfoFile ]
+		                ifNone: [ OPProjectDirectoryMaterializer new ].
+	^ materializer loadProjectFrom: aFolder asFileReference
 ]
 
 { #category : 'opening' }

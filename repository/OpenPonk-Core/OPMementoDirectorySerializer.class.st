@@ -121,6 +121,6 @@ OPMementoDirectorySerializer >> saveModelOf: aMemento to: aFolder [
 	modelSerializer class saveExportInfoTo: aFolder.
 	(aFolder / 'model' , modelSerializer formatName)
 		ensureDelete;
-		writeStreamDo: [ :stream | 
+		writeStreamDo: [ :stream |
 			stream nextPutAll: (modelSerializer serializeModel: aMemento model) ]
 ]

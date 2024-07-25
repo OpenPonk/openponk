@@ -22,9 +22,9 @@ OPModelObjectReference >> = otherModelObject [
 ]
 
 { #category : 'comparing' }
-OPModelObjectReference >> modelObjectFrom: aDictionary [
+OPModelObjectReference >> modelObjectFrom: aCollection [
 
-	^ aDictionary at: uuid
+	^ aCollection detect: [ :any | any uuid = uuid ]
 ]
 
 { #category : 'printing' }

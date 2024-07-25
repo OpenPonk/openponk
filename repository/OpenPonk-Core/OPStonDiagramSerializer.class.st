@@ -32,13 +32,11 @@ OPStonDiagramSerializer >> formatName [
 { #category : 'serialize/materialize' }
 OPStonDiagramSerializer >> materializeDiagramOf: aModel from: aStream [
 
-	| diagram adapters allModelElements |
+	| diagram innerElements |
 	diagram := STON fromStream: aStream.
-	adapters := OPNavigatorAdapters new.
-	allModelElements := ((Set with: aModel)
-	                     , (adapters allChildrenFor: aModel) collect: [ 
-		                     :each | each uuid -> each ]) asDictionary.
-	diagram resolveAllModelElements: allModelElements.
+	innerElements := OPNavigatorAdapters new allChildrenFor: aModel.
+	diagram resolveAllModelElements:
+		(innerElements asArray copyWith: aModel).
 	^ diagram
 ]
 

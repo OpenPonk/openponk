@@ -426,18 +426,18 @@ OPShape >> resizableInteractionTarget [
 ]
 
 { #category : 'serialization' }
-OPShape >> resolveAllModelElements: aDictionary [
+OPShape >> resolveAllModelElements: aCollection [
 
-	self resolveModelElements: aDictionary.
+	self resolveModelElements: aCollection.
 	self ownedElements do: [ :each | 
-		each resolveAllModelElements: aDictionary ]
+		each resolveAllModelElements: aCollection ]
 ]
 
 { #category : 'serialization' }
-OPShape >> resolveModelElements: aDictionary [
+OPShape >> resolveModelElements: aCollection [
 
-	self modelElements: (self modelElements collect: [ :each | 
-			 each modelObjectFrom: aDictionary ])
+	self modelElements: (self modelElements collect: [ :each |
+			 each modelObjectFrom: aCollection ])
 ]
 
 { #category : 'rendering' }

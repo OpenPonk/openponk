@@ -27,6 +27,12 @@ OPSerializer class >> exportVersion [
 	^ self subclassResponsibility
 ]
 
+{ #category : 'accessing' }
+OPSerializer class >> fileExtension [
+
+	^ self formatName
+]
+
 { #category : 'as yet unclassified' }
 OPSerializer class >> forExportInfo: anExportInfo [
 
@@ -89,4 +95,14 @@ OPSerializer class >> supportsExportInfo: anExportInfo [
 				  and: self maxImportVersion ] ] ]
 		  on: SubclassResponsibility
 		  do: [ false ]
+]
+
+{ #category : 'accessing' }
+OPSerializer >> fileExtension [
+	^ self class fileExtension
+]
+
+{ #category : 'formatting' }
+OPSerializer >> formatName [
+	^ self class formatName
 ]

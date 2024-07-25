@@ -24,11 +24,6 @@ OPJsonDiagramSerializer class >> minImportVersion [
 	^ 1
 ]
 
-{ #category : 'accessing' }
-OPJsonDiagramSerializer >> formatName [
-	^ 'json'
-]
-
 { #category : 'serialize/materialize' }
 OPJsonDiagramSerializer >> materializeDiagramOf: aModel from: aStream [
 

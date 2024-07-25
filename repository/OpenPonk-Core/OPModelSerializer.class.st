@@ -15,11 +15,6 @@ OPModelSerializer class >> exportSubject [
 	^ #model
 ]
 
-{ #category : 'formatting' }
-OPModelSerializer >> formatName [
-	^ 'model'
-]
-
 { #category : 'serialize/materialize' }
 OPModelSerializer >> materializeModelFrom: aStream [
 	"materialize aStream into a model instance"

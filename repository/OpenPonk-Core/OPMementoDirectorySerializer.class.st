@@ -40,14 +40,15 @@ OPMementoDirectorySerializer >> loadDiagramsOf: aModel from: aFolder [
 	| materializer |
 	aFolder exists ifFalse: [ ^ #(  ) ].
 	materializer := aFolder files
-		                detect: [ :any | any basename = OPExportInfo fileName ]
-		                ifFound: [ :exportInfoFile | 
+		                detect: [ :any |
+		                any basename = OPExportInfo fileName ]
+		                ifFound: [ :exportInfoFile |
 		                OPSerializer forExportInfoFile: exportInfoFile ]
 		                ifNone: [ OPJsonDiagramSerializer new ].
-	^ ((aFolder filesMatching: '*.' , materializer formatName) reject: [ 
-		   :any | any basename = OPExportInfo fileName ]) collect: [ 
-		  :eachFile | 
-		  self loadDiagramOf: aModel from: eachFile by: materializer ]
+	^ ((aFolder filesMatching: '*.' , materializer fileExtension)
+		   reject: [ :any | any basename = OPExportInfo fileName ])
+		  collect: [ :eachFile |
+			  self loadDiagramOf: aModel from: eachFile by: materializer ]
 ]
 
 { #category : 'loading' }
@@ -68,13 +69,15 @@ OPMementoDirectorySerializer >> loadModelFrom: aFolder [
 
 	| modelFile materializer |
 	materializer := aFolder files
-		                detect: [ :any | any basename = OPExportInfo fileName ]
-		                ifFound: [ :exportInfoFile | 
-		                plugin modelSerializerClass forExportInfoFile: exportInfoFile ]
+		                detect: [ :any |
+		                any basename = OPExportInfo fileName ]
+		                ifFound: [ :exportInfoFile |
+			                plugin modelSerializerClass forExportInfoFile:
+				                exportInfoFile ]
 		                ifNone: [ plugin modelSerializerClass new ].
-	modelFile := aFolder / 'model' , materializer formatName.
+	modelFile := aFolder / 'model' , materializer fileExtension.
 	modelFile exists ifFalse: [ ^ nil ].
-	^ modelFile readStreamDo: [ :stream | 
+	^ modelFile readStreamDo: [ :stream |
 		  materializer materializeModelFrom: stream ]
 ]
 
@@ -85,9 +88,9 @@ OPMementoDirectorySerializer >> saveDiagram: aDiagram to: aFolder index: aNumber
 	diagramSerializer := OPStonDiagramSerializer new.
 	(aFolder
 	 / (aNumber asString , '-' , (aDiagram name ifEmpty: [ 'diagram' ]))
-	 , diagramSerializer formatName)
+	 , diagramSerializer fileExtension)
 		ensureDelete;
-		writeStreamDo: [ :stream | 
+		writeStreamDo: [ :stream |
 			stream nextPutAll: (diagramSerializer serializeDiagram: aDiagram) ]
 ]
 
@@ -119,7 +122,7 @@ OPMementoDirectorySerializer >> saveModelOf: aMemento to: aFolder [
 	| modelSerializer |
 	modelSerializer := plugin modelSerializerClass new.
 	modelSerializer class saveExportInfoTo: aFolder.
-	(aFolder / 'model' , modelSerializer formatName)
+	(aFolder / 'model' , modelSerializer fileExtension)
 		ensureDelete;
 		writeStreamDo: [ :stream |
 			stream nextPutAll: (modelSerializer serializeModel: aMemento model) ]

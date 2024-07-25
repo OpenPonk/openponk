@@ -31,11 +31,6 @@ OPStonModelSerializer class >> minImportVersion [
 	^ 1
 ]
 
-{ #category : 'accessing' }
-OPStonModelSerializer >> formatName [
-	^ 'ston'
-]
-
 { #category : 'serialize/materialize' }
 OPStonModelSerializer >> materializeModelFrom: aStream [
 	^ self stonMaterialize: aStream

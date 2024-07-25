@@ -24,11 +24,6 @@ OPStonDiagramSerializer class >> minImportVersion [
 	^ 1
 ]
 
-{ #category : 'accessing' }
-OPStonDiagramSerializer >> formatName [
-	^ 'ston'
-]
-
 { #category : 'serialize/materialize' }
 OPStonDiagramSerializer >> materializeDiagramOf: aModel from: aStream [
 

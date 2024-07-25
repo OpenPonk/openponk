@@ -12,11 +12,6 @@ OPDiagramSerializer class >> exportSubject [
 	^ #diagram
 ]
 
-{ #category : 'accessing' }
-OPDiagramSerializer >> formatName [
-	^ self subclassResponsibility
-]
-
 { #category : 'serialize/materialize' }
 OPDiagramSerializer >> materializeDiagramOf: aModel from: aStream [
 	"materialize aStream into a diagram that will be consumed by your controller"

@@ -26,11 +26,13 @@ Class {
 
 { #category : 'accessing' }
 OPVersion class >> current [
+
 	^ current ifNil: [ current := self new ]
 ]
 
 { #category : 'instance creation' }
 OPVersion class >> current: aVersion [
+
 	current := aVersion.
 	latest := nil.
 	^ current
@@ -57,7 +59,7 @@ OPVersion class >> fromRunJson: aRun [
 	^ self new fromRunJson: aRun
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'fetching' }
 OPVersion class >> getRunsOf: aRepositoryName workflowName: aWorkflowName [
 
 	^ self runsCache
@@ -80,7 +82,7 @@ OPVersion class >> latest [
 	^ latest ifNil: [ latest := self current getOfLatest ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPVersion class >> ofLastestNightlyOf: aRepositoryName [
 	^ self
 		fromRunJson:
@@ -89,7 +91,7 @@ OPVersion class >> ofLastestNightlyOf: aRepositoryName [
 				ifNotEmpty: [ :runs | runs first ])
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPVersion class >> ofLastestReleaseOf: aRepositoryName [
 	^ self
 		fromRunJson:
@@ -107,7 +109,7 @@ OPVersion class >> reset [
 	runsCache := nil
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'private' }
 OPVersion class >> runsCache [
 	^ runsCache
 		ifNil: [ runsCache := TTLCache new timeToLive: 30 minutes ]
@@ -134,9 +136,11 @@ OPVersion >> < aComparable [
 
 { #category : 'comparing' }
 OPVersion >> = aComparable [
-	^ self isRelease = aComparable isRelease
-		and: [ self releaseName = aComparable releaseName
-				and: [ self isRelease or: [ self commit = aComparable commit ] ] ]
+
+	^ self releaseName = aComparable releaseName and: [
+		  self isRelease or: [
+			  self commit = aComparable commit and: [
+				  self buildDate = aComparable buildDate ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -287,9 +291,9 @@ OPVersion >> githubWorkflowRunId: anObject [
 
 { #category : 'comparing' }
 OPVersion >> hash [
-	self isRelease
-		ifFalse: [ ^ self commit hash ].
-	^ self releaseName hash
+
+	self isRelease ifTrue: [ ^ self releaseName hash ].
+	^ self commit hash xor: self buildDate hash
 ]
 
 { #category : 'testing' }

@@ -1,6 +1,6 @@
 Class {
-	#name : #DCRTLPosition,
-	#superclass : #Object,
+	#name : 'DCRTLPosition',
+	#superclass : 'Object',
 	#instVars : [
 		'ranking',
 		'maxRanking',
@@ -10,97 +10,99 @@ Class {
 		'mark',
 		'feature'
 	],
-	#category : 'DynaCASE-Layouting-GlobalEdgeLabels'
+	#category : 'DynaCASE-Layouting-GlobalEdgeLabels',
+	#package : 'DynaCASE-Layouting',
+	#tag : 'GlobalEdgeLabels'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLPosition >> bounds [
 	^ bounds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLPosition >> bounds: aRectangle [
 	bounds := aRectangle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLPosition >> center [
 	^ self bounds center
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLPosition >> feature [
 	^ feature
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLPosition >> feature: anObject [
 	feature := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLPosition >> height [
 	^ self bounds height
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLPosition >> mark [
 	^ mark
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLPosition >> mark: aPoint [
 	mark := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLPosition >> maxRanking [
 	^ maxRanking
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLPosition >> maxRanking: aNumber [
 	maxRanking := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLPosition >> orientation [
 	^ orientation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLPosition >> orientation: aSymbol [
 	"#topLeft, #topRight, #bottomLeft, #bottomRight"
 	orientation := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLPosition >> position [
 	^ position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLPosition >> position: aPoint [
 	position := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLPosition >> ranking [
 	^ ranking
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLPosition >> ranking: aNumber [
 	ranking := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLPosition >> ranking: aNumber of: aMax [
 	ranking := aNumber.
 	maxRanking := aMax
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLPosition >> width [
 	^ self bounds width
 ]

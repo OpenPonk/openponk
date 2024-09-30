@@ -2,8 +2,8 @@
 I am an editor for UML DSL.
 "
 Class {
-	#name : #OPDslEditor,
-	#superclass : #ComposablePresenter,
+	#name : 'OPDslEditor',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'editor',
 		'autoUpdate',
@@ -17,24 +17,26 @@ Class {
 		'modelClass',
 		'highlighter'
 	],
-	#category : #'OpenPonk-Spec-Windows'
+	#category : 'OpenPonk-Spec-Windows',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Windows'
 }
 
-{ #category : #specs }
-OPDslEditor class >> defaultSpec [
+{ #category : 'as yet unclassified' }
+OPDslEditor class >> defaultLayout [
 	^ SpecColumnLayout new
-		newRow: [ :row | row add: #toolbar ] height: self toolbarHeight;
-		newRow: [ :row | row add: #editor ];
-		newRow: [ :row | row add: #autoUpdate ] height: self toolbarHeight;
+		add: SpBoxLayout newLeftToRight:  [ :row | row add: #toolbar ] height: self toolbarHeight;
+		add: SpBoxLayout newLeftToRight:  [ :row | row add: #editor ];
+		add: SpBoxLayout newLeftToRight:  [ :row | row add: #autoUpdate ] height: self toolbarHeight;
 		yourself
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPDslEditor >> autoUpdate [
 	^ autoUpdate
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPDslEditor >> buildToolbar: aMenu [
 	aMenu
 		addGroup:
@@ -45,55 +47,61 @@ OPDslEditor >> buildToolbar: aMenu [
 					item
 						name: 'New';
 						description: 'New Diagram';
-						icon: (self iconNamed: #addIcon);
-						action: [ self class new openWithSpec ] ];
+						icon: (self iconNamed: #add);
+						action: [ self class new open ] ];
 				addItem:
 						[ :item | 
 					item
 						name: 'Save';
 						description: 'Save Diagram';
-						icon: (self iconNamed: #smallSaveIcon);
+						icon: (self iconNamed: #smallSave);
 						action: [ self saveToFile: location ] ];
 				addItem:
 						[ :item | 
 					item
 						name: 'Save as...';
 						description: 'Save Diagram As...';
-						icon: (self iconNamed: #smallSaveIcon);
+						icon: (self iconNamed: #smallSave);
 						action: [ self saveToFile: nil ] ];
 				addItem:
 						[ :item | 
 					item
 						name: 'Open';
 						description: 'Open...';
-						icon: (self iconNamed: #openIcon);
+						icon: (self iconNamed: #open);
 						action: [ self openFromFile ] ];
 				addItem:
 						[ :item | 
 					item
 						name: 'Open Editor';
 						description: 'Open Editor';
-						icon: (self iconNamed: #openIcon);
+						icon: (self iconNamed: #open);
 						action: [ model ifNil: [ self updateModel ].
 							OPWorkbench openModel: model ] ] ]
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'as yet unclassified' }
+OPDslEditor >> connectPresenters [
+	super connectPresenters.
+	editor whenTextIsAccepted: [ self textUpdated: editor text ]
+]
+
+{ #category : 'accessing - spec' }
 OPDslEditor >> editor [
 	^ editor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDslEditor >> exporter [
 	^ exporter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDslEditor >> exporter: anExporter [
 	exporter := anExporter
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPDslEditor >> highlight: aText [
 	| tokens |
 	highlighter ifNil: [ ^ aText ].
@@ -107,20 +115,14 @@ OPDslEditor >> highlight: aText [
 				ifFalse: [ aText makeColor: each value from: each key start to: each key stop ] ]
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPDslEditor >> highlighter: aHighlighterParser [
 	highlighter := aHighlighterParser
 ]
 
-{ #category : #initialization }
-OPDslEditor >> initializePresenter [
-	super initializePresenter.
-	editor whenTextIsAccepted: [ self textUpdated: editor text ]
-]
-
-{ #category : #initialization }
-OPDslEditor >> initializeWidgets [
-	toolbar := self instantiate: MenuModel.
+{ #category : 'as yet unclassified' }
+OPDslEditor >> initializePresenters [
+	toolbar := self newMenu.
 	self buildToolbar: toolbar.
 	toolbar applyTo: self.
 	(editor := self newText)
@@ -134,27 +136,27 @@ OPDslEditor >> initializeWidgets [
 		add: autoUpdate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDslEditor >> model: aModel [
 	model := aModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDslEditor >> modelClass [
 	^ modelClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDslEditor >> modelClass: aModelClass [
 	modelClass := aModelClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPDslEditor >> newModel [
 	^ self modelClass new
 ]
 
-{ #category : #'save/load' }
+{ #category : 'save/load' }
 OPDslEditor >> openFromFile [
 
 	| filename |
@@ -169,17 +171,17 @@ OPDslEditor >> openFromFile [
 	editor text: location contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDslEditor >> parser [
 	^ parser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDslEditor >> parser: aParser [
 	parser := aParser
 ]
 
-{ #category : #'save/load' }
+{ #category : 'save/load' }
 OPDslEditor >> saveToFile: aPath [
 	| newLocation |
 	newLocation := aPath.
@@ -192,22 +194,22 @@ OPDslEditor >> saveToFile: aPath [
 	self updateModel
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 OPDslEditor >> textUpdated: aString [
 	location ifNil: [ self updateModel ] ifNotNil: [ self saveToFile: location ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 OPDslEditor >> title [
 	^ 'DSL Editor'
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPDslEditor >> toolbar [
 	^ toolbar
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 OPDslEditor >> updateFromModel [
 	| text |
 	model ifNil: [ ^ self ].
@@ -216,7 +218,7 @@ OPDslEditor >> updateFromModel [
 	editor text: text
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 OPDslEditor >> updateModel [
 
 	| statements text |

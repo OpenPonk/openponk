@@ -1,13 +1,15 @@
 Class {
-	#name : #DCOCRouterTest,
-	#superclass : #TestCase,
+	#name : 'DCOCRouterTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'router'
 	],
-	#category : 'DynaCASE-Layouting-OCR'
+	#category : 'DynaCASE-Layouting-OCR',
+	#package : 'DynaCASE-Layouting',
+	#tag : 'OCR'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCRouterTest >> routeVisualization [
 |v p route pstr|
 v := RTView new.
@@ -33,19 +35,19 @@ route do: [ :each |
 v @ RTZoomableView @ RTDraggableView.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 DCOCRouterTest >> setUp [
 	router := DCOCRouter new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DCOCRouterTest >> testCollinearizeRoute [
 	self
 		assert: (router class collinearizeRoute: {0@0 . 10@0 . 10@10 . 10@20 . 30@20 . 50 @ 20 . 50 @ 40})
 		equals: {0@0 . 10@0 . 10@20 . 50 @ 20 . 50 @ 40}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DCOCRouterTest >> testInterestingPoint [
 	| e |
 	e := RTBox new

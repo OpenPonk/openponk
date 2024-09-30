@@ -1,6 +1,6 @@
-Extension { #name : #GraphViz }
+Extension { #name : 'GraphViz' }
 
-{ #category : #'*DynaCASE-Layouting' }
+{ #category : '*DynaCASE-Layouting' }
 GraphViz >> asGml [
 
 	^ self generator createGMLDocument

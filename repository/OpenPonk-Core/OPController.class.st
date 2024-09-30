@@ -2,21 +2,24 @@
 A DCController is the parent class to all controller classes.
 "
 Class {
-	#name : #OPController,
-	#superclass : #Object,
+	#name : 'OPController',
+	#superclass : 'Object',
 	#instVars : [
 		'model',
-		'diagramController'
+		'diagramController',
+		'diagramElement'
 	],
-	#category : #'OpenPonk-Core-Controllers'
+	#category : 'OpenPonk-Core-Controllers',
+	#package : 'OpenPonk-Core',
+	#tag : 'Controllers'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPController class >> modelClass [
 	^ self new modelClass
 ]
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPController >> addAsSourceFor: aController [
 	(self canBeSourceFor: aController)
 		ifFalse: [ self
@@ -26,40 +29,39 @@ OPController >> addAsSourceFor: aController [
 	aController source: self
 ]
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPController >> addAsTargetFor: aController [
-	(self canBeTargetFor: aController)
-		ifFalse: [ self
-				error:
-					self class asString , ' cannot be target for '
-						, aController class asString ].
+
+	(self canBeTargetFor: aController) ifFalse: [
+		self error: self class asString , ' cannot be target for '
+			, aController class asString ].
 	aController target: self.
 	aController
-		createModelIn: self modelAsParent
+		createModelIn: (self parentWhenTargetFor: aController)
 		andShowInDiagram: self diagramController
 ]
 
-{ #category : #forms }
+{ #category : 'forms' }
 OPController >> buildEditorForm: aForm [
 	aForm fromMagritteDescriptions: self magritteDescription
 ]
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPController >> canBeSourceFor: aController [
 	^ false
 ]
 
-{ #category : #connecting }
+{ #category : 'connecting' }
 OPController >> canBeTargetFor: aController [
 	^ false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPController >> commonModelClassPrefix [
 	^ 'OP'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPController >> dependentControllers [
 	^ self dependentElements
 		collect:
@@ -67,12 +69,14 @@ OPController >> dependentControllers [
 		thenSelect: #isNotNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPController >> dependentElements [
+	"model elements that require this one to be rendered in order to render itself"
+
 	^ self elementsToShowInside
 ]
 
-{ #category : #forms }
+{ #category : 'forms' }
 OPController >> descriptionAccessor: aSymbol [
 	^ MAPluggableAccessor
 		read: [ :me | me model perform: aSymbol ]
@@ -81,144 +85,200 @@ OPController >> descriptionAccessor: aSymbol [
 			self modelChanged ]
 ]
 
-{ #category : #forms }
+{ #category : 'forms' }
 OPController >> descriptionName [
+
 	<magritteDescription>
 	| accessor |
 	accessor := MAPluggableAccessor
-		read: [ :me | me model name ]
-		write: [ :me :newValue | 
-			me model name: newValue.
-			self refreshFigure ].
+		            read: [ :me | me model name ]
+		            write: [ :me :newValue | 
+			            me model name: newValue.
+			            self diagramElement modelChanged ].
 	^ MAStringDescription new
-		accessor: accessor;
-		label: 'Name';
-		priority: 1;
-		yourself
+		  accessor: accessor;
+		  label: 'Name';
+		  priority: 1;
+		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPController >> diagramController [
 	^ diagramController
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPController >> diagramController: aDiagramController [
 	diagramController := aDiagramController
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+OPController >> diagramElement [
+
+	^ diagramElement
+]
+
+{ #category : 'accessing' }
+OPController >> diagramElement: aDiagramElement [
+
+	diagramElement := aDiagramElement
+]
+
+{ #category : 'accessing' }
 OPController >> elementsToShowInside [
-	^ #()
+	"model elements that should be shown (rendered) automatically when this one is rendered"
+
+	^ #(  )
 ]
 
-{ #category : #figures }
+{ #category : 'accessing' }
+OPController >> ensureDiagramElement [
+
+	self assert: diagramElement isNotNil.
+	diagramElement modelElement: self model.
+	^ diagramElement
+]
+
+{ #category : 'figures' }
 OPController >> figure [
-	^ self subclassResponsibility
+
+	self
+		deprecated: 'Use #diagramElement instead'
+		transformWith: '`@receiver figure' -> '`@receiver diagramElement'.
+
+	^ self diagramElement
 ]
 
-{ #category : #figures }
-OPController >> figureDoubleClicked [
-	"do nothing by default"
-]
-
-{ #category : #'canvas actions' }
+{ #category : 'canvas actions' }
 OPController >> hideSelectionFeedback [
-	"by default do nothing"
 
-	
+	self deprecated: 'This should be done by shapes (diagram elements)'
 ]
 
-{ #category : #announcements }
+{ #category : 'announcements' }
 OPController >> internalSubscribeTo: aModel [
-	aModel announcer when: OPElementRenamed do: [ self refreshFigure ]
+
+	aModel announcer
+		when: OPElementRenamed
+		do: [ self diagramElement modelChanged ]
+		for: self
 ]
 
-{ #category : #announcements }
+{ #category : 'announcements' }
 OPController >> internalUnsubscribeFrom: aModel [
 	aModel announcer unsubscribe: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPController >> isHideable [
 	^ false
 ]
 
-{ #category : #accessing }
-OPController >> layout [
-	^ OPElementLayout none
+{ #category : 'testing' }
+OPController >> isRendered [
+
+	^ self diagramElement isNotNil and: [ self diagramElement isRendered ]
 ]
 
-{ #category : #accessing }
-OPController >> layout: anObject [
-	"do nothing"
+{ #category : 'testing' }
+OPController >> isTargetUsedAsContainer [
+
+	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPController >> model [
 	^ model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPController >> model: aModel [
+
+	aModel ifNotNil: [ 
+		aModel uuid ifNil: [ 
+			self error: 'All model objects must have a uuid to be used by OP' ] ].
 	model ifNotNil: [ :m | self internalUnsubscribeFrom: m ].
 	model := aModel.
 	model ifNotNil: [ :m | self internalSubscribeTo: m ]
 ]
 
-{ #category : #connecting }
-OPController >> modelAsParent [
-	^ model
-]
-
-{ #category : #announcements }
+{ #category : 'announcements' }
 OPController >> modelChanged [
 	self figure ifNotNil: [ self refreshFigure ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPController >> modelClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPController >> nameOfType [
 	^ (self diagramController typeOfModel: self model) name
 ]
 
-{ #category : #figures }
+{ #category : 'connecting' }
+OPController >> parentContainerModel [
+	"Redefine to answer model that acts as a primary container of my model and other elements on my model's level. If I am always directly inside diagramController without any intermediate structure, this may answer self diagramController model"
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'connecting' }
+OPController >> parentWhenTargetFor: aCreatedController [
+
+	^ aCreatedController isTargetUsedAsContainer
+		  ifTrue: [ self model ]
+		  ifFalse: [ self parentContainerModel ]
+]
+
+{ #category : 'figures' }
 OPController >> refreshFigure [
-	self figure trachelShape triggerCallbacksForStep: 0 @ 0.
-	self figure signalUpdate.
-	^ self figure
+
+	self
+		deprecated: 'Use #diagramElement modelChanged instead'
+		transformWith: '`@receiver refreshFigure'
+			-> '`@receiver diagramElement modelChanged'.
+
+	^ self diagramElement modelChanged
 ]
 
-{ #category : #deprecated }
+{ #category : 'deprecated' }
 OPController >> remove [
+
 	self deprecated: 'Use removeController instead.'.
-	model ifNotNil: [ model announcer unsubscribe: self ]
+	self model ifNotNil: [ self model announcer unsubscribe: self ]
 ]
 
-{ #category : #destruction }
+{ #category : 'destruction' }
 OPController >> removeController [
-	model ifNotNil: [ self removeDependentControllers ].
+
+	self model ifNotNil: [ self removeDependentControllers ].
 	self diagramController ifNil: [ ^ self ].
-	self removeFigure.
-	self diagramController removeController: self.
-	self model: nil.
-	self diagramController: nil
+	self diagramController deselectAll.
+	self removeDiagramElement.
+	self diagramController removeController: self
 ]
 
-{ #category : #destruction }
+{ #category : 'destruction' }
+OPController >> removeControllerAndModel [
+
+	self removeDependent.
+	self removeController.
+	self removeModel.
+	self model: nil
+]
+
+{ #category : 'destruction' }
 OPController >> removeDependent [
 	self dependentControllers
 		do: [ :each | 
 			self diagramController controllers
 				detect: [ :ctrl | ctrl model = each model ]
-				ifFound: #removeFull ]
+				ifFound: #removeControllerAndModel ]
 ]
 
-{ #category : #destruction }
+{ #category : 'destruction' }
 OPController >> removeDependentControllers [
 	self dependentControllers
 		do: [ :each | 
@@ -227,25 +287,32 @@ OPController >> removeDependentControllers [
 				ifFound: #removeController ]
 ]
 
-{ #category : #destruction }
+{ #category : 'destruction' }
+OPController >> removeDiagramElement [
+
+	self diagramElement ifNil: [ ^ self ].
+	diagramElement remove.
+	diagramElement := nil
+]
+
+{ #category : 'destruction' }
 OPController >> removeFigure [
+
+	self
+		deprecated: 'Use #removeDiagramElement instead'
+		transformWith:
+		'`@receiver removeFigure' -> '`@receiver removeDiagramElement'.
 	self diagramController deselectAll.
-	self figure view ifNotNil: [ self figure remove ]
+	self figure remove
 ]
 
-{ #category : #destruction }
-OPController >> removeFull [
-	self removeDependent.
-	self removeModel.
-	self removeController
-]
-
-{ #category : #private }
+{ #category : 'destruction' }
 OPController >> removeModel [
-	^ self subclassResponsibility
+
+	self diagramController elementRemoved
 ]
 
-{ #category : #deprecated }
+{ #category : 'deprecated' }
 OPController >> removeModelElement: aModelElement [
 	"Remove self as target of aModelElement"
 	self deprecated: 'use #removeModel on the proper controller instead.'.
@@ -253,34 +320,63 @@ OPController >> removeModelElement: aModelElement [
 	(self diagramController controllerForModel: aModelElement) removeModel
 ]
 
-{ #category : #figures }
-OPController >> saveStateOnDragEndFor: aFigure [
-	aFigure when: TRMouseDragEnd do: [ :evt | self diagramController saveState ]
+{ #category : 'destruction' }
+OPController >> removeRender [
+
+	self diagramController deselectAll.
+	self diagramElement removeRender
 ]
 
-{ #category : #'canvas actions' }
+{ #category : 'figures' }
+OPController >> roassalShape [
+
+	^ self diagramElement ifNotNil: [ :found | found roassalShape ]
+]
+
+{ #category : 'figures' }
+OPController >> saveStateOnDragEndFor: aFigure [
+
+	aFigure
+		when: RSMouseDragEnd
+		do: [ :evt | self diagramController saveState ]
+]
+
+{ #category : 'canvas actions' }
 OPController >> showAcceptFeedbackFor: aController [
 	"Return something that understands #remove, or nil to not show any feedback."
 
-	^ OPAcceptDenyFeedbackBuilder acceptFeedbackFor: self figure
+	^ OPRSAcceptDenyFeedbackBuilder acceptFeedbackFor: self roassalShape
 ]
 
-{ #category : #'canvas actions' }
+{ #category : 'canvas actions' }
 OPController >> showDenyFeedbackFor: aController [
 	"Return something that understands #remove, or nil to not show any feedback."
 
-	^ OPAcceptDenyFeedbackBuilder denyFeedbackFor: self figure
+	^ OPRSAcceptDenyFeedbackBuilder denyFeedbackFor: self roassalShape
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPController >> showInDiagram: aDiagramController [
-	^ self dependentElements
-		do: [ :each | aDiagramController showInDiagramModel: each ]
+
+	self showWithoutDependentInDiagram: aDiagramController.
+	^ self dependentElements do: [ :each |
+		  aDiagramController showInDiagramModel: each ]
 ]
 
-{ #category : #'canvas actions' }
+{ #category : 'canvas actions' }
 OPController >> showSelectionFeedback [
-	"by default do nothing"
 
-	
+	self deprecated: 'This should be done by shapes (diagram elements)'
+]
+
+{ #category : 'construction' }
+OPController >> showWithoutDependentInDiagram: aDiagramController [
+
+	self subclassResponsibility
+]
+
+{ #category : 'event handling' }
+OPController >> updateAfterDiagramFocused [
+
+	self subclassResponsibility
 ]

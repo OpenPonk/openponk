@@ -1,6 +1,6 @@
-Extension { #name : #Rectangle }
+Extension { #name : 'Rectangle' }
 
-{ #category : #'*DynaCASE-Layouting' }
+{ #category : '*DynaCASE-Layouting' }
 Rectangle >> nearestDistanceTo: anotherRectangle [
 	| line this that |
 	line := RTLineSegment from: self center to: anotherRectangle center.
@@ -9,7 +9,7 @@ Rectangle >> nearestDistanceTo: anotherRectangle [
 	^ this dist: that
 ]
 
-{ #category : #'*DynaCASE-Layouting' }
+{ #category : '*DynaCASE-Layouting' }
 Rectangle >> nearestDistanceToLineFrom: p1 to: p2 [
 	"Note this will give points beyond the endpoints."
 
@@ -17,14 +17,14 @@ Rectangle >> nearestDistanceToLineFrom: p1 to: p2 [
 		min
 ]
 
-{ #category : #'*DynaCASE-Layouting' }
+{ #category : '*DynaCASE-Layouting' }
 Rectangle >> nearestPointAlongLineFrom: p1 to: p2 [
 	"Note this will give points beyond the endpoints."
 
 	^ (self corners collect: [ :point | point nearestPointAlongLineFrom: p1 to: p2 ]) min
 ]
 
-{ #category : #'*DynaCASE-Layouting' }
+{ #category : '*DynaCASE-Layouting' }
 Rectangle >> nearestPointOnLineFrom: p1 to: p2 [
 	"This will not give points beyond the endpoints"
 

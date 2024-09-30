@@ -1,16 +1,18 @@
 Class {
-	#name : #OPEditableDropListPresenter,
-	#superclass : #DropListPresenter,
-	#category : #'OpenPonk-Spec-EditableDropList'
+	#name : 'OPEditableDropListPresenter',
+	#superclass : 'SpDropListPresenter',
+	#category : 'OpenPonk-Spec-Form',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Form'
 }
 
-{ #category : #specs }
-OPEditableDropListPresenter class >> defaultSpec [
-	<spec>
-	^ #(OPMorphicEditableDropListAdapter adapt: #(model))
+{ #category : 'specs' }
+OPEditableDropListPresenter class >> adapterName [
+
+	^ #OPMorphicEditableDropListAdapter
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 OPEditableDropListPresenter >> items: aList [
 	super items: aList asOrderedCollection
 ]

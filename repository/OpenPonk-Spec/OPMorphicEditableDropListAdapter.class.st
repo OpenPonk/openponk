@@ -1,25 +1,37 @@
 Class {
-	#name : #OPMorphicEditableDropListAdapter,
-	#superclass : #MorphicDropListAdapter,
-	#category : #'OpenPonk-Spec-EditableDropList'
+	#name : 'OPMorphicEditableDropListAdapter',
+	#superclass : 'SpMorphicDropListAdapter',
+	#category : 'OpenPonk-Spec-Form',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Form'
 }
 
-{ #category : #factory }
+{ #category : 'factory' }
 OPMorphicEditableDropListAdapter >> addToList: anItem [
-	self model addSilentlyItemLabeled: anItem do: [  ].
-	self model setSelectedItem: anItem
+
+	self model addAndSelectItemLabeled: anItem copy do: [  ]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OPMorphicEditableDropListAdapter >> buildWidget [
-	^ OPSpecEditableDropListMorph new
-		wrapSelector: #wrapItem:index:;
-		on: self
-			list: #getList
-			selected: #getIndex
-			changeSelected: #setIndex:;
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		addToListSel: #addToList:;
-		yourself
+
+	self model model whenChangedDo: [ 
+		self changed: #getList.
+		self changed: #getIndex ].
+	self model selection whenChangedDo: [ self changed: #getIndex ].
+
+	^ OPEditableDropListMorph new
+		  wrapSelector: #wrapItem:index:;
+		  on: self
+		  list: #getList
+		  selected: #getIndex
+		  changeSelected: #setIndex:;
+		  hResizing: #spaceFill;
+		  vResizing: #spaceFill;
+		  dragEnabled: self dragEnabled;
+		  dropEnabled: self dropEnabled;
+		  enabled: self enabled;
+		  setBalloonText: self help;
+		  addToListSel: #addToList:;
+		  yourself
 ]

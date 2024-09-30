@@ -1,37 +1,39 @@
 Class {
-	#name : #OPModelObjectType,
-	#superclass : #Object,
+	#name : 'OPModelObjectType',
+	#superclass : 'Object',
 	#traits : 'TComparable',
 	#classTraits : 'TComparable classTrait',
 	#instVars : [
 		'name',
 		'subtype'
 	],
-	#category : #'OpenPonk-Core-Controllers'
+	#category : 'OpenPonk-Core-Controllers',
+	#package : 'OpenPonk-Core',
+	#tag : 'Controllers'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPModelObjectType class >> named: aString [
 	^ self new
 		name: aString;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPModelObjectType class >> named: aString withSubtype: aType [
 	^ (self named: aString)
 		subtype: aType;
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPModelObjectType >> < aComparable [
 	"Answer whether the receiver is less than the argument."
 
 	^ name < aComparable name
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPModelObjectType >> = aComparable [
 	"Answer whether the receiver and aComparable represent the same object."
 
@@ -43,36 +45,36 @@ OPModelObjectType >> = aComparable [
 									[ aComparable subtype isNotNil and: [ subtype = aComparable subtype ] ] ] ] ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPModelObjectType >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ name hash
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPModelObjectType >> mostSpecific [
 	subtype ifNil: [ ^ self ].
 	^ subtype mostSpecific
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPModelObjectType >> mostSpecificName [
 	subtype ifNil: [ ^ name ].
 	^ subtype mostSpecificName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPModelObjectType >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPModelObjectType >> name: aString [
 	name := aString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 OPModelObjectType >> printOn: aStream [
 	"Append a sequence of characters to aStream that identify the receiver."
 
@@ -83,17 +85,17 @@ OPModelObjectType >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPModelObjectType >> subtype [
 	^ subtype
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPModelObjectType >> subtype: aType [
 	subtype := aType
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPModelObjectType >> withAllSubtypes [
 	| set |
 	set := Set with: self.

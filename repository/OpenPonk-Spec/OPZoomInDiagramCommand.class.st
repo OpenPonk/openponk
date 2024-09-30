@@ -1,10 +1,12 @@
 Class {
-	#name : #OPZoomInDiagramCommand,
-	#superclass : #OPDiagramToolbarCommand,
-	#category : #'OpenPonk-Spec-Diagram-Toolbar-Commands'
+	#name : 'OPZoomInDiagramCommand',
+	#superclass : 'OPDiagramToolbarCommand',
+	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Diagram-Toolbar-Commands'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 OPZoomInDiagramCommand class >> toolbarMenuActivation [
 	<classAnnotation>
 	^ OPDiagramToolbarActivation
@@ -13,17 +15,17 @@ OPZoomInDiagramCommand class >> toolbarMenuActivation [
 		for: OPCanvasPresenter
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPZoomInDiagramCommand >> defaultMenuIcon [
 	^ OPIdeaGraphIcons zoomInIcon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPZoomInDiagramCommand >> defaultMenuItemName [
-	^ nil
+	^ ''
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPZoomInDiagramCommand >> execute [
 	diagramPresenter zoom: diagramPresenter zoom * 1.25
 ]

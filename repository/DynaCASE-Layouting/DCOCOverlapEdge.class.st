@@ -1,18 +1,20 @@
 Class {
-	#name : #DCOCOverlapEdge,
-	#superclass : #DCGTEdge,
+	#name : 'DCOCOverlapEdge',
+	#superclass : 'DCGTEdge',
 	#instVars : [
 		'routes'
 	],
-	#category : 'DynaCASE-Layouting-OCR'
+	#category : 'DynaCASE-Layouting-OCR',
+	#package : 'DynaCASE-Layouting',
+	#tag : 'OCR'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCOCOverlapEdge >> routes [
 	^ routes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCOCOverlapEdge >> routes: anObject [
 	routes := anObject
 ]

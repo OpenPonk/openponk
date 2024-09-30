@@ -2,72 +2,104 @@
 I convert magritte descriptions into DynamicForm widgets.
 "
 Class {
-	#name : #OPDynamicFormMagritteVisitor,
-	#superclass : #Object,
+	#name : 'OPDynamicFormMagritteVisitor',
+	#superclass : 'MAVisitor',
 	#instVars : [
 		'form',
 		'controller'
 	],
-	#category : #'OpenPonk-Spec-Form'
+	#category : 'OpenPonk-Spec-Form',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Form'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDynamicFormMagritteVisitor >> controller [
 	^ controller
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDynamicFormMagritteVisitor >> controller: anObject [
 	controller := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDynamicFormMagritteVisitor >> form [
 	^ form
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDynamicFormMagritteVisitor >> form: anObject [
 	form := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPDynamicFormMagritteVisitor >> shouldIncludeLabelFor: aContainer [
 	"container priority = 0 is the root container"
 
 	^ aContainer priority > 0 & aContainer label isNotNil
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visit: anObject [
-	anObject isVisible
-		ifFalse: [ ^ self ].
-	anObject acceptMagritte: self
+	((anObject respondsTo: #isVisible) and: [ anObject isVisible not ])
+		ifTrue: [ ^ self ].
+	^ super visit: anObject
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
+OPDynamicFormMagritteVisitor >> visitActionDescription: aDescription [
+	(form addButton: aDescription label) action: aDescription action
+]
+
+{ #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visitBooleanDescription: aBooleanDescription [
+
 	(form addCheckbox: aBooleanDescription label)
 		state: (aBooleanDescription accessor read: controller);
-		whenChangedDo: [ :newValue | aBooleanDescription accessor write: newValue to: controller ];
-		in:
-				[ :input | aBooleanDescription accessor opWhenUpdated: [ :newValue | input state: newValue ] ]
+		whenChangedDo: [ :newValue | 
+			aBooleanDescription accessor write: newValue to: controller ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visitLabelDescription: aStringDescription [
+
 	form addLabel: aStringDescription label.
-	(form addLabel: (aStringDescription accessor read: controller)) emphasis: #()
+	form addLabel: (aStringDescription accessor read: controller)
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visitMemoDescription: aMemoDescription [
-	(form addText: aMemoDescription label)
+
+	(aMemoDescription lineCount > aMemoDescription class defaultLineCount
+		 ifTrue: [ form addLongText: aMemoDescription label ]
+		 ifFalse: [ form addText: aMemoDescription label ])
 		text: (aMemoDescription accessor read: controller);
-		whenTextIsAccepted: [ :newValue | aMemoDescription accessor write: newValue asString to: controller ]
+		whenTextChangedDo: [ :newValue | 
+			aMemoDescription accessor write: newValue asString to: controller ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
+OPDynamicFormMagritteVisitor >> visitMultipleOptionDescription: aMultipleOptionDescription [
+
+	| dropList |
+	aMultipleOptionDescription isExtensible ifTrue: [ 
+		self notify: 'Extensibility of multilists not yet supported'.
+		^ self ].
+	dropList := form addList: aMultipleOptionDescription label.
+	dropList
+		beMultipleSelection;
+		items: aMultipleOptionDescription options;
+		enabled: aMultipleOptionDescription isReadOnly not;
+		display: [ :each | aMultipleOptionDescription labelForOption: each ];
+		displayIcon: [ :each :item | 
+			aMultipleOptionDescription iconForOption: each ];
+		selectItems: (aMultipleOptionDescription accessor read: controller);
+		whenSelectionChangedDo: [ :selection | 
+			selection accessor write: selection selectedItems to: controller ]
+]
+
+{ #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visitPriorityContainer: aContainer [
 	(self shouldIncludeLabelFor: aContainer)
 		ifTrue: [ form addLabel: aContainer label ].
@@ -75,27 +107,36 @@ OPDynamicFormMagritteVisitor >> visitPriorityContainer: aContainer [
 	form addSeparator
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visitSingleOptionDescription: aSingleOptionDescription [
-	(aSingleOptionDescription isExtensible
-		ifTrue: [ form addEditableDroplist: aSingleOptionDescription label ]
-		ifFalse: [ form addDroplist: aSingleOptionDescription label ])
+
+	| dropList |
+	dropList := aSingleOptionDescription isExtensible
+		            ifTrue: [ 
+		            form addEditableDroplist: aSingleOptionDescription label ]
+		            ifFalse: [ 
+		            form addDroplist: aSingleOptionDescription label ].
+	dropList
 		items: aSingleOptionDescription options;
 		enabled: aSingleOptionDescription isReadOnly not;
-		displayBlock: [ :each | aSingleOptionDescription labelForOption: each ];
-		iconHolder: [ :each :item | aSingleOptionDescription iconForOption: each ];
-		setSelectedItem: (aSingleOptionDescription accessor read: controller);
-		whenSelectedItemChanged: [ :newValue | aSingleOptionDescription accessor write: newValue to: controller ]
+		display: [ :each | aSingleOptionDescription labelForOption: each ];
+		displayIcon: [ :each :item | 
+			aSingleOptionDescription iconForOption: each ];
+		addAndSelectItemLabeled:
+			(aSingleOptionDescription accessor read: controller)
+		do: [  ];
+		whenSelectedItemChangedDo: [ :newValue | 
+			aSingleOptionDescription accessor write: newValue to: controller ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visitStringDescription: aStringDescription [
 
 	aStringDescription isReadOnly ifTrue: [ 
 		^ self visitLabelDescription: aStringDescription ].
 	(form addTextInput: aStringDescription label)
 		text: ((aStringDescription accessor read: controller) ifNil: [ '' ]);
-		whenTextIsAccepted: [ :newText | 
+		whenTextChangedDo: [ :newText | 
 			[ 
 			| newString |
 			newString := newText asString.
@@ -108,13 +149,10 @@ OPDynamicFormMagritteVisitor >> visitStringDescription: aStringDescription [
 						ifFalse: [ 
 							(GrowlMorph label: 'Error' contents: e asString)
 								backgroundColor: GrowlMorph theme dangerBackgroundColor;
-								openInWorld ] ] ];
-		in: [ :input | 
-			aStringDescription accessor opWhenUpdated: [ :newValue | 
-				input text: newValue ] ]
+								openInWorld ] ] ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visitToManyRelationDescription: aMAToManyRelationDescription [
 	form addLabel: aMAToManyRelationDescription label.
 	(form addButton: 'Edit ') action: [ controller maEdit ]

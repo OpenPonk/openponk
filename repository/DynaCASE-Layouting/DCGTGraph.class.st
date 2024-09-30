@@ -1,14 +1,16 @@
 Class {
-	#name : #DCGTGraph,
-	#superclass : #Object,
+	#name : 'DCGTGraph',
+	#superclass : 'Object',
 	#instVars : [
 		'nodes',
 		'edges'
 	],
-	#category : 'DynaCASE-Layouting-DGT'
+	#category : 'DynaCASE-Layouting-DGT',
+	#package : 'DynaCASE-Layouting',
+	#tag : 'DGT'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCGTGraph class >> graphModel [
 	'
 DCGTGraph { }
@@ -25,53 +27,53 @@ DCGTGraph --> edges DCGTEdge[*];
 ' asClassDiagram open
 ]
 
-{ #category : #'adding/removing' }
+{ #category : 'adding/removing' }
 DCGTGraph >> addEdge: aDCGTEdge [
 	(edges includes: aDCGTEdge) ifTrue: [ ^ self ].
 	edges add: aDCGTEdge
 ]
 
-{ #category : #'adding/removing' }
+{ #category : 'adding/removing' }
 DCGTGraph >> addNode: aDCGTNode [
 	(nodes includes: aDCGTNode) ifTrue: [ ^ self ].
 	nodes add: aDCGTNode
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 DCGTGraph >> degreeFor: aVertex [
 	^ (self edgesFor: aVertex) size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCGTGraph >> edges [
 	<DCAssociation: ''>
 	^ edges
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCGTGraph >> edges: aCollection [
 	edges := aCollection
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 DCGTGraph >> edgesFor: aVertex [
 	^ self edges select: [ :each | each from = aVertex | (each to = aVertex) ]
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 DCGTGraph >> edgesForAll: aVertexSet [
 	^ self edges
 		select: [ :each | (aVertexSet includes: each from) and: [ aVertexSet includes: each to ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DCGTGraph >> initialize [
 	super initialize.
 	nodes := OrderedCollection new.
 	edges := OrderedCollection new
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 DCGTGraph >> neighborsOf: aVertex [
 	^ (self edgesFor: aVertex)
 		collect: [ :each | 
@@ -80,30 +82,30 @@ DCGTGraph >> neighborsOf: aVertex [
 				ifFalse: [ each to ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCGTGraph >> nodes [
 	<DCAssociation: ''>
 	^ nodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCGTGraph >> nodes: aCollection [
 	nodes := aCollection
 ]
 
-{ #category : #'adding/removing' }
+{ #category : 'adding/removing' }
 DCGTGraph >> removeEdge: aDCGTEdge [
 	(edges includes: aDCGTEdge) ifFalse: [ ^ self ].
 	edges remove: aDCGTEdge
 ]
 
-{ #category : #'adding/removing' }
+{ #category : 'adding/removing' }
 DCGTGraph >> removeNode: aDCGTNode [
 	(nodes includes: aDCGTNode) ifFalse: [ ^ self ].
 	nodes remove: aDCGTNode
 ]
 
-{ #category : #visualization }
+{ #category : 'visualization' }
 DCGTGraph >> renderIn: aView [
 	| b |
 	b := RTMondrian new.
@@ -123,7 +125,7 @@ DCGTGraph >> renderIn: aView [
 	^ b view
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 DCGTGraph >> vertexInducedBy: aVertexSet [
 	^ self class new
 		nodes: aVertexSet;
@@ -131,18 +133,18 @@ DCGTGraph >> vertexInducedBy: aVertexSet [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCGTGraph >> vertices [
 	<DCAssociation: ''>
 	^ self nodes
 ]
 
-{ #category : #visualization }
+{ #category : 'visualization' }
 DCGTGraph >> visualization [
 	^ self renderIn: RTView new
 ]
 
-{ #category : #visualization }
+{ #category : 'visualization' }
 DCGTGraph >> visualize [
 	self visualization open
 ]

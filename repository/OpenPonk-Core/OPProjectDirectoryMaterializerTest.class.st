@@ -1,16 +1,18 @@
 Class {
-	#name : #OPProjectDirectoryMaterializerTest,
-	#superclass : #TestCase,
+	#name : 'OPProjectDirectoryMaterializerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'reader',
 		'root',
 		'project',
 		'memoryRoot'
 	],
-	#category : #'OpenPonk-Core-Tests'
+	#category : 'OpenPonk-Core-Tests',
+	#package : 'OpenPonk-Core',
+	#tag : 'Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 OPProjectDirectoryMaterializerTest >> setUp [
 	super setUp.
 	OPPluginRegistry setDefault: (OPPluginRegistry new add: OPTestPlugin new).
@@ -18,7 +20,7 @@ OPProjectDirectoryMaterializerTest >> setUp [
 	self setUpBasicProject
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPProjectDirectoryMaterializerTest >> setUpBasicProject [
 	(project := OPProject new)
 		name: 'Test Project';
@@ -32,51 +34,43 @@ OPProjectDirectoryMaterializerTest >> setUpBasicProject [
 	root := (FileSystem zip: memoryRoot) open / 'project'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OPProjectDirectoryMaterializerTest >> tearDown [
 	OPPluginRegistry resetDefault
 ]
 
-{ #category : #tests }
-OPProjectDirectoryMaterializerTest >> testExporterVersion [
-	self assert: reader exporter equals: 'OpenPonk'.
-	self assert: reader exporterVersion equals: OPVersion current fullVersionString
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 OPProjectDirectoryMaterializerTest >> testMissingProject [
 	self should: [ reader loadProjectFrom: FileSystem memory root ] raise: FileDoesNotExistException
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPProjectDirectoryMaterializerTest >> testPluginReferenceKnown [
 	self
 		assert: {reader pluginForName: #OPTestPlugin pluginVersion: OPTestPlugin new version}
 		equals: OPPluginRegistry default plugins asArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPProjectDirectoryMaterializerTest >> testPluginReferenceUnknown [
 	self
 		should: [ reader pluginForName: 'Unknown' pluginVersion: '0.0.0' ]
 		raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPProjectDirectoryMaterializerTest >> testRead [
 	self assert: (reader loadProjectFrom: root) models size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPProjectDirectoryMaterializerTest >> testReadMemento [
 
 	| memento |
 	memento := reader
 		           readMementoFrom:
 		           root / 'models' / project models first uuid asString
-		           with: (OPMementoDirectorySerializer
-				            withModelSerializer: OPStonModelSerializer new
-				            diagramsSerializer: OPJsonDiagramSerializer new).
+		           asPlugin: OPTestPlugin new.
 	self
 		assert: memento model className
 		equals: project models first className.
@@ -85,12 +79,12 @@ OPProjectDirectoryMaterializerTest >> testReadMemento [
 	self assert: memento diagrams isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPProjectDirectoryMaterializerTest >> testReadMementos [
 	self assert: (reader readAllMementosFrom: root) size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPProjectDirectoryMaterializerTest >> testReadModelReferences [
 	| references |
 	references := reader readModelReferences: root.
@@ -99,7 +93,7 @@ OPProjectDirectoryMaterializerTest >> testReadModelReferences [
 		equals: project models first uuid -> OPPluginRegistry default plugins first
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPProjectDirectoryMaterializerTest >> testReadProject [
 	project := reader readProjectInfoFrom: root / 'project.json'.
 	self assert: project name equals: 'Test Project'.
@@ -108,7 +102,7 @@ OPProjectDirectoryMaterializerTest >> testReadProject [
 		equals: (UUID fromString: '7f5ee44a-1655-4061-a78e-db9578a2226c')
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OPProjectDirectoryMaterializerTest >> testSetUp [
 	self assert: (root / 'project.json') exists
 ]

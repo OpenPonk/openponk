@@ -3,8 +3,8 @@ I solve minimal cost assignment problem as described in
 MUNKRES, J. Algorithms for the assignment and transportation problems. Journal of the Society for Industrial and Applied Mathematics 5, 1 (March 1957), 32–38
 "
 Class {
-	#name : #DCRTLHungarianSolver,
-	#superclass : #Object,
+	#name : 'DCRTLHungarianSolver',
+	#superclass : 'Object',
 	#instVars : [
 		'matrix',
 		'marks',
@@ -12,20 +12,22 @@ Class {
 		'rowCovers',
 		'columnCovers'
 	],
-	#category : 'DynaCASE-Layouting-GlobalEdgeLabels'
+	#category : 'DynaCASE-Layouting-GlobalEdgeLabels',
+	#package : 'DynaCASE-Layouting',
+	#tag : 'GlobalEdgeLabels'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 DCRTLHungarianSolver >> addToColumnAt: j value: aValue [
 	matrix atColumn: j put: ((matrix atColumn: j) collect: [ :each | each + aValue ])
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 DCRTLHungarianSolver >> addToRowAt: i value: aValue [
 	matrix atRow: i put: ((matrix atRow: i) collect: [ :each | each + aValue ])
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 DCRTLHungarianSolver >> anyNonCoveredZero [
 	matrix
 		withIndicesDo:
@@ -35,7 +37,7 @@ DCRTLHungarianSolver >> anyNonCoveredZero [
 	^ nil
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 DCRTLHungarianSolver >> columnAt: j has: aMark [
 	(marks atColumn: j)
 		withIndexDo: [ :each :i | 
@@ -44,22 +46,22 @@ DCRTLHungarianSolver >> columnAt: j has: aMark [
 	^ nil
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 DCRTLHungarianSolver >> columnHasStar: j [
 	^ self columnAt: j has: self star
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 DCRTLHungarianSolver >> done [
 	
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DCRTLHungarianSolver >> empty [
 	^ #empty
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DCRTLHungarianSolver >> initialMarks [
 	matrix
 		withIndicesDo:
@@ -72,22 +74,22 @@ DCRTLHungarianSolver >> initialMarks [
 	rowCovers atAllPut: false
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 DCRTLHungarianSolver >> isComplete [
 	^ (columnCovers select: [ :each | each = true ]) size = size
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DCRTLHungarianSolver >> minimizeColumns [
 	1 to: size do: [ :j | self addToColumnAt: j value: (matrix atColumn: j) min negated ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DCRTLHungarianSolver >> minimizeRows [
 	1 to: size do: [ :i | self addToRowAt: i value: (matrix atRow: i) min negated ]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 DCRTLHungarianSolver >> nonCoveredMin [
 	| min |
 	min := Float infinity.
@@ -99,7 +101,7 @@ DCRTLHungarianSolver >> nonCoveredMin [
 	^ min
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 DCRTLHungarianSolver >> padWithZeros: aMatrix [
 	| max padded |
 	max := aMatrix numberOfRows max: aMatrix numberOfColumns.
@@ -108,7 +110,7 @@ DCRTLHungarianSolver >> padWithZeros: aMatrix [
 	^ padded
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DCRTLHungarianSolver >> paddedSolve: aMatrix [
 	| padded |
 	padded := self padWithZeros: aMatrix.
@@ -116,18 +118,18 @@ DCRTLHungarianSolver >> paddedSolve: aMatrix [
 	^ self solution: aMatrix
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DCRTLHungarianSolver >> prime [
 	^ #prime
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 DCRTLHungarianSolver >> resetCovers [
 	rowCovers := (Array new: size) atAllPut: false.
 	columnCovers := (Array new: size) atAllPut: false
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 DCRTLHungarianSolver >> rowAt: i has: aMark [
 	(marks atRow: i)
 		withIndexDo: [ :each :j | 
@@ -136,19 +138,19 @@ DCRTLHungarianSolver >> rowAt: i has: aMark [
 	^ nil
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 DCRTLHungarianSolver >> rowHasStar: i [
 	^ self rowAt: i has: self star
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DCRTLHungarianSolver >> setup [
 	size := matrix numberOfRows.
 	marks := Matrix rows: size columns: size element: self empty.
 	self resetCovers
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 DCRTLHungarianSolver >> solution: sourceMatrix [
 	| solution |
 	solution := OrderedCollection new.
@@ -160,7 +162,7 @@ DCRTLHungarianSolver >> solution: sourceMatrix [
 	^ solution asArray
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DCRTLHungarianSolver >> solve: aMatrix [
 	self
 		assert: [ aMatrix numberOfRows = aMatrix numberOfColumns ]
@@ -174,12 +176,12 @@ DCRTLHungarianSolver >> solve: aMatrix [
 	^ self solution: aMatrix
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DCRTLHungarianSolver >> star [
 	^ #star
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 DCRTLHungarianSolver >> step1 [
 	| indices |
 	self isComplete
@@ -195,7 +197,7 @@ DCRTLHungarianSolver >> step1 [
 	self step3
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 DCRTLHungarianSolver >> step2: aPrimeIndices [
 	| path |
 	path := OrderedCollection new.
@@ -224,7 +226,7 @@ DCRTLHungarianSolver >> step2: aPrimeIndices [
 	self step1
 ]
 
-{ #category : #algorithm }
+{ #category : 'algorithm' }
 DCRTLHungarianSolver >> step3 [
 	| min |
 	min := self nonCoveredMin.

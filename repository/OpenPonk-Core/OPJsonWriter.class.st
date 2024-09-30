@@ -6,19 +6,21 @@ unlike my parent, by default I
 * sort properties lexicographically
 "
 Class {
-	#name : #OPJsonWriter,
-	#superclass : #NeoJSONWriter,
-	#category : #'OpenPonk-Core-Persistence'
+	#name : 'OPJsonWriter',
+	#superclass : 'NeoJSONWriter',
+	#category : 'OpenPonk-Core-Persistence',
+	#package : 'OpenPonk-Core',
+	#tag : 'Persistence'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPJsonWriter >> initialize [
 	super initialize.
 	self newLine: String lf.
 	self prettyPrint: true
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 OPJsonWriter >> writeObject: anObject [
 	| mapping |
 	mapping := self mappingFor: anObject class.

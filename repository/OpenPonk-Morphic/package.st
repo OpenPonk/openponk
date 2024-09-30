@@ -1,1 +1,1 @@
-Package { #name : #'OpenPonk-Morphic' }
+Package { #name : 'OpenPonk-Morphic' }

@@ -2,8 +2,8 @@
 I hold the current version of OpenPonk.
 "
 Class {
-	#name : #OPVersion,
-	#superclass : #Object,
+	#name : 'OPVersion',
+	#superclass : 'Object',
 	#traits : 'TComparable',
 	#classTraits : 'TComparable classTrait',
 	#instVars : [
@@ -19,22 +19,26 @@ Class {
 		'latest',
 		'runsCache'
 	],
-	#category : #'OpenPonk-Core-Persistence'
+	#category : 'OpenPonk-Core-Persistence',
+	#package : 'OpenPonk-Core',
+	#tag : 'Persistence'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion class >> current [
+
 	^ current ifNil: [ current := self new ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPVersion class >> current: aVersion [
+
 	current := aVersion.
 	latest := nil.
 	^ current
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPVersion class >> currentWithRunId: anId projectName: aProjectName [
 	^ self
 		current:
@@ -45,17 +49,17 @@ OPVersion class >> currentWithRunId: anId projectName: aProjectName [
 				yourself)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPVersion class >> currentWithRunId: anId repositoryName: aRepositoryName [
 	^ self currentWithRunId: anId projectName: aRepositoryName
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPVersion class >> fromRunJson: aRun [
 	^ self new fromRunJson: aRun
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'fetching' }
 OPVersion class >> getRunsOf: aRepositoryName workflowName: aWorkflowName [
 
 	^ self runsCache
@@ -72,13 +76,13 @@ OPVersion class >> getRunsOf: aRepositoryName workflowName: aWorkflowName [
 			  (STONJSON fromString: response entity string) at: #workflow_runs ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion class >> latest [
 	current ifNil: [ ^ nil ].
 	^ latest ifNil: [ latest := self current getOfLatest ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'accessing' }
 OPVersion class >> ofLastestNightlyOf: aRepositoryName [
 	^ self
 		fromRunJson:
@@ -87,7 +91,7 @@ OPVersion class >> ofLastestNightlyOf: aRepositoryName [
 				ifNotEmpty: [ :runs | runs first ])
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'accessing' }
 OPVersion class >> ofLastestReleaseOf: aRepositoryName [
 	^ self
 		fromRunJson:
@@ -96,29 +100,32 @@ OPVersion class >> ofLastestReleaseOf: aRepositoryName [
 				ifNotEmpty: [ :runs | runs first ])
 ]
 
-{ #category : #accessing }
-OPVersion class >> resetCurrent [
+{ #category : 'accessing' }
+OPVersion class >> reset [
+
 	<script>
-	^ current := self new
+	current := nil.
+	latest := nil.
+	runsCache := nil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'private' }
 OPVersion class >> runsCache [
 	^ runsCache
 		ifNil: [ runsCache := TTLCache new timeToLive: 30 minutes ]
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OPVersion class >> semanticVersionRegex [
 	^ 'v(\d+)\.(\d+)\.(\d+)'
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 OPVersion class >> unknownRepositoryName [
 	^ 'Unknown / custom'
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPVersion >> < aComparable [
 	(self isRelease xor: [ aComparable isRelease ])
 		ifTrue: [ ^ false ].
@@ -127,57 +134,59 @@ OPVersion >> < aComparable [
 	^ self releaseName < aComparable releaseName
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPVersion >> = aComparable [
-	^ self isRelease = aComparable isRelease
-		and: [ self releaseName = aComparable releaseName
-				and: [ self isRelease or: [ self commit = aComparable commit ] ] ]
+
+	^ self releaseName = aComparable releaseName and: [
+		  self isRelease or: [
+			  self commit = aComparable commit and: [
+				  self buildDate = aComparable buildDate ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> buildDate [
 	buildDate ifNil: [ self downloadInfo ].
 	^ buildDate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> buildDate: aDateAndTime [
 	buildDate := aDateAndTime
 ]
 
-{ #category : #downloading }
+{ #category : 'downloading' }
 OPVersion >> canDownloadInfo [
 	^ githubWorkflowRunId isNotNil and: [ self repositoryName isNotNil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> commit [
 	commit ifNil: [ self downloadInfo ].
 	^ commit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> commit: aString [
 	commit := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> commitDate [
 	^ commitDate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> commitDate: anObject [
 	commitDate := anObject
 ]
 
-{ #category : #downloading }
+{ #category : 'downloading' }
 OPVersion >> downloadInfo [
 	self githubWorkflowRunId ifNil: [ ^ self ].
 	^ self fromRunJson: self getRun
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPVersion >> fromRunJson: aRun [
 	| runCommit repository runReleaseName |
 	runCommit := aRun at: #head_commit.
@@ -194,7 +203,7 @@ OPVersion >> fromRunJson: aRun [
 		buildDate: (aRun at: #created_at) asDateAndTime asLocal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> fullVersionString [
 	(repositoryName isNil or: [ githubWorkflowRunId isNil ])
 		ifTrue: [ ^ 'unknown' ].
@@ -205,119 +214,164 @@ OPVersion >> fullVersionString [
 				ifFalse: [ stream << '-' << self commit ] ]
 ]
 
-{ #category : #downloading }
+{ #category : 'downloading' }
 OPVersion >> getOfLatest [
 	^ self isRelease
 		ifTrue: [ self getOfLatestRelease ]
 		ifFalse: [ self getOfLatestNightlyBuild ]
 ]
 
-{ #category : #downloading }
+{ #category : 'downloading' }
 OPVersion >> getOfLatestNightlyBuild [
 	^ self class ofLastestNightlyOf: self repositoryName
 ]
 
-{ #category : #downloading }
+{ #category : 'downloading' }
 OPVersion >> getOfLatestRelease [
 	^ self class ofLastestReleaseOf: self repositoryName
 ]
 
-{ #category : #downloading }
+{ #category : 'downloading' }
 OPVersion >> getRun [
-
-	| response |
-	response := ZnEasy get:
-		            'https://api.github.com/repos/openponk/'
-		            , self repositoryName , '/actions/runs/'
-		            , self githubWorkflowRunId asString.
-	response isError ifTrue: [ 
-		(ZnHttpUnsuccessful response: response) signal ].
-	^ STONJSON fromString: response entity string
+	| response client githubToken |
+	client := ZnClient new.
+	client
+		url:
+			'https://api.github.com/repos/openponk/' , self repositoryName
+				, '/actions/runs/' , self githubWorkflowRunId asString.
+	githubToken := OSEnvironment current
+		at: 'ACTIONS_READ_ACCESS_TOKEN'
+		ifAbsent: [ nil ].
+	githubToken
+		ifNotNil: [ :token | 
+			Stdio stdout
+				nextPutAll: 'Loading version info using GitHub API token';
+				nextPutAll: OSPlatform current lineEnding.
+			client request setAuthorization: 'Bearer ' , githubToken ].
+	response := client
+		get;
+		response.
+	response isError
+		ifTrue: [ (Smalltalk image isInteractive not
+				and: [ response code = 403
+						and: [ response statusLine reason includesSubstring: 'rate limit' ] ])
+				ifTrue: [ | reset resetIn |
+					reset := DateAndTime
+						fromUnixTime: (response headers at: 'X-RateLimit-Reset') asInteger.
+					resetIn := reset - DateAndTime now.
+					Stdio stdout
+						nextPutAll:
+							'Downloading OPVersion run info failed due to rate limiting. Limit resets at '.
+					reset printHMSOn: Stdio stdout.
+					Stdio stdout
+						nextPutAll: ' (in ';
+						nextPutAll: resetIn minutes asString;
+						nextPutAll: ' min, ';
+						nextPutAll: resetIn seconds asString;
+						nextPutAll: ' sec).';
+						nextPutAll: OSPlatform current lineEnding.
+					resetIn < 8 minutes
+						ifTrue: [ Stdio stdout nextPutAll: 'Waiting until reset...'.
+							resetIn wait.
+							^ self getRun ]
+						ifFalse: [ (ZnHttpUnsuccessful response: response) signal ] ]
+				ifFalse: [ (ZnHttpUnsuccessful response: response) signal ] ]
+		ifFalse: [ ^ STONJSON fromString: response entity string ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> githubWorkflowRunId [
 	^ githubWorkflowRunId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> githubWorkflowRunId: anObject [
 	githubWorkflowRunId := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPVersion >> hash [
-	self isRelease
-		ifFalse: [ ^ self commit hash ].
-	^ self releaseName hash
+
+	self isRelease ifTrue: [ ^ self releaseName hash ].
+	^ self commit hash xor: self buildDate hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPVersion >> isMostRecent [
 	^ self getOfLatest = self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> isRelease [
 	^ self releaseName isNotNil
 		and: [ self releaseName matchesRegex: self class semanticVersionRegex ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> isRepositoryNameKnown [
 	^ self repositoryName ~= self class unknownRepositoryName
 ]
 
-{ #category : #downloading }
+{ #category : 'downloading' }
 OPVersion >> needsDownloadInfo [
 	^ commit isNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> releaseName [
 	releaseName ifNil: [ self downloadInfo ].
 	^ releaseName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> releaseName: aString [
 	releaseName := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> repositoryName [
-	^ repositoryName
-		ifNil: [ | activePlugins |
-			activePlugins := {((Smalltalk globals
-				includesKey: #BaselineOfClassEditor)
-				ifTrue: [ #'class-editor' ]).
-			((Smalltalk globals includesKey: #BaselineOfBormEditor)
-				ifTrue: [ #'borm-editor' ]).
-			((Smalltalk globals includesKey: #BaselineOfFsmEditor)
-				ifTrue: [ #'fsm-editor' ]).
-			((Smalltalk globals includesKey: #BaselineOfPetriNets)
-				ifTrue: [ #petrinets ])} reject: #isNil.
-			repositoryName := activePlugins size >= 4
-				ifTrue: [ #'all-in-one' ]
-				ifFalse: [ activePlugins size = 1
-						ifTrue: [ activePlugins first ]
-						ifFalse: [ self class unknownRepositoryName ] ] ]
+
+	^ repositoryName ifNil: [ 
+		  | activePlugins |
+		  activePlugins := { 
+			                   ((Smalltalk globals includesKey:
+				                     #BaselineOfClassEditor) ifTrue: [ 
+				                    #'class-editor' ]).
+			                   ((Smalltalk globals includesKey:
+				                     #BaselineOfBormEditor) ifTrue: [ 
+				                    #'borm-editor' ]).
+			                   ((Smalltalk globals includesKey:
+				                     #BaselineOfFsmEditor) ifTrue: [ 
+				                    #'fsm-editor' ]).
+			                   ((Smalltalk globals includesKey:
+				                     #BaselineOfPetriNets) ifTrue: [ #petrinets ]).
+			                   ((Smalltalk globals includesKey: #BaselineOfBPMN) 
+				                    ifTrue: [ #'BPMN' ]) } reject: #isNil.
+		  repositoryName := activePlugins size >= 4
+			                    ifTrue: [ #plugins ]
+			                    ifFalse: [ 
+				                    activePlugins size = 1
+					                    ifTrue: [ activePlugins first ]
+					                    ifFalse: [ self class unknownRepositoryName ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> repositoryName: aString [
 	repositoryName := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPVersion >> repositoryNotationName [
+
 	| notationNames |
-	notationNames := {(#'class-editor' -> '(Onto)UML').
-	(#'borm-editor' -> 'BORM').
-	(#'fsm-editor' -> 'FSM').
-	(#petrinets -> 'Petri nets').
-	(#'all-in-one' -> 'All-in-one')} asDictionary.
+	notationNames := { 
+		                 (#'class-editor' -> '(Onto)UML').
+		                 (#'borm-editor' -> 'BORM').
+		                 (#'fsm-editor' -> 'FSM').
+		                 (#petrinets -> 'Petri nets').
+		                 (#'BPMN' -> 'BPMN').
+		                 (#plugins -> 'All plugins') } asDictionary.
 	^ notationNames
-		at: self repositoryName
-		ifAbsent: [ self repositoryName ]
+		  at: self repositoryName
+		  ifAbsent: [ self repositoryName ]
 ]

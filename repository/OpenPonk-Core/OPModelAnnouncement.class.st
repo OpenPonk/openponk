@@ -2,25 +2,27 @@
 I am a base class for model (or model element) events.
 "
 Class {
-	#name : #OPModelAnnouncement,
-	#superclass : #Announcement,
+	#name : 'OPModelAnnouncement',
+	#superclass : 'Announcement',
 	#instVars : [
 		'model'
 	],
-	#category : #'OpenPonk-Core-Announcements'
+	#category : 'OpenPonk-Core-Announcements',
+	#package : 'OpenPonk-Core',
+	#tag : 'Announcements'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPModelAnnouncement class >> on: aModel [
 	^ self new model: aModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPModelAnnouncement >> model [
 	^ model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPModelAnnouncement >> model: aModel [
 	model := aModel
 ]

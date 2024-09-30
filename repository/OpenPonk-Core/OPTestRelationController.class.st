@@ -2,35 +2,27 @@
 I am a mock controller for model entities representing relationships.
 "
 Class {
-	#name : #OPTestRelationController,
-	#superclass : #OPDirectionalRelationshipController,
-	#instVars : [
-		'sourceController'
-	],
-	#category : #'OpenPonk-Core-Controllers - Tests'
+	#name : 'OPTestRelationController',
+	#superclass : 'OPDirectionalRelationshipController',
+	#category : 'OpenPonk-Core-Controllers-Tests',
+	#package : 'OpenPonk-Core',
+	#tag : 'Controllers-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'construction' }
+OPTestRelationController >> diagramElementClass [
+
+	^ OPTestEdge
+]
+
+{ #category : 'accessing' }
 OPTestRelationController >> modelClass [
 	^ OPTestRelationModel
 ]
 
-{ #category : #destruction }
+{ #category : 'destruction' }
 OPTestRelationController >> removeModel [
-	| ownerModel |
-	ownerModel := self diagramController model.
-	ownerModel entities remove: self model
-]
 
-{ #category : #construction }
-OPTestRelationController >> renderFigureIn: aView [
-	self diagramController addingFigureFor: self.
-	figure := RTBox new elementOn: self model.
-	aView add: figure.
-	^ self diagramController addedFigureFor: self
-]
-
-{ #category : #accessing }
-OPTestRelationController >> sourceController [
-	^ sourceController
+	self diagramController model entities remove: self model.
+	super removeModel
 ]

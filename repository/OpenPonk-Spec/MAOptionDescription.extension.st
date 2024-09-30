@@ -1,6 +1,6 @@
-Extension { #name : #MAOptionDescription }
+Extension { #name : 'MAOptionDescription' }
 
-{ #category : #'*OpenPonk-Spec' }
+{ #category : '*OpenPonk-Spec' }
 MAOptionDescription >> iconForOption: anObject [
 	self
 		propertyAt: #icons
@@ -8,7 +8,7 @@ MAOptionDescription >> iconForOption: anObject [
 	^ nil
 ]
 
-{ #category : #'*OpenPonk-Spec' }
+{ #category : '*OpenPonk-Spec' }
 MAOptionDescription >> icons: aDictionary [
 	self propertyAt: #icons put: aDictionary
 ]

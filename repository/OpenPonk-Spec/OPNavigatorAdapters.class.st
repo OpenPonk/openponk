@@ -2,132 +2,149 @@
 I hold a collection of navigator adapters applicable to a concrete editor.
 "
 Class {
-	#name : #OPNavigatorAdapters,
-	#superclass : #Object,
+	#name : 'OPNavigatorAdapters',
+	#superclass : 'Object',
 	#instVars : [
 		'adapters',
-		'typeToAdapterMapping'
+		'modelToAdapterMapping'
 	],
-	#classInstVars : [
-		'default'
-	],
-	#category : #'OpenPonk-Spec-Utils'
+	#category : 'OpenPonk-Spec-Utils',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Utils'
 }
 
-{ #category : #accessing }
-OPNavigatorAdapters class >> default [
-	^ default ifNil: [ default := self new ]
-]
-
-{ #category : #accessing }
-OPNavigatorAdapters class >> reset [
-	<script>
-	^ default := self new
-]
-
-{ #category : #'accessing - private' }
+{ #category : 'accessing - private' }
 OPNavigatorAdapters >> adapterFor: aModelObject [
-	^ typeToAdapterMapping
-		at: aModelObject class
-		ifAbsentPut: [ adapters
-				detect: [ :each | each hasMappingFor: aModelObject ]
-				ifNone: [ self error: 'No adapter found for ' , aModelObject printString ] ]
+
+	^ self adapterFor: aModelObject in: (OPProject new uuid: UUID nilUUID)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing - private' }
+OPNavigatorAdapters >> adapterFor: aModelObject in: aModel [
+
+	^ modelToAdapterMapping
+		  at: (Association key: aModelObject value: aModel)
+		  ifAbsentPut: [ 
+			  adapters
+				  detect: [ :each | each hasMappingFor: aModelObject in: aModel ]
+				  ifNone: [ 
+					  self error:
+						  'No adapter found for ' , aModelObject printString , ' in '
+						  , aModel printString ] ]
+]
+
+{ #category : 'accessing' }
 OPNavigatorAdapters >> adapters: aCollection [
 	adapters := aCollection
 ]
 
-{ #category : #'accessing - private' }
-OPNavigatorAdapters >> adaptersFor: anObject detect: aOneArgSymbol [
-	adapters
-		do: [ :each | 
-			(each hasMappingFor: anObject)
-				ifTrue: [ (each perform: aOneArgSymbol with: anObject) ifNotNil: [ :v | ^ v ] ] ]
-]
-
-{ #category : #'accessing - private' }
-OPNavigatorAdapters >> adaptersFor: anObject in: aRootModel detect: aTwoArgSymbol [
-	adapters
-		do: [ :each | 
-			(each hasMappingFor: anObject)
-				ifTrue: [ (each perform: aTwoArgSymbol with: anObject with: aRootModel)
-						ifNotNil: [ :v | ^ v ] ] ]
-]
-
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPNavigatorAdapters >> allAdapters [
+
 	"Return default navigator last, because it has the lowest priority."
 
-	^ OPNavigatorAdapter allSubclasses
+	^ OPNavigatorAdapter allSubclasses sortedAs: #priority
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNavigatorAdapters >> allChildrenFor: anObject [
+
 	^ (self adapterFor: anObject) allChildrenFor: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNavigatorAdapters >> childrenFor: anObject [
+
 	^ (self adapterFor: anObject) childrenFor: anObject
 ]
 
-{ #category : #accessing }
-OPNavigatorAdapters >> contextMenuFor: anObject projectController: aProjectController in: aMenu [
+{ #category : 'accessing' }
+OPNavigatorAdapters >> contextMenuFor: anObject projectController: aProjectController inside: aMenuPresenter [
 
-	| builder |
-	builder := OPMenuBuilder new.
-	builder menu: aMenu.
-	((adapters select: [ :each | each hasMappingFor: anObject ]) 
-		 collect: [ :each | each contextMenuFor: anObject ]) flattened do: [ 
-		:pair | 
-		builder addItem: pair key action: [ pair value value: anObject ] ].
+	| contextMenuGroups |
+	contextMenuGroups := OrderedCollection new.
+	adapters
+		select: [ :each | each hasMappingFor: anObject in: OPProject new ]
+		thenDo: [ :each | 
+			(each contextMenuFor: anObject) do: [ :eachGroup | 
+				(eachGroup reject: [ :eachItemPair | 
+					 contextMenuGroups anySatisfy: [ :anyGroup | 
+						 anyGroup anySatisfy: [ :anyItemPair | 
+							 anyItemPair key = eachItemPair key ] ] ]) ifNotEmpty: [ 
+					:filteredGroup | contextMenuGroups add: filteredGroup ] ] ].
+	contextMenuGroups do: [ :eachGroup | 
+		aMenuPresenter addGroup: [ :group | 
+			eachGroup do: [ :eachItemPair | 
+				aMenuPresenter addItem: [ :item | 
+					item
+						name: eachItemPair key;
+						action: [ eachItemPair value value: anObject ] ] ] ] ].
 	((aProjectController hasModel: anObject) and: [ 
-		 aProjectController project models size > 1 ]) ifFalse: [ ^ self ].
-	builder addItem: 'Delete from project' action: [ 
-		SpConfirmDialog new
-			title: 'Delete model from project?';
-			label:
-				'Do you want to delete the model, including its contents and diagrams?';
-			acceptLabel: 'Yes, delete it';
-			cancelLabel: 'Cancel';
-			onAccept: [ aProjectController removeModel: anObject ];
-			openDialogWithSpec ]
+		 aProjectController project models size > 1 ]) ifFalse: [ 
+		^ aMenuPresenter ].
+	aMenuPresenter addItem: [ :item | 
+		item
+			name: 'Delete from project';
+			action: [ 
+				SpConfirmDialog new
+					title: 'Delete model from project?';
+					label:
+						'Do you want to delete the model, including its contents and diagrams?';
+					acceptLabel: 'Yes, delete it';
+					cancelLabel: 'Cancel';
+					onAccept: [ aProjectController removeModel: anObject ];
+					openDialog ] ].
+	^ aMenuPresenter
 ]
 
-{ #category : #accessing }
-OPNavigatorAdapters >> dependentFor: anObject in: aRootModel [
-	^ (self adapterFor: anObject) dependentFor: anObject in: aRootModel
+{ #category : 'accessing' }
+OPNavigatorAdapters >> dependentFor: anObject in: aModel [
+
+	^ (self adapterFor: anObject in: aModel)
+		  dependentFor: anObject
+		  in: aModel
 ]
 
-{ #category : #accessing }
-OPNavigatorAdapters >> dependsTypeOf: firstObject on: secondObject in: aRootModel [
-	^ (self adapterFor: firstObject)
-		dependsTypeOf: firstObject
-		on: secondObject
-		in: aRootModel
+{ #category : 'accessing' }
+OPNavigatorAdapters >> dependsTypeOf: firstObject on: secondObject in: aModel [
+
+	^ (self adapterFor: firstObject in: aModel)
+		  dependsTypeOf: firstObject
+		  on: secondObject
+		  in: aModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNavigatorAdapters >> displayFor: anObject [
+
 	^ (self adapterFor: anObject) displayFor: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNavigatorAdapters >> iconFor: anObject [
+
 	^ (self adapterFor: anObject) iconFor: anObject
 ]
 
-{ #category : #initialization }
-OPNavigatorAdapters >> initialize [
-	super initialize.
-	adapters := self allAdapters collect: #new.
-	typeToAdapterMapping := Dictionary new
+{ #category : 'accessing' }
+OPNavigatorAdapters >> initialSetupFor: anObject in: aDiagramController [
+
+	^ (self adapterFor: anObject in: aDiagramController model)
+		  initialSetupFor: anObject
+		  in: aDiagramController
 ]
 
-{ #category : #sorting }
+{ #category : 'initialization' }
+OPNavigatorAdapters >> initialize [
+
+	super initialize.
+	adapters := self allAdapters collect: #new.
+	modelToAdapterMapping := Dictionary new
+]
+
+{ #category : 'sorting' }
 OPNavigatorAdapters >> sort: modelObjects [
+
 	modelObjects ifEmpty: [ ^ modelObjects ].
 	^ (self adapterFor: modelObjects anyOne) sort: modelObjects
 ]

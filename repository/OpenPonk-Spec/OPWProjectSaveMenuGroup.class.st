@@ -2,17 +2,19 @@
 I contain commands related to the entire opened project.
 "
 Class {
-	#name : #OPWProjectSaveMenuGroup,
-	#superclass : #CmdMenuGroup,
-	#category : #'OpenPonk-Spec-Commands'
+	#name : 'OPWProjectSaveMenuGroup',
+	#superclass : 'CmdMenuGroup',
+	#category : 'OpenPonk-Spec-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Commands'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPWProjectSaveMenuGroup >> isInlined [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPWProjectSaveMenuGroup >> order [
 	^ 20
 ]

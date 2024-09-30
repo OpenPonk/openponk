@@ -3,22 +3,21 @@ A DCElementController an abstract class which should be a parent for all element
 It has method which handles the creation of the form for specific element. The controller is also responsible for specification of the view of an element. The precise definition of the form and the view is done by descendants.
 "
 Class {
-	#name : #OPElementController,
-	#superclass : #OPController,
-	#instVars : [
-		'figure'
-	],
-	#category : #'OpenPonk-Core-Controllers'
+	#name : 'OPElementController',
+	#superclass : 'OPController',
+	#category : 'OpenPonk-Core-Controllers',
+	#package : 'OpenPonk-Core',
+	#tag : 'Controllers'
 }
 
-{ #category : #deprecated }
+{ #category : 'deprecated' }
 OPElementController >> attach [
 	self deprecated: 'Use createInModel:andShowInDiagram: instead.'.
 "	self registerModelEvents: model.
 	self attachFigure"
 ]
 
-{ #category : #deprecated }
+{ #category : 'deprecated' }
 OPElementController >> attachFigure [
 	"add figure to the view"
 
@@ -31,7 +30,7 @@ OPElementController >> attachFigure [
 	self refreshFigure"
 ]
 
-{ #category : #deprecated }
+{ #category : 'deprecated' }
 OPElementController >> attachTo: aDiagramController [
 	self deprecated: 'Use createInModel:andShowInDiagram: instead.'.
 	"self diagramController: aDiagramController.
@@ -42,79 +41,123 @@ OPElementController >> attachTo: aDiagramController [
 	self attachFigure"
 ]
 
-{ #category : #deprecated }
-OPElementController >> createFigure [
-	self deprecated: 'Use renderFigureIn: instead.'.
+{ #category : 'construction' }
+OPElementController >> createDiagramElement [
 
-"	^ OPRTCallbackBuilder block: [ :view | self createFigureInView: view ]"
+	^ diagramElement := self diagramElementClass
+		                    in: self diagramElementOwner
+		                    forModelElement: self model
 ]
 
-{ #category : #deprecated }
+{ #category : 'deprecated' }
+OPElementController >> createFigure [
+
+	self deprecated: 'Use renderFigureIn: instead.'
+]
+
+{ #category : 'deprecated' }
 OPElementController >> createModel [
 	self deprecated: 'Use createModelIn: instead.'
 "	^ self model ifNil: [ self modelClass new ]"
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPElementController >> createModelIn: aParentModel [
+
 	self model: self modelClass new.
-	aParentModel add: model.
-	^ model
+	self registerModelIn: aParentModel.
+	^ self model
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPElementController >> createModelIn: aParentModel andShowInDiagram: aDiagramController [
+
+	self removeDiagramElement.
 	self createModelIn: aParentModel.
 	self showWithoutDependentInDiagram: aDiagramController
 ]
 
-{ #category : #accessing }
-OPElementController >> figure [
-	^ figure
+{ #category : 'construction' }
+OPElementController >> dependingOnElements [
+
+	^ Set empty
 ]
 
-{ #category : #accessing }
+{ #category : 'construction' }
+OPElementController >> diagramElementClass [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'diagram elements' }
+OPElementController >> diagramElementOwner [
+
+	^ self diagramController diagramElement
+]
+
+{ #category : 'accessing' }
+OPElementController >> ensureDiagramElement [
+
+	diagramElement
+		ifNil: [ self createDiagramElement ]
+		ifNotNil: [ self linkToExistingDiagramElement ].
+	^ diagramElement
+]
+
+{ #category : 'construction' }
+OPElementController >> ensureShownDependenciesInDiagram: aDiagramController [
+
+	^ self dependingOnElements do: [ :each |
+		  aDiagramController showWithoutDependentInDiagramModel: each ]
+]
+
+{ #category : 'figures' }
 OPElementController >> figure: aFigure [
-	figure := aFigure
+
+	self deprecated:
+		'Figure (Roassal shape) cannot be set directly anymore.'
 ]
 
-{ #category : #deprecated }
+{ #category : 'deprecated' }
 OPElementController >> figureLabel: aLabelName text: aString [
 	self deprecated: 'Method will be removed without replacement.'
 "	(figure labels at: aLabelName) trachelShape text: aString"
 ]
 
-{ #category : #'canvas actions' }
-OPElementController >> hideSelectionFeedback [
-	self figure view
-		ifNotNil: [ 
-			self figure announce: OPTRUnfocused.
-			self figure view signalUpdate ]
+{ #category : 'construction' }
+OPElementController >> hookDiagramElement [
+
+	"do nothing by default"
+
+	
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPElementController >> isCommon [
 	^ false
 ]
 
-{ #category : #accessing }
-OPElementController >> layout [
-	^ OPElementLayout withPosition: self figure position
+{ #category : 'construction' }
+OPElementController >> linkToExistingDiagramElement [
+
+	self diagramElement modelElement: self model
 ]
 
-{ #category : #accessing }
-OPElementController >> layout: anElementLayout [
-	self figure translateTo: anElementLayout position
-]
-
-{ #category : #deprecated }
+{ #category : 'deprecated' }
 OPElementController >> loadModel [
 	self deprecated: 'Method will be removed without replacement.'
 "	self model ifNil: [ self model: self createModel ].
 	^ self model"
 ]
 
-{ #category : #deprecated }
+{ #category : 'connecting' }
+OPElementController >> parentContainerModel [
+	"Redefine to answer model that acts as a primary container of my model and other elements on my model's level. If I am always directly inside diagramController without any intermediate structure, this may answer self diagramController model"
+
+	^ self model owner
+]
+
+{ #category : 'deprecated' }
 OPElementController >> registerModelEvents: aModel [
 	self deprecated: 'Use model: and internalSubscribeTo: instead.'.
 "	super registerModelEvents: aModel.
@@ -125,49 +168,69 @@ OPElementController >> registerModelEvents: aModel [
 				ifTrue: [ self refreshFigure ] ]"
 ]
 
-{ #category : #deprecated }
+{ #category : 'construction' }
+OPElementController >> registerModelIn: aParentModel [
+
+	self registerModelInContainer: aParentModel
+]
+
+{ #category : 'construction' }
+OPElementController >> registerModelInContainer: aParentModel [
+
+	aParentModel add: self model
+]
+
+{ #category : 'deprecated' }
 OPElementController >> remove [
 
 	self
 		deprecated: 'Use #removeController instead.'
 		transformWith: '`@receiver remove' -> '`@receiver removeController'.
 
-	self removeController
+	^ self removeController
 ]
 
-{ #category : #construction }
-OPElementController >> renderFigureIn: aView [
-	^ self subclassResponsibility
+{ #category : 'construction' }
+OPElementController >> renderDiagramElement [
+
+	self diagramController willRender: self.
+	self hookDiagramElement.
+	self diagramElement renderIn: self diagramController canvas.
+	self diagramController rendered: self.
+	^ self roassalShape
 ]
 
-{ #category : #'ui interaction' }
-OPElementController >> reselect [
-	self diagramController ifNotNil: [ self diagramController selectController: self ]
+{ #category : 'construction' }
+OPElementController >> renderFigureIn: aCanvas [
+
+	self
+		deprecated: 'Use #createDiagramElement and #renderDiagramElement without parameter.'
+		transformWith: '`@receiver renderFigureIn: `@statements1'
+			-> '`@receiver createDiagramElement; renderDiagramElement'.
+	^ self
+		  createDiagramElement;
+		  renderDiagramElement
 ]
 
-{ #category : #construction }
-OPElementController >> showInDiagram: aDiagramController [
-	aDiagramController addController: self.
-	self renderFigureIn: aDiagramController view.
-	self dependentElements
-		do:
-			[ :each | aDiagramController showInDiagramModel: each ]
-]
-
-{ #category : #'canvas actions' }
-OPElementController >> showSelectionFeedback [
-	self figure announce: OPTRFocused
-]
-
-{ #category : #construction }
+{ #category : 'construction' }
 OPElementController >> showWithoutDependentInDiagram: aDiagramController [
+
+	self ensureShownDependenciesInDiagram: aDiagramController.
 	aDiagramController addController: self.
-	self renderFigureIn: aDiagramController view
+	self ensureDiagramElement.
+	self renderDiagramElement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPElementController >> target: aController [
 	"do nothing"
 
 	
+]
+
+{ #category : 'event handling' }
+OPElementController >> updateAfterDiagramFocused [
+
+	self isRendered ifFalse: [ ^ self ].
+	self diagramElement updateRenderFromModel
 ]

@@ -2,323 +2,245 @@
 I am Spec model to embed Roassal2 into DCEditor.
 "
 Class {
-	#name : #OPCanvasPresenter,
-	#superclass : #RoassalModel,
+	#name : 'OPCanvasPresenter',
+	#superclass : 'SpRoassalPresenter',
 	#instVars : [
-		'roassalView',
 		'diagramController',
-		'lastClickPosition',
 		'onZoomChange',
-		'lastSelectedFigure'
+		'onExtentChange'
 	],
-	#category : #'OpenPonk-Spec-Windows'
+	#category : 'OpenPonk-Spec-Windows',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Windows'
 }
 
-{ #category : #adding }
-OPCanvasPresenter >> addMenuFor: aFigure [
-	aFigure
-		when: TRMouseRightClick
-		do: [ :event | 
-			| menu |
-			self lastClickPosition: event position.
-			self diagramController selectFigure: event element.
-			self lastSelectedFigure: event element.
-			menu := CmdContextMenuActivation
-				buildContextMenuFor: self
-				inContext: (OPDiagramFigureContext for: self of: self selectedElements).
-			menu popUpInWorld ]
-]
-
-{ #category : #adding }
-OPCanvasPresenter >> addMouseEventsFor: aFigure [
-	aFigure
-		when: TRMouseDoubleLeftClick
-		do: [ :event | 
-			self lastClickPosition: event position.
-			self diagramController doubleClickFigure: event element ].
-	aFigure
-		when: TRMouseLeftClick
-		do: [ :event | 
-			self lastClickPosition: event position.
-			self diagramController selectFigure: event element.
-			self lastSelectedFigure: event element ].
-	aFigure
-		when: TRMouseRightClick
-		do: [ :event | 
-			self lastClickPosition: event position.
-			self diagramController selectFigure: event element.
-			self lastSelectedFigure: event element ].
-	aFigure
-		when: TRMouseEnter
-		do: [ :event | 
-			self lastClickPosition: event position.
-			self diagramController hoverFigure: event element ].
-	aFigure
-		when: TRMouseLeave
-		do: [ :event | 
-			self lastClickPosition: event position.
-			self diagramController hoverView ]
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCanvasPresenter >> attachController: aDiagramController [
-	(diagramController := aDiagramController)
-		view: roassalView;
-		whenFigureAdded: [ :figure | self figureAdded: figure ]
+
+	(diagramController := aDiagramController) canvasPresenter: self
 ]
 
-{ #category : #private }
-OPCanvasPresenter >> cleanView [
+{ #category : 'accessing' }
+OPCanvasPresenter >> canvas [
 
-	"roassalView cleanAll is unusable because it breaks (maybe) misused TRRemoveCallbacks"
-
-	roassalView edges copy do: #remove.
-	roassalView elements copy do: #remove.
-	roassalView canvas shapes copy do: [ :each | 
-		(each isKindOf: TRCanvasGridShape) ifFalse: [ each remove ] ]
+	currentCanvas ifNil: [ 
+		self initializeCanvas: (currentCanvas := RSCanvas new) ].
+	^ currentCanvas
 ]
 
-{ #category : #'private-focus' }
+{ #category : 'initialization' }
+OPCanvasPresenter >> connectPresenters [
+
+	super connectPresenters.
+	onZoomChange := [ :event |  ].
+	onExtentChange := [ :event |  ].
+	self whenBuiltDo: [ :adptr |
+		CmdKMDispatcher attachedTo: adptr widget withCommandsFrom: self ]
+]
+
+{ #category : 'private-focus' }
 OPCanvasPresenter >> createCommandContext [
 	"Subclases should override it if they provide any selection"
 
 	^ self createCommandContextForSelection: self selectedElements
 ]
 
-{ #category : #'private-focus' }
+{ #category : 'private-focus' }
 OPCanvasPresenter >> createCommandContextForSelection: selectedItems [
 	"simple context has no information about selected items"
 
 	^ OPDiagramFigureContext for: self of: selectedItems
-	"	^CmdContactBookPresenterContext for: self of: selectedContacts"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCanvasPresenter >> diagramController [
 	^ diagramController
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCanvasPresenter >> editor [
 	^ self owner
 ]
 
-{ #category : #'private-focus' }
-OPCanvasPresenter >> ensureKeyBindingsFor: aWidget [
-	super ensureKeyBindingsFor: aWidget.
-	^self enableCommanderShortcutsIn: aWidget
-]
+{ #category : 'toolbar' }
+OPCanvasPresenter >> exportAsPdf [
 
-{ #category : #toolbar }
-OPCanvasPresenter >> exportAsPng [
-
-	OPExportCanvasDialog new
-		whenSelected: [ :file :zoom | self exportCanvasTo: file zoom: zoom ];
-		extensionFilters: { ('Images' -> #( png )) };
-		defaultName:
-			self editor diagramController model name asFileName , '.png';
+	self flag: 'default name not supported in file browser'.
+	OPExportImageDialog new
+		title: 'Choose a PDF file to export the diagram';
+		okAction: [ :file :zoom |
+			OPCanvasPDFExporter
+				exportDiagramController: diagramController
+				to: file ];
+		extensions: #( pdf ) named: 'PDF documents';
 		open
 ]
 
-{ #category : #toolbar }
-OPCanvasPresenter >> exportCanvasTo: aFile [
+{ #category : 'toolbar' }
+OPCanvasPresenter >> exportAsPng [
 
-	self exportCanvasTo: aFile zoom: TRCamera new defaultCameraScale
+	self flag: 'default name not supported in file browser'.
+	OPExportImageDialog new
+		title: 'Choose a PNG file to export the diagram';
+		okAction: [ :file :zoom |
+			OPCanvasPNGExporter
+				exportDiagramController: diagramController
+				to: file
+				zoom: zoom ];
+		extensions: #( png ) named: 'PNG images';
+		open
 ]
 
-{ #category : #toolbar }
-OPCanvasPresenter >> exportCanvasTo: aFileReference zoom: aNumber [
+{ #category : 'toolbar' }
+OPCanvasPresenter >> exportAsPng: aFile [
 
-	| gridShape gridColor selectedElements zoom |
-	zoom := aNumber = 1
-		        ifTrue: [ roassalView canvas camera defaultCameraScale ]
-		        ifFalse: [ aNumber ].
-	gridShape := roassalView canvas shapes detect: [ :each | 
-		             each isKindOf: TRCanvasGridShape ].
-	gridColor := gridShape color.
-	selectedElements := self selectedElements.
-	self diagramController deselectAll.
-	[ 
-	gridShape color: Color transparent.
-	(OPRTCanvasExporter canvas: roassalView canvas)
-		format: #png;
-		whole;
-		scale: zoom;
-		oversizedBy: 20 @ 20;
-		fileName: aFileReference;
-		export.
-	UIManager default
-		inform: (String streamContents: [ :s | 
-				 s << 'Saved to ' << aFileReference pathString.
-				 s
-					 cr;
-					 cr.
-				 s << 'Click to open location' ])
-		actionOnClick: [ aFileReference openInOSFileBrowser ] ] ensure: [ 
-		gridShape color: gridColor.
-		selectedElements do: [ :each | "self diagramController selectFigure: " 
-			each announce: TRMouseLeftClick new ] ]
+	OPCanvasPNGExporter
+		exportDiagramController: diagramController
+		to: aFile
 ]
 
-{ #category : #adding }
-OPCanvasPresenter >> figureAdded: aFigure [
-	"Only elements can be translated, not edges."
-	(aFigure isElement)
-		ifTrue: [ aFigure translateTo: self lastClickPosition ].
-	self addMouseEventsFor: aFigure.
-	self addMenuFor: aFigure.
-	self signalUpdate
+{ #category : 'toolbar' }
+OPCanvasPresenter >> exportAsSvg [
+
+	self flag: 'default name not supported in file browser'.
+	StFBSaveFileDialog new
+		title: 'Choose a SVG file to export the diagram';
+		okAction: [ :file |
+			OPCanvasSVGExporter
+				exportDiagramController: diagramController
+				to: file ];
+		extensions: #( svg ) named: 'SVG images';
+		"defaultName:
+			self editor diagramController model name asFileName , '.svg';"
+			open
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPCanvasPresenter >> initialize [
+
 	super initialize.
-	onZoomChange := [ :value |  ].
-	self
-		script: [ :view :canvas | 
-			roassalView := view.
-			self initializeView: view ]
+	self script: [ :canvas | self initializeCanvas: canvas ]
 ]
 
-{ #category : #initialization }
-OPCanvasPresenter >> initializeView: aView [
-	aView when: TRMouseLeftClick do: [ :event | self viewClicked: event ].
-	aView
-		when: TRMouseRightClick
-		do: [ :event | self viewContextClicked: event ].
-	aView canvas theme: TRWhiteTheme new.
-	aView
-		@
-			(OPRTSelectableView new
-				candidatesBlock: [ diagramController selectableFigures ]).
-	aView @ (RTZoomableView new min: 0.05 max: 4).
-	aView @ (RTGridView new gridSize: 20).
-	^ aView canvas camera
-		addCallback:
-			(TRCameraScaleCallback
-				block: [ :newScale | 
-					onZoomChange
-						value:
-							(newScale < 1
-								ifTrue: [ '   ' ]
-								ifFalse: [ '' ]) , (newScale * 100) rounded asString , '%'.
-					self editor zoomLabel
-						label:
-							(newScale < 1
-								ifTrue: [ '   ' ]
-								ifFalse: [ '' ]) , (newScale * 100) rounded asString , '%' ])
+{ #category : 'initialization' }
+OPCanvasPresenter >> initializeCanvas: aCanvas [
+
+	aCanvas
+		@ (RSCanvasController new
+				 interactionsFromArray: {
+						 (RSDraggableCanvasInteraction right
+							  hasDraggableAnimation: false;
+							  yourself).
+						 OPRSKeyNavigationCanvasInteraction new.
+						 OPRSZoomableCanvasInteraction new.
+						 "OPRSRemoveable new."
+						 RSScrollBarsCanvasInteraction new };
+				 configuration: (OPRSControlConfiguration new
+						  noLegend;
+						  hasZoomableAnimation: false;
+						  yourself));
+		@ OPRSSelectableCanvas.
+
+	(aCanvas propertyAt: OPRSSelectableCanvas)
+		when: OPRSSelectionEndEvent
+		do: [ :evt |
+			self
+				selectedShapes: evt selectedShapes
+				onPosition: evt originalEvent position ]
+		for: self.
+
+	aCanvas
+		when: RSExtentChangedEvent
+		do: [ :event | onExtentChange value: event ]
+		for: self.
+	aCanvas
+		when: RSScaleChangedEvent
+		do: [ :event |
+			| zoomText |
+			zoomText := (event newScale < 1
+				             ifTrue: [ '   ' ]
+				             ifFalse: [ '' ])
+			            , (event newScale * 100) rounded asString , '%'.
+			onZoomChange value: event.
+			self editor zoomLabel label: ' ' , zoomText ]
+		for: self
 ]
 
-{ #category : #events }
-OPCanvasPresenter >> lastClickPosition [
-	^ lastClickPosition ifNil: [ 0 @ 0 ]
-]
-
-{ #category : #events }
+{ #category : 'events' }
 OPCanvasPresenter >> lastClickPosition: aPoint [
-	lastClickPosition := aPoint
+
+	self deprecated: 'Last click is now handled by OPRSEventLogger'
 ]
 
-{ #category : #accessing }
-OPCanvasPresenter >> lastSelectedFigure [
-	^ lastSelectedFigure
-]
-
-{ #category : #accessing }
-OPCanvasPresenter >> lastSelectedFigure: aFigure [
-	lastSelectedFigure := aFigure
-]
-
-{ #category : #private }
-OPCanvasPresenter >> loadElementsFromController [
-
-	self deprecated: 'Control reloading from Controller, not Canvas'.
-	[ 
-	self currentWorld activeHand showTemporaryCursor: Cursor wait.
-	self currentWorld doOneCycle.
-	diagramController rebuild.
-	diagramController applyDefaultLayout ] ensure: [ 
-		self currentWorld activeHand showTemporaryCursor: nil ]
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCanvasPresenter >> model [
 	^ diagramController model
 ]
 
-{ #category : #signalling }
-OPCanvasPresenter >> reloadView [
-	self deprecated: 'Control reloading from Controller, not Canvas'.
-	self cleanView.
-	diagramController ifNotNil: [ self loadElementsFromController ].
-	diagramController ifNotNil: [ diagramController updateView ]
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCanvasPresenter >> roassalView [
-	^ roassalView
+
+	self
+		deprecated: 'Use #canvas instead.'
+		transformWith:
+		'`@receiver roassalView' -> '`@receiver canvas'.
+	^ self canvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCanvasPresenter >> selectedElements [
-	roassalView attributes
-		at: OPRTSelectableView
-		ifPresent: [ :els | els ifNotEmpty: [ ^ els ] ].
-	^ self lastSelectedFigure ifNil: [ {} ] ifNotNil: [ {self lastSelectedFigure} ]
+
+	^ self diagramController selectedElements
 ]
 
-{ #category : #'as yet unclassified' }
-OPCanvasPresenter >> showAllFigures [
-
-	roassalView elements
-		ifEmpty: [ roassalView canvas camera scale: 1 ]
-		ifNotEmpty: [ roassalView canvas focusOnCenterScaled ]
+{ #category : 'selection handling' }
+OPCanvasPresenter >> selectedShapes: shapes onPosition: aPoint [
+	self diagramController selectedShapes: shapes onPosition: aPoint
 ]
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 OPCanvasPresenter >> signalUpdate [
-	roassalView signalUpdate
+	self canvas signalUpdate
 ]
 
-{ #category : #'selection handling' }
-OPCanvasPresenter >> viewClicked: anEvent [
-	self lastClickPosition: anEvent position.
-	self diagramController selectView
+{ #category : 'accessing' }
+OPCanvasPresenter >> whenExtentChangedDo:  aOneArgBlock [
+	onExtentChange := aOneArgBlock
 ]
 
-{ #category : #'selection handling' }
-OPCanvasPresenter >> viewContextClicked: anEvent [
-
-	(OPPragmaPluginMenuBuilder
-		 pragmaKeyword: #opCanvasContextMenu:
-		 model: self) menuSpec asMenuMorph popUpInWorld
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCanvasPresenter >> whenZoomChanged: aOneArgBlock [
 	onZoomChange := aOneArgBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCanvasPresenter >> workbench [
 	^ self editor workbench
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCanvasPresenter >> zoom [
-	"1: default zoom (it should be 1.0001, but who cares)
-	2: zoomed in to 200%"
+	"1: default zoom
+	 2: zoomed in to 200%"
 
-	^ roassalView canvas camera scale
+	^ self canvas camera scale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCanvasPresenter >> zoom: aScale [
-	"1: default zoom (it should be 1.0001, but who cares)
-	2: zoomed in to 200%"
+	"1: default zoom
+	 2: zoomed in to 200%"
 
 	(aScale between: 0.05 and: 4)
 		ifFalse: [ ^ self ].
-	roassalView canvas camera scale: aScale.
-	roassalView signalUpdate
+	self canvas camera scale: aScale.
+	self canvas signalUpdate
+]
+
+{ #category : 'as yet unclassified' }
+OPCanvasPresenter >> zoomToFit [
+
+	self canvas shapes
+		ifEmpty: [ self canvas camera scale: 1 ]
+		ifNotEmpty: [ self canvas zoomToFit ]
 ]

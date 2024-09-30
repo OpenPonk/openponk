@@ -2,19 +2,21 @@
 Basic vertex ordering for undirected graphs.
 "
 Class {
-	#name : #DCGTVertexOrdering,
-	#superclass : #DCGTAbstractVertexOrdering,
-	#category : 'DynaCASE-Layouting-DGT'
+	#name : 'DCGTVertexOrdering',
+	#superclass : 'DCGTAbstractVertexOrdering',
+	#category : 'DynaCASE-Layouting-DGT',
+	#package : 'DynaCASE-Layouting',
+	#tag : 'DGT'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCGTVertexOrdering >> firstVertexFor: aGraph [
 	| minDeg |
 	minDeg := (aGraph nodes collect: #inDegree) min.
 	^ (aGraph nodes select: [ :each | each inDegree = minDeg ]) detectMin: #outDegree
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCGTVertexOrdering >> orderingFor: aGraph [
 	| d rcl v perm graph |
 	graph := aGraph.

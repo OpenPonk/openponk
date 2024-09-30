@@ -1,95 +1,115 @@
 "
-I am baseline for the core and all-in-one dynacase.
-https://dynacase.github.io/
+I am baseline for the core of Openponk.
+https://openponk.org/
 "
 Class {
-	#name : #BaselineOfOpenPonk,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfOpenPonk
+	#name : 'BaselineOfOpenPonk',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfOpenPonk',
+	#package : 'BaselineOfOpenPonk'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfOpenPonk >> baseline: spec [
 
 	<baseline>
-	spec for: #common do: [ 
+	spec for: #common do: [
 		self externalProjectsBaseline: spec.
 		self internalProjectsBaseline: spec.
 		spec
-			package: 'OpenPonk-Trachel'
-			with: [ spec requires: #( 'Roassal2' ) ];
-			package: 'OpenPonk-Roassal2'
-			with: [ spec requires: #( 'OpenPonk-Trachel' ) ];
-			package: 'OpenPonk-Core' with: [ 
+			package: 'OpenPonk-Roassal'
+			with: [ spec requires: #( 'Roassal' 'RoassalExporters' ) ];
+			package: 'OpenPonk-Core' with: [
 				spec requires:
-						#( 'Magritte' 'Mocketry' 'XMLParser' 'XPath' 'NeoJSON' 'OpenPonk-Roassal2' ) ];
+						#( 'Magritte' 'Mocketry' 'XPath' 'NeoJSON' 'OpenPonk-Roassal' ) ];
 			package: 'OpenPonk-Morphic';
-			package: 'OpenPonk-Help';
-			package: 'OpenPonk-Spec' with: [ 
+			package: 'OpenPonk-Spec' with: [
 				spec requires:
-						#( 'Moose' 'FileDialog' 'Magritte' 'SynchronizedLinks'
-						   'OpenPonk-Morphic' ) ];
-			preLoadDoIt: #loadPetitParser.
+						#( 'NewTools' 'Magritte' 'SynchronizedLinks' 'OpenPonk-Morphic' ) ].
 		spec
 			group: 'default'
-			with: #( 'OpenPonk-Core' 'OpenPonk-Roassal2' 'OpenPonk-Morphic'
-				   'OpenPonk-Spec' 'OpenPonk-Help' ) ]
+			with: #( 'OpenPonk-Core' 'OpenPonk-Morphic' 'OpenPonk-Spec' ) ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 
-	spec baseline: 'XMLParser' with: [ 
+	spec
+		baseline: 'XPath'
+		with: [
+		spec repository: 'github://pharo-contributions/XML-XPath:v2.3.0' ].
+
+	spec baseline: 'Magritte' with: [
 		spec
-			repository: 'github://pharo-contributions/XML-XMLParser:3.5.x/src';
-			loads: #( Core ) ].
-	spec baseline: 'XPath' with: [ 
-		spec
-			repository: 'github://pharo-contributions/XML-XPath:3450f91/src';
-			loads: #( Core ) ].
-	spec baseline: 'Roassal2' with: [ 
-		spec
-			repository: 'github://ObjectProfile/Roassal2:v2.0.2/src';
-			loads: #( Core ) ].
-	spec baseline: 'Magritte' with: [ 
-		spec
-			repository: 'github://magritte-metamodel/magritte:dc9a440/source';
+			repository: 'github://JanBliznicenko/magritte:6d92c9d';
 			loads: #( Core 'Magritte-Morph' ) ].
-	spec baseline: 'Moose' with: [ 
-		spec
-			repository: 'github://moosetechnology/Moose:f2b6052/src';
-			loads: #( Merlin ) ].
+
 	spec
 		baseline: 'Mocketry'
-		with: [ spec repository: 'github://dionisiydk/Mocketry:v6.0.3' ].
+		with: [ spec repository: 'github://dionisiydk/Mocketry:v7.0.2' ].
+
 	spec
 		baseline: 'NeoJSON'
-		with: [ 
-		spec repository: 'github://svenvc/NeoJSON:a16e02b/repository' ]
+		with: [ spec repository: 'github://svenvc/NeoJSON:17efabc' ].
+
+	spec baseline: 'Roassal' with: [
+		spec
+			repository: 'github://pharo-graphics/Roassal:3af02a4';
+			loads: #Full;
+			postLoadDoIt: #removeRoassalExplicitRequirements ].
+
+	spec
+		baseline: 'RoassalExporters'
+		with: [
+		spec repository: 'github://pharo-graphics/RoassalExporters:v1.02' ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 
-	spec baseline: 'FileDialog' with: [ 
-		spec repository:
-			'github://peteruhnak/file-dialog:3faba6b/repository' ].
+	spec baseline: 'NewTools' with: [ 
+		spec
+			repository: 'github://pharo-spec/NewTools:Pharo12';
+			loads: #( FileBrowser ) ].
 	spec
 		baseline: 'SynchronizedLinks'
 		with: [ 
-		spec repository: 'github://openponk/synchronized-links:v3.0.x/repository' ]
+		spec repository: 'github://openponk/synchronized-links:v4.0.x/repository' ]
 ]
 
-{ #category : #'as yet unclassified' }
-BaselineOfOpenPonk >> loadPetitParser [
+{ #category : 'baselines' }
+BaselineOfOpenPonk >> removeExplicitRequirementsFromPackage: aPackageName [
 
-	"PetitParser is not needed by core OP. It is needed by BormEditor, but due to Pharo bug https://github.com/pharo-project/pharo/issues/9913 it must be always loaded before Roassal2 in Pharo 10"
+	| regExp packages |
+	regExp := '*' , aPackageName , '*'.
+	packages := PackageOrganizer default packages select: [ :each |
+		            regExp match: each name ].
+	packages do: [ :each |
+		Transcript crShow:
+			'Removing explicitRequirements from package ' , each name.
+		each classes select: #isTrait thenDo: [ :eachClass |
+			eachClass methods
+				select: [ :eachMethod |
+					eachMethod sourceCode includesSubstring:
+						'self explicitRequirement' ]
+				thenDo: #removeFromSystem ] ]
+]
 
-	Smalltalk at: #BaselineOfPetitParser ifPresent: [ ^ self ].
-	Metacello new
-		baseline: 'PetitParser';
-		repository: 'github://moosetechnology/PetitParser:v2.x.x/src';
-		load:
-			#( 'Core' 'Tests' 'Examples' 'Islands' 'Analyzer' 'Preprocessor'
-			   'Indent' 'Extension' 'TestsExtension' 'Parser' )
+{ #category : 'baselines' }
+BaselineOfOpenPonk >> removePackage: aPackageName [
+
+	| regExp packages |
+	regExp := '*' , aPackageName , '*'.
+	packages := PackageOrganizer default packages select: [ :each |
+		            regExp match: each name ].
+	packages do: [ :each |
+		Transcript crShow: 'Removing package ' , each name.
+		each removeFromSystem ]
+]
+
+{ #category : 'baselines' }
+BaselineOfOpenPonk >> removeRoassalExplicitRequirements [
+
+	#( Roassal Numeric RTree OpenPonk OP OntoUML ) do: [ :eachName |
+		self removeExplicitRequirementsFromPackage: eachName ]
 ]

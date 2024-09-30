@@ -1,15 +1,17 @@
 Class {
-	#name : #OPSugiyamaLayoutCommand,
-	#superclass : #OPLayoutDiagramCommand,
-	#category : #'OpenPonk-Spec-Layouting'
+	#name : 'OPSugiyamaLayoutCommand',
+	#superclass : 'OPLayoutDiagramCommand',
+	#category : 'OpenPonk-Spec-Layouting',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Layouting'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPSugiyamaLayoutCommand >> defaultMenuItemName [
 	^ 'Hierarchical'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPSugiyamaLayoutCommand >> execute [
 	layouter sugiyamaLayout
 ]

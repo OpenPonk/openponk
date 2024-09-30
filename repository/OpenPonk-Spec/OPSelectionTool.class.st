@@ -3,31 +3,51 @@ A palette item used for selecting items in the view.
 This class should not be used directly and is created automatically with every DCPalette.
 "
 Class {
-	#name : #OPSelectionTool,
-	#superclass : #OPPaletteTool,
+	#name : 'OPSelectionTool',
+	#superclass : 'OPPaletteTool',
 	#instVars : [
-		'selectedController'
+		'selectedControllers'
 	],
-	#category : #'OpenPonk-Spec-Palettes'
+	#category : 'OpenPonk-Spec-Palettes',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Palettes'
 }
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPSelectionTool >> deselect [
-	selectedController hideSelectionFeedback.
-	selectedController := OPPaletteNullController new.
-	self workbench openFormOn: nil
+
+	self disableMultiselect.
+	self selectedControllers: {  }
 ]
 
-{ #category : #protocol }
+{ #category : 'accessing' }
+OPSelectionTool >> palette: aPalette [
+
+	palette ifNotNil: [ 
+		self diagramController ifNotNil: [ :diagramController | 
+			diagramController announcer unsubscribe: self ] ].
+	super palette: aPalette
+]
+
+{ #category : 'protocol' }
 OPSelectionTool >> select [
-	selectedController := OPPaletteNullController new.
-	self diagramController whenHoverChanged: [ :ctrl |  ].
-	self diagramController whenSelectionChanged: [ :ctrl | self targetSelected: ctrl ]
+
+	self enableMultiselect.
+	selectedControllers := {  }
 ]
 
-{ #category : #protocol }
-OPSelectionTool >> targetSelected: aController [
-	selectedController hideSelectionFeedback.
-	(selectedController := aController) showSelectionFeedback.
-	self workbench openFormOn: selectedController
+{ #category : 'protocol' }
+OPSelectionTool >> selectedControllers: aCollectionOfControllers [
+
+	| originalFigures newFigures |
+	originalFigures := selectedControllers collect: #roassalShape.
+	newFigures := aCollectionOfControllers collect: #roassalShape.
+	originalFigures , newFigures
+		detect: #isSelectable
+		ifFound: [ :fig | 
+			(fig propertyAt: OPRSSelectable) doHighlightShapes: newFigures ].
+	selectedControllers := aCollectionOfControllers.
+	self editor openFormOn: (aCollectionOfControllers size = 1
+			 ifTrue: [ aCollectionOfControllers anyOne ]
+			 ifFalse: [ nil ])
 ]

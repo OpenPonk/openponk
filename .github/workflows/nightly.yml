@@ -20,71 +20,7 @@ env:
   RUN_ID: ${{ github.run_id }}
 
 jobs:
-
-  test-linux:
-    runs-on: ubuntu-latest
-    env:
-      PLATFORM: linux
-    name: 'Test Linux'
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2.3.4
-      - name: Load SmalltalkCI environment
-        uses: hpi-swa/setup-smalltalkCI@1.2.1
-        id: smalltalkci
-        with:
-          smalltalk-version: Pharo64-9.0
-      - name: Prepare image and test
-        run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
-        shell: bash
-        timeout-minutes: 10
-
-  test-win:
-    runs-on: windows-latest
-    env:
-      PLATFORM: win
-    name: 'Test Windows'
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2.3.4
-      - name: Load SmalltalkCI environment
-        uses: hpi-swa/setup-smalltalkCI@1.2.1
-        id: smalltalkci
-        with:
-          smalltalk-version: Pharo64-9.0
-      - name: Prepare image and test
-        run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
-        shell: bash
-        timeout-minutes: 15
-
-  create-dependent-matrix:
-    runs-on: ubuntu-latest
-    name: 'Find dependent repositories'
-    if: ${{ github.event_name == 'push' || contains(github.event.inputs.build-dependent || false, 'true') }}
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2.3.4
-      - name: Check list of repositories exists
-        id: check-file
-        run: test -f ./.github/dependent-repositories.txt || exit 1
-      - name: Create dependent build matrix
-        id: set-matrix
-        run: echo "::set-output name=matrix::`cat ./.github/dependent-repositories.txt | tr -d " \t\n\r"`"
-
-  build-dependent:
-    needs: [test-linux, test-win, create-dependent-matrix]
-    runs-on: ubuntu-latest
-    name: 'Build dependent'
-    if: ${{ contains(needs.create-dependent-matrix.outputs.matrix, '/') }}
-    strategy:
-      matrix: ${{fromJson(needs.create-dependent-matrix.outputs.matrix)}}
-    steps:
-      - name: Start ${{ matrix.repository }} build
-        uses: benc-uk/workflow-dispatch@v1.1.0
-        with:
-          workflow: Nightly
-          repo: ${{ matrix.repository }}
-          token: ${{ secrets.WORKFLOW_ACCESS_TOKEN }}
-          inputs: '{ "build-dependent": "${{ matrix.build-dependent }}" }'
+  OP:
+    uses: OpenPonk/ci-scripts/.github/workflows/test-nightly.yml@master
+    secrets:
+      WORKFLOW_ACCESS_TOKEN: ${{ secrets.WORKFLOW_ACCESS_TOKEN }}

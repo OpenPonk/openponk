@@ -1,25 +1,27 @@
 Class {
-	#name : #OPElementTextAttributeChanged,
-	#superclass : #Announcement,
+	#name : 'OPElementTextAttributeChanged',
+	#superclass : 'Announcement',
 	#instVars : [
 		'attributeName'
 	],
-	#category : #'OpenPonk-Core-UICommands'
+	#category : 'OpenPonk-Core-UICommands',
+	#package : 'OpenPonk-Core',
+	#tag : 'UICommands'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPElementTextAttributeChanged class >> withAttributeName: aString [
 	^ self new
 		attributeName: aString;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPElementTextAttributeChanged >> attributeName: aString [
 	attributeName := aString
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPElementTextAttributeChanged >> initialize [
 	attributeName := ''
 ]

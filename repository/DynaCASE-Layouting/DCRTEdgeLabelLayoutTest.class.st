@@ -1,6 +1,6 @@
 Class {
-	#name : #DCRTEdgeLabelLayoutTest,
-	#superclass : #TestCase,
+	#name : 'DCRTEdgeLabelLayoutTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'view',
 		'elements',
@@ -8,16 +8,18 @@ Class {
 		'layout',
 		'label'
 	],
-	#category : 'DynaCASE-Layouting-GlobalEdgeLabels'
+	#category : 'DynaCASE-Layouting-GlobalEdgeLabels',
+	#package : 'DynaCASE-Layouting',
+	#tag : 'GlobalEdgeLabels'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 DCRTEdgeLabelLayoutTest >> assertPosition: actual equals: expected [
 	#(#ranking #maxRanking #position #orientation #bounds)
 		do: [ :each | self assert: (actual perform: each) equals: (expected perform: each) ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DCRTEdgeLabelLayoutTest >> initialPositions [
 	^ {(DCRTLPosition new
 		ranking: 1 of: 3;
@@ -41,7 +43,7 @@ DCRTEdgeLabelLayoutTest >> initialPositions [
 		bounds: (-14 @ -39 corner: 24 @ -1))}
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DCRTEdgeLabelLayoutTest >> positions [
 	^ {(label
 		->
@@ -53,7 +55,7 @@ DCRTEdgeLabelLayoutTest >> positions [
 				index: 2)})} asOrderedDictionary
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 DCRTEdgeLabelLayoutTest >> setUp [
 	view := RTView new.
 	elements := RTBox new
@@ -74,7 +76,7 @@ DCRTEdgeLabelLayoutTest >> setUp [
 	layout labels: {label}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DCRTEdgeLabelLayoutTest >> testEdgeMarks [
 	| marks |
 	layout spacing: 30.
@@ -88,7 +90,7 @@ DCRTEdgeLabelLayoutTest >> testEdgeMarks [
 			(75 @ 0)}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DCRTEdgeLabelLayoutTest >> testIndexPositions [
 	| positions |
 	positions := layout removeFeatureOverlapsFor: label positions: self initialPositions.
@@ -99,7 +101,7 @@ DCRTEdgeLabelLayoutTest >> testIndexPositions [
 	self assert: positions second index equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DCRTEdgeLabelLayoutTest >> testInitialPositions [
 	| positions |
 	layout spacing: 50.
@@ -111,7 +113,7 @@ DCRTEdgeLabelLayoutTest >> testInitialPositions [
 	self assertPosition: positions fourth equals: self initialPositions fourth
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DCRTEdgeLabelLayoutTest >> testOverlapGraphFor [
 	| graph |
 	graph := layout overlapGraphFor: self positions.
@@ -121,7 +123,7 @@ DCRTEdgeLabelLayoutTest >> testOverlapGraphFor [
 	self assert: graph edges size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DCRTEdgeLabelLayoutTest >> testRemoveFeatureOverlaps [
 	| positions |
 	positions := layout removeFeatureOverlapsFor: label positions: self initialPositions.

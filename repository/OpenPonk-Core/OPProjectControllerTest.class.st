@@ -1,14 +1,16 @@
 Class {
-	#name : #OPProjectControllerTest,
-	#superclass : #TestCase,
+	#name : 'OPProjectControllerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'controller',
 		'project'
 	],
-	#category : #'OpenPonk-Core-Tests'
+	#category : 'OpenPonk-Core-Tests',
+	#package : 'OpenPonk-Core',
+	#tag : 'Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 OPProjectControllerTest >> setUp [
 	controller := OPProjectController new.
 	project := OPProject new.
@@ -16,12 +18,12 @@ OPProjectControllerTest >> setUp [
 	OPPluginRegistry setDefault: (OPPluginRegistry new add: OPTestPlugin new)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OPProjectControllerTest >> tearDown [
 	OPPluginRegistry resetDefault
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPProjectControllerTest >> testAddController [
 
 	| dc model |
@@ -32,7 +34,7 @@ OPProjectControllerTest >> testAddController [
 	self assert: controller controllers asArray equals: { dc }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPProjectControllerTest >> testRemoveController [
 	| dc model |
 	dc := OPDiagramController new.
@@ -44,7 +46,7 @@ OPProjectControllerTest >> testRemoveController [
 	self deny: (model announcer hasSubscriber: controller)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPProjectControllerTest >> testSaveProjectEmpty [
 	| root store |
 	root := FileSystem memory / 'project.opp'.
@@ -56,8 +58,9 @@ OPProjectControllerTest >> testSaveProjectEmpty [
 	self assert: (store / 'project' / 'project.json') exists
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPProjectControllerTest >> testSaveProjectWithModel [
+
 	| memoryRoot root |
 	project addModel: OPTestContainerModel new.
 	memoryRoot := FileSystem memory / 'project'.
@@ -68,8 +71,10 @@ OPProjectControllerTest >> testSaveProjectWithModel [
 	self assert: (root / 'project' / 'project.json') exists.
 	self
 		assert: ((root / 'project' / 'models') children collect: #basename)
-		equals: {project models first uuid asString}.
+		equals: { project models first uuid asString }.
 	self
-		assert: ((root / 'project' / 'models') children anyOne children collect: #basename)
-		equals: (Array with: 'model.ston')
+		assertCollection:
+			(((root / 'project' / 'models') children anyOne / 'model') children 
+				 collect: #basename)
+		includesAll: (Array with: 'model.ston')
 ]

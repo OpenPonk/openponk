@@ -1,31 +1,33 @@
 Class {
-	#name : #DCRTLGraph,
-	#superclass : #Object,
+	#name : 'DCRTLGraph',
+	#superclass : 'Object',
 	#instVars : [
 		'nodes',
 		'edges'
 	],
-	#category : 'DynaCASE-Layouting-GlobalEdgeLabels'
+	#category : 'DynaCASE-Layouting-GlobalEdgeLabels',
+	#package : 'DynaCASE-Layouting',
+	#tag : 'GlobalEdgeLabels'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLGraph >> edges [
 	^ edges
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLGraph >> edges: aCollection [
 	edges := aCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DCRTLGraph >> initialize [
 	super initialize.
 	edges := OrderedCollection new.
 	nodes := OrderedCollection new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTLGraph >> neighborsOf: aNode [
 	^ edges
 		select: [ :pair | pair key = aNode | (pair value = aNode) ]
@@ -35,12 +37,12 @@ DCRTLGraph >> neighborsOf: aNode [
 				ifFalse: [ pair key ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLGraph >> nodes [
 	^ nodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTLGraph >> nodes: aCollection [
 	nodes := aCollection
 ]

@@ -1,22 +1,18 @@
 Class {
-	#name : #OPIdeaWelcomeIcons,
-	#superclass : #Object,
-	#classVars : [
-		'icons'
-	],
-	#category : #'OpenPonk-Core-Icons'
+	#name : 'OPIdeaWelcomeIcons',
+	#superclass : 'OPIcons',
+	#category : 'OpenPonk-Core-Icons',
+	#package : 'OpenPonk-Core',
+	#tag : 'Icons'
 }
 
-{ #category : #'accessing - icons' }
+{ #category : 'accessing - icons' }
 OPIdeaWelcomeIcons class >> createNewProjectIcon [
-	"Private - Generated method"
-	^ self icons
-		at: #createNewProjectIcon
-		ifAbsentPut: [ Form
-				fromBinaryStream: (self createNewProjectIconContents base64Decoded asByteArray readStream) ]
+
+	^ Form fromBinaryStream: self createNewProjectIconContents base64Decoded asByteArray readStream
 ]
 
-{ #category : #'private - contents' }
+{ #category : 'private - contents' }
 OPIdeaWelcomeIcons class >> createNewProjectIconContents [
 	"Private - Method generated with the content of the file File @ D:\OpenPonk\icons\idea\welcome\createNewProject.png"
 	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAfElEQVR42mNgwAMuTVLQBmJZ
@@ -25,39 +21,13 @@ kEVSiAvLEgr1E3g0g+S0sdnaSEAjNoMawa6h2ACKvUDtQCQ/GilOSBQnZYozEx5vaeNTAwCa
 VyUU/OC4vAAAAABJRU5ErkJggg=='
 ]
 
-{ #category : #'GT-InspectorExtensions' }
-OPIdeaWelcomeIcons class >> gtInspectorIconsIn: composite [
-	<gtInspectorPresentationOrder: 0>
-	<script: 'self inspect'>
-	composite table
-		title: 'Icons';
-		display: [ (self class selectorsInCategory: 'accessing - icons') sorted
-				collect: [ :each | each -> (self perform: each) ] ];
-		column: 'Icon' evaluated: #value width: 50;
-		column: 'Selector' evaluated: #key
-]
-
-{ #category : #initialization }
-OPIdeaWelcomeIcons class >> iconSelectors [
-
-	^ self class selectorsInCategory: 'accessing - icons'
-]
-
-{ #category : #accessing }
-OPIdeaWelcomeIcons class >> icons [
-	^ icons ifNil: [ icons := Dictionary new ]
-]
-
-{ #category : #'accessing - icons' }
+{ #category : 'accessing - icons' }
 OPIdeaWelcomeIcons class >> importProjectIcon [
-	"Private - Generated method"
-	^ self icons
-		at: #importProjectIcon
-		ifAbsentPut: [ Form
-				fromBinaryStream: (self importProjectIconContents base64Decoded asByteArray readStream) ]
+
+	^ Form fromBinaryStream: self importProjectIconContents base64Decoded asByteArray readStream
 ]
 
-{ #category : #'private - contents' }
+{ #category : 'private - contents' }
 OPIdeaWelcomeIcons class >> importProjectIconContents [
 	"Private - Method generated with the content of the file File @ D:\OpenPonk\icons\idea\welcome\importProject.png"
 	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAX0lEQVR42mNgIANMLV/Ox0Au
@@ -65,56 +35,16 @@ AGrWBuLrQBxGieanIJoizSA+IQ27YH4lWTNU01OoIZYENc9avuEMMkYyABnjtplIAyxxOpdI
 A3bhjH8iDcBtCDYDSALoBmDDw90ASgAAsEIRZbX5U38AAAAASUVORK5CYII='
 ]
 
-{ #category : #'gt-inspector' }
-OPIdeaWelcomeIcons class >> inspectionIcons [
-
-	<inspectorPresentationOrder: 40 title: 'Icons'>
-	<script: 'self inspect'>
-	| selectorsByForms |
-	selectorsByForms := (self iconSelectors collect: [ :each | 
-		                     ([ self perform: each ]
-			                      on: Deprecation
-			                      do: #resume) -> each ]) asDictionary.
-	^ SpTablePresenter new
-		  items:
-			  (selectorsByForms keys sortedAs: [ :each | 
-					   selectorsByForms at: each ]);
-		  addColumn: (SpImageTableColumn new
-				   title: 'Icon';
-				   evaluated: [ :each | 
-					   [ 
-					   each scaledToSize:
-							   (50 min: each width) @ (16 min: each height) ]
-						   on: Deprecation
-						   do: #resume ];
-				   width: 50;
-				   yourself);
-		  addColumn: (SpStringTableColumn new
-				   title: 'Name';
-				   evaluated: [ :each | selectorsByForms at: each ];
-				   yourself);
-		  yourself
-]
-
-{ #category : #'accessing - icons' }
+{ #category : 'accessing - icons' }
 OPIdeaWelcomeIcons class >> openProjectIcon [
-	"Private - Generated method"
-	^ self icons
-		at: #openProjectIcon
-		ifAbsentPut: [ Form
-				fromBinaryStream: (self openProjectIconContents base64Decoded asByteArray readStream) ]
+
+	^ Form fromBinaryStream: self openProjectIconContents base64Decoded asByteArray readStream
 ]
 
-{ #category : #'private - contents' }
+{ #category : 'private - contents' }
 OPIdeaWelcomeIcons class >> openProjectIconContents [
 	"Private - Method generated with the content of the file File @ D:\OpenPonk\icons\idea\welcome\openProject.png"
 	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAASklEQVR42mNgGB5g1vINm7Dg
 FEoNAOF8Sg3AiWlmgDMlgTjn5mLnMCB+SgI+gWyAM0iARAPCYAaQbzvUAPJtBwGKbIcaQL7t
 Aw4AGOxGhu4o5hAAAAAASUVORK5CYII='
-]
-
-{ #category : #'accessing - reset' }
-OPIdeaWelcomeIcons class >> resetIcons [
-	<script>
-	^ icons := nil
 ]

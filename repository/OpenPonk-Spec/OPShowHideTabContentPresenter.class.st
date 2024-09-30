@@ -1,53 +1,57 @@
 Class {
-	#name : #OPShowHideTabContentPresenter,
-	#superclass : #SpPresenter,
+	#name : 'OPShowHideTabContentPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'diagramController',
 		'tree',
 		'selectedItems',
 		'adapters'
 	],
-	#category : #'OpenPonk-Spec-Dialogs'
+	#category : 'OpenPonk-Spec-Dialogs',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Dialogs'
 }
 
-{ #category : #specs }
-OPShowHideTabContentPresenter class >> defaultSpec [
-	^ SpBoxLayout newVertical
-		add: #tree;
-		yourself
+{ #category : 'as yet unclassified' }
+OPShowHideTabContentPresenter class >> defaultLayout [
+
+	^ SpBoxLayout newTopToBottom
+		  add: #tree;
+		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShowHideTabContentPresenter >> childrenFor: anItem [
 	^ self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPShowHideTabContentPresenter >> connectPresenters [
+
 	self whenSelectionChangedDo: [ self updateSelectedItems ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPShowHideTabContentPresenter >> findSelectedItems [
 	^ self subclassResponsibility
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OPShowHideTabContentPresenter >> hasIcon [
 	^ self class includesSelector: #iconFor:
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OPShowHideTabContentPresenter >> iconFor: anItem [
 	^ nil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPShowHideTabContentPresenter >> initialRoots [
 	^ self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPShowHideTabContentPresenter >> initializePresenters [
 
 	| mainColumn |
@@ -80,17 +84,17 @@ OPShowHideTabContentPresenter >> initializePresenters [
 			buildWidget widget dataSource rootItem expandAll ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPShowHideTabContentPresenter >> isSelected: anItem [
 	^ self selectedItems includes: anItem
 ]
 
-{ #category : #general }
+{ #category : 'general' }
 OPShowHideTabContentPresenter >> nameFor: anItem [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShowHideTabContentPresenter >> processAndUpdateSelected: anAddedItem [
 	| addedElements |
 	addedElements := self selected: anAddedItem.
@@ -98,7 +102,7 @@ OPShowHideTabContentPresenter >> processAndUpdateSelected: anAddedItem [
 		announce: (OPShowHideElementsSelected elements: addedElements)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShowHideTabContentPresenter >> processAndUpdateUnselected: aRemovedItem [
 	| removedElements |
 	removedElements := self unselected: aRemovedItem.
@@ -106,39 +110,42 @@ OPShowHideTabContentPresenter >> processAndUpdateUnselected: aRemovedItem [
 		announce: (OPShowHideElementsUnselected elements: removedElements)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShowHideTabContentPresenter >> selected: anAddedItem [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShowHideTabContentPresenter >> selectedItems [
 	^ selectedItems ifNil: [ self updateSelectedItems ]
 ]
 
-{ #category : #'accessing model' }
+{ #category : 'accessing model' }
 OPShowHideTabContentPresenter >> setModelBeforeInitialization: aDiagramController [
+
 	diagramController := aDiagramController.
-	adapters := OPNavigatorAdapters default
+	adapters := diagramController editor workbench projectController
+		            navigatorAdapters
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShowHideTabContentPresenter >> unselected: aRemovedItem [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPShowHideTabContentPresenter >> updateSelectedItems [
+
 	selectedItems := self findSelectedItems.
-	tree adapter
-		ifNotNil: [ :treeAdapter | 
-			treeAdapter widget dataSource
-				updateData;
-				expandAll ].
+	tree refresh.
 	^ selectedItems
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 OPShowHideTabContentPresenter >> whenSelectionChangedDo: aBlock [
-	^ self announcer when: OPShowHideSelectionChanged do: aBlock
+
+	^ self announcer
+		  when: OPShowHideSelectionChanged
+		  do: aBlock
+		  for: (aBlock receiver ifNil: [ self ])
 ]

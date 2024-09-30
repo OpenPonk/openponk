@@ -1,42 +1,45 @@
-"
-I represent camera positioning over the view.
-"
 Class {
-	#name : #OPDiagramCamera,
-	#superclass : #Object,
+	#name : 'OPDiagramCamera',
+	#superclass : 'Object',
 	#instVars : [
-		'offset',
-		'zoom'
+		'scale',
+		'position'
 	],
-	#category : #'OpenPonk-Core-Diagrams'
+	#category : 'OpenPonk-Core-Shapes',
+	#package : 'OpenPonk-Core',
+	#tag : 'Shapes'
 }
 
-{ #category : #accessing }
-OPDiagramCamera class >> neoJsonMapping: mapper [
-	mapper
-		for: self
-			do: [ :mapping | 
-			mapping mapInstVars.
-			(mapping mapInstVar: #offset) valueSchema: Point ];
-		mapInstVarsFor: Point
+{ #category : 'instance creation' }
+OPDiagramCamera class >> newFrom: aCamera [
+
+	^ self new
+		  scale: aCamera scale;
+		  position: aCamera position;
+		  yourself
 ]
 
-{ #category : #accessing }
-OPDiagramCamera >> offset [
-	^ offset
+{ #category : 'accessing' }
+OPDiagramCamera >> position [
+	^ position
 ]
 
-{ #category : #accessing }
-OPDiagramCamera >> offset: anObject [
-	offset := anObject
+{ #category : 'accessing' }
+OPDiagramCamera >> position: aPoint [
+
+	position := aPoint
 ]
 
-{ #category : #accessing }
-OPDiagramCamera >> zoom [
-	^ zoom
+{ #category : 'accessing' }
+OPDiagramCamera >> scale: aNumber [ 
+	scale := aNumber
 ]
 
-{ #category : #accessing }
-OPDiagramCamera >> zoom: anObject [
-	zoom := anObject
+{ #category : 'roassal' }
+OPDiagramCamera >> updateRoassalCamera: aRSCamera [
+
+	scale ifNotNil: [ aRSCamera scale: scale ].
+	self position ifNotNil: [ :position | 
+		aRSCamera translateTo: position ].
+	^ aRSCamera
 ]

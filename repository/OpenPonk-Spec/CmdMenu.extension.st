@@ -1,6 +1,6 @@
-Extension { #name : #CmdMenu }
+Extension { #name : 'CmdMenu' }
 
-{ #category : #'*OpenPonk-Spec' }
+{ #category : '*OpenPonk-Spec' }
 CmdMenu >> buildSpecMenuOn: aMenu [
 	rootGroup buildSpecMenuOn: aMenu
 ]

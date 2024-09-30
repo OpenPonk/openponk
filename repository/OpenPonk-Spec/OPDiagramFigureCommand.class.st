@@ -2,26 +2,31 @@
 I am command for figure context menu.
 "
 Class {
-	#name : #OPDiagramFigureCommand,
-	#superclass : #CmdCommand,
+	#name : 'OPDiagramFigureCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
-		'figure',
-		'view',
+		'canvas',
 		'diagramController',
 		'figures',
 		'models',
-		'controllers'
+		'controllers',
+		'diagramElements'
 	],
-	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
+	#classInstVars : [
+		'lastEvent'
+	],
+	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Diagram-Figure-Commands'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 OPDiagramFigureCommand class >> contextMenuActivation [
 	<classAnnotation>
 	^ CmdContextMenuActivation byRootGroupItemFor: OPCanvasPresenter
 ]
 
-{ #category : #example }
+{ #category : 'example' }
 OPDiagramFigureCommand class >> example [
 	| proj model |
 	proj := OPProject new.
@@ -31,7 +36,7 @@ OPDiagramFigureCommand class >> example [
 	proj open
 ]
 
-{ #category : #example }
+{ #category : 'example' }
 OPDiagramFigureCommand class >> example2 [
 	| c a |
 	c := OPCanvasPresenter new.
@@ -41,18 +46,19 @@ OPDiagramFigureCommand class >> example2 [
 	a openInWindow
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPDiagramFigureCommand class >> isAbstract [
 	^ self = OPDiagramFigureCommand
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPDiagramFigureCommand >> prepareFullExecutionInContext: aToolContext [
+
 	super prepareFullExecutionInContext: aToolContext.
 	diagramController := aToolContext diagramController.
-	view := diagramController view.
+	canvas := diagramController canvas.
 	figures := aToolContext figures.
-	figure := aToolContext figure.
 	models := aToolContext models.
-	controllers := aToolContext controllers
+	controllers := aToolContext controllers.
+	diagramElements := aToolContext diagramElements.
 ]

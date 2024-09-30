@@ -1,6 +1,6 @@
 Class {
-	#name : #OPUpdater,
-	#superclass : #SpPresenter,
+	#name : 'OPUpdater',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'version',
 		'lastVersion',
@@ -14,73 +14,76 @@ Class {
 		'lastVersionInfo',
 		'lastNightlyVersionInfo'
 	],
-	#category : #'OpenPonk-Spec-Dialogs'
+	#category : 'OpenPonk-Spec-Dialogs',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Dialogs'
 }
 
-{ #category : #specs }
-OPUpdater class >> defaultSpec [
-	^ SpBoxLayout newVertical
-		borderWidth: 5;
-		add:
-			(SpBoxLayout newHorizontal
-					spacing: 5;
-					add: SpBoxLayout newVertical;
-					add: #repositoryNameLabel expand: false;
-					add: #repositoryName expand: false;
-					add: SpBoxLayout newVertical;
-					yourself)
-			expand: false
-			fill: false
-			padding: 12;
-		add:
-			(SpBoxLayout newHorizontal
-				spacing: 5;
-				add:
-					(SpBoxLayout newVertical
-						add: #versionInfoLabel height: self labelHeight * 1.6;
-						add: #versionInfo);
-				add:
-					(SpBoxLayout newVertical
-						add: #lastVersionInfoLabel height: self labelHeight * 1.6;
-						add: #lastVersionInfo;
-						yourself);
-				add:
-					(SpBoxLayout newVertical
-						add: #lastNightlyVersionInfoLabel
-							height: self labelHeight * 1.6;
-						add: #lastNightlyVersionInfo;
-						yourself);
-				yourself);
-		yourself
+{ #category : 'as yet unclassified' }
+OPUpdater class >> defaultLayout [
+
+	^ SpBoxLayout newTopToBottom
+		  borderWidth: 5;
+		  add: (SpBoxLayout newLeftToRight
+				   spacing: 5;
+				   add: SpBoxLayout newTopToBottom;
+				   add: #repositoryNameLabel expand: false;
+				   add: #repositoryName expand: false;
+				   add: SpBoxLayout newTopToBottom;
+				   yourself)
+		  expand: false
+		  fill: false
+		  padding: 12;
+		  add: (SpBoxLayout newLeftToRight
+				   spacing: 5;
+				   add: (SpBoxLayout newTopToBottom
+						    add: #versionInfoLabel height: self labelHeight * 1.6;
+						    add: #versionInfo);
+				   add: (SpBoxLayout newTopToBottom
+						    add: #lastVersionInfoLabel height: self labelHeight * 1.6;
+						    add: #lastVersionInfo;
+						    yourself);
+				   add: (SpBoxLayout newTopToBottom
+						    add: #lastNightlyVersionInfoLabel
+						    height: self labelHeight * 1.6;
+						    add: #lastNightlyVersionInfo;
+						    yourself);
+				   yourself);
+		  yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPUpdater >> connectPresenters [
-	version needsDownloadInfo
-		ifFalse: [ ^ self currentVersionInfoLoaded ].
-	version canDownloadInfo
-		ifTrue: [ versionInfo onInfoDownloadDo: [ self currentVersionInfoLoaded ] ]
+
+	version needsDownloadInfo ifFalse: [ ^ self currentVersionInfoLoaded ].
+	version canDownloadInfo ifTrue: [
+		versionInfo onInfoDownloadDo: [ self currentVersionInfoLoaded ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPUpdater >> currentVersionInfoLoaded [
-	[ [ lastVersion := version getOfLatestRelease.
-	lastVersion
-		ifNil: [ lastVersionInfo label: 'Unknown.' ]
-		ifNotNil: [ lastVersionInfo := OPVersionInfo
-				newApplication: self application
-				model: lastVersion.
-			self update ] ]
+
+	[
+	[
+	lastVersion := version getOfLatestRelease.
+	lastVersion ifNil: [ lastVersionInfo label: 'Unknown.' ] ifNotNil: [
+		lastVersionInfo := OPVersionInfo
+			                   newApplication: self application
+			                   model: lastVersion.
+		self update ] ]
 		on: ZnHttpUnsuccessful
 		do: [ lastVersionInfo label: 'Failed to download info.' ] ]
 		forkAt: Processor userBackgroundPriority
 		named: 'Loading OpenPonk latest release info from GitHub'.
-	[ [ lastNightlyVersion := version getOfLatestNightlyBuild.
+	[
+	[
+	lastNightlyVersion := version getOfLatestNightlyBuild.
 	lastNightlyVersion
 		ifNil: [ lastNightlyVersionInfo label: 'Unknown.' ]
-		ifNotNil: [ lastNightlyVersionInfo := OPVersionInfo
-				newApplication: self application
-				model: lastNightlyVersion.
+		ifNotNil: [
+			lastNightlyVersionInfo := OPVersionInfo
+				                          newApplication: self application
+				                          model: lastNightlyVersion.
 			self update ] ]
 		on: ZnHttpUnsuccessful
 		do: [ lastNightlyVersionInfo label: 'Failed to download info.' ] ]
@@ -88,7 +91,7 @@ OPUpdater >> currentVersionInfoLoaded [
 		named: 'Loading OpenPonk nightly build info from GitHub'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPUpdater >> initializePresenters [
 	repositoryNameLabel := self newLabel.
 	repositoryNameLabel label: 'Plugin build / repository: '.
@@ -123,9 +126,10 @@ OPUpdater >> initializePresenters [
 	lastNightlyVersionInfo := self newLabel label: 'Unable to determine.'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPUpdater >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 		title: 'OpenPonk version info';
-		initialExtent: 700 @ 210
+		initialExtent: 720 @ 200.
+	aWindowPresenter windowIcon: OPCoreIcons openponkIcon
 ]

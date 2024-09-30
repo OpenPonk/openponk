@@ -1,6 +1,6 @@
-Extension { #name : #CmdCommandMenuItem }
+Extension { #name : 'CmdCommandMenuItem' }
 
-{ #category : #'*OpenPonk-Spec' }
+{ #category : '*OpenPonk-Spec' }
 CmdCommandMenuItem >> buildSpecMenuOn: aGroup [
 	activator buildSpecMenuOn: aGroup
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #NeoJSONObjectMapping }
+Extension { #name : 'NeoJSONObjectMapping' }
 
-{ #category : #'*OpenPonk-Core' }
+{ #category : '*OpenPonk-Core' }
 NeoJSONObjectMapping >> sortProperties [
 	properties := properties sorted: #propertyName ascending
 ]

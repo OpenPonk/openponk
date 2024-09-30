@@ -2,42 +2,45 @@
 I am a mock class for testing ""regular"" model controllers.
 "
 Class {
-	#name : #OPTestEntityController,
-	#superclass : #OPElementController,
-	#category : #'OpenPonk-Core-Controllers - Tests'
+	#name : 'OPTestEntityController',
+	#superclass : 'OPElementController',
+	#category : 'OpenPonk-Core-Controllers-Tests',
+	#package : 'OpenPonk-Core',
+	#tag : 'Controllers-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPTestEntityController >> canBeSourceFor: aController [
 	^ aController modelClass = OPTestRelationModel
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPTestEntityController >> canBeTargetFor: aController [
 	^ aController modelClass = OPTestRelationModel
 ]
 
-{ #category : #connecting }
-OPTestEntityController >> modelAsParent [
-	^ self diagramController model
+{ #category : 'construction' }
+OPTestEntityController >> diagramElementClass [
+
+	^ OPTestDiagramElement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTestEntityController >> modelClass [
 	^ OPTestEntityModel
 ]
 
-{ #category : #destruction }
-OPTestEntityController >> removeModel [
-	| ownerModel |
-	ownerModel := self diagramController model.
-	ownerModel entities remove: self model
+{ #category : 'connecting' }
+OPTestEntityController >> parentContainerModel [
+
+	^ self diagramController model
 ]
 
-{ #category : #construction }
-OPTestEntityController >> renderFigureIn: aView [
-	self diagramController addingFigureFor: self.
-	figure := RTBox new size: 50; elementOn: self model.
-	aView add: figure.
-	^ self diagramController addedFigureFor: self
+{ #category : 'destruction' }
+OPTestEntityController >> removeModel [
+
+	| ownerModel |
+	ownerModel := self diagramController model.
+	ownerModel entities remove: self model.
+	super removeModel
 ]

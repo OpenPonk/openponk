@@ -2,12 +2,14 @@
 I take a graph and produce a collection of (noncomplete) connected clusters.
 "
 Class {
-	#name : #DCRTLClusters,
-	#superclass : #Object,
-	#category : 'DynaCASE-Layouting-GlobalEdgeLabels'
+	#name : 'DCRTLClusters',
+	#superclass : 'Object',
+	#category : 'DynaCASE-Layouting-GlobalEdgeLabels',
+	#package : 'DynaCASE-Layouting',
+	#tag : 'GlobalEdgeLabels'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTLClusters >> clusterGraphsFor: anOverlapGraph [
 	| clusters graph |
 	clusters := self clustersFor: anOverlapGraph.
@@ -28,7 +30,7 @@ DCRTLClusters >> clusterGraphsFor: anOverlapGraph [
 			graph ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTLClusters >> clustersFor: anOverlapGraph [
 	| classGraph clusters |
 	(classGraph := MalGraphStructure new).
@@ -66,7 +68,7 @@ DCRTLClusters >> clustersFor: anOverlapGraph [
 		removeDuplicates asArray
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTLClusters >> completeClusterFor: aGraph [
 	| degrees removed |
 	(self isComplete: aGraph)
@@ -78,12 +80,12 @@ DCRTLClusters >> completeClusterFor: aGraph [
 	^ self completeClustersFor: (self clusterGraphsFor: aGraph)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTLClusters >> completeClustersFor: clusterGraphs [
 	^ clusterGraphs flatCollect: [ :each | self completeClusterFor: each ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTLClusters >> isComplete: aGraph [
 	"|E| = |N|*(|N|-1)/2"
 

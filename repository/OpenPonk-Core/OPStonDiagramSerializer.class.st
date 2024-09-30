@@ -1,30 +1,42 @@
 Class {
-	#name : #OPStonDiagramSerializer,
-	#superclass : #OPDiagramSerializer,
-	#category : #'OpenPonk-Core-Persistence'
+	#name : 'OPStonDiagramSerializer',
+	#superclass : 'OPDiagramSerializer',
+	#category : 'OpenPonk-Core-Persistence',
+	#package : 'OpenPonk-Core',
+	#tag : 'Persistence'
 }
 
-{ #category : #accessing }
-OPStonDiagramSerializer >> formatName [
-	^ 'ston'
+{ #category : 'as yet unclassified' }
+OPStonDiagramSerializer class >> exportVersion [
+
+	^ 2
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'formatting' }
+OPStonDiagramSerializer class >> formatName [
+
+	^ #ston
+]
+
+{ #category : 'accessing' }
+OPStonDiagramSerializer class >> minImportVersion [
+
+	^ 1
+]
+
+{ #category : 'serialize/materialize' }
 OPStonDiagramSerializer >> materializeDiagramOf: aModel from: aStream [
-	^ self stonMaterialize: aStream
+
+	| diagram innerElements |
+	diagram := STON fromStream: aStream.
+	innerElements := OPNavigatorAdapters new allChildrenFor: aModel.
+	diagram resolveAllModelElements:
+		(innerElements asArray copyWith: aModel).
+	^ diagram
 ]
 
-{ #category : #'ston - serialize/materialize' }
-OPStonDiagramSerializer >> serialize: anObject [
-	^ STON toStringPretty: anObject
-]
+{ #category : 'serialize/materialize' }
+OPStonDiagramSerializer >> serializeDiagram: aDiagram to: aStream [
 
-{ #category : #'serialize/materialize' }
-OPStonDiagramSerializer >> serializeDiagram: aDiagramMemento [
-	^ self serialize: aDiagramMemento
-]
-
-{ #category : #'ston - serialize/materialize' }
-OPStonDiagramSerializer >> stonMaterialize: aString [
-	^ STON fromString: aString
+	^ STON put: aDiagram onStreamPretty: aStream
 ]

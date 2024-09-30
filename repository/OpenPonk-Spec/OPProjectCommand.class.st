@@ -2,22 +2,24 @@
 I am a base class for workbench toolbar commands.
 "
 Class {
-	#name : #OPProjectCommand,
-	#superclass : #CmdCommand,
+	#name : 'OPProjectCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'workbenchToolbar',
 		'projectController',
 		'workbench'
 	],
-	#category : #'OpenPonk-Spec-Commands'
+	#category : 'OpenPonk-Spec-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Commands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPProjectCommand class >> isAbstract [
 	^ self = OPProjectCommand
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 OPProjectCommand class >> toolbarMenuActivation [
 	<classAnnotation>
 	^ OPWorkbenchActivation
@@ -25,7 +27,7 @@ OPProjectCommand class >> toolbarMenuActivation [
 		for: OPWorkbenchToolbar
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	workbenchToolbar := aToolContext.

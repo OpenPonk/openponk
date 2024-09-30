@@ -4,36 +4,38 @@ I create new controllers for models.
 Controllers are registered for models and optionally with a condition further clarifying the nature of the model required for the controller.
 "
 Class {
-	#name : #OPControllerFactory,
-	#superclass : #Object,
+	#name : 'OPControllerFactory',
+	#superclass : 'Object',
 	#instVars : [
 		'registrations'
 	],
-	#category : #'OpenPonk-Core-Controllers'
+	#category : 'OpenPonk-Core-Controllers',
+	#package : 'OpenPonk-Core',
+	#tag : 'Controllers'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPControllerFactory class >> withCommonElements [
 	^ self new registerCommonElements
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 OPControllerFactory >> acceptAllCondition [
 	^ [ :aModel | true ]
 ]
 
-{ #category : #'api - testing' }
+{ #category : 'api - testing' }
 OPControllerFactory >> hasControllerFor: aModel [
 	^ registrations anySatisfy: [ :each | each isForModel: aModel ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPControllerFactory >> initialize [
 	super initialize.
 	registrations := OrderedCollection new
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 OPControllerFactory >> newControllerFor: aModel [
 	| controller |
 	controller := (registrations detect: [ :each | each isForModel: aModel ]) controllerClass
@@ -42,12 +44,12 @@ OPControllerFactory >> newControllerFor: aModel [
 	^ controller
 ]
 
-{ #category : #'api - registration' }
+{ #category : 'api - registration' }
 OPControllerFactory >> register: aControllerClass forModel: aModelClass [
 	self register: aControllerClass forModel: aModelClass condition: self acceptAllCondition
 ]
 
-{ #category : #'api - registration' }
+{ #category : 'api - registration' }
 OPControllerFactory >> register: aControllerClass forModel: aModelClass condition: aConditionBlock [
 	registrations
 		add:
@@ -57,13 +59,13 @@ OPControllerFactory >> register: aControllerClass forModel: aModelClass conditio
 				condition: aConditionBlock)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPControllerFactory >> registerCommonElements [
 	OPCommonElementController
 		allSubclassesDo: [ :each | self register: each forModel: each modelClass ]
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 OPControllerFactory >> registrationClass [
 	^ OPControllerFactoryRegistration
 ]

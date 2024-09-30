@@ -2,27 +2,29 @@
 Fire me on any DiagramController's MODEL and the Editor operating on the model will be closed. If it doesn't exist then nothing will happen.
 "
 Class {
-	#name : #OPCloseEditorRequest,
-	#superclass : #Announcement,
+	#name : 'OPCloseEditorRequest',
+	#superclass : 'Announcement',
 	#instVars : [
 		'model'
 	],
-	#category : #'OpenPonk-Core-Announcements'
+	#category : 'OpenPonk-Core-Announcements',
+	#package : 'OpenPonk-Core',
+	#tag : 'Announcements'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCloseEditorRequest class >> model: aModel [
 	^ self new
 		model: aModel;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCloseEditorRequest >> model [
 	^ model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCloseEditorRequest >> model: anObject [
 	model := anObject
 ]

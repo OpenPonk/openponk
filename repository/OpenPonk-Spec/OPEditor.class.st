@@ -4,161 +4,209 @@ I consist of canvas (Roassal's RTView) and a palette which depends on the type o
 I am bound with a diagram package and cannot live without it.
 "
 Class {
-	#name : #OPEditor,
-	#superclass : #ComposablePresenter,
+	#name : 'OPEditor',
+	#superclass : 'SpPresenter',
 	#instVars : [
-		'canvasModel',
-		'paletteModel',
 		'workbench',
-		'canvasMenuModel',
-		'formModel',
 		'zoomLabel',
 		'diagramController',
 		'plugin',
-		'shortcuts'
+		'canvasPresenter',
+		'canvasMenu',
+		'form',
+		'palette'
 	],
-	#category : #'OpenPonk-Spec-Windows'
+	#classInstVars : [
+		'currentLayout'
+	],
+	#category : 'OpenPonk-Spec-Windows',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Windows'
 }
 
-{ #category : #toolbar }
+{ #category : 'settings' }
+OPEditor class >> availableLayoutNames [
+
+	^ self availableLayouts collect: #name
+]
+
+{ #category : 'settings' }
+OPEditor class >> availableLayouts [
+
+	^ OPEditorLayout all
+]
+
+{ #category : 'settings' }
+OPEditor class >> canvasSectionWidth [
+
+	^ OPWorkbench initialExtent x - OPWorkbench initialListsWidth
+	  - OPPalette initialWidth - OPDynamicForm initialWidth
+]
+
+{ #category : 'settings' }
+OPEditor class >> currentLayout [
+
+	currentLayout ifNil: [ self setDefaultLayout ].
+	^ currentLayout
+]
+
+{ #category : 'settings' }
+OPEditor class >> defaultLayout [
+
+	^ OPEditorLayout default
+]
+
+{ #category : 'toolbar' }
 OPEditor class >> developerToolbarMenu: aBuilder [
-	OPWorkbench isDevelopmentMode
-		ifFalse: [ ^ self ].
+
 	(aBuilder item: 'Inspect Controller...')
+		icon: (self iconNamed: #glamorousInspect);
 		action: [ aBuilder model diagramController inspect ].
 	aBuilder withSeparatorAfter
 ]
 
-{ #category : #specs }
-OPEditor class >> specCombined [
-	<spec: #combined>
-	^ SpecColumnLayout composed
-		newRow: [ :row | 
-			row
-				newColumn: [ :col | 
-					col
-						add: #canvasModel;
-						addSplitter;
-						newRow: [ :r | 
-							r
-								add: #canvasMenuModel;
-								add: #zoomLabel width: 35 ]
-							height: self toolbarHeight - 1 ];
-				addSplitter;
-				newColumn: [ :col | 
-					col
-						add: #paletteModel;
-						add: #formModel ]
-					width: 170 ];
-		yourself
+{ #category : 'toolbar' }
+OPEditor class >> diagramExportMenu: aBuilder [
+
+	(aBuilder item: #diagramExport)
+		label: 'Export diagram as...';
+		icon: (self iconNamed: #smallScreenshot).
+
+	(aBuilder item: 'Export as PNG...')
+		parent: #diagramExport;
+		action: [ aBuilder model canvasPresenter exportAsPng ].
+	(aBuilder item: 'Export as SVG...')
+		parent: #diagramExport;
+		action: [ aBuilder model canvasPresenter exportAsSvg ].
+	(aBuilder item: 'Export as PDF...')
+		parent: #diagramExport;
+		action: [ aBuilder model canvasPresenter exportAsPdf ]
 ]
 
-{ #category : #specs }
-OPEditor class >> specSeparated [
-	<spec: #separated>
-	^ SpecColumnLayout composed
-		newRow: [ :row | 
-			row
-				newColumn: [ :col | 
-					col
-						add: #canvasModel;
-						addSplitter;
-						newRow: [ :r | 
-							r
-								add: #canvasMenuModel;
-								add: #zoomLabel width: 35 ]
-							height: self toolbarHeight - 1 ];
-				addSplitter;
-				newColumn: [ :col | 
-					col
-						add: #paletteModel
-"						addSplitter;"
-"						add: #formModel" ]
-					width: 150 ];
-		yourself
+{ #category : 'settings' }
+OPEditor class >> layoutName [
+
+	^ self currentLayout name
 ]
 
-{ #category : #toolbar }
+{ #category : 'settings' }
+OPEditor class >> layoutName: aLayoutName [
+
+	currentLayout := OPEditorLayout named: aLayoutName.
+	self allInstances
+		select: [ :each | 
+			| isWindowOpen |
+			isWindowOpen := false.
+			each withWindowDo: [ :window | isWindowOpen := window isOpen ].
+			isWindowOpen ]
+		thenDo: [ :each | 
+			currentLayout applyOn: each ]
+]
+
+{ #category : 'settings' }
+OPEditor class >> setDefaultLayout [
+
+	<script>
+	self layoutName: self defaultLayout name
+]
+
+{ #category : 'settings' }
+OPEditor class >> settingsOn: aBuilder [
+
+	<systemsettings>
+	(aBuilder pickOne: #layoutName)
+		parent: #openponk;
+		target: self;
+		label: 'Editor Layout Style';
+		description:
+			'Show palette on the left or right of main canvas.';
+		default: self defaultLayout name;
+		domainValues: self availableLayoutNames;
+		order: 40
+]
+
+{ #category : 'toolbar' }
 OPEditor class >> toolbarMenu: aBuilder [
+
 	<opEditorToolbarMenu>
 	self developerToolbarMenu: aBuilder.
-	(aBuilder item: 'Export as PNG...')
-		action: [ aBuilder model canvasModel exportAsPng ]
+	self diagramExportMenu: aBuilder
 ]
 
-{ #category : #api }
-OPEditor >> buildWithSpec [
-	^ self buildWithSpec: OPWorkbench layoutStyle
+{ #category : 'accessing - spec' }
+OPEditor >> canvasMenu [
+	^ canvasMenu
 ]
 
-{ #category : #'accessing - spec' }
-OPEditor >> canvasMenuModel [
-	^ canvasMenuModel
+{ #category : 'accessing - spec' }
+OPEditor >> canvasPresenter [
+	^ canvasPresenter
 ]
 
-{ #category : #'accessing - spec' }
-OPEditor >> canvasModel [
-	^ canvasModel
+{ #category : 'initialization' }
+OPEditor >> connectPresenters [
+
+	| menu |
+	menu := OPDiagramToolbarActivation buildMenuInContext:
+		        (CmdSimpleToolContext for: canvasPresenter).
+	menu buildSpecMenuOn: canvasMenu
 ]
 
-{ #category : #shortcuts }
-OPEditor >> collectShortcuts [
-	^ ((PragmaCollector
-		filter: [ :prg | 
-	prg selector = #opEditorShortcut:
-		and: [ prg arguments first = self plugin class name ] ])
-		reset;
-		collect:
-				[ :prg | prg methodClass theNonMetaClass perform: prg methodSelector with: self ])
-		flattened
-]
-
-{ #category : #'private-focus' }
+{ #category : 'private-focus' }
 OPEditor >> createCommandContext [
 	"Subclases should override it if they provide any selection"
 
-	^ canvasModel createCommandContext
+	^ canvasPresenter createCommandContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEditor >> diagramController [
 	^ diagramController
 ]
 
-{ #category : #'private-focus' }
-OPEditor >> ensureKeyBindingsFor: aWidget [
-	super ensureKeyBindingsFor: aWidget.
-	^self enableCommanderShortcutsIn: aWidget
+{ #category : 'accessing - spec' }
+OPEditor >> form [
+	^ form
 ]
 
-{ #category : #'accessing - spec' }
-OPEditor >> formModel [
-	^ formModel
-]
+{ #category : 'initialization' }
+OPEditor >> initializePresenters [
 
-{ #category : #initialization }
-OPEditor >> initializePresenter [
-	| menu |
-	menu := OPDiagramToolbarActivation
-		buildMenuInContext: (CmdSimpleToolContext for: canvasModel).
-	menu buildSpecMenuOn: canvasMenuModel
-]
-
-{ #category : #initialization }
-OPEditor >> initializeWidgets [
-	canvasMenuModel := self instantiate: MenuModel.
-	canvasModel := self instantiate: OPCanvasPresenter.
-	paletteModel := self instantiate: OPScrollablePalette.
-	formModel := self instantiate: OPScrollableForm.
+	canvasMenu := self newMenuBar.
+	canvasPresenter := self instantiate: OPCanvasPresenter.
+	palette := self instantiate: OPPalette.
+	form := self instantiate: OPDynamicForm.
 	(zoomLabel := self newLabel) label: '100%'.
 	self focusOrder
-		add: canvasMenuModel;
-		add: canvasModel;
-		add: paletteModel;
-		add: formModel
+		add: canvasMenu;
+		add: canvasPresenter;
+		add: palette;
+		add: form.
+	self class currentLayout applyOn: self.
+
+	self whenBuiltDo: [ :builtEvent |
+		self withWindowDo: [ :window |
+			| minimized |
+			minimized := false.
+			window window announcer
+				when: WindowCollapsed
+				do: [ minimized := true ]
+				for: self.
+			window window announcer
+				when: WindowExpanded
+				do: [ minimized := false ]
+				for: self.
+			window whenResizingDo: [ :resizeEvent |
+				minimized ifFalse: [
+					self class currentLayout
+						resizePanelsOf: builtEvent widget
+						afterWindowResized: resizeEvent ] ].
+			window whenClosedDo: [
+				window window announcer unsubscribe: self.
+				diagramController removeAllControllers ] ] ]
 ]
 
-{ #category : #'diagram handling' }
+{ #category : 'diagram handling' }
 OPEditor >> newDiagramControllerFor: aModel [
 	^ plugin diagramControllerClass new
 		model: aModel;
@@ -167,108 +215,88 @@ OPEditor >> newDiagramControllerFor: aModel [
 		yourself
 ]
 
-{ #category : #'diagram handling' }
+{ #category : 'diagram handling' }
 OPEditor >> openEmptyModel: aModel [
+
 	diagramController := self newDiagramControllerFor: aModel.
-	self workbench projectController addDiagramController: diagramController.
-	canvasModel attachController: diagramController.
+	self workbench projectController addDiagramController:
+		diagramController.
+	canvasPresenter attachController: diagramController.
 	self rebuildWidget
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'initialization' }
 OPEditor >> openFormOn: aController [
-	formModel editController: aController
+
+	form editController: aController
 ]
 
-{ #category : #'accessing - spec' }
-OPEditor >> paletteModel [
-	^ paletteModel
+{ #category : 'accessing' }
+OPEditor >> palette [
+
+	^ palette
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEditor >> plugin [
 	^ plugin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPEditor >> plugin: aPlugin [
 	plugin := aPlugin
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 OPEditor >> rebuildWidget [
-	diagramController
-		ifNotNil: [ paletteModel createPaletteFor: diagramController ].
-	canvasModel needRebuild: false.
-	self needRebuild: false.
-	self buildWithSpec
+
+	diagramController ifNotNil: [ 
+		palette createPaletteFor: diagramController ].
+	self update
 ]
 
-{ #category : #shortcuts }
-OPEditor >> registerShortcutsOn: aPresenter [
-	shortcuts := self collectShortcuts.
-	shortcuts do: [ :each | aPresenter bindKeyCombination: each key toAction: each value ]
-]
-
-{ #category : #api }
-OPEditor >> retrieveSpec: aSelector [
-	((SpecPragmaCollector behavior: self class class)
-		filter:
-				[ :pragma | pragma selector = #spec: and: [ pragma arguments first = aSelector ] ];
-		reset;
-		collected)
-		ifNotEmpty: [ :pragmas | ^ super retrieveSpec: pragmas first method selector ].
-	^ super retrieveSpec: aSelector
-]
-
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPEditor >> setModelBeforeInitialization: aPlugin [
 	self plugin: aPlugin
 	
 ]
 
-{ #category : #'diagram handling' }
-OPEditor >> showDiagram: aDiagram [
-	diagramController diagram: aDiagram.
-	diagramController rebuild
-]
-
-{ #category : #updating }
+{ #category : 'updating' }
 OPEditor >> tabDeleted [
-	self workbench projectController removeDiagramController: diagramController.
-	self unregisterShortcutsOn: self workbench.
-	diagramController removeAllControllers
+
+	self workbench projectController updateDiagram:
+		diagramController diagramElement.
+	self workbench projectController removeDiagramController:
+		diagramController.
+	diagramController removeRender
 ]
 
-{ #category : #shortcuts }
-OPEditor >> unregisterShortcutsOn: aPresenter [
-	shortcuts do: [ :pair | aPresenter removeKeyCombination: pair key ]
-]
-
-{ #category : #updating }
+{ #category : 'updating' }
 OPEditor >> updateUndoRedo [
+	self flag: #unused.
+	"
 	| items |
-	items := canvasMenuModel menuGroups flatCollect: #menuItems.
+	items := canvasPresenter menuGroups flatCollect: #menuItems.
 	(items detect: [ :each | each name = 'Undo' ])
 		enabled: self diagramController hasUndo;
 		changed: #enabled with: {self diagramController hasUndo}.
 	(items detect: [ :each | each name = 'Redo' ])
 		enabled: self diagramController hasRedo;
-		changed: #enabled with: {self diagramController hasRedo}
+		changed: #enabled with: {self diagramController hasRedo}"
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPEditor >> workbench [
 	^ workbench
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPEditor >> workbench: aWorkbench [
-	workbench := aWorkbench.
-	self registerShortcutsOn: workbench
+
+	workbench := aWorkbench
 ]
 
-{ #category : #'accessing - spec' }
+{ #category : 'accessing - spec' }
 OPEditor >> zoomLabel [
 	^ zoomLabel
 ]

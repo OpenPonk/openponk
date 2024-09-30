@@ -2,7 +2,9 @@
 I am fired when an Editor was closed.
 "
 Class {
-	#name : #OPEditorClosed,
-	#superclass : #OPEditorAnnouncements,
-	#category : #'OpenPonk-Core-Announcements'
+	#name : 'OPEditorClosed',
+	#superclass : 'OPEditorAnnouncements',
+	#category : 'OpenPonk-Core-Announcements',
+	#package : 'OpenPonk-Core',
+	#tag : 'Announcements'
 }

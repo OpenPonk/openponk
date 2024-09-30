@@ -1,18 +1,20 @@
 Class {
-	#name : #DCOCNode,
-	#superclass : #DCGTNode,
+	#name : 'DCOCNode',
+	#superclass : 'DCGTNode',
 	#instVars : [
 		'element'
 	],
-	#category : 'DynaCASE-Layouting-OCR'
+	#category : 'DynaCASE-Layouting-OCR',
+	#package : 'DynaCASE-Layouting',
+	#tag : 'OCR'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCNode >> direction [
 	^ self element encompassingRectangle sideNearestTo: self model
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCNode >> dirnsFrom: previousNode [
 	| res |
 	res := Set new.
@@ -27,24 +29,24 @@ DCOCNode >> dirnsFrom: previousNode [
 	^ res
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCNode >> distanceTo: aNode [
 	"Manhattan distance between two nodes."
 
 	^ (self model x - aNode model x) abs + (self model y - aNode model y) abs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCOCNode >> element [
 	^ element
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCOCNode >> element: anElement [
 	element := anElement
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCNode >> leftOf: aDirection [
 	^ {(#top -> #left).
 	(#left -> #bottom).
@@ -52,7 +54,7 @@ DCOCNode >> leftOf: aDirection [
 	(#right -> #top)} asDictionary at: aDirection
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCNode >> reverseOf: aDirection [
 	^ {(#top -> #bottom).
 	(#right -> #left).
@@ -60,7 +62,7 @@ DCOCNode >> reverseOf: aDirection [
 	(#left -> #right)} asDictionary at: aDirection
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCOCNode >> rightOf: aDirection [
 	^ {(#top -> #right).
 	(#right -> #bottom).

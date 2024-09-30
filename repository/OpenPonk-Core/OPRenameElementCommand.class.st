@@ -1,6 +1,10 @@
 "
 I am a UI command for renaming a model element.
 
+!! Requirements
+
+The model element has to implement #name: and #announcer
+
 !! Responsibility
 
 Show rename dialog.
@@ -12,16 +16,23 @@ DCCanvasModel
 DCNavigator
 "
 Class {
-	#name : #OPRenameElementCommand,
-	#superclass : #OPUICommand,
-	#category : #'OpenPonk-Core-UICommands'
+	#name : 'OPRenameElementCommand',
+	#superclass : 'OPUICommand',
+	#category : 'OpenPonk-Core-UICommands',
+	#package : 'OpenPonk-Core',
+	#tag : 'UICommands'
 }
 
-{ #category : #execute }
+{ #category : 'execute' }
 OPRenameElementCommand >> execute [
+
 	| result |
-	result := UIManager default request: 'Name' initialAnswer: model name.
+	result := self doAndReturnFocus: [
+		          UIManager default
+			          request: 'Enter a name'
+			          initialAnswer: controller model name ].
 	result ifNil: [ ^ self ].
-	model name: result.
-	model announcer announce: OPElementRenamed new
+	result ifEmpty: [ ^ self ].
+	controller model name: result.
+	controller model announcer announce: OPElementRenamed new
 ]

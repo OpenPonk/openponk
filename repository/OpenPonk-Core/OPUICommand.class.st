@@ -2,32 +2,48 @@
 I am base class for all UI - centric commands such as rename or export
 "
 Class {
-	#name : #OPUICommand,
-	#superclass : #Object,
+	#name : 'OPUICommand',
+	#superclass : 'Object',
 	#instVars : [
-		'model'
+		'controller'
 	],
-	#category : #'OpenPonk-Core-UICommands'
+	#category : 'OpenPonk-Core-UICommands',
+	#package : 'OpenPonk-Core',
+	#tag : 'UICommands'
 }
 
-{ #category : #public }
-OPUICommand class >> executeOn: anObject [
+{ #category : 'public' }
+OPUICommand class >> executeOn: anElementController [
+
+	^ (self on: anElementController) execute
+]
+
+{ #category : 'instance creation' }
+OPUICommand class >> on: anElementController [
+
 	^ self new
-		on: anObject;
-		execute
+		  on: anElementController;
+		  yourself
 ]
 
-{ #category : #'instance creation' }
-OPUICommand class >> on: anObject [
-	^ self new on: anObject
+{ #category : 'utilities' }
+OPUICommand >> doAndReturnFocus: aBlock [
+
+	| result window wasActive |
+	window := controller diagramController canvasPresenter window window.
+	wasActive := window isActive.
+	result := aBlock value.
+	window activate.
+	^ result
 ]
 
-{ #category : #execute }
+{ #category : 'execute' }
 OPUICommand >> execute [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
-OPUICommand >> on: aModel [
-	model := aModel
+{ #category : 'accessing' }
+OPUICommand >> on: anElementController [
+
+	controller := anElementController
 ]

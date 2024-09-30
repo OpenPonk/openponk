@@ -1,6 +1,6 @@
 Class {
-	#name : #OPModelTypeSelector,
-	#superclass : #SpPresenter,
+	#name : 'OPModelTypeSelector',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'projectController',
 		'addModelButton',
@@ -11,19 +11,21 @@ Class {
 		'pluginsLabel',
 		'nameChanged'
 	],
-	#category : #'OpenPonk-Spec-Windows'
+	#category : 'OpenPonk-Spec-Windows',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Windows'
 }
 
-{ #category : #specs }
-OPModelTypeSelector class >> defaultSpec [
+{ #category : 'as yet unclassified' }
+OPModelTypeSelector class >> defaultLayout [
 
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		  add: #pluginsLabel
 		  expand: false
 		  fill: false
 		  padding: 5;
 		  add: #plugins;
-		  add: (SpBoxLayout newHorizontal
+		  add: (SpBoxLayout newLeftToRight
 				   add: #projectNameLabel
 				   expand: false
 				   fill: false
@@ -33,16 +35,16 @@ OPModelTypeSelector class >> defaultSpec [
 		  expand: false
 		  fill: false
 		  padding: 5;
-		  add: (SpBoxLayout newHorizontal
-				   add: SpBoxLayout newVertical;
+		  add: (SpBoxLayout newLeftToRight
+				   add: SpBoxLayout newTopToBottom;
 				   add: #addModelButton width: 150;
-				   add: SpBoxLayout newVertical;
+				   add: SpBoxLayout newTopToBottom;
 				   yourself)
 		  height: self buttonHeight;
 		  yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPModelTypeSelector >> addModel [
 
 	| model diagram selectedPlugin |
@@ -52,21 +54,19 @@ OPModelTypeSelector >> addModel [
 	model := selectedPlugin newModel
 		         name: projectNameInput text;
 		         yourself.
-	diagram := OPDiagram withWholeModel: model.
+	diagram := OPOpenPonkDiagram forModelElement: model.
 	projectController project addDiagram: diagram.
 	projectController openEditorOnDiagram: diagram.
 	self withWindowDo: #close
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPModelTypeSelector >> connectPresenters [
 
 	addModelButton action: [ self addModel ].
-	projectNameInput
-		autoAccept: true;
-		whenTextChangedDo: [ :newValue | 
-			nameChanged := true.
-			self ensureButtonActivation ].
+	projectNameInput whenTextChangedDo: [ :newValue | 
+		nameChanged := true.
+		self ensureButtonActivation ].
 	plugins items: pluginRegistry plugins.
 	plugins whenSelectionChangedDo: [ :selection | 
 		self ensureButtonActivation.
@@ -77,14 +77,14 @@ OPModelTypeSelector >> connectPresenters [
 	plugins items ifNotEmpty: [ plugins selectFirst ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPModelTypeSelector >> ensureButtonActivation [
 
 	addModelButton enabled: (projectNameInput text isNotEmpty and: [ 
 			 plugins selectedItem isNotNil ])
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPModelTypeSelector >> initialize [
 
 	pluginRegistry := OPPluginRegistry default.
@@ -92,7 +92,7 @@ OPModelTypeSelector >> initialize [
 	super initialize
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPModelTypeSelector >> initializePresenters [
 
 	pluginsLabel := self newLabel label: 'Select model type:'.
@@ -103,15 +103,15 @@ OPModelTypeSelector >> initializePresenters [
 	addModelButton := self newButton label: 'Create'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPModelTypeSelector >> initializeWindow: aWindow [
-
 	aWindow
 		title: 'OpenPonk - Add new model to project';
-		initialExtent: 300 @ 265
+		initialExtent: 300 @ 265;
+		windowIcon: OPCoreIcons openponkIcon
 ]
 
-{ #category : #'accessing model' }
+{ #category : 'accessing model' }
 OPModelTypeSelector >> setModelBeforeInitialization: aProjectController [
 	projectController := aProjectController
 ]

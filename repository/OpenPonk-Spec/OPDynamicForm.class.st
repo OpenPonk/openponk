@@ -8,25 +8,31 @@ Creating form controls (text boxes, checkboxes, etc) for editing a controller's 
 ==DCController>>buildEditorForm:==
 "
 Class {
-	#name : #OPDynamicForm,
-	#superclass : #DynamicComposablePresenter,
+	#name : 'OPDynamicForm',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'components',
 		'whenAccepted',
-		'controller',
-		'heading'
+		'controller'
 	],
-	#category : #'OpenPonk-Spec-Form'
+	#category : 'OpenPonk-Spec-Form',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Form'
 }
 
-{ #category : #specs }
-OPDynamicForm class >> defaultSpec [
-	^ SpecLayout composed
-		newColumn: [ :c | c newRow: [ :r |  ] ];
-		yourself
+{ #category : 'as yet unclassified' }
+OPDynamicForm class >> defaultLayout [
+
+	^ SpBoxLayout newTopToBottom
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
+OPDynamicForm class >> initialWidth [
+
+	^ 260
+]
+
+{ #category : 'specs' }
 OPDynamicForm class >> installLink [
 	| link |
 	self isLinkInstalled
@@ -42,17 +48,23 @@ OPDynamicForm class >> installLink [
 	self visitAst link: link
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 OPDynamicForm class >> isLinkInstalled [
 	^ self visitAst links ifNil: [ false ] ifNotNil: #isNotEmpty
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
+OPDynamicForm class >> minWidth [
+
+	^ 180
+]
+
+{ #category : 'specs' }
 OPDynamicForm class >> settingsOn: aBuilder [
 
 	<systemsettings>
 	(aBuilder setting: #showPriority)
-		parent: #openponk;
+		parent: #'op-dev';
 		target: self;
 		label: 'Show Properties Form Priorities';
 		description:
@@ -60,29 +72,29 @@ OPDynamicForm class >> settingsOn: aBuilder [
 		order: 60
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 OPDynamicForm class >> showPriority [
 	^ self isLinkInstalled
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 OPDynamicForm class >> showPriority: aBoolean [
 	aBoolean
 		ifTrue: [ self installLink ]
 		ifFalse: [ self uninstallLink ]
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 OPDynamicForm class >> uninstallLink [
 	self visitAst links ifNotNil: [ :links | links asSet do: #uninstall ]
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 OPDynamicForm class >> visitAst [
 	^ (OPDynamicFormMagritteVisitor >> #visit:) ast
 ]
 
-{ #category : #'public - adding' }
+{ #category : 'public - adding' }
 OPDynamicForm >> addButton: aName [
 	| control |
 	control := self newButton.
@@ -92,7 +104,7 @@ OPDynamicForm >> addButton: aName [
 	^ control
 ]
 
-{ #category : #'public - adding' }
+{ #category : 'public - adding' }
 OPDynamicForm >> addCheckbox: aName [
 	| control |
 	control := self newCheckBox.
@@ -102,13 +114,14 @@ OPDynamicForm >> addCheckbox: aName [
 	^ control
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPDynamicForm >> addControl: aControl [
+
 	components add: aControl.
 	self focusOrder add: aControl
 ]
 
-{ #category : #'public - adding' }
+{ #category : 'public - adding' }
 OPDynamicForm >> addDroplist: aName [
 	| control |
 	self addLabel: aName.
@@ -119,8 +132,9 @@ OPDynamicForm >> addDroplist: aName [
 	^ control
 ]
 
-{ #category : #'public - adding' }
+{ #category : 'public - adding' }
 OPDynamicForm >> addEditableDroplist: aName [
+
 	| control |
 	self addLabel: aName.
 	control := self instantiate: OPEditableDropListPresenter.
@@ -128,93 +142,93 @@ OPDynamicForm >> addEditableDroplist: aName [
 	^ control
 ]
 
-{ #category : #'public - adding' }
+{ #category : 'public - adding' }
 OPDynamicForm >> addEntity: aName [
 	| control |
 	self addLabel: aName.
-	control := self instantiate: OPSelectEntity.
+	control := self instantiate: SpSelectEntity.
 	self addControl: control.
 	^ control
 ]
 
-{ #category : #'public - adding' }
+{ #category : 'public - adding' }
 OPDynamicForm >> addLabel: aLabel [
+
 	| control |
 	control := self newLabel.
-	control
-		label: aLabel;
-		emphasis: #(bold).
+	control label: aLabel.
+	"control addStyle: 'bold'."
+	self flag: 'implement bold'.
 
 	self addControl: control.
 	^ control
 ]
 
-{ #category : #'public - adding' }
+{ #category : 'public - adding' }
+OPDynamicForm >> addList: aName [
+	| control |
+	self addLabel: aName.
+	
+	control := self newList.
+
+	self addControl: control.
+	^ control
+]
+
+{ #category : 'public - adding' }
+OPDynamicForm >> addLongText: aName [
+
+	| control |
+	self addLabel: aName.
+
+	control := self instantiate: OPLongTextPresenter.
+
+	self addControl: control.
+	^ control
+]
+
+{ #category : 'public - adding' }
+OPDynamicForm >> addNumberInput: aName [
+
+	| control |
+	self addLabel: aName.
+
+	control := self newNumberInput.
+
+	self addControl: control.
+	^ control
+]
+
+{ #category : 'public - adding' }
 OPDynamicForm >> addSeparator [
 	self addLabel: ''
 ]
 
-{ #category : #'public - adding' }
+{ #category : 'public - adding' }
 OPDynamicForm >> addText: aName [
+
 	| control |
 	self addLabel: aName.
 
 	control := self newText.
-	control autoAccept: true.
 
 	self addControl: control.
 	^ control
 ]
 
-{ #category : #'public - adding' }
+{ #category : 'public - adding' }
 OPDynamicForm >> addTextInput: aName [
+
 	| control |
 	self addLabel: aName.
 
 	control := self newTextInput.
-	control autoAccept: true.
 
 	self addControl: control.
 	^ control
 ]
 
-{ #category : #'private - building widgets' }
-OPDynamicForm >> createWidgets [
-	components do: [ :each | self assign: each to: ('control' , each hash asString) asSymbol ]
-]
-
-{ #category : #initialization }
-OPDynamicForm >> defaultHeights [
-	| lineHeight |
-	lineHeight := 20.
-	^ {OPSelectEntity -> lineHeight.
-	LabelPresenter -> (lineHeight - 5).
-	TextInputFieldPresenter -> (lineHeight + 2).
-	TextPresenter -> (lineHeight * 4).
-	OPEditableDropListPresenter -> lineHeight.
-	DropListPresenter -> lineHeight.
-	CheckBoxPresenter -> (lineHeight * 1).
-	ButtonPresenter -> (lineHeight * 1.2)} asDictionary
-]
-
-{ #category : #'private - building widgets' }
-OPDynamicForm >> dynamicLayout [
-	| keys height |
-	keys := self widgets keys.
-	^ SpecRowLayout composed
-		newColumn: [ :c | 
-			keys ifNotEmpty: [ c add: #heading height: self class toolbarHeight ].
-			keys
-				do: [ :key | 
-					height := self heightFor: (self perform: key).
-					height
-						ifNil: [ c add: key ]
-						ifNotNil: [ c add: key height: height ] ].
-			c newRow: [ :r |  ] ];
-		yourself
-]
-
-{ #category : #public }
+{ #category : 'public' }
 OPDynamicForm >> editController: aController [
 	components ifNotEmpty: [ self reset ].
 	controller := aController.
@@ -224,7 +238,16 @@ OPDynamicForm >> editController: aController [
 		takeKeyboardFocus
 ]
 
-{ #category : #public }
+{ #category : 'initialization' }
+OPDynamicForm >> forcedHeights [
+
+	^ { 
+		  (SpListPresenter -> 100).
+		  (OPLongTextPresenter -> 200).
+		  (SpTextPresenter -> 60) } asDictionary
+]
+
+{ #category : 'public' }
 OPDynamicForm >> fromMagritteDescriptions: aContainer [
 	| visitor |
 	visitor := OPDynamicFormMagritteVisitor new.
@@ -233,46 +256,42 @@ OPDynamicForm >> fromMagritteDescriptions: aContainer [
 	visitor visit: aContainer
 ]
 
-{ #category : #accessing }
-OPDynamicForm >> heading [
-	^ heading
-]
-
-{ #category : #private }
-OPDynamicForm >> heightFor: aModel [
-	^ self defaultHeights at: aModel class ifAbsent: nil
-]
-
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPDynamicForm >> initialize [
 	self reset.
 	super initialize.
-	heading := OPWidgetHeading forLabel: 'Properties'.
 	whenAccepted := [  ]
 ]
 
-{ #category : #'private - building widgets' }
+{ #category : 'private - building widgets' }
+OPDynamicForm >> initializeLayout [
+
+	| itemsLayout |
+	itemsLayout := self class defaultLayout.
+	components do: [ :each | 
+		itemsLayout add: each withConstraints: [ :constraints | 
+			self forcedHeights
+				at: each class
+				ifPresent: [ :height | constraints height: height ]
+				ifAbsent: [ constraints expand: false ] ] ].
+	self layout: itemsLayout
+]
+
+{ #category : 'initialization' }
+OPDynamicForm >> initializePresenters [
+
+	super initializePresenters.
+	self initializeLayout
+]
+
+{ #category : 'private - building widgets' }
 OPDynamicForm >> rebuildWidget [
-	self widgets removeAll.
-	self createWidgets.
-	self needFullRebuild: false.
-	self buildWithSpecLayout: self dynamicLayout.
-	self resizeWidgets
+
+	self initializeLayout
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPDynamicForm >> reset [
-	components := OrderedCollection new.
-	focusOrder := OrderedCollection new
-]
 
-{ #category : #'private - building widgets' }
-OPDynamicForm >> resizeWidgets [
-	| font |
-	font := LabelMorph labelFont class
-		familyName: LabelMorph labelFont familyName
-		pointSize: 9.
-	self widgets values
-		reject: [ :each | each isKindOf: OPSelectEntity ]
-		thenDo: [ :each | each widget widget font: font ]
+	components := OrderedCollection new
 ]

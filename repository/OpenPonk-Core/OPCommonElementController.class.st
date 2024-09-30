@@ -1,31 +1,79 @@
 Class {
-	#name : #OPCommonElementController,
-	#superclass : #OPElementController,
-	#category : #'OpenPonk-Core-CommonElements'
+	#name : 'OPCommonElementController',
+	#superclass : 'OPElementController',
+	#category : 'OpenPonk-Core-CommonElements',
+	#package : 'OpenPonk-Core',
+	#tag : 'CommonElements'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPCommonElementController class >> paletteItemName [
 	^ self subclassResponsibility
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 OPCommonElementController >> createModelIn: aParentModel [
-	self model: self modelClass new.
-	^ model
+
+	"do nothing - common model elements are not part of any model"
+
+	^ nil
 ]
 
-{ #category : #testing }
+{ #category : 'accessing' }
+OPCommonElementController >> ensureDiagramElement [
+
+	diagramElement ifNil: [ self createDiagramElement ].
+	^ diagramElement
+]
+
+{ #category : 'announcements' }
+OPCommonElementController >> internalSubscribeTo: aModel [
+
+	"do nothing"
+
+	
+]
+
+{ #category : 'testing' }
 OPCommonElementController >> isCommon [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'accessing' }
+OPCommonElementController >> model [
+
+	^ self diagramElement
+]
+
+{ #category : 'accessing' }
+OPCommonElementController >> model: aModel [
+
+	self diagramElement: aModel
+]
+
+{ #category : 'accessing' }
+OPCommonElementController >> modelClass [
+
+	^ self diagramElementClass 
+]
+
+{ #category : 'constants' }
 OPCommonElementController >> paletteItemName [
 	^ self class paletteItemName
 ]
 
-{ #category : #private }
+{ #category : 'construction' }
+OPCommonElementController >> registerModelInContainer: aParentModel [
+
+	"do nothing - common model elements are not part of any model"
+
+	
+]
+
+{ #category : 'private' }
 OPCommonElementController >> removeModel [
-	"do nothing - common model elements are not part of any other model element"
+
+	"do nothing - common model elements are not part of any model"
+
+	
 ]

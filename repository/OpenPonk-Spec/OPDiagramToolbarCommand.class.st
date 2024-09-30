@@ -2,15 +2,17 @@
 I am command for diagram toolbar.
 "
 Class {
-	#name : #OPDiagramToolbarCommand,
-	#superclass : #CmdCommand,
+	#name : 'OPDiagramToolbarCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'diagramPresenter'
 	],
-	#category : #'OpenPonk-Spec-Diagram-Toolbar-Commands'
+	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Diagram-Toolbar-Commands'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPDiagramToolbarCommand class >> defaultMenuItemName [
 	| parts |
 	true
@@ -24,12 +26,12 @@ OPDiagramToolbarCommand class >> defaultMenuItemName [
 				allButFirstDo: [ :each | s << Character space << each asLowercase ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPDiagramToolbarCommand class >> isAbstract [
 	^ self = OPDiagramToolbarCommand
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 OPDiagramToolbarCommand class >> toolbarMenuActivation [
 	<classAnnotation>
 	^ OPDiagramToolbarActivation
@@ -37,7 +39,7 @@ OPDiagramToolbarCommand class >> toolbarMenuActivation [
 		for: OPCanvasPresenter
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPDiagramToolbarCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	diagramPresenter := aToolContext

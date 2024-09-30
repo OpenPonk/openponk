@@ -10,13 +10,14 @@ SmalltalkCISpec {
 		}
 	],
 	#testing : {
-		#coverage : {
-			#packages : [
-				'OpenPonk*'
-			]
+		#coverage : { 
+			#packages: [ 
+				'OpenPonk*' 
+			] 
 		},
 		#packages : [
-			'OpenPonk*'
+			'OpenPonk*',
+			'SynchronizedLinks*'
 		]
 	}
 }

@@ -1,6 +1,6 @@
-Extension { #name : #CmdCommandActivator }
+Extension { #name : 'CmdCommandActivator' }
 
-{ #category : #'*OpenPonk-Spec' }
+{ #category : '*OpenPonk-Spec' }
 CmdCommandActivator >> buildSpecMenuOn: aGroup [
 	self canExecuteCommand
 		ifFalse: [ ^ self ].

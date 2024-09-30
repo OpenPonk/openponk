@@ -1,50 +1,52 @@
 Class {
-	#name : #OPControllerFactoryRegistration,
-	#superclass : #Object,
+	#name : 'OPControllerFactoryRegistration',
+	#superclass : 'Object',
 	#instVars : [
 		'controllerClass',
 		'modelClass',
 		'condition'
 	],
-	#category : #'OpenPonk-Core-Controllers'
+	#category : 'OpenPonk-Core-Controllers',
+	#package : 'OpenPonk-Core',
+	#tag : 'Controllers'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPControllerFactoryRegistration >> condition [
 	^ condition ifNil: [ [ :aModel | true ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPControllerFactoryRegistration >> condition: aBlock [
 	condition := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPControllerFactoryRegistration >> controllerClass [
 	^ controllerClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPControllerFactoryRegistration >> controllerClass: anObject [
 	controllerClass := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPControllerFactoryRegistration >> isForModel: aModel [
 	^ aModel class = self modelClass and: [ self condition value: aModel ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPControllerFactoryRegistration >> modelClass [
 	^ modelClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPControllerFactoryRegistration >> modelClass: anObject [
 	modelClass := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 OPControllerFactoryRegistration >> printOn: stream [
 	super printOn: stream.
 	stream << ' (' << self modelClass asString << ' -> '

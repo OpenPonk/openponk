@@ -14,26 +14,38 @@ DCEditor
 
 "
 Class {
-	#name : #OPPalette,
-	#superclass : #DynamicComposablePresenter,
+	#name : 'OPPalette',
+	#superclass : 'SpPresenter',
 	#instVars : [
-		'items',
 		'selectedTool',
 		'selectedItem',
 		'diagramController',
-		'heading'
+		'items'
 	],
-	#category : #'OpenPonk-Spec-Palettes'
+	#category : 'OpenPonk-Spec-Palettes',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Palettes'
 }
 
-{ #category : #specs }
-OPPalette class >> defaultSpec [
-	^ SpecRowLayout composed
-		newColumn: [ :c | c newRow: [ :r |  ] ];
-		yourself
+{ #category : 'as yet unclassified' }
+OPPalette class >> defaultLayout [
+
+	^ SpBoxLayout newTopToBottom
 ]
 
-{ #category : #private }
+{ #category : 'widget API' }
+OPPalette class >> initialWidth [
+
+	^ 180
+]
+
+{ #category : 'widget API' }
+OPPalette class >> minWidth [
+
+	^ 120
+]
+
+{ #category : 'private' }
 OPPalette >> addEntry [
 	| entry |
 	entry := self instantiate: OPPaletteEntry.
@@ -41,7 +53,7 @@ OPPalette >> addEntry [
 	^ entry
 ]
 
-{ #category : #'building widgets' }
+{ #category : 'building widgets' }
 OPPalette >> alignButtons [
 	"align content of all buttons to left"
 
@@ -50,55 +62,50 @@ OPPalette >> alignButtons [
 		thenDo: [ :each | each widget widget submorphs first listCentering: #topLeft ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPPalette >> createPaletteFor: aDiagramController [
+
 	diagramController := aDiagramController.
 	self removeAll.
 	OPPaletteInitializer
 		addAllToPalette: self
 		forController: diagramController.
 	self selectSelectionTool.
-	diagramController whenDeselectionChanged: [ self deselectTool ]
+	diagramController whenAllDeselectedDo: [ self selectSelectionTool ]
 ]
 
-{ #category : #'building widgets' }
+{ #category : 'building widgets' }
 OPPalette >> createWidgets [
 	items do: [ :item | self assign: item to: ('button' , item hash asString) asSymbol ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPPalette >> deselectTool [
-	self selectSelectionTool
+
+	self
+		deprecated: 'Use #selectSelectionTool instead.'
+		transformWith:
+		'`@receiver deselectTool' -> '`@receiver selectSelectionTool'.
+	^ self selectSelectionTool
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPalette >> diagramController [
 	^ diagramController
 ]
 
-{ #category : #'building widgets' }
-OPPalette >> dynamicLayout [
-	| keys |
-	keys := self widgets keys.
-	^ SpecRowLayout composed
-		newColumn: [ :c | 
-			c add: #heading height: self class toolbarHeight.
-			keys do: [ :key | c newRow: key height: self class buttonHeight ].
-			c newRow: [ :r |  ] ];
-		yourself
+{ #category : 'accessing' }
+OPPalette >> editor [
+	^ self owner
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPalette >> entries [
-	^ items
+
+	^ self items select: [ :each | each isKindOf: OPPaletteEntry ]
 ]
 
-{ #category : #accessing }
-OPPalette >> heading [
-	^ heading
-]
-
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPPalette >> initialize [
 
 	items := OrderedCollection new.
@@ -108,14 +115,28 @@ OPPalette >> initialize [
 		toAction: [ self selectSelectionTool ]
 ]
 
-{ #category : #initialization }
-OPPalette >> initializeWidgets [
-	self newWidgetHeading.
+{ #category : 'building widgets' }
+OPPalette >> initializeLayout [
+
+	| itemsLayout |
+	itemsLayout := self class defaultLayout.
+	itemsLayout spacing: 2.
+	items do: [ :each | itemsLayout add: each expand: false ].
+	self layout: itemsLayout
+]
+
+{ #category : 'initialization' }
+OPPalette >> initializePresenters [
 	self newSelectionTool.
 	self newSeparator
 ]
 
-{ #category : #protocol }
+{ #category : 'accessing' }
+OPPalette >> items [
+	^ items
+]
+
+{ #category : 'protocol' }
 OPPalette >> newConnectionCreationEntry: aFactoryBlock [
 	| entry |
 	entry := self addEntry.
@@ -124,7 +145,7 @@ OPPalette >> newConnectionCreationEntry: aFactoryBlock [
 	^ entry
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPPalette >> newConnectionCreationTool: aFactoryBlock [
 	| item tool |
 	item := self addEntry.
@@ -135,12 +156,12 @@ OPPalette >> newConnectionCreationTool: aFactoryBlock [
 	^ item
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPPalette >> newConnectionCreationTool: aLabel factory: aBlock [
 	self newConnectionCreationTool: aLabel factory: aBlock icon: nil
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPPalette >> newConnectionCreationTool: aLabel factory: aBlock icon: anIcon [
 	| item tool |
 	item := self addEntry.
@@ -153,7 +174,7 @@ OPPalette >> newConnectionCreationTool: aLabel factory: aBlock icon: anIcon [
 		action: [ self selectItem: item tool: tool ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPPalette >> newCreationEntry: aFactoryBlock [
 	| entry |
 	entry := self addEntry.
@@ -162,7 +183,7 @@ OPPalette >> newCreationEntry: aFactoryBlock [
 	^ entry
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPPalette >> newCreationTool: aFactoryBlock [
 	| item tool |
 	item := self addEntry.
@@ -173,12 +194,12 @@ OPPalette >> newCreationTool: aFactoryBlock [
 	^ item
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPPalette >> newCreationTool: aLabel factory: aBlock [
 	self newCreationTool: aLabel factory: aBlock icon: nil
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPPalette >> newCreationTool: aLabel factory: aBlock icon: anIcon [
 	| item tool |
 	item := self addEntry.
@@ -191,7 +212,7 @@ OPPalette >> newCreationTool: aLabel factory: aBlock icon: anIcon [
 		action: [ self selectItem: item tool: tool ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPPalette >> newCreationTool: aFactoryBlock with: aToolConfigBlock [
 	| item tool |
 	item := self addEntry.
@@ -203,17 +224,9 @@ OPPalette >> newCreationTool: aFactoryBlock with: aToolConfigBlock [
 	^ item
 ]
 
-{ #category : #protocol }
-OPPalette >> newModelCreationTool: aFactoryBlock [
-	| entry |
-	entry := self addEntry.
-	entry tool: (OPModelCreationTool new palette: self).
-	entry factory: aFactoryBlock.
-	^ entry
-]
-
-{ #category : #private }
+{ #category : 'private' }
 OPPalette >> newSelectionTool [
+
 	| item tool |
 	item := self addEntry.
 	(tool := OPSelectionTool new) palette: self.
@@ -221,38 +234,29 @@ OPPalette >> newSelectionTool [
 		label: 'Select';
 		action: [ self selectItem: item tool: tool ];
 		shortcut: Character escape asKeyCombination;
-		icon: OPIcons current dcSelectIcon
+		icon: OPCoreIcons opSelectIcon
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPPalette >> newSeparator [
 	| item |
 	item := self newLabel.
 	items add: item
 ]
 
-{ #category : #initialization }
-OPPalette >> newWidgetHeading [
-	heading := OPWidgetHeading forLabel: 'Palette'
-]
-
-{ #category : #'building widgets' }
+{ #category : 'building widgets' }
 OPPalette >> rebuildWidget [
-	self widgets removeAll.
-	self createWidgets.
-	self needFullRebuild: false.
-	self buildWithSpecLayout: self dynamicLayout.
-	self alignButtons
+
+	self initializeLayout
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 OPPalette >> removeAll [
 	items := OrderedCollection new.
-	self widgets removeAll.
-	self initializeWidgets
+	self initializePresenters
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPPalette >> selectEntry: anEntry [
 	selectedTool
 		ifNotNil: [ selectedTool deselect.
@@ -262,7 +266,7 @@ OPPalette >> selectEntry: anEntry [
 	anEntry select
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPPalette >> selectItem: anItem tool: aTool [
 	selectedTool
 		ifNotNil: [ 
@@ -272,12 +276,12 @@ OPPalette >> selectItem: anItem tool: aTool [
 	(selectedItem := anItem) state: true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPPalette >> selectSelectionTool [
 	items first performAction
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPPalette >> selectTool: aTool [
 	selectedTool
 		ifNotNil: [ selectedTool deselect.
@@ -285,12 +289,12 @@ OPPalette >> selectTool: aTool [
 	(selectedTool := aTool) select
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPPalette >> selectedTool [
 	^ selectedTool
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPPalette >> workbench [
-	^ owner workbench
+	^ self editor workbench
 ]

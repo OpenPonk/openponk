@@ -1,6 +1,6 @@
-Extension { #name : #DoubleLink }
+Extension { #name : 'DoubleLink' }
 
-{ #category : #'*OpenPonk-Core-accessing' }
+{ #category : '*OpenPonk-Core-accessing' }
 DoubleLink >> addPredecessor: aLink [
 	| oldPredeccessor |
 	oldPredeccessor := self previousLink.
@@ -10,7 +10,7 @@ DoubleLink >> addPredecessor: aLink [
 	self previousLink: aLink
 ]
 
-{ #category : #'*OpenPonk-Core-accessing' }
+{ #category : '*OpenPonk-Core-accessing' }
 DoubleLink >> addSuccessor: aLink [
 	| oldSuccessor |
 	oldSuccessor := self nextLink.
@@ -20,17 +20,17 @@ DoubleLink >> addSuccessor: aLink [
 	self nextLink: aLink
 ]
 
-{ #category : #'*OpenPonk-Core-accessing' }
+{ #category : '*OpenPonk-Core-accessing' }
 DoubleLink >> next [
 	^ self nextLink
 ]
 
-{ #category : #'*OpenPonk-Core-accessing' }
+{ #category : '*OpenPonk-Core-accessing' }
 DoubleLink >> previous [
 	^ self previousLink
 ]
 
-{ #category : #'*OpenPonk-Core-accessing' }
+{ #category : '*OpenPonk-Core-accessing' }
 DoubleLink >> removeLink [
 	| predecessor successor |
 	predecessor := self previousLink.

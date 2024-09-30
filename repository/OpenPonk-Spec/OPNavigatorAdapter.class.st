@@ -17,8 +17,8 @@ displayBlock
 Because this will affect all objects, it is recommended to also reimplement ==hasMappingFor:== method to specify whether the adapter is applicable for this particular object.
 "
 Class {
-	#name : #OPNavigatorAdapter,
-	#superclass : #Object,
+	#name : 'OPNavigatorAdapter',
+	#superclass : 'Object',
 	#instVars : [
 		'iconMapping',
 		'childrenMapping',
@@ -28,46 +28,54 @@ Class {
 		'dependentMapping',
 		'typesByDependency'
 	],
-	#category : #'OpenPonk-Spec-Utils'
+	#category : 'OpenPonk-Spec-Utils',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Utils'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPNavigatorAdapter class >> isAbstract [
 	^ self = OPNavigatorAdapter
 ]
 
-{ #category : #registering }
+{ #category : 'accessing' }
+OPNavigatorAdapter class >> priority [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'registering' }
 OPNavigatorAdapter class >> registerAdapter: aNavigator [
 	aNavigator registerAdapter: self new
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 OPNavigatorAdapter >> actionFor: anObject [
 	^ self retrieveActionMapping at: anObject
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 OPNavigatorAdapter >> actionMapping [
 	"by default no action is expected"
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 OPNavigatorAdapter >> allChildrenFor: anObject [
 	^ (self mappingFor: anObject in: self retrieveChildrenMapping)
 		flatCollectAsSet: [ :each | (self allChildrenFor: each) , {each} ]
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 OPNavigatorAdapter >> childrenFor: anObject [
 	^ self mappingFor: anObject in: self retrieveChildrenMapping
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 OPNavigatorAdapter >> childrenMapping [
 	^ {}
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 OPNavigatorAdapter >> contextMenuFor: anObject [
 	^ self retrieveContextMenuMapping associations
 		select: [ :pair | 
@@ -77,26 +85,26 @@ OPNavigatorAdapter >> contextMenuFor: anObject [
 		thenCollect: #value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPNavigatorAdapter >> contextMenuMapping [
 	^ {(Object -> {('Inspect' -> [ :obj | obj inspect ])})}
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPNavigatorAdapter >> cull: aSomething with: anObject [
 	^ (aSomething isKindOf: Symbol) | (aSomething isKindOf: BlockClosure)
 		ifTrue: [ aSomething cull: anObject ]
 		ifFalse: [ aSomething ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPNavigatorAdapter >> cull: aSomething with: anObject with: aRootModel [
 	^ (aSomething isKindOf: Symbol) | (aSomething isKindOf: BlockClosure)
 		ifTrue: [ aSomething cull: anObject cull: aRootModel ]
 		ifFalse: [ aSomething ]
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 OPNavigatorAdapter >> dependentFor: anObject in: aRootModel [
 	^ self
 		mappingFor: anObject
@@ -104,12 +112,12 @@ OPNavigatorAdapter >> dependentFor: anObject in: aRootModel [
 		in: self retrieveDependentMapping
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPNavigatorAdapter >> dependentMapping [
 	^ self retrieveChildrenMapping
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 OPNavigatorAdapter >> dependsTypeOf: firstObject on: secondObject in: aRootModel [
 	| indexOfFirst indexOfSecond |
 	indexOfFirst := self retrieveTypesByDependency
@@ -119,41 +127,48 @@ OPNavigatorAdapter >> dependsTypeOf: firstObject on: secondObject in: aRootModel
 	^ indexOfFirst > indexOfSecond
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 OPNavigatorAdapter >> displayFor: anObject [
 	^ (self mappingFor: anObject in: self retrieveDisplayMapping)
 		ifNil: [ anObject printString ]
 		ifNotNil: [ :suffix | anObject name , (suffix ifNotEmpty: [ ' (' , suffix , ')' ]) ]
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 OPNavigatorAdapter >> displayMapping [
 	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
-OPNavigatorAdapter >> hasMappingFor: anObject [
+{ #category : 'testing' }
+OPNavigatorAdapter >> hasMappingFor: anObject in: aModel [
 	^ false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPNavigatorAdapter >> hierarchyFor: anObject [
 	^ (anObject allSuperclassesIncluding: Object)
 		addFirst: anObject;
 		yourself
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 OPNavigatorAdapter >> iconFor: anObject [
 	^ self mappingFor: anObject in: self retrieveIconMapping
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 OPNavigatorAdapter >> iconMapping [
 	^ self subclassResponsibility 
 ]
 
-{ #category : #private }
+{ #category : 'as yet unclassified' }
+OPNavigatorAdapter >> initialSetupFor: anObject in: aDiagramController [
+
+	^ OPRenameElementCommand executeOn:
+		  (aDiagramController controllerForModel: anObject)
+]
+
+{ #category : 'private' }
 OPNavigatorAdapter >> mappingFor: anObject in: aDictionary [
 	| h |
 	h := self hierarchyFor: anObject class.
@@ -165,7 +180,7 @@ OPNavigatorAdapter >> mappingFor: anObject in: aDictionary [
 	^ #()
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPNavigatorAdapter >> mappingFor: anObject inModel: aRootModel in: aDictionary [
 	| h |
 	h := self hierarchyFor: anObject class.
@@ -184,51 +199,51 @@ OPNavigatorAdapter >> mappingFor: anObject inModel: aRootModel in: aDictionary [
 	^ #()
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPNavigatorAdapter >> retrieveActionMapping [
 	^ actionMapping ifNil: [ actionMapping := self actionMapping asDictionary ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPNavigatorAdapter >> retrieveChildrenMapping [
 	^ childrenMapping
 		ifNil: [ childrenMapping := self childrenMapping asDictionary ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPNavigatorAdapter >> retrieveContextMenuMapping [
 	^ contextMenuMapping ifNil: [ contextMenuMapping := self contextMenuMapping asDictionary ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPNavigatorAdapter >> retrieveDependentMapping [
 	^ dependentMapping
 		ifNil: [ dependentMapping := self dependentMapping asDictionary ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPNavigatorAdapter >> retrieveDisplayMapping [
 	^ displayMapping ifNil: [ displayMapping := self displayMapping asDictionary ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPNavigatorAdapter >> retrieveIconMapping [
 	^ iconMapping ifNil: [ iconMapping := self iconMapping asDictionary ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPNavigatorAdapter >> retrieveTypesByDependency [
 	^ typesByDependency
 		ifNil: [ typesByDependency := self typesByDependency
 				flatCollect: [ :eachClass | eachClass withAllSubclasses ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OPNavigatorAdapter >> sort: modelObjects [
 	^ modelObjects sorted: [ :a :b | a hash < b hash ]
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 OPNavigatorAdapter >> typesByDependency [
 	^ self subclassResponsibility
 ]

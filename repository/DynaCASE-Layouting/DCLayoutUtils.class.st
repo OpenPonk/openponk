@@ -1,15 +1,17 @@
 Class {
-	#name : #DCLayoutUtils,
-	#superclass : #Object,
-	#category : 'DynaCASE-Layouting-GlobalEdgeLabels'
+	#name : 'DCLayoutUtils',
+	#superclass : 'Object',
+	#category : 'DynaCASE-Layouting-GlobalEdgeLabels',
+	#package : 'DynaCASE-Layouting',
+	#tag : 'GlobalEdgeLabels'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCLayoutUtils >> addBoundingBoxFor: aCollection [
 	aCollection do: [ :each | self addBoundingBoxTo: each ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCLayoutUtils >> addBoundingBoxTo: anElement [
 	| bb |
 	bb := RTBox new
@@ -22,7 +24,7 @@ DCLayoutUtils >> addBoundingBoxTo: anElement [
 	bb trachelShape pushBehind: anElement trachelShape.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCLayoutUtils >> computeSolutionSpaceFor: aBox line: aLine [
 	| vertA vertB space direction |
 	space := OrderedCollection new.
@@ -46,7 +48,7 @@ DCLayoutUtils >> computeSolutionSpaceFor: aBox line: aLine [
 	^ space
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCLayoutUtils >> showSolutionSpaceForLabel: aLabel edge: anEdge [
 	| line space polygon |
 	(anEdge hasAttribute: #solutionSpace)

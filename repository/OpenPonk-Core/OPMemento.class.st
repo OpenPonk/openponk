@@ -1,14 +1,16 @@
 Class {
-	#name : #OPMemento,
-	#superclass : #Object,
+	#name : 'OPMemento',
+	#superclass : 'Object',
 	#instVars : [
 		'model',
 		'diagrams'
 	],
-	#category : #'OpenPonk-Core-Persistence'
+	#category : 'OpenPonk-Core-Persistence',
+	#package : 'OpenPonk-Core',
+	#tag : 'Persistence'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPMemento class >> model: aModel diagram: aDiagram [
 	self
 		deprecated: 'OP no longer has one diagram per model, use diagrams instead'
@@ -18,7 +20,7 @@ OPMemento class >> model: aModel diagram: aDiagram [
 		yourself"
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPMemento class >> model: aModel diagrams: diagramsCollection [
 	^ self new
 		model: aModel;
@@ -26,13 +28,13 @@ OPMemento class >> model: aModel diagrams: diagramsCollection [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPMemento >> = otherMemento [
 	^ self model = otherMemento model
 		and: [ self diagrams = otherMemento diagrams ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPMemento >> diagram [
 	self
 		deprecated: 'OP no longer has one diagram per model, use diagrams instead'.
@@ -40,7 +42,7 @@ OPMemento >> diagram [
 	^ self diagrams first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPMemento >> diagram: aDiagram [
 	self
 		deprecated: 'OP no longer has one diagram per model, use diagrams: instead'
@@ -50,27 +52,27 @@ OPMemento >> diagram: aDiagram [
 	diagrams := {aDiagram}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPMemento >> diagrams [
 	^ diagrams
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPMemento >> diagrams: aDiagramsCollection [
 	diagrams := aDiagramsCollection copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPMemento >> model [
 	^ model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPMemento >> model: aModel [
 	model := aModel
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPMemento >> setModel: aModel diagram: aDiagram [
 	self
 		deprecated: 'OP no longer has one diagram per model, use views instead'
@@ -82,19 +84,20 @@ OPMemento >> setModel: aModel diagram: aDiagram [
 	diagram := aDiagram"
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPMemento >> setModel: aModel diagrams: diagramsCollection [
+
 	self
 		deprecated: 'set model and diagrams separately'
 		transformWith:
 			'`@receiver setModel: `@statements1 diagrams: `@statements2'
-				-> '`@receiver model: `@statements1; diagrams: `@statements2'.
-	self
-		model: aModel;
-		diagrams: diagramsCollection
+			-> '`@receiver model: `@statements1; diagrams: `@statements2'.
+	^ self
+		  model: aModel;
+		  diagrams: diagramsCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPMemento >> uuid [
 	^ self model uuid
 ]

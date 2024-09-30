@@ -1,10 +1,12 @@
 Class {
-	#name : #OPDynamicFormMagritteVisitorTest,
-	#superclass : #TestCase,
-	#category : #'OpenPonk-Spec-Tests'
+	#name : 'OPDynamicFormMagritteVisitorTest',
+	#superclass : 'TestCase',
+	#category : 'OpenPonk-Spec-Tests',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPDynamicFormMagritteVisitorTest >> testToManyRelation [
 	| visitor form button controller morph |
 	visitor := OPDynamicFormMagritteVisitor new.

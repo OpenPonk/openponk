@@ -1,23 +1,21 @@
 Class {
-	#name : #OPVersionInfo,
-	#superclass : #SpPresenter,
+	#name : 'OPVersionInfo',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'version',
 		'releaseNameLabel',
 		'releaseName',
 		'buildDateLabel',
 		'buildDate',
-		'commitLabel',
-		'commit',
-		'commitDateLabel',
-		'commitDate',
 		'onInfoDownloadBlock'
 	],
-	#category : #'OpenPonk-Spec-Dialogs'
+	#category : 'OpenPonk-Spec-Dialogs',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Dialogs'
 }
 
-{ #category : #specs }
-OPVersionInfo class >> defaultSpec [
+{ #category : 'as yet unclassified' }
+OPVersionInfo class >> defaultLayout [
 	^ SpGridLayout new
 		borderWidth: 0;
 		beColumnNotHomogeneous;
@@ -25,15 +23,11 @@ OPVersionInfo class >> defaultSpec [
 		add: #releaseName at: 2 @ 1;
 		add: #buildDateLabel at: 1 @ 2;
 		add: #buildDate at: 2 @ 2;
-		add: #commitLabel at: 1 @ 3;
-		add: #commit at: 2 @ 3;
-		add: #commitDateLabel at: 1 @ 4;
-		add: #commitDate at: 2 @ 4;
 		add: '' at: 1 @ 5 span: 2 @ 1;
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPVersionInfo >> connectPresenters [
 	(version needsDownloadInfo and: [ version canDownloadInfo ])
 		ifTrue: [ [ version downloadInfo.
@@ -44,14 +38,15 @@ OPVersionInfo >> connectPresenters [
 				named: 'Loading OpenPonk version info from GitHub' ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPVersionInfo >> initialize [
 	onInfoDownloadBlock := [  ].
 	super initialize
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPVersionInfo >> initializePresenters [
+
 	| unknownLabel |
 	releaseNameLabel := self newLabel.
 	releaseNameLabel label: 'Version: '.
@@ -59,64 +54,47 @@ OPVersionInfo >> initializePresenters [
 	buildDateLabel := self newLabel.
 	buildDateLabel label: 'Build/release date: '.
 	buildDate := self newLabel.
-	commitLabel := self newLabel.
-	commitLabel label: 'Built from commit: '.
-	commit := self newLink.
-	commitDateLabel := self newLabel.
-	commitDateLabel label: 'Commit date: '.
-	commitDate := self newLabel.
 	unknownLabel := version canDownloadInfo
-		ifTrue: [ 'Loading...' ]
-		ifFalse: [ 'Unknown' ].
-	version needsDownloadInfo
-		ifFalse: [ ^ self refreshInfo ].
+		                ifTrue: [ 'Loading...' ]
+		                ifFalse: [ 'Unknown' ].
+	version needsDownloadInfo ifFalse: [ ^ self refreshInfo ].
 	releaseName
 		label: unknownLabel;
 		url: 'https://openponk.org'.
-	buildDate label: unknownLabel.
-	commit
-		label: unknownLabel;
-		url: 'https://openponk.org'.
-	commitDate label: unknownLabel
+	buildDate label: unknownLabel
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 OPVersionInfo >> onInfoDownloadDo: aBlock [
+
 	version needsDownloadInfo
 		ifTrue: [ onInfoDownloadBlock := aBlock ]
 		ifFalse: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'updating' }
 OPVersionInfo >> refreshInfo [
-	version needsDownloadInfo
-		ifTrue: [ ^ self ].
+
+	version needsDownloadInfo ifTrue: [ ^ self ].
 	releaseName
 		label: version releaseName;
-		url:
-			'https://github.com/OpenPonk/' , version repositoryName
-				, '/releases/tag/' , version releaseName.
+		url: 'https://github.com/OpenPonk/' , version repositoryName
+			, '/releases/tag/' , version releaseName.
 	buildDate label: version buildDate asStringYMDHM.
-	commit
-		label: (version commit asString first: 7);
-		url:
-			'https://github.com/OpenPonk/' , version repositoryName , '/commit/'
-				, version commit asString.
-	commitDate label: version commitDate asStringYMDHM.
 	onInfoDownloadBlock value
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'updating' }
 OPVersionInfo >> setFailedInfo [
+
 	| label |
 	label := 'failed to download'.
 	releaseName label: label.
-	buildDate label: label.
-	commit label: label.
-	commitDate label: label
+	buildDate label: label
 ]
 
-{ #category : #'accessing model' }
+{ #category : 'accessing - model' }
 OPVersionInfo >> setModelBeforeInitialization: aVersion [
+
 	version := aVersion
 ]

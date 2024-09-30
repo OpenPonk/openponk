@@ -2,24 +2,26 @@
 I provide in-image persistance for DCProjects.
 "
 Class {
-	#name : #OPProjectStorage,
-	#superclass : #Object,
+	#name : 'OPProjectStorage',
+	#superclass : 'Object',
 	#instVars : [
 		'projects'
 	],
 	#classVars : [
 		'Default'
 	],
-	#category : #'OpenPonk-Core-Models'
+	#category : 'OpenPonk-Core-Models',
+	#package : 'OpenPonk-Core',
+	#tag : 'Models'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectStorage class >> default [
 	<script: 'self default inspect'>
 	^ Default ifNil: [ Default := self new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectStorage class >> reset [
 	"self reset"
 	<script: 'self reset'>
@@ -27,34 +29,34 @@ OPProjectStorage class >> reset [
 	Default := nil
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 OPProjectStorage >> add: aProject [
 	self addFirst: aProject
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 OPProjectStorage >> addFirst: aProject [
 	self ensureRemove: aProject.
 	projects addFirst: aProject
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 OPProjectStorage >> ensureRemove: aProject [
 	projects removeAllSuchThat: [ :each | each storageFile = aProject storageFile ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPProjectStorage >> initialize [
 	super initialize.
 	projects := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPProjectStorage >> projects [
 	^ projects
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 OPProjectStorage >> remove: aProject [
 	self ensureRemove: aProject
 ]

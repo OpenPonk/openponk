@@ -1,12 +1,7 @@
 Class {
-	#name : #OPDiagramView,
-	#superclass : #OPDiagram,
-	#category : #'OpenPonk-Core-Diagrams'
+	#name : 'OPDiagramView',
+	#superclass : 'OPLegacyDiagram',
+	#category : 'OpenPonk-Core-Diagrams',
+	#package : 'OpenPonk-Core',
+	#tag : 'Diagrams'
 }
-
-{ #category : #testing }
-OPDiagramView class >> isDeprecated [
-	"renamed to OPDiagram"
-
-	^ true
-]

@@ -1,15 +1,17 @@
 Class {
-	#name : #DCRTLHungarianSolverTest,
-	#superclass : #TestCase,
+	#name : 'DCRTLHungarianSolverTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'solver',
 		'matrix',
 		'expected'
 	],
-	#category : 'DynaCASE-Layouting-GlobalEdgeLabels'
+	#category : 'DynaCASE-Layouting-GlobalEdgeLabels',
+	#package : 'DynaCASE-Layouting',
+	#tag : 'GlobalEdgeLabels'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DCRTLHungarianSolverTest >> matrixFor: a2DArray [
 	^ Matrix
 		rows: a2DArray size
@@ -17,13 +19,13 @@ DCRTLHungarianSolverTest >> matrixFor: a2DArray [
 		tabulate: [ :i :j | (a2DArray at: i) at: j ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 DCRTLHungarianSolverTest >> setUp [
 	super setUp.
 	solver := DCRTLHungarianSolver new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DCRTLHungarianSolverTest >> testMedium [
 	matrix := self
 		matrixFor:
@@ -38,14 +40,14 @@ DCRTLHungarianSolverTest >> testMedium [
 	self assert: (solver solve: matrix) equals: expected
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DCRTLHungarianSolverTest >> testMicro [
 	matrix := self matrixFor: {#(1)}.
 	expected := {(#(1 1) -> 1)}.
 	self assert: (solver solve: matrix) equals: expected
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DCRTLHungarianSolverTest >> testMini [
 	matrix := self
 		matrixFor:
@@ -56,21 +58,21 @@ DCRTLHungarianSolverTest >> testMini [
 	self assert: (solver solve: matrix) equals: expected
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DCRTLHungarianSolverTest >> testPadWithZeros [
 	matrix := self matrixFor: #(#(1 3)).
 	expected := self matrixFor: #(#(1 3) #(0 0)).
 	self assert: (solver padWithZeros: matrix) equals: expected
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DCRTLHungarianSolverTest >> testPadWithZeros2 [
 	matrix := self matrixFor: #(#(1) #(2)).
 	expected := self matrixFor: #(#(1 0) #(2 0)).
 	self assert: (solver padWithZeros: matrix) equals: expected
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DCRTLHungarianSolverTest >> testSmall [
 	matrix := self
 		matrixFor:

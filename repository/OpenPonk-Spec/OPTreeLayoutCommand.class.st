@@ -1,15 +1,17 @@
 Class {
-	#name : #OPTreeLayoutCommand,
-	#superclass : #OPLayoutDiagramCommand,
-	#category : #'OpenPonk-Spec-Layouting'
+	#name : 'OPTreeLayoutCommand',
+	#superclass : 'OPLayoutDiagramCommand',
+	#category : 'OpenPonk-Spec-Layouting',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Layouting'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTreeLayoutCommand >> defaultMenuItemName [
 	^ 'Tree'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPTreeLayoutCommand >> execute [
 	layouter treeLayout
 ]

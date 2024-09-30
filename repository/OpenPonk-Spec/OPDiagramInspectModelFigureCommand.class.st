@@ -1,24 +1,35 @@
 Class {
-	#name : #OPDiagramInspectModelFigureCommand,
-	#superclass : #OPDiagramFigureCommand,
-	#category : #'OpenPonk-Spec-Diagram-Figure-Commands'
+	#name : 'OPDiagramInspectModelFigureCommand',
+	#superclass : 'OPDiagramFigureCommand',
+	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Diagram-Figure-Commands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPDiagramInspectModelFigureCommand class >> canvasShortcutActivation [
 	<classAnnotation>
 	^ CmdShortcutActivation by: $i meta for: OPCanvasPresenter
 ]
 
-{ #category : #execution }
-OPDiagramInspectModelFigureCommand >> defaultMenuItemName [
-	^ 'Inspect model'
+{ #category : 'accessing' }
+OPDiagramInspectModelFigureCommand >> defaultMenuIcon [
+
+	^ self iconNamed: #glamorousInspect
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
+OPDiagramInspectModelFigureCommand >> defaultMenuItemName [
+
+	| basicName |
+	basicName := 'Inspect model'.
+	models ifNil: [ ^ basicName ].
+	^ models size pluralize: basicName
+]
+
+{ #category : 'execution' }
 OPDiagramInspectModelFigureCommand >> execute [
-	models ifEmpty: [ ^ self ].
-	models size = 1
-		ifTrue: [ models anyOne inspect ]
-		ifFalse: [ models inspect ]
+
+	models size = 1 ifTrue: [ ^ models anyOne inspect ].
+	^ models inspect
 ]

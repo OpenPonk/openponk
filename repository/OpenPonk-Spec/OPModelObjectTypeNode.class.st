@@ -1,16 +1,18 @@
 Class {
-	#name : #OPModelObjectTypeNode,
-	#superclass : #Object,
+	#name : 'OPModelObjectTypeNode',
+	#superclass : 'Object',
 	#traits : 'TComparable',
 	#classTraits : 'TComparable classTrait',
 	#instVars : [
 		'name',
 		'children'
 	],
-	#category : #'OpenPonk-Spec-Utils'
+	#category : 'OpenPonk-Spec-Utils',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Utils'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPModelObjectTypeNode class >> fromType: aType [
 	^ self new
 		name: aType name;
@@ -18,20 +20,20 @@ OPModelObjectTypeNode class >> fromType: aType [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPModelObjectTypeNode class >> fromTypes: aTypesCollection [
 	^ (self named: #root withChildrenFromTypes: aTypesCollection)
 		children
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPModelObjectTypeNode class >> named: childName [
 	^ self new
 		name: childName;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OPModelObjectTypeNode class >> named: childName withChildrenFromTypes: aTypesCollection [
 	^ self new
 		name: childName;
@@ -39,14 +41,14 @@ OPModelObjectTypeNode class >> named: childName withChildrenFromTypes: aTypesCol
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPModelObjectTypeNode >> < aComparable [
 	"Answer whether the receiver is less than the argument."
 
 	^ name < aComparable name
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPModelObjectTypeNode >> = aComparable [
 	"Compare the receiver with the argument and answer with true if the 
 	receiver is equal to the argument. Otherwise answer false."
@@ -54,12 +56,12 @@ OPModelObjectTypeNode >> = aComparable [
 	^ name = aComparable name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPModelObjectTypeNode >> children [
 	^ children
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPModelObjectTypeNode >> childrenFromTypes: aTypesCollection [
 	children := (aTypesCollection groupedBy: #name) associations
 		collect: [ :nameAndTypesPair | 
@@ -68,47 +70,47 @@ OPModelObjectTypeNode >> childrenFromTypes: aTypesCollection [
 				withChildrenFromTypes: (nameAndTypesPair value collect: #subtype thenReject: #isNil) ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OPModelObjectTypeNode >> hash [
 	"Hash must be redefined whenever = is redefined."
 
 	^ name hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OPModelObjectTypeNode >> includesType: aType [
 	^ aType withAllSubtypes anySatisfy: [ :any | any name = name ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPModelObjectTypeNode >> initialize [
 	super initialize.
 	children := Set new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPModelObjectTypeNode >> isLeaf [
 	^ children isEmpty
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPModelObjectTypeNode >> leafNames [
 	^ children
 		ifEmpty: [ Set with: name ]
 		ifNotEmpty: [ children flatCollectAsSet: #leafNames ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPModelObjectTypeNode >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPModelObjectTypeNode >> name: aString [ 
 	name := aString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 OPModelObjectTypeNode >> printOn: aStream [
 	"Append a sequence of characters to aStream that identify the receiver."
 
@@ -119,7 +121,7 @@ OPModelObjectTypeNode >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 OPModelObjectTypeNode >> withAllChildren [
 	^ (Set with: self) , (children flatCollectAsSet: #withAllChildren)
 ]

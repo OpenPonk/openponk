@@ -1,6 +1,6 @@
 Class {
-	#name : #OPEditorAnnouncementsTest,
-	#superclass : #TestCase,
+	#name : 'OPEditorAnnouncementsTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'workbench',
 		'editor',
@@ -8,10 +8,12 @@ Class {
 		'plugin',
 		'project'
 	],
-	#category : #'OpenPonk-Spec-Tests'
+	#category : 'OpenPonk-Spec-Tests',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Tests'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OPEditorAnnouncementsTest >> setUp [
 
 	plugin := Mock new.
@@ -30,70 +32,76 @@ OPEditorAnnouncementsTest >> setUp [
 	announcer := workbench announcer
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OPEditorAnnouncementsTest >> tearDown [
 	super tearDown.
 	OPPluginRegistry resetDefault
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPEditorAnnouncementsTest >> testEditorClosesAndUnfocuses [
+
 	| unfocusedAnn closedAnn oldModel |
 	oldModel := project models first.
-	announcer when: OPEditorClosed do: [ :ann | closedAnn := ann ].
-	announcer when: OPEditorUnfocused do: [ :ann | unfocusedAnn := ann ].
+	announcer
+		when: OPEditorClosed
+		do: [ :ann | closedAnn := ann ]
+		for: self.
+	announcer
+		when: OPEditorUnfocused
+		do: [ :ann | unfocusedAnn := ann ]
+		for: self.
 	workbench openProject: project.
 	workbench openEditorOn: oldModel.
-	workbench tabManager tabs first buildWithSpec.
-	workbench tabManager tabs first widget widget delete.
+	self deny: unfocusedAnn diagramController model equals: oldModel.
+	self assert: closedAnn isNil.
+	workbench notebook pages first removeFromNotebook.
 	self assert: unfocusedAnn isNotNil.
-	self assert: unfocusedAnn editor diagramController model equals: oldModel.
+	self assert: unfocusedAnn diagramController model equals: oldModel.
 	self assert: closedAnn isNotNil.
-	self assert: closedAnn editor diagramController model equals: oldModel
+	self assert: closedAnn diagramController model equals: oldModel.
+	workbench withWindowDo: #close
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPEditorAnnouncementsTest >> testEditorCreatedAndFocused [
+
 	| createdAnn focusedAnn model |
 	model := project models second.
-	announcer when: OPEditorCreated do: [ :ann | createdAnn := ann ].
-	announcer when: OPEditorFocused do: [ :ann | focusedAnn := ann ].
+	announcer
+		when: OPEditorCreated
+		do: [ :ann | createdAnn := ann ]
+		for: self.
+	announcer
+		when: OPEditorFocused
+		do: [ :ann | focusedAnn := ann ]
+		for: self.
 	workbench openProject: project.
 	workbench openEditorOn: model.
 	self assert: createdAnn isNotNil.
 	self assert: createdAnn editor diagramController model equals: model.
 	self assert: focusedAnn isNotNil.
-	self assert: focusedAnn editor diagramController model equals: model
+	self assert: focusedAnn editor diagramController model equals: model.
+	workbench withWindowDo: #close
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPEditorAnnouncementsTest >> testEditorCreationChangesFocus [
+
 	| focusedAnn unfocusedAnn oldModel newModel |
 	oldModel := project models first.
 	workbench openProject: project.
 	workbench openEditorOn: oldModel.
-	announcer when: OPEditorFocused do: [ :ann | focusedAnn := ann ].
-	announcer when: OPEditorUnfocused do: [ :ann | unfocusedAnn := ann ].
+	announcer
+		when: OPEditorFocused
+		do: [ :ann | focusedAnn := ann ]
+		for: self.
+	announcer
+		when: OPEditorUnfocused
+		do: [ :ann | unfocusedAnn := ann ]
+		for: self.
 	newModel := project models second.
 	workbench openEditorOn: newModel.
-	self assert: unfocusedAnn isNotNil.
-	self assert: unfocusedAnn editor diagramController model equals: oldModel.
-	self assert: focusedAnn isNotNil.
-	self assert: focusedAnn editor diagramController model equals: newModel
-]
-
-{ #category : #tests }
-OPEditorAnnouncementsTest >> testTabSwitchRefocuses [
-	| unfocusedAnn focusedAnn oldModel newModel |
-	newModel := project models first.
-	oldModel := project models second.
-	workbench openProject: project.
-	workbench openEditorOn: newModel.
-	workbench openEditorOn: oldModel.
-	workbench tabManager selectedTab: workbench tabManager tabs second.
-	announcer when: OPEditorFocused do: [ :ann | focusedAnn := ann ].
-	announcer when: OPEditorUnfocused do: [ :ann | unfocusedAnn := ann ].
-	workbench tabManager selectedTab: workbench tabManager tabs first.
 	self assert: unfocusedAnn isNotNil.
 	self
 		assert: unfocusedAnn editor diagramController model
@@ -101,5 +109,36 @@ OPEditorAnnouncementsTest >> testTabSwitchRefocuses [
 	self assert: focusedAnn isNotNil.
 	self
 		assert: focusedAnn editor diagramController model
-		equals: newModel
+		equals: newModel.
+	workbench withWindowDo: #close
+]
+
+{ #category : 'tests' }
+OPEditorAnnouncementsTest >> testTabSwitchRefocuses [
+
+	| unfocusedAnn focusedAnn oldModel newModel |
+	newModel := project models first.
+	oldModel := project models second.
+	workbench openProject: project.
+	workbench openEditorOn: newModel.
+	workbench openEditorOn: oldModel.
+	workbench notebook selectPageIndex: 2.
+	announcer
+		when: OPEditorFocused
+		do: [ :ann | focusedAnn := ann ]
+		for: self.
+	announcer
+		when: OPEditorUnfocused
+		do: [ :ann | unfocusedAnn := ann ]
+		for: self.
+	workbench notebook selectPageIndex: 1.
+	self assert: unfocusedAnn isNotNil.
+	self
+		assert: unfocusedAnn editor diagramController model
+		equals: oldModel.
+	self assert: focusedAnn isNotNil.
+	self
+		assert: focusedAnn editor diagramController model
+		equals: newModel.
+	workbench withWindowDo: #close
 ]

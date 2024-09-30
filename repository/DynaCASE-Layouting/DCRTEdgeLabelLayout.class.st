@@ -1,6 +1,6 @@
 Class {
-	#name : #DCRTEdgeLabelLayout,
-	#superclass : #RTEdgeDrivenLayout,
+	#name : 'DCRTEdgeLabelLayout',
+	#superclass : 'RTEdgeDrivenLayout',
 	#instVars : [
 		'labels',
 		'assignedLabels',
@@ -16,10 +16,12 @@ Class {
 		'labelToEdgeMapping',
 		'preferences'
 	],
-	#category : 'DynaCASE-Layouting-GlobalEdgeLabels'
+	#category : 'DynaCASE-Layouting-GlobalEdgeLabels',
+	#package : 'DynaCASE-Layouting',
+	#tag : 'GlobalEdgeLabels'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 DCRTEdgeLabelLayout class >> example [
 |v es edges lines utils edgeLabels|
 utils := DCLayoutUtils new.
@@ -88,7 +90,7 @@ v canvas camera focusOnCenterScaled: (521.0@700.0).
 ^ v
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 DCRTEdgeLabelLayout class >> example2 [
 |v es edges lines utils edgeLabels|
 utils := DCLayoutUtils new.
@@ -144,7 +146,7 @@ v canvas camera focusOnCenterScaled: (450.0@700.0).
 ^ v
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 DCRTEdgeLabelLayout class >> exampleClusters [
 |v es edges lines utils edgeLabels|
 utils := DCLayoutUtils new.
@@ -208,24 +210,24 @@ v canvas camera focusOnCenterScaled: (521.0@700.0).
 ^ v
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> allEdgeMarks [
 	^ (self edges collect: [ :each | each -> (self edgeMarksFor: each) ]) as: OrderedDictionary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> applyAssignment: aDictionary [
 	aDictionary
 		keysAndValuesDo:
 			[ :feature :position | (self labelForEdge: feature model) translateTo: position center ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> batchOfUnassignedLabels [
 	^ self edges collect: [ :e | self labelForEdge: e ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> clusterGraphsFor: anOverlapGraph [
 	| clusters graph |
 	clusters := self clustersFor: anOverlapGraph.
@@ -246,7 +248,7 @@ DCRTEdgeLabelLayout >> clusterGraphsFor: anOverlapGraph [
 			graph ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> clustersFor: anOverlapGraph [
 	| classGraph clusters |
 	(classGraph := MalGraphStructure new).
@@ -284,7 +286,7 @@ DCRTEdgeLabelLayout >> clustersFor: anOverlapGraph [
 		removeDuplicates asArray
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> completeClusterFor: aGraph [
 	| degrees removed |
 	(self isComplete: aGraph)
@@ -296,12 +298,12 @@ DCRTEdgeLabelLayout >> completeClusterFor: aGraph [
 	^ self completeClustersFor: (self clusterGraphsFor: aGraph)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> completeClustersFor: clusterGraphs [
 	^ clusterGraphs flatCollect: [ :each | self completeClusterFor: each ]
 ]
 
-{ #category : #cost }
+{ #category : 'cost' }
 DCRTEdgeLabelLayout >> costForFeature: aFeatureNode cluster: aClusterNode edges: matchingGraph [
 	^ matchingGraph edges
 		detect: [ :e | e from = aFeatureNode & (e to = aClusterNode) ]
@@ -317,12 +319,12 @@ DCRTEdgeLabelLayout >> costForFeature: aFeatureNode cluster: aClusterNode edges:
 		ifNone: [ Float infinity ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> defaultSpacing [
 	^ 30
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 DCRTEdgeLabelLayout >> doExecute: elementsCollection [
 	| action |
 	action := [ withVisualization
@@ -333,7 +335,7 @@ DCRTEdgeLabelLayout >> doExecute: elementsCollection [
 		ifFalse: [ action value ]
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 DCRTEdgeLabelLayout >> doExecuteNormal: elementsCollection [
 	| edgeMarks positions overlapGraph clusterGraphs completeClusters matchingGraph assignment |
 	elements := elementsCollection.
@@ -352,7 +354,7 @@ DCRTEdgeLabelLayout >> doExecuteNormal: elementsCollection [
 	unassignedLabels ifNotEmpty: [ self doExecute: elementsCollection ]
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 DCRTEdgeLabelLayout >> doExecuteVisualized: elementsCollection [
 	| edgeMarks positions overlapGraph clusterGraphs completeClusters matchingGraph assignment conf |
 	conf := visualizer class Configuration.
@@ -401,17 +403,17 @@ DCRTEdgeLabelLayout >> doExecuteVisualized: elementsCollection [
 	unassignedLabels ifNotEmpty: [ self doExecuteVisualized: elementsCollection ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> edgeForLabel: aLabel [
 	^ edgeForLabel cull: aLabel cull: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> edgeForLabelStrategy: aTwoArgBlock [
 	edgeForLabel := aTwoArgBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> edgeMarksFor: anEdge [
 	| line angle direction |
 	line := RTLineSegment
@@ -427,17 +429,17 @@ DCRTEdgeLabelLayout >> edgeMarksFor: anEdge [
 		asArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTEdgeLabelLayout >> elements [
 	^ elements , assignedLabels
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTEdgeLabelLayout >> elements: aCollection [
 	elements := aCollection
 ]
 
-{ #category : #hook }
+{ #category : 'hook' }
 DCRTEdgeLabelLayout >> findAssignmentFor: aMatchingGraph [
 	| matrix features clusters solver solution assignment |
 	features := aMatchingGraph nodes select: #isFeature.
@@ -466,7 +468,7 @@ DCRTEdgeLabelLayout >> findAssignmentFor: aMatchingGraph [
 	^ assignment asDictionary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> indexPositions: aDictionary [
 	"assign each position a globally (within the view) unique ID so it can be tracked later"
 
@@ -490,13 +492,13 @@ DCRTEdgeLabelLayout >> indexPositions: aDictionary [
 	^ indexed
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> initialPositions [
 	^ (self batchOfUnassignedLabels
 		collect: [ :each | each -> (self initialPositionsFor: each) ]) as: OrderedDictionary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> initialPositionsFor: aLabel [
 	| marks size w h extent |
 	extent := aLabel extent.
@@ -535,7 +537,7 @@ DCRTEdgeLabelLayout >> initialPositionsFor: aLabel [
 		collect: [ :each | each bounds: ((each position corner: each position) expandBy: extent / 2) ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 DCRTEdgeLabelLayout >> initialize [
 	super initialize.
 	labels := nil.
@@ -549,24 +551,24 @@ DCRTEdgeLabelLayout >> initialize [
 	preferences := Dictionary new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> isComplete: aGraph [
 	"|E| = |N|*(|N|-1)/2"
 
 	^ aGraph edges size = (aGraph nodes size * (aGraph nodes size - 1) / 2)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> labelForEdge: anEdge [
 	^ labelForEdge cull: anEdge cull: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> labelForEdgeStrategy: aTwoArgBlock [
 	^ labelForEdge := aTwoArgBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTEdgeLabelLayout >> labelToEdgeMapping: aDictionary [
 	labelToEdgeMapping := aDictionary.
 	self edgeForLabelStrategy: [ :label :me | labelToEdgeMapping at: label ].
@@ -577,24 +579,24 @@ DCRTEdgeLabelLayout >> labelToEdgeMapping: aDictionary [
 				detect: [ :lbl | unassignedLabels includes: lbl ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTEdgeLabelLayout >> labels [
 	^ labels ifNil: [ labels := self edges collect: labelsStrategy thenReject: #isNil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTEdgeLabelLayout >> labels: aCollection [
 	labels := aCollection.
 	unassignedLabels := aCollection asOrderedCollection.
 	assignedLabels := OrderedCollection new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> labelsStrategy: aBlock [
 	labelsStrategy := aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> matchingGraphFor: anOverlapGraph classes: clusterGraphs [
 	| matchingGraph clusterNode |
 	matchingGraph := MalGraphStructure new.
@@ -617,7 +619,7 @@ DCRTEdgeLabelLayout >> matchingGraphFor: anOverlapGraph classes: clusterGraphs [
 	^ matchingGraph
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> overlapGraphFor: aDictionary [
 	| graph oldGraph positions added |
 	(graph := MalGraphStructure new) edgeClass: MalGraphEdge.
@@ -648,7 +650,7 @@ DCRTEdgeLabelLayout >> overlapGraphFor: aDictionary [
 	^ graph
 ]
 
-{ #category : #cost }
+{ #category : 'cost' }
 DCRTEdgeLabelLayout >> penaltyForEdgeProximity: aPosition of: anEdge [
 	| line closestAnotherDistance edgeDistance from to |
 	from := [ :e | e shape startingPointOf: e ].
@@ -670,7 +672,7 @@ DCRTEdgeLabelLayout >> penaltyForEdgeProximity: aPosition of: anEdge [
 		ifFalse: [ 1 ]"
 ]
 
-{ #category : #cost }
+{ #category : 'cost' }
 DCRTEdgeLabelLayout >> penaltyForElementProximity: aPosition of: anEdge [
 	| closestDistance |
 	closestDistance := (elements
@@ -678,7 +680,7 @@ DCRTEdgeLabelLayout >> penaltyForElementProximity: aPosition of: anEdge [
 	^ 11 - closestDistance rounded max: 0
 ]
 
-{ #category : #cost }
+{ #category : 'cost' }
 DCRTEdgeLabelLayout >> penaltyForOrientation: aPosition of: anEdge [
 	self preferences
 		at: aPosition feature
@@ -697,7 +699,7 @@ DCRTEdgeLabelLayout >> penaltyForOrientation: aPosition of: anEdge [
 		ifAbsent: [ ^ 0 ]
 ]
 
-{ #category : #cost }
+{ #category : 'cost' }
 DCRTEdgeLabelLayout >> penaltyForProximity: aPosition of: anEdge [
 	| p1 p2 |
 	p1 := self penaltyForEdgeProximity: aPosition of: anEdge.
@@ -705,7 +707,7 @@ DCRTEdgeLabelLayout >> penaltyForProximity: aPosition of: anEdge [
 	^ p1 max: p2
 ]
 
-{ #category : #cost }
+{ #category : 'cost' }
 DCRTEdgeLabelLayout >> penaltyForRanking: aPosition of: anEdge [
 	self preferences
 		at: aPosition feature
@@ -718,17 +720,17 @@ DCRTEdgeLabelLayout >> penaltyForRanking: aPosition of: anEdge [
 		ifAbsent: [ ^ aPosition ranking ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTEdgeLabelLayout >> preferences [
 	^ preferences
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTEdgeLabelLayout >> preferences: aDictionary [
 	preferences := aDictionary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> removeFeatureOverlaps: aDictionary [
 	"Remove all positions overlapping another edge or element, but not label."
 
@@ -740,7 +742,7 @@ DCRTEdgeLabelLayout >> removeFeatureOverlaps: aDictionary [
 	^ newMap
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> removeFeatureOverlapsFor: aLabel positions: aCollection [
 	"Remove all positions overlapping another edge or element, but not label."
 
@@ -775,22 +777,22 @@ DCRTEdgeLabelLayout >> removeFeatureOverlapsFor: aLabel positions: aCollection [
 	^ rectangles
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTEdgeLabelLayout >> spacing [
 	^ spacing
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTEdgeLabelLayout >> spacing: aNumber [
 	spacing := aNumber
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCRTEdgeLabelLayout >> withProgressBar [
 	withProgressBar := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DCRTEdgeLabelLayout >> withVisualization [
 	withVisualization := true
 ]

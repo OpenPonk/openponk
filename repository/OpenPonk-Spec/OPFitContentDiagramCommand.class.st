@@ -1,10 +1,12 @@
 Class {
-	#name : #OPFitContentDiagramCommand,
-	#superclass : #OPDiagramToolbarCommand,
-	#category : #'OpenPonk-Spec-Diagram-Toolbar-Commands'
+	#name : 'OPFitContentDiagramCommand',
+	#superclass : 'OPDiagramToolbarCommand',
+	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Diagram-Toolbar-Commands'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 OPFitContentDiagramCommand class >> toolbarMenuActivation [
 	<classAnnotation>
 	^ OPDiagramToolbarActivation
@@ -13,17 +15,17 @@ OPFitContentDiagramCommand class >> toolbarMenuActivation [
 		for: OPCanvasPresenter
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPFitContentDiagramCommand >> defaultMenuIcon [
 	^ OPIdeaGraphIcons fitContentIcon
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPFitContentDiagramCommand >> defaultMenuItemName [
 	^ 'Fit All'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 OPFitContentDiagramCommand >> execute [
-	diagramPresenter showAllFigures
+	diagramPresenter zoomToFit
 ]

@@ -1,30 +1,32 @@
 Class {
-	#name : #OPProjectTest,
-	#superclass : #TestCase,
+	#name : 'OPProjectTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'project',
 		'model'
 	],
-	#category : #'OpenPonk-Core-Tests'
+	#category : 'OpenPonk-Core-Tests',
+	#package : 'OpenPonk-Core',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPProjectTest >> testAddModel [
-	| view |
+
+	| diagram visibleElements |
 	project := OPProject new.
 	self assert: project models isEmpty.
 	self assert: project diagrams isEmpty.
 	model := OPTestContainerModel new.
 	project addModel: model.
-	self assert: project models asArray equals: {model}.
+	self assert: project models asArray equals: { model }.
 	project ensureModelsHaveDiagrams.
 	self assert: project diagrams size equals: 1.
-	view := project diagrams first.
-	view visibleElements ifEmpty: [ self assert: false ].
-	self assert: view model equals: model
+	diagram := project diagrams first.
+	self assert: diagram modelElement equals: model
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OPProjectTest >> testRemoveModel [
 	project := OPProject new.
 	model := OPTestContainerModel new.

@@ -14,12 +14,14 @@ See
 [2] M. E. F. E. M. Kaufmann, “An Approach for Mixed Upward Planarization,” Graph Algorithms and Applications 4, vol. 4, p. 203, 2006.
 "
 Class {
-	#name : #DCGTPlanarization,
-	#superclass : #Object,
-	#category : 'DynaCASE-Layouting-DGT'
+	#name : 'DCGTPlanarization',
+	#superclass : 'Object',
+	#category : 'DynaCASE-Layouting-DGT',
+	#package : 'DynaCASE-Layouting',
+	#tag : 'DGT'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DCGTPlanarization class >> example [
 	| a b c d e g ord pi part over parts |
 	a := DCGTNode model: #A.

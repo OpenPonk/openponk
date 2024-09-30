@@ -5,63 +5,70 @@ DCPalette>>newCreationTool:
 
 "
 Class {
-	#name : #OPCreationTool,
-	#superclass : #OPPaletteTool,
+	#name : 'OPCreationTool',
+	#superclass : 'OPPaletteTool',
 	#instVars : [
 		'factory',
 		'objectController',
 		'feedback',
 		'onComplete'
 	],
-	#category : #'OpenPonk-Spec-Palettes'
+	#category : 'OpenPonk-Spec-Palettes',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Palettes'
 }
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPCreationTool >> deselect [
+
 	feedback value: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OPCreationTool >> factory: aBlock [
 	factory := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'callbacks' }
+OPCreationTool >> hoveredController: aController [
+
+	feedback value: ((aController canBeTargetFor: objectController)
+			 ifTrue: [ aController showAcceptFeedbackFor: objectController ]
+			 ifFalse: [ aController showDenyFeedbackFor: objectController ])
+]
+
+{ #category : 'accessing' }
 OPCreationTool >> initialize [
 	super initialize.
 	onComplete := [ :ctrl |  ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 OPCreationTool >> select [
+
 	feedback := nil asValueHolder.
-	feedback whenChangedDo: [ :newVal :oldVal | oldVal ifNotNil: [ oldVal remove ] ].
-	objectController := factory value.
-	self diagramController whenHoverChanged: [ :ctrl | self targetEntered: ctrl ].
-	self diagramController whenSelectionChanged: [ :ctrl | self targetSelected: ctrl ]
+	feedback whenChangedDo: [ :newVal :oldVal | 
+		oldVal ifNotNil: [ oldVal remove ] ].
+	objectController := factory value
 ]
 
-{ #category : #callbacks }
-OPCreationTool >> targetEntered: aController [
-	feedback
-		value:
-			((aController canBeTargetFor: objectController)
-				ifTrue: [ aController showAcceptFeedbackFor: objectController ]
-				ifFalse: [ aController showDenyFeedbackFor: objectController ])
-]
+{ #category : 'callbacks' }
+OPCreationTool >> selectedControllers: aCollectionOfControllers [
 
-{ #category : #callbacks }
-OPCreationTool >> targetSelected: aController [
-	(aController canBeTargetFor: objectController)
-		ifFalse: [ ^ self ].
-	aController addAsTargetFor: objectController.
-	self palette deselectTool.
-	self palette selectedTool targetSelected: objectController.
+	| targetController |
+	aCollectionOfControllers size = 1 ifFalse: [ ^ self ].
+	targetController := aCollectionOfControllers anyOne.
+	(targetController canBeTargetFor: objectController) ifFalse: [
+		^ self ].
+	targetController addAsTargetFor: objectController.
+	self palette selectSelectionTool.
+	self palette selectedTool selectedControllers: { objectController }.
 	onComplete value: objectController.
+	self editor openFormOn: objectController.
 	objectController := nil
 ]
 
-{ #category : #callbacks }
-OPCreationTool >> whenCompleted: aOneArgBlock [
+{ #category : 'callbacks' }
+OPCreationTool >> whenCreated: aOneArgBlock [
 	onComplete := aOneArgBlock
 ]

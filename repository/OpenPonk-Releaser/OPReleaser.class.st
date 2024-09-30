@@ -2,7 +2,6 @@ Class {
 	#name : 'OPReleaser',
 	#superclass : 'Object',
 	#instVars : [
-		'repository',
 		'repositoryName',
 		'versionArray',
 		'nightlyBranchName',
@@ -44,22 +43,71 @@ OPReleaser class >> releaseRepository: aName branch: aString asVersion: anArrayO
 		  inspectGitCommands
 ]
 
+{ #category : 'instance creation' }
+OPReleaser >> branch: aBranchName [
+
+	nightlyBranchName := aBranchName
+]
+
 { #category : 'actions' }
-OPReleaser >> commitAndPush [
+OPReleaser >> checkoutLocalReleaseBranch [
+
+	| releaseBranchModel |
+	"grab local release_base"
+	releaseBranch := repo allBranches detect: [ :b |
+		                 b name = 'release_base' ].
+	releaseBranchModel := IceTipBranchModel
+		                      repositoryModel: repoModel
+		                      on: releaseBranch.
+
+	"perform checkout via GUI"
+	releaseBranchModel previewCheckout.
+
+	"------------- HANDLE OPEN WINDOWS IF ANY ----------------"
+	self confirmToContinue:
+		'If any window opened, handle checkout release_base, then proceed'
+]
+
+{ #category : 'actions' }
+OPReleaser >> checkoutRemoteReleaseBranch [
+	"grab remote branch"
+
+	| remoteBranchModel |
+	remoteBranch := repo allBranches detect: [ :b |
+		                b name = 'origin/release_base' ].
+	remoteBranchModel := IceTipBranchModel
+		                     repositoryModel: repoModel
+		                     on: remoteBranch.
+
+	"if not available locally, yet, checkout remote"
+	repo allBranches
+		detect: [ :b | b name = 'release_base' ]
+		ifNone: [ "perform checkout via GUI"
+		remoteBranchModel previewCheckout ].
+
+	"------------- HANDLE OPEN WINDOWS IF ANY ----------------"
+	self confirmToContinue:
+		'If any window opened, handle checkout release_base, then proceed'
+]
+
+{ #category : 'actions' }
+OPReleaser >> commit [
+
+	| commitBrowser |
+	
 	"------------- HANDLE OPEN WINDOWS IF ANY ----------------"
 	"------- MAKE NECESSARY CHANGES BY HAND IN THE BASELINE/CODE -------"
-
+	
 	self confirmToContinue:
 		'Handle open merge window, make neccessary changes in the baseline, then proceed'.
 
 	"commit via GUI"
-	(IceTipCommitBrowser onRepository: repo) open.
+	commitBrowser := IceTipCommitBrowser onRepository: repo.
+	commitBrowser commentPanel commentText text: 'Updated baseline'.
+	commitBrowser open.
 
 	"------------- HANDLE OPEN WINDOWS IF ANY ----------------"
-	self confirmToContinue: 'Handle commit window, then proceed'.
-
-	"push the changes to GitHub"
-	releaseBranch pushTo: remoteBranch remote
+	self confirmToContinue: 'Handle commit window, then proceed'
 ]
 
 { #category : 'utilities' }
@@ -73,9 +121,11 @@ OPReleaser >> confirmToContinue: aText [
 OPReleaser >> createRelease [
 
 	self getRepo.
-	self getRemoteReleaseBranch.
-	self getLocalReleaseBranch.
-	self commitAndPush.
+	self checkoutRemoteReleaseBranch.
+	self checkoutLocalReleaseBranch.
+	self pullReleaseBranchAndMerge.
+	self commit.
+	self push.
 	self createTags.
 	^ self getGitCommands
 ]
@@ -123,52 +173,12 @@ OPReleaser >> getGitCommands [
 	^ gitCommands := String streamContents: [ :s |
 		                 s << 'pushd "' << repo location fullName << '"'.
 		                 s lf.
-		                 s << ('git push --delete origin ' , minorTag).
+		                 s << 'git push --delete origin ' << minorTag.
 		                 s lf.
-		                 s << ('git push --delete origin ' , majorTag).
+		                 s << 'git push --delete origin ' << majorTag.
 		                 s lf.
 		                 s << 'git push --tags'.
 		                 s lf ]
-]
-
-{ #category : 'actions' }
-OPReleaser >> getLocalReleaseBranch [
-	"pull to ensure it is up to date"
-
-	| masterBranch masterBranchModel |
-	releaseBranch pullFrom: remoteBranch remote.
-
-
-	"get master branch"
-	masterBranch := repo allBranches detect: [ :b | b name = 'master' ].
-	masterBranchModel := IceTipBranchModel
-		                     repositoryModel: repoModel
-		                     on: masterBranch.
-
-	"merge master branch into the currently checked-out (which is the release branch)"
-	masterBranchModel previewMerge: IceTipMergeType direct
-]
-
-{ #category : 'actions' }
-OPReleaser >> getRemoteReleaseBranch [
-	"grab remote branch"
-
-	| remoteBranchModel |
-	remoteBranch := repo allBranches detect: [ :b |
-		                b name = 'origin/release_base' ].
-	remoteBranchModel := IceTipBranchModel
-		                     repositoryModel: repoModel
-		                     on: remoteBranch.
-
-	"if not available locally, yet, checkout remote"
-	repo allBranches
-		detect: [ :b | b name = 'release_base' ]
-		ifNone: [ "perform checkout via GUI"
-		remoteBranchModel previewCheckout ].
-
-	"------------- HANDLE OPEN WINDOWS IF ANY ----------------"
-	self confirmToContinue:
-		'If any window opened, handle checkout release_base, then proceed'
 ]
 
 { #category : 'actions' }
@@ -192,6 +202,31 @@ OPReleaser >> inspectGitCommands [
 	^ (gitCommands ifNil: [ self createRelease ])
 		  inspect;
 		  yourself
+]
+
+{ #category : 'actions' }
+OPReleaser >> pullReleaseBranchAndMerge [
+
+	| masterBranch masterBranchModel |
+	
+	"pull to ensure it is up to date"
+	releaseBranch pullFrom: remoteBranch remote.
+
+	"get master branch"
+	masterBranch := repo allBranches detect: [ :b | b name = nightlyBranchName ].
+	masterBranchModel := IceTipBranchModel
+		                     repositoryModel: repoModel
+		                     on: masterBranch.
+
+	"merge master branch into the currently checked-out (which is the release branch)"
+	masterBranchModel previewMerge: IceTipMergeType direct
+]
+
+{ #category : 'actions' }
+OPReleaser >> push [
+	"push the changes to GitHub"
+
+	releaseBranch pushTo: remoteBranch remote
 ]
 
 { #category : 'accessing' }

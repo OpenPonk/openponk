@@ -69,7 +69,7 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 
 	spec baseline: 'NewTools' with: [ 
 		spec
-			repository: 'github://pharo-spec/NewTools:Pharo11';
+			repository: 'github://pharo-spec/NewTools:Pharo12';
 			loads: #( FileBrowser ) ].
 	spec
 		baseline: 'SynchronizedLinks'
@@ -82,7 +82,7 @@ BaselineOfOpenPonk >> removeExplicitRequirementsFromPackage: aPackageName [
 
 	| regExp packages |
 	regExp := '*' , aPackageName , '*'.
-	packages := RPackageOrganizer default packages select: [ :each |
+	packages := PackageOrganizer default packages select: [ :each |
 		            regExp match: each name ].
 	packages do: [ :each |
 		Transcript crShow:
@@ -100,7 +100,7 @@ BaselineOfOpenPonk >> removePackage: aPackageName [
 
 	| regExp packages |
 	regExp := '*' , aPackageName , '*'.
-	packages := RPackageOrganizer default packages select: [ :each |
+	packages := PackageOrganizer default packages select: [ :each |
 		            regExp match: each name ].
 	packages do: [ :each |
 		Transcript crShow: 'Removing package ' , each name.

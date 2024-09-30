@@ -1,6 +1,6 @@
 Class {
 	#name : 'OPExportImageDialog',
-	#superclass : 'StFBSaveFileDialog',
+	#superclass : 'StSaveFilePresenter',
 	#instVars : [
 		'zoomLabel',
 		'zoomText',

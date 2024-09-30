@@ -37,7 +37,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 	spec
 		baseline: 'XPath'
 		with: [
-		spec repository: 'github://pharo-contributions/XML-XPath:v2.3.0' ].
+		spec repository: 'github://pharo-contributions/XML-XPath:v2.3.x' ].
 
 	spec baseline: 'Magritte' with: [
 		spec

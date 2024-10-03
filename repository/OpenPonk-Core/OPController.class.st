@@ -325,14 +325,6 @@ OPController >> roassalShape [
 	^ self diagramElement ifNotNil: [ :found | found roassalShape ]
 ]
 
-{ #category : 'figures' }
-OPController >> saveStateOnDragEndFor: aFigure [
-
-	aFigure
-		when: RSMouseDragEnd
-		do: [ :evt | self diagramController saveState ]
-]
-
 { #category : 'canvas actions' }
 OPController >> showAcceptFeedbackFor: aController [
 	"Return something that understands #remove, or nil to not show any feedback."

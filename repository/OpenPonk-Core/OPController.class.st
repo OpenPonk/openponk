@@ -77,15 +77,6 @@ OPController >> dependentElements [
 ]
 
 { #category : 'forms' }
-OPController >> descriptionAccessor: aSymbol [
-	^ MAPluggableAccessor
-		read: [ :me | me model perform: aSymbol ]
-		write: [ :me :newValue | 
-			me model perform: aSymbol asMutator with: newValue.
-			self modelChanged ]
-]
-
-{ #category : 'forms' }
 OPController >> descriptionName [
 
 	<magritteDescription>
@@ -204,7 +195,8 @@ OPController >> model: aModel [
 
 { #category : 'announcements' }
 OPController >> modelChanged [
-	self figure ifNotNil: [ self refreshFigure ]
+
+	self diagramElement ifNotNil: [ :de | de modelChanged ]
 ]
 
 { #category : 'accessing' }

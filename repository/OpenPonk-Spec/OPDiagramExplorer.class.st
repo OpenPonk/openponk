@@ -85,19 +85,21 @@ OPDiagramExplorer >> showDependentFor: aModelObject [
 
 { #category : 'actions' }
 OPDiagramExplorer >> showElement: aModelObject [
+
 	| existingCtrl ctrl |
 	self diagramController deselectAll.
-	aModelObject = diagramController model
-		ifTrue: [ ^ diagramController showAllElements ].
+	aModelObject = diagramController model ifTrue: [
+		^ diagramController showAllElements ].
 	diagramController disableRefresh.
+	self halt.
 	existingCtrl := diagramController
-		controllerForModel: aModelObject
-		ifNone: [ nil ].
-	ctrl := diagramController
-		showWithoutDependentInDiagramModel: aModelObject.
+		                controllerForModel: aModelObject
+		                ifNone: [ nil ].
+	ctrl := diagramController showWithoutDependentInDiagramModel:
+		        aModelObject.
 	diagramController enableRefresh.
 	existingCtrl ifNil: [ ^ self ].
-	ctrl refreshFigure
+	ctrl diagramElement modelChanged
 ]
 
 { #category : 'actions' }

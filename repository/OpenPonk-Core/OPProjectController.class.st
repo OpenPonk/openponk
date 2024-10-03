@@ -320,7 +320,7 @@ OPProjectController >> removeModel: aModel [
 { #category : 'saving' }
 OPProjectController >> replaceWritableProjectFile [
 
-	^ self project storageFile: ((StFileDialogPresenter new
+	^ self project storageFile: ((StSaveFilePresenter new
 			    title: 'Set a file for saving an OpenPonk project';
 			    extensions: #( opp ) named: 'OP projects';
 			    openModal) ifNil: [ OPProjectSaveCanceledException signal ])

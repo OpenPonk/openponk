@@ -103,7 +103,7 @@ OPCanvasPresenter >> exportAsPng: aFile [
 OPCanvasPresenter >> exportAsSvg [
 
 	self flag: 'default name not supported in file browser'.
-	StFBSaveFileDialog new
+	StSaveFilePresenter new
 		title: 'Choose a SVG file to export the diagram';
 		okAction: [ :file |
 			OPCanvasSVGExporter

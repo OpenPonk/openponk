@@ -37,7 +37,7 @@ OPProjectController class >> fromDirectory: aFolder [
 { #category : 'opening' }
 OPProjectController class >> fromDirectoryDo: aBlock [
 
-	StFBOpenDirectoryDialog new
+	StOpenDirectoryPresenter new
 		title: 'Choose an OpenPonk project directory';
 		okAction: [ :dir | aBlock value: (self fromDirectory: dir) ];
 		open
@@ -57,7 +57,7 @@ OPProjectController class >> fromFile: aFile [
 { #category : 'opening' }
 OPProjectController class >> fromFileDo: aBlock [
 
-	StFBOpenFileDialog new
+	StOpenFilePresenter new
 		title: 'Choose an OpenPonk project';
 		okAction: [ :file | aBlock value: (self fromFile: file) ];
 		extensions: #( opp ) named: 'OP projects';
@@ -67,7 +67,7 @@ OPProjectController class >> fromFileDo: aBlock [
 { #category : 'opening' }
 OPProjectController class >> modalFromFile [
 
-	^ StFBOpenFileDialog new
+	^ StOpenFilePresenter new
 		  title: 'Choose an OpenPonk project';
 		  extensions: #( opp ) named: 'OP projects';
 		  openModal
@@ -320,7 +320,7 @@ OPProjectController >> removeModel: aModel [
 { #category : 'saving' }
 OPProjectController >> replaceWritableProjectFile [
 
-	^ self project storageFile: ((StFBSaveFileDialog new
+	^ self project storageFile: ((StFileDialogPresenter new
 			    title: 'Set a file for saving an OpenPonk project';
 			    extensions: #( opp ) named: 'OP projects';
 			    openModal) ifNil: [ OPProjectSaveCanceledException signal ])

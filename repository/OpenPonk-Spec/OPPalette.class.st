@@ -71,7 +71,7 @@ OPPalette >> createPaletteFor: aDiagramController [
 		addAllToPalette: self
 		forController: diagramController.
 	self selectSelectionTool.
-	diagramController whenAllDeselectedDo: [ self selectSelectionTool ]
+	diagramController whenAllDeselectedDo: [ self selectSelectionTool ] for: self
 ]
 
 { #category : 'building widgets' }

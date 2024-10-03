@@ -136,16 +136,16 @@ OPDiagramController >> cachedControllerForModel: aModel ifFound: aFoundBlock [
 OPDiagramController >> cachedControllerForModel: aModel ifFound: aFoundBlock ifNone: aNoneBlock [
 
 	| ctrl |
-	modelToControllerCache ifNil: [ 
+	modelToControllerCache ifNil: [
 		modelToControllerCache := Dictionary new.
-		self controllers do: [ :each | 
+		self controllers do: [ :each |
 			modelToControllerCache at: each model put: each ] ].
 	ctrl := modelToControllerCache at: aModel ifPresent: #yourself.
-	(self controllers includes: ctrl) ifTrue: [ 
+	(self controllers includes: ctrl) ifTrue: [
 		^ aFoundBlock value: ctrl ].
 	^ self controllers
 		  detect: [ :fresh | fresh model = aModel ]
-		  ifFound: [ :found | 
+		  ifFound: [ :found |
 			  modelToControllerCache at: aModel put: found.
 			  aFoundBlock cull: found ]
 		  ifNone: aNoneBlock
@@ -868,15 +868,15 @@ OPDiagramController >> visibleElements: aCollection [
 ]
 
 { #category : 'accessing' }
-OPDiagramController >> when: anEvent do: aBlock [
+OPDiagramController >> when: anEvent do: aBlock for: aSubscriber [
 
-	^ self announcer when: anEvent do: aBlock for: aBlock receiver
+	^ self announcer when: anEvent do: aBlock for: aSubscriber
 ]
 
 { #category : 'protocol-events' }
-OPDiagramController >> whenAllDeselectedDo: aBlock [
+OPDiagramController >> whenAllDeselectedDo: aBlock for: aSubscriber [
 
-	self when: OPAllFiguresDeselected do: aBlock
+	self when: OPAllFiguresDeselected do: aBlock for: aSubscriber
 ]
 
 { #category : 'protocol-events' }

@@ -122,11 +122,14 @@ OPModelTreeWidget >> openCommand: aDiagram [
 { #category : 'accessing' }
 OPModelTreeWidget >> openOn: aProject [
 
-	self workbench announcer when: OPEditorFocused do: [ :event | 
-		project ifNotNil: [ project unsubscribe: self ].
-		project := event diagramController model.
-		project ifNotNil: [ project whenChanged: [ self refresh ] ].
-		self refresh ].
+	self workbench
+		when: OPEditorFocused
+		do: [ :event |
+			project ifNotNil: [ project unsubscribe: self ].
+			project := event diagramController model.
+			project ifNotNil: [ project whenChanged: [ self refresh ] ].
+			self refresh ]
+		for: self.
 	tree expandRoots
 ]
 

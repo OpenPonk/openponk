@@ -57,7 +57,7 @@ OPDynamicFormMagritteVisitor >> visitBooleanDescription: aBooleanDescription [
 
 	(form addCheckbox: aBooleanDescription label)
 		state: (aBooleanDescription accessor read: controller);
-		whenChangedDo: [ :newValue | 
+		whenChangedDo: [ :newValue |
 			aBooleanDescription accessor write: newValue to: controller ]
 ]
 
@@ -83,7 +83,7 @@ OPDynamicFormMagritteVisitor >> visitMemoDescription: aMemoDescription [
 OPDynamicFormMagritteVisitor >> visitMultipleOptionDescription: aMultipleOptionDescription [
 
 	| dropList |
-	aMultipleOptionDescription isExtensible ifTrue: [ 
+	aMultipleOptionDescription isExtensible ifTrue: [
 		self notify: 'Extensibility of multilists not yet supported'.
 		^ self ].
 	dropList := form addList: aMultipleOptionDescription label.
@@ -92,11 +92,11 @@ OPDynamicFormMagritteVisitor >> visitMultipleOptionDescription: aMultipleOptionD
 		items: aMultipleOptionDescription options;
 		enabled: aMultipleOptionDescription isReadOnly not;
 		display: [ :each | aMultipleOptionDescription labelForOption: each ];
-		displayIcon: [ :each :item | 
+		displayIcon: [ :each :item |
 			aMultipleOptionDescription iconForOption: each ];
 		selectItems: (aMultipleOptionDescription accessor read: controller);
-		whenSelectionChangedDo: [ :selection | 
-			selection accessor write: selection selectedItems to: controller ]
+		whenSelectionChangedDo: [ :selection |
+			aMultipleOptionDescription accessor write: selection selectedItems to: controller ]
 ]
 
 { #category : 'visiting' }

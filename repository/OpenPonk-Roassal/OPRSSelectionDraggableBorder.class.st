@@ -36,7 +36,8 @@ OPRSSelectionDraggableBorder >> createDragBoxes [
 	renderDragBoxes := [ shape canvas addAll: dragBoxes ].
 	shape isInACanvas
 		ifTrue: renderDragBoxes
-		ifFalse: [ shape when: RSShapeAddedEvent do: renderDragBoxes ].
+		ifFalse: [
+		shape when: RSShapeAddedEvent do: renderDragBoxes for: self ].
 	shape
 		when: RSShapeRemovedEvent
 		do: [ dragBoxes do: #remove ]

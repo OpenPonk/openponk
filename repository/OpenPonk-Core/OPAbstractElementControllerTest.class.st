@@ -115,12 +115,6 @@ OPAbstractElementControllerTest >> showInDiagram [
 	controller showWithoutDependentInDiagram: diagramController
 ]
 
-{ #category : 'support' }
-OPAbstractElementControllerTest >> stubRefresh [
-	controller stub figure willReturn: Mock new.
-	controller stub refreshFigure willReturn: controller
-]
-
 { #category : 'tests - controllers' }
 OPAbstractElementControllerTest >> testAddController [
 
@@ -212,17 +206,19 @@ OPAbstractElementControllerTest >> testCreateUsingAddAsTarget [
 
 { #category : 'tests' }
 OPAbstractElementControllerTest >> testDescriptionName [
+
 	| diagramElement |
 	model := Mock new.
 	model stub name willReturn: 'bravo'.
 	diagramElement := Mock new.
 	controller model: model.
 	controller diagramElement: diagramElement.
-	self stubRefresh.
 	controller descriptionName accessor write: 'charlie' to: controller.
 	model should receive name: 'charlie'.
-	self assert: (controller descriptionName accessor read: controller) equals: 'bravo'.
-	diagramElement should receive modelChanged 
+	self
+		assert: (controller descriptionName accessor read: controller)
+		equals: 'bravo'.
+	diagramElement should receive modelChanged
 ]
 
 { #category : 'tests - controllers' }

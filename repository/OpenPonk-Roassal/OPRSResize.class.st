@@ -37,4 +37,5 @@ OPRSResize >> stickSameSize [
 	self fixedShape
 		when: RSExtentChangedEvent
 		do: [ :event | block value ]
+		for: self
 ]

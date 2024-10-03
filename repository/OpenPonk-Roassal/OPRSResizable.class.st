@@ -62,7 +62,10 @@ OPRSResizable >> onShape: aShape [
 	shape isInACanvas
 		ifTrue: [ self connectWithCanvas ]
 		ifFalse: [
-		shape when: RSShapeAddedEvent do: [ self connectWithCanvas ] ].
+			shape
+				when: RSShapeAddedEvent
+				do: [ self connectWithCanvas ]
+				for: self ].
 	shape
 		when: RSMouseDragStart send: #disableHandles: to: self;
 		when: RSMouseDragEnd send: #enableHandles: to: self;

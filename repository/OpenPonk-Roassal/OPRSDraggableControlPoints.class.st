@@ -148,12 +148,3 @@ OPRSDraggableControlPoints >> showMidpointHandles [
 	midpointHandles last beNearEnd.
 	midpointHandles do: #render
 ]
-
-{ #category : 'initialization' }
-OPRSDraggableControlPoints >> showOnShape: aLine [
-
-	line := aLine.
-	line when: RSMouseLeftClick do: [ self showHandles ].
-	line when: RSShapeRemovedEvent do: [ self removeHandles ].
-	self connectWithCanvas
-]

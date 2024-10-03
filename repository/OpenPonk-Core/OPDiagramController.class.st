@@ -868,15 +868,15 @@ OPDiagramController >> visibleElements: aCollection [
 ]
 
 { #category : 'accessing' }
-OPDiagramController >> when: anEvent do: aBlock [
+OPDiagramController >> when: anEvent do: aBlock for: aSubscriber [
 
-	^ self announcer when: anEvent do: aBlock for: aBlock receiver
+	^ self announcer when: anEvent do: aBlock for: aSubscriber
 ]
 
 { #category : 'protocol-events' }
-OPDiagramController >> whenAllDeselectedDo: aBlock [
+OPDiagramController >> whenAllDeselectedDo: aBlock for: aSubscriber [
 
-	self when: OPAllFiguresDeselected do: aBlock
+	self when: OPAllFiguresDeselected do: aBlock for: aSubscriber
 ]
 
 { #category : 'protocol-events' }

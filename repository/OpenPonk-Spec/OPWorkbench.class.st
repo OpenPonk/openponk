@@ -341,6 +341,12 @@ OPWorkbench >> updateTitle [
 	^ self withWindowDo: [ :window | window title: self title ]
 ]
 
+{ #category : 'protocol' }
+OPWorkbench >> when: anEvent do: aBlock for: aSubscriber [
+
+	^ self announcer when: anEvent do: aBlock for: aSubscriber
+]
+
 { #category : 'accessing - spec' }
 OPWorkbench >> workbench [
 	^ self

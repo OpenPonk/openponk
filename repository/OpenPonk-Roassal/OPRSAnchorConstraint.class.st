@@ -81,7 +81,10 @@ OPRSAnchorConstraint >> build [
 			^ shape isInACanvas
 				  ifTrue: [ self addAnchorAndGuideLine ]
 				  ifFalse: [
-				  shape when: RSShapeAddedEvent do: [ self addAnchorAndGuideLine ] ] ]
+					  shape
+						  when: RSShapeAddedEvent
+						  do: [ self addAnchorAndGuideLine ]
+						  for: self ] ]
 		ifFalse: [
 			shape
 				when: RSMouseLeftDragStart

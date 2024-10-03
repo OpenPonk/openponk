@@ -53,6 +53,7 @@ OPTestContainerModel >> uuid: anObject [
 ]
 
 { #category : 'accessing' }
-OPTestContainerModel >> when: anAnnouncement do: aBlock [
-	^ self announcer when: anAnnouncement do: aBlock
+OPTestContainerModel >> when: anAnnouncement do: aBlock for: aSubscriber [
+
+	^ self announcer when: anAnnouncement do: aBlock for: aSubscriber
 ]

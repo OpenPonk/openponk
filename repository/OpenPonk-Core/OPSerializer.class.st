@@ -30,7 +30,13 @@ OPSerializer class >> exportVersion [
 { #category : 'accessing' }
 OPSerializer class >> fileExtension [
 
-	^ self formatName
+	^ self fileExtensions first
+]
+
+{ #category : 'accessing' }
+OPSerializer class >> fileExtensions [
+
+	^ { self formatName }
 ]
 
 { #category : 'as yet unclassified' }
@@ -100,6 +106,11 @@ OPSerializer class >> supportsExportInfo: anExportInfo [
 { #category : 'accessing' }
 OPSerializer >> fileExtension [
 	^ self class fileExtension
+]
+
+{ #category : 'accessing' }
+OPSerializer >> fileExtensions [
+	^ self class fileExtensions
 ]
 
 { #category : 'formatting' }

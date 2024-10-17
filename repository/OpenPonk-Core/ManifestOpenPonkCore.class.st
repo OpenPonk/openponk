@@ -15,3 +15,10 @@ ManifestOpenPonkCore class >> ruleRTInvocationSequenceRuleV1FalsePositive [
 ManifestOpenPonkCore class >> ruleReTestClassNotInPackageWithTestEndingNameV1FalsePositive [
 	^ #(#(#(#RGPackageDefinition #(#'OpenPonk-Core')) #'2020-05-27T10:56:37.652665+02:00') )
 ]
+
+{ #category : 'code-critics' }
+ManifestOpenPonkCore class >> ruleStringConcatenationRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGMethodDefinition #(#OPMementoDirectorySerializer #loadModelFrom: #false)) #'2024-10-17T12:14:35.401+02:00') )
+]

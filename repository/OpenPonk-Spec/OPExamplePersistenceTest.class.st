@@ -6,8 +6,8 @@ Class {
 		'sourceWorkbench',
 		'targetWorkbench'
 	],
-	#category : 'OpenPonk-Core-Tests',
-	#package : 'OpenPonk-Core',
+	#category : 'OpenPonk-Spec-Tests',
+	#package : 'OpenPonk-Spec',
 	#tag : 'Tests'
 }
 

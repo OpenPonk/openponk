@@ -760,7 +760,8 @@ OPDiagramController >> showDiagramElement: aDiagramElement [
 				              ifFound: [ :ctrl |
 					              ctrl isRendered ifTrue: [
 						              aDiagramElement isRendered ifTrue: [ ^ ctrl ].
-						              ^ self error: 'Controller is already rendered' ].
+						              ^ self error:
+							                'Controller is already rendered by a different diagram element' ].
 					              ctrl ]
 				              ifNone: [
 				              self newControllerFor:
@@ -838,6 +839,12 @@ OPDiagramController >> updateView [
 		'`@receiver updateView'
 		-> '`@receiver updateCanvas'.
 	^ self updateCanvas
+]
+
+{ #category : 'validation' }
+OPDiagramController >> validate [
+
+	self controllers do: [ :each | each validate ]
 ]
 
 { #category : 'accessing' }

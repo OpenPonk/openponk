@@ -271,6 +271,8 @@ OPShape >> modelElement [
 OPShape >> modelElement: anObject [
 
 	anObject ifNil: [ ^ self modelElements: #(  ) ].
+	(self modelElements size = 1 and: [
+		 self modelElements first == anObject ]) ifTrue: [ ^ self ].
 	self modelElements: { anObject }
 ]
 
@@ -319,6 +321,7 @@ OPShape >> ownedElement: aShape renderedIn: aCanvas [
 
 { #category : 'accessing' }
 OPShape >> ownedElements [
+
 	^ ownedElements
 ]
 

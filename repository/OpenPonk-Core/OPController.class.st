@@ -364,3 +364,9 @@ OPController >> updateAfterDiagramFocused [
 
 	self subclassResponsibility
 ]
+
+{ #category : 'validation' }
+OPController >> validate [
+
+	"do nothing by default"
+]

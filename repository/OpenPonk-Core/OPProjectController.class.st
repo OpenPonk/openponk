@@ -395,15 +395,16 @@ OPProjectController >> selectInDiagram: aModelElement [
 OPProjectController >> updateDiagram: aDiagram [
 
 	| focusedController |
-	focusedController := workbench focusedEditor ifNotNil: [ :editor | 
+	controllers do: [ :each | each validate ].
+	focusedController := workbench focusedEditor ifNotNil: [ :editor |
 		                     editor diagramController ].
 	controllers
 		detect: [ :ctrl | ctrl diagramElement = aDiagram ]
-		ifFound: [ :ctrl | 
+		ifFound: [ :ctrl |
 			aDiagram isOpen: true.
 			aDiagram isRendered ifTrue: [ aDiagram updateFromRender ].
 			aDiagram isSelected: ctrl = focusedController ]
-		ifNone: [ 
+		ifNone: [
 			aDiagram
 				isOpen: false;
 				isSelected: false ]

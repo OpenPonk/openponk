@@ -45,9 +45,11 @@ OPMementoDirectorySerializer >> loadDiagramsOf: aModel from: aFolder [
 		                ifFound: [ :exportInfoFile |
 		                OPSerializer forExportInfoFile: exportInfoFile ]
 		                ifNone: [ OPJsonDiagramSerializer new ].
-	^ ((aFolder filesMatching: '*.' , materializer fileExtension)
-		   reject: [ :any | any basename = OPExportInfo fileName ])
-		  collect: [ :eachFile |
+	^ aFolder files
+		  select: [ :any |
+			  (materializer fileExtensions includes: any extension) and: [
+				  any basename ~= OPExportInfo fileName ] ]
+		  thenCollect: [ :eachFile |
 			  self loadDiagramOf: aModel from: eachFile by: materializer ]
 ]
 
@@ -75,8 +77,16 @@ OPMementoDirectorySerializer >> loadModelFrom: aFolder [
 			                plugin modelSerializerClass forExportInfoFile:
 				                exportInfoFile ]
 		                ifNone: [ plugin modelSerializerClass new ].
-	modelFile := aFolder / 'model' , materializer fileExtension.
-	modelFile exists ifFalse: [ ^ nil ].
+
+	modelFile := aFolder files
+		             detect: [ :anyFile |
+			             materializer fileExtensions anySatisfy: [
+				             :anyExtension |
+				             anyFile basename = ('model.' , anyExtension) ] ]
+		             ifNone: [
+			             self error:
+				             'Failed to find model file in .opp'
+				             , aFolder absolutePath pathString ].
 	^ modelFile readStreamDo: [ :stream |
 		  materializer materializeModelFrom: stream ]
 ]

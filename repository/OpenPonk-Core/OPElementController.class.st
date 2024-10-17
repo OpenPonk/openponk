@@ -215,6 +215,7 @@ OPElementController >> renderFigureIn: aCanvas [
 { #category : 'construction' }
 OPElementController >> showWithoutDependentInDiagram: aDiagramController [
 
+	self validate.
 	self ensureShownDependenciesInDiagram: aDiagramController.
 	aDiagramController addController: self.
 	self ensureDiagramElement.

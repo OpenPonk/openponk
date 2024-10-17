@@ -262,8 +262,19 @@ OPEditor >> setModelBeforeInitialization: aPlugin [
 ]
 
 { #category : 'updating' }
-OPEditor >> tabDeleted [
+OPEditor >> tabClosed [
 
+	self workbench projectController updateDiagram:
+		diagramController diagramElement.
+	self workbench projectController removeDiagramController:
+		diagramController.
+	diagramController removeRender
+]
+
+{ #category : 'updating' }
+OPEditor >> tabClosedWhileClosingWorkbench: discardingChanges [
+
+	discardingChanges ifTrue: [ ^ self ].
 	self workbench projectController updateDiagram:
 		diagramController diagramElement.
 	self workbench projectController removeDiagramController:

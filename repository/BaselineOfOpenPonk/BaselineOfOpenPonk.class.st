@@ -1,6 +1,6 @@
 "
-I am baseline for the core and all-in-one dynacase.
-https://dynacase.github.io/
+I am baseline for the core of Openponk.
+https://openponk.org/
 "
 Class {
 	#name : 'BaselineOfOpenPonk',
@@ -37,7 +37,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 	spec
 		baseline: 'XPath'
 		with: [
-		spec repository: 'github://pharo-contributions/XML-XPath:2aa720c' ].
+		spec repository: 'github://pharo-contributions/XML-XPath:v2.3.x' ].
 
 	spec baseline: 'Magritte' with: [
 		spec

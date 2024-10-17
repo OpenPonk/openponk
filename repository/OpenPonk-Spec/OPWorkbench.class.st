@@ -126,19 +126,22 @@ OPWorkbench >> closeEditorOfDiagram: aDiagram [
 { #category : 'opening' }
 OPWorkbench >> closedTabOfEditor: anEditor [
 
-	self projectController updateDiagram:
-		anEditor diagramController diagramElement.
-	anEditor tabDeleted.
-	topToolbar activeEditor: nil.
-	editors removeKey: anEditor diagramController diagramElement.
-	anEditor diagramController diagramElement isSelected: false.
-	focusedEditor = anEditor ifTrue: [ 
+	self closedTabOfEditor: anEditor whileClosingWorkbench: false
+]
+
+{ #category : 'opening' }
+OPWorkbench >> closedTabOfEditor: anEditor whileClosingWorkbench: discardChanges [
+
+	focusedEditor = anEditor ifTrue: [
 		focusedEditor := nil.
 		self announce: (OPEditorUnfocused on: anEditor) ].
+	anEditor tabClosedWhileClosingWorkbench: discardChanges.
+	topToolbar activeEditor: nil.
+	editors removeKey: anEditor diagramController diagramElement.
 	self announce: (OPEditorClosed on: anEditor)
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPWorkbench >> connectPresenters [
 
 	super connectPresenters.
@@ -197,7 +200,7 @@ OPWorkbench >> initialize [
 	super initialize
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPWorkbench >> initializePresenters [
 
 	topToolbar := self instantiate: OPWorkbenchToolbar.
@@ -211,7 +214,7 @@ OPWorkbench >> initializePresenters [
 		add: notebook
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPWorkbench >> initializeWindow: aWindow [
 
 	aWindow
@@ -220,7 +223,9 @@ OPWorkbench >> initializeWindow: aWindow [
 		initialExtent: self class initialExtent;
 		whenClosedDo: [
 			editors valuesDo: [ :each |
-					self closedTabOfEditor: (each at: #editor) ] ]
+					self
+						closedTabOfEditor: (each at: #editor)
+						whileClosingWorkbench: true ] ]
 ]
 
 { #category : 'accessing - spec' }
@@ -284,7 +289,7 @@ OPWorkbench >> openProject: aProject [
 	self updateTitle.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'opening' }
 OPWorkbench >> pageRemoved: aPage [
 
 	"activePresenter is editor"
@@ -307,7 +312,7 @@ OPWorkbench >> projectTree [
 	^ projectTree
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'opening' }
 OPWorkbench >> showAllElementsInAllDiagrams [
 
 	self projectController controllers do: [ :each | 

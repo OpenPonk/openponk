@@ -1,14 +1,19 @@
 Trait {
 	#name : 'OPTResizableFigureWithText',
 	#instVars : [
-		'renderedWrapWidth',
-		'renderedText',
 		'labeled'
 	],
 	#category : 'OpenPonk-Core-CommonElements',
 	#package : 'OpenPonk-Core',
 	#tag : 'CommonElements'
 }
+
+{ #category : 'removing' }
+OPTResizableFigureWithText >> removeRender [
+
+	super removeRender.
+	labeled := nil
+]
 
 { #category : 'creating - subelements' }
 OPTResizableFigureWithText >> renderLabel [

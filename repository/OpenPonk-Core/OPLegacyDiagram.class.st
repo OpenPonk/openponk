@@ -192,9 +192,9 @@ OPLegacyDiagram >> asOPDiagram [
 		                       diagramController addController: controller.
 		                       diagramElement := controller
 			                                         ensureDiagramElement.
-		                       diagramElement owningElement ifNil: [
+		                       diagramElement owningElement ifNotExists: [
 			                       diagramElement owningElement:
-				                       controller diagramElementOwner ].
+				                       controller ownerDiagramElement ].
 		                       each -> controller ].
 	job progress: 0.7.
 	diagram renderIn: canvas.

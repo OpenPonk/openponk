@@ -59,8 +59,8 @@ OPEdge >> innerWaypoints: aCollection [
 OPEdge >> remove [
 
 	super remove.
-	self source: nil.
-	self target: nil
+	self source: OPNoShape new.
+	self target: OPNoShape new
 ]
 
 { #category : 'rendering' }

@@ -91,7 +91,6 @@ OPDiagramExplorer >> showElement: aModelObject [
 	aModelObject = diagramController model ifTrue: [
 		^ diagramController showAllElements ].
 	diagramController disableRefresh.
-	self halt.
 	existingCtrl := diagramController
 		                controllerForModel: aModelObject
 		                ifNone: [ nil ].

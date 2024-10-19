@@ -97,9 +97,9 @@ OPShape >> addEventForwardingToOwner [
 
 	| ownerRoassalShape |
 	ownerRoassalShape := self owningElement
-		                     ifNil: [ ^ self ]
-		                     ifNotNil: [ :owner |
-		                     owner roassalShape ifNil: [ ^ self ] ].
+		                     ifExists: [ :owner |
+		                     owner roassalShape ifNil: [ ^ self ] ]
+		                     else: [ ^ self ].
 	self addEventForwardingFrom: roassalShape to: ownerRoassalShape
 ]
 
@@ -187,11 +187,30 @@ OPShape >> fromSton: stonReader [
 			ifFalse: [ self instVarNamed: instVarName asString put: value ] ]
 ]
 
+{ #category : 'conditions' }
+OPShape >> ifExists: aFullBlockClosure [
+
+	^ aFullBlockClosure cull: self
+]
+
+{ #category : 'existence' }
+OPShape >> ifExists: aFullBlockClosure else: aFullBlockClosure2 [
+
+	^ aFullBlockClosure cull: self
+]
+
+{ #category : 'conditions' }
+OPShape >> ifNotExists: aFullBlockClosure [
+
+	^ self
+]
+
 { #category : 'initialization' }
 OPShape >> initialize [
 
 	super initialize.
 	modelElements := #(  ).
+	owningElement := OPNoShape new.
 	ownedElements := SRToManyLink
 		                 on: self
 		                 slot: #ownedElements
@@ -263,7 +282,7 @@ OPShape >> modelChanged [
 { #category : 'accessing' }
 OPShape >> modelElement [
 
-	^ self ownModelElement ifNil: [ self owningElement ifNotNil: #modelElement ]
+	^ self ownModelElement ifNil: [ self owningElement ifExists: #modelElement ]
 		  
 ]
 
@@ -285,11 +304,11 @@ OPShape >> modelElements [
 { #category : 'accessing' }
 OPShape >> modelElements: aCollection [
 
-	(self owningElement isNotNil and: [ 
-		 aCollection includes: self owningElement modelElement ]) ifTrue: [ 
-		aCollection size > 1 ifTrue: [ 
-			self error: 'Cannot have same modelElement as owningElement has' ].
-		^ self modelElement: nil ].
+	self owningElement ifExists: [
+		(aCollection includes: self owningElement modelElement) ifTrue: [
+			aCollection size > 1 ifTrue: [
+				self error: 'Cannot have same modelElement as owningElement has' ].
+			^ self modelElement: nil ] ].
 
 	modelElements := aCollection
 ]
@@ -309,12 +328,12 @@ OPShape >> ownModelElement [
 { #category : 'initialization' }
 OPShape >> ownedElement: aShape renderedIn: aCanvas [
 
-	self isRendered ifTrue: [ 
+	self isRendered ifTrue: [
 		self
 			assert: roassalShape canvas = aCanvas
 			description:
 			'Reusing same diagram element for 2 canvases not allowed'.
-		^ self owningElement ifNotNil: [ :owner | 
+		^ self owningElement ifExists: [ :owner |
 			  owner ownedElement: aShape renderedIn: aCanvas ] ].
 	self renderIn: aCanvas
 ]
@@ -341,12 +360,10 @@ OPShape >> owningElement [
 { #category : 'accessing' }
 OPShape >> owningElement: aDiagramElement [
 
-	(aDiagramElement isNotNil and: [ 
-		 self modelElements includes: aDiagramElement modelElement ]) 
-		ifTrue: [ 
-			self modelElements size > 1 ifTrue: [ 
-				self error: 'Cannot have same modelElement as owningElement has' ].
-			self modelElement: nil ].
+	(self modelElements includes: aDiagramElement modelElement) ifTrue: [
+		self modelElements size > 1 ifTrue: [
+			self error: 'Cannot have same modelElement as owningElement has' ].
+		self modelElement: nil ].
 	owningElement := SRToOneLink
 		                 on: self
 		                 slot: #owningElement
@@ -361,7 +378,7 @@ OPShape >> remove [
 	[ self ownedElements isNotEmpty ] whileTrue: [
 		self ownedElements anyOne remove ].
 	self removeRender.
-	self owningElement: nil
+	self owningElement: OPNoShape new
 ]
 
 { #category : 'removing' }
@@ -407,7 +424,7 @@ OPShape >> renderIn: aCanvas [
 	self updateRenderFromModel.
 	self updateRenderFromStyles.
 	self updateRenderFromSelf.
-	self owningElement ifNotNil: [ :element |
+	self owningElement ifExists: [ :element |
 		element ownedElement: self renderedIn: self canvas ].
 	^ roassalShape
 ]
@@ -457,7 +474,7 @@ OPShape >> selectableInteraction [
 
 { #category : 'accessing' }
 OPShape >> sharedStyle [
-	^ sharedStyle ifNil: [ self owningElement ifNotNil: #sharedStyle ]
+	^ sharedStyle ifNil: [ self owningElement ifExists: #sharedStyle ]
 ]
 
 { #category : 'accessing' }
@@ -563,11 +580,11 @@ OPShape >> stylePropertyNamed: aName ifAbsent: aBlock [
 
 	| nameSymbol |
 	nameSymbol := aName asSymbol.
-	self localStyle ifNotNil: [ :style | 
+	self localStyle ifNotNil: [ :style |
 		style at: nameSymbol ifPresent: [ :value | ^ value ] ].
-	self sharedStyle ifNotNil: [ :style | 
+	self sharedStyle ifNotNil: [ :style |
 		style at: nameSymbol ifPresent: [ :value | ^ value ] ].
-	self owningElement ifNotNil: [ :owner | 
+	self owningElement ifExists: [ :owner |
 		^ owner stylePropertyNamed: nameSymbol ifAbsent: aBlock ].
 	^ aBlock value
 ]
@@ -610,8 +627,8 @@ OPShape >> targetEdges: aCollection [
 OPShape >> topMostOwningElement [
 
 	^ self owningElement
-		  ifNil: [ self ]
-		  ifNotNil: [ :owner | owner topMostOwningElement ]
+		  ifExists: [ :owner | owner topMostOwningElement ]
+		  else: [ self ]
 ]
 
 { #category : 'initialization' }

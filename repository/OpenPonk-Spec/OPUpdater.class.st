@@ -127,9 +127,11 @@ OPUpdater >> initializePresenters [
 ]
 
 { #category : 'initialization' }
-OPUpdater >> initializeWindow: aWindowPresenter [
-	aWindowPresenter
+OPUpdater >> initializeWindow: aWindow [
+
+	super initializeWindow: aWindow.
+	aWindow
 		title: 'OpenPonk version info';
 		initialExtent: 720 @ 200.
-	aWindowPresenter windowIcon: OPCoreIcons openponkIcon
+	aWindow windowIcon: OPCoreIcons openponkIcon
 ]

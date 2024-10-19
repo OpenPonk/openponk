@@ -106,7 +106,7 @@ OPController >> diagramController: aDiagramController [
 { #category : 'accessing' }
 OPController >> diagramElement [
 
-	^ diagramElement
+	^ diagramElement ifNil: [ diagramElement := OPNoShape new ]
 ]
 
 { #category : 'accessing' }
@@ -125,7 +125,7 @@ OPController >> elementsToShowInside [
 { #category : 'accessing' }
 OPController >> ensureDiagramElement [
 
-	self assert: diagramElement isNotNil.
+	self assert: self diagramElement exists.
 	diagramElement modelElement: self model.
 	^ diagramElement
 ]
@@ -149,15 +149,13 @@ OPController >> hideSelectionFeedback [
 { #category : 'announcements' }
 OPController >> internalSubscribeTo: aModel [
 
-	aModel announcer
-		when: OPElementRenamed
-		do: [ self diagramElement modelChanged ]
-		for: self
+	aModel when: OPElementRenamed send: #modelChanged to: self
 ]
 
 { #category : 'announcements' }
 OPController >> internalUnsubscribeFrom: aModel [
-	aModel announcer unsubscribe: self
+
+	aModel unsubscribe: self
 ]
 
 { #category : 'testing' }
@@ -168,7 +166,7 @@ OPController >> isHideable [
 { #category : 'testing' }
 OPController >> isRendered [
 
-	^ self diagramElement isNotNil and: [ self diagramElement isRendered ]
+	^ self diagramElement isRendered
 ]
 
 { #category : 'testing' }
@@ -196,7 +194,7 @@ OPController >> model: aModel [
 { #category : 'announcements' }
 OPController >> modelChanged [
 
-	self diagramElement ifNotNil: [ :de | de modelChanged ]
+	self diagramElement modelChanged
 ]
 
 { #category : 'accessing' }
@@ -245,18 +243,30 @@ OPController >> remove [
 { #category : 'destruction' }
 OPController >> removeController [
 
-	self model ifNotNil: [ self removeDependentControllers ].
-	self diagramController ifNil: [ ^ self ].
-	self diagramController deselectAll.
-	self removeDiagramElement.
-	self diagramController removeController: self
+	self model ifNotNil: [ :m |
+		self
+			removeDependentControllers;
+			internalUnsubscribeFrom: m ].
+	self removeFromDiagramController.
+	self removeRender
+]
+
+{ #category : 'destruction' }
+OPController >> removeControllerAndDiagramElement [
+
+	self model ifNotNil: [ :m |
+		self
+			removeDependentControllersAndDiagramElements;
+			internalUnsubscribeFrom: m ].
+	self removeFromDiagramController.
+	self removeDiagramElement
 ]
 
 { #category : 'destruction' }
 OPController >> removeControllerAndModel [
 
 	self removeDependent.
-	self removeController.
+	self removeControllerAndDiagramElement.
 	self removeModel.
 	self model: nil
 ]
@@ -272,19 +282,27 @@ OPController >> removeDependent [
 
 { #category : 'destruction' }
 OPController >> removeDependentControllers [
+
+	self dependentControllers do: [ :each |
+		self diagramController controllers
+			detect: [ :ctrl | ctrl model = each model ]
+			ifFound: #removeController ]
+]
+
+{ #category : 'destruction' }
+OPController >> removeDependentControllersAndDiagramElements [
 	self dependentControllers
 		do: [ :each | 
 			self diagramController controllers
 				detect: [ :ctrl | ctrl model = each model ]
-				ifFound: #removeController ]
+				ifFound: #removeControllerAndDiagramElement ]
 ]
 
 { #category : 'destruction' }
 OPController >> removeDiagramElement [
 
-	self diagramElement ifNil: [ ^ self ].
-	diagramElement remove.
-	diagramElement := nil
+	self diagramElement remove.
+	self diagramElement: OPNoShape new
 ]
 
 { #category : 'destruction' }
@@ -296,6 +314,14 @@ OPController >> removeFigure [
 		'`@receiver removeFigure' -> '`@receiver removeDiagramElement'.
 	self diagramController deselectAll.
 	self figure remove
+]
+
+{ #category : 'destruction' }
+OPController >> removeFromDiagramController [
+
+	self diagramController ifNil: [ ^ self ].
+	self diagramController deselectAll.
+	self diagramController removeController: self
 ]
 
 { #category : 'destruction' }
@@ -322,7 +348,7 @@ OPController >> removeRender [
 { #category : 'figures' }
 OPController >> roassalShape [
 
-	^ self diagramElement ifNotNil: [ :found | found roassalShape ]
+	^ self diagramElement roassalShape
 ]
 
 { #category : 'canvas actions' }

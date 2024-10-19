@@ -44,9 +44,9 @@ OPElementController >> attachTo: aDiagramController [
 { #category : 'construction' }
 OPElementController >> createDiagramElement [
 
-	^ diagramElement := self diagramElementClass
-		                    in: self diagramElementOwner
-		                    forModelElement: self model
+	^ self diagramElement: (self diagramElementClass
+			   in: self ownerDiagramElement
+			   forModelElement: self model)
 ]
 
 { #category : 'deprecated' }
@@ -89,19 +89,13 @@ OPElementController >> diagramElementClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'diagram elements' }
-OPElementController >> diagramElementOwner [
-
-	^ self diagramController diagramElement
-]
-
 { #category : 'accessing' }
 OPElementController >> ensureDiagramElement [
 
-	diagramElement
-		ifNil: [ self createDiagramElement ]
-		ifNotNil: [ self linkToExistingDiagramElement ].
-	^ diagramElement
+	self diagramElement
+		ifExists: [ self linkToExistingDiagramElement ]
+		else: [ self createDiagramElement ].
+	^ self diagramElement
 ]
 
 { #category : 'construction' }
@@ -150,6 +144,18 @@ OPElementController >> loadModel [
 	^ self model"
 ]
 
+{ #category : 'diagram elements' }
+OPElementController >> owner [
+
+	^ self diagramController
+]
+
+{ #category : 'diagram elements' }
+OPElementController >> ownerDiagramElement [
+
+	^ self owner diagramElement
+]
+
 { #category : 'connecting' }
 OPElementController >> parentContainerModel [
 	"Redefine to answer model that acts as a primary container of my model and other elements on my model's level. If I am always directly inside diagramController without any intermediate structure, this may answer self diagramController model"
@@ -187,7 +193,22 @@ OPElementController >> remove [
 		deprecated: 'Use #removeController instead.'
 		transformWith: '`@receiver remove' -> '`@receiver removeController'.
 
-	^ self removeController
+	^ self removeControllerAndDiagramElement
+]
+
+{ #category : 'destruction' }
+OPElementController >> removeDiagramElement [
+
+	self diagramElement remove.
+	self unhookDiagramElement.
+	self diagramElement: OPNoShape new
+]
+
+{ #category : 'destruction' }
+OPElementController >> removeRender [
+
+	super removeRender.
+	self unhookDiagramElement
 ]
 
 { #category : 'construction' }
@@ -225,6 +246,14 @@ OPElementController >> showWithoutDependentInDiagram: aDiagramController [
 { #category : 'accessing' }
 OPElementController >> target: aController [
 	"do nothing"
+
+	
+]
+
+{ #category : 'diagram elements' }
+OPElementController >> unhookDiagramElement [
+
+	"do nothing by default"
 
 	
 ]

@@ -464,7 +464,7 @@ OPDiagramController >> hasUndo [
 OPDiagramController >> hideAllElements [
 
 	[ self controllers isNotEmpty ] whileTrue: [ 
-		self controllers anyOne removeController ].
+		self controllers anyOne removeControllerAndDiagramElement ].
 	self canvas signalUpdate
 ]
 
@@ -472,7 +472,7 @@ OPDiagramController >> hideAllElements [
 OPDiagramController >> hideModelFromDiagram: aModel [
 	self
 		controllerForModel: aModel
-		ifFound: [ :ctrl | ctrl removeController ]
+		ifFound: [ :ctrl | ctrl removeControllerAndDiagramElement ]
 ]
 
 { #category : 'protocol-canvas' }
@@ -615,13 +615,15 @@ OPDiagramController >> remove [
 
 { #category : 'destruction' }
 OPDiagramController >> removeAllControllers [
-	[ self controllers isNotEmpty ]
-		whileTrue: [ self controllers anyOne removeController ]
+
+	[ self controllers isNotEmpty ] whileTrue: [
+		self controllers anyOne removeController ]
 ]
 
 { #category : 'controllers management' }
 OPDiagramController >> removeController: aController [
-	self controllers remove: aController ifAbsent: [  ]
+	self controllers remove: aController ifAbsent: [  ].
+	self removeMouseEventsFor: aController roassalShape
 ]
 
 { #category : 'deprecated' }
@@ -672,6 +674,12 @@ OPDiagramController >> removeModelElement: aModelElement [
 OPDiagramController >> removeModelOfRoassalShape: aFigure [
 	aFigure ifNil: [ ^ self ].
 	(self controllerForRoassalShape: aFigure) removeControllerAndModel
+]
+
+{ #category : 'accessing' }
+OPDiagramController >> removeMouseEventsFor: aFigure [
+
+	aFigure announcer unsubscribe: self
 ]
 
 { #category : 'accessing' }
@@ -821,7 +829,7 @@ OPDiagramController >> updateAfterDiagramFocused [
 	self controllers do: [ :each |
 		(showableElements includes: each model)
 			ifTrue: [ each updateAfterDiagramFocused ]
-			ifFalse: [ each removeController ] ]
+			ifFalse: [ each removeControllerAndDiagramElement ] ]
 ]
 
 { #category : 'userinterface' }

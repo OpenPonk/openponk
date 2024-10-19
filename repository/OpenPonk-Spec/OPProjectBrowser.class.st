@@ -46,8 +46,9 @@ OPProjectBrowser class >> menuCommandOn: aBuilder [
 
 { #category : 'instance creation' }
 OPProjectBrowser class >> open [
+
 	<script>
-	^ self new open
+	^ (self newApplication: OPApplication new) open
 ]
 
 { #category : 'System-FileRegistry' }
@@ -157,6 +158,7 @@ OPProjectBrowser >> initializePresenters [
 { #category : 'initialization' }
 OPProjectBrowser >> initializeWindow: aWindow [
 
+	super initializeWindow: aWindow.
 	aWindow
 		windowIcon: OPCoreIcons openponkIcon;
 		title: 'OpenPonk Project Browser';

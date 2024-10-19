@@ -135,9 +135,9 @@ OPWorkbench >> closedTabOfEditor: anEditor whileClosingWorkbench: discardChanges
 	focusedEditor = anEditor ifTrue: [
 		focusedEditor := nil.
 		self announce: (OPEditorUnfocused on: anEditor) ].
-	anEditor tabClosedWhileClosingWorkbench: discardChanges.
 	topToolbar activeEditor: nil.
 	editors removeKey: anEditor diagramController diagramElement.
+	anEditor tabClosedWhileClosingWorkbench: discardChanges.
 	self announce: (OPEditorClosed on: anEditor)
 ]
 
@@ -217,6 +217,8 @@ OPWorkbench >> initializePresenters [
 { #category : 'initialization' }
 OPWorkbench >> initializeWindow: aWindow [
 
+	super initializeWindow: aWindow.
+
 	aWindow
 		windowIcon: OPCoreIcons openponkIcon;
 		title: self title;
@@ -244,7 +246,7 @@ OPWorkbench >> openEditorOn: aModel [
 OPWorkbench >> openEditorOnDiagram: aDiagram [
 
 	| editor notebookPage plugin model |
-	(self projectController hasDiagram: aDiagram) ifTrue: [ 
+	(self projectController hasDiagram: aDiagram) ifTrue: [
 		^ self focusEditorOf: aDiagram ].
 	model := aDiagram modelElement.
 	plugin := pluginRegistry pluginFor: model.
@@ -252,14 +254,14 @@ OPWorkbench >> openEditorOnDiagram: aDiagram [
 	editor workbench: self.
 	notebookPage := self newNotebookPage.
 	notebookPage beCloseable.
-	editors at: aDiagram put: { 
+	editors at: aDiagram put: {
 			(#editor -> editor).
 			(#page -> notebookPage) } asDictionary.
 	editor owner: notebook.
 	editor openEmptyModel: model.
-	(model respondsTo: #whenChanged:) ifTrue: [ 
-		model whenChanged: [ 
-			notebookPage title: '[' , aDiagram name , '] ' , model name ] ].
+	self whenWindowClosedUnsubscribeFrom: model.
+	(model respondsTo: #whenChangedSend:to:) ifTrue: [
+		model whenChangedSend: #updateTabTitle to: self ].
 	editor palette rebuildWidget.
 	notebookPage
 		title: '[' , aDiagram name , '] ' , model name;
@@ -279,14 +281,13 @@ OPWorkbench >> openProject: aProject [
 		project: project;
 		workbench: self.
 	topToolbar updateProjectMenu.
-	project whenChanged: [ self updateTitle ].
+	self whenWindowClosedUnsubscribeFrom: project.
+	project whenChangedSend: #updateTitle to: self.
 	diagramsList project: project.
 	projectTree openOn: project.
 	projectController openDiagrams.
 	self hasWindow ifFalse: [ self open ].
-	self withWindowDo: [ :window | 
-		window whenClosedDo: [ project unsubscribe: self ] ].
-	self updateTitle.
+	self updateTitle
 ]
 
 { #category : 'opening' }
@@ -338,6 +339,16 @@ OPWorkbench >> title [
 { #category : 'accessing - spec' }
 OPWorkbench >> topToolbar [
 	^ topToolbar
+]
+
+{ #category : 'protocol' }
+OPWorkbench >> updateTabTitle [
+
+	| page diagramController |
+	page := notebook selectedPage ifNil: [ ^ self ].
+	diagramController := page activePresenter diagramController.
+	page title: '[' , diagramController diagramElement name , '] '
+		, diagramController model name
 ]
 
 { #category : 'protocol' }

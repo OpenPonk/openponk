@@ -22,7 +22,7 @@ OPCommonElementController >> createModelIn: aParentModel [
 { #category : 'accessing' }
 OPCommonElementController >> ensureDiagramElement [
 
-	diagramElement ifNil: [ self createDiagramElement ].
+	diagramElement ifNotExists: [ self createDiagramElement ].
 	^ diagramElement
 ]
 

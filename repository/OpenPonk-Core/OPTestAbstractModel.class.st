@@ -11,12 +11,20 @@ Class {
 
 { #category : 'comparing' }
 OPTestAbstractModel >> = other [
-	^ self uuid = other uuid and: [ self name = other name ]
+
+	^ other isNotNil and: [
+		  self uuid = other uuid and: [ self name = other name ] ]
 ]
 
 { #category : 'accessing' }
 OPTestAbstractModel >> name [
 	^ 'container'
+]
+
+{ #category : 'subscription' }
+OPTestAbstractModel >> unsubscribe: anOPTestDiagramController [
+
+	self announcer unsubscribe: anOPTestDiagramController
 ]
 
 { #category : 'accessing' }
@@ -32,4 +40,13 @@ OPTestAbstractModel >> uuid: aStringOrUUID [
 	uuid := aStringOrUUID isString
 		ifTrue: [ UUID fromString: aStringOrUUID ]
 		ifFalse: [ aStringOrUUID ]
+]
+
+{ #category : 'announcer' }
+OPTestAbstractModel >> when: anAnnouncementClass send: aSelector to: aReceiver [
+
+	^ self announcer
+		  when: anAnnouncementClass
+		  send: aSelector
+		  to: aReceiver
 ]

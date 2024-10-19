@@ -249,9 +249,9 @@ OPDiagramsList >> project [
 OPDiagramsList >> project: aProject [
 
 	project := aProject.
-	project whenChanged: [ self updateContent ].
-	self withWindowDo: [ :window |
-		window whenClosedDo: [ project unsubscribe: self ] ].
+	self whenWindowClosedUnsubscribeFrom: project.
+	self whenWindowClosedUnsubscribeFrom: self workbench announcer.
+	project whenChangedSend: #updateContent to: self.
 	self updateContent.
 	self workbench announcer
 		when: OPEditorUnfocused

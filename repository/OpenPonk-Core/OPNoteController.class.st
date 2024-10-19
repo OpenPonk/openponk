@@ -28,14 +28,3 @@ OPNoteController >> diagramElementClass [
 
 	^ OPNote
 ]
-
-{ #category : 'construction' }
-OPNoteController >> renderDiagramElement [
-
-	super renderDiagramElement.
-	diagramElement announcer
-		when: OPElementTextAttributeChanged
-		send: #updateRenderFromSelf
-		to: diagramElement.
-	^ self roassalShape
-]

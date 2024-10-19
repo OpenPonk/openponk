@@ -4,7 +4,8 @@ Class {
 	#traits : 'OPTBorderColoredAsStroke - {#updateRenderFromStyles}',
 	#classTraits : 'OPTBorderColoredAsStroke classTrait',
 	#instVars : [
-		'uuid'
+		'uuid',
+		'announcer'
 	],
 	#category : 'OpenPonk-Core-CommonElements',
 	#package : 'OpenPonk-Core',
@@ -43,10 +44,10 @@ OPDiagramOnlyShape class >> stonAllInstVarNames [
 { #category : 'accessing' }
 OPDiagramOnlyShape >> announcer [
 
-	^ roassalShape ifNotNil: #announcer
+	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 OPDiagramOnlyShape >> initialize [
 
 	super initialize.
@@ -82,4 +83,13 @@ OPDiagramOnlyShape >> updateRenderFromModel [
 OPDiagramOnlyShape >> uuid [
 
 	^ uuid
+]
+
+{ #category : 'announcement registration' }
+OPDiagramOnlyShape >> when: anAnnouncementClass send: aSelector to: aReceiver [
+
+	^ self announcer
+		  when: anAnnouncementClass
+		  send: aSelector
+		  to: aReceiver
 ]

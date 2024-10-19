@@ -113,7 +113,8 @@ OPDirectionalRelationshipController >> registerModelIn: aParentModel [
 { #category : 'rendering' }
 OPDirectionalRelationshipController >> renderSimplified [
 
-	diagramElement := self diagramElementClass renderSimplifiedForController: self.
+	self diagramElement:
+		(self diagramElementClass renderSimplifiedForController: self)
 ]
 
 { #category : 'construction' }

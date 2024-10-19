@@ -143,7 +143,7 @@ OPProject >> initialize [
 	name whenChangedDo: [ dirty value: true ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'inspecting' }
 OPProject >> inspectionItems [
 
 	<inspectorPresentationOrder: 100 title: 'Models and Diagrams'>
@@ -264,7 +264,7 @@ OPProject >> uuid: aUUID [
 ]
 
 { #category : 'announcements' }
-OPProject >> whenChanged: aBlock [
+OPProject >> whenChangedSend: aSelector to: aReceiver [
 
-	dirty announcer when: ValueChanged do: aBlock for: aBlock receiver
+	^ dirty whenChangedSend: aSelector to: aReceiver
 ]

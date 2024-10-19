@@ -103,9 +103,10 @@ OPModelTreeWidget >> initializeTree [
 		expandRoots
 ]
 
-{ #category : 'api' }
+{ #category : 'initialization' }
 OPModelTreeWidget >> initializeWindow: aWindow [
 
+	super initializeWindow: aWindow.
 	aWindow initialExtent: 600 @ 800
 ]
 
@@ -127,7 +128,7 @@ OPModelTreeWidget >> openOn: aProject [
 		do: [ :event |
 			project ifNotNil: [ project unsubscribe: self ].
 			project := event diagramController model.
-			project ifNotNil: [ project whenChanged: [ self refresh ] ].
+			project ifNotNil: [ project whenChangedSend: #refresh to: self ].
 			self refresh ]
 		for: self.
 	tree expandRoots

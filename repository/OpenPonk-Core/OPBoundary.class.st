@@ -1,13 +1,8 @@
 Class {
 	#name : 'OPBoundary',
-	#superclass : 'OPDiagramOnlyShape',
-	#traits : 'OPTResizableFigureWithText',
-	#classTraits : 'OPTResizableFigureWithText classTrait',
+	#superclass : 'OPDiagramOnlyShapeWithText',
 	#instVars : [
-		'name',
-		'positionOfMainRelativeToDragBoxes',
-		'dragBoxUpdateBlocks',
-		'dragBoxes'
+		'name'
 	],
 	#category : 'OpenPonk-Core-CommonElements',
 	#package : 'OpenPonk-Core',
@@ -41,8 +36,13 @@ OPBoundary >> defaultWidth [
 
 { #category : 'initialization' }
 OPBoundary >> initialize [
+
 	super initialize.
-	name := ''
+	name := ''.
+	self
+		when: OPElementTextAttributeChanged
+		send: #updateRenderFromSelf
+		to: self
 ]
 
 { #category : 'accessing' }
@@ -76,13 +76,6 @@ OPBoundary >> renderBasicShape [
 				  color: Color gray;
 				  dashArray: #( 4 ) ];
 		  yourself
-]
-
-{ #category : 'creating - subelements' }
-OPBoundary >> renderShapeDetails [
-
-	super renderShapeDetails.
-	self renderLabel
 ]
 
 { #category : 'creating - subelements' }

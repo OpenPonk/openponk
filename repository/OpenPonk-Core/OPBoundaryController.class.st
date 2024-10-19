@@ -39,14 +39,3 @@ OPBoundaryController >> diagramElementClass [
 
 	^ OPBoundary
 ]
-
-{ #category : 'construction' }
-OPBoundaryController >> renderDiagramElement [
-
-	super renderDiagramElement.
-	diagramElement announcer
-		when: OPElementTextAttributeChanged
-		do: [ diagramElement updateRenderFromSelf ]
-		for: self.
-	^ self roassalShape
-]

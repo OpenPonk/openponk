@@ -1,11 +1,8 @@
 Class {
 	#name : 'OPNote',
-	#superclass : 'OPDiagramOnlyShape',
-	#traits : 'OPTResizableFigureWithText',
-	#classTraits : 'OPTResizableFigureWithText classTrait',
+	#superclass : 'OPDiagramOnlyShapeWithText',
 	#instVars : [
 		'text',
-		'lines',
 		'topLeftBox',
 		'upperTopRightBox',
 		'lowerTopRightBox',
@@ -15,9 +12,7 @@ Class {
 		'middleBottomBox',
 		'leftFillBox',
 		'bottomFillBox',
-		'triangle',
-		'invisibleBoxes',
-		'baseShape'
+		'triangle'
 	],
 	#category : 'OpenPonk-Core-CommonElements',
 	#package : 'OpenPonk-Core',
@@ -35,7 +30,7 @@ OPNote class >> stonAllInstVarNames [
 { #category : 'creating - subelements' }
 OPNote >> createOwnedBorderLines [
 
-	| lineShape innerLineShape |
+	| lineShape innerLineShape lines |
 	lineShape := RSLine new
 		             color: Color darkGray;
 		             width: 1;
@@ -108,7 +103,7 @@ OPNote >> createOwnedFillBoxes [
 { #category : 'creating - subelements' }
 OPNote >> createOwnedInvisibleBoxes [
 
-	| invisibleBoxShape |
+	| invisibleBoxShape invisibleBoxes |
 	invisibleBoxShape := RSBox new
 		                     color: Color transparent;
 		                     borderColor: Color transparent;
@@ -139,8 +134,13 @@ OPNote >> createOwnedInvisibleBoxes [
 
 { #category : 'initialization' }
 OPNote >> initialize [
+
 	super initialize.
-	text := ''
+	text := ''.
+	self
+		when: OPElementTextAttributeChanged
+		send: #updateRenderFromSelf
+		to: self
 ]
 
 { #category : 'printing' }
@@ -159,6 +159,22 @@ OPNote >> printOn: aStream [
 				nextPutAll: (self text first: (17 min: self text size));
 				nextPutAll: '''...' ].
 	aStream nextPutAll: ')'
+]
+
+{ #category : 'removing' }
+OPNote >> removeRender [
+
+	super removeRender.
+	topLeftBox := nil.
+	upperTopRightBox := nil.
+	lowerTopRightBox := nil.
+	bottomLeftBox := nil.
+	bottomRightBox := nil.
+	middleLeftBox := nil.
+	middleBottomBox := nil.
+	leftFillBox := nil.
+	bottomFillBox := nil.
+	triangle := nil
 ]
 
 { #category : 'as yet unclassified' }
@@ -187,8 +203,7 @@ OPNote >> renderShapeDetails [
 		for: self;
 		when: RSExtentChangedEvent
 		do: [ self updateOwnedElements ]
-		for: self.
-	self renderLabel
+		for: self
 ]
 
 { #category : 'interactions' }

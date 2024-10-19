@@ -21,8 +21,7 @@ OPProjectNavigator >> openOn: aProject [
 
 	project := aProject.
 	project unsubscribe: self.
-	project whenChanged: [ self refresh ].
-	self refresh.
-	self withWindowDo: [ :window | 
-		window whenClosedDo: [ project unsubscribe: self ] ]
+	self whenWindowClosedUnsubscribeFrom: project.
+	project whenChangedSend: #refresh to: self.
+	self refresh
 ]

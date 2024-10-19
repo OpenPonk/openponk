@@ -391,6 +391,12 @@ OPProjectController >> selectInDiagram: aModelElement [
 				^ self ] ] ]
 ]
 
+{ #category : 'accessing' }
+OPProjectController >> spApplication [
+
+	^ workbench application
+]
+
 { #category : 'opening' }
 OPProjectController >> updateDiagram: aDiagram [
 

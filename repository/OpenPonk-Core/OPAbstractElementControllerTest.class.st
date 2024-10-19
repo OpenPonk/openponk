@@ -286,7 +286,7 @@ OPAbstractElementControllerTest >> testRemoveController [
 	self
 		assertCollection: diagramController canvas shapes
 		includesAll: { controller roassalShape }.
-	controller removeController.
+	controller removeControllerAndDiagramElement.
 	self
 		should: [ diagramController controllerForModel: model ]
 		raise: NotFound.

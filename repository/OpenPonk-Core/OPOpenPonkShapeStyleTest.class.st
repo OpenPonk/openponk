@@ -24,8 +24,8 @@ OPOpenPonkShapeStyleTest >> shapeClass [
 { #category : 'tests' }
 OPOpenPonkShapeStyleTest >> testLocalStyleNotInherited [
 	| a b |
-	a := OPShape new.
-	(b := OPShape new) owningElement: a.
+	a := OPDiagramElement new.
+	(b := OPDiagramElement new) owningElement: a.
 	self assert: a localStyle equals: nil.
 	self assert: b localStyle equals: nil.
 	a localStyle: style.
@@ -37,8 +37,8 @@ OPOpenPonkShapeStyleTest >> testLocalStyleNotInherited [
 OPOpenPonkShapeStyleTest >> testPropertyInheritance [
 
 	| a b aStyle bShared bLocal |
-	a := OPShape new.
-	(b := OPShape new) owningElement: a.
+	a := OPDiagramElement new.
+	(b := OPDiagramElement new) owningElement: a.
 	(aStyle := OPOpenPonkShapeStyle new) fontSize: 15.
 	self
 		assert: (b stylePropertyNamed: #fontSize ifAbsent: [ 1 ])
@@ -79,8 +79,8 @@ OPOpenPonkShapeStyleTest >> testPropertyInheritance [
 OPOpenPonkShapeStyleTest >> testSharedStyleIsInherited [
 
 	| a b |
-	a := OPShape new.
-	(b := OPShape new) owningElement: a.
+	a := OPDiagramElement new.
+	(b := OPDiagramElement new) owningElement: a.
 	style fontSize: 5.
 	self
 		assert: (a stylePropertyNamed: #fontSize ifAbsent: [ 1 ])
@@ -101,8 +101,8 @@ OPOpenPonkShapeStyleTest >> testSharedStyleIsInherited [
 OPOpenPonkShapeStyleTest >> testSharedStyleOverriden [
 
 	| a b newStyle |
-	a := OPShape new.
-	(b := OPShape new) owningElement: a.
+	a := OPDiagramElement new.
+	(b := OPDiagramElement new) owningElement: a.
 	style fontSize: 5.
 	a sharedStyle: style.
 	self

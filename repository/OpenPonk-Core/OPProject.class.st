@@ -59,6 +59,11 @@ OPProject >> addModel: aModel [
 	^ diagrams
 ]
 
+{ #category : 'accessing' }
+OPProject >> announcer [
+	^ dirty announcer
+]
+
 { #category : 'announcements' }
 OPProject >> changed [
 	dirty value: true
@@ -213,8 +218,6 @@ OPProject >> removeFromImage [
 OPProject >> removeModel: aModel [
 
 	modelsAndDiagrams removeKey: aModel.
-	(aModel respondsTo: #announcer) ifTrue: [ 
-		aModel announcer unsubscribe: self ].
 	(aModel respondsTo: #project:) ifTrue: [ aModel project: nil ]
 ]
 
@@ -261,6 +264,12 @@ OPProject >> uuid [
 { #category : 'accessing' }
 OPProject >> uuid: aUUID [
 	uuid := aUUID
+]
+
+{ #category : 'announcements' }
+OPProject >> weakWhenChangedSend: aSelector to: aReceiver [
+
+	^ dirty announcer weak when: ValueChanged send: aSelector to: aReceiver
 ]
 
 { #category : 'announcements' }

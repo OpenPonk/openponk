@@ -1,9 +1,9 @@
 Class {
 	#name : 'OPEdgeLabel',
 	#superclass : 'OPLabel',
-	#category : 'OpenPonk-Core-Shapes',
+	#category : 'OpenPonk-Core-DiagramElements',
 	#package : 'OpenPonk-Core',
-	#tag : 'Shapes'
+	#tag : 'DiagramElements'
 }
 
 { #category : 'adding' }

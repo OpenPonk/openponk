@@ -118,78 +118,40 @@ OPDiagramController >> autosaveManager [
 { #category : 'controllers management' }
 OPDiagramController >> cachedControllerForModel: aModel [
 
-	^ self cachedControllerForModel: aModel ifNone: [ 
-		  self controllers errorNotFound:
-			  'Controller for ' , aModel printString ]
+	^ modelToControllerCache at: aModel
 ]
 
 { #category : 'controllers management' }
 OPDiagramController >> cachedControllerForModel: aModel ifFound: aFoundBlock [
 
-	^ self
-		  cachedControllerForModel: aModel
-		  ifFound: aFoundBlock
-		  ifNone: [ nil ]
+	^ modelToControllerCache at: aModel ifPresent: aFoundBlock
 ]
 
 { #category : 'controllers management' }
 OPDiagramController >> cachedControllerForModel: aModel ifFound: aFoundBlock ifNone: aNoneBlock [
 
-	| ctrl |
-	modelToControllerCache ifNil: [
-		modelToControllerCache := Dictionary new.
-		self controllers do: [ :each |
-			modelToControllerCache at: each model put: each ] ].
-	ctrl := modelToControllerCache at: aModel ifPresent: #yourself.
-	(self controllers includes: ctrl) ifTrue: [
-		^ aFoundBlock value: ctrl ].
-	^ self controllers
-		  detect: [ :fresh | fresh model = aModel ]
-		  ifFound: [ :found |
-			  modelToControllerCache at: aModel put: found.
-			  aFoundBlock cull: found ]
-		  ifNone: aNoneBlock
+	^ modelToControllerCache
+		  at: aModel
+		  ifPresent: aFoundBlock
+		  ifAbsent: aNoneBlock
 ]
 
 { #category : 'controllers management' }
 OPDiagramController >> cachedControllerForModel: aModel ifNone: aNoneBlock [
 
-	^ self
-		  cachedControllerForModel: aModel
-		  ifFound: [ :ctrl | ctrl ]
-		  ifNone: aNoneBlock
+	^ modelToControllerCache at: aModel ifAbsent: aNoneBlock
 ]
 
 { #category : 'controllers management' }
 OPDiagramController >> cachedControllerForRoassalShape: aFigure [
 
-	| ctrl |
-	figureToControllerCache ifNil: [ 
-		figureToControllerCache := Dictionary new.
-		self controllers do: [ :each | 
-			figureToControllerCache at: each roassalShape put: each ] ].
-	ctrl := figureToControllerCache at: aFigure ifPresent: #yourself.
-	(self controllers includes: ctrl) ifTrue: [ ^ ctrl ].
-	ctrl := self controllers detect: [ :fresh | fresh roassalShape isOrComposesOf: aFigure ].
-	figureToControllerCache at: aFigure put: ctrl.
-	^ ctrl
+	^ figureToControllerCache at: aFigure
 ]
 
 { #category : 'controllers management' }
 OPDiagramController >> cachedControllerForRoassalShape: aFigure ifNone: aBlock [
 
-	| ctrl |
-	figureToControllerCache ifNil: [ 
-		figureToControllerCache := Dictionary new.
-		self controllers do: [ :each | 
-			figureToControllerCache at: each figure put: each ] ].
-	ctrl := figureToControllerCache at: aFigure ifPresent: #yourself.
-	(self controllers includes: ctrl) ifTrue: [ ^ ctrl ].
-	ctrl := self controllers
-		        detect: [ :fresh | fresh roassalShape = aFigure ]
-		        ifNone: [ ^ aBlock value ].
-	figureToControllerCache at: aFigure put: ctrl.
-	^ ctrl
+	^ figureToControllerCache at: aFigure ifAbsent: aBlock
 ]
 
 { #category : 'connecting' }
@@ -395,11 +357,6 @@ OPDiagramController >> ensureControllerFor: aModel [
 ]
 
 { #category : 'accessing' }
-OPDiagramController >> figure [
-	^ self canvas
-]
-
-{ #category : 'accessing' }
 OPDiagramController >> figureAdded: aFigure [
 
 	self
@@ -496,11 +453,14 @@ OPDiagramController >> incompatiblePaletteItemNames [
 
 { #category : 'initialization' }
 OPDiagramController >> initialize [
+
 	super initialize.
 	figureAdded := [ :figure |  ].
 	controllerFactory := self controllerFactory.
 	diagramController := self.
-	figuresBeingAdded := Set new
+	figuresBeingAdded := Set new.
+	modelToControllerCache := OPModelToControllerCache for: self.
+	figureToControllerCache := OPRoassalShapeToControllerCache for: self
 ]
 
 { #category : 'ui interaction' }
@@ -622,8 +582,8 @@ OPDiagramController >> removeAllControllers [
 
 { #category : 'controllers management' }
 OPDiagramController >> removeController: aController [
-	self controllers remove: aController ifAbsent: [  ].
-	self removeMouseEventsFor: aController roassalShape
+
+	self controllers remove: aController ifAbsent: [  ]
 ]
 
 { #category : 'deprecated' }
@@ -674,12 +634,6 @@ OPDiagramController >> removeModelElement: aModelElement [
 OPDiagramController >> removeModelOfRoassalShape: aFigure [
 	aFigure ifNil: [ ^ self ].
 	(self controllerForRoassalShape: aFigure) removeControllerAndModel
-]
-
-{ #category : 'accessing' }
-OPDiagramController >> removeMouseEventsFor: aFigure [
-
-	aFigure announcer unsubscribe: self
 ]
 
 { #category : 'accessing' }

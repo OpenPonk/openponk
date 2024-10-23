@@ -1,9 +1,9 @@
 Class {
 	#name : 'OPDICamera',
 	#superclass : 'OPDiagramCamera',
-	#category : 'OpenPonk-Core-Shapes',
+	#category : 'OpenPonk-Core-DiagramElements',
 	#package : 'OpenPonk-Core',
-	#tag : 'Shapes'
+	#tag : 'DiagramElements'
 }
 
 { #category : 'testing' }

@@ -134,10 +134,10 @@ OPController >> ensureDiagramElement [
 OPController >> figure [
 
 	self
-		deprecated: 'Use #diagramElement instead'
-		transformWith: '`@receiver figure' -> '`@receiver diagramElement'.
+		deprecated: 'Use #roassalShape instead'
+		transformWith: '`@receiver figure' -> '`@receiver roassalShape'.
 
-	^ self diagramElement
+	^ self roassalShape
 ]
 
 { #category : 'canvas actions' }
@@ -149,13 +149,16 @@ OPController >> hideSelectionFeedback [
 { #category : 'announcements' }
 OPController >> internalSubscribeTo: aModel [
 
-	aModel when: OPElementRenamed send: #modelChanged to: self
+	aModel announcer weak
+		when: OPElementRenamed
+		send: #modelChanged
+		to: self
 ]
 
 { #category : 'announcements' }
 OPController >> internalUnsubscribeFrom: aModel [
 
-	aModel unsubscribe: self
+	"aModel unsubscribe: self"
 ]
 
 { #category : 'testing' }
@@ -236,8 +239,8 @@ OPController >> refreshFigure [
 { #category : 'deprecated' }
 OPController >> remove [
 
-	self deprecated: 'Use removeController instead.'.
-	self model ifNotNil: [ self model announcer unsubscribe: self ]
+	self deprecated: 'Use removeControllerAndDiagramElement instead.'.
+	self removeControllerAndDiagramElement
 ]
 
 { #category : 'destruction' }

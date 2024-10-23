@@ -1,6 +1,6 @@
 Class {
 	#name : 'OPTestDiagramElement',
-	#superclass : 'OPShape',
+	#superclass : 'OPDiagramElement',
 	#category : 'OpenPonk-Core-Controllers-Tests',
 	#package : 'OpenPonk-Core',
 	#tag : 'Controllers-Tests'

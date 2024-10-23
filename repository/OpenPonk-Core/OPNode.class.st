@@ -1,9 +1,9 @@
 Class {
 	#name : 'OPNode',
-	#superclass : 'OPShape',
-	#category : 'OpenPonk-Core-Shapes',
+	#superclass : 'OPDiagramElement',
+	#category : 'OpenPonk-Core-DiagramElements',
 	#package : 'OpenPonk-Core',
-	#tag : 'Shapes'
+	#tag : 'DiagramElements'
 }
 
 { #category : 'as yet unclassified' }

@@ -208,7 +208,7 @@ OPElementController >> removeDiagramElement [
 OPElementController >> removeRender [
 
 	super removeRender.
-	self unhookDiagramElement
+	self unhookRoassalShape
 ]
 
 { #category : 'construction' }
@@ -256,6 +256,12 @@ OPElementController >> unhookDiagramElement [
 	"do nothing by default"
 
 	
+]
+
+{ #category : 'diagram elements' }
+OPElementController >> unhookRoassalShape [
+
+	self diagramElement roassalShapeUnsubscribe: self
 ]
 
 { #category : 'event handling' }

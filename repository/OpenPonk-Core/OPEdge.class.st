@@ -1,14 +1,14 @@
 Class {
 	#name : 'OPEdge',
-	#superclass : 'OPShape',
+	#superclass : 'OPDiagramElement',
 	#instVars : [
 		'source',
 		'target',
 		'waypoints'
 	],
-	#category : 'OpenPonk-Core-Shapes',
+	#category : 'OpenPonk-Core-DiagramElements',
 	#package : 'OpenPonk-Core',
-	#tag : 'Shapes'
+	#tag : 'DiagramElements'
 }
 
 { #category : 'rendering' }

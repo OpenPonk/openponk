@@ -5,9 +5,9 @@ Class {
 		'scale',
 		'position'
 	],
-	#category : 'OpenPonk-Core-Shapes',
+	#category : 'OpenPonk-Core-DiagramElements',
 	#package : 'OpenPonk-Core',
-	#tag : 'Shapes'
+	#tag : 'DiagramElements'
 }
 
 { #category : 'instance creation' }

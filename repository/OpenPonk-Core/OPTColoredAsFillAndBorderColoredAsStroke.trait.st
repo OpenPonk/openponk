@@ -2,9 +2,9 @@ Trait {
 	#name : 'OPTColoredAsFillAndBorderColoredAsStroke',
 	#traits : 'OPTColoredAsFill + OPTBorderColoredAsStroke',
 	#classTraits : 'OPTColoredAsFill classTrait + OPTBorderColoredAsStroke classTrait',
-	#category : 'OpenPonk-Core-Shapes',
+	#category : 'OpenPonk-Core-DiagramElements',
 	#package : 'OpenPonk-Core',
-	#tag : 'Shapes'
+	#tag : 'DiagramElements'
 }
 
 { #category : 'initialization' }

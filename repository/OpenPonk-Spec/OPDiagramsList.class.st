@@ -250,8 +250,8 @@ OPDiagramsList >> project: aProject [
 
 	project := aProject.
 	self whenWindowClosedUnsubscribeFrom: project.
-	self whenWindowClosedUnsubscribeFrom: self workbench announcer.
-	project whenChangedSend: #updateContent to: self.
+	self whenWindowClosedUnsubscribeFrom: self workbench.
+	project weakWhenChangedSend: #updateContent to: self.
 	self updateContent.
 	self workbench announcer
 		when: OPEditorUnfocused

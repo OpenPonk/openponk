@@ -128,7 +128,7 @@ OPModelTreeWidget >> openOn: aProject [
 		do: [ :event |
 			project ifNotNil: [ project unsubscribe: self ].
 			project := event diagramController model.
-			project ifNotNil: [ project whenChangedSend: #refresh to: self ].
+			project ifNotNil: [ project weakWhenChangedSend: #refresh to: self ].
 			self refresh ]
 		for: self.
 	tree expandRoots

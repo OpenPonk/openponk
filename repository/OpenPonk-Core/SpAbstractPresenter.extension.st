@@ -9,7 +9,7 @@ SpAbstractPresenter >> whenWindowClosedDo: aBlock [
 { #category : '*OpenPonk-Core' }
 SpAbstractPresenter >> whenWindowClosedUnsubscribeFrom: anObject [
 
-	self whenWindowClosedDo: [ anObject unsubscribe: self ]
+	self whenWindowClosedDo: [ anObject announcer unsubscribe: self ]
 ]
 
 { #category : '*OpenPonk-Core' }

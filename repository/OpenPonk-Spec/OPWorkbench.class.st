@@ -260,8 +260,8 @@ OPWorkbench >> openEditorOnDiagram: aDiagram [
 	editor owner: notebook.
 	editor openEmptyModel: model.
 	self whenWindowClosedUnsubscribeFrom: model.
-	(model respondsTo: #whenChangedSend:to:) ifTrue: [
-		model whenChangedSend: #updateTabTitle to: self ].
+	(model respondsTo: #weakWhenChangedSend:to:) ifTrue: [
+		model weakWhenChangedSend: #updateTabTitle to: self ].
 	editor palette rebuildWidget.
 	notebookPage
 		title: '[' , aDiagram name , '] ' , model name;
@@ -282,7 +282,7 @@ OPWorkbench >> openProject: aProject [
 		workbench: self.
 	topToolbar updateProjectMenu.
 	self whenWindowClosedUnsubscribeFrom: project.
-	project whenChangedSend: #updateTitle to: self.
+	project weakWhenChangedSend: #updateTitle to: self.
 	diagramsList project: project.
 	projectTree openOn: project.
 	projectController openDiagrams.

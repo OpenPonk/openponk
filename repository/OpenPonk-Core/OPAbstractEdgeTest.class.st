@@ -17,7 +17,7 @@ OPAbstractEdgeTest >> testRenderSimplifiedForController [
 	
 	rsBox := RSBox new.
 	
-	connectedShape := OPShape new.
+	connectedShape := OPDiagramElement new.
 	connectedShape stub roassalShape willReturn: rsBox.
 	
 	connectedController := Mock new.

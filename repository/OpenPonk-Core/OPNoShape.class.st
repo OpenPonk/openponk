@@ -1,9 +1,9 @@
 Class {
 	#name : 'OPNoShape',
 	#superclass : 'Object',
-	#category : 'OpenPonk-Core-Shapes',
+	#category : 'OpenPonk-Core-DiagramElements',
 	#package : 'OpenPonk-Core',
-	#tag : 'Shapes'
+	#tag : 'DiagramElements'
 }
 
 { #category : 'testing' }
@@ -72,6 +72,13 @@ OPNoShape >> remove [
 OPNoShape >> roassalShape [
 
 	^ nil
+]
+
+{ #category : 'as yet unclassified' }
+OPNoShape >> roassalShapeUnsubscribe: aSubscriber [
+	"do nothing"
+
+	
 ]
 
 { #category : 'accessing' }

@@ -372,6 +372,20 @@ OPDiagramElement >> owningElement: aDiagramElement [
 		                 to: aDiagramElement
 ]
 
+{ #category : 'actions' }
+OPDiagramElement >> pushBack [
+
+	roassalShape ifNil: [ ^ self ].
+	roassalShape pushBack
+]
+
+{ #category : 'actions' }
+OPDiagramElement >> pushFront [
+
+	roassalShape ifNil: [ ^ self ].
+	roassalShape pushFront
+]
+
 { #category : 'removing' }
 OPDiagramElement >> remove [
 

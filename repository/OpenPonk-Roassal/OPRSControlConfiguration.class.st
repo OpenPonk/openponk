@@ -92,7 +92,7 @@ OPRSControlConfiguration class >> settingsOn: aBuilder [
 	(aBuilder setting: #dragSnapMargin)
 		parent: #openponk;
 		target: self;
-		label: 'Margin for srag snapping';
+		label: 'Margin for drag snapping';
 		description:
 			'When dragging a shape, it snaps to a horizontally or vertically aligned shapes within this margin, ie. in case of horizontal snapping, how much below of above the shapes can be to still snap to it.';
 		order: 72;

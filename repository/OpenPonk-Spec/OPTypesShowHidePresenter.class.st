@@ -62,6 +62,13 @@ OPTypesShowHidePresenter >> possibleTypeLeafNames [
 	^ self getRootNode leafNames
 ]
 
+{ #category : 'private' }
+OPTypesShowHidePresenter >> searchValueOf: item [
+
+	self halt.
+	^ item name
+]
+
 { #category : 'accessing' }
 OPTypesShowHidePresenter >> selected: added [
 	| typesToShow elementsToShow executor |

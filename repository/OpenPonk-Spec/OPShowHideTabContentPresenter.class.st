@@ -58,30 +58,33 @@ OPShowHideTabContentPresenter >> initializePresenters [
 	tree := self newTreeTable.
 	mainColumn := SpCompositeTableColumn new.
 	mainColumn addColumn:
-		((SpCheckBoxTableColumn evaluated: [ :modelObject | 
+		((SpCheckBoxTableColumn evaluated: [ :modelObject |
 				  self isSelected: modelObject ])
 			 width: 20;
-			 onActivation: [ :modelObject | 
+			 onActivation: [ :modelObject |
 				 self processAndUpdateSelected: modelObject ];
-			 onDeactivation: [ :modelObject | 
+			 onDeactivation: [ :modelObject |
 				 self processAndUpdateUnselected: modelObject ];
 			 yourself).
-	self hasIcon ifTrue: [ 
+	self hasIcon ifTrue: [
 		mainColumn addColumn:
-			((SpImageTableColumn evaluated: [ :modelObject | 
+			((SpImageTableColumn evaluated: [ :modelObject |
 					  self iconFor: modelObject ])
 				 width: 20;
 				 yourself) ].
 	mainColumn addColumn:
-		(SpStringTableColumn evaluated: [ :modelObject | 
+		(SpStringTableColumn evaluated: [ :modelObject |
 			 self nameFor: modelObject ]).
 	tree
 		addColumn: mainColumn;
 		roots: self initialRoots;
 		hideColumnHeaders;
 		children: [ :item | self childrenFor: item ];
-		whenBuiltDo: [ :buildWidget | 
-			buildWidget widget dataSource rootItem expandAll ]
+		whenBuiltDo: [ :buildWidget |
+			buildWidget widget dataSource rootItem expandAll ];
+		searchMatching: [ :item :pattern |
+			(self nameFor: item) asString trimBoth asLowercase includesSubstring:
+					pattern asLowercase ]
 ]
 
 { #category : 'testing' }

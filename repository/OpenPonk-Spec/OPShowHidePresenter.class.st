@@ -32,6 +32,14 @@ OPShowHidePresenter >> connectPresenters [
 		whenSelectedPageChangedDo: [ :selectedPage | self refreshPage: selectedPage ]
 ]
 
+{ #category : 'api - focus' }
+OPShowHidePresenter >> defaultKeyboardFocus [
+
+	^ notebook selectedPage
+		  ifNil: [ self ]
+		  ifNotNil: [ :page | page activePresenter ]
+]
+
 { #category : 'initialization' }
 OPShowHidePresenter >> initializePresenters [
 	notebook := self newNotebook.
@@ -59,8 +67,11 @@ OPShowHidePresenter >> refreshCurrentPage [
 
 { #category : 'initialization' }
 OPShowHidePresenter >> refreshPage: aPage [
-	aPage activePresenter
-		ifNotNil: [ :presenter | presenter updateSelectedItems ]
+
+	aPage activePresenter ifNotNil: [ :presenter |
+		presenter
+			updateSelectedItems;
+			takeKeyboardFocus ]
 ]
 
 { #category : 'accessing model' }

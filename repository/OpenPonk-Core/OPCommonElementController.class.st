@@ -12,6 +12,13 @@ OPCommonElementController class >> paletteItemName [
 ]
 
 { #category : 'construction' }
+OPCommonElementController >> createDiagramElement [
+
+	^ self diagramElement:
+		  (self diagramElementClass in: self ownerDiagramElement)
+]
+
+{ #category : 'construction' }
 OPCommonElementController >> createModelIn: aParentModel [
 
 	"do nothing - common model elements are not part of any model"
@@ -22,8 +29,7 @@ OPCommonElementController >> createModelIn: aParentModel [
 { #category : 'accessing' }
 OPCommonElementController >> ensureDiagramElement [
 
-	diagramElement ifNotExists: [ self createDiagramElement ].
-	^ diagramElement
+	^ self diagramElement ifNotExists: [ self createDiagramElement ]
 ]
 
 { #category : 'announcements' }

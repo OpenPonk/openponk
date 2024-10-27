@@ -24,6 +24,7 @@ OPElementControllerTest >> diagramElementClass [
 
 { #category : 'accessing' }
 OPElementControllerTest >> diagramModelClass [
+
 	^ OPTestContainerModel
 ]
 

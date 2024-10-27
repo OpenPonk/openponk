@@ -23,7 +23,7 @@ OPControllerCache >> at: anObject [
 
 	^ self at: anObject ifAbsent: [
 		  diagramController controllers errorNotFound:
-			  'Controller of' , anObject asString , ' not found' ]
+			  'Controller of ' , anObject asString , ' not found' ]
 ]
 
 { #category : 'accessing' }

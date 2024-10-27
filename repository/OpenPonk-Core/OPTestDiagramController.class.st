@@ -11,7 +11,9 @@ Class {
 
 { #category : 'testing' }
 OPTestDiagramController >> canBeTargetFor: aController [
-	^ aController class = OPTestEntityController
+
+	^ (super canBeTargetFor: aController) or: [
+		  aController class = OPTestEntityController ]
 ]
 
 { #category : 'accessing' }

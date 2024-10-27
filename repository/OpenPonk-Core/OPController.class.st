@@ -112,7 +112,7 @@ OPController >> diagramElement [
 { #category : 'accessing' }
 OPController >> diagramElement: aDiagramElement [
 
-	diagramElement := aDiagramElement
+	^ diagramElement := aDiagramElement
 ]
 
 { #category : 'accessing' }
@@ -126,8 +126,8 @@ OPController >> elementsToShowInside [
 OPController >> ensureDiagramElement [
 
 	self assert: self diagramElement exists.
-	diagramElement modelElement: self model.
-	^ diagramElement
+	self linkDiagramElementToModel.
+	^ self diagramElement
 ]
 
 { #category : 'figures' }
@@ -176,6 +176,12 @@ OPController >> isRendered [
 OPController >> isTargetUsedAsContainer [
 
 	^ true
+]
+
+{ #category : 'construction' }
+OPController >> linkDiagramElementToModel [
+
+	self diagramElement modelElement: self model
 ]
 
 { #category : 'accessing' }

@@ -93,7 +93,7 @@ OPElementController >> diagramElementClass [
 OPElementController >> ensureDiagramElement [
 
 	self diagramElement
-		ifExists: [ self linkToExistingDiagramElement ]
+		ifExists: [ self linkDiagramElementToModel ]
 		else: [ self createDiagramElement ].
 	^ self diagramElement
 ]
@@ -129,12 +129,6 @@ OPElementController >> hookDiagramElement [
 { #category : 'testing' }
 OPElementController >> isCommon [
 	^ false
-]
-
-{ #category : 'construction' }
-OPElementController >> linkToExistingDiagramElement [
-
-	self diagramElement modelElement: self model
 ]
 
 { #category : 'deprecated' }

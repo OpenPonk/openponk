@@ -37,9 +37,14 @@ OPControllerFactory >> initialize [
 
 { #category : 'api - accessing' }
 OPControllerFactory >> newControllerFor: aModel [
+
 	| controller |
-	controller := (registrations detect: [ :each | each isForModel: aModel ]) controllerClass
-		new.
+	controller := (registrations
+		               detect: [ :each | each isForModel: aModel ]
+		               ifNone: [
+			               self error:
+				               'Unable to find controller class for model: '
+				               , aModel asString ]) controllerClass new.
 	controller model: aModel.
 	^ controller
 ]

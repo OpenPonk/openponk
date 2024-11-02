@@ -274,14 +274,14 @@ OPController >> removeControllerAndDiagramElement [
 { #category : 'destruction' }
 OPController >> removeControllerAndModel [
 
-	self removeDependent.
+	self removeDependentConrollersAndModels.
 	self removeControllerAndDiagramElement.
 	self removeModel.
 	self model: nil
 ]
 
 { #category : 'destruction' }
-OPController >> removeDependent [
+OPController >> removeDependentConrollersAndModels [
 	self dependentControllers
 		do: [ :each | 
 			self diagramController controllers

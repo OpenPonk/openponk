@@ -103,9 +103,40 @@ OPDiagramRemoveFigureCommand >> executeWithConfirmation [
 { #category : 'execution' }
 OPDiagramRemoveFigureCommand >> executeWithoutConfirmation [
 
+	| allShown |
 	diagramController deselectAll.
+
+	allShown := self showDependentAndReturnOriginallyShown.
+
 	figures do: [ :each |
 		(diagramController hasControllerForFigure: each) ifTrue: [
 			diagramController removeModelOfRoassalShape: each ] ].
+
+	self removeAllNotOriginallyShown: allShown.
+
 	canvas signalUpdate
+]
+
+{ #category : 'execution' }
+OPDiagramRemoveFigureCommand >> removeAllNotOriginallyShown: allShown [
+
+	diagramController allVisibleShowableElements
+		reject: [ :any | allShown includes: any ]
+		thenDo: [ :each |
+			diagramController
+				controllerForModel: each
+				ifFound: [ :controller |
+				controller removeControllerAndDiagramElement ] ]
+]
+
+{ #category : 'execution' }
+OPDiagramRemoveFigureCommand >> showDependentAndReturnOriginallyShown [
+
+	| executor allShown dependent |
+	executor := OPDiagramExplorer on: diagramController.
+	allShown := diagramController allVisibleShowableElements asSet.
+	dependent := models flatCollect: [ :each |
+		             executor dependentFor: each ].
+	executor showElements: dependent.
+	^ allShown
 ]

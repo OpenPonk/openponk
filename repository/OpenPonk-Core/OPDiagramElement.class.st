@@ -161,6 +161,20 @@ OPDiagramElement >> allShapesPositionableByUser [
 ]
 
 { #category : 'accessing' }
+OPDiagramElement >> attachedShapes [
+
+	^ #(  )
+]
+
+{ #category : 'actions' }
+OPDiagramElement >> attachedShapesDo: aBlock [
+
+	^ self attachedShapes
+		  select: [ :each | each isNotNil and: [ each isInACanvas ] ]
+		  thenDo: aBlock
+]
+
+{ #category : 'accessing' }
 OPDiagramElement >> canvas [
 
 	^ roassalShape canvas
@@ -237,7 +251,7 @@ OPDiagramElement >> isRendered [
 	^ roassalShape isNotNil and: [ roassalShape isInACanvas ]
 ]
 
-{ #category : 'testing' }
+{ #category : 'conditions' }
 OPDiagramElement >> isRenderedWithOwnedElements [
 
 	^ self isRendered and: [ 
@@ -376,6 +390,7 @@ OPDiagramElement >> owningElement: aDiagramElement [
 OPDiagramElement >> pushBack [
 
 	roassalShape ifNil: [ ^ self ].
+	self attachedShapesDo: [ :each | each pushBack ].
 	roassalShape pushBack
 ]
 
@@ -383,7 +398,8 @@ OPDiagramElement >> pushBack [
 OPDiagramElement >> pushFront [
 
 	roassalShape ifNil: [ ^ self ].
-	roassalShape pushFront
+	roassalShape pushFront.
+	self attachedShapesDo: [ :each | each pushFront ]
 ]
 
 { #category : 'removing' }
@@ -398,7 +414,8 @@ OPDiagramElement >> remove [
 { #category : 'removing' }
 OPDiagramElement >> removeRender [
 
-	self ownedElements do: #removeRender.
+	self ownedElements do: [ :each | each removeRender ].
+	self attachedShapesDo: [ :each | each remove ].
 	roassalShape ifNil: [ ^ self ].
 	roassalShape remove.
 	roassalShape := nil

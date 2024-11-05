@@ -11,6 +11,8 @@ Class {
 
 { #category : 'running' }
 OPControllerFactoryTest >> setUp [
+
+	super setUp.
 	factory := OPControllerFactory new
 ]
 

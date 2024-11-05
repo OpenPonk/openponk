@@ -12,7 +12,8 @@ Class {
 		'middleBottomBox',
 		'leftFillBox',
 		'bottomFillBox',
-		'triangle'
+		'triangle',
+		'lines'
 	],
 	#category : 'OpenPonk-Core-CommonElements',
 	#package : 'OpenPonk-Core',
@@ -27,10 +28,26 @@ OPNote class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #text )
 ]
 
+{ #category : 'accessing' }
+OPNote >> attachedShapes [
+
+	^ super attachedShapes , {
+		  topLeftBox.
+		  upperTopRightBox.
+		  lowerTopRightBox.
+		  bottomLeftBox.
+		  bottomRightBox.
+		  middleLeftBox.
+		  middleBottomBox.
+		  leftFillBox.
+		  bottomFillBox.
+		  triangle } , lines
+]
+
 { #category : 'creating - subelements' }
 OPNote >> createOwnedBorderLines [
 
-	| lineShape innerLineShape lines |
+	| lineShape innerLineShape |
 	lineShape := RSLine new
 		             color: Color darkGray;
 		             width: 1;
@@ -56,10 +73,6 @@ OPNote >> createOwnedBorderLines [
 			          from: topLeftBox;
 			          to: upperTopRightBox) } asGroup.
 	roassalShape canvas addAll: lines.
-	roassalShape
-		when: RSShapeRemovedEvent
-		do: [ lines do: #remove ]
-		for: self
 ]
 
 { #category : 'creating - subelements' }
@@ -71,11 +84,7 @@ OPNote >> createOwnedCornerTriangle [
 		            borderColor: Color lightGray;
 		            model: self;
 		            yourself.
-	self canvas add: triangle.
-	roassalShape
-		when: RSShapeRemovedEvent
-		do: [ triangle remove ]
-		for: self
+	self canvas add: triangle
 ]
 
 { #category : 'creating - subelements' }
@@ -90,14 +99,7 @@ OPNote >> createOwnedFillBoxes [
 	bottomFillBox := fillBoxShape copy model: #bottom.
 	self canvas
 		add: leftFillBox;
-		add: bottomFillBox.
-
-	roassalShape
-		when: RSShapeRemovedEvent
-		do: [
-			leftFillBox remove.
-			bottomFillBox remove ]
-		for: self
+		add: bottomFillBox
 ]
 
 { #category : 'creating - subelements' }
@@ -125,11 +127,7 @@ OPNote >> createOwnedInvisibleBoxes [
 			                                    #middleLeft).
 		                  (middleBottomBox := invisibleBoxShape copy model:
 			                                      #middleBottom) } asGroup.
-	self canvas addAll: invisibleBoxes.
-	roassalShape
-		when: RSShapeRemovedEvent
-		do: [ invisibleBoxes do: #remove ]
-		for: self
+	self canvas addAll: invisibleBoxes
 ]
 
 { #category : 'initialization' }
@@ -174,10 +172,11 @@ OPNote >> removeRender [
 	middleBottomBox := nil.
 	leftFillBox := nil.
 	bottomFillBox := nil.
-	triangle := nil
+	triangle := nil.
+	lines removeAll.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'rendering' }
 OPNote >> renderBasicShape [
 
 	^ RSBox new
@@ -235,7 +234,7 @@ OPNote >> text: aString [
 	text := aString
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'rendering' }
 OPNote >> updateOwnedElements [
 
 	bottomRightBox translateTo:

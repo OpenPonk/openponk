@@ -5,9 +5,9 @@ Class {
 	#name : 'OPController',
 	#superclass : 'Object',
 	#instVars : [
-		'model',
 		'diagramController',
-		'diagramElement'
+		'diagramElement',
+		'adapter'
 	],
 	#category : 'OpenPonk-Core-Controllers',
 	#package : 'OpenPonk-Core',
@@ -186,7 +186,8 @@ OPController >> linkDiagramElementToModel [
 
 { #category : 'accessing' }
 OPController >> model [
-	^ model
+
+	^ adapter ifNotNil: [ :existingAdapter | existingAdapter model ]
 ]
 
 { #category : 'accessing' }
@@ -195,9 +196,9 @@ OPController >> model: aModel [
 	aModel ifNotNil: [ 
 		aModel uuid ifNil: [ 
 			self error: 'All model objects must have a uuid to be used by OP' ] ].
-	model ifNotNil: [ :m | self internalUnsubscribeFrom: m ].
-	model := aModel.
-	model ifNotNil: [ :m | self internalSubscribeTo: m ]
+	self model ifNotNil: [ :m | self internalUnsubscribeFrom: m ].
+	adapter := OPModelAdapter forModel: aModel.
+	self model ifNotNil: [ :m | self internalSubscribeTo: m ]
 ]
 
 { #category : 'announcements' }

@@ -9,5 +9,5 @@ Class {
 { #category : 'as yet unclassified' }
 OPRSPolyline >> includedRadius [
 
-	^ super includedRadius + 2
+	^ super includedRadius + 1.5 + (2.5 / self canvas camera scale)
 ]

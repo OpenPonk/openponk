@@ -341,14 +341,19 @@ OPDiagramElement >> ownModelElement [
 
 { #category : 'initialization' }
 OPDiagramElement >> ownedElement: aShape renderedIn: aCanvas [
+	"do nothing"
+
+	
+]
+
+{ #category : 'initialization' }
+OPDiagramElement >> ownedElement: aShape willRenderIn: aCanvas [
 
 	self isRendered ifTrue: [
 		self
 			assert: roassalShape canvas = aCanvas
 			description:
-			'Reusing same diagram element for 2 canvases not allowed'.
-		^ self owningElement ifExists: [ :owner |
-			  owner ownedElement: aShape renderedIn: aCanvas ] ].
+			'Reusing same diagram element for 2 canvases not allowed' ].
 	self renderIn: aCanvas
 ]
 
@@ -447,6 +452,7 @@ OPDiagramElement >> renderBasicShapeIn: aCanvas [
 OPDiagramElement >> renderIn: aCanvas [
 
 	self isRendered ifTrue: [ ^ self ].
+	self owningElement ownedElement: self willRenderIn: aCanvas.
 	self renderBasicShapeIn: aCanvas.
 	self renderShapeDetails.
 	self addInteractions.
@@ -455,8 +461,7 @@ OPDiagramElement >> renderIn: aCanvas [
 	self updateRenderFromModel.
 	self updateRenderFromStyles.
 	self updateRenderFromSelf.
-	self owningElement ifExists: [ :element |
-		element ownedElement: self renderedIn: self canvas ].
+	self owningElement ownedElement: self renderedIn: aCanvas.
 	^ roassalShape
 ]
 

@@ -48,6 +48,20 @@ OPNoShape >> modelElement [
 	^ nil
 ]
 
+{ #category : 'initialization' }
+OPNoShape >> ownedElement: anOPPetriNetPTPlaceShape renderedIn: aRSCanvas [
+	"do nothing"
+
+	
+]
+
+{ #category : 'initialization' }
+OPNoShape >> ownedElement: anOPPetriNetPTPlaceShape willRenderIn: aRSCanvas [
+	"do nothing"
+
+	
+]
+
 { #category : 'accessing' }
 OPNoShape >> ownedElements [
 

@@ -26,10 +26,9 @@ OPDiagram >> canvas: aCanvas [
 		self
 			assert: roassalShape canvas = aCanvas
 			description:
-			'Reusing same diagram element for 2 canvases not allowed'.
-		^ false ].
+			'Reusing same diagram element for 2 canvases not allowed' ].
 	roassalShape := aCanvas.
-	^ true
+	self updateRenderFromSelf
 ]
 
 { #category : 'accessing' }
@@ -89,10 +88,9 @@ OPDiagram >> name: anObject [
 ]
 
 { #category : 'as yet unclassified' }
-OPDiagram >> ownedElement: aShape renderedIn: aCanvas [
+OPDiagram >> ownedElement: aShape willRenderIn: aCanvas [
 
-	(self canvas: aCanvas) ifFalse: [ ^ self ].
-	self updateRenderFromSelf
+	self canvas: aCanvas
 ]
 
 { #category : 'rendering' }

@@ -131,6 +131,12 @@ OPElementController >> isCommon [
 	^ false
 ]
 
+{ #category : 'testing' }
+OPElementController >> isHideable [
+
+	^ true
+]
+
 { #category : 'deprecated' }
 OPElementController >> loadModel [
 	self deprecated: 'Method will be removed without replacement.'

@@ -426,6 +426,13 @@ OPDiagramElement >> removeRender [
 	roassalShape := nil
 ]
 
+{ #category : 'accessing' }
+OPDiagramElement >> removeStylePropertyNamed: aName [
+
+	self localStyle ifNotNil: [ :style |
+		style removeKey: aName ifAbsent: [  ] ]
+]
+
 { #category : 'rendering' }
 OPDiagramElement >> renderBasicShape [
 

@@ -17,7 +17,7 @@ OPDiagramToolbarCommand class >> defaultMenuItemName [
 	| parts |
 	true
 		ifTrue: [ ^ 'TESTTEST' ].
-	parts := self name splitOnCapitals allButLast: 2.
+	parts := self name splitCamelCase allButLast: 2.
 	parts ifEmpty: [ ^ self name ].
 	^ String
 		streamContents: [ :s | 

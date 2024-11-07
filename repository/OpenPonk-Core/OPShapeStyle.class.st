@@ -78,6 +78,15 @@ OPShapeStyle >> removeKey: aSymbol [
 	^ result
 ]
 
+{ #category : 'removing' }
+OPShapeStyle >> removeKey: aSymbol ifAbsent: aBlock [
+
+	| result |
+	result := properties removeKey: aSymbol ifAbsent: [ ^ aBlock value ].
+	self styledElements do: #styleChanged.
+	^ result
+]
+
 { #category : 'accessing' }
 OPShapeStyle >> removedFromStyledElement: aDiagramElement [
 

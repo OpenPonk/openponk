@@ -18,7 +18,8 @@ OPDiagramInspectFigureCommand >> defaultMenuItemName [
 	| basicName |
 	basicName := 'Inspect figure'.
 	figures ifNil: [ ^ basicName ].
-	^ figures size pluralize: basicName
+	figures size = 1 ifTrue: [ ^ basicName ].
+	^ GRInflector pluralize: basicName
 ]
 
 { #category : 'execution' }

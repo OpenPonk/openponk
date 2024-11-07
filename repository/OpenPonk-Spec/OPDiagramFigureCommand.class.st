@@ -52,13 +52,14 @@ OPDiagramFigureCommand class >> isAbstract [
 ]
 
 { #category : 'execution' }
-OPDiagramFigureCommand >> prepareFullExecutionInContext: aToolContext [
+OPDiagramFigureCommand >> readParametersFromContext: aToolContext [
 
-	super prepareFullExecutionInContext: aToolContext.
+	super readParametersFromContext: aToolContext.
+
 	diagramController := aToolContext diagramController.
 	canvas := diagramController canvas.
 	figures := aToolContext figures.
 	models := aToolContext models.
 	controllers := aToolContext controllers.
-	diagramElements := aToolContext diagramElements.
+	diagramElements := aToolContext diagramElements
 ]

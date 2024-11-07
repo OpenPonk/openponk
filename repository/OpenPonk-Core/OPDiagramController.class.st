@@ -767,7 +767,7 @@ OPDiagramController >> typeOfModel: aModel [
 	^ OPModelObjectType
 		named:
 			((aModel className withoutPrefix: self commonModelClassPrefix)
-				splitOnCapitals joinUsing: ' ')
+				splitCamelCase joinUsing: ' ')
 ]
 
 { #category : 'undo/redo' }

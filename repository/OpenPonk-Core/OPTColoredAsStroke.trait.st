@@ -14,9 +14,17 @@ OPTColoredAsStroke >> color [
 ]
 
 { #category : 'accessing' }
+OPTColoredAsStroke >> defaultStrokeColor [
+
+	^ Color black
+]
+
+{ #category : 'accessing' }
 OPTColoredAsStroke >> strokeColor [
 
-	^ self stylePropertyNamed: #strokeColor ifAbsent: [ Color black ]
+	^ self
+		  stylePropertyNamed: #strokeColor
+		  ifAbsent: [ self defaultStrokeColor ]
 ]
 
 { #category : 'accessing' }

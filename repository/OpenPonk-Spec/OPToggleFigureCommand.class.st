@@ -35,12 +35,9 @@ OPToggleFigureCommand >> basicExecute [
 { #category : 'accessing' }
 OPToggleFigureCommand >> defaultMenuItemName [
 
-	| basicName |
-	basicName := ((((self class name withoutPrefix: 'OP') withoutSuffix:
-		                'FigureCommand') splitOnCapitals collect:
-		               #asLowercase) joinUsing: ' ') capitalized.
-	models ifNil: [ ^ basicName ].
-	^ models size pluralize: basicName
+	^ ((((self class name withoutPrefix: 'OP') withoutSuffix:
+		     'FigureCommand') splitCamelCase collect: #asLowercase)
+		   joinUsing: ' ') capitalized
 ]
 
 { #category : 'execution' }

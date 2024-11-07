@@ -20,3 +20,9 @@ OPDiagramFigureFillColorCommand class >> contextMenuActivation [
 		  byItemOf: OPFigureFillColorMenuGroup
 		  for: OPCanvasPresenter
 ]
+
+{ #category : 'as yet unclassified' }
+OPDiagramFigureFillColorCommand class >> defaultColorOf: aDiagramElement [
+
+	^ aDiagramElement defaultFillColor
+]

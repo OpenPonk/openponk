@@ -12,9 +12,17 @@ OPTBorderColoredAsStroke >> borderColor [
 ]
 
 { #category : 'accessing' }
+OPTBorderColoredAsStroke >> defaultStrokeColor [
+
+	^ Color black
+]
+
+{ #category : 'accessing' }
 OPTBorderColoredAsStroke >> strokeColor [
 
-	^ self stylePropertyNamed: #strokeColor ifAbsent: [ Color black ]
+	^ self
+		  stylePropertyNamed: #strokeColor
+		  ifAbsent: [ self defaultStrokeColor ]
 ]
 
 { #category : 'accessing' }
@@ -36,7 +44,7 @@ OPTBorderColoredAsStroke >> updateBorderColorFromStyles [
 				ifPresent: [ :previousBorder |
 					previousBorder do: [ :each | each color: self borderColor ].
 					^ self ] ].
-	self roassalShape borderColor: self borderColor
+	self updateRoassalShapeBorderColorFromStyles
 ]
 
 { #category : 'accessing' }
@@ -46,4 +54,10 @@ OPTBorderColoredAsStroke >> updateRenderFromStyles [
 	self updateBorderColorFromStyles.
 	super updateRenderFromStyles.
 	self roassalShape signalUpdate
+]
+
+{ #category : 'initialization' }
+OPTBorderColoredAsStroke >> updateRoassalShapeBorderColorFromStyles [
+
+	self roassalShape borderColor: self borderColor
 ]

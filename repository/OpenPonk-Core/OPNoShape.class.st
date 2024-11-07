@@ -1,10 +1,32 @@
 Class {
 	#name : 'OPNoShape',
 	#superclass : 'Object',
+	#classInstVars : [
+		'instance'
+	],
 	#category : 'OpenPonk-Core-DiagramElements',
 	#package : 'OpenPonk-Core',
 	#tag : 'DiagramElements'
 }
+
+{ #category : 'accessing' }
+OPNoShape class >> instance [
+
+	^ instance ifNil: [ instance := self basicNew ]
+]
+
+{ #category : 'instance creation' }
+OPNoShape class >> new [
+
+	^ self instance
+]
+
+{ #category : 'initialization' }
+OPNoShape class >> reset [
+
+	<script>
+	instance := nil
+]
 
 { #category : 'testing' }
 OPNoShape >> doesNotExist [

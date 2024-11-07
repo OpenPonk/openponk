@@ -20,3 +20,9 @@ OPDiagramFigureStrokeColorCommand class >> contextMenuActivation [
 		  byItemOf: OPFigureStrokeColorMenuGroup
 		  for: OPCanvasPresenter
 ]
+
+{ #category : 'as yet unclassified' }
+OPDiagramFigureStrokeColorCommand class >> defaultColorOf: aDiagramElement [
+
+	^ aDiagramElement defaultStrokeColor
+]

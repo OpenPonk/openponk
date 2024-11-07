@@ -163,6 +163,7 @@ OPController >> internalUnsubscribeFrom: aModel [
 
 { #category : 'testing' }
 OPController >> isHideable [
+
 	^ false
 ]
 

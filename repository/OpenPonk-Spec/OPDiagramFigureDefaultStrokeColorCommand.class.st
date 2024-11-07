@@ -1,13 +1,9 @@
 Class {
-	#name : 'OPDiagramFigureBlueStrokeColorCommand',
+	#name : 'OPDiagramFigureDefaultStrokeColorCommand',
 	#superclass : 'OPDiagramFigureStrokeColorCommand',
+	#traits : 'OPTDiagramFigureDefaultColorCommand',
+	#classTraits : 'OPTDiagramFigureDefaultColorCommand classTrait',
 	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
 	#package : 'OpenPonk-Spec',
 	#tag : 'Diagram-Figure-Commands'
 }
-
-{ #category : 'as yet unclassified' }
-OPDiagramFigureBlueStrokeColorCommand class >> color [
-
-	^ Color blue
-]

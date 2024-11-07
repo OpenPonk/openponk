@@ -7,13 +7,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-OPDiagramFigureGreenFillColorCommand >> color [
+OPDiagramFigureGreenFillColorCommand class >> color [
 
 	^ Color paleGreen
-]
-
-{ #category : 'as yet unclassified' }
-OPDiagramFigureGreenFillColorCommand >> defaultMenuItemName [
-
-	^ 'Green'
 ]

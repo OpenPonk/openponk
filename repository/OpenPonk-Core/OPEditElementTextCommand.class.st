@@ -30,7 +30,7 @@ OPEditElementTextCommand class >> executeAccessor: anAccessor on: anObject [
 OPEditElementTextCommand >> accessor: anAccessor [
 	self getSelector: anAccessor.
 	self setSelector: anAccessor , ':'.
-	self name: (anAccessor capitalized splitOnCapitals joinUsing: ' ')
+	self name: (anAccessor capitalized splitCamelCase joinUsing: ' ')
 ]
 
 { #category : 'execute' }

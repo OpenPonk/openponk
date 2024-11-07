@@ -45,6 +45,12 @@ OPCommonElementController >> isCommon [
 	^ true
 ]
 
+{ #category : 'testing' }
+OPCommonElementController >> isHideable [
+
+	^ false
+]
+
 { #category : 'accessing' }
 OPCommonElementController >> model [
 

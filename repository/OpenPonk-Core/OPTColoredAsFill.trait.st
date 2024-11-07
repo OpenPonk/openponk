@@ -14,9 +14,17 @@ OPTColoredAsFill >> color [
 ]
 
 { #category : 'accessing' }
+OPTColoredAsFill >> defaultFillColor [
+
+	^ Color white
+]
+
+{ #category : 'accessing' }
 OPTColoredAsFill >> fillColor [
 
-	^ self stylePropertyNamed: #fillColor ifAbsent: [ Color white ]
+	^ self
+		  stylePropertyNamed: #fillColor
+		  ifAbsent: [ self defaultFillColor ]
 ]
 
 { #category : 'accessing' }

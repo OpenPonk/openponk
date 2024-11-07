@@ -24,7 +24,8 @@ OPDiagramInspectControllerFigureCommand >> defaultMenuItemName [
 	| basicName |
 	basicName := 'Inspect controller'.
 	controllers ifNil: [ ^ basicName ].
-	^ controllers size pluralize: basicName
+	controllers size = 1 ifTrue: [ ^ basicName ].
+	^ GRInflector pluralize: basicName
 ]
 
 { #category : 'execution' }

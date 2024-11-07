@@ -1,6 +1,8 @@
 Class {
 	#name : 'OPNote',
 	#superclass : 'OPDiagramOnlyShapeWithText',
+	#traits : 'OPTColoredAsFillAndBorderColoredAsStroke',
+	#classTraits : 'OPTColoredAsFillAndBorderColoredAsStroke classTrait',
 	#instVars : [
 		'text',
 		'topLeftBox',
@@ -29,9 +31,9 @@ OPNote class >> stonAllInstVarNames [
 ]
 
 { #category : 'accessing' }
-OPNote >> attachedShapes [
+OPNote >> attachedElementShapes [
 
-	^ super attachedShapes , {
+	^ {
 		  topLeftBox.
 		  upperTopRightBox.
 		  lowerTopRightBox.
@@ -41,7 +43,13 @@ OPNote >> attachedShapes [
 		  middleBottomBox.
 		  leftFillBox.
 		  bottomFillBox.
-		  triangle } , lines
+		  triangle }
+]
+
+{ #category : 'accessing' }
+OPNote >> attachedShapes [
+
+	^ super attachedShapes , self attachedElementShapes , lines
 ]
 
 { #category : 'creating - subelements' }
@@ -49,11 +57,9 @@ OPNote >> createOwnedBorderLines [
 
 	| lineShape innerLineShape |
 	lineShape := RSLine new
-		             color: Color darkGray;
 		             width: 1;
 		             yourself.
 	innerLineShape := RSLine new
-		                  color: Color gray;
 		                  width: 1;
 		                  yourself.
 	lines := {
@@ -72,7 +78,7 @@ OPNote >> createOwnedBorderLines [
 		         (lineShape copy
 			          from: topLeftBox;
 			          to: upperTopRightBox) } asGroup.
-	roassalShape canvas addAll: lines.
+	roassalShape canvas addAll: lines
 ]
 
 { #category : 'creating - subelements' }
@@ -80,8 +86,6 @@ OPNote >> createOwnedCornerTriangle [
 
 	triangle := RSSVGPath new
 		            svgPath: 'M0,0L20,0L0,-20Z';
-		            color: Color lightYellow darker;
-		            borderColor: Color lightGray;
 		            model: self;
 		            yourself.
 	self canvas add: triangle
@@ -92,7 +96,6 @@ OPNote >> createOwnedFillBoxes [
 
 	| fillBoxShape |
 	fillBoxShape := RSBox new
-		                color: Color lightYellow;
 		                borderColor: Color transparent;
 		                yourself.
 	leftFillBox := fillBoxShape model: #left.
@@ -107,7 +110,6 @@ OPNote >> createOwnedInvisibleBoxes [
 
 	| invisibleBoxShape invisibleBoxes |
 	invisibleBoxShape := RSBox new
-		                     color: Color transparent;
 		                     borderColor: Color transparent;
 		                     width: 1;
 		                     height: 1;
@@ -128,6 +130,12 @@ OPNote >> createOwnedInvisibleBoxes [
 		                  (middleBottomBox := invisibleBoxShape copy model:
 			                                      #middleBottom) } asGroup.
 	self canvas addAll: invisibleBoxes
+]
+
+{ #category : 'accessing' }
+OPNote >> defaultFillColor [
+
+	^ OPDiagramFigureYellowFillColorCommand new color
 ]
 
 { #category : 'initialization' }
@@ -258,4 +266,19 @@ OPNote >> updateOwnedElements [
 	bottomFillBox
 		extent: roassalShape extent + (0 @ -20);
 		translateTo: roassalShape position + (0 @ 10)
+]
+
+{ #category : 'initialization' }
+OPNote >> updateRoassalShapeBorderColorFromStyles [
+
+	lines do: [ :each | each color: self borderColor ].
+	triangle borderColor:
+		(self borderColor alphaMixed: 0.35 with: Color white)
+]
+
+{ #category : 'initialization' }
+OPNote >> updateRoassalShapeColorFromStyles [
+
+	self attachedElementShapes do: [ :each | each color: self color ].
+	triangle color: self color slightlyDarker
 ]

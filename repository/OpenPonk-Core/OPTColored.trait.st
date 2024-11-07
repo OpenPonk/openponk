@@ -24,7 +24,7 @@ OPTColored >> updateColorFromStyles [
 					at: key
 					put: (OrderedCollection with: self color).
 				^ self ] ].
-	self roassalShape color: self color
+	self updateRoassalShapeColorFromStyles
 ]
 
 { #category : 'initialization' }
@@ -34,4 +34,10 @@ OPTColored >> updateRenderFromStyles [
 	self updateColorFromStyles.
 	super updateRenderFromStyles.
 	self roassalShape signalUpdate
+]
+
+{ #category : 'initialization' }
+OPTColored >> updateRoassalShapeColorFromStyles [
+
+	self roassalShape color: self color
 ]

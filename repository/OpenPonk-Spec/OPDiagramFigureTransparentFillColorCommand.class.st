@@ -7,21 +7,13 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-OPDiagramFigureTransparentFillColorCommand >> color [
+OPDiagramFigureTransparentFillColorCommand class >> color [
 
 	^ Color transparent
 ]
 
 { #category : 'as yet unclassified' }
-OPDiagramFigureTransparentFillColorCommand >> defaultMenuIcon [
+OPDiagramFigureTransparentFillColorCommand >> defaultMenuIconFormSet [
 
-	^ Morph new 
-				color: Color white;
-				asFormOfSize: 30@20
-]
-
-{ #category : 'as yet unclassified' }
-OPDiagramFigureTransparentFillColorCommand >> defaultMenuItemName [
-
-	^ 'Transparent'
+	^ nil
 ]

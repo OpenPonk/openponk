@@ -7,13 +7,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-OPDiagramFigureWhiteFontColorCommand >> color [
+OPDiagramFigureWhiteFontColorCommand class >> color [
 
 	^ Color white
-]
-
-{ #category : 'as yet unclassified' }
-OPDiagramFigureWhiteFontColorCommand >> defaultMenuItemName [
-
-	^ 'White'
 ]

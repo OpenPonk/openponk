@@ -20,3 +20,9 @@ OPDiagramFigureFontColorCommand class >> contextMenuActivation [
 		  byItemOf: OPFigureFontColorMenuGroup
 		  for: OPCanvasPresenter
 ]
+
+{ #category : 'accessing' }
+OPDiagramFigureFontColorCommand class >> defaultColorOf: aDiagramElement [
+
+	^ aDiagramElement defaultFontColor
+]

@@ -64,7 +64,7 @@ OPDynamicFormMagritteVisitor >> visitBooleanDescription: aBooleanDescription [
 { #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visitLabelDescription: aStringDescription [
 
-	form addLabel: aStringDescription label.
+	form addHeadingLabel: aStringDescription label.
 	form addLabel: (aStringDescription accessor read: controller)
 ]
 
@@ -102,7 +102,7 @@ OPDynamicFormMagritteVisitor >> visitMultipleOptionDescription: aMultipleOptionD
 { #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visitPriorityContainer: aContainer [
 	(self shouldIncludeLabelFor: aContainer)
-		ifTrue: [ form addLabel: aContainer label ].
+		ifTrue: [ form addHeadingLabel: aContainer label ].
 	aContainer children do: [ :each | self visit: each ].
 	form addSeparator
 ]
@@ -154,6 +154,7 @@ OPDynamicFormMagritteVisitor >> visitStringDescription: aStringDescription [
 
 { #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visitToManyRelationDescription: aMAToManyRelationDescription [
-	form addLabel: aMAToManyRelationDescription label.
+
+	form addHeadingLabel: aMAToManyRelationDescription label.
 	(form addButton: 'Edit ') action: [ controller maEdit ]
 ]

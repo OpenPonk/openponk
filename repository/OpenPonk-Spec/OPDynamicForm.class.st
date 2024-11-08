@@ -124,7 +124,7 @@ OPDynamicForm >> addControl: aControl [
 { #category : 'public - adding' }
 OPDynamicForm >> addDroplist: aName [
 	| control |
-	self addLabel: aName.
+	self addHeadingLabel: aName.
 	
 	control := self newDropList.
 
@@ -136,7 +136,7 @@ OPDynamicForm >> addDroplist: aName [
 OPDynamicForm >> addEditableDroplist: aName [
 
 	| control |
-	self addLabel: aName.
+	self addHeadingLabel: aName.
 	control := self instantiate: OPEditableDropListPresenter.
 	self addControl: control.
 	^ control
@@ -145,10 +145,18 @@ OPDynamicForm >> addEditableDroplist: aName [
 { #category : 'public - adding' }
 OPDynamicForm >> addEntity: aName [
 	| control |
-	self addLabel: aName.
+	self addHeadingLabel: aName.
 	control := self instantiate: SpSelectEntity.
 	self addControl: control.
 	^ control
+]
+
+{ #category : 'public - adding' }
+OPDynamicForm >> addHeadingLabel: aLabel [
+
+	^ (self addLabel: aLabel)
+		  displayBold: [ true ];
+		  yourself
 ]
 
 { #category : 'public - adding' }
@@ -157,8 +165,6 @@ OPDynamicForm >> addLabel: aLabel [
 	| control |
 	control := self newLabel.
 	control label: aLabel.
-	"control addStyle: 'bold'."
-	self flag: 'implement bold'.
 
 	self addControl: control.
 	^ control
@@ -167,7 +173,7 @@ OPDynamicForm >> addLabel: aLabel [
 { #category : 'public - adding' }
 OPDynamicForm >> addList: aName [
 	| control |
-	self addLabel: aName.
+	self addHeadingLabel: aName.
 	
 	control := self newList.
 
@@ -179,7 +185,7 @@ OPDynamicForm >> addList: aName [
 OPDynamicForm >> addLongText: aName [
 
 	| control |
-	self addLabel: aName.
+	self addHeadingLabel: aName.
 
 	control := self instantiate: OPLongTextPresenter.
 
@@ -191,7 +197,7 @@ OPDynamicForm >> addLongText: aName [
 OPDynamicForm >> addNumberInput: aName [
 
 	| control |
-	self addLabel: aName.
+	self addHeadingLabel: aName.
 
 	control := self newNumberInput.
 
@@ -208,7 +214,7 @@ OPDynamicForm >> addSeparator [
 OPDynamicForm >> addText: aName [
 
 	| control |
-	self addLabel: aName.
+	self addHeadingLabel: aName.
 
 	control := self newText.
 
@@ -220,7 +226,7 @@ OPDynamicForm >> addText: aName [
 OPDynamicForm >> addTextInput: aName [
 
 	| control |
-	self addLabel: aName.
+	self addHeadingLabel: aName.
 
 	control := self newTextInput.
 

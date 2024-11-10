@@ -25,7 +25,7 @@ BaselineOfOpenPonk >> baseline: spec [
 			package: 'OpenPonk-Morphic';
 			package: 'OpenPonk-Spec' with: [
 				spec requires:
-						#( 'NewTools' 'Magritte' 'SynchronizedLinks' 'OpenPonk-Morphic' ) ];
+						#( 'NewTools' 'Magritte' 'OpenPonkSynchronizedLinks' 'OpenPonk-Morphic' ) ];
 			package: 'OpenPonk-Releaser'.
 		spec
 			group: 'default'
@@ -75,7 +75,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 
 	spec
-		baseline: 'SynchronizedLinks'
+		baseline: 'OpenPonkSynchronizedLinks'
 		with: [ spec repository: 'github://openponk/synchronized-links' ]
 ]
 

@@ -335,17 +335,17 @@ OPVersion >> repositoryName [
 		  | activePlugins |
 		  activePlugins := { 
 			                   ((Smalltalk globals includesKey:
-				                     #BaselineOfClassEditor) ifTrue: [ 
+				                     #BaselineOfOpenPonkClassEditor) ifTrue: [ 
 				                    #'class-editor' ]).
 			                   ((Smalltalk globals includesKey:
-				                     #BaselineOfBormEditor) ifTrue: [ 
+				                     #BaselineOfOpenPonkBormEditor) ifTrue: [ 
 				                    #'borm-editor' ]).
 			                   ((Smalltalk globals includesKey:
-				                     #BaselineOfFsmEditor) ifTrue: [ 
+				                     #BaselineOfOpenPonkFsmEditor) ifTrue: [ 
 				                    #'fsm-editor' ]).
 			                   ((Smalltalk globals includesKey:
-				                     #BaselineOfPetriNets) ifTrue: [ #petrinets ]).
-			                   ((Smalltalk globals includesKey: #BaselineOfBPMN) 
+				                     #BaselineOfOpenPonkPetriNets) ifTrue: [ #petrinets ]).
+			                   ((Smalltalk globals includesKey: #BaselineOfOpenPonkBPMN) 
 				                    ifTrue: [ #'BPMN' ]) } reject: #isNil.
 		  repositoryName := activePlugins size >= 4
 			                    ifTrue: [ #plugins ]

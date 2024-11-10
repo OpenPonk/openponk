@@ -53,12 +53,12 @@ OPRSDependenciesMapBuilder >> computeModels [
 
 	| verResults |
 	verResults := Smalltalk globals
-		              at: #BaselineOfOntoUMLVerificationFramework
+		              at: #BaselineOfOpenPonkOntoUMLVerifications
 		              ifAbsent: [ ^ super computeModels ].
 	[
-	Smalltalk globals removeKey: #BaselineOfOntoUMLVerificationFramework.
+	Smalltalk globals removeKey: #BaselineOfOpenPonkOntoUMLVerifications.
 	super computeModels ] ensure: [
-		Smalltalk globals at: #BaselineOfOntoUMLVerificationFramework put: verResults ]
+		Smalltalk globals at: #BaselineOfOpenPonkOntoUMLVerifications put: verResults ]
 ]
 
 { #category : 'hooks - model' }

@@ -63,20 +63,20 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 	spec
 		baseline: 'RoassalExporters'
 		with: [
-		spec repository: 'github://pharo-graphics/RoassalExporters:v1.02' ]
+		spec repository: 'github://pharo-graphics/RoassalExporters:v1.02' ].
+
+	spec baseline: 'NewTools' with: [
+		spec
+			repository: 'github://pharo-spec/NewTools:Pharo12';
+			loads: #( FileBrowser ) ]
 ]
 
 { #category : 'baselines' }
 BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 
-	spec baseline: 'NewTools' with: [ 
-		spec
-			repository: 'github://pharo-spec/NewTools:Pharo12';
-			loads: #( FileBrowser ) ].
 	spec
 		baseline: 'SynchronizedLinks'
-		with: [ 
-		spec repository: 'github://openponk/synchronized-links' ]
+		with: [ spec repository: 'github://openponk/synchronized-links' ]
 ]
 
 { #category : 'baselines' }

@@ -155,6 +155,17 @@ OPDynamicFormMagritteVisitor >> visitStringDescription: aStringDescription [
 { #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visitToManyRelationDescription: aMAToManyRelationDescription [
 
-	form addHeadingLabel: aMAToManyRelationDescription label.
-	(form addButton: 'Edit ') action: [ controller maEdit ]
+	| label hasDisplay |
+	label := aMAToManyRelationDescription label.
+	form addHeadingLabel: label.
+	hasDisplay := aMAToManyRelationDescription displayBlockOrSymbol
+	              ~=
+	              aMAToManyRelationDescription class
+		              defaultDisplayProperty.
+	hasDisplay ifTrue: [
+		(aMAToManyRelationDescription accessor read: controller) do: [ :each |
+			form addLabel:
+				(aMAToManyRelationDescription displayStringFor: each) ] ].
+	(form addButton: 'Edit ' , (label ifNil: [ '' ])) action: [
+		controller maEdit ]
 ]

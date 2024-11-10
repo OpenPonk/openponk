@@ -30,5 +30,6 @@ OPProjectExitCommand >> defaultMenuItemName [
 
 { #category : 'accessing' }
 OPProjectExitCommand >> execute [
-	workbench delete
+
+	workbench close
 ]

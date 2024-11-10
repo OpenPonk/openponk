@@ -114,6 +114,12 @@ OPWorkbench class >> settingsOn: aBuilder [
 	(aBuilder group: #openponk) label: 'OpenPonk'
 ]
 
+{ #category : 'initialize-release' }
+OPWorkbench >> close [
+
+	self withWindowDo: [ :window | window close ]
+]
+
 { #category : 'opening' }
 OPWorkbench >> closeEditorOfDiagram: aDiagram [
 

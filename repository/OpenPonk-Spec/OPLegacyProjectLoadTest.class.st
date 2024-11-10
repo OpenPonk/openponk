@@ -80,7 +80,7 @@ OPLegacyProjectLoadTest >> projectZip [
 OPLegacyProjectLoadTest >> tearDown [
 
 	self file ensureDelete.
-	workbench ifNotNil: [ workbench delete ].
+	workbench ifNotNil: [ workbench close ].
 	super tearDown
 ]
 

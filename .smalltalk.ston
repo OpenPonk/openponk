@@ -16,8 +16,7 @@ SmalltalkCISpec {
 			] 
 		},
 		#packages : [
-			'OpenPonk*',
-			'SynchronizedLinks*'
+			'OpenPonk*'
 		]
 	}
 }

@@ -103,7 +103,7 @@ OPBoundNode >> renderIn: aCanvas [
 { #category : 'as yet unclassified' }
 OPBoundNode >> updateFromRender [
 
-	self isResizableByUser | self isPositionableByUser ifTrue: [
+	(self isResizableByUser or: [ self isPositionableByUser ]) ifTrue: [
 		self bounds: (OPNodeBounds new
 				 position: roassalShape position
 				 extent: roassalShape extent) ].

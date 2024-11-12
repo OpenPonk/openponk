@@ -1,9 +1,9 @@
 Class {
 	#name : 'OPDiagramViewCamera',
 	#superclass : 'OPLegacyDiagramCamera',
-	#category : 'OpenPonk-Core-Diagrams',
+	#category : 'OpenPonk-Core-LegacySupport-Diagrams',
 	#package : 'OpenPonk-Core',
-	#tag : 'Diagrams'
+	#tag : 'LegacySupport-Diagrams'
 }
 
 { #category : 'testing' }

@@ -7,9 +7,9 @@ Class {
 		'source',
 		'points'
 	],
-	#category : 'OpenPonk-Core-Diagrams',
+	#category : 'OpenPonk-Core-LegacySupport-Diagrams',
 	#package : 'OpenPonk-Core',
-	#tag : 'Diagrams'
+	#tag : 'LegacySupport-Diagrams'
 }
 
 { #category : 'instance creation' }

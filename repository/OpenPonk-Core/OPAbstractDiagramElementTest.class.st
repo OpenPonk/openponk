@@ -1,9 +1,10 @@
 Class {
-	#name : 'OPAbstractShapeTest',
+	#name : 'OPAbstractDiagramElementTest',
 	#superclass : 'TestCase',
 	#instVars : [
 		'canvas',
-		'shape'
+		'shape',
+		'model'
 	],
 	#category : 'OpenPonk-Core-Tests',
 	#package : 'OpenPonk-Core',
@@ -11,30 +12,51 @@ Class {
 }
 
 { #category : 'testing' }
-OPAbstractShapeTest class >> isAbstract [
+OPAbstractDiagramElementTest class >> isAbstract [
 	^ self name includesSubstring: 'Abstract'
 ]
 
 { #category : 'instance creation' }
-OPAbstractShapeTest >> newShapeInstance [
+OPAbstractDiagramElementTest >> modelClass [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'instance creation' }
+OPAbstractDiagramElementTest >> newModelInstance [
+
+	^ self modelClass new
+]
+
+{ #category : 'instance creation' }
+OPAbstractDiagramElementTest >> newShapeInstance [
 	^ self shapeClass new
 ]
 
 { #category : 'running' }
-OPAbstractShapeTest >> setUp [
+OPAbstractDiagramElementTest >> setUp [
 
 	super setUp.
 	shape := self newShapeInstance.
+	model := self newModelInstance.
+	shape modelElement: model.
 	canvas := RSCanvas new
 ]
 
 { #category : 'hooks' }
-OPAbstractShapeTest >> shapeClass [
+OPAbstractDiagramElementTest >> shapeClass [
 	^ self subclassResponsibility
 ]
 
+{ #category : 'running' }
+OPAbstractDiagramElementTest >> testEmpty [
+
+	self assert: shape modelElement equals: model.
+	self assertCollection: shape modelElements hasSameElements: { model }
+]
+
 { #category : 'tests' }
-OPAbstractShapeTest >> testRenderSimplifiedForController [
+OPAbstractDiagramElementTest >> testRenderSimplifiedForController [
 
 	| diagramController controller |
 	canvas := RSCanvas new.

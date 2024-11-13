@@ -139,7 +139,7 @@ OPDiagramElement >> addSelectionDraggableInteraction [
 	roassalShape @ OPRSSelectionDraggable
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'rendering' }
 OPDiagramElement >> addedByMouseClickTo: aPoint [
 
 	"Do nothing by default. The given point is position where user clicked by mouse in order to create the element. If the shape was not added by a mouse click, this method is not called. May be overriden to translate to that position or react in any other way."
@@ -147,14 +147,14 @@ OPDiagramElement >> addedByMouseClickTo: aPoint [
 	
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 OPDiagramElement >> allOwnedShapesPositionableByUser [
 
 	self isRendered ifFalse: [ ^ #(  ) ].
 	^ self ownedElements flatCollect: #allOwnedShapesPositionableByUser
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 OPDiagramElement >> allShapesPositionableByUser [
 
 	^ self topMostOwningElement allOwnedShapesPositionableByUser
@@ -510,7 +510,7 @@ OPDiagramElement >> roassalShape [
 	^ roassalShape
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'rendering' }
 OPDiagramElement >> roassalShapeUnsubscribe: aSubscriber [
 
 	roassalShape ifNil: [ ^ self ].
@@ -705,7 +705,5 @@ OPDiagramElement >> updateRenderFromSelf [
 { #category : 'initialization' }
 OPDiagramElement >> updateRenderFromStyles [
 
-	"do nothing by default"
-
-	
+	self ownedElements select: #isRendered thenDo: #updateRenderFromStyles
 ]

@@ -111,7 +111,7 @@ OPDiagramFigureColorCommand >> defaultMenuItemName [
 	^ String streamContents: [ :s |
 		  s << self colorName.
 		  isDefault ifTrue: [ s << ' (default)' ].
-		  isCurrent ifTrue: [ s << ' [current]' ] ]
+		  isCurrent ifTrue: [ s << ' [selected]' ] ]
 ]
 
 { #category : 'execution' }

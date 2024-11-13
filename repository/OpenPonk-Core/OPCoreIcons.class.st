@@ -1131,6 +1131,30 @@ LkyAhQTNdxgYGJ7gixFCQGc0NWMHAKweDmH+UsOrAAAAAElFTkSuQmCC'
 ]
 
 { #category : 'as yet unclassified' }
+OPCoreIcons class >> opHideLabelsContents [
+
+	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAOklEQVQoz2NkYGD4/5+RASdgYWBgYGBk4EcT/sjwH1nBf9wGMDAxEACjCqilgAVCCaAJf4CzGAlFNwAbkwgipGLcfgAAAABJRU5ErkJggg=='
+]
+
+{ #category : 'as yet unclassified' }
+OPCoreIcons class >> opHideLabelsIcon [
+
+	^ Form fromBinaryStream: self opHideLabelsContents base64Decoded asByteArray readStream
+]
+
+{ #category : 'as yet unclassified' }
+OPCoreIcons class >> opHideSameLabelsContents [
+
+	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAPElEQVQoz2NkYGD4/5+RASdgYWBgYGBk4Gdl+I0s/JHhP5TFSMgEJgYCYFQBtRSwQCiB/6jCH+CxQzCyAP9OCx+tRQshAAAAAElFTkSuQmCC'
+]
+
+{ #category : 'as yet unclassified' }
+OPCoreIcons class >> opHideSameLabelsIcon [
+
+	^ Form fromBinaryStream: self opHideSameLabelsContents base64Decoded asByteArray readStream
+]
+
+{ #category : 'as yet unclassified' }
 OPCoreIcons class >> opMcDiagramIcon [
 
 	^ Form fromBinaryStream: self opMcDiagramIconContents base64Decoded asByteArray readStream
@@ -1191,6 +1215,18 @@ iSay6AMIgkCSJKFSqfRZr9cFOOmO3+9fSSaTVbjQPeSOAQpQ9fWnA1EULZlMBqVSqetWq9Xs
 9XqI47hVt9u9B+U+0ATegHf9nBo+n+/SbrdfgM0A6yzLPiog6EiB33kEHmb4lTudzokgCOdg
 PAEf7Xb7qtFooEAggBiGOQbv36xNa8wQkUgkXhVQOp0WwWABYroDY42LxSLv9XofarXaMxhr
 v/dmQSaCxb50u11+8hs/gG99/Qf21bg5RlgkZQAAAABJRU5ErkJggg=='
+]
+
+{ #category : 'as yet unclassified' }
+OPCoreIcons class >> opShowLabelsContents [
+
+	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAPUlEQVQoz2NkYGD4/5+RASdgYWBgYGBk4P+PKvyR8T+ygv8MDDjNYGIgAEYVUEsBC4QSQIusD/C4YSQU3QA+VwojR7FvAAAAAABJRU5ErkJggg=='
+]
+
+{ #category : 'as yet unclassified' }
+OPCoreIcons class >> opShowLabelsIcon [
+
+	^ Form fromBinaryStream: self opShowLabelsContents base64Decoded asByteArray readStream
 ]
 
 { #category : 'accessing - icons' }

@@ -35,6 +35,12 @@ OPNoShape >> doesNotExist [
 ]
 
 { #category : 'conditions' }
+OPNoShape >> exists [
+
+	^ false
+]
+
+{ #category : 'conditions' }
 OPNoShape >> ifExists: aFullBlockClosure [
 
 	^ nil

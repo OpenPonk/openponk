@@ -188,6 +188,12 @@ OPDiagramElement >> createOwnedElementsWithoutController [
 	
 ]
 
+{ #category : 'testing' }
+OPDiagramElement >> exists [
+
+	^ true
+]
+
 { #category : 'instance creation' }
 OPDiagramElement >> fromSton: stonReader [
 
@@ -417,6 +423,13 @@ OPDiagramElement >> remove [
 	self owningElement: nil
 ]
 
+{ #category : 'accessing' }
+OPDiagramElement >> removeLocalStylePropertyNamed: aName [
+
+	self localStyle ifNotNil: [ :style |
+		style removeKeyIfPresent: aName asSymbol ]
+]
+
 { #category : 'removing' }
 OPDiagramElement >> removeRender [
 
@@ -425,13 +438,6 @@ OPDiagramElement >> removeRender [
 	roassalShape ifNil: [ ^ self ].
 	roassalShape remove.
 	roassalShape := nil
-]
-
-{ #category : 'accessing' }
-OPDiagramElement >> removeStylePropertyNamed: aName [
-
-	self localStyle ifNotNil: [ :style |
-		style removeKey: aName ifAbsent: [  ] ]
 ]
 
 { #category : 'rendering' }

@@ -55,10 +55,22 @@ OPShapeStyle >> at: aSymbol ifPresent: aBlock [
 ]
 
 { #category : 'accessing' }
+OPShapeStyle >> at: aSymbol ifPresent: aBlock ifAbsent: anAbsentBlock [
+
+	^ properties at: aSymbol ifPresent: aBlock ifAbsent: anAbsentBlock
+]
+
+{ #category : 'accessing' }
 OPShapeStyle >> at: aSymbol put: aValue [
 
 	properties at: aSymbol put: aValue.
 	self styledElements do: #styleChanged
+]
+
+{ #category : 'accessing' }
+OPShapeStyle >> includesKey: aSymbol [
+
+	^ properties includesKey: aSymbol
 ]
 
 { #category : 'initialization' }
@@ -83,6 +95,15 @@ OPShapeStyle >> removeKey: aSymbol ifAbsent: aBlock [
 
 	| result |
 	result := properties removeKey: aSymbol ifAbsent: [ ^ aBlock value ].
+	self styledElements do: #styleChanged.
+	^ result
+]
+
+{ #category : 'removing' }
+OPShapeStyle >> removeKeyIfPresent: aSymbol [
+
+	| result |
+	result := properties removeKey: aSymbol ifAbsent: [ ^ nil ].
 	self styledElements do: #styleChanged.
 	^ result
 ]

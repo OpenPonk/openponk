@@ -25,9 +25,9 @@ OPProjectMergeModelsCommand class >> toolbarMenuActivation [
 ]
 
 { #category : 'accessing' }
-OPProjectMergeModelsCommand >> defaultMenuIcon [
+OPProjectMergeModelsCommand >> defaultMenuIconName [
 
-	^ self iconNamed: #hierarchy
+	^ #hierarchy
 ]
 
 { #category : 'accessing' }

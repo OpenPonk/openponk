@@ -13,9 +13,9 @@ OPDiagramInspectModelFigureCommand class >> canvasShortcutActivation [
 ]
 
 { #category : 'accessing' }
-OPDiagramInspectModelFigureCommand >> defaultMenuIcon [
+OPDiagramInspectModelFigureCommand >> defaultMenuIconName [
 
-	^ self iconNamed: #glamorousInspect
+	^  #glamorousInspect
 ]
 
 { #category : 'accessing' }

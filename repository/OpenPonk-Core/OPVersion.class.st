@@ -329,30 +329,42 @@ OPVersion >> releaseName: aString [
 ]
 
 { #category : 'accessing' }
+OPVersion >> repositoryLink [
+
+	^ self isRepositoryNameKnown
+		  ifTrue: [ 'https://github.com/OpenPonk/' , self repositoryName ]
+		  ifFalse: [ 'https://openponk.org' ]
+]
+
+{ #category : 'accessing' }
 OPVersion >> repositoryName [
 
-	^ repositoryName ifNil: [ 
-		  | activePlugins |
-		  activePlugins := { 
-			                   ((Smalltalk globals includesKey:
-				                     #BaselineOfOpenPonkClassEditor) ifTrue: [ 
-				                    #'class-editor' ]).
-			                   ((Smalltalk globals includesKey:
-				                     #BaselineOfOpenPonkBormEditor) ifTrue: [ 
-				                    #'borm-editor' ]).
-			                   ((Smalltalk globals includesKey:
-				                     #BaselineOfOpenPonkFsmEditor) ifTrue: [ 
-				                    #'fsm-editor' ]).
-			                   ((Smalltalk globals includesKey:
-				                     #BaselineOfOpenPonkPetriNets) ifTrue: [ #petrinets ]).
-			                   ((Smalltalk globals includesKey: #BaselineOfOpenPonkBPMN) 
-				                    ifTrue: [ #'BPMN' ]) } reject: #isNil.
-		  repositoryName := activePlugins size >= 4
-			                    ifTrue: [ #plugins ]
-			                    ifFalse: [ 
-				                    activePlugins size = 1
-					                    ifTrue: [ activePlugins first ]
-					                    ifFalse: [ self class unknownRepositoryName ] ] ]
+	| activePlugins repositoriesOfBaselines |
+	repositoryName ifNotNil: [ ^ repositoryName ].
+	repositoriesOfBaselines := {
+		                           (#BaselineOfOpenPonkClassEditor
+		                            -> #'class-editor').
+		                           (#BaselineOfOpenPonkBormEditor
+		                            -> #'borm-editor').
+		                           (#BaselineOfOpenPonkFsmEditor
+		                            -> #'fsm-editor').
+		                           (#BaselineOfOpenPonkPetriNets
+		                            -> #petrinets).
+		                           (#BaselineOfOpenPonkBPMN -> #BPMN).
+		                           (#BaselineOfOpenPonkMarkovChains
+		                            -> #'markov-chains') }.
+
+	activePlugins := repositoriesOfBaselines
+		                 select: [ :each |
+		                 Smalltalk hasClassNamed: each key ]
+		                 thenCollect: [ :each | each value ].
+	^ repositoryName := activePlugins size
+	                    >= repositoriesOfBaselines size
+		                    ifTrue: [ #plugins ]
+		                    ifFalse: [
+			                    activePlugins size = 1
+				                    ifTrue: [ activePlugins anyOne ]
+				                    ifFalse: [ self class unknownRepositoryName ] ]
 ]
 
 { #category : 'accessing' }

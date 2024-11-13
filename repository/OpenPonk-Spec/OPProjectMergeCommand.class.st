@@ -13,9 +13,9 @@ OPProjectMergeCommand class >> toolbarMenuActivation [
 ]
 
 { #category : 'accessing' }
-OPProjectMergeCommand >> defaultMenuIcon [
+OPProjectMergeCommand >> defaultMenuIconName [
 
-	^ self iconNamed: #merge
+	^ #merge
 ]
 
 { #category : 'accessing' }

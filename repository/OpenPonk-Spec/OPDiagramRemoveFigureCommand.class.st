@@ -52,8 +52,9 @@ OPDiagramRemoveFigureCommand class >> skipConfirmationModifier [
 ]
 
 { #category : 'accessing' }
-OPDiagramRemoveFigureCommand >> defaultMenuIcon [
-	^ self iconNamed: #glamorousTrash
+OPDiagramRemoveFigureCommand >> defaultMenuIconName [
+
+	^ #glamorousTrash
 ]
 
 { #category : 'accessing' }

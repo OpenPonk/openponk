@@ -13,8 +13,9 @@ OPProjectSaveCommand class >> toolbarMenuActivation [
 ]
 
 { #category : 'accessing' }
-OPProjectSaveCommand >> defaultMenuIcon [
-	^ self iconNamed: #smallSave
+OPProjectSaveCommand >> defaultMenuIconName [
+
+	^ #smallSave
 ]
 
 { #category : 'accessing' }

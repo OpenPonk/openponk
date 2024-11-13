@@ -7,9 +7,9 @@ Class {
 }
 
 { #category : 'accessing' }
-OPDiagramInspectFigureCommand >> defaultMenuIcon [
+OPDiagramInspectFigureCommand >> defaultMenuIconName [
 
-	^ self iconNamed: #glamorousInspect
+	^ #glamorousInspect
 ]
 
 { #category : 'accessing' }

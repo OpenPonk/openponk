@@ -13,8 +13,9 @@ OPProjectNewModelCommand class >> toolbarMenuActivation [
 ]
 
 { #category : 'accessing' }
-OPProjectNewModelCommand >> defaultMenuIcon [
-	^ self iconNamed: #glamorousAdd
+OPProjectNewModelCommand >> defaultMenuIconName [
+
+	^ #glamorousAdd
 ]
 
 { #category : 'accessing' }

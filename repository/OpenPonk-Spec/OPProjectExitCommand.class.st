@@ -19,8 +19,9 @@ OPProjectExitCommand class >> toolbarMenuActivation [
 ]
 
 { #category : 'accessing' }
-OPProjectExitCommand >> defaultMenuIcon [
-	^ self iconNamed: #smallQuit
+OPProjectExitCommand >> defaultMenuIconName [
+
+	^ #smallQuit
 ]
 
 { #category : 'accessing' }

@@ -144,7 +144,7 @@ OPWorkbenchToolbar >> opMenu [
 						name: 'Check for new version';
 						icon: (self iconNamed: #smallUpdate);
 						action: [ 
-							(OPUpdater newApplication: SpApplication defaultApplication)
+							(OPVersionComparisonInfo newApplication: SpApplication defaultApplication)
 								open ] ] ];
 		addGroup: [ :group | 
 			group addItem: [ :item | 

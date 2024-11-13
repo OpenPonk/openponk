@@ -14,10 +14,10 @@ OPUndoDiagramCommand class >> toolbarMenuActivation [
 	
 ]
 
-{ #category : 'execution' }
-OPUndoDiagramCommand >> defaultMenuIcon [
+{ #category : 'accessing' }
+OPUndoDiagramCommand >> defaultMenuIconName [
 
-	^ self iconNamed: #smallUndo
+	^ #smallUndo
 ]
 
 { #category : 'accessing' }

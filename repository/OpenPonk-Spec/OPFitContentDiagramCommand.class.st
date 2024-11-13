@@ -15,12 +15,13 @@ OPFitContentDiagramCommand class >> toolbarMenuActivation [
 		for: OPCanvasPresenter
 ]
 
-{ #category : 'execution' }
-OPFitContentDiagramCommand >> defaultMenuIcon [
-	^ OPIdeaGraphIcons fitContentIcon
+{ #category : 'accessing' }
+OPFitContentDiagramCommand >> defaultMenuIconFormSet [
+
+	^ FormSet form: OPIdeaGraphIcons fitContentIcon
 ]
 
-{ #category : 'execution' }
+{ #category : 'accessing' }
 OPFitContentDiagramCommand >> defaultMenuItemName [
 	^ 'Fit All'
 ]

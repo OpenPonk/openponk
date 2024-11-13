@@ -201,7 +201,7 @@ OPElementController >> removeDiagramElement [
 
 	self diagramElement remove.
 	self unhookDiagramElement.
-	self diagramElement: OPNoShape new
+	self diagramElement: nil
 ]
 
 { #category : 'destruction' }

@@ -310,10 +310,10 @@ OPDiagramController >> diagramFocused [
 
 	self isRendered ifTrue: [ ^ self updateAfterDiagramFocused ].
 
-	diagramElement canvas: self canvas.
-	diagramElement ownedElements do: [ :each |
+	self diagramElement canvas: self canvas.
+	self diagramElement ownedElements do: [ :each |
 		self showDiagramElement: each ].
-	diagramElement updateRenderFromSelf
+	self diagramElement updateRenderFromSelf
 ]
 
 { #category : 'userinterface' }

@@ -59,8 +59,8 @@ OPEdge >> innerWaypoints: aCollection [
 OPEdge >> remove [
 
 	super remove.
-	self source: OPNoShape new.
-	self target: OPNoShape new
+	self source: nil.
+	self target: nil
 ]
 
 { #category : 'rendering' }
@@ -72,7 +72,7 @@ OPEdge >> selectableInteraction [
 { #category : 'accessing' }
 OPEdge >> source [
 
-	^ source
+	^ source ifNil: [ OPNoShape instance ]
 ]
 
 { #category : 'accessing' }
@@ -89,7 +89,7 @@ OPEdge >> source: anElement [
 { #category : 'accessing' }
 OPEdge >> target [
 
-	^ target
+	^ target ifNil: [ OPNoShape instance ]
 ]
 
 { #category : 'accessing' }

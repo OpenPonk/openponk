@@ -224,7 +224,6 @@ OPDiagramElement >> initialize [
 
 	super initialize.
 	modelElements := #(  ).
-	owningElement := OPNoShape new.
 	ownedElements := SRToManyLink
 		                 on: self
 		                 slot: #ownedElements
@@ -373,16 +372,18 @@ OPDiagramElement >> ownedElements: aCollection [
 
 { #category : 'accessing' }
 OPDiagramElement >> owningElement [
-	^ owningElement
+
+	^ owningElement ifNil: [ OPNoShape instance ]
 ]
 
 { #category : 'accessing' }
 OPDiagramElement >> owningElement: aDiagramElement [
 
-	(self modelElements includes: aDiagramElement modelElement) ifTrue: [
-		self modelElements size > 1 ifTrue: [
-			self error: 'Cannot have same modelElement as owningElement has' ].
-		self modelElement: nil ].
+	aDiagramElement ifNotNil: [
+		(self modelElements includes: aDiagramElement modelElement) ifTrue: [
+			self modelElements size > 1 ifTrue: [
+				self error: 'Cannot have same modelElement as owningElement has' ].
+			self modelElement: nil ] ].
 	owningElement := SRToOneLink
 		                 on: self
 		                 slot: #owningElement
@@ -413,7 +414,7 @@ OPDiagramElement >> remove [
 	[ self ownedElements isNotEmpty ] whileTrue: [
 		self ownedElements anyOne remove ].
 	self removeRender.
-	self owningElement: OPNoShape new
+	self owningElement: nil
 ]
 
 { #category : 'removing' }

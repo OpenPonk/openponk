@@ -1,6 +1,6 @@
 Class {
 	#name : 'OPNoShape',
-	#superclass : 'Object',
+	#superclass : 'UndefinedObject',
 	#classInstVars : [
 		'instance'
 	],

@@ -106,7 +106,7 @@ OPController >> diagramController: aDiagramController [
 { #category : 'accessing' }
 OPController >> diagramElement [
 
-	^ diagramElement ifNil: [ diagramElement := OPNoShape new ]
+	^ diagramElement ifNil: [ OPNoShape instance ]
 ]
 
 { #category : 'accessing' }
@@ -313,7 +313,7 @@ OPController >> removeDependentControllersAndDiagramElements [
 OPController >> removeDiagramElement [
 
 	self diagramElement remove.
-	self diagramElement: OPNoShape new
+	self diagramElement: nil
 ]
 
 { #category : 'destruction' }

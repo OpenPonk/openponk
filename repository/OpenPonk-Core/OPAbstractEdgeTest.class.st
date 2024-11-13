@@ -1,6 +1,6 @@
 Class {
 	#name : 'OPAbstractEdgeTest',
-	#superclass : 'OPAbstractShapeTest',
+	#superclass : 'OPAbstractDiagramElementTest',
 	#category : 'OpenPonk-Core-Tests',
 	#package : 'OpenPonk-Core',
 	#tag : 'Tests'

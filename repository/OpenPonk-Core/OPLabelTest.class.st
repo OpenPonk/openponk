@@ -5,3 +5,9 @@ Class {
 	#package : 'OpenPonk-Core',
 	#tag : 'Tests'
 }
+
+{ #category : 'instance creation' }
+OPLabelTest >> modelClass [
+
+	^ Mock
+]

@@ -1,6 +1,6 @@
 Class {
 	#name : 'OPAbstractLabelTest',
-	#superclass : 'OPAbstractShapeTest',
+	#superclass : 'OPAbstractNodeTest',
 	#category : 'OpenPonk-Core-Tests',
 	#package : 'OpenPonk-Core',
 	#tag : 'Tests'

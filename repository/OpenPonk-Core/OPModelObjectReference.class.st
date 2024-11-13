@@ -4,9 +4,9 @@ Class {
 	#instVars : [
 		'uuid'
 	],
-	#category : 'OpenPonk-Core-Diagrams',
+	#category : 'OpenPonk-Core-LegacySupport-Diagrams',
 	#package : 'OpenPonk-Core',
-	#tag : 'Diagrams'
+	#tag : 'LegacySupport-Diagrams'
 }
 
 { #category : 'as yet unclassified' }
@@ -19,6 +19,12 @@ OPModelObjectReference class >> withUUID: aUUID [
 { #category : 'comparing' }
 OPModelObjectReference >> = otherModelObject [
 	^ self references: otherModelObject
+]
+
+{ #category : 'comparing' }
+OPModelObjectReference >> hash [
+
+	^ self uuid hash
 ]
 
 { #category : 'comparing' }

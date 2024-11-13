@@ -26,7 +26,8 @@ OPDiagram >> canvas: aCanvas [
 		self
 			assert: roassalShape canvas = aCanvas
 			description:
-			'Reusing same diagram element for 2 canvases not allowed' ].
+			'Reusing same diagram element for 2 canvases not allowed'.
+		^ self ].
 	roassalShape := aCanvas.
 	self updateRenderFromSelf
 ]

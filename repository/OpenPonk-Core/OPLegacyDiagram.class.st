@@ -16,9 +16,9 @@ Class {
 		'model',
 		'commonElements'
 	],
-	#category : 'OpenPonk-Core-Diagrams',
+	#category : 'OpenPonk-Core-LegacySupport-Diagrams',
 	#package : 'OpenPonk-Core',
-	#tag : 'Diagrams'
+	#tag : 'LegacySupport-Diagrams'
 }
 
 { #category : 'instance creation' }
@@ -229,6 +229,12 @@ OPLegacyDiagram >> commonElements [
 { #category : 'accessing' }
 OPLegacyDiagram >> commonElements: anObject [
 	commonElements := anObject
+]
+
+{ #category : 'comparing' }
+OPLegacyDiagram >> hash [
+
+	^ self asJson hash
 ]
 
 { #category : 'initialization' }

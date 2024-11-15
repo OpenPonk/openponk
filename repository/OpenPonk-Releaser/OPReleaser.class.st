@@ -18,13 +18,50 @@ Class {
 	#package : 'OpenPonk-Releaser'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'constants' }
+OPReleaser class >> allRepositories [
+
+	^ #( 
+		'synchronized-links' 
+		'openponk-model' 
+		'uml-metamodel'
+		'xml-dom-visitor' 
+		'xmi' 'uml-xmi' 
+		'uml-bootstrap-generator'
+		'uml-profiles' 
+		'ontouml-profile' 
+		'ontouml-modelquery'
+		'ontouml-verifications' 
+		'ontouml-patterns' 
+		'openponk-ontouml-to-uml-transformation'
+		'openponk-git' 
+		'openponk' 
+		'borm-model' 
+		'borm-editor'
+		'markov-chains' 
+		'petrinets' 
+		'BPMN' 
+		'fsm-editor' 
+		'class-editor'
+		'plugins'
+	)
+]
+
+{ #category : 'constants' }
 OPReleaser class >> defaultBranch [
 
 	^ 'master'
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
+OPReleaser class >> releaseAllRepositoriesAsVersion: anArrayOfNumbers [
+
+	self
+		releaseRepositories: self allRepositories
+		asVersion: anArrayOfNumbers
+]
+
+{ #category : 'actions' }
 OPReleaser class >> releaseRepositories: aCollectionOfString asVersion: anArrayOfNumbers [
 
 	[
@@ -37,7 +74,7 @@ OPReleaser class >> releaseRepositories: aCollectionOfString asVersion: anArrayO
 		named: 'OPReleaser'
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPReleaser class >> releaseRepository: aName asVersion: anArrayOfNumbers [
 
 	self
@@ -46,7 +83,7 @@ OPReleaser class >> releaseRepository: aName asVersion: anArrayOfNumbers [
 		asVersion: anArrayOfNumbers
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPReleaser class >> releaseRepository: aName branch: aString asVersion: anArrayOfNumbers [
 
 	[

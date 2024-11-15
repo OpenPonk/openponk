@@ -54,6 +54,14 @@ OPDirectionalRelationshipController >> edgeBuilder [
 		'Depracated without replacement - use Roassal directly or define own figures'
 ]
 
+{ #category : 'construction' }
+OPDirectionalRelationshipController >> ensureShownDependenciesInDiagram: aDiagramController [
+
+	self ensureSourceIn: aDiagramController.
+	self ensureTargetIn: aDiagramController.
+	^ super ensureShownDependenciesInDiagram: aDiagramController
+]
+
 { #category : 'accessing' }
 OPDirectionalRelationshipController >> ensureSourceIn: aDiagramController [
 
@@ -115,14 +123,6 @@ OPDirectionalRelationshipController >> renderSimplified [
 
 	self diagramElement:
 		(self diagramElementClass renderSimplifiedForController: self)
-]
-
-{ #category : 'construction' }
-OPDirectionalRelationshipController >> showWithoutDependentInDiagram: aDiagramController [
-
-	self ensureSourceIn: aDiagramController.
-	self ensureTargetIn: aDiagramController.
-	^ super showWithoutDependentInDiagram: aDiagramController
 ]
 
 { #category : 'accessing' }

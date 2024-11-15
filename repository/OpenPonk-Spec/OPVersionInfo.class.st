@@ -29,13 +29,18 @@ OPVersionInfo class >> defaultLayout [
 
 { #category : 'initialization' }
 OPVersionInfo >> connectPresenters [
+
 	(version needsDownloadInfo and: [ version canDownloadInfo ])
-		ifTrue: [ [ version downloadInfo.
-			[ self refreshInfo ]
-				on: ZnHttpUnsuccessful
-				do: [ self setFailedInfo ] ]
-				forkAt: Processor userBackgroundPriority
-				named: 'Loading OpenPonk version info from GitHub' ]
+		ifFalse: [ ^ self ].
+
+	self whenBuiltDo: [
+		[
+		version downloadInfo.
+		[ self refreshInfo ]
+			on: ZnHttpUnsuccessful
+			do: [ self setFailedInfo ] ]
+			forkAt: Processor userBackgroundPriority
+			named: 'Loading OpenPonk version info from GitHub' ]
 ]
 
 { #category : 'initialization' }

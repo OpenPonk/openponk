@@ -13,8 +13,9 @@ OPProjectOpenCommand class >> toolbarMenuActivation [
 ]
 
 { #category : 'accessing' }
-OPProjectOpenCommand >> defaultMenuIcon [
-	^ self iconNamed: #smallOpen
+OPProjectOpenCommand >> defaultMenuIconName [
+
+	^ #smallOpen
 ]
 
 { #category : 'accessing' }

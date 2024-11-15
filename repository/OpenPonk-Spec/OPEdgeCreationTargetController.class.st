@@ -5,8 +5,9 @@ Class {
 		'edgeController',
 		'diagramElement'
 	],
-	#category : 'OpenPonk-Spec',
-	#package : 'OpenPonk-Spec'
+	#category : 'OpenPonk-Spec-Palettes',
+	#package : 'OpenPonk-Spec',
+	#tag : 'Palettes'
 }
 
 { #category : 'rendering' }

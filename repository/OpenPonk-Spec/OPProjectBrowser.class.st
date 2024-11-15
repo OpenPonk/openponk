@@ -170,7 +170,7 @@ OPProjectBrowser >> openProject: project [
 
 	project saveInImage.
 	project open.
-	self delete
+	self withWindowDo: [ :window | window close ]
 ]
 
 { #category : 'accessing - spec' }

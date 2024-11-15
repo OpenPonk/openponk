@@ -14,9 +14,17 @@ OPTColoredAsFont >> color [
 ]
 
 { #category : 'accessing' }
+OPTColoredAsFont >> defaultFontColor [
+
+	^ Color black
+]
+
+{ #category : 'accessing' }
 OPTColoredAsFont >> fontColor [
 
-	^ self stylePropertyNamed: #fontColor ifAbsent: [ Color black ]
+	^ self
+		  stylePropertyNamed: #fontColor
+		  ifAbsent: [ self defaultFontColor ]
 ]
 
 { #category : 'accessing' }

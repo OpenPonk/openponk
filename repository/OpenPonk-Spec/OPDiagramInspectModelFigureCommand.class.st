@@ -13,18 +13,19 @@ OPDiagramInspectModelFigureCommand class >> canvasShortcutActivation [
 ]
 
 { #category : 'accessing' }
-OPDiagramInspectModelFigureCommand >> defaultMenuIcon [
+OPDiagramInspectModelFigureCommand >> defaultMenuIconName [
 
-	^ self iconNamed: #glamorousInspect
+	^  #glamorousInspect
 ]
 
-{ #category : 'execution' }
+{ #category : 'accessing' }
 OPDiagramInspectModelFigureCommand >> defaultMenuItemName [
 
 	| basicName |
 	basicName := 'Inspect model'.
 	models ifNil: [ ^ basicName ].
-	^ models size pluralize: basicName
+	models size = 1 ifTrue: [ ^ basicName ].
+	^ GRInflector pluralize: basicName
 ]
 
 { #category : 'execution' }

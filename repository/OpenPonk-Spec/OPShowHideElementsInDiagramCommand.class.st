@@ -11,12 +11,13 @@ OPShowHideElementsInDiagramCommand class >> canBeExecutedInContext: aToolContext
 	^ aToolContext editor plugin supportsHidingElements
 ]
 
-{ #category : 'execution' }
-OPShowHideElementsInDiagramCommand >> defaultMenuIcon [
-	^ OPIdeaActionsIcons propertiesIcon
+{ #category : 'accessing' }
+OPShowHideElementsInDiagramCommand >> defaultMenuIconFormSet [
+
+	^ FormSet form: OPIdeaActionsIcons propertiesIcon
 ]
 
-{ #category : 'execution' }
+{ #category : 'accessing' }
 OPShowHideElementsInDiagramCommand >> defaultMenuItemName [
 	^ 'Show/Hide Elements'
 ]

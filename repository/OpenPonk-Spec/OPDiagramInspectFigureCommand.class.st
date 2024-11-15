@@ -7,9 +7,9 @@ Class {
 }
 
 { #category : 'accessing' }
-OPDiagramInspectFigureCommand >> defaultMenuIcon [
+OPDiagramInspectFigureCommand >> defaultMenuIconName [
 
-	^ self iconNamed: #glamorousInspect
+	^ #glamorousInspect
 ]
 
 { #category : 'accessing' }
@@ -18,7 +18,8 @@ OPDiagramInspectFigureCommand >> defaultMenuItemName [
 	| basicName |
 	basicName := 'Inspect figure'.
 	figures ifNil: [ ^ basicName ].
-	^ figures size pluralize: basicName
+	figures size = 1 ifTrue: [ ^ basicName ].
+	^ GRInflector pluralize: basicName
 ]
 
 { #category : 'execution' }

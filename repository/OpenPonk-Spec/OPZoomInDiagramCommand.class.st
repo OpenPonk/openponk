@@ -15,9 +15,10 @@ OPZoomInDiagramCommand class >> toolbarMenuActivation [
 		for: OPCanvasPresenter
 ]
 
-{ #category : 'execution' }
-OPZoomInDiagramCommand >> defaultMenuIcon [
-	^ OPIdeaGraphIcons zoomInIcon
+{ #category : 'accessing' }
+OPZoomInDiagramCommand >> defaultMenuIconFormSet [
+
+	^ FormSet form: OPIdeaGraphIcons zoomInIcon
 ]
 
 { #category : 'accessing' }

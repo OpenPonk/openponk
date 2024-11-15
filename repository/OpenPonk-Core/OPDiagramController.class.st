@@ -86,7 +86,7 @@ OPDiagramController >> addMouseEventsFor: aFigure [
 OPDiagramController >> allShowableElements [
 	"all elements that could be directly hidden on diagram"
 
-	^ (Set with: model) , self elementsToShowInside
+	^ (Set with: self model) , self elementsToShowInside
 ]
 
 { #category : 'as yet unclassified' }
@@ -196,21 +196,21 @@ OPDiagramController >> controllerFactory [
 { #category : 'controllers management' }
 OPDiagramController >> controllerForModel: aModel [
 
-	aModel = model ifTrue: [ ^ self ].
+	aModel = self model ifTrue: [ ^ self ].
 	^ self cachedControllerForModel: aModel
 ]
 
 { #category : 'controllers management' }
 OPDiagramController >> controllerForModel: aModel ifFound: aFoundBlock [
 
-	aModel = model ifTrue: [ ^ aFoundBlock value: self ].
+	aModel = self model ifTrue: [ ^ aFoundBlock value: self ].
 	^ self cachedControllerForModel: aModel ifFound: aFoundBlock
 ]
 
 { #category : 'controllers management' }
 OPDiagramController >> controllerForModel: aModel ifFound: aFoundBlock ifNone: aNoneBlock [
 
-	aModel = model ifTrue: [ ^ aFoundBlock value: self ].
+	aModel = self model ifTrue: [ ^ aFoundBlock value: self ].
 	^ self
 		  cachedControllerForModel: aModel
 		  ifFound: aFoundBlock
@@ -220,7 +220,7 @@ OPDiagramController >> controllerForModel: aModel ifFound: aFoundBlock ifNone: a
 { #category : 'controllers management' }
 OPDiagramController >> controllerForModel: aModel ifNone: aFoundBlock [
 
-	aModel = model ifTrue: [ ^ self ].
+	aModel = self model ifTrue: [ ^ self ].
 	^ self cachedControllerForModel: aModel ifNone: aFoundBlock
 ]
 
@@ -310,10 +310,10 @@ OPDiagramController >> diagramFocused [
 
 	self isRendered ifTrue: [ ^ self updateAfterDiagramFocused ].
 
-	diagramElement canvas: self canvas.
-	diagramElement ownedElements do: [ :each |
+	self diagramElement canvas: self canvas.
+	self diagramElement ownedElements do: [ :each |
 		self showDiagramElement: each ].
-	diagramElement updateRenderFromSelf
+	self diagramElement updateRenderFromSelf
 ]
 
 { #category : 'userinterface' }
@@ -397,9 +397,10 @@ OPDiagramController >> hasControllerForFigure: aFigure [
 
 { #category : 'controllers management' }
 OPDiagramController >> hasControllerForModel: aModel [
-	^ aModel = model
-		or: [ self cachedControllerForModel: aModel ifNone: [ ^ false ].
-			true ]
+
+	^ aModel = self model or: [
+		  self cachedControllerForModel: aModel ifNone: [ ^ false ].
+		  true ]
 ]
 
 { #category : 'testing' }
@@ -766,7 +767,7 @@ OPDiagramController >> typeOfModel: aModel [
 	^ OPModelObjectType
 		named:
 			((aModel className withoutPrefix: self commonModelClassPrefix)
-				splitOnCapitals joinUsing: ' ')
+				splitCamelCase joinUsing: ' ')
 ]
 
 { #category : 'undo/redo' }

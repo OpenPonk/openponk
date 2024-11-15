@@ -71,22 +71,20 @@ OPNodeBounds >> origin: aPoint [
 
 { #category : 'accessing' }
 OPNodeBounds >> position [
-
 	"center point"
 
-	^ self origin + (self extent / 2)
+	^ self origin + (self extent / 2) rounded
 ]
 
 { #category : 'accessing' }
 OPNodeBounds >> position: aPoint [
-
 	"center point"
 
 	self
 		assert: self extent isNotNil
 		description:
 		'Extent (width and height) must be set before setting position (origin x and y)'.
-	self origin: aPoint - (self extent / 2)
+	self origin: aPoint - (self extent / 2) rounded
 ]
 
 { #category : 'accessing' }

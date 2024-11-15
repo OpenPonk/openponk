@@ -25,7 +25,8 @@ OPTestDiagramController >> controllerFactory [
 
 { #category : 'accessing' }
 OPTestDiagramController >> elementsToShowInside [
-	^ model entities
+
+	^ self model entities
 ]
 
 { #category : 'destruction' }

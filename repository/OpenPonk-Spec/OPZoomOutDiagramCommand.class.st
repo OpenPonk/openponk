@@ -15,9 +15,10 @@ OPZoomOutDiagramCommand class >> toolbarMenuActivation [
 		for: OPCanvasPresenter
 ]
 
-{ #category : 'execution' }
-OPZoomOutDiagramCommand >> defaultMenuIcon [
-	^ OPIdeaGraphIcons zoomOutIcon
+{ #category : 'accessing' }
+OPZoomOutDiagramCommand >> defaultMenuIconFormSet [
+
+	^ FormSet form: OPIdeaGraphIcons zoomOutIcon
 ]
 
 { #category : 'accessing' }

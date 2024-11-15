@@ -131,6 +131,12 @@ OPElementController >> isCommon [
 	^ false
 ]
 
+{ #category : 'testing' }
+OPElementController >> isHideable [
+
+	^ true
+]
+
 { #category : 'deprecated' }
 OPElementController >> loadModel [
 	self deprecated: 'Method will be removed without replacement.'
@@ -195,7 +201,7 @@ OPElementController >> removeDiagramElement [
 
 	self diagramElement remove.
 	self unhookDiagramElement.
-	self diagramElement: OPNoShape new
+	self diagramElement: nil
 ]
 
 { #category : 'destruction' }

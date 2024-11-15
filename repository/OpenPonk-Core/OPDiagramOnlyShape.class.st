@@ -1,8 +1,6 @@
 Class {
 	#name : 'OPDiagramOnlyShape',
 	#superclass : 'OPBoundNode',
-	#traits : 'OPTBorderColoredAsStroke - {#updateRenderFromStyles}',
-	#classTraits : 'OPTBorderColoredAsStroke classTrait',
 	#instVars : [
 		'uuid',
 		'announcer'
@@ -65,12 +63,6 @@ OPDiagramOnlyShape >> modelElements: aCollection [
 
 	(aCollection noneSatisfy: [ :any | any ~= self ]) ifTrue: [ ^ self ].
 	self shouldNotImplement
-]
-
-{ #category : 'accessing' }
-OPDiagramOnlyShape >> strokeColor: aColor [
-
-	"ignore for now"
 ]
 
 { #category : 'rendering' }

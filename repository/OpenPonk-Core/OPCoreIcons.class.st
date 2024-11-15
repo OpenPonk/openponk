@@ -1131,6 +1131,30 @@ LkyAhQTNdxgYGJ7gixFCQGc0NWMHAKweDmH+UsOrAAAAAElFTkSuQmCC'
 ]
 
 { #category : 'as yet unclassified' }
+OPCoreIcons class >> opHideLabelsIcon [
+
+	^ Form fromBinaryStream: self opHideLabelsIconContents base64Decoded asByteArray readStream
+]
+
+{ #category : 'as yet unclassified' }
+OPCoreIcons class >> opHideLabelsIconContents [
+
+	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAiUlEQVQoz33RMQrCQBAF0GeiNxAC5gIK2niA2OSQHsbSRhCxECwtBCUoCForFqIB2d1fDcxjdpnJtZm7OfpL9qt6pi7EwcTTOQVqO484yFQWEilsFaHGd0KpCX2xBSNrrxSoLMNvf0Bu7JACQ12nFKjt3eOgY5beQd9GGWtmKF1DV2jBwCq8A3gD71EYmTfN21wAAAAASUVORK5CYII='
+]
+
+{ #category : 'as yet unclassified' }
+OPCoreIcons class >> opHideSomeLabelsIcon [
+
+	^ Form fromBinaryStream: self opHideSomeLabelsIconContents base64Decoded asByteArray readStream
+]
+
+{ #category : 'as yet unclassified' }
+OPCoreIcons class >> opHideSomeLabelsIconContents [
+
+	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAmklEQVQoz33QPQrCQBCG4XfzA/YWAdOkNKCNB0iatLmfB7EUbGyEFCkESwXBIAkIpkhlsBBdkJ35qmX2YWYYH5s1D678xfu9Qla0IIMlLxoNFBzpZeCRsUVJRE3k+vh2iLm7VrQgpWLUQMbePfsDfBacNTAn4KaBghNPGRhy+QYBMCVhl0z6wZZN2W0siOloLiNGGjHj4L4BwBuZxB5zJOJJxAAAAABJRU5ErkJggg=='
+]
+
+{ #category : 'as yet unclassified' }
 OPCoreIcons class >> opMcDiagramIcon [
 
 	^ Form fromBinaryStream: self opMcDiagramIconContents base64Decoded asByteArray readStream
@@ -1191,6 +1215,18 @@ iSay6AMIgkCSJKFSqfRZr9cFOOmO3+9fSSaTVbjQPeSOAQpQ9fWnA1EULZlMBqVSqetWq9Xs
 9XqI47hVt9u9B+U+0ATegHf9nBo+n+/SbrdfgM0A6yzLPiog6EiB33kEHmb4lTudzokgCOdg
 PAEf7Xb7qtFooEAggBiGOQbv36xNa8wQkUgkXhVQOp0WwWABYroDY42LxSLv9XofarXaMxhr
 v/dmQSaCxb50u11+8hs/gG99/Qf21bg5RlgkZQAAAABJRU5ErkJggg=='
+]
+
+{ #category : 'as yet unclassified' }
+OPCoreIcons class >> opShowLabelsIcon [
+
+	^ Form fromBinaryStream: self opShowLabelsIconContents base64Decoded asByteArray readStream
+]
+
+{ #category : 'as yet unclassified' }
+OPCoreIcons class >> opShowLabelsIconContents [
+
+	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAn0lEQVQoz32QsQqCYBSFv1//oL1ByMWxoBYfwBbX3q8HaQxaWoKGhqBRIVAiIcihKWmIvKDX/0wHzsc9l+Mj2vDkRkde60bEPOjJtm7JhzIa128JzbraCpByoc7B6BUeCTscCjgTaMH/Qshde1GAOScaF5Bw0Lt/gM+CzAXMsBQuIOXKaxgwrIY3sMCEiH1/ZAFCKsq86Y4sFVOO+gYAX+T1I1hMBdlaAAAAAElFTkSuQmCC'
 ]
 
 { #category : 'accessing - icons' }

@@ -1,6 +1,8 @@
 Class {
 	#name : 'OPBoundary',
 	#superclass : 'OPDiagramOnlyShapeWithText',
+	#traits : 'OPTColoredAsFillAndBorderColoredAsStroke',
+	#classTraits : 'OPTColoredAsFillAndBorderColoredAsStroke classTrait',
 	#instVars : [
 		'name'
 	],
@@ -25,8 +27,20 @@ OPBoundary >> addSelectionDraggableInteraction [
 ]
 
 { #category : 'accessing' }
+OPBoundary >> defaultFillColor [
+
+	^ Color transparent
+]
+
+{ #category : 'accessing' }
 OPBoundary >> defaultHeight [
 	^ 400
+]
+
+{ #category : 'accessing' }
+OPBoundary >> defaultStrokeColor [
+
+	^ Color gray slightlyDarker
 ]
 
 { #category : 'accessing' }
@@ -64,21 +78,17 @@ OPBoundary >> printOn: aStream [
 		nextPutAll: ''')'
 ]
 
-{ #category : 'creating - subelements' }
+{ #category : 'rendering' }
 OPBoundary >> renderBasicShape [
 
 	^ RSBox new
-		  color: Color transparent;
 		  width: self defaultWidth;
 		  height: self defaultHeight;
-		  borderDo: [ :border | 
-			  border
-				  color: Color gray;
-				  dashArray: #( 4 ) ];
+		  borderDo: [ :border | border dashArray: #( 4 ) ];
 		  yourself
 ]
 
-{ #category : 'creating - subelements' }
+{ #category : 'interactions' }
 OPBoundary >> selectableInteraction [
 
 	^ OPRSSelectable

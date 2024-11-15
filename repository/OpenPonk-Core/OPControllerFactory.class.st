@@ -1,71 +1,36 @@
-"
-I create new controllers for models.
-
-Controllers are registered for models and optionally with a condition further clarifying the nature of the model required for the controller.
-"
 Class {
 	#name : 'OPControllerFactory',
-	#superclass : 'Object',
-	#instVars : [
-		'registrations'
-	],
+	#superclass : 'OPModelHandlerFactory',
 	#category : 'OpenPonk-Core-Controllers',
 	#package : 'OpenPonk-Core',
 	#tag : 'Controllers'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 OPControllerFactory class >> withCommonElements [
 	^ self new registerCommonElements
 ]
 
-{ #category : 'accessing - defaults' }
-OPControllerFactory >> acceptAllCondition [
-	^ [ :aModel | true ]
+{ #category : 'hooks' }
+OPControllerFactory >> handlerKindName [
+
+	^ 'controller'
 ]
 
 { #category : 'api - testing' }
 OPControllerFactory >> hasControllerFor: aModel [
-	^ registrations anySatisfy: [ :each | each isForModel: aModel ]
-]
 
-{ #category : 'initialization' }
-OPControllerFactory >> initialize [
-	super initialize.
-	registrations := OrderedCollection new
+	^ self hasHandlerFor: aModel
 ]
 
 { #category : 'api - accessing' }
 OPControllerFactory >> newControllerFor: aModel [
-	| controller |
-	controller := (registrations detect: [ :each | each isForModel: aModel ]) controllerClass
-		new.
-	controller model: aModel.
-	^ controller
+
+	^ self newHandlerFor: aModel
 ]
 
-{ #category : 'api - registration' }
-OPControllerFactory >> register: aControllerClass forModel: aModelClass [
-	self register: aControllerClass forModel: aModelClass condition: self acceptAllCondition
-]
-
-{ #category : 'api - registration' }
-OPControllerFactory >> register: aControllerClass forModel: aModelClass condition: aConditionBlock [
-	registrations
-		add:
-			(self registrationClass new
-				controllerClass: aControllerClass;
-				modelClass: aModelClass;
-				condition: aConditionBlock)
-]
-
-{ #category : 'as yet unclassified' }
+{ #category : 'hooks' }
 OPControllerFactory >> registerCommonElements [
 	OPCommonElementController
 		allSubclassesDo: [ :each | self register: each forModel: each modelClass ]
-]
-
-{ #category : 'accessing - defaults' }
-OPControllerFactory >> registrationClass [
-	^ OPControllerFactoryRegistration
 ]

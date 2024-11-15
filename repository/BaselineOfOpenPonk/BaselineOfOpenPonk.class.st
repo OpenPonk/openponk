@@ -25,7 +25,7 @@ BaselineOfOpenPonk >> baseline: spec [
 			package: 'OpenPonk-Morphic';
 			package: 'OpenPonk-Spec' with: [
 				spec requires:
-						#( 'NewTools' 'Magritte' 'SynchronizedLinks' 'OpenPonk-Morphic' ) ];
+						#( 'NewTools' 'Magritte' 'OpenPonkSynchronizedLinks' 'OpenPonk-Morphic' ) ];
 			package: 'OpenPonk-Releaser'.
 		spec
 			group: 'default'
@@ -43,7 +43,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 
 	spec baseline: 'Magritte' with: [
 		spec
-			repository: 'github://JanBliznicenko/magritte:master';
+			repository: 'github://JanBliznicenko/magritte:6d92c9d';
 			loads: #( Core 'Magritte-Morph' ) ].
 
 	spec
@@ -63,20 +63,20 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 	spec
 		baseline: 'RoassalExporters'
 		with: [
-		spec repository: 'github://pharo-graphics/RoassalExporters:v1.02' ]
+		spec repository: 'github://pharo-graphics/RoassalExporters:v1.02' ].
+
+	spec baseline: 'NewTools' with: [
+		spec
+			repository: 'github://pharo-spec/NewTools:Pharo12';
+			loads: #( FileBrowser ) ]
 ]
 
 { #category : 'baselines' }
 BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 
-	spec baseline: 'NewTools' with: [ 
-		spec
-			repository: 'github://pharo-spec/NewTools:Pharo12';
-			loads: #( FileBrowser ) ].
 	spec
-		baseline: 'SynchronizedLinks'
-		with: [ 
-		spec repository: 'github://openponk/synchronized-links:v4.0.x' ]
+		baseline: 'OpenPonkSynchronizedLinks'
+		with: [ spec repository: 'github://openponk/synchronized-links:v4.1.x' ]
 ]
 
 { #category : 'baselines' }

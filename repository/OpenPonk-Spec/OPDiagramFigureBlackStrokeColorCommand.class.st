@@ -7,13 +7,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-OPDiagramFigureBlackStrokeColorCommand >> color [
+OPDiagramFigureBlackStrokeColorCommand class >> color [
 
 	^ Color black
-]
-
-{ #category : 'as yet unclassified' }
-OPDiagramFigureBlackStrokeColorCommand >> defaultMenuItemName [
-
-	^ 'Black'
 ]

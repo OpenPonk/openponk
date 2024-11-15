@@ -7,13 +7,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-OPDiagramFigureMagentaStrokeColorCommand >> color [
+OPDiagramFigureMagentaStrokeColorCommand class >> color [
 
 	^ Color magenta
-]
-
-{ #category : 'as yet unclassified' }
-OPDiagramFigureMagentaStrokeColorCommand >> defaultMenuItemName [
-
-	^ 'Magenta'
 ]

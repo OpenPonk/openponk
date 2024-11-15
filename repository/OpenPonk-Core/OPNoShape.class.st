@@ -1,15 +1,43 @@
 Class {
 	#name : 'OPNoShape',
-	#superclass : 'Object',
+	#superclass : 'UndefinedObject',
+	#classInstVars : [
+		'instance'
+	],
 	#category : 'OpenPonk-Core-DiagramElements',
 	#package : 'OpenPonk-Core',
 	#tag : 'DiagramElements'
 }
 
+{ #category : 'accessing' }
+OPNoShape class >> instance [
+
+	^ instance ifNil: [ instance := self basicNew ]
+]
+
+{ #category : 'instance creation' }
+OPNoShape class >> new [
+
+	^ self instance
+]
+
+{ #category : 'initialization' }
+OPNoShape class >> reset [
+
+	<script>
+	instance := nil
+]
+
 { #category : 'testing' }
 OPNoShape >> doesNotExist [
 
 	^ true
+]
+
+{ #category : 'conditions' }
+OPNoShape >> exists [
+
+	^ false
 ]
 
 { #category : 'conditions' }
@@ -46,6 +74,20 @@ OPNoShape >> modelChanged [
 OPNoShape >> modelElement [
 
 	^ nil
+]
+
+{ #category : 'initialization' }
+OPNoShape >> ownedElement: anOPPetriNetPTPlaceShape renderedIn: aRSCanvas [
+	"do nothing"
+
+	
+]
+
+{ #category : 'initialization' }
+OPNoShape >> ownedElement: anOPPetriNetPTPlaceShape willRenderIn: aRSCanvas [
+	"do nothing"
+
+	
 ]
 
 { #category : 'accessing' }

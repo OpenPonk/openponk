@@ -30,7 +30,7 @@ OPFigureColorMenuGroup class >> generateColorCommands [
 	self colors do: [ :each |
 		| colorName niceColorName className class |
 		colorName := each name.
-		niceColorName := each name capitalized splitOnCapitals last.
+		niceColorName := each name capitalized splitCamelCase last.
 		className := ('OPDiagramFigure' , niceColorName , niceAttributeName
 		              , 'Command') asSymbol.
 

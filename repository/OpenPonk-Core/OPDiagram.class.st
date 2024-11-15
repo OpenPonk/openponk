@@ -19,7 +19,7 @@ OPDiagram class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #name #documentation #resolution )
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPDiagram >> canvas: aCanvas [
 
 	self isRendered ifTrue: [
@@ -27,9 +27,9 @@ OPDiagram >> canvas: aCanvas [
 			assert: roassalShape canvas = aCanvas
 			description:
 			'Reusing same diagram element for 2 canvases not allowed'.
-		^ false ].
+		^ self ].
 	roassalShape := aCanvas.
-	^ true
+	self updateRenderFromSelf
 ]
 
 { #category : 'accessing' }
@@ -44,7 +44,7 @@ OPDiagram >> documentation: anObject [
 	documentation := anObject
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'testing' }
 OPDiagram >> isPositionableByUser [
 
 	^ false
@@ -56,13 +56,13 @@ OPDiagram >> isRendered [
 	^ roassalShape isNotNil
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'testing' }
 OPDiagram >> isResizableByUser [
 
 	^ false
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPDiagram >> modelElementName [
 
 	^ (self modelElement respondsTo: #name)
@@ -70,7 +70,7 @@ OPDiagram >> modelElementName [
 		  ifFalse: [ self modelElementType ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPDiagram >> modelElementType [
 
 	^ self modelElement className
@@ -89,10 +89,9 @@ OPDiagram >> name: anObject [
 ]
 
 { #category : 'as yet unclassified' }
-OPDiagram >> ownedElement: aShape renderedIn: aCanvas [
+OPDiagram >> ownedElement: aShape willRenderIn: aCanvas [
 
-	(self canvas: aCanvas) ifFalse: [ ^ self ].
-	self updateRenderFromSelf
+	self canvas: aCanvas
 ]
 
 { #category : 'rendering' }
@@ -131,7 +130,7 @@ OPDiagram >> resolution: anObject [
 	resolution := anObject
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'rendering' }
 OPDiagram >> updateFromRender [
 
 	self bounds: (OPNodeBounds

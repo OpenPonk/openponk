@@ -12,10 +12,10 @@ OPRedoDiagramCommand class >> toolbarMenuActivation [
 	^ OPDiagramToolbarActivation byRootGroupItemOrder: 11 for: OPCanvasModel"
 ]
 
-{ #category : 'execution' }
-OPRedoDiagramCommand >> defaultMenuIcon [
+{ #category : 'accessing' }
+OPRedoDiagramCommand >> defaultMenuIconName [
 
-	^ self iconNamed: #smallRedo
+	^ #smallRedo
 ]
 
 { #category : 'accessing' }

@@ -1,6 +1,8 @@
 Class {
 	#name : 'OPNote',
 	#superclass : 'OPDiagramOnlyShapeWithText',
+	#traits : 'OPTColoredAsFillAndBorderColoredAsStroke',
+	#classTraits : 'OPTColoredAsFillAndBorderColoredAsStroke classTrait',
 	#instVars : [
 		'text',
 		'topLeftBox',
@@ -12,7 +14,8 @@ Class {
 		'middleBottomBox',
 		'leftFillBox',
 		'bottomFillBox',
-		'triangle'
+		'triangle',
+		'lines'
 	],
 	#category : 'OpenPonk-Core-CommonElements',
 	#package : 'OpenPonk-Core',
@@ -27,16 +30,36 @@ OPNote class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #text )
 ]
 
+{ #category : 'accessing' }
+OPNote >> attachedElementShapes [
+
+	^ {
+		  topLeftBox.
+		  upperTopRightBox.
+		  lowerTopRightBox.
+		  bottomLeftBox.
+		  bottomRightBox.
+		  middleLeftBox.
+		  middleBottomBox.
+		  leftFillBox.
+		  bottomFillBox.
+		  triangle }
+]
+
+{ #category : 'accessing' }
+OPNote >> attachedShapes [
+
+	^ super attachedShapes , self attachedElementShapes , lines
+]
+
 { #category : 'creating - subelements' }
 OPNote >> createOwnedBorderLines [
 
-	| lineShape innerLineShape lines |
+	| lineShape innerLineShape |
 	lineShape := RSLine new
-		             color: Color darkGray;
 		             width: 1;
 		             yourself.
 	innerLineShape := RSLine new
-		                  color: Color gray;
 		                  width: 1;
 		                  yourself.
 	lines := {
@@ -55,11 +78,7 @@ OPNote >> createOwnedBorderLines [
 		         (lineShape copy
 			          from: topLeftBox;
 			          to: upperTopRightBox) } asGroup.
-	roassalShape canvas addAll: lines.
-	roassalShape
-		when: RSShapeRemovedEvent
-		do: [ lines do: #remove ]
-		for: self
+	roassalShape canvas addAll: lines
 ]
 
 { #category : 'creating - subelements' }
@@ -67,15 +86,9 @@ OPNote >> createOwnedCornerTriangle [
 
 	triangle := RSSVGPath new
 		            svgPath: 'M0,0L20,0L0,-20Z';
-		            color: Color lightYellow darker;
-		            borderColor: Color lightGray;
 		            model: self;
 		            yourself.
-	self canvas add: triangle.
-	roassalShape
-		when: RSShapeRemovedEvent
-		do: [ triangle remove ]
-		for: self
+	self canvas add: triangle
 ]
 
 { #category : 'creating - subelements' }
@@ -83,21 +96,13 @@ OPNote >> createOwnedFillBoxes [
 
 	| fillBoxShape |
 	fillBoxShape := RSBox new
-		                color: Color lightYellow;
 		                borderColor: Color transparent;
 		                yourself.
 	leftFillBox := fillBoxShape model: #left.
 	bottomFillBox := fillBoxShape copy model: #bottom.
 	self canvas
 		add: leftFillBox;
-		add: bottomFillBox.
-
-	roassalShape
-		when: RSShapeRemovedEvent
-		do: [
-			leftFillBox remove.
-			bottomFillBox remove ]
-		for: self
+		add: bottomFillBox
 ]
 
 { #category : 'creating - subelements' }
@@ -105,7 +110,6 @@ OPNote >> createOwnedInvisibleBoxes [
 
 	| invisibleBoxShape invisibleBoxes |
 	invisibleBoxShape := RSBox new
-		                     color: Color transparent;
 		                     borderColor: Color transparent;
 		                     width: 1;
 		                     height: 1;
@@ -125,11 +129,13 @@ OPNote >> createOwnedInvisibleBoxes [
 			                                    #middleLeft).
 		                  (middleBottomBox := invisibleBoxShape copy model:
 			                                      #middleBottom) } asGroup.
-	self canvas addAll: invisibleBoxes.
-	roassalShape
-		when: RSShapeRemovedEvent
-		do: [ invisibleBoxes do: #remove ]
-		for: self
+	self canvas addAll: invisibleBoxes
+]
+
+{ #category : 'accessing' }
+OPNote >> defaultFillColor [
+
+	^ OPDiagramFigureYellowFillColorCommand new color
 ]
 
 { #category : 'initialization' }
@@ -174,10 +180,11 @@ OPNote >> removeRender [
 	middleBottomBox := nil.
 	leftFillBox := nil.
 	bottomFillBox := nil.
-	triangle := nil
+	triangle := nil.
+	lines removeAll.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'rendering' }
 OPNote >> renderBasicShape [
 
 	^ RSBox new
@@ -235,7 +242,7 @@ OPNote >> text: aString [
 	text := aString
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'rendering' }
 OPNote >> updateOwnedElements [
 
 	bottomRightBox translateTo:
@@ -259,4 +266,19 @@ OPNote >> updateOwnedElements [
 	bottomFillBox
 		extent: roassalShape extent + (0 @ -20);
 		translateTo: roassalShape position + (0 @ 10)
+]
+
+{ #category : 'initialization' }
+OPNote >> updateRoassalShapeBorderColorFromStyles [
+
+	lines do: [ :each | each color: self borderColor ].
+	triangle borderColor:
+		(self borderColor alphaMixed: 0.35 with: Color white)
+]
+
+{ #category : 'initialization' }
+OPNote >> updateRoassalShapeColorFromStyles [
+
+	self attachedElementShapes do: [ :each | each color: self color ].
+	triangle color: self color slightlyDarker
 ]

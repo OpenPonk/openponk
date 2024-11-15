@@ -83,7 +83,7 @@ OPDirectionalRelationshipController >> modelSource: aModel in: aParentModel [
 	"answers whether model's source has been changed"
 
 	self modelSource = aModel ifTrue: [ ^ false ].
-	model source: aModel.
+	self model source: aModel.
 	^ true
 ]
 
@@ -92,7 +92,7 @@ OPDirectionalRelationshipController >> modelTarget: aModel in: aParentModel [
 	"answers whether model's target has been changed"
 
 	self modelTarget = aModel ifTrue: [ ^ false ].
-	model target: aModel.
+	self model target: aModel.
 	^ true
 ]
 

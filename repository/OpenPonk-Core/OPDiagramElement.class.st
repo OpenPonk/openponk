@@ -139,7 +139,7 @@ OPDiagramElement >> addSelectionDraggableInteraction [
 	roassalShape @ OPRSSelectionDraggable
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'rendering' }
 OPDiagramElement >> addedByMouseClickTo: aPoint [
 
 	"Do nothing by default. The given point is position where user clicked by mouse in order to create the element. If the shape was not added by a mouse click, this method is not called. May be overriden to translate to that position or react in any other way."
@@ -147,17 +147,31 @@ OPDiagramElement >> addedByMouseClickTo: aPoint [
 	
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 OPDiagramElement >> allOwnedShapesPositionableByUser [
 
 	self isRendered ifFalse: [ ^ #(  ) ].
 	^ self ownedElements flatCollect: #allOwnedShapesPositionableByUser
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 OPDiagramElement >> allShapesPositionableByUser [
 
 	^ self topMostOwningElement allOwnedShapesPositionableByUser
+]
+
+{ #category : 'accessing' }
+OPDiagramElement >> attachedShapes [
+
+	^ #(  )
+]
+
+{ #category : 'actions' }
+OPDiagramElement >> attachedShapesDo: aBlock [
+
+	^ self attachedShapes
+		  select: [ :each | each isNotNil and: [ each isInACanvas ] ]
+		  thenDo: aBlock
 ]
 
 { #category : 'accessing' }
@@ -172,6 +186,12 @@ OPDiagramElement >> createOwnedElementsWithoutController [
 	"Might be overriden to add owned diagram elements that have no controller that would create them, for example labels. Make sure these do not exist yet (that could produce them multiple times)"
 
 	
+]
+
+{ #category : 'testing' }
+OPDiagramElement >> exists [
+
+	^ true
 ]
 
 { #category : 'instance creation' }
@@ -210,7 +230,6 @@ OPDiagramElement >> initialize [
 
 	super initialize.
 	modelElements := #(  ).
-	owningElement := OPNoShape new.
 	ownedElements := SRToManyLink
 		                 on: self
 		                 slot: #ownedElements
@@ -237,7 +256,7 @@ OPDiagramElement >> isRendered [
 	^ roassalShape isNotNil and: [ roassalShape isInACanvas ]
 ]
 
-{ #category : 'testing' }
+{ #category : 'conditions' }
 OPDiagramElement >> isRenderedWithOwnedElements [
 
 	^ self isRendered and: [ 
@@ -327,14 +346,19 @@ OPDiagramElement >> ownModelElement [
 
 { #category : 'initialization' }
 OPDiagramElement >> ownedElement: aShape renderedIn: aCanvas [
+	"do nothing"
+
+	
+]
+
+{ #category : 'initialization' }
+OPDiagramElement >> ownedElement: aShape willRenderIn: aCanvas [
 
 	self isRendered ifTrue: [
 		self
 			assert: roassalShape canvas = aCanvas
 			description:
-			'Reusing same diagram element for 2 canvases not allowed'.
-		^ self owningElement ifExists: [ :owner |
-			  owner ownedElement: aShape renderedIn: aCanvas ] ].
+			'Reusing same diagram element for 2 canvases not allowed' ].
 	self renderIn: aCanvas
 ]
 
@@ -354,16 +378,18 @@ OPDiagramElement >> ownedElements: aCollection [
 
 { #category : 'accessing' }
 OPDiagramElement >> owningElement [
-	^ owningElement
+
+	^ owningElement ifNil: [ OPNoShape instance ]
 ]
 
 { #category : 'accessing' }
 OPDiagramElement >> owningElement: aDiagramElement [
 
-	(self modelElements includes: aDiagramElement modelElement) ifTrue: [
-		self modelElements size > 1 ifTrue: [
-			self error: 'Cannot have same modelElement as owningElement has' ].
-		self modelElement: nil ].
+	aDiagramElement ifNotNil: [
+		(self modelElements includes: aDiagramElement modelElement) ifTrue: [
+			self modelElements size > 1 ifTrue: [
+				self error: 'Cannot have same modelElement as owningElement has' ].
+			self modelElement: nil ] ].
 	owningElement := SRToOneLink
 		                 on: self
 		                 slot: #owningElement
@@ -376,6 +402,7 @@ OPDiagramElement >> owningElement: aDiagramElement [
 OPDiagramElement >> pushBack [
 
 	roassalShape ifNil: [ ^ self ].
+	self attachedShapesDo: [ :each | each pushBack ].
 	roassalShape pushBack
 ]
 
@@ -383,7 +410,8 @@ OPDiagramElement >> pushBack [
 OPDiagramElement >> pushFront [
 
 	roassalShape ifNil: [ ^ self ].
-	roassalShape pushFront
+	roassalShape pushFront.
+	self attachedShapesDo: [ :each | each pushFront ]
 ]
 
 { #category : 'removing' }
@@ -392,13 +420,21 @@ OPDiagramElement >> remove [
 	[ self ownedElements isNotEmpty ] whileTrue: [
 		self ownedElements anyOne remove ].
 	self removeRender.
-	self owningElement: OPNoShape new
+	self owningElement: nil
+]
+
+{ #category : 'accessing' }
+OPDiagramElement >> removeLocalStylePropertyNamed: aName [
+
+	self localStyle ifNotNil: [ :style |
+		style removeKeyIfPresent: aName asSymbol ]
 ]
 
 { #category : 'removing' }
 OPDiagramElement >> removeRender [
 
-	self ownedElements do: #removeRender.
+	self ownedElements do: [ :each | each removeRender ].
+	self attachedShapesDo: [ :each | each remove ].
 	roassalShape ifNil: [ ^ self ].
 	roassalShape remove.
 	roassalShape := nil
@@ -430,6 +466,7 @@ OPDiagramElement >> renderBasicShapeIn: aCanvas [
 OPDiagramElement >> renderIn: aCanvas [
 
 	self isRendered ifTrue: [ ^ self ].
+	self owningElement ownedElement: self willRenderIn: aCanvas.
 	self renderBasicShapeIn: aCanvas.
 	self renderShapeDetails.
 	self addInteractions.
@@ -438,8 +475,7 @@ OPDiagramElement >> renderIn: aCanvas [
 	self updateRenderFromModel.
 	self updateRenderFromStyles.
 	self updateRenderFromSelf.
-	self owningElement ifExists: [ :element |
-		element ownedElement: self renderedIn: self canvas ].
+	self owningElement ownedElement: self renderedIn: aCanvas.
 	^ roassalShape
 ]
 
@@ -480,7 +516,7 @@ OPDiagramElement >> roassalShape [
 	^ roassalShape
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'rendering' }
 OPDiagramElement >> roassalShapeUnsubscribe: aSubscriber [
 
 	roassalShape ifNil: [ ^ self ].
@@ -675,7 +711,5 @@ OPDiagramElement >> updateRenderFromSelf [
 { #category : 'initialization' }
 OPDiagramElement >> updateRenderFromStyles [
 
-	"do nothing by default"
-
-	
+	self ownedElements select: #isRendered thenDo: #updateRenderFromStyles
 ]

@@ -284,11 +284,11 @@ OPController >> removeControllerAndModel [
 
 { #category : 'destruction' }
 OPController >> removeDependentConrollersAndModels [
-	self dependentControllers
-		do: [ :each | 
-			self diagramController controllers
-				detect: [ :ctrl | ctrl model = each model ]
-				ifFound: #removeControllerAndModel ]
+
+	self dependentControllers do: [ :each |
+		self diagramController
+			controllerForModel: each model
+			ifFound: [ :found | found removeControllerAndModel ] ]
 ]
 
 { #category : 'destruction' }

@@ -103,6 +103,13 @@ OPNoShape >> readSlotNamed: aName [
 	^ nil
 ]
 
+{ #category : 'initialization' }
+OPNoShape >> recursivelyOwnedElement: aShape renderedIn: aCanvas [
+	"do nothing"
+
+	
+]
+
 { #category : 'removing' }
 OPNoShape >> remove [
 	"do nothing"

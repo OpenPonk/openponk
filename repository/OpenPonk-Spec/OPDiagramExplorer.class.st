@@ -98,7 +98,7 @@ OPDiagramExplorer >> showElement: aModelObject [
 		        aModelObject.
 	diagramController enableRefresh.
 	existingCtrl ifNil: [ ^ self ].
-	ctrl diagramElement modelChanged
+	ctrl modelChanged
 ]
 
 { #category : 'actions' }

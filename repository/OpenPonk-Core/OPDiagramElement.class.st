@@ -346,19 +346,18 @@ OPDiagramElement >> ownModelElement [
 
 { #category : 'initialization' }
 OPDiagramElement >> ownedElement: aShape renderedIn: aCanvas [
-	"do nothing"
 
-	
+	self recursivelyOwnedElement: aShape renderedIn: aCanvas
 ]
 
 { #category : 'initialization' }
 OPDiagramElement >> ownedElement: aShape willRenderIn: aCanvas [
 
 	self isRendered ifTrue: [
-		self
-			assert: roassalShape canvas = aCanvas
-			description:
-			'Reusing same diagram element for 2 canvases not allowed' ].
+		^ self
+			  assert: roassalShape canvas = aCanvas
+			  description:
+			  'Reusing same diagram element for 2 canvases not allowed' ].
 	self renderIn: aCanvas
 ]
 
@@ -412,6 +411,12 @@ OPDiagramElement >> pushFront [
 	roassalShape ifNil: [ ^ self ].
 	roassalShape pushFront.
 	self attachedShapesDo: [ :each | each pushFront ]
+]
+
+{ #category : 'initialization' }
+OPDiagramElement >> recursivelyOwnedElement: aShape renderedIn: aCanvas [
+
+	self owningElement recursivelyOwnedElement: aShape renderedIn: aCanvas
 ]
 
 { #category : 'removing' }

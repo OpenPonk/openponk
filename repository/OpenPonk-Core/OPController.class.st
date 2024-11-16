@@ -85,7 +85,7 @@ OPController >> descriptionName [
 		            read: [ :me | me model name ]
 		            write: [ :me :newValue | 
 			            me model name: newValue.
-			            self diagramElement modelChanged ].
+			            self modelChanged ].
 	^ MAStringDescription new
 		  accessor: accessor;
 		  label: 'Name';
@@ -237,11 +237,11 @@ OPController >> parentWhenTargetFor: aCreatedController [
 OPController >> refreshFigure [
 
 	self
-		deprecated: 'Use #diagramElement modelChanged instead'
+		deprecated: 'Use #modelChanged instead'
 		transformWith: '`@receiver refreshFigure'
-			-> '`@receiver diagramElement modelChanged'.
+			-> '`@receiver modelChanged'.
 
-	^ self diagramElement modelChanged
+	^ self modelChanged
 ]
 
 { #category : 'deprecated' }

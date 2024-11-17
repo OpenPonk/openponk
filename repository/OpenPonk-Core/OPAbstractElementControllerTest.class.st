@@ -213,6 +213,7 @@ OPAbstractElementControllerTest >> testDescriptionName [
 	diagramElement := Mock new.
 	controller model: model.
 	controller diagramElement: diagramElement.
+	controller diagramController: diagramController.
 	controller descriptionName accessor write: 'charlie' to: controller.
 	model should receive name: 'charlie'.
 	self

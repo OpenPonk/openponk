@@ -174,6 +174,12 @@ OPDiagramElement >> attachedShapesDo: aBlock [
 		  thenDo: aBlock
 ]
 
+{ #category : 'serialization' }
+OPDiagramElement >> backupModelElementFor: aModelReference [
+
+	^ nil
+]
+
 { #category : 'accessing' }
 OPDiagramElement >> canvas [
 
@@ -512,7 +518,12 @@ OPDiagramElement >> resolveAllModelElements: aCollection [
 OPDiagramElement >> resolveModelElements: aCollection [
 
 	self modelElements: (self modelElements collect: [ :each |
-			 each modelObjectFrom: aCollection ])
+			 [ each modelObjectFrom: aCollection ]
+				 on: NotFound
+				 do: [ :e |
+					 OPModelInvalid signal:
+						 'Diagram references non-existent model element. Try using Proceed to use placeholder model object'.
+					 self backupModelElementFor: each ] ])
 ]
 
 { #category : 'rendering' }

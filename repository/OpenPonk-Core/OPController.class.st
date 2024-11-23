@@ -94,6 +94,12 @@ OPController >> descriptionName [
 ]
 
 { #category : 'accessing' }
+OPController >> diagram [
+
+	^ self diagramController diagram
+]
+
+{ #category : 'accessing' }
 OPController >> diagramController [
 	^ diagramController
 ]
@@ -120,6 +126,12 @@ OPController >> elementsToShowInside [
 	"model elements that should be shown (rendered) automatically when this one is rendered"
 
 	^ #(  )
+]
+
+{ #category : 'as yet unclassified' }
+OPController >> ensureDeselected [
+
+	self subclassResponsibility
 ]
 
 { #category : 'accessing' }
@@ -258,8 +270,8 @@ OPController >> removeController [
 		self
 			removeDependentControllers;
 			internalUnsubscribeFrom: m ].
-	self removeFromDiagramController.
-	self removeRender
+	self removeRender.
+	self removeFromDiagramController
 ]
 
 { #category : 'destruction' }
@@ -323,7 +335,7 @@ OPController >> removeFigure [
 		deprecated: 'Use #removeDiagramElement instead'
 		transformWith:
 		'`@receiver removeFigure' -> '`@receiver removeDiagramElement'.
-	self diagramController deselectAll.
+	self ensureDeselected.
 	self figure remove
 ]
 
@@ -331,7 +343,7 @@ OPController >> removeFigure [
 OPController >> removeFromDiagramController [
 
 	self diagramController ifNil: [ ^ self ].
-	self diagramController deselectAll.
+	self ensureDeselected.
 	self diagramController removeController: self
 ]
 
@@ -352,7 +364,7 @@ OPController >> removeModelElement: aModelElement [
 { #category : 'destruction' }
 OPController >> removeRender [
 
-	self diagramController deselectAll.
+	self ensureDeselected.
 	self diagramElement removeRender
 ]
 

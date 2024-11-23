@@ -276,9 +276,6 @@ OPDiagramController >> deselectAll [
 { #category : 'accessing' }
 OPDiagramController >> diagram [
 
-	self
-		deprecated: 'Use diagramElement instead'
-		transformWith: '`@receiver diagram ' -> '`@receiver diagramElement '.
 	^ self diagramElement
 ]
 
@@ -354,6 +351,12 @@ OPDiagramController >> ensureControllerFor: aModel [
 	controller := self newControllerFor: aModel.
 	self addController: controller.
 	^ controller
+]
+
+{ #category : 'as yet unclassified' }
+OPDiagramController >> ensureDeselected [
+
+	self deselectAll
 ]
 
 { #category : 'accessing' }
@@ -534,6 +537,7 @@ OPDiagramController >> nameOfTypeForModel: aModel [
 
 { #category : 'controllers management' }
 OPDiagramController >> newControllerFor: aModel [
+
 	^ controllerFactory newControllerFor: aModel
 ]
 

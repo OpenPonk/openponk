@@ -148,6 +148,14 @@ OPDiagramElement >> addedByMouseClickTo: aPoint [
 ]
 
 { #category : 'enumerating' }
+OPDiagramElement >> allOwnedElements [
+
+	^ self ownedElements
+	  ,
+	  (self ownedElements flatCollect: [ :each | each allOwnedElements ])
+]
+
+{ #category : 'enumerating' }
 OPDiagramElement >> allOwnedShapesPositionableByUser [
 
 	self isRendered ifFalse: [ ^ #(  ) ].
@@ -186,6 +194,18 @@ OPDiagramElement >> createOwnedElementsWithoutController [
 	"Might be overriden to add owned diagram elements that have no controller that would create them, for example labels. Make sure these do not exist yet (that could produce them multiple times)"
 
 	
+]
+
+{ #category : 'accessing' }
+OPDiagramElement >> diagramElementOfType: aType withModelElement: anElement ifFound: aFoundBlock [
+
+	((self isKindOf: aType) and: [ modelElements includes: anElement ])
+		ifTrue: [ ^ aFoundBlock cull: self ].
+	ownedElements do: [ :each |
+		each
+			diagramElementOfType: aType
+			withModelElement: anElement
+			ifFound: [ :found | ^ aFoundBlock cull: found ] ]
 ]
 
 { #category : 'testing' }
@@ -503,16 +523,24 @@ OPDiagramElement >> resizableInteractionTarget [
 { #category : 'serialization' }
 OPDiagramElement >> resolveAllModelElements: aCollection [
 
-	self resolveModelElements: aCollection.
-	self ownedElements do: [ :each | 
-		each resolveAllModelElements: aCollection ]
+	| success |
+	success := self resolveModelElements: aCollection.
+	self ownedElements removeAll: (self ownedElements reject: [ :each |
+			 each resolveAllModelElements: aCollection ]).
+	^ success
 ]
 
 { #category : 'serialization' }
 OPDiagramElement >> resolveModelElements: aCollection [
 
 	self modelElements: (self modelElements collect: [ :each |
-			 each modelObjectFrom: aCollection ])
+			 [ each modelObjectFrom: aCollection ]
+				 on: NotFound
+				 do: [ :e |
+					 OPDiagramInvalid signal:
+						 'Diagram references non-existent model element. Try using Proceed to remove it'.
+					 ^ false ] ]).
+	^ true
 ]
 
 { #category : 'rendering' }

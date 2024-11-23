@@ -52,7 +52,6 @@ OPDiagramExplorer >> hideDependentFor: aDataElement [
 { #category : 'actions' }
 OPDiagramExplorer >> hideElement: element [
 
-	diagramController deselectAll.
 	element = diagramController model
 		ifTrue: [ diagramController hideAllElements ]
 		ifFalse: [ diagramController hideModelFromDiagram: element ].
@@ -61,9 +60,8 @@ OPDiagramExplorer >> hideElement: element [
 
 { #category : 'actions' }
 OPDiagramExplorer >> hideElements: elements [
-	diagramController deselectAll.
-	elements
-		do: [ :each | diagramController hideModelFromDiagram: each ].
+
+	elements do: [ :each | diagramController hideModelFromDiagram: each ].
 	diagramController canvas signalUpdate
 ]
 
@@ -80,6 +78,7 @@ OPDiagramExplorer >> showAllElements [
 
 { #category : 'actions' }
 OPDiagramExplorer >> showDependentFor: aModelObject [
+
 	self showElements: (self dependentFor: aModelObject)
 ]
 
@@ -87,7 +86,6 @@ OPDiagramExplorer >> showDependentFor: aModelObject [
 OPDiagramExplorer >> showElement: aModelObject [
 
 	| existingCtrl ctrl |
-	self diagramController deselectAll.
 	aModelObject = diagramController model ifTrue: [
 		^ diagramController showAllElements ].
 	diagramController disableRefresh.
@@ -106,19 +104,18 @@ OPDiagramExplorer >> showElements: aCollectionOfModelObjects [
 
 	| ctrls existingCtrls |
 	aCollectionOfModelObjects ifEmpty: [ ^ self ].
-	self diagramController deselectAll.
 	diagramController disableRefresh.
 	existingCtrls := aCollectionOfModelObjects asArray
-		                 collect: [ :each | 
+		                 collect: [ :each |
 		                 diagramController
 			                 controllerForModel: each
 			                 ifNone: [ nil ] ]
 		                 thenSelect: [ :each | each isNotNil ].
-	ctrls := (aCollectionOfModelObjects sorted: [ :a :b | 
+	ctrls := (aCollectionOfModelObjects sorted: [ :a :b |
 		          self adapters
 			          dependsTypeOf: b
 			          on: a
-			          in: diagramController model ]) collect: [ :each | 
+			          in: diagramController model ]) collect: [ :each |
 		         diagramController showWithoutDependentInDiagramModel: each ].
 	diagramController enableRefresh
 ]

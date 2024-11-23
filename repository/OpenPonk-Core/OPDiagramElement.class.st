@@ -182,12 +182,6 @@ OPDiagramElement >> attachedShapesDo: aBlock [
 		  thenDo: aBlock
 ]
 
-{ #category : 'serialization' }
-OPDiagramElement >> backupModelElementFor: aModelReference [
-
-	^ nil
-]
-
 { #category : 'accessing' }
 OPDiagramElement >> canvas [
 
@@ -529,9 +523,11 @@ OPDiagramElement >> resizableInteractionTarget [
 { #category : 'serialization' }
 OPDiagramElement >> resolveAllModelElements: aCollection [
 
-	self resolveModelElements: aCollection.
-	self ownedElements do: [ :each | 
-		each resolveAllModelElements: aCollection ]
+	| success |
+	success := self resolveModelElements: aCollection.
+	self ownedElements: (self ownedElements select: [ :each |
+			 each resolveAllModelElements: aCollection ]).
+	^ success
 ]
 
 { #category : 'serialization' }
@@ -541,9 +537,10 @@ OPDiagramElement >> resolveModelElements: aCollection [
 			 [ each modelObjectFrom: aCollection ]
 				 on: NotFound
 				 do: [ :e |
-					 OPModelInvalid signal:
-						 'Diagram references non-existent model element. Try using Proceed to use placeholder model object'.
-					 self backupModelElementFor: each ] ])
+					 OPDiagramInvalid signal:
+						 'Diagram references non-existent model element. Try using Proceed to remove it'.
+					 ^ false ] ]).
+	^ true
 ]
 
 { #category : 'rendering' }

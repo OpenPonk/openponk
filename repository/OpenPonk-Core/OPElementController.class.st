@@ -89,6 +89,23 @@ OPElementController >> diagramElementClass [
 	^ self subclassResponsibility
 ]
 
+{ #category : 'as yet unclassified' }
+OPElementController >> ensureDeselected [
+
+	| roassalShape |
+	self isRendered ifFalse: [ ^ self ].
+	roassalShape := self roassalShape.
+	roassalShape isSelectable ifFalse: [ ^ self ].
+	roassalShape isSelected ifFalse: [ ^ self ].
+	roassalShape propertyAt: OPRSSelectable ifPresent: [ :selectable |
+		selectable clicked: roassalShape by: (RSMouseLeftClick new
+				 controlKeyPressed: true;
+				 canvas: roassalShape canvas;
+				 shape: roassalShape;
+				 position: roassalShape position;
+				 yourself) ]
+]
+
 { #category : 'accessing' }
 OPElementController >> ensureDiagramElement [
 

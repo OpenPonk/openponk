@@ -105,8 +105,6 @@ OPDiagramRemoveFigureCommand >> executeWithConfirmation [
 OPDiagramRemoveFigureCommand >> executeWithoutConfirmation [
 
 	| allShown |
-	diagramController deselectAll.
-
 	allShown := self showDependentAndReturnOriginallyShown.
 
 	figures do: [ :each |

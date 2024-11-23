@@ -353,6 +353,12 @@ OPDiagramController >> ensureControllerFor: aModel [
 	^ controller
 ]
 
+{ #category : 'as yet unclassified' }
+OPDiagramController >> ensureDeselected [
+
+	self deselectAll
+]
+
 { #category : 'accessing' }
 OPDiagramController >> figureAdded: aFigure [
 

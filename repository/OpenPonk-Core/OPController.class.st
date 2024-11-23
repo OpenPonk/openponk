@@ -128,6 +128,12 @@ OPController >> elementsToShowInside [
 	^ #(  )
 ]
 
+{ #category : 'as yet unclassified' }
+OPController >> ensureDeselected [
+
+	self subclassResponsibility
+]
+
 { #category : 'accessing' }
 OPController >> ensureDiagramElement [
 
@@ -329,7 +335,7 @@ OPController >> removeFigure [
 		deprecated: 'Use #removeDiagramElement instead'
 		transformWith:
 		'`@receiver removeFigure' -> '`@receiver removeDiagramElement'.
-	self diagramController deselectAll.
+	self ensureDeselected.
 	self figure remove
 ]
 
@@ -337,7 +343,7 @@ OPController >> removeFigure [
 OPController >> removeFromDiagramController [
 
 	self diagramController ifNil: [ ^ self ].
-	self diagramController deselectAll.
+	self ensureDeselected.
 	self diagramController removeController: self
 ]
 
@@ -358,7 +364,7 @@ OPController >> removeModelElement: aModelElement [
 { #category : 'destruction' }
 OPController >> removeRender [
 
-	self diagramController deselectAll.
+	self ensureDeselected.
 	self diagramElement removeRender
 ]
 

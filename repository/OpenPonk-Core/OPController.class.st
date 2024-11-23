@@ -270,8 +270,8 @@ OPController >> removeController [
 		self
 			removeDependentControllers;
 			internalUnsubscribeFrom: m ].
-	self removeFromDiagramController.
-	self removeRender
+	self removeRender.
+	self removeFromDiagramController
 ]
 
 { #category : 'destruction' }

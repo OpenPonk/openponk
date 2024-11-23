@@ -40,12 +40,12 @@ OPSelectionTool >> select [
 OPSelectionTool >> selectedControllers: aCollectionOfControllers [
 
 	| originalFigures newFigures |
-	originalFigures := selectedControllers collect: #roassalShape.
+	originalFigures := selectedControllers
+		                   select: #isRendered
+		                   thenCollect: #roassalShape.
 	newFigures := aCollectionOfControllers collect: #roassalShape.
-	originalFigures , newFigures
-		detect: #isSelectable
-		ifFound: [ :fig | 
-			(fig propertyAt: OPRSSelectable) doHighlightShapes: newFigures ].
+	originalFigures , newFigures detect: #isSelectable ifFound: [ :fig |
+		(fig propertyAt: OPRSSelectable) doHighlightShapes: newFigures ].
 	selectedControllers := aCollectionOfControllers.
 	self editor openFormOn: (aCollectionOfControllers size = 1
 			 ifTrue: [ aCollectionOfControllers anyOne ]

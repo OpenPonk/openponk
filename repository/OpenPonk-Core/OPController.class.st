@@ -94,6 +94,12 @@ OPController >> descriptionName [
 ]
 
 { #category : 'accessing' }
+OPController >> diagram [
+
+	^ self diagramController diagram
+]
+
+{ #category : 'accessing' }
 OPController >> diagramController [
 	^ diagramController
 ]

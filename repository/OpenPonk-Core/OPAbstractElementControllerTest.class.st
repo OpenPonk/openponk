@@ -75,6 +75,7 @@ OPAbstractElementControllerTest >> setUp [
 	diagramController canvasPresenter: (OPCanvasPresenter new
 			 canvas: RSCanvas new;
 			 yourself).
+	diagramController diagramElement: OPDiagram new.
 	self setUpCreationTarget
 ]
 

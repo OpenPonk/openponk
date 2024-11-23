@@ -148,6 +148,14 @@ OPDiagramElement >> addedByMouseClickTo: aPoint [
 ]
 
 { #category : 'enumerating' }
+OPDiagramElement >> allOwnedElements [
+
+	^ self ownedElements
+	  ,
+	  (self ownedElements flatCollect: [ :each | each allOwnedElements ])
+]
+
+{ #category : 'enumerating' }
 OPDiagramElement >> allOwnedShapesPositionableByUser [
 
 	self isRendered ifFalse: [ ^ #(  ) ].
@@ -192,6 +200,18 @@ OPDiagramElement >> createOwnedElementsWithoutController [
 	"Might be overriden to add owned diagram elements that have no controller that would create them, for example labels. Make sure these do not exist yet (that could produce them multiple times)"
 
 	
+]
+
+{ #category : 'accessing' }
+OPDiagramElement >> diagramElementOfType: aType withModelElement: anElement ifFound: aFoundBlock [
+
+	((self isKindOf: aType) and: [ modelElements includes: anElement ])
+		ifTrue: [ ^ aFoundBlock cull: self ].
+	ownedElements do: [ :each |
+		each
+			diagramElementOfType: aType
+			withModelElement: anElement
+			ifFound: [ :found | ^ aFoundBlock cull: found ] ]
 ]
 
 { #category : 'testing' }

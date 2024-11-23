@@ -94,7 +94,12 @@ OPElementController >> ensureDiagramElement [
 
 	self diagramElement
 		ifExists: [ self linkDiagramElementToModel ]
-		else: [ self createDiagramElement ].
+		else: [
+			self diagram
+				diagramElementOfType: self diagramElementClass
+				withModelElement: self model
+				ifFound: [ :found | ^ self diagramElement: found ].
+			self createDiagramElement ].
 	^ self diagramElement
 ]
 

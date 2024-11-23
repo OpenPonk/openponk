@@ -276,9 +276,6 @@ OPDiagramController >> deselectAll [
 { #category : 'accessing' }
 OPDiagramController >> diagram [
 
-	self
-		deprecated: 'Use diagramElement instead'
-		transformWith: '`@receiver diagram ' -> '`@receiver diagramElement '.
 	^ self diagramElement
 ]
 
@@ -534,6 +531,7 @@ OPDiagramController >> nameOfTypeForModel: aModel [
 
 { #category : 'controllers management' }
 OPDiagramController >> newControllerFor: aModel [
+
 	^ controllerFactory newControllerFor: aModel
 ]
 

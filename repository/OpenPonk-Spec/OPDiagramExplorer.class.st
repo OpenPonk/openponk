@@ -80,6 +80,7 @@ OPDiagramExplorer >> showAllElements [
 
 { #category : 'actions' }
 OPDiagramExplorer >> showDependentFor: aModelObject [
+
 	self showElements: (self dependentFor: aModelObject)
 ]
 

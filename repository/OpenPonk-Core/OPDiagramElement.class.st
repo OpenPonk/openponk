@@ -525,7 +525,7 @@ OPDiagramElement >> resolveAllModelElements: aCollection [
 
 	| success |
 	success := self resolveModelElements: aCollection.
-	self ownedElements: (self ownedElements select: [ :each |
+	self ownedElements removeAll: (self ownedElements reject: [ :each |
 			 each resolveAllModelElements: aCollection ]).
 	^ success
 ]

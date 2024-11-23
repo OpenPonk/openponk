@@ -93,7 +93,7 @@ OPNoShape >> ownedElement: anOPPetriNetPTPlaceShape willRenderIn: aRSCanvas [
 { #category : 'accessing' }
 OPNoShape >> ownedElements [
 
-	^ #(  )
+	^ OrderedCollection empty
 ]
 
 { #category : 'introspection' }
@@ -139,13 +139,13 @@ OPNoShape >> sharedStyle [
 { #category : 'accessing' }
 OPNoShape >> sourceEdges [
 
-	^ #(  )
+	^ OrderedCollection empty
 ]
 
 { #category : 'accessing' }
 OPNoShape >> targetEdges [
 
-	^ #(  )
+	^ OrderedCollection empty
 ]
 
 { #category : 'subscription' }

@@ -23,7 +23,7 @@ OPCommonElementController >> createModelIn: aParentModel [
 
 	"do nothing - common model elements are not part of any model"
 
-	^ nil
+	^ self model
 ]
 
 { #category : 'accessing' }
@@ -46,6 +46,12 @@ OPCommonElementController >> isCommon [
 ]
 
 { #category : 'testing' }
+OPCommonElementController >> isDiagramOnly [
+
+	^ true
+]
+
+{ #category : 'testing' }
 OPCommonElementController >> isHideable [
 
 	^ false
@@ -59,8 +65,10 @@ OPCommonElementController >> model [
 
 { #category : 'accessing' }
 OPCommonElementController >> model: aModel [
+	"do nothing - common model elements do not have a model"
 
-	self diagramElement: aModel
+	self assert:
+		(aModel isNil or: [ aModel isKindOf: self diagramElementClass ])
 ]
 
 { #category : 'accessing' }

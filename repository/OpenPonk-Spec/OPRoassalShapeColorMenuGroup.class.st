@@ -1,26 +1,26 @@
 Class {
-	#name : 'OPFigureColorMenuGroup',
+	#name : 'OPRoassalShapeColorMenuGroup',
 	#superclass : 'CmdMenuGroup',
-	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-Figure-Commands'
+	#tag : 'Diagram-RoassalShape-Commands'
 }
 
 { #category : 'as yet unclassified' }
-OPFigureColorMenuGroup class >> colors [
+OPRoassalShapeColorMenuGroup class >> colors [
 
 	^ self subclassResponsibility
 ]
 
 { #category : 'as yet unclassified' }
-OPFigureColorMenuGroup class >> generateAllColorCommands [
+OPRoassalShapeColorMenuGroup class >> generateAllColorCommands [
 
 	<script>
 	self allSubclassesDo: #generateColorCommands
 ]
 
 { #category : 'as yet unclassified' }
-OPFigureColorMenuGroup class >> generateColorCommands [
+OPRoassalShapeColorMenuGroup class >> generateColorCommands [
 
 	| niceAttributeName superclassName |
 	niceAttributeName := self styleAttribute capitalized.
@@ -59,7 +59,7 @@ OPFigureColorMenuGroup class >> generateColorCommands [
 ]
 
 { #category : 'as yet unclassified' }
-OPFigureColorMenuGroup class >> styleAttribute [
+OPRoassalShapeColorMenuGroup class >> styleAttribute [
 
 	^ self subclassResponsibility
 ]

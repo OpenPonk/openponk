@@ -1,13 +1,13 @@
 Class {
-	#name : 'OPFigureFillColorMenuGroup',
-	#superclass : 'OPFigureColorMenuGroup',
-	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#name : 'OPRoassalShapeFillColorMenuGroup',
+	#superclass : 'OPRoassalShapeColorMenuGroup',
+	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-Figure-Commands'
+	#tag : 'Diagram-RoassalShape-Commands'
 }
 
 { #category : 'as yet unclassified' }
-OPFigureFillColorMenuGroup class >> colors [
+OPRoassalShapeFillColorMenuGroup class >> colors [
 
 	^ {
 		  Color transparent.
@@ -22,13 +22,13 @@ OPFigureFillColorMenuGroup class >> colors [
 ]
 
 { #category : 'as yet unclassified' }
-OPFigureFillColorMenuGroup class >> styleAttribute [
+OPRoassalShapeFillColorMenuGroup class >> styleAttribute [
 
 	^ #fillColor
 ]
 
 { #category : 'accessing' }
-OPFigureFillColorMenuGroup >> name [
+OPRoassalShapeFillColorMenuGroup >> name [
 
 	^ 'Fill color'
 ]

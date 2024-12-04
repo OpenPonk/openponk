@@ -60,13 +60,6 @@ OPOpenPonkDiagram >> newCopy [
 		  serializer materializeDiagramOf: self modelElement from: s ]
 ]
 
-{ #category : 'removing' }
-OPOpenPonkDiagram >> removeRender [
-
-	self ownedElements do: #removeRender.
-	roassalShape := nil
-]
-
 { #category : 'as yet unclassified' }
 OPOpenPonkDiagram >> updateFromRender [
 

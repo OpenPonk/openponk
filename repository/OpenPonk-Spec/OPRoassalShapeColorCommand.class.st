@@ -1,13 +1,13 @@
 Class {
-	#name : 'OPDiagramFigureColorCommand',
-	#superclass : 'OPDiagramFigureCommand',
-	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#name : 'OPRoassalShapeColorCommand',
+	#superclass : 'OPRoassalShapeCommand',
+	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-Figure-Commands'
+	#tag : 'Diagram-RoassalShape-Commands'
 }
 
 { #category : 'testing' }
-OPDiagramFigureColorCommand class >> canBeExecutedInContext: aToolContext [
+OPRoassalShapeColorCommand class >> canBeExecutedInContext: aToolContext [
 
 	^ (super canBeExecutedInContext: aToolContext) and: [
 		  aToolContext controllers anySatisfy: [ :any |
@@ -15,25 +15,25 @@ OPDiagramFigureColorCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : 'accessing' }
-OPDiagramFigureColorCommand class >> color [
+OPRoassalShapeColorCommand class >> color [
 
 	^ self subclassResponsibility
 ]
 
 { #category : 'accessing' }
-OPDiagramFigureColorCommand class >> colorAttribute [
+OPRoassalShapeColorCommand class >> colorAttribute [
 
 	^ self subclassResponsibility
 ]
 
 { #category : 'accessing' }
-OPDiagramFigureColorCommand class >> colorFor: aDiagramElement [
+OPRoassalShapeColorCommand class >> colorFor: aDiagramElement [
 
 	^ self color
 ]
 
 { #category : 'accessing' }
-OPDiagramFigureColorCommand class >> currentColorOf: aDiagramElement [
+OPRoassalShapeColorCommand class >> currentColorOf: aDiagramElement [
 
 	^ aDiagramElement
 		  stylePropertyNamed: self colorAttribute
@@ -41,13 +41,13 @@ OPDiagramFigureColorCommand class >> currentColorOf: aDiagramElement [
 ]
 
 { #category : 'accessing' }
-OPDiagramFigureColorCommand class >> defaultColorOf: aDiagramElement [
+OPRoassalShapeColorCommand class >> defaultColorOf: aDiagramElement [
 
 	^ self subclassResponsibility
 ]
 
 { #category : 'accessing' }
-OPDiagramFigureColorCommand class >> defaultColorsOfDiagramElements: diagramElements [
+OPRoassalShapeColorCommand class >> defaultColorsOfDiagramElements: diagramElements [
 
 	^ (diagramElements select: [ :each |
 		   each supportsColorChangeOfType: self colorAttribute ])
@@ -56,20 +56,20 @@ OPDiagramFigureColorCommand class >> defaultColorsOfDiagramElements: diagramElem
 ]
 
 { #category : 'testing' }
-OPDiagramFigureColorCommand class >> isAbstract [
+OPRoassalShapeColorCommand class >> isAbstract [
 
-	^ self = OPDiagramFigureColorCommand or: [
-		  self superclass = OPDiagramFigureColorCommand ]
+	^ self = OPRoassalShapeColorCommand or: [
+		  self superclass = OPRoassalShapeColorCommand ]
 ]
 
 { #category : 'accessing' }
-OPDiagramFigureColorCommand >> color [
+OPRoassalShapeColorCommand >> color [
 
 	^ self class color
 ]
 
 { #category : 'accessing' }
-OPDiagramFigureColorCommand >> colorName [
+OPRoassalShapeColorCommand >> colorName [
 
 	| colorName |
 	colorName := self color name.
@@ -78,7 +78,7 @@ OPDiagramFigureColorCommand >> colorName [
 ]
 
 { #category : 'accessing - defaults' }
-OPDiagramFigureColorCommand >> currentColors [
+OPRoassalShapeColorCommand >> currentColors [
 
 	^ (diagramElements select: [ :each |
 		   each supportsColorChangeOfType: self class colorAttribute ])
@@ -87,13 +87,13 @@ OPDiagramFigureColorCommand >> currentColors [
 ]
 
 { #category : 'accessing - defaults' }
-OPDiagramFigureColorCommand >> defaultColors [
+OPRoassalShapeColorCommand >> defaultColors [
 
 	^ self class defaultColorsOfDiagramElements: diagramElements
 ]
 
 { #category : 'accessing' }
-OPDiagramFigureColorCommand >> defaultMenuIconFormSet [
+OPRoassalShapeColorCommand >> defaultMenuIconFormSet [
 
 	^ FormSet form: (Morph new
 			   color: self color;
@@ -101,7 +101,7 @@ OPDiagramFigureColorCommand >> defaultMenuIconFormSet [
 ]
 
 { #category : 'accessing' }
-OPDiagramFigureColorCommand >> defaultMenuItemName [
+OPRoassalShapeColorCommand >> defaultMenuItemName [
 
 	| isDefault isCurrent |
 	isDefault := self defaultColors allSatisfy: [ :each |
@@ -115,7 +115,7 @@ OPDiagramFigureColorCommand >> defaultMenuItemName [
 ]
 
 { #category : 'execution' }
-OPDiagramFigureColorCommand >> execute [
+OPRoassalShapeColorCommand >> execute [
 
 	diagramElements
 		select: [ :each |
@@ -125,7 +125,7 @@ OPDiagramFigureColorCommand >> execute [
 ]
 
 { #category : 'execution' }
-OPDiagramFigureColorCommand >> executeOn: aDiagramElement [
+OPRoassalShapeColorCommand >> executeOn: aDiagramElement [
 
 	aDiagramElement
 		stylePropertyNamed: self class colorAttribute

@@ -94,6 +94,15 @@ OPDiagram >> ownedElement: aShape willRenderIn: aCanvas [
 	self canvas: aCanvas
 ]
 
+{ #category : 'removing' }
+OPDiagram >> removeRender [
+
+	self ownedElements do: [ :each | each removeRender ].
+	roassalShape ifNil: [ ^ self ].
+	self attachedShapesDo: [ :each | each remove ].
+	roassalShape := nil
+]
+
 { #category : 'rendering' }
 OPDiagram >> renderBasicShape [
 

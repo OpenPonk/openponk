@@ -39,13 +39,16 @@ OPSelectionTool >> select [
 { #category : 'protocol' }
 OPSelectionTool >> selectedControllers: aCollectionOfControllers [
 
-	| originalFigures newFigures |
-	originalFigures := selectedControllers
-		                   select: #isRendered
-		                   thenCollect: #roassalShape.
-	newFigures := aCollectionOfControllers collect: #roassalShape.
-	originalFigures , newFigures detect: #isSelectable ifFound: [ :fig |
-		(fig propertyAt: OPRSSelectable) doHighlightShapes: newFigures ].
+	| originalRoassalShapes newRoassalShapes |
+	originalRoassalShapes := selectedControllers
+		                         select: #isRendered
+		                         thenCollect: #roassalShape.
+	newRoassalShapes := aCollectionOfControllers collect: #roassalShape.
+	originalRoassalShapes , newRoassalShapes
+		detect: #isSelectable
+		ifFound: [ :shape |
+			(shape propertyAt: OPRSSelectable) doHighlightShapes:
+				newRoassalShapes ].
 	selectedControllers := aCollectionOfControllers.
 	self editor openFormOn: (aCollectionOfControllers size = 1
 			 ifTrue: [ aCollectionOfControllers anyOne ]

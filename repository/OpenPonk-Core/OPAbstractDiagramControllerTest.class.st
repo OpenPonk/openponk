@@ -17,7 +17,7 @@ OPAbstractDiagramControllerTest >> setUp [
 
 	super setUp.
 	controller model: model.
-	controller diagramElement: OPDiagram new.
+	controller diagramElement: (OPOpenPonkDiagram forModelElement: model).
 	controller canvasPresenter: (OPCanvasPresenter new
 			 canvas: RSCanvas new;
 			 yourself)

@@ -15,7 +15,43 @@ OPDiagramOnlyControllerTest class >> isAbstract [
 { #category : 'accessing' }
 OPDiagramOnlyControllerTest >> allElements [
 
-	^ super allElements asSet copyWith: model
+	^ super allElements copyWith: self model
+]
+
+{ #category : 'accessing' }
+OPDiagramOnlyControllerTest >> controllersByModelsKey [
+
+	^ self diagramElementClass new
+]
+
+{ #category : 'accessing' }
+OPDiagramOnlyControllerTest >> model [
+
+	^ controller ifNotNil: [ :ctrl | ctrl diagramElement ]
+]
+
+{ #category : 'accessing' }
+OPDiagramOnlyControllerTest >> modelClass [
+
+	^ self diagramElementClass
+]
+
+{ #category : 'instance creation' }
+OPDiagramOnlyControllerTest >> newModel [
+
+	^ nil
+]
+
+{ #category : 'tests - ui interaction' }
+OPDiagramOnlyControllerTest >> testBeingRemovedAfterModelRemovalWhenNotRendered [
+
+	self skip
+]
+
+{ #category : 'tests - ui interaction' }
+OPDiagramOnlyControllerTest >> testBeingRemovedAfterModelRemovalWhenRendered [
+
+	self skip
 ]
 
 { #category : 'tests - construction' }

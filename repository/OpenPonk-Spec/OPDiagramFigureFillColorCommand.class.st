@@ -1,9 +1,9 @@
 Class {
 	#name : 'OPDiagramFigureFillColorCommand',
-	#superclass : 'OPDiagramFigureColorCommand',
-	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#superclass : 'OPRoassalShapeColorCommand',
+	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-Figure-Commands'
+	#tag : 'Diagram-RoassalShape-Commands'
 }
 
 { #category : 'accessing' }
@@ -17,7 +17,7 @@ OPDiagramFigureFillColorCommand class >> contextMenuActivation [
 
 	<classAnnotation>
 	^ CmdContextMenuActivation
-		  byItemOf: OPFigureFillColorMenuGroup
+		  byItemOf: OPRoassalShapeFillColorMenuGroup
 		  for: OPCanvasPresenter
 ]
 

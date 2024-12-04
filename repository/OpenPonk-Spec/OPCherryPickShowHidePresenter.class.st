@@ -14,7 +14,7 @@ OPCherryPickShowHidePresenter >> childrenFor: aModelObject [
 
 { #category : 'defaults' }
 OPCherryPickShowHidePresenter >> findSelectedItems [
-	^ diagramController allVisibleShowableElements
+	^ diagramController allModelElementsWithController
 		ifNotEmpty: [ :newElements | newElements copyWith: diagramController model ]
 ]
 

@@ -18,7 +18,7 @@ OPTestAbstractModel >> = other [
 
 { #category : 'accessing' }
 OPTestAbstractModel >> name [
-	^ 'container'
+	^ 'model'
 ]
 
 { #category : 'subscription' }
@@ -30,9 +30,7 @@ OPTestAbstractModel >> unsubscribe: anOPTestDiagramController [
 { #category : 'accessing' }
 OPTestAbstractModel >> uuid [
 
-	^ uuid ifNil: [
-		  uuid := '6875c7ff-b858-0d00-9c00-4775'
-		          , self hash printStringHex asLowercase ]
+	^ uuid ifNil: [ uuid := UUID new ]
 ]
 
 { #category : 'accessing' }
@@ -40,6 +38,12 @@ OPTestAbstractModel >> uuid: aStringOrUUID [
 	uuid := aStringOrUUID isString
 		ifTrue: [ UUID fromString: aStringOrUUID ]
 		ifFalse: [ aStringOrUUID ]
+]
+
+{ #category : 'accessing' }
+OPTestAbstractModel >> when: anAnnouncement do: aBlock for: aSubscriber [
+
+	^ self announcer when: anAnnouncement do: aBlock for: aSubscriber
 ]
 
 { #category : 'announcer' }

@@ -8,7 +8,7 @@ Class {
 
 { #category : 'as yet unclassified' }
 OPTypesShowHidePresenter >> allElements [
-	^ diagramController allShowableElements
+	^ diagramController allModelElementsWithPossibleController
 ]
 
 { #category : 'accessing' }
@@ -19,7 +19,7 @@ OPTypesShowHidePresenter >> childrenFor: aNode [
 { #category : 'defaults' }
 OPTypesShowHidePresenter >> findSelectedItems [
 	| visibleElements hidableElementTypes |
-	visibleElements := diagramController allVisibleShowableElements.
+	visibleElements := diagramController allModelElementsWithController.
 	hidableElementTypes := ((adapters allChildrenFor: diagramController model)
 									collect: [ :element | element class ]) asSet.
 	"Returns all children from getAllNodes x where such visible element exists, that it is hideable and x is its type"

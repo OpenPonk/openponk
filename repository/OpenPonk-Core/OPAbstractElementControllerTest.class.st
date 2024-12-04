@@ -75,7 +75,8 @@ OPAbstractElementControllerTest >> setUp [
 	diagramController canvasPresenter: (OPCanvasPresenter new
 			 canvas: RSCanvas new;
 			 yourself).
-	diagramController diagramElement: OPDiagram new.
+	diagramController diagramElement:
+		(OPOpenPonkDiagram forModelElement: diagramController model).
 	self setUpCreationTarget
 ]
 
@@ -122,9 +123,140 @@ OPAbstractElementControllerTest >> testAddController [
 	self prepareToShow.
 	diagramController addController: controller.
 	self
-		assert: (diagramController controllerForModel: model)
+		assert: (diagramController controllerForModel: self model)
 		equals: controller.
 	self assert: controller diagramController equals: diagramController
+]
+
+{ #category : 'tests - ui interaction' }
+OPAbstractElementControllerTest >> testBeingCopiedWithDiagram [
+
+	| diagram diagramElement diagramControllerOfCopy |
+	self assertEmpty: diagramController controllers.
+	self showInDiagram.
+	diagram := diagramController diagramElement.
+	diagramElement := controller diagramElement.
+	self assert: (diagramController hasControllerForModel: self model).
+	self
+		assertCollection: diagram allOwnedElements
+		includesAll: { diagramElement }.
+	self
+		assertCollection: diagramController controllers
+		includesAll: { controller }.
+	diagramControllerOfCopy := self diagramControllerClass new.
+	diagramControllerOfCopy model: diagramController model.
+	self
+		shouldnt: [ diagramControllerOfCopy diagramElement: diagram newCopy ]
+		raise: OPInvalidWarning.
+	diagramControllerOfCopy canvasPresenter: (OPCanvasPresenter new
+			 canvas: RSCanvas new;
+			 yourself).
+	diagramControllerOfCopy diagramFocused.
+	self
+		assertCollection:
+			(diagramControllerOfCopy diagram allOwnedElements collect:
+				 #modelElement)
+		hasSameElements:
+		(diagramController diagram allOwnedElements collect: #modelElement).
+	self
+		assertCollection:
+		(diagramControllerOfCopy controllers collect: #model)
+		hasSameElements: (diagramController controllers collect: #model)
+]
+
+{ #category : 'tests - ui interaction' }
+OPAbstractElementControllerTest >> testBeingKeptWhenEditorFocusChanges [
+
+	self
+		assertCollection: diagramController controllers
+		hasSameElements: {  }.
+	self showInDiagram.
+	self
+		assertCollection: diagramController controllers
+		includesAll: { controller }.
+	diagramController diagramFocused.
+	self
+		assertCollection: diagramController controllers
+		includesAll: { controller }
+]
+
+{ #category : 'tests - ui interaction' }
+OPAbstractElementControllerTest >> testBeingRemovedAfterModelRemovalWhenNotRendered [
+
+	| diagram diagramElement newDiagramControllerBlock diagramControllerOfCopy controllerOfCopy recreatedDiagramController |
+	self
+		denyCollection: diagramController controllers
+		includesAll: { controller }.
+	self showInDiagram.
+	diagram := diagramController diagramElement.
+	diagramElement := controller diagramElement.
+	self
+		assertCollection: diagram allOwnedElements
+		includesAll: { diagramElement }.
+	self
+		assertCollection: diagramController controllers
+		includesAll: { controller }.
+	self assert: diagramElement isRendered.
+	diagramController removeController.
+	self
+		assertCollection: diagram allOwnedElements
+		includesAll: { diagramElement }.
+	self deny: diagramElement isRendered.
+	self
+		denyCollection: diagramController controllers
+		includesAll: { controller }.
+	newDiagramControllerBlock := [ :copyOfDiagram |
+	                             | newDiagramController |
+	                             newDiagramController := self
+		                                                     diagramControllerClass
+		                                                     new.
+	                             newDiagramController model:
+		                             diagramController model.
+	                             newDiagramController diagramElement:
+		                             copyOfDiagram.
+	                             newDiagramController canvasPresenter:
+		                             (OPCanvasPresenter new
+			                              canvas: RSCanvas new;
+			                              yourself).
+	                             newDiagramController diagramFocused.
+	                             newDiagramController ].
+
+
+	self
+		shouldnt: [
+			diagramControllerOfCopy := newDiagramControllerBlock value:
+				                           diagram newCopy ]
+		raise: OPInvalidWarning.
+	controllerOfCopy := diagramControllerOfCopy controllerForModel: model.
+	controllerOfCopy removeModel.
+	recreatedDiagramController := newDiagramControllerBlock value:
+		                              diagram.
+	recreatedDiagramController validate.
+	self
+		denyCollection: diagram allOwnedElements
+		includesAll: { diagramElement }.
+	self deny: diagramElement isRendered.
+	self
+		denyCollection: recreatedDiagramController controllers
+		includesAll: { controller }
+]
+
+{ #category : 'tests - ui interaction' }
+OPAbstractElementControllerTest >> testBeingRemovedAfterModelRemovalWhenRendered [
+
+	self
+		denyCollection: diagramController controllers
+		includesAll: { controller }.
+	self showInDiagram.
+	self
+		assertCollection: diagramController controllers
+		includesAll: { controller }.
+	controller removeModel.
+	controller model: model.
+	diagramController diagramFocused.
+	self
+		denyCollection: diagramController controllers
+		includesAll: { controller }
 ]
 
 { #category : 'tests' }
@@ -145,7 +277,11 @@ OPAbstractElementControllerTest >> testCreateAndShow [
 		includesAll: { controller }.
 	self
 		assertCollection: diagramController canvas shapes
-		includesAll: { controller roassalShape }
+		includesAll: { controller roassalShape }.
+	self
+		assert: diagramController isRendered
+		description:
+		'Diagram controller not showing as rendered when element is'
 ]
 
 { #category : 'tests' }
@@ -223,27 +359,11 @@ OPAbstractElementControllerTest >> testDescriptionName [
 	diagramElement should receive modelChanged
 ]
 
-{ #category : 'tests - controllers' }
-OPAbstractElementControllerTest >> testFigureForModel [
-
-	self showInDiagram.
-	self
-		assert: (diagramController roassalShapeForModel: model)
-		equals: controller roassalShape
-]
-
-{ #category : 'tests - construction' }
-OPAbstractElementControllerTest >> testFigureWasRendered [
-
-	self showInDiagram.
-	self assert:
-		(diagramController canvas nodes includes: controller roassalShape)
-]
-
 { #category : 'tests' }
 OPAbstractElementControllerTest >> testIsSupported [
 
-	self assert: (diagramController hasSupportForModel: model)
+	self assert:
+		(diagramController hasSupportForModel: self controllersByModelsKey)
 ]
 
 { #category : 'tests' }
@@ -257,12 +377,13 @@ OPAbstractElementControllerTest >> testModelForFigure [
 	self showInDiagram.
 	self
 		assert: (diagramController modelForFigure: controller roassalShape)
-		equals: model
+		equals: self model
 ]
 
 { #category : 'tests - controllers' }
-OPAbstractElementControllerTest >> testNewController [
-	controller := diagramController newControllerFor: model.
+OPAbstractElementControllerTest >> testNewControllerFor [
+
+	controller := diagramController newControllerFor: self controllersByModelsKey.
 	self assert: controller class equals: self controllerClass
 ]
 
@@ -321,6 +442,23 @@ OPAbstractElementControllerTest >> testRemoveModel [
 	self denyCollection: self allElements includesAll: { model }
 ]
 
+{ #category : 'tests - controllers' }
+OPAbstractElementControllerTest >> testRoassalShapeForModel [
+
+	self showInDiagram.
+	self
+		assert: (diagramController roassalShapeForModel: self model)
+		equals: controller roassalShape
+]
+
+{ #category : 'tests - construction' }
+OPAbstractElementControllerTest >> testRoassalShapeWasRendered [
+
+	self showInDiagram.
+	self assert:
+		(diagramController canvas nodes includes: controller roassalShape)
+]
+
 { #category : 'tests - construction' }
 OPAbstractElementControllerTest >> testShowInDiagram [
 
@@ -331,5 +469,5 @@ OPAbstractElementControllerTest >> testShowInDiagram [
 			 controller roassalShape)
 		equals: controller.
 	self assert: (diagramController canvas shapes anySatisfy: [ :each |
-			 each model isNotNil and: [ each model modelElement = model ] ])
+			 each model isNotNil and: [ each model modelElement = self model ] ])
 ]

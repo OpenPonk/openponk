@@ -27,12 +27,6 @@ OPDirectionalRelationshipController >> createDiagramElement [
 		  yourself
 ]
 
-{ #category : 'hooks' }
-OPDirectionalRelationshipController >> createLineFrom: fromElement to: toElement [
-
-	self deprecated: 'This is responsibility of DI shapes now'.
-]
-
 { #category : 'construction' }
 OPDirectionalRelationshipController >> dependingOnElements [
 
@@ -45,13 +39,6 @@ OPDirectionalRelationshipController >> dependingOnElements [
 				     ifNil: [ self target model ]
 				     ifNotNil: [ self modelTarget ]) ifNil: [
 				    self error: 'There is no target of ' , self model asString ]))
-]
-
-{ #category : 'hooks' }
-OPDirectionalRelationshipController >> edgeBuilder [
-
-	self deprecated:
-		'Depracated without replacement - use Roassal directly or define own figures'
 ]
 
 { #category : 'construction' }

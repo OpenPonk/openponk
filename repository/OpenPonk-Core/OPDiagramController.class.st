@@ -8,18 +8,17 @@ Class {
 		'announcer',
 		'controllers',
 		'editor',
-		'figureAdded',
 		'plugin',
 		'autosaveManager',
-		'figureToControllerCache',
 		'modelToControllerCache',
 		'workbenchAnnouncer',
 		'layouter',
-		'figuresBeingAdded',
 		'controllerFactory',
-		'lastClickPosition',
 		'lastSelectionPosition',
-		'canvasPresenter'
+		'canvasPresenter',
+		'roassalShapeToControllerCache',
+		'roassalShapeAdded',
+		'roassalShapesBeingAdded'
 	],
 	#category : 'OpenPonk-Core-Controllers',
 	#package : 'OpenPonk-Core',
@@ -42,58 +41,38 @@ OPDiagramController >> addController: aController [
 	self controllers add: aController
 ]
 
-{ #category : 'deprecated' }
-OPDiagramController >> addModelElement: aModelElement [
-	| controller figure |
-	self deprecated: 'Use createModelIn:andShowInDiagram: instead.'.
-"	self controllers detect: [ :ctrl | ctrl model = aModelElement ] ifFound: [ ^ self ].
-	(self model has: aModelElement)
-		ifFalse: [ self model add: aModelElement ].
-	controller := self createController: aModelElement.
-	controller diagramController: self.
-	self controllers add: controller.
-	(controller isKindOf: OPRelationshipController)
-		ifTrue: [ 
-			| fromModel toModel fromCtrl toCtrl |
-			fromModel := aModelElement source.
-			toModel := aModelElement target.
-			fromCtrl := self controllers detect: [ :ctrl | ctrl model = fromModel ] ifNone: [ self addModelElement: fromModel ].
-			toCtrl := self controllers detect: [ :ctrl | ctrl model = toModel ] ifNone: [ self addModelElement: toModel ].
-			controller
-				source: fromCtrl;
-				target: toCtrl ].
-	controller registerModelEvents: controller model.
-	figure := controller figure.
-	figure view ifNil: [ figure renderIn: self view ].
-	self diagramController figureAdded: figure.
-	^ controller"
-]
-
 { #category : 'accessing' }
-OPDiagramController >> addMouseEventsFor: aFigure [
+OPDiagramController >> addMouseEventsFor: aRoassalShape [
 
-	aFigure
+	aRoassalShape
 		when: RSMouseRightClick
-		do: [ :event | self figureContextClicked: event ]
+		do: [ :event | self roassalShapeContextClicked: event ]
 		for: self.
-	aFigure
+	aRoassalShape
 		when: RSMouseEnter
 		do: [ :event | self hoverRoassalShape: event shape ]
 		for: self
 ]
 
-{ #category : 'rendering' }
-OPDiagramController >> allShowableElements [
+{ #category : 'enumerating' }
+OPDiagramController >> allModelElementsWithController [
+	"Should return all elements that could be directly hidden on diagram but are currently shown"
+
+	^ self controllers collect: [ :each | each model ]
+]
+
+{ #category : 'enumerating' }
+OPDiagramController >> allModelElementsWithPossibleController [
 	"all elements that could be directly hidden on diagram"
 
 	^ (Set with: self model) , self elementsToShowInside
 ]
 
-{ #category : 'as yet unclassified' }
-OPDiagramController >> allVisibleShowableElements [
-	"Should return all elements that could be directly hidden on diagram but are currently shown"
+{ #category : 'enumerating' }
+OPDiagramController >> allModelElementsWithPossibleDiagramElement [
+	"all model elements that can have diagram elements (even if cannot have controller)"
 
-	^ self controllers collect: [ :each | each model ]
+	^ self allModelElementsWithPossibleController
 ]
 
 { #category : 'accessing' }
@@ -143,15 +122,15 @@ OPDiagramController >> cachedControllerForModel: aModel ifNone: aNoneBlock [
 ]
 
 { #category : 'controllers management' }
-OPDiagramController >> cachedControllerForRoassalShape: aFigure [
+OPDiagramController >> cachedControllerForRoassalShape: aRoassalShape [
 
-	^ figureToControllerCache at: aFigure
+	^ roassalShapeToControllerCache at: aRoassalShape
 ]
 
 { #category : 'controllers management' }
-OPDiagramController >> cachedControllerForRoassalShape: aFigure ifNone: aBlock [
+OPDiagramController >> cachedControllerForRoassalShape: aRoassalShape ifNone: aBlock [
 
-	^ figureToControllerCache at: aFigure ifAbsent: aBlock
+	^ roassalShapeToControllerCache at: aRoassalShape ifAbsent: aBlock
 ]
 
 { #category : 'connecting' }
@@ -270,7 +249,7 @@ OPDiagramController >> createController: aModel [
 { #category : 'protocol-canvas' }
 OPDiagramController >> deselectAll [
 
-	self announcer announce: OPAllFiguresDeselected new
+	self announcer announce: OPAllShapesDeselected new
 ]
 
 { #category : 'accessing' }
@@ -305,7 +284,8 @@ OPDiagramController >> diagramController: aController [
 { #category : 'rebuilding' }
 OPDiagramController >> diagramFocused [
 
-	self isRendered ifTrue: [ ^ self updateAfterDiagramFocused ].
+	self updateAfterDiagramFocused.
+	self isRendered ifTrue: [ ^ self ].
 
 	self diagramElement canvas: self canvas.
 	self diagramElement ownedElements do: [ :each |
@@ -329,7 +309,7 @@ OPDiagramController >> editor: anEditor [
 	editor := anEditor
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'destruction' }
 OPDiagramController >> elementRemoved [
 
 	self editor ifNotNil: [ :foundEditor |
@@ -353,7 +333,7 @@ OPDiagramController >> ensureControllerFor: aModel [
 	^ controller
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'ui interaction' }
 OPDiagramController >> ensureDeselected [
 
 	self deselectAll
@@ -363,25 +343,11 @@ OPDiagramController >> ensureDeselected [
 OPDiagramController >> figureAdded: aFigure [
 
 	self
-		deprecated: 'Use addedFigureFor: instead'
+		deprecated: 'Use rendered: instead'
 		transformWith: '`@receiver figureAdded: `@statements1'
 			->
-			'`@receiver addedFigureFor: (`@receiver controllerForFigure: `@statements1)'.
+			'`@receiver rendered: (`@receiver controllerForRoassalShape: `@statements1)'.
 	^ self rendered: (self controllerForRoassalShape: aFigure)
-]
-
-{ #category : 'accessing' }
-OPDiagramController >> figureContextClicked: anEvent [
-
-	| shapes menu |
-	shapes := (self selectedElements includes: anEvent shape)
-		          ifTrue: [ self selectedElements ]
-		          ifFalse: [ { anEvent shape } ].
-	menu := CmdContextMenuActivation
-		        buildContextMenuFor: self canvasPresenter
-		        inContext:
-		        (OPDiagramFigureContext for: self canvasPresenter of: shapes).
-	menu popUpInWorld
 ]
 
 { #category : 'ui interaction' }
@@ -391,18 +357,18 @@ OPDiagramController >> form [
 ]
 
 { #category : 'controllers management' }
-OPDiagramController >> hasControllerForFigure: aFigure [
-
-	^ aFigure = self canvas or: [ 
-		  self cachedControllerForRoassalShape: aFigure ifNone: [ ^ false ].
-		  true ]
-]
-
-{ #category : 'controllers management' }
 OPDiagramController >> hasControllerForModel: aModel [
 
 	^ aModel = self model or: [
 		  self cachedControllerForModel: aModel ifNone: [ ^ false ].
+		  true ]
+]
+
+{ #category : 'controllers management' }
+OPDiagramController >> hasControllerForRoassalShape: aRoassalShape [
+
+	^ aRoassalShape = self canvas or: [ 
+		  self cachedControllerForRoassalShape: aRoassalShape ifNone: [ ^ false ].
 		  true ]
 ]
 
@@ -443,9 +409,9 @@ OPDiagramController >> hoverController: aController [
 ]
 
 { #category : 'protocol-canvas' }
-OPDiagramController >> hoverRoassalShape: aFigure [
+OPDiagramController >> hoverRoassalShape: aRoassalShape [
 
-	self hoverController: (self controllerForRoassalShape: aFigure)
+	self hoverController: (self controllerForRoassalShape: aRoassalShape)
 ]
 
 { #category : 'ui interaction' }
@@ -459,12 +425,12 @@ OPDiagramController >> incompatiblePaletteItemNames [
 OPDiagramController >> initialize [
 
 	super initialize.
-	figureAdded := [ :figure |  ].
+	roassalShapeAdded := [ :roassalShape |  ].
 	controllerFactory := self controllerFactory.
 	diagramController := self.
-	figuresBeingAdded := Set new.
+	roassalShapesBeingAdded := Set new.
 	modelToControllerCache := OPModelToControllerCache for: self.
-	figureToControllerCache := OPRoassalShapeToControllerCache for: self
+	roassalShapeToControllerCache := OPRoassalShapeToControllerCache for: self
 ]
 
 { #category : 'ui interaction' }
@@ -508,7 +474,18 @@ OPDiagramController >> modelClass [
 
 { #category : 'accessing' }
 OPDiagramController >> modelForFigure: aFigure [
-	^ (self controllerForRoassalShape: aFigure) model
+	self
+		deprecated: 'use #modelForRoassalShape: instead'
+		transformWith:
+			'`@receiver modelForFigure: `@argument'
+				-> '`@receiver modelForRoassalShape: `@argument'.
+
+	^ self modelForRoassalShape: aFigure
+]
+
+{ #category : 'accessing' }
+OPDiagramController >> modelForRoassalShape: aRoassalShape [
+	^ (self controllerForRoassalShape: aRoassalShape) model
 ]
 
 { #category : 'accessing' }
@@ -525,7 +502,7 @@ OPDiagramController >> modelsWithController [
 	^ self controllers collect: #model
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPDiagramController >> nameOfTypeForModel: aModel [
 	self
 		deprecated: 'use #name on typeOfModel: instead'
@@ -601,7 +578,7 @@ OPDiagramController >> removeControllerOf: aModelElement [
 ]
 
 { #category : 'destruction' }
-OPDiagramController >> removeFromCanvas: aFigure [
+OPDiagramController >> removeFromCanvas: aRoassalShape [
 
 	self
 		deprecated: 'use removeModelOfRoassalShape: instead'
@@ -636,19 +613,21 @@ OPDiagramController >> removeModelElement: aModelElement [
 ]
 
 { #category : 'destruction' }
-OPDiagramController >> removeModelOfRoassalShape: aFigure [
-	aFigure ifNil: [ ^ self ].
-	(self controllerForRoassalShape: aFigure) removeControllerAndModel
+OPDiagramController >> removeModelOfRoassalShape: aRoassalShape [
+
+	aRoassalShape ifNil: [ ^ self ].
+	(self controllerForRoassalShape: aRoassalShape)
+		removeControllerAndModel
 ]
 
 { #category : 'accessing' }
 OPDiagramController >> rendered: aController [
 
-	(figuresBeingAdded includes: aController)
+	(roassalShapesBeingAdded includes: aController)
 		ifFalse: [
 			self traceCr:
 				'DiagramController>>#addedFigureFor: added figure not previously marked as being added' ]
-		ifTrue: [ figuresBeingAdded remove: aController ].
+		ifTrue: [ roassalShapesBeingAdded remove: aController ].
 
 
 	lastSelectionPosition ifNotNil: [
@@ -658,17 +637,24 @@ OPDiagramController >> rendered: aController [
 	self addMouseEventsFor: aController roassalShape
 ]
 
-{ #category : 'testing' }
-OPDiagramController >> requiresControllerToShowDiagramElement: aDiagramElement [
-
-	^ aDiagramElement ownModelElement isNotNil and: [
-		  (aDiagramElement isKindOf: OPEdgeLabel) not ]
-]
-
 { #category : 'accessing' }
 OPDiagramController >> roassalShape [
 
 	^ self canvas
+]
+
+{ #category : 'accessing' }
+OPDiagramController >> roassalShapeContextClicked: anEvent [
+
+	| shapes menu |
+	shapes := (self selectedElements includes: anEvent shape)
+		          ifTrue: [ self selectedElements ]
+		          ifFalse: [ { anEvent shape } ].
+	menu := CmdContextMenuActivation
+		        buildContextMenuFor: self canvasPresenter
+		        inContext:
+		        (OPRoassalShapeContext for: self canvasPresenter of: shapes).
+	menu popUpInWorld
 ]
 
 { #category : 'accessing' }
@@ -711,7 +697,7 @@ OPDiagramController >> selectedShapes: shapes onPosition: aPoint [
 OPDiagramController >> showAllElements [
 
 	self disableRefresh.
-	self allShowableElements do: [ :each | 
+	self allModelElementsWithPossibleController do: [ :each | 
 		self showWithoutDependentInDiagramModel: each ].
 	self enableRefresh
 ]
@@ -719,23 +705,22 @@ OPDiagramController >> showAllElements [
 { #category : 'rebuilding' }
 OPDiagramController >> showDiagramElement: aDiagramElement [
 
-	(self requiresControllerToShowDiagramElement: aDiagramElement)
-		ifTrue: [
-			| controller |
-			controller := self
-				              controllerForModel: aDiagramElement ownModelElement
-				              ifFound: [ :ctrl |
-					              ctrl isRendered ifTrue: [
-						              aDiagramElement isRendered ifTrue: [ ^ ctrl ].
-						              ^ self error:
-							                'Controller is already rendered by a different diagram element' ].
-					              ctrl ]
-				              ifNone: [
-				              self newControllerFor:
-					              aDiagramElement ownModelElement ].
-			controller
-				diagramElement: aDiagramElement;
-				showWithoutDependentInDiagram: self ].
+	aDiagramElement shouldHaveController ifTrue: [
+		| controller |
+		controller := self
+			              controllerForModel: aDiagramElement ownModelElement
+			              ifFound: [ :ctrl |
+				              ctrl isRendered ifTrue: [
+					              aDiagramElement isRendered ifTrue: [ ^ ctrl ].
+					              ^ self error:
+						                'Controller is already rendered by a different diagram element' ].
+				              ctrl ]
+			              ifNone: [
+			              self newControllerFor:
+				              aDiagramElement ownModelElement ].
+		controller
+			diagramElement: aDiagramElement;
+			showWithoutDependentInDiagram: self ].
 	aDiagramElement ownedElements do: [ :each |
 		self showDiagramElement: each ]
 ]
@@ -766,7 +751,7 @@ OPDiagramController >> showWithoutDependentInDiagramModel: aModel [
 		  yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPDiagramController >> typeOfModel: aModel [
 	^ OPModelObjectType
 		named:
@@ -783,12 +768,21 @@ OPDiagramController >> undo [
 { #category : 'event handling' }
 OPDiagramController >> updateAfterDiagramFocused [
 
-	| showableElements |
-	showableElements := self allShowableElements asIdentitySet.
-	self controllers do: [ :each |
-		(showableElements includes: each model)
-			ifTrue: [ each updateAfterDiagramFocused ]
-			ifFalse: [ each removeControllerAndDiagramElement ] ]
+	| modelElementsToKeep |
+	modelElementsToKeep := self
+		                       allModelElementsWithPossibleDiagramElement
+		                       asIdentitySet.
+	self controllers
+		reject: [ :each | each isDiagramOnly ]
+		thenDo: [ :each |
+			(modelElementsToKeep includes: each model)
+				ifTrue: [ each updateAfterDiagramFocused ]
+				ifFalse: [ each removeControllerAndDiagramElement ] ].
+	self diagramElement allOwnedElements asIdentitySet
+		reject: [ :each |
+			each isDiagramOnly or: [
+				modelElementsToKeep includes: each modelElement ] ]
+		thenDo: [ :each | each remove ]
 ]
 
 { #category : 'userinterface' }
@@ -825,7 +819,7 @@ OPDiagramController >> view [
 
 { #category : 'accessing' }
 OPDiagramController >> visibleElements [
-	^ self allShowableElements
+	^ self allModelElementsWithPossibleController
 		select: [ :el | self isVisibleInDiagram: el ]
 ]
 
@@ -837,7 +831,7 @@ OPDiagramController >> visibleElements: aCollection [
 	executor hideAll.
 	executor
 		showElements:
-			(self allShowableElements
+			(self allModelElementsWithPossibleController
 				select: [ :each | aCollection anySatisfy: [ :any | any = each ] ])
 ]
 
@@ -850,20 +844,20 @@ OPDiagramController >> when: anEvent do: aBlock for: aSubscriber [
 { #category : 'protocol-events' }
 OPDiagramController >> whenAllDeselectedDo: aBlock for: aSubscriber [
 
-	self when: OPAllFiguresDeselected do: aBlock for: aSubscriber
+	self when: OPAllShapesDeselected do: aBlock for: aSubscriber
 ]
 
 { #category : 'protocol-events' }
 OPDiagramController >> whenFigureAdded: aBlock [
-	figureAdded := aBlock ifNil: [ [ :figure |  ] ]
+	roassalShapeAdded := aBlock ifNil: [ [ :figure |  ] ]
 ]
 
 { #category : 'accessing' }
 OPDiagramController >> willRender: aController [
 
-	(figuresBeingAdded includes: aController) ifTrue: [ 
+	(roassalShapesBeingAdded includes: aController) ifTrue: [ 
 		self notify: 'Same controller is already being added' ].
-	figuresBeingAdded add: aController
+	roassalShapesBeingAdded add: aController
 ]
 
 { #category : 'accessing' }

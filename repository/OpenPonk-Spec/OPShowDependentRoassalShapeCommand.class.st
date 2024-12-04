@@ -1,5 +1,5 @@
 Class {
-	#name : 'OPHideDependentRoassalShapesCommand',
+	#name : 'OPShowDependentRoassalShapeCommand',
 	#superclass : 'OPToggleRoassalShapeCommand',
 	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
 	#package : 'OpenPonk-Spec',
@@ -7,9 +7,6 @@ Class {
 }
 
 { #category : 'execution' }
-OPHideDependentRoassalShapesCommand >> basicExecute [
-
-	controllers
-		select: #isHideable
-		thenDo: [ :each | executor hideDependentFor: each model ]
+OPShowDependentRoassalShapeCommand >> basicExecute [
+	models do: [ :each | executor showDependentFor: each ]
 ]

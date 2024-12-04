@@ -36,7 +36,7 @@ OPToggleRoassalShapeCommand >> basicExecute [
 OPToggleRoassalShapeCommand >> defaultMenuItemName [
 
 	^ ((((self class name withoutPrefix: 'OP') withoutSuffix:
-		     'FigureCommand') splitCamelCase collect: #asLowercase)
+		     'RoassalShapeCommand') splitCamelCase collect: #asLowercase)
 		   joinUsing: ' ') capitalized
 ]
 

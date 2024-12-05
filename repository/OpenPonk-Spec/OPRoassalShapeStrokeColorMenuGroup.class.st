@@ -1,13 +1,13 @@
 Class {
-	#name : 'OPFigureStrokeColorMenuGroup',
-	#superclass : 'OPFigureColorMenuGroup',
-	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#name : 'OPRoassalShapeStrokeColorMenuGroup',
+	#superclass : 'OPRoassalShapeColorMenuGroup',
+	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-Figure-Commands'
+	#tag : 'Diagram-RoassalShape-Commands'
 }
 
 { #category : 'as yet unclassified' }
-OPFigureStrokeColorMenuGroup class >> colors [
+OPRoassalShapeStrokeColorMenuGroup class >> colors [
 
 	^ {
 		  Color black.
@@ -22,13 +22,13 @@ OPFigureStrokeColorMenuGroup class >> colors [
 ]
 
 { #category : 'as yet unclassified' }
-OPFigureStrokeColorMenuGroup class >> styleAttribute [
+OPRoassalShapeStrokeColorMenuGroup class >> styleAttribute [
 
 	^ #strokeColor
 ]
 
 { #category : 'accessing' }
-OPFigureStrokeColorMenuGroup >> name [
+OPRoassalShapeStrokeColorMenuGroup >> name [
 
 	^ 'Stroke color'
 ]

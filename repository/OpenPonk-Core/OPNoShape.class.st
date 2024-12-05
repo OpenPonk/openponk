@@ -76,6 +76,12 @@ OPNoShape >> modelElement [
 	^ nil
 ]
 
+{ #category : 'accessing' }
+OPNoShape >> orOwningElementWithPossibleController [
+
+	^ self
+]
+
 { #category : 'initialization' }
 OPNoShape >> ownedElement: anOPPetriNetPTPlaceShape renderedIn: aRSCanvas [
 	"do nothing"
@@ -94,6 +100,12 @@ OPNoShape >> ownedElement: anOPPetriNetPTPlaceShape willRenderIn: aRSCanvas [
 OPNoShape >> ownedElements [
 
 	^ OrderedCollection empty
+]
+
+{ #category : 'accessing' }
+OPNoShape >> owningElementWithPossibleController [
+
+	^ self
 ]
 
 { #category : 'introspection' }

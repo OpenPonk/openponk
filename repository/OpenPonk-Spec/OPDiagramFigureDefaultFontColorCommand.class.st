@@ -1,9 +1,9 @@
 Class {
 	#name : 'OPDiagramFigureDefaultFontColorCommand',
 	#superclass : 'OPDiagramFigureFontColorCommand',
-	#traits : 'OPTDiagramFigureDefaultColorCommand',
-	#classTraits : 'OPTDiagramFigureDefaultColorCommand classTrait',
-	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#traits : 'OPTRoassalShapeDefaultColorCommand',
+	#classTraits : 'OPTRoassalShapeDefaultColorCommand classTrait',
+	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-Figure-Commands'
+	#tag : 'Diagram-RoassalShape-Commands'
 }

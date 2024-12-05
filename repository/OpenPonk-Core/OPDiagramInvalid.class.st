@@ -1,6 +1,6 @@
 Class {
 	#name : 'OPDiagramInvalid',
-	#superclass : 'Warning',
+	#superclass : 'OPInvalidWarning',
 	#category : 'OpenPonk-Core-Controllers',
 	#package : 'OpenPonk-Core',
 	#tag : 'Controllers'

@@ -235,14 +235,6 @@ OPAbstractDirectionalRelationshipControllerTest >> testCreateUsingAddAsTarget [
 		equals: self diagramElementClass
 ]
 
-{ #category : 'tests - construction' }
-OPAbstractDirectionalRelationshipControllerTest >> testFigureWasRendered [
-
-	self showInDiagram.
-	self assert:
-		(diagramController canvas lines includes: controller roassalShape)
-]
-
 { #category : 'tests' }
 OPAbstractDirectionalRelationshipControllerTest >> testRemovalOfSourceRemovesRelationship [
 
@@ -271,6 +263,14 @@ OPAbstractDirectionalRelationshipControllerTest >> testRemoveController [
 	self
 		denyCollection: diagramController canvas shapes
 		hasSameElements: {  }
+]
+
+{ #category : 'tests - construction' }
+OPAbstractDirectionalRelationshipControllerTest >> testRoassalShapeWasRendered [
+
+	self showInDiagram.
+	self assert:
+		(diagramController canvas lines includes: controller roassalShape)
 ]
 
 { #category : 'as yet unclassified' }

@@ -1,12 +1,12 @@
 Trait {
-	#name : 'OPTDiagramFigureDefaultColorCommand',
-	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#name : 'OPTRoassalShapeDefaultColorCommand',
+	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-Figure-Commands'
+	#tag : 'Diagram-RoassalShape-Commands'
 }
 
 { #category : 'testing' }
-OPTDiagramFigureDefaultColorCommand classSide >> canBeExecutedInContext: aToolContext [
+OPTRoassalShapeDefaultColorCommand classSide >> canBeExecutedInContext: aToolContext [
 
 	| defaultColors |
 	(super canBeExecutedInContext: aToolContext) ifFalse: [ ^ false ].
@@ -18,19 +18,19 @@ OPTDiagramFigureDefaultColorCommand classSide >> canBeExecutedInContext: aToolCo
 ]
 
 { #category : 'accessing' }
-OPTDiagramFigureDefaultColorCommand classSide >> color [
+OPTRoassalShapeDefaultColorCommand classSide >> color [
 
 	^ Color transparent
 ]
 
 { #category : 'accessing' }
-OPTDiagramFigureDefaultColorCommand classSide >> colorFor: aDiagramElement [
+OPTRoassalShapeDefaultColorCommand classSide >> colorFor: aDiagramElement [
 
 	^ self defaultColorOf: aDiagramElement
 ]
 
 { #category : 'accessing' }
-OPTDiagramFigureDefaultColorCommand >> color [
+OPTRoassalShapeDefaultColorCommand >> color [
 
 	| defaultColors |
 	defaultColors := self defaultColors.
@@ -39,7 +39,7 @@ OPTDiagramFigureDefaultColorCommand >> color [
 ]
 
 { #category : 'execution' }
-OPTDiagramFigureDefaultColorCommand >> executeOn: aDiagramElement [
+OPTRoassalShapeDefaultColorCommand >> executeOn: aDiagramElement [
 
-	aDiagramElement removeStylePropertyNamed: self class colorAttribute
+	aDiagramElement removeLocalStylePropertyNamed: self class colorAttribute
 ]

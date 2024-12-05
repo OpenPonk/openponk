@@ -1,19 +1,19 @@
 Class {
-	#name : 'OPDiagramInspectDiagramElementCommand',
-	#superclass : 'OPDiagramFigureDevCommand',
-	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#name : 'OPInspectDiagramElementCommand',
+	#superclass : 'OPRoassalShapeDevCommand',
+	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-Figure-Commands'
+	#tag : 'Diagram-RoassalShape-Commands'
 }
 
 { #category : 'accessing' }
-OPDiagramInspectDiagramElementCommand >> defaultMenuIconName [
+OPInspectDiagramElementCommand >> defaultMenuIconName [
 
 	^ #glamorousInspect
 ]
 
 { #category : 'accessing' }
-OPDiagramInspectDiagramElementCommand >> defaultMenuItemName [
+OPInspectDiagramElementCommand >> defaultMenuItemName [
 
 	| basicName |
 	basicName := 'Inspect diagram element'.
@@ -23,7 +23,7 @@ OPDiagramInspectDiagramElementCommand >> defaultMenuItemName [
 ]
 
 { #category : 'execution' }
-OPDiagramInspectDiagramElementCommand >> execute [
+OPInspectDiagramElementCommand >> execute [
 
 	diagramElements size = 1 ifTrue: [ ^ diagramElements anyOne inspect ].
 	^ diagramElements inspect

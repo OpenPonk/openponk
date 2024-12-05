@@ -24,6 +24,18 @@ OPBaseControllerTest >> controllerClass [
 ]
 
 { #category : 'accessing' }
+OPBaseControllerTest >> controllersByModelsKey [
+
+	^ self model
+]
+
+{ #category : 'accessing' }
+OPBaseControllerTest >> model [
+
+	^ model
+]
+
+{ #category : 'accessing' }
 OPBaseControllerTest >> modelClass [
 	^ self subclassResponsibility
 ]

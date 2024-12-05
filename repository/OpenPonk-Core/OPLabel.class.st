@@ -18,6 +18,12 @@ OPLabel class >> stonAllInstVarNames [
 ]
 
 { #category : 'accessing' }
+OPLabel >> canHaveController [
+
+	^ false
+]
+
+{ #category : 'accessing' }
 OPLabel >> defaultFontColor [
 
 	^ Color black

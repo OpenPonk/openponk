@@ -29,9 +29,3 @@ OPBoundaryControllerTest >> diagramModelClass [
 
 	^ OPTestContainerModel
 ]
-
-{ #category : 'accessing' }
-OPBoundaryControllerTest >> modelClass [
-
-	^ self diagramElementClass
-]

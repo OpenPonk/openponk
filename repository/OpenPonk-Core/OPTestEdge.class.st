@@ -9,5 +9,8 @@ Class {
 { #category : 'rendering' }
 OPTestEdge >> renderBasicShape [
 
-	^ RSLine new
+	^ RSPolyline new
+		  from: self source roassalShape;
+		  to: self target roassalShape;
+		  yourself
 ]

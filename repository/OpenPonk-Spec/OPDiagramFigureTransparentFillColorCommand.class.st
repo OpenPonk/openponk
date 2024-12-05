@@ -1,9 +1,9 @@
 Class {
 	#name : 'OPDiagramFigureTransparentFillColorCommand',
 	#superclass : 'OPDiagramFigureFillColorCommand',
-	#category : 'OpenPonk-Spec-Diagram-Figure-Commands',
+	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-Figure-Commands'
+	#tag : 'Diagram-RoassalShape-Commands'
 }
 
 { #category : 'as yet unclassified' }

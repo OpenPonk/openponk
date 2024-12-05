@@ -29,9 +29,3 @@ OPNoteControllerTest >> diagramModelClass [
 
 	^ OPTestContainerModel
 ]
-
-{ #category : 'accessing' }
-OPNoteControllerTest >> modelClass [
-
-	^ self diagramElementClass
-]

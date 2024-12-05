@@ -183,6 +183,12 @@ OPDiagramElement >> attachedShapesDo: aBlock [
 ]
 
 { #category : 'accessing' }
+OPDiagramElement >> canHaveController [
+
+	^ true
+]
+
+{ #category : 'accessing' }
 OPDiagramElement >> canvas [
 
 	^ roassalShape canvas
@@ -262,6 +268,12 @@ OPDiagramElement >> initialize [
 		               on: self
 		               slot: #targetEdges
 		               oppositeSlot: #target
+]
+
+{ #category : 'testing' }
+OPDiagramElement >> isDiagramOnly [
+
+	^ false
 ]
 
 { #category : 'testing' }
@@ -359,6 +371,13 @@ OPDiagramElement >> movesWithOtherShape [
 ]
 
 { #category : 'accessing' }
+OPDiagramElement >> orOwningElementWithPossibleController [
+
+	self canHaveController ifTrue: [ ^ self ].
+	^ owningElement orOwningElementWithPossibleController
+]
+
+{ #category : 'accessing' }
 OPDiagramElement >> ownModelElement [
 
 	^ self modelElements ifEmpty: [ nil ] ifNotEmpty: #first
@@ -417,6 +436,12 @@ OPDiagramElement >> owningElement: aDiagramElement [
 		                 to: aDiagramElement
 ]
 
+{ #category : 'accessing' }
+OPDiagramElement >> owningElementWithPossibleController [
+
+	^ self owningElement orOwningElementWithPossibleController
+]
+
 { #category : 'actions' }
 OPDiagramElement >> pushBack [
 
@@ -459,8 +484,8 @@ OPDiagramElement >> removeLocalStylePropertyNamed: aName [
 OPDiagramElement >> removeRender [
 
 	self ownedElements do: [ :each | each removeRender ].
-	self attachedShapesDo: [ :each | each remove ].
 	roassalShape ifNil: [ ^ self ].
+	self attachedShapesDo: [ :each | each remove ].
 	roassalShape remove.
 	roassalShape := nil
 ]
@@ -592,6 +617,12 @@ OPDiagramElement >> shouldBeSelectable [
 
 	^ self selectableInteraction ~= OPRSNoInteraction and: [
 		  self selectableInteraction class ~= OPRSNoInteraction ]
+]
+
+{ #category : 'accessing' }
+OPDiagramElement >> shouldHaveController [
+
+	^ self canHaveController and: [ self ownModelElement isNotNil ]
 ]
 
 { #category : 'accessing' }

@@ -5,7 +5,7 @@ HandMorph >> sendKeyboardEvent: anEvent [
 
 	self flag:
 		'Part of ugly hack to find out if ctrl is currently pressed'.
-	OPDiagramRemoveFigureCommand lastEvent: anEvent.
+	OPRemoveModelOfRoassalShapeCommand lastEvent: anEvent.
 	self flag:
 		'Original method below'.
 		
@@ -22,7 +22,7 @@ HandMorph >> sendMouseEvent: anEvent [
 
 	self flag:
 		'Part of ugly hack to find out if ctrl is currently pressed'.
-	OPDiagramRemoveFigureCommand lastEvent: anEvent.
+	OPRemoveModelOfRoassalShapeCommand lastEvent: anEvent.
 	self flag:
 		'Original method below'.
 		

@@ -49,7 +49,7 @@ OPNote >> attachedElementShapes [
 { #category : 'accessing' }
 OPNote >> attachedShapes [
 
-	^ super attachedShapes , self attachedElementShapes , lines
+	^ super attachedShapes , self attachedElementShapes , self lines
 ]
 
 { #category : 'creating - subelements' }
@@ -149,6 +149,12 @@ OPNote >> initialize [
 		to: self
 ]
 
+{ #category : 'accessing' }
+OPNote >> lines [
+
+	^ lines ifNil: [ OrderedCollection new ]
+]
+
 { #category : 'printing' }
 OPNote >> printOn: aStream [
 
@@ -181,7 +187,7 @@ OPNote >> removeRender [
 	leftFillBox := nil.
 	bottomFillBox := nil.
 	triangle := nil.
-	lines removeAll.
+	self lines removeAll
 ]
 
 { #category : 'rendering' }

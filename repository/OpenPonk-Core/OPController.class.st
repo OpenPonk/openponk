@@ -56,7 +56,7 @@ OPController >> canBeTargetFor: aController [
 	^ false
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPController >> commonModelClassPrefix [
 	^ 'OP'
 ]
@@ -128,7 +128,7 @@ OPController >> elementsToShowInside [
 	^ #(  )
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'ui interaction' }
 OPController >> ensureDeselected [
 
 	self subclassResponsibility
@@ -140,16 +140,6 @@ OPController >> ensureDiagramElement [
 	self assert: self diagramElement exists.
 	self linkDiagramElementToModel.
 	^ self diagramElement
-]
-
-{ #category : 'figures' }
-OPController >> figure [
-
-	self
-		deprecated: 'Use #roassalShape instead'
-		transformWith: '`@receiver figure' -> '`@receiver roassalShape'.
-
-	^ self roassalShape
 ]
 
 { #category : 'canvas actions' }
@@ -329,17 +319,6 @@ OPController >> removeDiagramElement [
 ]
 
 { #category : 'destruction' }
-OPController >> removeFigure [
-
-	self
-		deprecated: 'Use #removeDiagramElement instead'
-		transformWith:
-		'`@receiver removeFigure' -> '`@receiver removeDiagramElement'.
-	self ensureDeselected.
-	self figure remove
-]
-
-{ #category : 'destruction' }
 OPController >> removeFromDiagramController [
 
 	self diagramController ifNil: [ ^ self ].
@@ -350,15 +329,8 @@ OPController >> removeFromDiagramController [
 { #category : 'destruction' }
 OPController >> removeModel [
 
-	self diagramController elementRemoved
-]
-
-{ #category : 'deprecated' }
-OPController >> removeModelElement: aModelElement [
-	"Remove self as target of aModelElement"
-	self deprecated: 'use #removeModel on the proper controller instead.'.
-
-	(self diagramController controllerForModel: aModelElement) removeModel
+	self diagramController elementRemoved.
+	self model: nil
 ]
 
 { #category : 'destruction' }

@@ -1,6 +1,8 @@
 Class {
 	#name : 'OPDiagramOnlyShape',
 	#superclass : 'OPBoundNode',
+	#traits : 'TComparable',
+	#classTraits : 'TComparable classTrait',
 	#instVars : [
 		'uuid',
 		'announcer'
@@ -39,10 +41,32 @@ OPDiagramOnlyShape class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #uuid )
 ]
 
+{ #category : 'comparing' }
+OPDiagramOnlyShape >> < aComparable [
+	"Answer whether the receiver is less than the argument."
+
+	^ aComparable class = self class and: [ self uuid < aComparable uuid ]
+]
+
+{ #category : 'comparing' }
+OPDiagramOnlyShape >> = aComparable [
+	"Compare the receiver with the argument and answer with true if the
+	receiver is equal to the argument. Otherwise answer false."
+
+	^ aComparable class = self class and: [ self uuid = aComparable uuid ]
+]
+
 { #category : 'accessing' }
 OPDiagramOnlyShape >> announcer [
 
 	^ announcer ifNil: [ announcer := Announcer new ]
+]
+
+{ #category : 'comparing' }
+OPDiagramOnlyShape >> hash [
+	"Hash must be redefined whenever = is redefined."
+
+	^ self uuid hash
 ]
 
 { #category : 'initialization' }
@@ -50,6 +74,12 @@ OPDiagramOnlyShape >> initialize [
 
 	super initialize.
 	uuid := UUID new
+]
+
+{ #category : 'testing' }
+OPDiagramOnlyShape >> isDiagramOnly [
+
+	^ true
 ]
 
 { #category : 'accessing' }

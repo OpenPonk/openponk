@@ -10,7 +10,7 @@ Class {
 OPAbstractNodeTest >> testDoesNotMoveOnShapeCreation [
 
 	| diagram originalRoassalPosition movedRoassalPosition newShape |
-	diagram := OPDiagram new.
+	diagram := OPOpenPonkDiagram new.
 	diagram renderIn: canvas.
 	shape owningElement: diagram.
 	shape modelElement: model.

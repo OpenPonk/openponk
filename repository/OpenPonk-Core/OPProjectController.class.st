@@ -387,7 +387,7 @@ OPProjectController >> selectInDiagram: aModelElement [
 				palette selectSelectionTool selectedTool 
 					selectedTargetControllers: { ctrl }.
 				dctrl editor canvasPresenter roassalView canvas camera 
-					translateTo: ctrl figure position.
+					translateTo: ctrl roassalShape position.
 				^ self ] ] ]
 ]
 
@@ -401,12 +401,12 @@ OPProjectController >> spApplication [
 OPProjectController >> updateDiagram: aDiagram [
 
 	| focusedController |
-	controllers do: [ :each | each validate ].
 	focusedController := workbench focusedEditor ifNotNil: [ :editor |
 		                     editor diagramController ].
 	controllers
 		detect: [ :ctrl | ctrl diagramElement = aDiagram ]
 		ifFound: [ :ctrl |
+			ctrl validate.
 			aDiagram isOpen: true.
 			aDiagram isRendered ifTrue: [ aDiagram updateFromRender ].
 			aDiagram isSelected: ctrl = focusedController ]

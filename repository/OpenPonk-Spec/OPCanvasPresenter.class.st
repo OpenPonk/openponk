@@ -49,7 +49,7 @@ OPCanvasPresenter >> createCommandContext [
 OPCanvasPresenter >> createCommandContextForSelection: selectedItems [
 	"simple context has no information about selected items"
 
-	^ OPDiagramFigureContext for: self of: selectedItems
+	^ OPRoassalShapeContext for: self of: selectedItems
 ]
 
 { #category : 'accessing' }

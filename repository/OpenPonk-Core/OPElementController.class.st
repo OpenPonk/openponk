@@ -10,55 +10,12 @@ Class {
 	#tag : 'Controllers'
 }
 
-{ #category : 'deprecated' }
-OPElementController >> attach [
-	self deprecated: 'Use createInModel:andShowInDiagram: instead.'.
-"	self registerModelEvents: model.
-	self attachFigure"
-]
-
-{ #category : 'deprecated' }
-OPElementController >> attachFigure [
-	"add figure to the view"
-
-	self deprecated: 'Use createInModel:andShowInDiagram: instead.'
-	"
-	| newFigure |
-	newFigure := self figure.
-	newFigure view ifNil: [ newFigure renderIn: self diagramController view ].
-	self diagramController figureAdded: newFigure.
-	self refreshFigure"
-]
-
-{ #category : 'deprecated' }
-OPElementController >> attachTo: aDiagramController [
-	self deprecated: 'Use createInModel:andShowInDiagram: instead.'.
-	"self diagramController: aDiagramController.
-	aDiagramController controllers add: self.
-
-	self loadModel.
-	self registerModelEvents: model.
-	self attachFigure"
-]
-
 { #category : 'construction' }
 OPElementController >> createDiagramElement [
 
 	^ self diagramElement: (self diagramElementClass
 			   in: self ownerDiagramElement
 			   forModelElement: self model)
-]
-
-{ #category : 'deprecated' }
-OPElementController >> createFigure [
-
-	self deprecated: 'Use renderFigureIn: instead.'
-]
-
-{ #category : 'deprecated' }
-OPElementController >> createModel [
-	self deprecated: 'Use createModelIn: instead.'
-"	^ self model ifNil: [ self modelClass new ]"
 ]
 
 { #category : 'construction' }
@@ -87,6 +44,12 @@ OPElementController >> dependingOnElements [
 OPElementController >> diagramElementClass [
 
 	^ self subclassResponsibility
+]
+
+{ #category : 'diagram elements' }
+OPElementController >> diagramElementOwnerWithPossibleController [
+
+	^ self diagramElement owningElementWithPossibleController
 ]
 
 { #category : 'as yet unclassified' }
@@ -150,6 +113,12 @@ OPElementController >> hookDiagramElement [
 
 { #category : 'testing' }
 OPElementController >> isCommon [
+	^ false
+]
+
+{ #category : 'testing' }
+OPElementController >> isDiagramOnly [
+
 	^ false
 ]
 

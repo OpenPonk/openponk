@@ -82,12 +82,17 @@ OPDiagramsList >> contextMenu: aMenuPresenter for: aDiagram [
 
 { #category : 'actions' }
 OPDiagramsList >> copyDiagram: aView [
+
 	| name newView |
-	[ name := UIManager default
-		request: 'Copy diagram "' , (self displayFor: aView) , '". New name: '
-		initialAnswer: aView name
-		title: 'Copy' ]
-		doWhileTrue: [ name isNotNil and: [ name isEmpty or: [ name = aView name ] ] ].
+	name := nil.
+	[
+	name := UIManager default
+		        request:
+		        'Copy diagram "' , (self displayFor: aView)
+		        , '". New name: '
+		        initialAnswer: 'Copy of ' , aView name
+		        title: 'Copy' ] doWhileTrue: [
+		name isNotNil and: [ name isEmpty or: [ name = aView name ] ] ].
 	name ifNil: [ ^ self ].
 	self workbench projectController updateDiagrams.
 	newView := project copyDiagram: aView.

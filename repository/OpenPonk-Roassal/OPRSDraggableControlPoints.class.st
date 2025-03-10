@@ -13,7 +13,7 @@ Class {
 	#tag : 'Polyline'
 }
 
-{ #category : 'private' }
+{ #category : 'actions' }
 OPRSDraggableControlPoints >> connectWithCanvas [
 
 	| interaction |
@@ -37,7 +37,7 @@ OPRSDraggableControlPoints >> connectWithCanvas [
 		for: self
 ]
 
-{ #category : 'initialization' }
+{ #category : 'actions' }
 OPRSDraggableControlPoints >> enable [
 
 	canvas := line canvas.
@@ -63,7 +63,7 @@ OPRSDraggableControlPoints >> onShape: aLine [
 		ifNotNil: [ self enable ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPRSDraggableControlPoints >> promoteFor: aLine handle: aMidpointHandle [
 
 	| newPoint |
@@ -88,7 +88,7 @@ OPRSDraggableControlPoints >> promoteFor: aLine handle: aMidpointHandle [
 	aLine canvas morph resetShapeBeingDragged
 ]
 
-{ #category : 'private' }
+{ #category : 'actions' }
 OPRSDraggableControlPoints >> rebuild [
 
 	isActive ifFalse: [ ^ self ].
@@ -98,16 +98,19 @@ OPRSDraggableControlPoints >> rebuild [
 	line signalUpdate
 ]
 
-{ #category : 'private' }
+{ #category : 'actions' }
 OPRSDraggableControlPoints >> remove [
 
 	self removeHandles.
 	line announcer unsubscribe: self.
 	canvas ifNil: [ ^ self ].
+	canvas
+		propertyAt: OPRSSelectableCanvas
+		ifPresent: [ :interaction | interaction announcer unsubscribe: self ].
 	canvas announcer unsubscribe: self
 ]
 
-{ #category : 'private' }
+{ #category : 'actions' }
 OPRSDraggableControlPoints >> removeHandles [
 	isActive
 		ifFalse: [ ^ self ].
@@ -119,7 +122,7 @@ OPRSDraggableControlPoints >> removeHandles [
 	isActive := false
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPRSDraggableControlPoints >> showHandles [
 
 	isActive ifTrue: [ ^ self ].
@@ -133,14 +136,14 @@ OPRSDraggableControlPoints >> showHandles [
 	isActive := true
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPRSDraggableControlPoints >> showMidpointHandles [
 
-	((line isKindOf: RSBezier) and: [ line controlPoints size >= 4 ]) 
+	((line isKindOf: RSBezier) and: [ line controlPoints size >= 4 ])
 		ifTrue: [ ^ self ].
 	midpointHandles := { line from }
 	                   , (handles collect: [ :each | each shape ])
-	                   , { line to } overlappingPairsCollect: [ :from :to | 
+	                   , { line to } overlappingPairsCollect: [ :from :to |
 		                   OPRSControlPointCreatorHandle new
 			                   on: line between: from and: to;
 			                   yourself ].

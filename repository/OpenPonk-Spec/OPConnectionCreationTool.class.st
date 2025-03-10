@@ -120,12 +120,14 @@ OPConnectionCreationTool >> selectedTargetControllers: aCollectionOfControllers 
 	| targetController |
 	aCollectionOfControllers size = 1 ifFalse: [ ^ self ].
 	targetController := aCollectionOfControllers anyOne.
-	(targetController canBeTargetFor: connectionController) ifFalse: [ 
+	(targetController canBeTargetFor: connectionController) ifFalse: [
 		^ self ].
 	targetController addAsTargetFor: connectionController.
 	self palette selectSelectionTool.
-	self palette selectedTool selectedControllers:
-		{ connectionController }.
+	connectionController roassalShape
+		propertyAt: OPRSSelectable
+		ifPresent: [ :selectable |
+			selectable fakeClicked: connectionController roassalShape ].
 	onComplete value: connectionController.
 	connectionController := nil.
 	self deselect

@@ -62,9 +62,11 @@ OPCreationTool >> selectedControllers: aCollectionOfControllers [
 		^ self ].
 	targetController addAsTargetFor: objectController.
 	self palette selectSelectionTool.
-	self palette selectedTool selectedControllers: { objectController }.
+	objectController roassalShape
+		propertyAt: OPRSSelectable
+		ifPresent: [ :selectable |
+		selectable fakeClicked: objectController roassalShape ].
 	onComplete value: objectController.
-	self editor openFormOn: objectController.
 	objectController := nil
 ]
 

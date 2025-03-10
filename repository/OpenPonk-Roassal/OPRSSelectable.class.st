@@ -89,6 +89,17 @@ OPRSSelectable >> clicked: aShape by: anEvent [
 				'OPRSSelectable requires OPRSSelectableCanvas on canvas' ]
 ]
 
+{ #category : 'hooks' }
+OPRSSelectable >> fakeClicked: aShape [
+	"variant with fake event"
+
+	self clicked: aShape by: (RSMouseLeftClick new
+			 canvas: aShape canvas;
+			 shape: aShape;
+			 position: aShape position;
+			 yourself)
+]
+
 { #category : 'as yet unclassified' }
 OPRSSelectable >> highlightAdornments: aBlock [
 	"Show adornments (little icons with actions). The block receives an OPRSAdornmentBuilder"

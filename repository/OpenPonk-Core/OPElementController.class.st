@@ -52,7 +52,7 @@ OPElementController >> diagramElementOwnerWithPossibleController [
 	^ self diagramElement owningElementWithPossibleController
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'ui interaction' }
 OPElementController >> ensureDeselected [
 
 	| roassalShape |
@@ -60,13 +60,9 @@ OPElementController >> ensureDeselected [
 	roassalShape := self roassalShape.
 	roassalShape isSelectable ifFalse: [ ^ self ].
 	roassalShape isSelected ifFalse: [ ^ self ].
-	roassalShape propertyAt: OPRSSelectable ifPresent: [ :selectable |
-		selectable clicked: roassalShape by: (RSMouseLeftClick new
-				 controlKeyPressed: true;
-				 canvas: roassalShape canvas;
-				 shape: roassalShape;
-				 position: roassalShape position;
-				 yourself) ]
+	roassalShape
+		propertyAt: OPRSSelectable
+		ifPresent: [ :selectable | selectable fakeClicked: roassalShape ]
 ]
 
 { #category : 'accessing' }

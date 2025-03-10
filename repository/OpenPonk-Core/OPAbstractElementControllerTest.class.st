@@ -376,7 +376,8 @@ OPAbstractElementControllerTest >> testModelForFigure [
 
 	self showInDiagram.
 	self
-		assert: (diagramController modelForFigure: controller roassalShape)
+		assert:
+		(diagramController modelForRoassalShape: controller roassalShape)
 		equals: self model
 ]
 

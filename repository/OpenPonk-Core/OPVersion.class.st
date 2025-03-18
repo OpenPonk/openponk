@@ -317,6 +317,13 @@ OPVersion >> needsDownloadInfo [
 	^ commit isNil
 ]
 
+{ #category : 'printing' }
+OPVersion >> printOn: aStream [
+
+	super printOn: aStream.
+	aStream << ' (' << self fullVersionString << ')'
+]
+
 { #category : 'accessing' }
 OPVersion >> releaseName [
 	releaseName ifNil: [ self downloadInfo ].

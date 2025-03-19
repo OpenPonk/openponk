@@ -5,6 +5,7 @@
 		{ "repository" : "OpenPonk/petrinets", "branch" : "master", "build-dependent" : false },
 		{ "repository" : "OpenPonk/fsm-editor", "branch" : "master", "build-dependent" : false },
 		{ "repository" : "OpenPonk/BPMN", "branch" : "master", "build-dependent" : false },
-		{ "repository" : "OpenPonk/markov-chains", "branch" : "master", "build-dependent" : false }
+		{ "repository" : "OpenPonk/markov-chains", "branch" : "master", "build-dependent" : false },
+		{ "repository" : "OpenPonk/ERD", "branch" : "main", "build-dependent" : false }
 	]
 }

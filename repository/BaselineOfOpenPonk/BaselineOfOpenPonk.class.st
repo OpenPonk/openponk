@@ -52,7 +52,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 
 	spec
 		baseline: 'NeoJSON'
-		with: [ spec repository: 'github://svenvc/NeoJSON:17efabc' ].
+		with: [ spec repository: 'github://svenvc/NeoJSON:9af34bb' ].
 
 	spec baseline: 'Roassal' with: [
 		spec

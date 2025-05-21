@@ -56,7 +56,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 
 	spec baseline: 'Roassal' with: [
 		spec
-			repository: 'github://pharo-graphics/Roassal:v1.06f';
+			repository: 'github://pharo-graphics/Roassal:v1.7.1';
 			loads: #Full;
 			postLoadDoIt: #removeRoassalExplicitRequirements ].
 

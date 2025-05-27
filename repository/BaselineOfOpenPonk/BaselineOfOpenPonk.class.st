@@ -48,7 +48,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 
 	spec
 		baseline: 'Mocketry'
-		with: [ spec repository: 'github://dionisiydk/Mocketry:v7.0.2' ].
+		with: [ spec repository: 'github://JanBliznicenko/Mocketry' ].
 
 	spec
 		baseline: 'NeoJSON'

@@ -323,7 +323,8 @@ OPProjectController >> replaceWritableProjectFile [
 	^ self project storageFile: ((StSaveFilePresenter new
 			    title: 'Set a file for saving an OpenPonk project';
 			    extensions: #( opp ) named: 'OP projects';
-			    openModal) ifNil: [ OPProjectSaveCanceledException signal ])
+			    openModal;
+			    selectedEntry) ifNil: [ OPProjectSaveCanceledException signal ])
 ]
 
 { #category : 'saving' }

@@ -233,8 +233,8 @@ OPProject >> storageFile [
 
 { #category : 'accessing' }
 OPProject >> storageFile: anObject [
-	storageFile := anObject.
-	^ storageFile
+
+	^ storageFile := anObject
 ]
 
 { #category : 'accessing' }

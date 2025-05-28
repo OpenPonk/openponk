@@ -148,14 +148,14 @@ OPProject >> initialize [
 	name whenChangedDo: [ dirty value: true ]
 ]
 
-{ #category : 'inspecting' }
-OPProject >> inspectionItems [
+{ #category : 'as yet unclassified' }
+OPProject >> inspectionItems: aBuilder [
 
 	<inspectorPresentationOrder: 100 title: 'Models and Diagrams'>
 	| diagramsByModels |
 	diagramsByModels := self modelsAndDiagrams.
 
-	^ SpTreePresenter new
+	^ aBuilder newTree
 		  roots: diagramsByModels keys;
 		  children: [ :each | diagramsByModels at: each ifAbsent: [ #(  ) ] ];
 		  display: #name;

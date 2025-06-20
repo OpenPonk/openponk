@@ -14,8 +14,9 @@ Class {
 
 { #category : 'running' }
 OPProjectDirectoryMaterializerTest >> setUp [
+
 	super setUp.
-	OPPluginRegistry setDefault: (OPPluginRegistry new add: OPTestPlugin new).
+	OPPluginRegistry setDefaultForTesting.
 	reader := OPProjectDirectoryMaterializer new.
 	self setUpBasicProject
 ]

@@ -6,11 +6,17 @@ Instead set & reset the default of DCPluginRegistry.
 "
 Class {
 	#name : 'OPTestPlugin',
-	#superclass : 'Object',
+	#superclass : 'OPPlugin',
 	#category : 'OpenPonk-Core-Tests',
 	#package : 'OpenPonk-Core',
 	#tag : 'Tests'
 }
+
+{ #category : 'testing' }
+OPTestPlugin class >> isTestingOnly [
+
+	^ true
+]
 
 { #category : 'accessing' }
 OPTestPlugin >> diagramControllerClass [
@@ -25,6 +31,13 @@ OPTestPlugin >> diagramSerializerClass [
 { #category : 'accessing' }
 OPTestPlugin >> isPluginFor: aModel [
 	^ self modelClass = aModel class
+]
+
+{ #category : 'accessing' }
+OPTestPlugin >> layouterClass [
+	"Create your own subclass of OPLayouter or use OPNoLayouter which does nothing"
+
+	^ OPNoLayouter
 ]
 
 { #category : 'accessing' }

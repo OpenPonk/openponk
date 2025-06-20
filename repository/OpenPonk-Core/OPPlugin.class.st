@@ -20,6 +20,12 @@ Class {
 	#tag : 'Plugin'
 }
 
+{ #category : 'testing' }
+OPPlugin class >> isTestingOnly [
+
+	^ false
+]
+
 { #category : 'accessing' }
 OPPlugin >> diagramClass [
 	self
@@ -55,7 +61,7 @@ OPPlugin >> layouterClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'model updates' }
 OPPlugin >> mergeModels: aModelsCollection [
 
 	self notYetImplemented

@@ -26,14 +26,24 @@ OPPluginRegistry class >> default [
 
 { #category : 'singleton' }
 OPPluginRegistry class >> resetDefault [
+
 	<script>
-	^ Default := nil
+	^ self setDefault: nil
 ]
 
 { #category : 'singleton' }
 OPPluginRegistry class >> setDefault: aDefault [
-	<script>
+
 	^ Default := aDefault
+]
+
+{ #category : 'singleton' }
+OPPluginRegistry class >> setDefaultForTesting [
+
+	<script>
+	^ self setDefault: (self new
+			   add: OPTestPlugin new;
+			   yourself)
 ]
 
 { #category : 'instance creation' }
@@ -50,12 +60,11 @@ OPPluginRegistry >> add: aPlugin [
 
 { #category : 'adding' }
 OPPluginRegistry >> addAll [
-	plugins := OrderedCollection new.
-	OPPlugin
-		allSubclassesWithLevelDo: [ :each :level | 
-			level > 0
-				ifTrue: [ plugins add: each new ] ]
-		startingLevel: 0
+
+	plugins := OPPlugin allSubclasses
+		           reject: [ :each |
+		           each isAbstract or: [ each isTestingOnly ] ]
+		           thenCollect: [ :each | each new ]
 ]
 
 { #category : 'accessing' }

@@ -26,26 +26,6 @@ OPRoassalShapeCommand class >> contextMenuActivation [
 	^ CmdContextMenuActivation byRootGroupItemFor: OPCanvasPresenter
 ]
 
-{ #category : 'example' }
-OPRoassalShapeCommand class >> example [
-	| proj model |
-	proj := OPProject new.
-	model := OPTestContainerModel new.
-	model entities add: OPTestEntityModel new.
-	proj addModel: model.
-	proj open
-]
-
-{ #category : 'example' }
-OPRoassalShapeCommand class >> example2 [
-	| c a |
-	c := OPCanvasPresenter new.
-	a := CmdContextMenuActivation
-		buildContextMenuFor: c
-		inContext: (OPRoassalShapeContext for: c).
-	a openInWindow
-]
-
 { #category : 'testing' }
 OPRoassalShapeCommand class >> isAbstract [
 	^ self = OPRoassalShapeCommand

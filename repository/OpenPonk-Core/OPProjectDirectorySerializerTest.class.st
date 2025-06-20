@@ -11,9 +11,10 @@ Class {
 
 { #category : 'running' }
 OPProjectDirectorySerializerTest >> setUp [
+
 	super setUp.
 	persistence := OPProjectDirectorySerializer new.
-	OPPluginRegistry setDefault: (OPPluginRegistry new add: OPTestPlugin new)
+	OPPluginRegistry setDefaultForTesting
 ]
 
 { #category : 'running' }

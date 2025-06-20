@@ -64,7 +64,6 @@ OPModelTreeWidget >> doubleClick [
 	OPPluginRegistry default plugins
 		detect: [ :each | each modelClass = element class ]
 		ifFound: [ self openCommand: element ]
-		ifNone: [  ]
 ]
 
 { #category : 'menu commands' }

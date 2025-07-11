@@ -293,7 +293,7 @@ OPVersion >> githubWorkflowRunId: anObject [
 OPVersion >> hash [
 
 	self isRelease ifTrue: [ ^ self releaseName hash ].
-	^ self commit hash xor: self buildDate hash
+	^ self commit hash bitXor: self buildDate hash
 ]
 
 { #category : 'testing' }

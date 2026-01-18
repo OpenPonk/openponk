@@ -14,8 +14,8 @@ OPDownloadStats class >> downloadStats [
 	<script>
 	| repos year |
 	repos := #( plugins 'borm-editor' BPMN 'class-editor' ERD 'fsm-editor'
-	            'markov-chains' petrinets ).
-	year := 2023.
+	            'markov-chains' petrinets DEMO).
+	year := 2026.
 
 	'dls.csv' asFileReference
 		ensureDelete;

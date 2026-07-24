@@ -209,13 +209,13 @@ OPNote >> renderShapeDetails [
 	self createOwnedFillBoxes.
 	self createOwnedCornerTriangle.
 	self createOwnedBorderLines.
-	self updateOwnedElements.
+	self updateAttachedElements.
 	self roassalShape
 		when: RSPositionChangedEvent
-		do: [ self updateOwnedElements ]
+		do: [ self updateAttachedElements ]
 		for: self;
 		when: RSExtentChangedEvent
-		do: [ self updateOwnedElements ]
+		do: [ self updateAttachedElements ]
 		for: self
 ]
 
@@ -249,7 +249,7 @@ OPNote >> text: aString [
 ]
 
 { #category : 'rendering' }
-OPNote >> updateOwnedElements [
+OPNote >> updateAttachedElements [
 
 	bottomRightBox translateTo:
 		roassalShape encompassingRectangle bottomRight.

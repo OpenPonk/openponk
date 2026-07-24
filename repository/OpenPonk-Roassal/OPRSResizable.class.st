@@ -10,11 +10,11 @@ Class {
 	#tag : 'Interactions'
 }
 
-{ #category : 'accessing' }
+{ #category : 'accessing - shapes' }
 OPRSResizable >> boxShape [
 
 	^ super boxShape
-		  borderColor: Color blue;
+		  borderColor: Color blue translucent;
 		  yourself
 ]
 

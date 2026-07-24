@@ -297,7 +297,21 @@ OPDynamicForm >> rebuildWidget [
 ]
 
 { #category : 'private' }
+OPDynamicForm >> removeLast [
+
+	components removeLast.
+	self focusOrder removeLast.
+]
+
+{ #category : 'private' }
+OPDynamicForm >> removeLast: anAmount [
+
+	anAmount timesRepeat: [ self removeLast ]
+]
+
+{ #category : 'private' }
 OPDynamicForm >> reset [
 
-	components := OrderedCollection new
+	components := OrderedCollection new.
+	self focusOrder: OrderedCollection new
 ]

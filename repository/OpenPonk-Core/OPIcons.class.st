@@ -23,7 +23,7 @@ OPIcons class >> at: aName ifAbsent: aBlock [
 { #category : 'GT-InspectorExtensions' }
 OPIcons class >> iconSelectors [
 
-	^ self class selectorsInCategory: 'accessing - icons'
+	^ self class selectorsInProtocol: 'accessing - icons'
 ]
 
 { #category : 'as yet unclassified' }

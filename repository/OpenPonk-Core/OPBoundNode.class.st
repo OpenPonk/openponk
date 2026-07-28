@@ -45,12 +45,6 @@ OPBoundNode >> extent [
 ]
 
 { #category : 'as yet unclassified' }
-OPBoundNode >> isResizableByUser [
-
-	^ true
-]
-
-{ #category : 'as yet unclassified' }
 OPBoundNode >> moveToEmptySpace [
 
 	| spacing neededSpace canvasRectangle possibleCanvas occupiedRectangles |
@@ -98,6 +92,12 @@ OPBoundNode >> renderIn: aCanvas [
 	self bounds ifNil: [
 		self movesWithOtherShape ifFalse: [ self moveToEmptySpace ] ].
 	^ roassalShape
+]
+
+{ #category : 'interactions' }
+OPBoundNode >> shouldBePositionableByUser [
+
+	^ true
 ]
 
 { #category : 'as yet unclassified' }

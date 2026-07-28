@@ -34,12 +34,6 @@ OPEdgeLabel >> renderShapeDetails [
 	self anchorToEdge
 ]
 
-{ #category : 'interactions' }
-OPEdgeLabel >> shouldBePositionableByUser [
-
-	^ true
-]
-
 { #category : 'as yet unclassified' }
 OPEdgeLabel >> updateFromRender [
 

@@ -104,12 +104,6 @@ OPBoundary >> setupLabelLocation: aLocation [
 ]
 
 { #category : 'interactions' }
-OPBoundary >> shouldBePositionableByUser [
-
-	^ true
-]
-
-{ #category : 'interactions' }
 OPBoundary >> shouldBeResizableByUser [
 
 	^ true

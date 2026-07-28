@@ -279,7 +279,7 @@ OPDiagramElement >> isDiagramOnly [
 { #category : 'testing' }
 OPDiagramElement >> isPositionableByUser [
 
-	^ false
+	^ self isRendered and: [ self shouldBePositionableByUser ]
 ]
 
 { #category : 'testing' }
@@ -294,6 +294,12 @@ OPDiagramElement >> isRenderedWithOwnedElements [
 	^ self isRendered and: [ 
 		  self ownedElements allSatisfy: [ :each | 
 			  each isRenderedWithOwnedElements ] ]
+]
+
+{ #category : 'testing' }
+OPDiagramElement >> isResizableByUser [
+
+	^ self isRendered and: [ self shouldBeResizableByUser ]
 ]
 
 { #category : 'testing' }

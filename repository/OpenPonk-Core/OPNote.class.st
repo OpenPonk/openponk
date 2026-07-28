@@ -225,12 +225,6 @@ OPNote >> selectableInteraction [
 	^ OPRSSelectable
 ]
 
-{ #category : 'creating - subelements' }
-OPNote >> shouldBePositionableByUser [
-
-	^ true
-]
-
 { #category : 'interactions' }
 OPNote >> shouldBeResizableByUser [
 

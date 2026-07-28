@@ -77,12 +77,6 @@ OPLabel >> fontSize [
 		  ifAbsent: [ self defaultFontSize ]
 ]
 
-{ #category : 'testing' }
-OPLabel >> isResizableByUser [
-
-	^ false
-]
-
 { #category : 'accessing' }
 OPLabel >> noText [
 

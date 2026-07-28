@@ -45,21 +45,9 @@ OPDiagram >> documentation: anObject [
 ]
 
 { #category : 'testing' }
-OPDiagram >> isPositionableByUser [
-
-	^ false
-]
-
-{ #category : 'testing' }
 OPDiagram >> isRendered [
 
 	^ roassalShape isNotNil
-]
-
-{ #category : 'testing' }
-OPDiagram >> isResizableByUser [
-
-	^ false
 ]
 
 { #category : 'accessing' }

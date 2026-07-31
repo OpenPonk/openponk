@@ -127,6 +127,12 @@ OPDiagram >> resolution: anObject [
 	resolution := anObject
 ]
 
+{ #category : 'interactions' }
+OPDiagram >> shouldBePositionableByUser [
+
+	^ false
+]
+
 { #category : 'rendering' }
 OPDiagram >> updateFromRender [
 

@@ -19,6 +19,12 @@ OPBaseControllerTest class >> isAbstract [
 ]
 
 { #category : 'accessing' }
+OPBaseControllerTest >> controller [
+
+	^ controller
+]
+
+{ #category : 'accessing' }
 OPBaseControllerTest >> controllerClass [
 	^ self subclassResponsibility
 ]

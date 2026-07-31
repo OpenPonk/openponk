@@ -4,8 +4,7 @@ Class {
 	#traits : 'TComparable',
 	#classTraits : 'TComparable classTrait',
 	#instVars : [
-		'uuid',
-		'announcer'
+		'uuid'
 	],
 	#category : 'OpenPonk-Core-CommonElements',
 	#package : 'OpenPonk-Core',
@@ -56,12 +55,6 @@ OPDiagramOnlyShape >> = aComparable [
 	^ aComparable class = self class and: [ self uuid = aComparable uuid ]
 ]
 
-{ #category : 'accessing' }
-OPDiagramOnlyShape >> announcer [
-
-	^ announcer ifNil: [ announcer := Announcer new ]
-]
-
 { #category : 'comparing' }
 OPDiagramOnlyShape >> hash [
 	"Hash must be redefined whenever = is redefined."
@@ -105,13 +98,4 @@ OPDiagramOnlyShape >> updateRenderFromModel [
 OPDiagramOnlyShape >> uuid [
 
 	^ uuid
-]
-
-{ #category : 'announcement registration' }
-OPDiagramOnlyShape >> when: anAnnouncementClass send: aSelector to: aReceiver [
-
-	^ self announcer
-		  when: anAnnouncementClass
-		  send: aSelector
-		  to: aReceiver
 ]

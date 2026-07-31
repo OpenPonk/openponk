@@ -9,7 +9,8 @@ Class {
 		'sharedStyle',
 		'localStyle',
 		'ownedElements',
-		'roassalShape'
+		'roassalShape',
+		'announcer'
 	],
 	#category : 'OpenPonk-Core-DiagramElements',
 	#package : 'OpenPonk-Core',
@@ -166,6 +167,27 @@ OPDiagramElement >> allOwnedShapesPositionableByUser [
 OPDiagramElement >> allShapesPositionableByUser [
 
 	^ self topMostOwningElement allOwnedShapesPositionableByUser
+]
+
+{ #category : 'announcing' }
+OPDiagramElement >> announceRenderRemoved: aRoassalShape [
+
+	self announcer announce: (OPDiagramElementRenderRemovedAnnouncement
+			 forDiagramElement: self
+			 roassalShape: aRoassalShape)
+]
+
+{ #category : 'announcing' }
+OPDiagramElement >> announceRendered [
+
+	self announcer announce:
+		(OPDiagramElementRenderedAnnouncement forDiagramElement: self)
+]
+
+{ #category : 'accessing' }
+OPDiagramElement >> announcer [
+
+	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
 { #category : 'accessing' }
@@ -489,11 +511,15 @@ OPDiagramElement >> removeLocalStylePropertyNamed: aName [
 { #category : 'removing' }
 OPDiagramElement >> removeRender [
 
+	| oldRoassalShape |
 	self ownedElements do: [ :each | each removeRender ].
 	roassalShape ifNil: [ ^ self ].
 	self attachedShapesDo: [ :each | each remove ].
+	roassalShape announcer unsubscribe: self.
 	roassalShape remove.
-	roassalShape := nil
+	oldRoassalShape := roassalShape.
+	roassalShape := nil.
+	self announceRenderRemoved: oldRoassalShape
 ]
 
 { #category : 'rendering' }
@@ -532,6 +558,7 @@ OPDiagramElement >> renderIn: aCanvas [
 	self updateRenderFromStyles.
 	self updateRenderFromSelf.
 	self owningElement ownedElement: self renderedIn: aCanvas.
+	self announceRendered.
 	^ roassalShape
 ]
 
@@ -585,6 +612,37 @@ OPDiagramElement >> roassalShapeUnsubscribe: aSubscriber [
 
 	roassalShape ifNil: [ ^ self ].
 	roassalShape announcer unsubscribe: aSubscriber
+]
+
+{ #category : 'rendering' }
+OPDiagramElement >> roassalShapeWhen: anAnnouncementClass send: aSelector to: aReceiver [
+
+	| subscription |
+	self isRendered ifTrue: [
+			self
+				roassalShapeWithoutCheckWhen: anAnnouncementClass
+				send: aSelector
+				to: aReceiver ].
+	subscription := nil.
+	subscription := self announcer
+		                when: OPDiagramElementRenderedAnnouncement
+		                do: [
+				                self
+					                roassalShapeWithoutCheckWhen: anAnnouncementClass
+					                send: aSelector
+					                to: aReceiver.
+				                subscription ifNotNil: [
+					                self announcer removeSubscription: subscription ] ]
+		                for: aReceiver
+]
+
+{ #category : 'rendering' }
+OPDiagramElement >> roassalShapeWithoutCheckWhen: anAnnouncementClass send: aSelector to: aReceiver [
+
+	self roassalShape
+		when: anAnnouncementClass
+		send: aSelector
+		to: aReceiver
 ]
 
 { #category : 'interactions' }
@@ -758,6 +816,12 @@ OPDiagramElement >> topMostOwningElement [
 		  else: [ self ]
 ]
 
+{ #category : 'subscription' }
+OPDiagramElement >> unsubscribe: aReceiver [
+
+	^ self announcer unsubscribe: aReceiver
+]
+
 { #category : 'initialization' }
 OPDiagramElement >> updateFromRender [
 
@@ -782,4 +846,13 @@ OPDiagramElement >> updateRenderFromSelf [
 OPDiagramElement >> updateRenderFromStyles [
 
 	self ownedElements select: #isRendered thenDo: #updateRenderFromStyles
+]
+
+{ #category : 'announcing' }
+OPDiagramElement >> when: anAnnouncementClass send: aSelector to: aReceiver [
+
+	^ self announcer
+		  when: anAnnouncementClass
+		  send: aSelector
+		  to: aReceiver
 ]

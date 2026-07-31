@@ -36,7 +36,7 @@ OPDiagramOnlyControllerTest >> modelClass [
 	^ self diagramElementClass
 ]
 
-{ #category : 'instance creation' }
+{ #category : 'initialization' }
 OPDiagramOnlyControllerTest >> newModel [
 
 	^ nil

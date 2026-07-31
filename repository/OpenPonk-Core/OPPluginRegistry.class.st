@@ -61,10 +61,9 @@ OPPluginRegistry >> add: aPlugin [
 { #category : 'adding' }
 OPPluginRegistry >> addAll [
 
-	plugins := OPPlugin allSubclasses
-		           reject: [ :each |
-		           each isAbstract or: [ each isTestingOnly ] ]
-		           thenCollect: [ :each | each new ]
+	OPPlugin allSubclasses
+		reject: [ :each | each isAbstract or: [ each isTestingOnly ] ]
+		thenDo: [ :each | self add: each new ]
 ]
 
 { #category : 'accessing' }
@@ -74,8 +73,9 @@ OPPluginRegistry >> hasPluginFor: aModel [
 
 { #category : 'initialization' }
 OPPluginRegistry >> initialize [
+
 	super initialize.
-	plugins := OrderedCollection new
+	plugins := SortedCollection new
 ]
 
 { #category : 'accessing' }

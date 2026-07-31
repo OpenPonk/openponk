@@ -24,7 +24,7 @@ OPBaseControllerTest >> controller [
 	^ controller
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPBaseControllerTest >> controllerClass [
 	^ self subclassResponsibility
 ]
@@ -41,12 +41,12 @@ OPBaseControllerTest >> model [
 	^ model
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPBaseControllerTest >> modelClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'instance creation' }
+{ #category : 'initialization' }
 OPBaseControllerTest >> newModel [
 
 	^ self modelClass new

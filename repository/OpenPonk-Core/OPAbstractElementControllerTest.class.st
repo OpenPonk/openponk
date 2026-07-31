@@ -23,35 +23,35 @@ OPAbstractElementControllerTest >> allElements [
 	^ diagramController model allElements
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPAbstractElementControllerTest >> creationTargetControllerClass [
 
 	^ self diagramControllerClass
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPAbstractElementControllerTest >> creationTargetModelClass [
 
 	^ self diagramModelClass
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPAbstractElementControllerTest >> diagramControllerClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'construction' }
+{ #category : 'constants' }
 OPAbstractElementControllerTest >> diagramElementClass [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPAbstractElementControllerTest >> diagramModelClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPAbstractElementControllerTest >> prepareToShow [
 
 	self showDependenciesInDiagram.
@@ -59,7 +59,7 @@ OPAbstractElementControllerTest >> prepareToShow [
 	self registerModel
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPAbstractElementControllerTest >> registerModel [
 
 	controller registerModelIn:
@@ -103,14 +103,14 @@ OPAbstractElementControllerTest >> setUpCreationTargetModel [
 	^ creationTargetController createModelIn: diagramController model
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPAbstractElementControllerTest >> showDependenciesInDiagram [
 
 	creationTargetController showWithoutDependentInDiagram:
 		diagramController
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPAbstractElementControllerTest >> showInDiagram [
 
 	self prepareToShow.

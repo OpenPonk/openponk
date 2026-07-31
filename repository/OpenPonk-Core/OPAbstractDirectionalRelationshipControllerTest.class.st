@@ -29,19 +29,19 @@ OPAbstractDirectionalRelationshipControllerTest >> assignModelTarget [
 	model target: targetModel
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPAbstractDirectionalRelationshipControllerTest >> creationTargetControllerClass [
 
 	^ self sourceControllerClass
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPAbstractDirectionalRelationshipControllerTest >> creationTargetModelClass [
 
 	^ self sourceModelClass
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPAbstractDirectionalRelationshipControllerTest >> prepareToShow [
 
 	controller source: self sourceController.
@@ -49,7 +49,7 @@ OPAbstractDirectionalRelationshipControllerTest >> prepareToShow [
 	super prepareToShow
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPAbstractDirectionalRelationshipControllerTest >> registerModel [
 
 	super registerModel.
@@ -121,44 +121,44 @@ OPAbstractDirectionalRelationshipControllerTest >> setUpTargetModel [
 		                 diagramController model
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPAbstractDirectionalRelationshipControllerTest >> showDependenciesInDiagram [
 
 	super showDependenciesInDiagram.
 	targetController showWithoutDependentInDiagram: diagramController
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPAbstractDirectionalRelationshipControllerTest >> sourceController [
 
 	^ creationTargetController
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'constants' }
 OPAbstractDirectionalRelationshipControllerTest >> sourceControllerClass [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPAbstractDirectionalRelationshipControllerTest >> sourceModelClass [
 
 	^ self subclassResponsibility 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPAbstractDirectionalRelationshipControllerTest >> targetController [
 
 	^ targetController
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'constants' }
 OPAbstractDirectionalRelationshipControllerTest >> targetControllerClass [
 
 	^ self sourceControllerClass
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPAbstractDirectionalRelationshipControllerTest >> targetModelClass [
 
 	^ self sourceModelClass
@@ -273,7 +273,7 @@ OPAbstractDirectionalRelationshipControllerTest >> testRoassalShapeWasRendered [
 		(diagramController canvas lines includes: controller roassalShape)
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 OPAbstractDirectionalRelationshipControllerTest >> testSetupOfTheTest [
 	"tests mostly whether the creationTarget is really the same thing as source - in case it is not, it is probably fault of the test class itself"
 

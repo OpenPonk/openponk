@@ -12,9 +12,8 @@ DCPluginRegistry
 Class {
 	#name : 'OPPlugin',
 	#superclass : 'Object',
-	#instVars : [
-		'layouter'
-	],
+	#traits : 'TComparable',
+	#classTraits : 'TComparable classTrait',
 	#category : 'OpenPonk-Core-Plugin',
 	#package : 'OpenPonk-Core',
 	#tag : 'Plugin'
@@ -24,6 +23,22 @@ Class {
 OPPlugin class >> isTestingOnly [
 
 	^ false
+]
+
+{ #category : 'comparing' }
+OPPlugin >> < aComparable [
+	"Answer whether the receiver is less than the argument."
+
+	^ self name < aComparable name
+]
+
+{ #category : 'comparing' }
+OPPlugin >> = aComparable [
+	"Compare the receiver with the argument and answer with true if the
+	receiver is equal to the argument. Otherwise answer false."
+
+	^ self name = aComparable name and: [
+		  self modelClass = aComparable modelClass ]
 ]
 
 { #category : 'accessing' }
@@ -37,6 +52,13 @@ OPPlugin >> diagramClass [
 { #category : 'accessing' }
 OPPlugin >> diagramControllerClass [
 	^ self subclassResponsibility
+]
+
+{ #category : 'comparing' }
+OPPlugin >> hash [
+	"Hash must be redefined whenever = is redefined."
+
+	^ self name hash
 ]
 
 { #category : 'accessing' }

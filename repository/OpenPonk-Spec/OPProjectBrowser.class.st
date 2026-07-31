@@ -101,7 +101,7 @@ OPProjectBrowser >> createProjectButton [
 
 { #category : 'initialization' }
 OPProjectBrowser >> initialize [
-	diagramOptions := Dictionary new.
+	diagramOptions := OrderedDictionary new.
 	pluginRegistry := OPPluginRegistry default.
 	super initialize
 ]
@@ -143,12 +143,12 @@ OPProjectBrowser >> initializePresenters [
 	projectNameInput := self newTextInput text: 'New Project'.
 	createProjectButton := self newButton label: 'Create Project'.
 	openProjectButton := self newButton label: 'Open Project...'.
-	
-	pluginRegistry pluginsDo: [ :each | 
+
+	pluginRegistry pluginsDo: [ :each |
 		diagramOptions at: each put: (self newRadioButton label: each name) ].
 
 	self initializeLayout.
-	
+
 	radioButtons := diagramOptions asArray.
 	radioButtons size < 2 ifTrue: [ ^ self ].
 	radioButtons first associatedRadioButtons:

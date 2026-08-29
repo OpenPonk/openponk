@@ -12,7 +12,7 @@ Class {
 	#tag : 'Layouting'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'userinterface' }
 OPLayouter class >> supportedLayoutCommands [
 	^ {OPDominanceTreeLayoutCommand.
 	OPGridLayoutCommand.
@@ -20,7 +20,7 @@ OPLayouter class >> supportedLayoutCommands [
 	OPTreeLayoutCommand}
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'userinterface' }
 OPLayouter class >> supports: aLayoutCommand [
 	^ self supportedLayoutCommands includes: aLayoutCommand
 ]
@@ -119,18 +119,20 @@ OPLayouter >> roassalShapesFor: aCollection [
 { #category : 'layouts' }
 OPLayouter >> sugiyamaLayout [
 
-	self applyLayout: [ :boxes :links | 
-		| centerY |
-		RSSugiyamaLayout new
-			verticalGap: 100;
-			horizontalGap: 100;
-			on: boxes edges: links.
-		centerY := (RSGroup withAll: boxes) encompassingRectangle center y.
-		boxes do: [ :each | 
-			each translateBy: 0 @ 2 * (centerY - each position y) ] ]
+	self applyLayout: [ :boxes :links |
+			| centerY |
+			(OPLayoutLoopDetector popupHaveLoopsBoxes: boxes links: links)
+				ifTrue: [ ^ self gridLayout ].
+			RSSugiyamaLayout new
+				verticalGap: 100;
+				horizontalGap: 100;
+				on: boxes edges: links.
+			centerY := (RSGroup withAll: boxes) encompassingRectangle center y.
+			boxes do: [ :each |
+				each translateBy: 0 @ 2 * (centerY - each position y) ] ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'userinterface' }
 OPLayouter >> supports: aLayoutCommand [
 	^ self class supports: aLayoutCommand
 ]

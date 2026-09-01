@@ -1,3 +1,7 @@
+"
+Unit tests for OPDirectionalRelationshipController. 
+Ensures that specific implementations of directed relationships properly attach and manage visual connections between shapes.
+"
 Class {
 	#name : 'OPDirectionalRelationshipControllerTest',
 	#superclass : 'OPAbstractDirectionalRelationshipControllerTest',
@@ -6,39 +10,39 @@ Class {
 	#tag : 'Controllers-Tests'
 }
 
-{ #category : 'accessing' }
-OPDirectionalRelationshipControllerTest >> controllerClass [
-	^ OPTestRelationController
-]
-
-{ #category : 'accessing' }
-OPDirectionalRelationshipControllerTest >> diagramControllerClass [
-	^ OPTestDiagramController
-]
-
-{ #category : 'construction' }
-OPDirectionalRelationshipControllerTest >> diagramElementClass [
+{ #category : 'constants' }
+OPDirectionalRelationshipControllerTest class >> diagramElementClass [
 
 	^ OPTestEdge
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
+OPDirectionalRelationshipControllerTest >> controllerClass [
+	^ OPTestRelationController
+]
+
+{ #category : 'constants' }
+OPDirectionalRelationshipControllerTest >> diagramControllerClass [
+	^ OPTestDiagramController
+]
+
+{ #category : 'constants' }
 OPDirectionalRelationshipControllerTest >> diagramModelClass [
 	^ OPTestContainerModel
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPDirectionalRelationshipControllerTest >> modelClass [
 	^ OPTestRelationModel
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPDirectionalRelationshipControllerTest >> sourceControllerClass [
 
 	^ OPTestEntityController 
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPDirectionalRelationshipControllerTest >> sourceModelClass [
 
 	^ OPTestEntityModel

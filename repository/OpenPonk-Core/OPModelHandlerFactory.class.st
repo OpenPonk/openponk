@@ -1,7 +1,6 @@
 "
-I create new controllers for models.
-
-Controllers are registered for models and optionally with a condition further clarifying the nature of the model required for the controller.
+Factory responsible for instantiating handlers (such as ViewModels or Controllers) for model elements.
+Handlers are registered for specific model classes alongside optional conditions clarifying the model requirements.
 "
 Class {
 	#name : 'OPModelHandlerFactory',
@@ -50,7 +49,7 @@ OPModelHandlerFactory >> newHandlerFor: aModel [
 	handler := ((registrations at: aModel class ifAbsent: errorBlock)
 		            detect: [ :any | any isForModel: aModel ]
 		            ifNone: errorBlock) handlerClass new.
-	handler model: aModel.
+	self setupHandler: handler withModel: aModel.
 	^ handler
 ]
 
@@ -73,4 +72,10 @@ OPModelHandlerFactory >> register: aHandlerClass forModel: aModelClass condition
 { #category : 'accessing - defaults' }
 OPModelHandlerFactory >> registrationClass [
 	^ OPModelHandlerFactoryRegistration
+]
+
+{ #category : 'api - accessing' }
+OPModelHandlerFactory >> setupHandler: aHandler withModel: aModel [
+
+	aHandler model: aModel
 ]

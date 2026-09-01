@@ -1,5 +1,6 @@
 "
-I am a mock representing a tree leaf entity.
+Mock domain model representing a basic leaf entity. 
+Used exclusively for unit and integration testing.
 "
 Class {
 	#name : 'OPTestEntityModel',

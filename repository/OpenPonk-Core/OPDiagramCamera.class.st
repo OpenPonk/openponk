@@ -1,3 +1,6 @@
+"
+Represents the camera configuration (scale and position) for a diagram, maintaining the viewport state independently of the underlying Roassal canvas.
+"
 Class {
 	#name : 'OPDiagramCamera',
 	#superclass : 'Object',
@@ -39,7 +42,6 @@ OPDiagramCamera >> scale: aNumber [
 OPDiagramCamera >> updateRoassalCamera: aRSCamera [
 
 	scale ifNotNil: [ aRSCamera scale: scale ].
-	self position ifNotNil: [ :position | 
-		aRSCamera translateTo: position ].
+	self position ifNotNil: [ aRSCamera translateTo: position ].
 	^ aRSCamera
 ]

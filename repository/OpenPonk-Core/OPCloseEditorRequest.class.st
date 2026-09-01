@@ -1,5 +1,6 @@
 "
-Fire me on any DiagramController's MODEL and the Editor operating on the model will be closed. If it doesn't exist then nothing will happen.
+Announcement signaling a request to close the editor operating on a specific model. 
+Typically dispatched on a diagram controller's announcer.
 "
 Class {
 	#name : 'OPCloseEditorRequest',

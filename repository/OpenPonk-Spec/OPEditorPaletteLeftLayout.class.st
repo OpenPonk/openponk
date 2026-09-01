@@ -1,3 +1,6 @@
+"
+Concrete layout strategy for the OpenPonk editor that positions the creation palette on the left side of the diagram canvas.
+"
 Class {
 	#name : 'OPEditorPaletteLeftLayout',
 	#superclass : 'OPEditorLayout',
@@ -15,45 +18,29 @@ OPEditorPaletteLeftLayout >> name [
 { #category : 'applying' }
 OPEditorPaletteLeftLayout >> resizePanelsOf: aMorph afterWindowResized: aResizeEvent [
 
-	| canvasFormlayoutPolicy canvasWidth formWidth formLackOfWidth diff |
+	| canvaslayoutPolicy canvasWidth diff |
 	aResizeEvent newSize x < 500 ifTrue: [ ^ self ].
 
 	diff := aResizeEvent newSize x - aResizeEvent oldSize x.
 
-	canvasFormlayoutPolicy := aMorph submorphs third layoutPolicy.
+	canvaslayoutPolicy := aMorph submorphs third layoutPolicy.
 
 	canvasWidth := aMorph submorphs third submorphs first extent x.
-	formWidth := aMorph submorphs third submorphs third extent x.
-	formLackOfWidth := OPDynamicForm minWidth - formWidth max: 0.
 
 	aMorph layoutPolicy position: aMorph submorphs first extent x.
-	canvasFormlayoutPolicy position: canvasWidth + diff - formLackOfWidth
+	canvaslayoutPolicy position: canvasWidth + diff
 ]
 
 { #category : 'applying' }
 OPEditorPaletteLeftLayout >> spLayoutFor: anEditor [
-
-	"[ Palette | [ Canvas | Form ] ]"
+	"[ Palette | Canvas ]"
 
 	^ SpPanedLayout newLeftToRight
 		  positionOfSlider: OPPalette initialWidth;
-		  add: self paletteSectionLayout
-		  withConstraints: [ :constraints | 
-			  constraints
-				  beNotResizable;
-				  beNotShrinkable ];
-		  add: (SpPanedLayout newLeftToRight
-				   positionOfSlider: OPEditor canvasSectionWidth;
-				   add: self canvasSectionLayout
-				   withConstraints: [ :constraints | 
-					   constraints
-						   beNotResizable;
-						   beNotShrinkable ];
-				   add: self formSectionLayout
-				   withConstraints: [ :constraints | 
-					   constraints
-						   beNotResizable;
-						   beNotShrinkable ];
-				   yourself);
+		  add: self paletteSectionLayout withConstraints: [ :constraints |
+				  constraints
+					  beNotResizable;
+					  beNotShrinkable ];
+		  add: self canvasSectionLayout;
 		  yourself
 ]

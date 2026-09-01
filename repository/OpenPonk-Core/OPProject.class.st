@@ -1,5 +1,6 @@
 "
-I represent a collection of diagrams and settings opened in editor.
+Represents a complete OpenPonk project containing a collection of models and their associated diagrams.
+Tracks the persistence state (storage folder/file) and coordinates notifications when the project content changes.
 "
 Class {
 	#name : 'OPProject',
@@ -64,7 +65,7 @@ OPProject >> announcer [
 	^ dirty announcer
 ]
 
-{ #category : 'announcements' }
+{ #category : 'updating' }
 OPProject >> changed [
 	dirty value: true
 ]
@@ -141,6 +142,7 @@ OPProject >> hash [
 { #category : 'initialization' }
 OPProject >> initialize [
 
+	super initialize.
 	modelsAndDiagrams := Dictionary new asValueHolder.
 	name := NewValueHolder value: 'Unnamed project'.
 	dirty := false asValueHolder.

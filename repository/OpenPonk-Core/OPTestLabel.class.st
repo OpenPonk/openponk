@@ -1,3 +1,6 @@
+"
+Mock label element used exclusively for testing text rendering and layout logic.
+"
 Class {
 	#name : 'OPTestLabel',
 	#superclass : 'OPLabel',

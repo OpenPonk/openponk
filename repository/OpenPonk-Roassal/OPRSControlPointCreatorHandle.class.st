@@ -1,3 +1,6 @@
+"
+Specialized transient handle that appears on a selected edge to allow the user to click and drag to create a brand new routing control point mid-segment.
+"
 Class {
 	#name : 'OPRSControlPointCreatorHandle',
 	#superclass : 'OPRSAbstractDraggableControlPointHandle',
@@ -12,12 +15,12 @@ Class {
 	#tag : 'Polyline'
 }
 
-{ #category : 'accessing' }
+{ #category : 'actions' }
 OPRSControlPointCreatorHandle >> beNearEnd [
 	nearEnd := true
 ]
 
-{ #category : 'accessing' }
+{ #category : 'actions' }
 OPRSControlPointCreatorHandle >> beNearStart [
 	nearStart := true
 ]
@@ -102,7 +105,7 @@ OPRSControlPointCreatorHandle >> render [
 		add: clickBox
 ]
 
-{ #category : 'shapes' }
+{ #category : 'accessing' }
 OPRSControlPointCreatorHandle >> size [
 
 	^ 5

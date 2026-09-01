@@ -1,3 +1,6 @@
+"
+Deprecated legacy class representing the spatial boundaries of a node. Use OPNodeBounds instead.
+"
 Class {
 	#name : 'OPDIBounds',
 	#superclass : 'OPNodeBounds',

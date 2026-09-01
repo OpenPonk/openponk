@@ -1,5 +1,6 @@
 "
-I provide basic scaffolding and utility functions to ease the testing of controllers.
+Abstract base class for testing OpenPonk controllers. 
+Provides basic scaffolding, initialization, and utility functions for testing controller subclasses.
 "
 Class {
 	#name : 'OPBaseControllerTest',
@@ -58,4 +59,12 @@ OPBaseControllerTest >> setUp [
 	super setUp.
 	controller := self controllerClass new.
 	model := self newModel
+]
+
+{ #category : 'tests' }
+OPBaseControllerTest >> testViewModelClassModelClass [
+
+	self
+		assert: self controllerClass viewModelClass modelClass
+		equals: self modelClass
 ]

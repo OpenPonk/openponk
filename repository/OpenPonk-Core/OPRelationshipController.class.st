@@ -1,3 +1,7 @@
+"
+Deprecated legacy controller for relationships. 
+Has been replaced by OPDirectionalRelationshipController and its subclasses.
+"
 Class {
 	#name : 'OPRelationshipController',
 	#superclass : 'OPDirectionalRelationshipController',

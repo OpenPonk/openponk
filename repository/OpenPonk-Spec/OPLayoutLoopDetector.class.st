@@ -1,3 +1,6 @@
+"
+Utility used during automated graph layout operations to detect cyclic dependencies (loops) within diagrams, preventing infinite loops or layout engine crashes.
+"
 Class {
 	#name : 'OPLayoutLoopDetector',
 	#superclass : 'Object',
@@ -41,7 +44,7 @@ OPLayoutLoopDetector >> boxes: anObject [
 	boxes := Array withAll: anObject
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'testing' }
 OPLayoutLoopDetector >> hasBox: box loopsBackTo: loopsTo [
 
 	| toBoxes |

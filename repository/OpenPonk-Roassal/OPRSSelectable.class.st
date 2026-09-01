@@ -1,3 +1,7 @@
+"
+Interaction responsible for the visual selection state of a shape. 
+When a user clicks a shape, highlights it (usually with a specific border color) and displays associated adornments (like context icons).
+"
 Class {
 	#name : 'OPRSSelectable',
 	#superclass : 'RSHighlightable',
@@ -90,6 +94,18 @@ OPRSSelectable >> clicked: aShape by: anEvent [
 ]
 
 { #category : 'hooks' }
+OPRSSelectable >> deselect: aShape [
+	aShape canvas ifNil: [ ^ self ].
+	aShape canvas propertyAt: OPRSSelectableCanvas ifPresent: [ :interaction |
+		| current |
+		current := interaction selectedShapes.
+		(current includes: aShape) ifTrue: [
+			interaction 
+				selectShapes: (RSGroup withAll: (current copyWithout: aShape))
+				byEvent: (RSMouseClick new canvas: aShape canvas; shape: aShape; yourself) ] ]
+]
+
+{ #category : 'hooks' }
 OPRSSelectable >> fakeClicked: aShape [
 	"variant with fake event"
 
@@ -100,7 +116,7 @@ OPRSSelectable >> fakeClicked: aShape [
 			 yourself)
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPRSSelectable >> highlightAdornments: aBlock [
 	"Show adornments (little icons with actions). The block receives an OPRSAdornmentBuilder"
 
@@ -115,7 +131,7 @@ OPRSSelectable >> highlightAdornments: aBlock [
 		when: RSUnHighlightEvent do: [ :evt | builder hide ] for: self
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPRSSelectable >> highlightBorderColor: aColor [
 	"Set the border color"
 
@@ -138,13 +154,13 @@ OPRSSelectable >> onShape: aShape [
 		for: self
 ]
 
-{ #category : 'accessing' }
+{ #category : 'accessing - keys' }
 OPRSSelectable >> propertyKey [
 
 	^ propertyKey ifNil: [ propertyKey := #selectedShapes ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPRSSelectable >> setBorderColorOf: aShape to: aColor [
 
 	self

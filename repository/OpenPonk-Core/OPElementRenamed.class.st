@@ -1,5 +1,5 @@
 "
-I am fired by RenameElementCommand after a model element has been renamed.
+Announcement fired following the successful renaming of a model element, typically triggered by OPRenameElementCommand.
 "
 Class {
 	#name : 'OPElementRenamed',

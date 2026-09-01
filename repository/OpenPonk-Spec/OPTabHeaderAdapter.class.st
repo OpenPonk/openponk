@@ -1,3 +1,6 @@
+"
+Specialized Spec Morphic adapter for customizing the rendering and behavior of tab headers within OpenPonk notebooks.
+"
 Class {
 	#name : 'OPTabHeaderAdapter',
 	#superclass : 'SpAbstractMorphicAdapter',

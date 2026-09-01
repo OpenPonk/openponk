@@ -1,3 +1,7 @@
+"
+Base class for visual diagram elements.
+Holds visual properties (styles, bounds, Roassal shapes) and references the underlying model elements. For diagram-only elements, serves directly as the primary model.
+"
 Class {
 	#name : 'OPDiagramElement',
 	#superclass : 'Object',
@@ -25,7 +29,7 @@ OPDiagramElement class >> forModelElement: anObject [
 		  yourself
 ]
 
-{ #category : 'rendering' }
+{ #category : 'evaluating' }
 OPDiagramElement class >> in: anOwner [
 
 	^ self new
@@ -151,9 +155,8 @@ OPDiagramElement >> addedByMouseClickTo: aPoint [
 { #category : 'enumerating' }
 OPDiagramElement >> allOwnedElements [
 
-	^ self ownedElements
-	  ,
-	  (self ownedElements flatCollect: [ :each | each allOwnedElements ])
+	^ (self ownedElements flatCollectAsSet: [ :each |
+		   each allOwnedElements ]) , self ownedElements
 ]
 
 { #category : 'enumerating' }
@@ -328,6 +331,14 @@ OPDiagramElement >> isResizableByUser [
 OPDiagramElement >> isSelectable [
 
 	^ roassalShape isSelectable
+]
+
+{ #category : 'testing' }
+OPDiagramElement >> isTransient [
+	"Answers whether this element is only a temporary visual scaffolding
+	 that should not be serialized."
+	
+	^ false
 ]
 
 { #category : 'accessing' }
@@ -553,13 +564,21 @@ OPDiagramElement >> renderIn: aCanvas [
 	self renderShapeDetails.
 	self addInteractions.
 	self createOwnedElementsWithoutController.
-	self ownedElements do: [ :each | each renderIn: aCanvas ].
+	self renderOwnedElementsWithoutController.
 	self updateRenderFromModel.
 	self updateRenderFromStyles.
 	self updateRenderFromSelf.
 	self owningElement ownedElement: self renderedIn: aCanvas.
 	self announceRendered.
 	^ roassalShape
+]
+
+{ #category : 'rendering' }
+OPDiagramElement >> renderOwnedElementsWithoutController [
+
+	self ownedElements
+		reject: [ :each | each shouldHaveController ]
+		thenDo: [ :each | each renderIn: self canvas ]
 ]
 
 { #category : 'rendering' }
@@ -704,16 +723,9 @@ OPDiagramElement >> sourceEdges: aCollection [
 { #category : 'ston persistence' }
 OPDiagramElement >> stonOn: stonWriter [
 
-	stonWriter writeObject: self streamMap: [ :dictionary | 
-		self class stonAllInstVarNames do: [ :each | 
-			| value |
-			value := self instVarNamed: each.
-			each = #modelElements ifTrue: [ 
-				value := modelElements collect: [ :eachModelElement | 
-					         eachModelElement uuid asString ] ].
-			(value isKindOf: SRToManyLink) ifTrue: [ 
-				value := Array withAll: value ].
-			value ifNotNil: [ dictionary at: each asSymbol put: value ] ] ]
+	stonWriter writeObject: self streamMap: [ :dictionary |
+			self class stonAllInstVarNames do: [ :instVarName |
+				self stonVariable: instVarName to: dictionary ] ]
 ]
 
 { #category : 'initialization' }
@@ -752,6 +764,27 @@ OPDiagramElement >> stonProcessSubObjects: block [
 		self
 			instVarNamed: each
 			put: (block value: (self instVarNamed: each)) ]
+]
+
+{ #category : 'ston persistence' }
+OPDiagramElement >> stonVariable: instVarName to: aDictionary [
+
+	| value |
+	value := self instVarNamed: instVarName.
+
+	value ifNil: [ ^ self ].
+
+	instVarName = #modelElements ifTrue: [
+			value := value collect: [ :eachModelElement |
+				         eachModelElement uuid asString ] ].
+
+	(value isKindOf: SRToManyLink) ifTrue: [
+		value := Array withAll: value ].
+
+	(instVarName = #ownedElements and: [ value isNotNil ]) ifTrue: [
+		value := value reject: [ :eachElement | eachElement isTransient ] ].
+
+	aDictionary at: instVarName asSymbol put: value
 ]
 
 { #category : 'initialization' }

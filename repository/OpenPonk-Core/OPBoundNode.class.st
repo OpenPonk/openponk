@@ -1,3 +1,7 @@
+"
+Diagram node that strictly maintains and updates its spatial bounds (position and extent). 
+Handles layout translations and coordinate rendering updates based on these constraints.
+"
 Class {
 	#name : 'OPBoundNode',
 	#superclass : 'OPNode',
@@ -17,7 +21,7 @@ OPBoundNode class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #bounds )
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 OPBoundNode >> allOwnedShapesPositionableByUser [
 
 	self isRendered ifFalse: [ ^ #(  ) ].
@@ -100,7 +104,7 @@ OPBoundNode >> shouldBePositionableByUser [
 	^ true
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPBoundNode >> updateFromRender [
 
 	(self isResizableByUser or: [ self isPositionableByUser ]) ifTrue: [
@@ -119,7 +123,7 @@ OPBoundNode >> updateRenderFromBounds [
 		roassalShape translateTo: bounds position ]
 ]
 
-{ #category : 'roassal' }
+{ #category : 'rendering' }
 OPBoundNode >> updateRenderFromSelf [
 
 	self isRendered ifFalse: [ ^ self ].

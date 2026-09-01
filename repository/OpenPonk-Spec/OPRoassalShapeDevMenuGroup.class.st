@@ -1,9 +1,12 @@
+"
+Commander menu group that collects developer-specific diagnostic commands (like inspecting morphs or controllers) within the shape context menu.
+"
 Class {
 	#name : 'OPRoassalShapeDevMenuGroup',
 	#superclass : 'CmdMenuGroup',
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
 { #category : 'accessing' }

@@ -1,9 +1,12 @@
+"
+Diagram toolbar command that increases the camera scale (zooms in) on the active diagram canvas.
+"
 Class {
 	#name : 'OPZoomInDiagramCommand',
 	#superclass : 'OPDiagramToolbarCommand',
-	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands',
+	#category : 'OpenPonk-Spec-Commands-CanvasPresenter',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-Toolbar-Commands'
+	#tag : 'Commands-CanvasPresenter'
 }
 
 { #category : 'activation' }

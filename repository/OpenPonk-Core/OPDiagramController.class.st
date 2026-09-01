@@ -1,5 +1,8 @@
 "
-A DCDiagramController is the parent class to controller classes that control whole diagrams. It (its decendant) creates a palette / menu  for specific diagram. It also handles the changes in diagram, e.g. removal of element. 
+Primary controller managing a single diagram. 
+Coordinates the layout, rendering canvas, shape addition/removal, and user interactions. 
+Creates and manages specific element controllers utilizing OPControllerFactory. 
+Bridges visual Roassal shapes with their logical controllers and underlying ViewModels.
 "
 Class {
 	#name : 'OPDiagramController',
@@ -63,16 +66,18 @@ OPDiagramController >> allModelElementsWithController [
 
 { #category : 'enumerating' }
 OPDiagramController >> allModelElementsWithPossibleController [
-	"all elements that could be directly hidden on diagram"
-
-	^ (Set with: self model) , self elementsToShowInside
+			"Returns only elements that can have a dedicated controller."
+			^ Array streamContents: [ :stream |
+				stream nextPut: self model.
+				self viewModel allChildrenModels do: [ :each |
+					(each ~= self model and: [ self hasSupportForModel: each ])
+						ifTrue: [ stream nextPut: each ] ] ]
 ]
 
 { #category : 'enumerating' }
 OPDiagramController >> allModelElementsWithPossibleDiagramElement [
-	"all model elements that can have diagram elements (even if cannot have controller)"
-
-	^ self allModelElementsWithPossibleController
+			"Returns all elements that have ANY diagram element (even labels without controller)."
+			^ Array with: self model withAll: self viewModel allChildrenModels
 ]
 
 { #category : 'accessing' }
@@ -135,8 +140,8 @@ OPDiagramController >> cachedControllerForRoassalShape: aRoassalShape ifNone: aB
 
 { #category : 'connecting' }
 OPDiagramController >> canBeTargetFor: aController [
-	^ (aController isKindOf: OPCommonElementController)
-		and: [ aController class ~= OPCommonElementController ]
+	^ (aController isKindOf: OPDiagramOnlyController)
+		and: [ aController class ~= OPDiagramOnlyController ]
 ]
 
 { #category : 'accessing' }
@@ -169,7 +174,7 @@ OPDiagramController >> commonElements [
 
 { #category : 'accessing' }
 OPDiagramController >> controllerFactory [
-	^ OPControllerFactory withCommonElements
+	^ OPControllerFactory withCommonElementsFor: self
 ]
 
 { #category : 'controllers management' }
@@ -248,7 +253,12 @@ OPDiagramController >> createController: aModel [
 
 { #category : 'protocol-canvas' }
 OPDiagramController >> deselectAll [
-
+	self canvas ifNotNil: [ :c |
+		c propertyAt: OPRSSelectableCanvas ifPresent: [ :interaction |
+			interaction selectedShapes ifNotEmpty: [
+				interaction 
+					selectShapes: RSGroup new 
+					byEvent: (RSMouseClick new canvas: c; position: 0@0; yourself) ] ] ].
 	self announcer announce: OPAllShapesDeselected new
 ]
 
@@ -416,7 +426,7 @@ OPDiagramController >> hoverRoassalShape: aRoassalShape [
 
 { #category : 'ui interaction' }
 OPDiagramController >> incompatiblePaletteItemNames [
-	^ OPCommonElementController allSubclasses
+	^ OPDiagramOnlyController allSubclasses
 		reject: [ :eachClass | self canBeTargetFor: eachClass new ]
 		thenCollect: [ :each | each paletteItemName ]
 ]
@@ -468,11 +478,6 @@ OPDiagramController >> loadState: aMemento [
 ]
 
 { #category : 'accessing' }
-OPDiagramController >> modelClass [
-	^ self plugin modelClass
-]
-
-{ #category : 'accessing' }
 OPDiagramController >> modelForFigure: aFigure [
 	self
 		deprecated: 'use #modelForRoassalShape: instead'
@@ -504,12 +509,9 @@ OPDiagramController >> modelsWithController [
 
 { #category : 'accessing' }
 OPDiagramController >> nameOfTypeForModel: aModel [
-	self
-		deprecated: 'use #name on typeOfModel: instead'
-		transformWith:
-			'`@receiver nameOfTypeForModel: `@argument'
-				-> '(`@receiver typeOfModel: `@argument) name'.
-	^ (self typeOfModel: aModel) name
+
+	self deprecated: 'use #nameOfType on the viewModel of the model'.
+	^ (self viewModelRegistry viewModelFor: aModel) nameOfType
 ]
 
 { #category : 'controllers management' }
@@ -520,19 +522,19 @@ OPDiagramController >> newControllerFor: aModel [
 
 { #category : 'ui interaction' }
 OPDiagramController >> openInForm: aController [
-	self form editController: aController
-]
 
-{ #category : 'connecting' }
-OPDiagramController >> parentContainerModel [
-	"I do not have any further parent"
-
-	^ self model
+	self form target: aController
 ]
 
 { #category : 'accessing' }
 OPDiagramController >> plugin [
 	^ plugin ifNil: [ OPPluginRegistry default pluginForController: self ]
+]
+
+{ #category : 'accessing' }
+OPDiagramController >> project [
+
+	^ self viewModelRegistry project
 ]
 
 { #category : 'undo/redo' }
@@ -546,13 +548,6 @@ OPDiagramController >> registerModelEvents: aModel [
 	self deprecated: 'Use #model: and #internalSubscribeTo: instead'.
 	"super registerModelEvents: aModel.
 	aModel announcer when: OPElementChanged do: [ :evt | self saveState ]"
-]
-
-{ #category : 'deprecated' }
-OPDiagramController >> remove [
-
-	self error:
-		'There should be no need to call #remove on DiagramController'
 ]
 
 { #category : 'destruction' }
@@ -599,12 +594,6 @@ OPDiagramController >> removeFromModel: aModel [
 ]
 
 { #category : 'deprecated' }
-OPDiagramController >> removeModel [
-	self deprecated: 'should not implement'.
-	^ self shouldNotImplement
-]
-
-{ #category : 'deprecated' }
 OPDiagramController >> removeModelElement: aModelElement [
 	self deprecated: 'Use removeModel on its controller instead.'.
 "	model remove: aModelElement"
@@ -637,7 +626,7 @@ OPDiagramController >> rendered: aController [
 	self addMouseEventsFor: aController roassalShape
 ]
 
-{ #category : 'accessing' }
+{ #category : 'figures' }
 OPDiagramController >> roassalShape [
 
 	^ self canvas
@@ -751,14 +740,6 @@ OPDiagramController >> showWithoutDependentInDiagramModel: aModel [
 		  yourself
 ]
 
-{ #category : 'accessing' }
-OPDiagramController >> typeOfModel: aModel [
-	^ OPModelObjectType
-		named:
-			((aModel className withoutPrefix: self commonModelClassPrefix)
-				splitCamelCase joinUsing: ' ')
-]
-
 { #category : 'undo/redo' }
 OPDiagramController >> undo [
 	self assert: [ self hasUndo ].
@@ -775,14 +756,16 @@ OPDiagramController >> updateAfterDiagramFocused [
 	self controllers
 		reject: [ :each | each isDiagramOnly ]
 		thenDo: [ :each |
-			(modelElementsToKeep includes: each model)
-				ifTrue: [ each updateAfterDiagramFocused ]
-				ifFalse: [ each removeControllerAndDiagramElement ] ].
+				(modelElementsToKeep includes: each model)
+					ifTrue: [ each updateAfterDiagramFocused ]
+					ifFalse: [ each removeControllerAndDiagramElement ] ].
 	self diagramElement allOwnedElements asIdentitySet
 		reject: [ :each |
-			each isDiagramOnly or: [
-				modelElementsToKeep includes: each modelElement ] ]
-		thenDo: [ :each | each remove ]
+				each isDiagramOnly or: [
+					modelElementsToKeep includes: each modelElement ] ]
+		thenDo: [ :each |
+				each remove.
+				each owningElement: nil ]
 ]
 
 { #category : 'userinterface' }
@@ -804,8 +787,7 @@ OPDiagramController >> updateView [
 
 { #category : 'validation' }
 OPDiagramController >> validate [
-
-	self controllers do: [ :each | each validate ]
+	self controllers do: [ :each | each viewModel validate ]
 ]
 
 { #category : 'accessing' }

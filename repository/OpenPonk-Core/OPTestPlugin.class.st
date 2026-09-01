@@ -1,8 +1,5 @@
 "
-I am plugin used for testing.
-
-DO NOT SUBCLASS DCPlugin.
-Instead set & reset the default of DCPluginRegistry.
+Mock implementation of an OpenPonk plugin used exclusively for testing the plugin architecture and project loading mechanisms.
 "
 Class {
 	#name : 'OPTestPlugin',
@@ -29,11 +26,6 @@ OPTestPlugin >> diagramSerializerClass [
 ]
 
 { #category : 'accessing' }
-OPTestPlugin >> isPluginFor: aModel [
-	^ self modelClass = aModel class
-]
-
-{ #category : 'accessing' }
 OPTestPlugin >> layouterClass [
 	"Create your own subclass of OPLayouter or use OPNoLayouter which does nothing"
 
@@ -53,24 +45,6 @@ OPTestPlugin >> modelSerializerClass [
 { #category : 'accessing' }
 OPTestPlugin >> name [
 	^ 'Plugin for testing'
-]
-
-{ #category : 'accessing' }
-OPTestPlugin >> serializer [
-
-	^ OPMementoDirectorySerializer forPlugin: self
-]
-
-{ #category : 'testing' }
-OPTestPlugin >> supportsHidingElements [
-
-	^ false
-]
-
-{ #category : 'testing' }
-OPTestPlugin >> supportsMergingModels [
-
-	^ false
 ]
 
 { #category : 'accessing' }

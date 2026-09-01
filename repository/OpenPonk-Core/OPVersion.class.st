@@ -1,5 +1,6 @@
 "
-I hold the current version of OpenPonk.
+Represents a version specification for OpenPonk artifacts or plugins. 
+Holds metadata such as build date, commit hash, workflow run IDs, and semantic version identifiers.
 "
 Class {
 	#name : 'OPVersion',
@@ -100,7 +101,7 @@ OPVersion class >> ofLastestReleaseOf: aRepositoryName [
 				ifNotEmpty: [ :runs | runs first ])
 ]
 
-{ #category : 'accessing' }
+{ #category : 'class initialization' }
 OPVersion class >> reset [
 
 	<script>

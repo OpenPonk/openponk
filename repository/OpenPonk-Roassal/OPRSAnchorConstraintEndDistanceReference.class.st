@@ -1,3 +1,6 @@
+"
+Specific anchoring strategy that positions a constrained shape at a fixed absolute pixel distance measured backward from the *end* point of a segmented line.
+"
 Class {
 	#name : 'OPRSAnchorConstraintEndDistanceReference',
 	#superclass : 'OPRSAnchorConstraintFixedDistanceReference',
@@ -6,32 +9,32 @@ Class {
 	#tag : 'AnchorConstraint'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'geometry' }
 OPRSAnchorConstraintEndDistanceReference >> anchorSegmentFrom: segments andPointFrom: lenghtFromStart [
 
 	^ segments last -> (segments last pointAtLength:
 		   lenghtFromStart - (segments allButLast sum: #length))
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'computing' }
 OPRSAnchorConstraintEndDistanceReference >> computeAbsoluteBalanceForLength: aNumber [
 
 	^ aNumber - distance
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'geometry' }
 OPRSAnchorConstraintEndDistanceReference >> farPointOfSegment: aSegment [
 
 	^ aSegment from
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'geometry' }
 OPRSAnchorConstraintEndDistanceReference >> referencePointOfSegment: aSegment [
 
 	^ aSegment to
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'geometry' }
 OPRSAnchorConstraintEndDistanceReference >> segmentIn: aConstraint [
 
 	^ aConstraint createUpdater segments last

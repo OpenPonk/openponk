@@ -1,3 +1,7 @@
+"
+Represents the execution context for Commander tools when a user interacts with one or more Roassal shapes. 
+Bundles the canvas, selected shapes, and their associated domain models and controllers.
+"
 Class {
 	#name : 'OPRoassalShapeContext',
 	#superclass : 'CmdToolContext',
@@ -5,9 +9,9 @@ Class {
 		'controllers',
 		'roassalShapes'
 	],
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
 { #category : 'instance creation' }
@@ -38,31 +42,14 @@ OPRoassalShapeContext >> diagramElements [
 
 { #category : 'accessing' }
 OPRoassalShapeContext >> models [
-	^ self controllers collect: #model
+
+	^ self controllers collect: [ :eachController |
+		  eachController viewModel model ]
 ]
 
 { #category : 'accessing' }
 OPRoassalShapeContext >> plugin [
 	^ self diagramController plugin
-]
-
-{ #category : 'testing' }
-OPRoassalShapeContext >> representsControllers: aCollection [
-	roassalShapes ifEmpty: [ ^ false ].
-	^ self controllers
-		allSatisfy: [ :each | aCollection anySatisfy: [ :cls | each isKindOf: cls ] ]
-]
-
-{ #category : 'testing' }
-OPRoassalShapeContext >> representsModel: aModelClass [
-	roassalShapes ifEmpty: [ ^ false ].
-	^ self models allSatisfy: [ :each | each isKindOf: aModelClass ]
-]
-
-{ #category : 'testing' }
-OPRoassalShapeContext >> representsModels: aCollection [
-	roassalShapes ifEmpty: [ ^ false ].
-	^ self models allSatisfy: [ :each | aCollection anySatisfy: [ :cls | each isKindOf: cls ] ]
 ]
 
 { #category : 'testing' }
@@ -81,4 +68,9 @@ OPRoassalShapeContext >> roassalShapes: aCollection [
 	roassalShapes := aCollection.
 	controllers := roassalShapes collect: [ :each | 
 		               self diagramController controllerForRoassalShape: each ]
+]
+
+{ #category : 'accessing' }
+OPRoassalShapeContext >> viewModels [
+	^ self controllers collect: #viewModel
 ]

@@ -1,12 +1,15 @@
+"
+Specialized menu builder that dynamically collects and constructs menu items across OpenPonk plugins using Pragmas, ensuring extensibility.
+"
 Class {
 	#name : 'OPPragmaPluginMenuBuilder',
 	#superclass : 'PragmaMenuBuilder',
 	#instVars : [
 		'testBlock'
 	],
-	#category : 'OpenPonk-Spec-Utils',
+	#category : 'OpenPonk-Spec-Windows',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Utils'
+	#tag : 'Windows'
 }
 
 { #category : 'registrations handling' }
@@ -56,7 +59,7 @@ OPPragmaPluginMenuBuilder >> testBlockFor: aModel [
 		          with: OPWorkbenchToolbar -> [ :prg | 
 			          prg arguments first
 			          = aModel projectController project className ]
-		          with: OPProjectNavigator -> [ :prg | 
+		          with: OPProjectTree -> [ :prg | 
 			          prg arguments first
 			          = aModel projectController project className ].
 	^ blocks at: aModel class

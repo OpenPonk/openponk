@@ -1,3 +1,7 @@
+"
+Unit tests for OPProjectController. 
+Verifies the management of open diagrams, projects, model additions/removals, and persistence boundaries (saving projects).
+"
 Class {
 	#name : 'OPProjectControllerTest',
 	#superclass : 'TestCase',
@@ -13,6 +17,7 @@ Class {
 { #category : 'running' }
 OPProjectControllerTest >> setUp [
 
+	super setUp.
 	controller := OPProjectController new.
 	project := OPProject new.
 	controller project: project.
@@ -21,7 +26,9 @@ OPProjectControllerTest >> setUp [
 
 { #category : 'running' }
 OPProjectControllerTest >> tearDown [
-	OPPluginRegistry resetDefault
+
+	OPPluginRegistry resetDefault.
+	super tearDown
 ]
 
 { #category : 'tests' }
@@ -30,6 +37,7 @@ OPProjectControllerTest >> testAddController [
 	| dc model |
 	dc := OPDiagramController new.
 	model := OPTestContainerModel new.
+	dc viewModelRegistry: OPViewModelRegistry forNewProject.
 	dc model: model.
 	controller addDiagramController: dc.
 	self assert: controller controllers asArray equals: { dc }
@@ -37,9 +45,11 @@ OPProjectControllerTest >> testAddController [
 
 { #category : 'tests' }
 OPProjectControllerTest >> testRemoveController [
+
 	| dc model |
 	dc := OPDiagramController new.
 	model := OPTestContainerModel new.
+	dc viewModelRegistry: OPViewModelRegistry forNewProject.
 	dc model: model.
 	controller addDiagramController: dc.
 	controller removeDiagramController: dc.

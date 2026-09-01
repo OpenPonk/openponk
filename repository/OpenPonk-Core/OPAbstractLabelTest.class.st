@@ -1,3 +1,7 @@
+"
+Abstract base class for testing diagram labels. 
+Ensures that textual representations, shape styling, and text formatting attributes work correctly.
+"
 Class {
 	#name : 'OPAbstractLabelTest',
 	#superclass : 'OPAbstractNodeTest',

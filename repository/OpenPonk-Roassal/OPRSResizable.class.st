@@ -1,3 +1,6 @@
+"
+Interaction that decorates a shape with resize handles (typically at corners or edges), enabling the user to interactively scale or modify the shape's dimensions via mouse dragging.
+"
 Class {
 	#name : 'OPRSResizable',
 	#superclass : 'RSTransformable',
@@ -87,7 +90,7 @@ OPRSResizable >> registerCanvasEventsIfNecessary: evt [
 	^ super registerCanvasEventsIfNecessary: evt
 ]
 
-{ #category : 'private' }
+{ #category : 'public' }
 OPRSResizable >> removeHandles: evt [
 
 	| canvas |
@@ -124,7 +127,7 @@ OPRSResizable >> showHandles: evt [
 	evt signalUpdate
 ]
 
-{ #category : 'private' }
+{ #category : 'update' }
 OPRSResizable >> updateCurrentShape: evt [
 
 	| handle newRec rect |
@@ -145,7 +148,7 @@ OPRSResizable >> updateCurrentShape: evt [
 	evt signalUpdate
 ]
 
-{ #category : 'private' }
+{ #category : 'update' }
 OPRSResizable >> updateHandles: evt [
 
 	| canvas rect base points circles matrix |

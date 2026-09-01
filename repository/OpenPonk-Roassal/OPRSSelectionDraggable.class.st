@@ -1,3 +1,7 @@
+"
+Advanced drag interaction. 
+When a selected shape is dragged, coordinates moving all other currently selected shapes, alongside any inner/child shapes determined by a specific OPRSSelectionDraggableInnerShapesProvider, and handles control point translations for connected lines.
+"
 Class {
 	#name : 'OPRSSelectionDraggable',
 	#superclass : 'RSDraggable',
@@ -236,7 +240,7 @@ OPRSSelectionDraggable >> replaceAlignmentLinesWith: alignmentLines [
 
 	alignmentLineShapes := alignmentLines collect: [ :each |
 		                       RSLine new
-			                       from: each draggedAdapated;
+			                       from: each draggedAdapted;
 			                       to: each compared;
 			                       color: (Color lightOrange alpha: 0.8);
 			                       yourself ].

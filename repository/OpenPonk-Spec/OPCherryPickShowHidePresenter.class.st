@@ -1,3 +1,7 @@
+"
+Concrete Spec presenter used within OPShowHidePresenter. 
+Provides a tree view that allows users to manually ""cherry-pick"" specific individual model elements to show or hide on the diagram canvas.
+"
 Class {
 	#name : 'OPCherryPickShowHidePresenter',
 	#superclass : 'OPShowHideTabContentPresenter',
@@ -7,9 +11,12 @@ Class {
 }
 
 { #category : 'accessing' }
-OPCherryPickShowHidePresenter >> childrenFor: aModelObject [
-	^ adapters
-		sort: (adapters dependentFor: aModelObject in: diagramController model)
+OPCherryPickShowHidePresenter >> childrenFor: aViewModel [
+
+	| items |
+	items := aViewModel dependentElements collect: [ :each |
+		         each registry viewModelFor: each ].
+	^ items sortedAs: #modelDisplayString
 ]
 
 { #category : 'defaults' }
@@ -19,32 +26,37 @@ OPCherryPickShowHidePresenter >> findSelectedItems [
 ]
 
 { #category : 'defaults' }
-OPCherryPickShowHidePresenter >> iconFor: aModelObject [
-	^ adapters iconFor: aModelObject
+OPCherryPickShowHidePresenter >> iconFor: aViewModel [
+
+	^ aViewModel icon
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPCherryPickShowHidePresenter >> initialRoots [
-	^ {diagramController model}
+
+	^ { diagramController viewModel }
 ]
 
 { #category : 'general' }
-OPCherryPickShowHidePresenter >> nameFor: anObject [
-	^ adapters displayFor: anObject
+OPCherryPickShowHidePresenter >> nameFor: aViewModel [
+
+	^ aViewModel modelDisplayString
 ]
 
 { #category : 'accessing' }
-OPCherryPickShowHidePresenter >> selected: added [
+OPCherryPickShowHidePresenter >> selected: anAddedViewModel [
+
 	| executor |
 	executor := OPDiagramExplorer on: diagramController.
-	executor showElement: added.
-	^ {added}
+	executor showElement: anAddedViewModel model.
+	^ { anAddedViewModel }
 ]
 
 { #category : 'accessing' }
-OPCherryPickShowHidePresenter >> unselected: removed [
+OPCherryPickShowHidePresenter >> unselected: aRemovedViewModel [
+
 	| executor |
 	executor := OPDiagramExplorer on: diagramController.
-	executor hideElement: removed.
-	^ {removed}
+	executor hideElement: aRemovedViewModel model.
+	^ { aRemovedViewModel }
 ]

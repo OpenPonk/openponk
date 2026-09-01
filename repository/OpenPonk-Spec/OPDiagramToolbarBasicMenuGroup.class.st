@@ -1,9 +1,12 @@
+"
+Represents a fundamental grouping of menu items within the diagram toolbar, typically arranging core diagram actions such as undo, redo, and zoom controls.
+"
 Class {
 	#name : 'OPDiagramToolbarBasicMenuGroup',
 	#superclass : 'CmdMenuGroup',
-	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands',
+	#category : 'OpenPonk-Spec-Commands-CanvasPresenter',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-Toolbar-Commands'
+	#tag : 'Commands-CanvasPresenter'
 }
 
 { #category : 'testing' }

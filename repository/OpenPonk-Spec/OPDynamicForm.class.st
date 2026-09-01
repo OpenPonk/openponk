@@ -1,11 +1,5 @@
 "
-!! Responsibility
-
-Creating form controls (text boxes, checkboxes, etc) for editing a controller's model.
-
-!! Collaborators
-
-==DCController>>buildEditorForm:==
+Spec presenter responsible for dynamically generating form controls (such as text inputs, dropdowns, and checkboxes) to edit properties of a selected domain model or view model.
 "
 Class {
 	#name : 'OPDynamicForm',
@@ -13,14 +7,14 @@ Class {
 	#instVars : [
 		'components',
 		'whenAccepted',
-		'controller'
+		'target'
 	],
 	#category : 'OpenPonk-Spec-Form',
 	#package : 'OpenPonk-Spec',
 	#tag : 'Form'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'layout' }
 OPDynamicForm class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -236,12 +230,8 @@ OPDynamicForm >> addTextInput: aName [
 
 { #category : 'public' }
 OPDynamicForm >> editController: aController [
-	components ifNotEmpty: [ self reset ].
-	controller := aController.
-	controller ifNotNil: [ controller buildEditorForm: self ].
-	self
-		rebuildWidget;
-		takeKeyboardFocus
+	self deprecated: 'Use target: instead' transformWith: '`@receiver editController: `@arg1' -> '`@receiver target: `@arg1'.
+	self target: aController
 ]
 
 { #category : 'initialization' }
@@ -258,15 +248,16 @@ OPDynamicForm >> fromMagritteDescriptions: aContainer [
 	| visitor |
 	visitor := OPDynamicFormMagritteVisitor new.
 	visitor form: self.
-	visitor controller: controller.
+	visitor controller: target.
 	visitor visit: aContainer
 ]
 
 { #category : 'initialization' }
 OPDynamicForm >> initialize [
+
 	self reset.
 	super initialize.
-	whenAccepted := [  ]
+	whenAccepted := [ ]
 ]
 
 { #category : 'private - building widgets' }
@@ -288,6 +279,13 @@ OPDynamicForm >> initializePresenters [
 
 	super initializePresenters.
 	self initializeLayout
+]
+
+{ #category : 'updating' }
+OPDynamicForm >> rebuildForm [
+	| currentTarget |
+	currentTarget := target.
+	currentTarget ifNotNil: [ self target: currentTarget ]
 ]
 
 { #category : 'private - building widgets' }
@@ -314,4 +312,26 @@ OPDynamicForm >> reset [
 
 	components := OrderedCollection new.
 	self focusOrder: OrderedCollection new
+]
+
+{ #category : 'accessing' }
+OPDynamicForm >> target [
+	^ target
+]
+
+{ #category : 'public' }
+OPDynamicForm >> target: anObjectWithBuildEditorForm [
+
+	target ifNotNil: [ target formEventsAnnouncer unsubscribe: self ].
+	components ifNotEmpty: [ self reset ].
+	target := anObjectWithBuildEditorForm.
+	target ifNotNil: [
+			target buildEditorForm: self.
+			target formEventsAnnouncer weak
+				when: OPElementFormNeedsRebuild
+				send: #rebuildForm
+				to: self ].
+	self
+		rebuildWidget;
+		takeKeyboardFocus
 ]

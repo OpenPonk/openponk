@@ -1,3 +1,6 @@
+"
+Diagram toolbar command that applies a grid layout algorithm to align elements on the current diagram canvas.
+"
 Class {
 	#name : 'OPGridLayoutCommand',
 	#superclass : 'OPLayoutDiagramCommand',
@@ -11,7 +14,7 @@ OPGridLayoutCommand >> defaultMenuItemName [
 	^ 'Grid'
 ]
 
-{ #category : 'accessing' }
+{ #category : 'execution' }
 OPGridLayoutCommand >> execute [
 	layouter gridLayout
 ]

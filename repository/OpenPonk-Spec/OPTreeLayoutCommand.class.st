@@ -1,3 +1,6 @@
+"
+Diagram toolbar command that applies a hierarchical tree layout algorithm to the elements on the current diagram canvas.
+"
 Class {
 	#name : 'OPTreeLayoutCommand',
 	#superclass : 'OPLayoutDiagramCommand',
@@ -11,7 +14,7 @@ OPTreeLayoutCommand >> defaultMenuItemName [
 	^ 'Tree'
 ]
 
-{ #category : 'accessing' }
+{ #category : 'execution' }
 OPTreeLayoutCommand >> execute [
 	layouter treeLayout
 ]

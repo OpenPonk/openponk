@@ -1,3 +1,7 @@
+"
+Unit tests for OPControllerFactory. 
+Verifies the registration, lookup, and instantiation of controllers based on provided model instances and types.
+"
 Class {
 	#name : 'OPControllerFactoryTest',
 	#superclass : 'TestCase',
@@ -12,8 +16,14 @@ Class {
 { #category : 'running' }
 OPControllerFactoryTest >> setUp [
 
+	| diagramController |
 	super setUp.
-	factory := OPControllerFactory new
+	diagramController := OPTestDiagramController new.
+	diagramController viewModelRegistry:
+		OPViewModelRegistry forNewProject.
+
+	factory := OPControllerFactory new.
+	factory diagramController: diagramController
 ]
 
 { #category : 'tests' }

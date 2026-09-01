@@ -1,3 +1,6 @@
+"
+Concrete exporter responsible for rendering and saving an OpenPonk diagram canvas into a PDF (Portable Document Format) file via Roassal.
+"
 Class {
 	#name : 'OPCanvasPDFExporter',
 	#superclass : 'OPCanvasExporter',

@@ -1,3 +1,6 @@
+"
+Announcement fired when a diagram element is successfully rendered onto the Roassal canvas.
+"
 Class {
 	#name : 'OPDiagramElementRenderedAnnouncement',
 	#superclass : 'OPDiagramElementAnnouncement',

@@ -1,5 +1,6 @@
 "
-I am base class for all UI - centric commands such as rename or export
+Abstract base class for all UI-centric commands in OpenPonk, such as renaming elements, changing visibility, or exporting diagrams. 
+Typically operates on an active controller or model context.
 "
 Class {
 	#name : 'OPUICommand',

@@ -1,3 +1,7 @@
+"
+Visual boundary (or visual grouping box) element in a diagram. 
+As a diagram-only shape, groups visual elements spatially on the canvas without acting as a structural container in the underlying domain model.
+"
 Class {
 	#name : 'OPBoundary',
 	#superclass : 'OPDiagramOnlyShapeWithText',
@@ -6,9 +10,9 @@ Class {
 	#instVars : [
 		'name'
 	],
-	#category : 'OpenPonk-Core-CommonElements',
+	#category : 'OpenPonk-Core-DiagramOnlyElements',
 	#package : 'OpenPonk-Core',
-	#tag : 'CommonElements'
+	#tag : 'DiagramOnlyElements'
 }
 
 { #category : 'ston-core' }
@@ -19,7 +23,7 @@ OPBoundary class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #name )
 ]
 
-{ #category : 'creating - subelements' }
+{ #category : 'interactions' }
 OPBoundary >> addSelectionDraggableInteraction [
 
 	roassalShape

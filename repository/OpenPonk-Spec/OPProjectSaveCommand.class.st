@@ -1,9 +1,12 @@
+"
+Workbench toolbar command that saves the current project state to its existing file location, or prompts for a destination if it has not been saved yet.
+"
 Class {
 	#name : 'OPProjectSaveCommand',
 	#superclass : 'OPProjectCommand',
-	#category : 'OpenPonk-Spec-Commands',
+	#category : 'OpenPonk-Spec-Commands-Workbench',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Commands'
+	#tag : 'Commands-Workbench'
 }
 
 { #category : 'activation' }
@@ -23,7 +26,7 @@ OPProjectSaveCommand >> defaultMenuItemName [
 	^ 'Save Project'
 ]
 
-{ #category : 'accessing' }
+{ #category : 'execution' }
 OPProjectSaveCommand >> execute [
 	projectController saveProject
 ]

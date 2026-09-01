@@ -1,3 +1,6 @@
+"
+Roassal interaction that enables drag-and-drop behavior on a shape, but only if a specific, dynamically evaluated condition block evaluates to true.
+"
 Class {
 	#name : 'OPRSConditionallyDraggable',
 	#superclass : 'RSDraggable',

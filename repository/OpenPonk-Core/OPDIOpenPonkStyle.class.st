@@ -1,3 +1,6 @@
+"
+Deprecated legacy class representing a shape style. Use OPOpenPonkShapeStyle instead.
+"
 Class {
 	#name : 'OPDIOpenPonkStyle',
 	#superclass : 'OPOpenPonkShapeStyle',

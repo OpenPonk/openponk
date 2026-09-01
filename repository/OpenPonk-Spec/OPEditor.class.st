@@ -1,7 +1,6 @@
 "
-I am a component for visualization and manipulation of diagrams.
-I consist of canvas (Roassal's RTView) and a palette which depends on the type of diagram.
-I am bound with a diagram package and cannot live without it.
+Core Spec presenter for visualizing and editing a diagram. 
+Coordinates the rendering canvas (Roassal), the palette of tools, and the governing OPDiagramController for a specific instance of a diagram (visual representation of a model).
 "
 Class {
 	#name : 'OPEditor',
@@ -13,7 +12,6 @@ Class {
 		'plugin',
 		'canvasPresenter',
 		'canvasMenu',
-		'form',
 		'palette'
 	],
 	#classInstVars : [
@@ -39,8 +37,8 @@ OPEditor class >> availableLayouts [
 { #category : 'settings' }
 OPEditor class >> canvasSectionWidth [
 
-	^ OPWorkbench initialExtent x - OPWorkbench initialListsWidth
-	  - OPPalette initialWidth - OPDynamicForm initialWidth
+	^ OPWorkbench initialWidth - OPWorkbench initialListsWidth
+	  - OPPalette initialWidth 
 ]
 
 { #category : 'settings' }
@@ -50,7 +48,7 @@ OPEditor class >> currentLayout [
 	^ currentLayout
 ]
 
-{ #category : 'settings' }
+{ #category : 'layout' }
 OPEditor class >> defaultLayout [
 
 	^ OPEditorLayout default
@@ -166,7 +164,8 @@ OPEditor >> diagramController [
 
 { #category : 'accessing - spec' }
 OPEditor >> form [
-	^ form
+
+	^ self workbench form
 ]
 
 { #category : 'initialization' }
@@ -175,13 +174,11 @@ OPEditor >> initializePresenters [
 	canvasMenu := self newMenuBar.
 	canvasPresenter := self instantiate: OPCanvasPresenter.
 	palette := self instantiate: OPPalette.
-	form := self instantiate: OPDynamicForm.
 	(zoomLabel := self newLabel) label: '100%'.
 	self focusOrder
 		add: canvasMenu;
 		add: canvasPresenter;
-		add: palette;
-		add: form.
+		add: palette.
 	self class currentLayout applyOn: self.
 
 	self whenBuiltDo: [ :builtEvent |
@@ -208,11 +205,14 @@ OPEditor >> initializePresenters [
 
 { #category : 'diagram handling' }
 OPEditor >> newDiagramControllerFor: aModel [
+
 	^ plugin diagramControllerClass new
-		model: aModel;
-		editor: self;
-		workbenchAnnouncer: self workbench announcer;
-		yourself
+		  editor: self;
+		  workbenchAnnouncer: self workbench announcer;
+		  viewModelRegistry:
+			  self workbench projectController viewModelRegistry;
+		  model: aModel;
+		  yourself
 ]
 
 { #category : 'diagram handling' }
@@ -223,12 +223,6 @@ OPEditor >> openEmptyModel: aModel [
 		diagramController.
 	canvasPresenter attachController: diagramController.
 	self rebuildWidget
-]
-
-{ #category : 'initialization' }
-OPEditor >> openFormOn: aController [
-
-	form editController: aController
 ]
 
 { #category : 'accessing' }
@@ -255,7 +249,7 @@ OPEditor >> rebuildWidget [
 	self update
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing - model' }
 OPEditor >> setModelBeforeInitialization: aPlugin [
 	self plugin: aPlugin
 	
@@ -288,6 +282,7 @@ OPEditor >> updateUndoRedo [
 
 { #category : 'accessing - spec' }
 OPEditor >> workbench [
+
 	^ workbench
 ]
 

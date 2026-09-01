@@ -1,11 +1,9 @@
 "
-I am fired when a model (element) has been removed.
-
-Typically a diagram would react by removing a related view & controller for this model.
+Event announced when a domain model element has been completely removed or destroyed from its parent container.
 "
 Class {
 	#name : 'OPModelRemoved',
-	#superclass : 'OPModelAnnouncement',
+	#superclass : 'OPModelEvent',
 	#category : 'OpenPonk-Core-Announcements',
 	#package : 'OpenPonk-Core',
 	#tag : 'Announcements'

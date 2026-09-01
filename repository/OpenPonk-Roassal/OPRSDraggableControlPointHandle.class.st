@@ -1,3 +1,7 @@
+"
+Specialized draggable handle bound to an existing control point on an edge. 
+Updates the edge's routing path interactively as the user drags it.
+"
 Class {
 	#name : 'OPRSDraggableControlPointHandle',
 	#superclass : 'OPRSAbstractDraggableControlPointHandle',
@@ -128,7 +132,7 @@ OPRSDraggableControlPointHandle >> render [
 	clickBox when: RSMouseDragEnd do: [ self onDragEnd ] for: self
 ]
 
-{ #category : 'shapes' }
+{ #category : 'accessing' }
 OPRSDraggableControlPointHandle >> size [
 
 	^ 9

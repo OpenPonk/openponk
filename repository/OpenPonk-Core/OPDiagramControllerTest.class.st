@@ -1,3 +1,7 @@
+"
+Unit tests for OPDiagramController. 
+Verifies the primary diagram loop, including element placement, sub-controller instantiation, and basic palette interactions.
+"
 Class {
 	#name : 'OPDiagramControllerTest',
 	#superclass : 'OPAbstractDiagramControllerTest',
@@ -6,7 +10,7 @@ Class {
 	#tag : 'Controllers-Tests'
 }
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPDiagramControllerTest >> controllerClass [
 	^ OPTestDiagramController
 ]
@@ -21,7 +25,7 @@ OPDiagramControllerTest >> diagramModelClass [
 	^ OPTestContainerModel
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPDiagramControllerTest >> modelClass [
 	^ OPTestContainerModel
 ]
@@ -41,16 +45,16 @@ OPDiagramControllerTest >> testAddAsTargetForEntity [
 		equals: { entityController }
 ]
 
-{ #category : 'tests - ui interaction' }
+{ #category : 'tests' }
 OPDiagramControllerTest >> testAttachEditor [
-	| editor workbench plugin |
-	plugin := OPPlugin new.
-	plugin stub layouterClass willReturn: OPLayouter.
-	editor := OPEditor on: plugin.
-	workbench := OPWorkbench new.
-	editor stub workbench willReturn: workbench.
+	| editor form |
+	editor := Mock new.
+	form := Mock new.
+	editor stub form willReturn: form.
+	
 	controller editor: editor.
-	self assert: controller form isNotNil
+	self assert: controller editor equals: editor.
+	self assert: controller form equals: form
 ]
 
 { #category : 'tests - connecting' }
@@ -85,6 +89,7 @@ OPDiagramControllerTest >> testModelClass [
 
 { #category : 'tests - construction' }
 OPDiagramControllerTest >> testShowModelInDiagram [
+
 	| entity |
 	controller model: model.
 	entity := OPTestEntityModel new.
@@ -93,9 +98,12 @@ OPDiagramControllerTest >> testShowModelInDiagram [
 
 { #category : 'tests - construction' }
 OPDiagramControllerTest >> testShowModelInDiagramAttachesController [
+
 	| entity |
 	controller model: model.
 	entity := OPTestEntityModel new.
 	controller showWithoutDependentInDiagramModel: entity.
-	self shouldnt: (controller controllerForModel: entity) raise: NotFound
+	self
+		shouldnt: (controller controllerForModel: entity)
+		raise: NotFound
 ]

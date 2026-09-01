@@ -1,3 +1,7 @@
+"
+Implements the Null Object pattern for Roassal shapes or diagram elements. 
+Provides a safe, no-operation interface for scenarios where an element temporarily or permanently lacks a visual representation.
+"
 Class {
 	#name : 'OPNoShape',
 	#superclass : 'UndefinedObject',
@@ -21,7 +25,7 @@ OPNoShape class >> new [
 	^ self instance
 ]
 
-{ #category : 'initialization' }
+{ #category : 'class initialization' }
 OPNoShape class >> reset [
 
 	<script>
@@ -64,7 +68,7 @@ OPNoShape >> isRendered [
 	^ false
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPNoShape >> modelChanged [
 
 	"do nothing"
@@ -135,7 +139,7 @@ OPNoShape >> roassalShape [
 	^ nil
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'rendering' }
 OPNoShape >> roassalShapeUnsubscribe: aSubscriber [
 	"do nothing"
 

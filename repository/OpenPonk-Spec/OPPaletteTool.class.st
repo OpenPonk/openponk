@@ -1,6 +1,5 @@
 "
-An abstract base class for all palette tools.
-To create new tool override >>select  (and optionaly >>deselect) methods.
+Abstract base class for tools residing within the OpenPonk palette (such as selection, node creation, and connection routing tools).
 "
 Class {
 	#name : 'OPPaletteTool',
@@ -44,7 +43,7 @@ OPPaletteTool >> enableMultiselect [
 		ifPresent: [ :selectableCanvas | selectableCanvas enableMultiselect ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'hooks' }
 OPPaletteTool >> hoveredController: aController [
 
 	"do nothing by default"
@@ -67,7 +66,7 @@ OPPaletteTool >> select [
 	self subclassResponsibility
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'hooks' }
 OPPaletteTool >> selectedControllers: aCollectionOfControllers [
 
 	^ self subclassResponsibility

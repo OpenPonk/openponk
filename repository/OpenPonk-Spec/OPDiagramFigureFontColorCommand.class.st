@@ -1,9 +1,12 @@
+"
+Context menu command that allows users to modify the font color of the text within the selected Roassal shape.
+"
 Class {
 	#name : 'OPDiagramFigureFontColorCommand',
 	#superclass : 'OPRoassalShapeColorCommand',
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
 { #category : 'accessing' }

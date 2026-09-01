@@ -1,16 +1,37 @@
+"
+Controller managing OPBoundary diagram elements. 
+Operates as a diagram-only controller without a corresponding domain model, and manages interactions such as user-driven resizing for visual boundaries.
+"
 Class {
 	#name : 'OPBoundaryController',
-	#superclass : 'OPCommonElementController',
+	#superclass : 'OPDiagramOnlyController',
 	#traits : 'OPTResizableFigureController',
 	#classTraits : 'OPTResizableFigureController classTrait',
-	#category : 'OpenPonk-Core-CommonElements',
+	#category : 'OpenPonk-Core-DiagramOnlyElements',
 	#package : 'OpenPonk-Core',
-	#tag : 'CommonElements'
+	#tag : 'DiagramOnlyElements'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'construction' }
+OPBoundaryController class >> diagramElementClass [
+	^ OPBoundary
+]
+
+{ #category : 'accessing' }
+OPBoundaryController class >> modelClass [
+
+	^ OPBoundary
+]
+
+{ #category : 'constants' }
 OPBoundaryController class >> paletteItemName [
 	^ #boundary
+]
+
+{ #category : 'accessing' }
+OPBoundaryController class >> viewModelClass [
+
+	^ OPBoundaryViewModel
 ]
 
 { #category : 'connecting' }
@@ -34,8 +55,13 @@ OPBoundaryController >> canBeTargetFor: aController [
 	^ self diagramController canBeTargetFor: aController
 ]
 
-{ #category : 'construction' }
-OPBoundaryController >> diagramElementClass [
+{ #category : 'ui-hooks' }
+OPBoundaryController >> creationUICommandClass [
 
-	^ OPBoundary
+	^ OPRenameElementCommand
+]
+
+{ #category : 'accessing' }
+OPBoundaryController >> propertiesTarget [
+	^ self
 ]

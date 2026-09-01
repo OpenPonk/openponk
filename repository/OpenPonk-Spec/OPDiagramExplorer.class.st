@@ -1,9 +1,13 @@
+"
+Provides an interface to navigate, discover, and toggle the visibility of diagram elements. 
+Coordinates with the OPViewModelRegistry and OPDiagramController to hide or show dependencies and connected elements.
+"
 Class {
 	#name : 'OPDiagramExplorer',
 	#superclass : 'Object',
 	#instVars : [
 		'diagramController',
-		'adapters'
+		'viewModelRegistry'
 	],
 	#category : 'OpenPonk-Spec-Dialogs',
 	#package : 'OpenPonk-Spec',
@@ -18,20 +22,9 @@ OPDiagramExplorer class >> on: aDiagramController [
 ]
 
 { #category : 'accessing' }
-OPDiagramExplorer >> adapters [
-
-	^ adapters ifNil: [ 
-		  adapters := diagramController editor
-			              ifNil: [ OPNavigatorAdapters new ]
-			              ifNotNil: [ 
-				              diagramController editor workbench projectController
-					              navigatorAdapters ] ]
-]
-
-{ #category : 'accessing' }
 OPDiagramExplorer >> dependentFor: aModelObject [
 
-	^ self adapters dependentFor: aModelObject in: diagramController model
+	^ self viewModelRegistry dependentFor: aModelObject
 ]
 
 { #category : 'accessing' }
@@ -101,21 +94,21 @@ OPDiagramExplorer >> showElement: aModelObject [
 
 { #category : 'actions' }
 OPDiagramExplorer >> showElements: aCollectionOfModelObjects [
+    | ctrls existingCtrls |
+    aCollectionOfModelObjects ifEmpty: [ ^ self ].
+    diagramController disableRefresh.
+    existingCtrls := aCollectionOfModelObjects asArray
+                     collect: [ :each | diagramController controllerForModel: each ifNone: [ nil ] ]
+                     thenSelect: [ :each | each isNotNil ].
+    ctrls := (aCollectionOfModelObjects sorted: [ :a :b |
+                  (self viewModelRegistry viewModelFor: a) creationPriority < (self viewModelRegistry viewModelFor: b) creationPriority ]) 
+             collect: [ :each | diagramController showWithoutDependentInDiagramModel: each ].
+    diagramController enableRefresh
+]
 
-	| ctrls existingCtrls |
-	aCollectionOfModelObjects ifEmpty: [ ^ self ].
-	diagramController disableRefresh.
-	existingCtrls := aCollectionOfModelObjects asArray
-		                 collect: [ :each |
-		                 diagramController
-			                 controllerForModel: each
-			                 ifNone: [ nil ] ]
-		                 thenSelect: [ :each | each isNotNil ].
-	ctrls := (aCollectionOfModelObjects sorted: [ :a :b |
-		          self adapters
-			          dependsTypeOf: b
-			          on: a
-			          in: diagramController model ]) collect: [ :each |
-		         diagramController showWithoutDependentInDiagramModel: each ].
-	diagramController enableRefresh
+{ #category : 'accessing' }
+OPDiagramExplorer >> viewModelRegistry [
+
+	^ viewModelRegistry ifNil: [
+		  viewModelRegistry := diagramController viewModel registry ]
 ]

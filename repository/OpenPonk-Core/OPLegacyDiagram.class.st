@@ -1,6 +1,6 @@
 "
-I represent a view of a model. The content of the model can be filtered, explicitly shown, or explicitly hidden.
-Further I contain the layout of the entities in the view, and layout/configuration of the view itself.
+Represents a legacy implementation of a diagram containing the layout of entities and view configuration.
+Retained strictly for backward compatibility and model migration.
 "
 Class {
 	#name : 'OPLegacyDiagram',
@@ -119,7 +119,7 @@ OPLegacyDiagram class >> withWholeModel: aModel [
 		yourself
 ]
 
-{ #category : 'copying' }
+{ #category : 'comparing' }
 OPLegacyDiagram >> = otherDiagram [
 	^ self asJson = otherDiagram asJson
 ]
@@ -151,63 +151,62 @@ OPLegacyDiagram >> asJsonTo: stream [
 
 { #category : 'converting' }
 OPLegacyDiagram >> asOPDiagram [
-
-	| diagram adapters allModelElements layoutsPerModel diagramController canvas controllersByModels |
+	| diagram viewModelRegistry allModelElements layoutsPerModel diagramController canvas controllersByModels |
 	diagram := OPOpenPonkDiagram forModelElement: self model.
 	[ :job |
-	job title: 'Transforming older version of project'.
-	job progress: 0.
-	diagram name: self name.
-	diagram isOpen: self isOpen.
-	diagram isSelected: self isSelected.
-	diagram camera: self camera.
-	adapters := OPNavigatorAdapters new.
-	job progress: 0.1.
-	allModelElements := ((Set with: self model)
-	                     , (adapters allChildrenFor: self model)
-	                     , commonElements collect: [ :each |
-		                     each uuid -> each ]) asDictionary.
-	job progress: 0.2.
-	visibleElements := (visibleElements collect: [ :each |
-		                    each modelObjectFrom: allModelElements ])
-		                   sorted: [ :a :b |
-		                   adapters dependsTypeOf: b on: a in: model ].
-	job progress: 0.3.
-	layoutsPerModel := (layout associations collect: [ :each |
-		                    (allModelElements at: each key) -> each value ])
-		                   asDictionary.
-	job progress: 0.4.
-	diagramController := (OPPluginRegistry default pluginFor: model)
-		                     diagramControllerClass new.
-	diagramController
-		model: model;
-		diagramElement: diagram.
-	canvas := RSCanvas new.
-	job progress: 0.5.
-	controllersByModels := (visibleElements copyWithout: model) collect: [
-		                       :each |
-		                       | controller diagramElement |
-		                       controller := diagramController
-			                                     newControllerFor: each.
-		                       diagramController addController: controller.
-		                       diagramElement := controller
-			                                         ensureDiagramElement.
-		                       diagramElement owningElement ifNotExists: [
-			                       diagramElement owningElement:
-				                       controller ownerDiagramElement ].
-		                       each -> controller ].
-	job progress: 0.7.
-	diagram renderIn: canvas.
-	job progress: 0.8.
-	controllersByModels do: [ :eachModelAndController |
-		layoutsPerModel
-			at: eachModelAndController key
-			ifPresent: [ :eachLayout |
-				eachLayout applyToDiagramElement:
-					eachModelAndController value diagramElement ] ].
-	job progress: 0.9.
-	diagram removeRender.
-	job progress: 1 ] asJob run.
+		job title: 'Transforming older version of project'.
+		job progress: 0.
+		diagram name: self name.
+		diagram isOpen: self isOpen.
+		diagram isSelected: self isSelected.
+		diagram camera: self camera.
+		
+		commonElements do: [ :each | each owningElement: diagram ].
+		
+		viewModelRegistry := OPViewModelRegistry forNewProject.
+		job progress: 0.1.
+		allModelElements := ((Set with: self model)
+							 ,
+							 (viewModelRegistry allChildrenFor: self model)
+							 , commonElements collect: [ :each |
+								 each uuid -> each ]) asDictionary.
+		job progress: 0.2.
+		visibleElements := (visibleElements collect: [ :each |
+								each modelObjectFrom: allModelElements ])
+							   sorted: [ :a :b |
+							   viewModelRegistry dependsRoughlyTypeOf: b on: a ].
+		job progress: 0.3.
+		layoutsPerModel := (layout associations collect: [ :each |
+								(allModelElements at: each key) -> each value ])
+							   asDictionary.
+		job progress: 0.4.
+		diagramController := (OPPluginRegistry default pluginFor: model)
+								 diagramControllerClass new.
+		canvas := RSCanvas new.
+		diagramController
+			viewModelRegistry: viewModelRegistry;
+			model: model;
+			diagramElement: diagram;
+			canvasPresenter: canvas.
+		job progress: 0.5.
+				
+		"Render the diagram first so that its roassalShape is assigned before adding elements"
+		diagram renderIn: canvas.
+		controllersByModels := (visibleElements copyWithout: model)
+								   collect: [ :each |
+									   | controller |
+									   controller := diagramController showWithoutDependentInDiagramModel: each.
+									   each -> controller ].
+		job progress: 0.8.
+		controllersByModels do: [ :eachModelAndController |
+				layoutsPerModel
+					at: eachModelAndController key
+					ifPresent: [ :eachLayout |
+							eachLayout applyToDiagramElement:
+								eachModelAndController value diagramElement ] ].
+		job progress: 0.9.
+		diagram removeRender.
+		job progress: 1 ] asJob run.
 	^ diagram
 ]
 
@@ -342,7 +341,7 @@ OPLegacyDiagram >> printOn: aStream [
 	aStream << ')'
 ]
 
-{ #category : 'accessing' }
+{ #category : 'actions' }
 OPLegacyDiagram >> setAllElementsVisible [
 
 	visibleElements := nil

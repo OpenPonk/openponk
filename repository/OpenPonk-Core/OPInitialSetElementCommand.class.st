@@ -1,3 +1,6 @@
+"
+UI command used to handle the initial setup or placement of a newly created element within a diagram or model.
+"
 Class {
 	#name : 'OPInitialSetElementCommand',
 	#superclass : 'OPUICommand',
@@ -9,8 +12,5 @@ Class {
 { #category : 'execute' }
 OPInitialSetElementCommand >> execute [
 
-	controller diagramController editor workbench projectController
-		navigatorAdapters
-		initialSetupFor: controller model
-		in: controller diagramController
+	controller creationUICommandClass executeOn: controller
 ]

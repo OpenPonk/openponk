@@ -1,6 +1,6 @@
 "
-A palette item used for selecting items in the view.
-This class should not be used directly and is created automatically with every DCPalette.
+Palette tool dedicated to selecting and highlighting existing items on the diagram canvas. 
+Typically the default active tool in any OpenPonk palette.
 "
 Class {
 	#name : 'OPSelectionTool',
@@ -36,7 +36,7 @@ OPSelectionTool >> select [
 	selectedControllers := {  }
 ]
 
-{ #category : 'protocol' }
+{ #category : 'hooks' }
 OPSelectionTool >> selectedControllers: aCollectionOfControllers [
 
 	| originalRoassalShapes newRoassalShapes |
@@ -50,7 +50,7 @@ OPSelectionTool >> selectedControllers: aCollectionOfControllers [
 			(shape propertyAt: OPRSSelectable) doHighlightShapes:
 				newRoassalShapes ].
 	selectedControllers := aCollectionOfControllers.
-	self editor openFormOn: (aCollectionOfControllers size = 1
-			 ifTrue: [ aCollectionOfControllers anyOne ]
-			 ifFalse: [ nil ])
+	self workbench openFormOn:
+		(aCollectionOfControllers size = 1 ifTrue: [
+			 aCollectionOfControllers anyOne ])
 ]

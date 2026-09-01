@@ -1,3 +1,7 @@
+"
+Unit tests for OPProjectDirectoryMaterializer. 
+Verifies the reconstruction of a full OPProject, alongside its diagrams and mementos, from a structured directory source.
+"
 Class {
 	#name : 'OPProjectDirectoryMaterializerTest',
 	#superclass : 'TestCase',
@@ -37,7 +41,9 @@ OPProjectDirectoryMaterializerTest >> setUpBasicProject [
 
 { #category : 'running' }
 OPProjectDirectoryMaterializerTest >> tearDown [
-	OPPluginRegistry resetDefault
+
+	OPPluginRegistry resetDefault.
+	super tearDown
 ]
 
 { #category : 'tests' }

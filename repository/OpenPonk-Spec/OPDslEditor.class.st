@@ -1,5 +1,6 @@
 "
-I am an editor for UML DSL.
+Spec presenter acting as a text-based Domain-Specific Language (DSL) editor. 
+Integrates a parser, syntax highlighter, and automatic model updating mechanism to support text-to-model workflows.
 "
 Class {
 	#name : 'OPDslEditor',
@@ -22,7 +23,7 @@ Class {
 	#tag : 'Windows'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'layout' }
 OPDslEditor class >> defaultLayout [
 	^ SpecColumnLayout new
 		add: SpBoxLayout newLeftToRight:  [ :row | row add: #toolbar ] height: self toolbarHeight;
@@ -80,7 +81,7 @@ OPDslEditor >> buildToolbar: aMenu [
 							OPWorkbench openModel: model ] ] ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPDslEditor >> connectPresenters [
 	super connectPresenters.
 	editor whenTextIsAccepted: [ self textUpdated: editor text ]
@@ -120,7 +121,7 @@ OPDslEditor >> highlighter: aHighlighterParser [
 	highlighter := aHighlighterParser
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPDslEditor >> initializePresenters [
 	toolbar := self newMenu.
 	self buildToolbar: toolbar.
@@ -199,7 +200,7 @@ OPDslEditor >> textUpdated: aString [
 	location ifNil: [ self updateModel ] ifNotNil: [ self saveToFile: location ]
 ]
 
-{ #category : 'api' }
+{ #category : 'accessing - deprecated' }
 OPDslEditor >> title [
 	^ 'DSL Editor'
 ]

@@ -1,3 +1,7 @@
+"
+Mock diagram edge. 
+Used exclusively for rendering and connection logic tests.
+"
 Class {
 	#name : 'OPTestEdge',
 	#superclass : 'OPEdge',

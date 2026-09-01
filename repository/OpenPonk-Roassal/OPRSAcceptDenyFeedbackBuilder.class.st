@@ -1,3 +1,6 @@
+"
+Utility builder that creates visual feedback overlays (typically colored highlights) on Roassal shapes to indicate whether an ongoing operation (like drag-and-drop or connection) is accepted or denied by a target controller.
+"
 Class {
 	#name : 'OPRSAcceptDenyFeedbackBuilder',
 	#superclass : 'RSObject',
@@ -9,12 +12,12 @@ Class {
 	#tag : 'CreationFeedback'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'visiting' }
 OPRSAcceptDenyFeedbackBuilder class >> acceptFeedbackFor: anObject [
 	^ self new acceptFeedbackFor: anObject
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'asserting' }
 OPRSAcceptDenyFeedbackBuilder class >> denyFeedbackFor: anObject [
 	^ self new denyFeedbackFor: anObject
 ]

@@ -1,3 +1,6 @@
+"
+Concrete Spec presenter used within OPShowHidePresenter. Provides a tree view that groups diagram elements by their metamodel types (classes), allowing users to show or hide entire categories of elements at once.
+"
 Class {
 	#name : 'OPTypesShowHidePresenter',
 	#superclass : 'OPShowHideTabContentPresenter',
@@ -6,7 +9,7 @@ Class {
 	#tag : 'Dialogs'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPTypesShowHidePresenter >> allElements [
 	^ diagramController allModelElementsWithPossibleController
 ]
@@ -18,19 +21,16 @@ OPTypesShowHidePresenter >> childrenFor: aNode [
 
 { #category : 'defaults' }
 OPTypesShowHidePresenter >> findSelectedItems [
-	| visibleElements hidableElementTypes |
-	visibleElements := diagramController allModelElementsWithController.
-	hidableElementTypes := ((adapters allChildrenFor: diagramController model)
-									collect: [ :element | element class ]) asSet.
-	"Returns all children from getAllNodes x where such visible element exists, that it is hideable and x is its type"
-		"The hidability condition excludes OPNote and OPBoundary"
-	^ (self getAllNodes
-		select: [ :typeTree | 
-			visibleElements anySatisfy:
-					[ :element | 
-						(hidableElementTypes anySatisfy: [:type| type = (element class)])
-							and: [typeTree includesType: (diagramController typeOfModel: element)]]])
-		ifNotEmpty: [ :newNodes | newNodes copyWith: (OPModelObjectTypeNode named: 'All') ]
+    | visibleElements hidableElementTypes |
+    visibleElements := diagramController allModelElementsWithController.
+    hidableElementTypes := (diagramController allModelElementsWithPossibleController
+                                    collect: [ :element | element class ]) asSet.
+    ^ (self getAllNodes
+        select: [ :typeTree | 
+            visibleElements anySatisfy: [ :element | 
+                (hidableElementTypes anySatisfy: [:type| type = element class ])
+                    and: [ typeTree includesType: (diagramController typeOfModel: element) ] ] ])
+        ifNotEmpty: [ :newNodes | newNodes copyWith: (OPModelObjectTypeNode named: 'All') ]
 ]
 
 { #category : 'defaults' }
@@ -43,11 +43,11 @@ OPTypesShowHidePresenter >> getRootNode [
 	^ OPModelObjectTypeNode
 		named: 'All'
 		withChildrenFromTypes:
-			((adapters allChildrenFor: diagramController model)
+			((viewModelRegistry allChildrenFor: diagramController model)
 				collect: [ :each | diagramController typeOfModel: each ])
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPTypesShowHidePresenter >> initialRoots [
 	^ {self getRootNode}
 ]
@@ -57,7 +57,7 @@ OPTypesShowHidePresenter >> nameFor: aNode [
 	^ aNode name
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPTypesShowHidePresenter >> possibleTypeLeafNames [
 	^ self getRootNode leafNames
 ]
@@ -75,7 +75,7 @@ OPTypesShowHidePresenter >> selected: added [
 	^ elementsToShow
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPTypesShowHidePresenter >> selectedLeafNames [
 	| allTypeLeafNames visibleElements |
 	allTypeLeafNames := self possibleTypeLeafNames.

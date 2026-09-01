@@ -1,3 +1,6 @@
+"
+Spec presenter that provides a dialog for users to select a specific metamodel notation (via loaded plugins) and assign a name when creating a new domain model.
+"
 Class {
 	#name : 'OPModelTypeSelector',
 	#superclass : 'SpPresenter',
@@ -16,7 +19,7 @@ Class {
 	#tag : 'Windows'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'layout' }
 OPModelTypeSelector class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -44,7 +47,7 @@ OPModelTypeSelector class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'adding' }
 OPModelTypeSelector >> addModel [
 
 	| model diagram selectedPlugin |
@@ -113,7 +116,7 @@ OPModelTypeSelector >> initializeWindow: aWindow [
 		windowIcon: OPCoreIcons openponkIcon
 ]
 
-{ #category : 'accessing model' }
+{ #category : 'accessing - model' }
 OPModelTypeSelector >> setModelBeforeInitialization: aProjectController [
 	projectController := aProjectController
 ]

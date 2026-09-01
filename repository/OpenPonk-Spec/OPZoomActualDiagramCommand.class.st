@@ -1,9 +1,12 @@
+"
+Diagram toolbar command that resets the camera scale of the canvas to its default, actual size (1:1 zoom).
+"
 Class {
 	#name : 'OPZoomActualDiagramCommand',
 	#superclass : 'OPDiagramToolbarCommand',
-	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands',
+	#category : 'OpenPonk-Spec-Commands-CanvasPresenter',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-Toolbar-Commands'
+	#tag : 'Commands-CanvasPresenter'
 }
 
 { #category : 'activation' }

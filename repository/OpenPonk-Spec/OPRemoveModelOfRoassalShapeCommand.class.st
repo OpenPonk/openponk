@@ -1,9 +1,13 @@
+"
+Context menu command that handles the deletion of the selected Roassal shape and its underlying domain model. 
+Prompts for confirmation and coordinates the cascading removal of dependent elements via the controllers.
+"
 Class {
 	#name : 'OPRemoveModelOfRoassalShapeCommand',
 	#superclass : 'OPRoassalShapeCommand',
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
 { #category : 'testing' }

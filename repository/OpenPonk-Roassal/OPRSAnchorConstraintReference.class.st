@@ -1,3 +1,6 @@
+"
+Abstract base class defining reference strategies for how an anchor point is calculated along a path (e.g., by balance percentage or fixed distance).
+"
 Class {
 	#name : 'OPRSAnchorConstraintReference',
 	#superclass : 'RSObject',
@@ -6,13 +9,13 @@ Class {
 	#tag : 'AnchorConstraint'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'geometry' }
 OPRSAnchorConstraintReference >> anchorSegmentFrom: segments andPointFrom: lenghtFromStart [
 
 	^ self subclassResponsibility 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'computing' }
 OPRSAnchorConstraintReference >> computeAbsoluteBalanceForLength: aNumber [
 
 	self subclassResponsibility
@@ -24,7 +27,7 @@ OPRSAnchorConstraintReference >> guideLineTargetFor: anchorConstraint [
 	^ anchorConstraint anchorShape
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPRSAnchorConstraintReference >> saveShapePositionIn: aConstraint [
 
 	self subclassResponsibility

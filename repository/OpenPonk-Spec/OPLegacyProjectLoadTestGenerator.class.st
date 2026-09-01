@@ -1,3 +1,6 @@
+"
+Testing utility responsible for generating test cases that verify the backwards-compatibility loading of legacy OpenPonk projects.
+"
 Class {
 	#name : 'OPLegacyProjectLoadTestGenerator',
 	#superclass : 'Object',

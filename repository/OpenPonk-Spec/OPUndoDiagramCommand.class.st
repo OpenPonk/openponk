@@ -1,9 +1,12 @@
+"
+Diagram toolbar command that undoes the most recent diagram action utilizing the project's autosave and memento history.
+"
 Class {
 	#name : 'OPUndoDiagramCommand',
 	#superclass : 'OPDiagramToolbarCommand',
-	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands',
+	#category : 'OpenPonk-Spec-Commands-CanvasPresenter',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-Toolbar-Commands'
+	#tag : 'Commands-CanvasPresenter'
 }
 
 { #category : 'activation' }

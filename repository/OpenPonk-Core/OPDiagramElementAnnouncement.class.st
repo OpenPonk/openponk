@@ -1,3 +1,6 @@
+"
+Abstract base class for announcements related to lifecycle events (such as addition, removal, or rendering changes) of a specific OPDiagramElement.
+"
 Class {
 	#name : 'OPDiagramElementAnnouncement',
 	#superclass : 'Announcement',

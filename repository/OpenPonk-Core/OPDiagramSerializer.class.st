@@ -1,3 +1,6 @@
+"
+Abstract base class for serializers specifically focused on serializing and materializing diagram representations (visual layouts and configuration).
+"
 Class {
 	#name : 'OPDiagramSerializer',
 	#superclass : 'OPSerializer',
@@ -6,7 +9,7 @@ Class {
 	#tag : 'Persistence'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPDiagramSerializer class >> exportSubject [
 
 	^ #diagram

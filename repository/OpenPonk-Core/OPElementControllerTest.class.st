@@ -1,3 +1,6 @@
+"
+Unit tests for verifying core functionality of OPElementController subclasses, such as acting as sources or targets for connecting relationships.
+"
 Class {
 	#name : 'OPElementControllerTest',
 	#superclass : 'OPAbstractElementControllerTest',
@@ -6,29 +9,29 @@ Class {
 	#tag : 'Controllers-Tests'
 }
 
-{ #category : 'accessing' }
-OPElementControllerTest >> controllerClass [
-	^ OPTestEntityController
-]
-
-{ #category : 'accessing' }
-OPElementControllerTest >> diagramControllerClass [
-	^ OPTestDiagramController
-]
-
-{ #category : 'construction' }
-OPElementControllerTest >> diagramElementClass [
+{ #category : 'constants' }
+OPElementControllerTest class >> diagramElementClass [
 
 	^ OPTestDiagramElement
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
+OPElementControllerTest >> controllerClass [
+	^ OPTestEntityController
+]
+
+{ #category : 'constants' }
+OPElementControllerTest >> diagramControllerClass [
+	^ OPTestDiagramController
+]
+
+{ #category : 'constants' }
 OPElementControllerTest >> diagramModelClass [
 
 	^ OPTestContainerModel
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPElementControllerTest >> modelClass [
 	^ OPTestEntityModel
 ]
@@ -65,25 +68,24 @@ OPElementControllerTest >> testAddAsSourceAndTargetForRelation [
 
 { #category : 'tests - connecting' }
 OPElementControllerTest >> testAddAsSourceAndTargetForRelationToSelf [
+
 	| relationController relationModel |
 	controller model: model.
 	diagramController model add: model.
 	controller showWithoutDependentInDiagram: diagramController.
-	relationController := diagramController
-		newControllerFor: OPTestRelationModel new.
+	relationController := diagramController newControllerFor:
+		                      OPTestRelationModel new.
 	controller addAsSourceFor: relationController.
 	controller addAsTargetFor: relationController.
 	relationModel := relationController model.
-	self
-		assertCollection: diagramController controllers asSet
-		equals:
-			{controller.
-			relationController} asSet.
+	self assertCollection: diagramController controllers asSet equals: {
+			controller.
+			relationController } asSet.
 	self
 		assertCollection: diagramController model entities asSet
-		equals:
-			{model.
-			relationModel} asSet.
+		equals: {
+				model.
+				relationModel } asSet.
 	self assert: relationModel source equals: model.
 	self assert: relationModel target equals: model
 ]

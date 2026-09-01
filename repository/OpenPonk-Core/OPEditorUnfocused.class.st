@@ -1,5 +1,5 @@
 "
-I am fired when an Editor lost focus (because it was closed, or because another Editor became focused).
+Announcement fired when an editor instance loses UI focus.
 "
 Class {
 	#name : 'OPEditorUnfocused',

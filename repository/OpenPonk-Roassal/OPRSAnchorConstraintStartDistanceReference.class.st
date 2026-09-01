@@ -1,3 +1,6 @@
+"
+Specific anchoring strategy that positions a constrained shape at a fixed absolute pixel distance measured forward from the *start* point of a segmented line.
+"
 Class {
 	#name : 'OPRSAnchorConstraintStartDistanceReference',
 	#superclass : 'OPRSAnchorConstraintFixedDistanceReference',
@@ -6,31 +9,31 @@ Class {
 	#tag : 'AnchorConstraint'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'geometry' }
 OPRSAnchorConstraintStartDistanceReference >> anchorSegmentFrom: segments andPointFrom: lenghtFromStart [
 
 	^ segments first -> (segments first pointAtLength: lenghtFromStart)
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'computing' }
 OPRSAnchorConstraintStartDistanceReference >> computeAbsoluteBalanceForLength: aNumber [
 
 	^ distance
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'geometry' }
 OPRSAnchorConstraintStartDistanceReference >> farPointOfSegment: aSegment [
 
 	^ aSegment to
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'geometry' }
 OPRSAnchorConstraintStartDistanceReference >> referencePointOfSegment: aSegment [
 
 	^ aSegment from
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'geometry' }
 OPRSAnchorConstraintStartDistanceReference >> segmentIn: aConstraint [
 
 	^ aConstraint createUpdater segments first

@@ -1,3 +1,7 @@
+"
+Represents a legacy routing path consisting of a source and intermediate points for a diagram relationship.
+Retained strictly for backward compatibility.
+"
 Class {
 	#name : 'OPLegacyRelationshipPath',
 	#superclass : 'Object',

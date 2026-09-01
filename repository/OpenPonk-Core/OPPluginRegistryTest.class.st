@@ -1,3 +1,7 @@
+"
+Unit tests for OPPluginRegistry. 
+Verifies the initialization, discovery, and retrieval of OpenPonk plugins based on given parameters or controllers.
+"
 Class {
 	#name : 'OPPluginRegistryTest',
 	#superclass : 'TestCase',
@@ -9,7 +13,7 @@ Class {
 	#tag : 'Tests'
 }
 
-{ #category : 'initialization' }
+{ #category : 'running' }
 OPPluginRegistryTest >> setUp [
 	super setUp.
 	registry := OPPluginRegistry new.

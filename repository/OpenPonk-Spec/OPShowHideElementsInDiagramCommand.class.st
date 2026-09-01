@@ -1,9 +1,12 @@
+"
+Diagram toolbar command that opens a specialized dialog (explorer) allowing the user to selectively show or hide specific model elements within the current diagram.
+"
 Class {
 	#name : 'OPShowHideElementsInDiagramCommand',
 	#superclass : 'OPDiagramToolbarCommand',
-	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands',
+	#category : 'OpenPonk-Spec-Commands-CanvasPresenter',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-Toolbar-Commands'
+	#tag : 'Commands-CanvasPresenter'
 }
 
 { #category : 'testing' }

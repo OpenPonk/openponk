@@ -1,3 +1,7 @@
+"
+Custom Roassal interaction that extends standard resizing to support an ""oversize"" boundary. 
+Ensures shapes can snap or maintain specific dimensional constraints while being resized interactively.
+"
 Class {
 	#name : 'OPRSResize',
 	#superclass : 'RSResize',

@@ -1,3 +1,6 @@
+"
+Abstract base class for unit tests ensuring backward compatibility. Verifies that OpenPonk can successfully load legacy projects—typically embedded as base64-encoded ZIP payloads—into the current version.
+"
 Class {
 	#name : 'OPLegacyProjectLoadTest',
 	#superclass : 'TestCase',

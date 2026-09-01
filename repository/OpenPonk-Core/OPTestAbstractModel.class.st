@@ -1,3 +1,6 @@
+"
+Mock implementation of a model element used exclusively for OpenPonk unit and integration tests.
+"
 Class {
 	#name : 'OPTestAbstractModel',
 	#superclass : 'Model',

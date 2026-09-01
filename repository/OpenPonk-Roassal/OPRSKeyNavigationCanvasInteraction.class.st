@@ -1,3 +1,6 @@
+"
+Canvas interaction that enables panning and navigation around the Roassal view using keyboard inputs (like arrow keys).
+"
 Class {
 	#name : 'OPRSKeyNavigationCanvasInteraction',
 	#superclass : 'RSKeyNavigationCanvasInteraction',

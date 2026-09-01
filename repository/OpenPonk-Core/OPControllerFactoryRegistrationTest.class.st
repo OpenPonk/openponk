@@ -1,3 +1,7 @@
+"
+Unit tests for OPModelHandlerFactoryRegistration. 
+Verifies the setup, constraints, and conditions of mapping model classes to their respective handlers.
+"
 Class {
 	#name : 'OPControllerFactoryRegistrationTest',
 	#superclass : 'TestCase',

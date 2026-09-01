@@ -1,3 +1,6 @@
+"
+Acts as a central registry and provider for icons used throughout the OpenPonk application GUI.
+"
 Class {
 	#name : 'OPIcons',
 	#superclass : 'Object',
@@ -26,7 +29,7 @@ OPIcons class >> iconSelectors [
 	^ self class selectorsInProtocol: 'accessing - icons'
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'inspecting' }
 OPIcons class >> inspectionIcons: aBuilder [
 
 	<inspectorPresentationOrder: 40 title: 'Icons'>

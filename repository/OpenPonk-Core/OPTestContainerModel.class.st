@@ -1,5 +1,6 @@
 "
-I am a mock representing a tree inner node entity.
+Mock domain model representing a container (inner node) holding child entities. 
+Used exclusively for unit and integration testing.
 "
 Class {
 	#name : 'OPTestContainerModel',
@@ -35,7 +36,7 @@ OPTestContainerModel >> initialize [
 	entities := OrderedCollection new
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
 OPTestContainerModel >> name [
 	^ 'container'
 ]

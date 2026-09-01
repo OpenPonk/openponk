@@ -1,3 +1,6 @@
+"
+Specific feedback builder designed to apply accept/deny visual highlights directly onto line or edge shapes during interactions.
+"
 Class {
 	#name : 'OPRSLineADFeedback',
 	#superclass : 'OPRSAcceptDenyFeedbackBuilder',

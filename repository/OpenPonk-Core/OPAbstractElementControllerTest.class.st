@@ -1,3 +1,7 @@
+"
+Abstract base class for testing specific diagram element controllers. 
+Verifies essential interactions such as rendering, detachment from the canvas, relation building, and correct target creation.
+"
 Class {
 	#name : 'OPAbstractElementControllerTest',
 	#superclass : 'OPBaseControllerTest',
@@ -9,6 +13,12 @@ Class {
 	#package : 'OpenPonk-Core',
 	#tag : 'Controllers-Tests'
 }
+
+{ #category : 'constants' }
+OPAbstractElementControllerTest class >> diagramElementClass [
+
+	^ self subclassResponsibility
+]
 
 { #category : 'testing' }
 OPAbstractElementControllerTest class >> isAbstract [
@@ -40,10 +50,9 @@ OPAbstractElementControllerTest >> diagramControllerClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'constants' }
+{ #category : 'accessing' }
 OPAbstractElementControllerTest >> diagramElementClass [
-
-	^ self subclassResponsibility
+    ^ self class diagramElementClass
 ]
 
 { #category : 'constants' }
@@ -62,16 +71,40 @@ OPAbstractElementControllerTest >> prepareToShow [
 { #category : 'initialization' }
 OPAbstractElementControllerTest >> registerModel [
 
-	controller registerModelIn:
+	controller viewModel registerModelIn:
 		(creationTargetController parentWhenTargetFor: controller)
 ]
 
 { #category : 'running' }
 OPAbstractElementControllerTest >> setUp [
 
+	| rootModel mockProject mockProjectViewModel |
 	super setUp.
 	diagramController := self diagramControllerClass new.
-	diagramController model: self diagramModelClass new.
+	rootModel := self diagramModelClass new.
+
+	mockProject := OPProject new.
+	mockProject stub models willReturn: { rootModel }.
+	diagramController viewModelRegistry:
+		(OPViewModelRegistry forProject: mockProject).
+
+	diagramController model: rootModel.
+
+	mockProjectViewModel := Mock new.
+	mockProjectViewModel stub model willReturn: mockProject.
+	mockProjectViewModel stub parentPackageViewModel willReturn: nil.
+	mockProjectViewModel stub packageViewModel willReturn: nil.
+	mockProjectViewModel stub parentViewModel willReturn: nil.
+	mockProjectViewModel stub projectViewModel willReturn:
+		mockProjectViewModel.
+
+	diagramController viewModelRegistry stub projectViewModel
+		willReturn: mockProjectViewModel.
+	diagramController viewModelRegistry stub project willReturn:
+		mockProject.
+
+	controller viewModelRegistry: diagramController viewModelRegistry.
+
 	diagramController canvasPresenter: (OPCanvasPresenter new
 			 canvas: RSCanvas new;
 			 yourself).
@@ -90,7 +123,7 @@ OPAbstractElementControllerTest >> setUpCreationTarget [
 	self setUpCreationTargetModel
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 OPAbstractElementControllerTest >> setUpCreationTargetController [
 
 	creationTargetController := self creationTargetControllerClass new.
@@ -144,10 +177,12 @@ OPAbstractElementControllerTest >> testBeingCopiedWithDiagram [
 		assertCollection: diagramController controllers
 		includesAll: { controller }.
 	diagramControllerOfCopy := self diagramControllerClass new.
+	diagramControllerOfCopy viewModelRegistry:
+		(OPViewModelRegistry forProject: diagramController project).
 	diagramControllerOfCopy model: diagramController model.
-	self
-		shouldnt: [ diagramControllerOfCopy diagramElement: diagram newCopy ]
-		raise: OPInvalidWarning.
+	
+	diagramControllerOfCopy diagramElement: diagram newCopy.
+
 	diagramControllerOfCopy canvasPresenter: (OPCanvasPresenter new
 			 canvas: RSCanvas new;
 			 yourself).
@@ -183,62 +218,100 @@ OPAbstractElementControllerTest >> testBeingKeptWhenEditorFocusChanges [
 { #category : 'tests - ui interaction' }
 OPAbstractElementControllerTest >> testBeingRemovedAfterModelRemovalWhenNotRendered [
 
-	| diagram diagramElement newDiagramControllerBlock diagramControllerOfCopy controllerOfCopy recreatedDiagramController |
+	| diagram diagramElement newDiagramControllerBlock diagramControllerOfCopy controllerOfCopy recreatedDiagramController diagramOfCopy diagramElementOfCopy recreatedDiagram |
 	self
 		denyCollection: diagramController controllers
 		includesAll: { controller }.
+
 	self showInDiagram.
 	diagram := diagramController diagramElement.
 	diagramElement := controller diagramElement.
 	self
+		assertCollection: diagramController controllers
+		includesAll: { controller }.
+	self
 		assertCollection: diagram allOwnedElements
 		includesAll: { diagramElement }.
 	self
-		assertCollection: diagramController controllers
-		includesAll: { controller }.
+		assertCollection: (diagramController controllers collect: #model)
+		includesAll: { model }.
+	self
+		assertCollection:
+		(diagram allOwnedElements flatCollect: #modelElements)
+		includesAll: { model }.
 	self assert: diagramElement isRendered.
 	diagramController removeController.
 	self
-		assertCollection: diagram allOwnedElements
-		includesAll: { diagramElement }.
-	self deny: diagramElement isRendered.
-	self
 		denyCollection: diagramController controllers
 		includesAll: { controller }.
-	newDiagramControllerBlock := [ :copyOfDiagram |
-	                             | newDiagramController |
-	                             newDiagramController := self
-		                                                     diagramControllerClass
-		                                                     new.
-	                             newDiagramController model:
-		                             diagramController model.
-	                             newDiagramController diagramElement:
-		                             copyOfDiagram.
-	                             newDiagramController canvasPresenter:
-		                             (OPCanvasPresenter new
-			                              canvas: RSCanvas new;
-			                              yourself).
-	                             newDiagramController diagramFocused.
-	                             newDiagramController ].
-
-
 	self
-		shouldnt: [
-			diagramControllerOfCopy := newDiagramControllerBlock value:
-				                           diagram newCopy ]
-		raise: OPInvalidWarning.
+		assertCollection: diagram allOwnedElements
+		includesAll: { diagramElement }.
+	self
+		denyCollection: (diagramController controllers collect: #model)
+		includesAll: { model }.
+	self
+		assertCollection:
+		(diagram allOwnedElements flatCollect: #modelElements)
+		includesAll: { model }.
+	self deny: diagramElement isRendered.
+
+	newDiagramControllerBlock := [ :copyOfDiagram |
+		                             | newDiagramController newRegistry |
+		                             newDiagramController := self
+			                                                     diagramControllerClass
+			                                                     new.
+		                             newRegistry := OPViewModelRegistry forProject: diagramController project.
+
+		                             newDiagramController
+			                             viewModelRegistry: newRegistry.
+		                             newDiagramController model:
+			                             diagramController model.
+		                             newDiagramController diagramElement:
+			                             copyOfDiagram.
+		                             newDiagramController canvasPresenter:
+			                             (OPCanvasPresenter new
+				                              canvas: RSCanvas new;
+				                              yourself).
+		                             newDiagramController diagramFocused.
+		                             newDiagramController ].
+
+	diagramControllerOfCopy := newDiagramControllerBlock value:
+		                           diagram newCopy.
 	controllerOfCopy := diagramControllerOfCopy controllerForModel: model.
-	controllerOfCopy removeModel.
+	diagramOfCopy := diagramControllerOfCopy diagram.
+	diagramElementOfCopy := controllerOfCopy diagramElement.
+	diagramControllerOfCopy validate.
+	self
+		assertCollection: diagramControllerOfCopy controllers
+		includesAll: { controllerOfCopy }.
+	self
+		assertCollection: diagramOfCopy allOwnedElements
+		includesAll: { diagramElementOfCopy }.
+	self
+		assertCollection:
+		(diagramControllerOfCopy controllers collect: #model)
+		includesAll: { model }.
+	self
+		assertCollection:
+		(diagramOfCopy allOwnedElements flatCollect: #modelElements)
+		includesAll: { model }.
+	self assert: diagramElementOfCopy isRendered.
+
+	controllerOfCopy viewModel removeModel.
 	recreatedDiagramController := newDiagramControllerBlock value:
 		                              diagram.
+	recreatedDiagram := recreatedDiagramController diagramElement.
 	recreatedDiagramController validate.
 	self
-		denyCollection: diagram allOwnedElements
-		includesAll: { diagramElement }.
-	self deny: diagramElement isRendered.
+		denyCollection:
+		(recreatedDiagramController controllers collect: #model)
+		includesAll: { model }.
 	self
-		denyCollection: recreatedDiagramController controllers
-		includesAll: { controller }
+		denyCollection:
+		(recreatedDiagram allOwnedElements flatCollect: #modelElements)
+		includesAll: { model }.
+	self deny: diagramElement isRendered
 ]
 
 { #category : 'tests - ui interaction' }
@@ -251,7 +324,10 @@ OPAbstractElementControllerTest >> testBeingRemovedAfterModelRemovalWhenRendered
 	self
 		assertCollection: diagramController controllers
 		includesAll: { controller }.
-	controller removeModel.
+	controller viewModel removeModel.
+
+	controller viewModelRegistry:
+		(OPViewModelRegistry forProject: diagramController project).
 	controller model: model.
 	diagramController diagramFocused.
 	self
@@ -346,15 +422,20 @@ OPAbstractElementControllerTest >> testDescriptionName [
 
 	| diagramElement |
 	model := Mock new.
+	model stub class willReturn: self modelClass.
 	model stub name willReturn: 'bravo'.
 	diagramElement := Mock new.
+	diagramElement stub class willReturn: self diagramElementClass.
+	controller diagramController: diagramController.
 	controller model: model.
 	controller diagramElement: diagramElement.
-	controller diagramController: diagramController.
-	controller descriptionName accessor write: 'charlie' to: controller.
+	controller viewModel descriptionName accessor
+		write: 'charlie'
+		to: controller.
 	model should receive name: 'charlie'.
 	self
-		assert: (controller descriptionName accessor read: controller)
+		assert:
+		(controller viewModel descriptionName accessor read: controller)
 		equals: 'bravo'.
 	diagramElement should receive modelChanged
 ]
@@ -439,7 +520,7 @@ OPAbstractElementControllerTest >> testRemoveModel [
 
 	self showInDiagram.
 	self assertCollection: self allElements includesAll: { model }.
-	controller removeModel.
+	controller viewModel removeModel.
 	self denyCollection: self allElements includesAll: { model }
 ]
 

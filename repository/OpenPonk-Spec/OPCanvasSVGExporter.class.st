@@ -1,3 +1,6 @@
+"
+Concrete exporter responsible for rendering and saving an OpenPonk diagram canvas into an SVG (Scalable Vector Graphics) file via Roassal.
+"
 Class {
 	#name : 'OPCanvasSVGExporter',
 	#superclass : 'OPCanvasExporter',

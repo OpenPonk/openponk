@@ -1,3 +1,7 @@
+"
+Abstract base Spec presenter for the individual tab pages within OPShowHidePresenter. 
+Manages a tree view with checkboxes to track which diagram elements are selected for visibility.
+"
 Class {
 	#name : 'OPShowHideTabContentPresenter',
 	#superclass : 'SpPresenter',
@@ -5,14 +9,14 @@ Class {
 		'diagramController',
 		'tree',
 		'selectedItems',
-		'adapters'
+		'viewModelRegistry'
 	],
 	#category : 'OpenPonk-Spec-Dialogs',
 	#package : 'OpenPonk-Spec',
 	#tag : 'Dialogs'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'layout' }
 OPShowHideTabContentPresenter class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -31,7 +35,7 @@ OPShowHideTabContentPresenter >> connectPresenters [
 	self whenSelectionChangedDo: [ self updateSelectedItems ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'defaults' }
 OPShowHideTabContentPresenter >> findSelectedItems [
 	^ self subclassResponsibility
 ]
@@ -46,7 +50,7 @@ OPShowHideTabContentPresenter >> iconFor: anItem [
 	^ nil
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPShowHideTabContentPresenter >> initialRoots [
 	^ self subclassResponsibility
 ]
@@ -123,12 +127,10 @@ OPShowHideTabContentPresenter >> selectedItems [
 	^ selectedItems ifNil: [ self updateSelectedItems ]
 ]
 
-{ #category : 'accessing model' }
+{ #category : 'accessing - model' }
 OPShowHideTabContentPresenter >> setModelBeforeInitialization: aDiagramController [
-
-	diagramController := aDiagramController.
-	adapters := diagramController editor workbench projectController
-		            navigatorAdapters
+    diagramController := aDiagramController.
+    viewModelRegistry := diagramController editor workbench projectController viewModelRegistry
 ]
 
 { #category : 'accessing' }

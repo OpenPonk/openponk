@@ -1,25 +1,28 @@
+"
+Commander menu group that dynamically generates color selection commands for context menus based on predefined palettes or current shape styles.
+"
 Class {
 	#name : 'OPRoassalShapeColorMenuGroup',
 	#superclass : 'CmdMenuGroup',
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'hooks' }
 OPRoassalShapeColorMenuGroup class >> colors [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPRoassalShapeColorMenuGroup class >> generateAllColorCommands [
 
 	<script>
 	self allSubclassesDo: #generateColorCommands
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPRoassalShapeColorMenuGroup class >> generateColorCommands [
 
 	| niceAttributeName superclassName |
@@ -28,37 +31,36 @@ OPRoassalShapeColorMenuGroup class >> generateColorCommands [
 		                  asSymbol.
 
 	self colors do: [ :each |
-		| colorName niceColorName className class |
-		colorName := each name.
-		niceColorName := each name capitalized splitCamelCase last.
-		className := ('OPDiagramFigure' , niceColorName , niceAttributeName
-		              , 'Command') asSymbol.
+			| colorName niceColorName className class |
+			colorName := each name.
+			niceColorName := each name capitalized splitCamelCase last.
+			className := ('OPDiagramFigure' , niceColorName , niceAttributeName
+			              , 'Command') asSymbol.
 
-		(Smalltalk at: superclassName asSymbol)
-			subclass: className
-			instanceVariableNames: ''
-			classVariableNames: ''
-			package: 'OpenPonk-Spec-Diagram-Figure-Commands'.
+			((Smalltalk at: superclassName asSymbol) << #className)
+				package: 'OpenPonk-Spec';
+				tag: 'Diagram-Figure-Commands';
+				install.
 
-		class := Smalltalk at: className.
+			class := Smalltalk at: className.
 
-		class compile: 'color
+			class compile: 'color
 
 	^ Color ' , colorName.
 
-		class compile: 'defaultMenuItemName
+			class compile: 'defaultMenuItemName
 
 	^ ''' , niceColorName , ''''.
 
-		each = Color transparent ifTrue: [
-			class compile: 'defaultMenuIcon
+			each = Color transparent ifTrue: [
+					class compile: 'defaultMenuIcon
 
 	^ Morph new 
 				color: Color white;
 				asFormOfSize: 30@20' ] ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'hooks' }
 OPRoassalShapeColorMenuGroup class >> styleAttribute [
 
 	^ self subclassResponsibility

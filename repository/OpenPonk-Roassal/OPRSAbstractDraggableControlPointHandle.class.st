@@ -1,3 +1,6 @@
+"
+Abstract base class for draggable handles used to manipulate control points (routing points) along an edge or path within a Roassal canvas.
+"
 Class {
 	#name : 'OPRSAbstractDraggableControlPointHandle',
 	#superclass : 'Object',
@@ -53,7 +56,7 @@ OPRSAbstractDraggableControlPointHandle >> shape [
 	^ shape
 ]
 
-{ #category : 'shapes' }
+{ #category : 'accessing' }
 OPRSAbstractDraggableControlPointHandle >> size [
 
 	^ self subclassResponsibility

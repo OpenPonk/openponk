@@ -1,3 +1,7 @@
+"
+Represents the root visual model of a diagram. 
+Specialized bound node containing metadata such as the diagram's name, documentation, and the coordinate resolution for the rendering canvas.
+"
 Class {
 	#name : 'OPDiagram',
 	#superclass : 'OPBoundNode',
@@ -76,7 +80,7 @@ OPDiagram >> name: anObject [
 	name := anObject
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPDiagram >> ownedElement: aShape willRenderIn: aCanvas [
 
 	self canvas: aCanvas
@@ -133,7 +137,7 @@ OPDiagram >> shouldBePositionableByUser [
 	^ false
 ]
 
-{ #category : 'rendering' }
+{ #category : 'initialization' }
 OPDiagram >> updateFromRender [
 
 	self bounds: (OPNodeBounds

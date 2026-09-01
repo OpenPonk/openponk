@@ -1,3 +1,6 @@
+"
+Serializer responsible for converting diagram representations (visual layouts and configuration) to and from JSON format.
+"
 Class {
 	#name : 'OPJsonDiagramSerializer',
 	#superclass : 'OPDiagramSerializer',
@@ -6,7 +9,7 @@ Class {
 	#tag : 'Persistence'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPJsonDiagramSerializer class >> exportVersion [
 
 	^ 1

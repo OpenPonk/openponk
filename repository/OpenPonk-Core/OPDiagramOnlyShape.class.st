@@ -1,3 +1,7 @@
+"
+Abstract base class for diagram elements that exist purely visually and lack a corresponding domain model element (such as notes or boundaries). 
+Maintains my own UUID to support independent diagram serialization.
+"
 Class {
 	#name : 'OPDiagramOnlyShape',
 	#superclass : 'OPBoundNode',
@@ -6,9 +10,9 @@ Class {
 	#instVars : [
 		'uuid'
 	],
-	#category : 'OpenPonk-Core-CommonElements',
+	#category : 'OpenPonk-Core-DiagramOnlyElements',
 	#package : 'OpenPonk-Core',
-	#tag : 'CommonElements'
+	#tag : 'DiagramOnlyElements'
 }
 
 { #category : 'accessing' }

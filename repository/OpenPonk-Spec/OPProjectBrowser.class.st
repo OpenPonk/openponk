@@ -1,9 +1,6 @@
 "
-I am a window with listing of all existing DCProjects and a simple interface for manipulating them (creating, removing, opening, ...)
-
-[[[
-DCProjectBrowser open
-]]]
+Spec presenter that provides the initial welcome screen and project browser for OpenPonk. 
+Displays a list of recently opened projects and provides an interface for creating, opening, and importing project files.
 "
 Class {
 	#name : 'OPProjectBrowser',
@@ -101,6 +98,7 @@ OPProjectBrowser >> createProjectButton [
 
 { #category : 'initialization' }
 OPProjectBrowser >> initialize [
+
 	diagramOptions := OrderedDictionary new.
 	pluginRegistry := OPPluginRegistry default.
 	super initialize

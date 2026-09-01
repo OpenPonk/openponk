@@ -1,5 +1,6 @@
 "
-A DCController is the parent class to all controller classes.
+Base class for all OpenPonk controllers.
+Coordinates the interaction between DiagramElements and ViewModels. Following the introduction of ViewModels, I no longer handle model element lifecycles, delegating domain logic to ViewModels and focusing on diagram view coordination.
 "
 Class {
 	#name : 'OPController',
@@ -7,7 +8,8 @@ Class {
 	#instVars : [
 		'diagramController',
 		'diagramElement',
-		'adapter'
+		'viewModel',
+		'viewModelRegistry'
 	],
 	#category : 'OpenPonk-Core-Controllers',
 	#package : 'OpenPonk-Core',
@@ -16,16 +18,21 @@ Class {
 
 { #category : 'accessing' }
 OPController class >> modelClass [
-	^ self new modelClass
+	^ self viewModelClass modelClass
+]
+
+{ #category : 'accessing' }
+OPController class >> viewModelClass [
+	^ self subclassResponsibility
 ]
 
 { #category : 'connecting' }
 OPController >> addAsSourceFor: aController [
-	(self canBeSourceFor: aController)
-		ifFalse: [ self
-				error:
-					self class asString , ' cannot be source for '
-						, aController class asString ].
+
+	(self canBeSourceFor: aController) ifFalse: [
+			self error: self class asString , ' cannot be source for '
+				, aController class asString ].
+	aController viewModelRegistry: self viewModelRegistry.
 	aController source: self
 ]
 
@@ -33,8 +40,9 @@ OPController >> addAsSourceFor: aController [
 OPController >> addAsTargetFor: aController [
 
 	(self canBeTargetFor: aController) ifFalse: [
-		self error: self class asString , ' cannot be target for '
-			, aController class asString ].
+			self error: self class asString , ' cannot be target for '
+				, aController class asString ].
+	aController viewModelRegistry: self viewModelRegistry.
 	aController target: self.
 	aController
 		createModelIn: (self parentWhenTargetFor: aController)
@@ -43,7 +51,7 @@ OPController >> addAsTargetFor: aController [
 
 { #category : 'forms' }
 OPController >> buildEditorForm: aForm [
-	aForm fromMagritteDescriptions: self magritteDescription
+	^ self viewModel buildEditorForm: aForm
 ]
 
 { #category : 'connecting' }
@@ -58,39 +66,41 @@ OPController >> canBeTargetFor: aController [
 
 { #category : 'accessing' }
 OPController >> commonModelClassPrefix [
-	^ 'OP'
+
+	self
+		deprecated: 'Use class viewModelClass commonModelClassPrefix instead'
+		transformWith:
+		'`@receiver commonModelClassPrefix' -> '`@receiver class viewModelClass commonModelClassPrefix'.
+
+	^ self class viewModelClass commonModelClassPrefix
+]
+
+{ #category : 'ui-hooks' }
+OPController >> creationUICommandClass [
+
+	^ self viewModel creationUICommandClass
 ]
 
 { #category : 'accessing' }
 OPController >> dependentControllers [
-	^ self dependentElements
-		collect:
-			[ :each | self diagramController controllerForModel: each ifNone: [ nil ] ]
-		thenSelect: #isNotNil
+
+	^ self viewModel ifNil: [ #(  ) ] ifNotNil: [ :vm |
+			  vm dependentElements asSet
+				  collect: [ :each |
+					  self diagramController controllerForModel: each ifNone: [ nil ] ]
+				  thenSelect: #isNotNil ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'deprecation' }
 OPController >> dependentElements [
-	"model elements that require this one to be rendered in order to render itself"
-
-	^ self elementsToShowInside
+	self deprecated: 'Use viewModel instead' transformWith: '`@receiver dependentElements' -> '`@receiver viewModel dependentElements'.
+	^ self viewModel ifNotNil: [ :vm | vm dependentElements ] ifNil: [ #() ]
 ]
 
 { #category : 'forms' }
 OPController >> descriptionName [
-
-	<magritteDescription>
-	| accessor |
-	accessor := MAPluggableAccessor
-		            read: [ :me | me model name ]
-		            write: [ :me :newValue | 
-			            me model name: newValue.
-			            self modelChanged ].
-	^ MAStringDescription new
-		  accessor: accessor;
-		  label: 'Name';
-		  priority: 1;
-		  yourself
+	self deprecated: 'Use viewModel instead' transformWith: '`@receiver descriptionName' -> '`@receiver viewModel descriptionName'.
+	^ self viewModel descriptionName
 ]
 
 { #category : 'accessing' }
@@ -106,7 +116,9 @@ OPController >> diagramController [
 
 { #category : 'accessing' }
 OPController >> diagramController: aDiagramController [
-	diagramController := aDiagramController
+
+	diagramController := aDiagramController.
+	self viewModelRegistry: diagramController viewModelRegistry
 ]
 
 { #category : 'accessing' }
@@ -123,9 +135,9 @@ OPController >> diagramElement: aDiagramElement [
 
 { #category : 'accessing' }
 OPController >> elementsToShowInside [
-	"model elements that should be shown (rendered) automatically when this one is rendered"
+	"Returns model elements that should be shown (made visible in diagram) when own model is shown"
 
-	^ #(  )
+	^ self viewModel essentialChildrenModels
 ]
 
 { #category : 'ui interaction' }
@@ -142,25 +154,16 @@ OPController >> ensureDiagramElement [
 	^ self diagramElement
 ]
 
+{ #category : 'forms' }
+OPController >> formEventsAnnouncer [
+
+	^ self viewModel announcer
+]
+
 { #category : 'canvas actions' }
 OPController >> hideSelectionFeedback [
 
 	self deprecated: 'This should be done by shapes (diagram elements)'
-]
-
-{ #category : 'announcements' }
-OPController >> internalSubscribeTo: aModel [
-
-	aModel announcer weak
-		when: OPElementRenamed
-		send: #modelChanged
-		to: self
-]
-
-{ #category : 'announcements' }
-OPController >> internalUnsubscribeFrom: aModel [
-
-	"aModel unsubscribe: self"
 ]
 
 { #category : 'testing' }
@@ -189,19 +192,17 @@ OPController >> linkDiagramElementToModel [
 
 { #category : 'accessing' }
 OPController >> model [
-
-	^ adapter ifNotNil: [ :existingAdapter | existingAdapter model ]
+    ^ self viewModel ifNotNil: [ :vm | vm model ]
 ]
 
 { #category : 'accessing' }
 OPController >> model: aModel [
 
-	aModel ifNotNil: [ 
-		aModel uuid ifNil: [ 
-			self error: 'All model objects must have a uuid to be used by OP' ] ].
-	self model ifNotNil: [ :m | self internalUnsubscribeFrom: m ].
-	adapter := OPModelAdapter forModel: aModel.
-	self model ifNotNil: [ :m | self internalSubscribeTo: m ]
+	self viewModel: (aModel ifNotNil: [
+				 aModel uuid ifNil: [
+					 self error:
+						 'All model objects must have a uuid to be used by OP' ].
+				 self viewModelRegistry viewModelFor: aModel ])
 ]
 
 { #category : 'announcements' }
@@ -212,19 +213,39 @@ OPController >> modelChanged [
 
 { #category : 'accessing' }
 OPController >> modelClass [
-	^ self subclassResponsibility
+	^ self class modelClass
+]
+
+{ #category : 'destruction' }
+OPController >> modelRemoved [
+	"The domain model was destroyed. Remove own visual representation and deregister."
+
+	self removeFromDiagramController.
+	self removeDiagramElement.
+
+	self viewModel: nil
 ]
 
 { #category : 'accessing' }
 OPController >> nameOfType [
-	^ (self diagramController typeOfModel: self model) name
+
+	self
+		deprecated: 'Use viewModel nameOfType instead'
+		transformWith:
+		'`@receiver nameOfType' -> '`@receiver viewModel nameOfType'.
+
+	^ self viewModel nameOfType
 ]
 
 { #category : 'connecting' }
 OPController >> parentContainerModel [
-	"Redefine to answer model that acts as a primary container of my model and other elements on my model's level. If I am always directly inside diagramController without any intermediate structure, this may answer self diagramController model"
 
-	^ self subclassResponsibility
+	self
+		deprecated: 'Use viewModel parentContainerModel instead'
+		transformWith: '`@receiver parentContainerModel'
+			-> '`@receiver viewModel parentContainerModel'.
+
+	^ self viewModel parentContainerModel
 ]
 
 { #category : 'connecting' }
@@ -232,7 +253,7 @@ OPController >> parentWhenTargetFor: aCreatedController [
 
 	^ aCreatedController isTargetUsedAsContainer
 		  ifTrue: [ self model ]
-		  ifFalse: [ self parentContainerModel ]
+		  ifFalse: [ self viewModel parentContainerModel ]
 ]
 
 { #category : 'figures' }
@@ -255,33 +276,26 @@ OPController >> remove [
 
 { #category : 'destruction' }
 OPController >> removeController [
-
-	self model ifNotNil: [ :m |
-		self
-			removeDependentControllers;
-			internalUnsubscribeFrom: m ].
-	self removeRender.
-	self removeFromDiagramController
+    self viewModel ifNotNil: [
+        self removeDependentControllers.
+        self unsubscribeFromViewModel ].
+    self removeRender.
+    self removeFromDiagramController
 ]
 
 { #category : 'destruction' }
 OPController >> removeControllerAndDiagramElement [
-
-	self model ifNotNil: [ :m |
-		self
-			removeDependentControllersAndDiagramElements;
-			internalUnsubscribeFrom: m ].
-	self removeFromDiagramController.
-	self removeDiagramElement
+    self viewModel ifNotNil: [
+        self removeDependentControllersAndDiagramElements.
+        self unsubscribeFromViewModel ].
+    self removeFromDiagramController.
+    self removeDiagramElement
 ]
 
 { #category : 'destruction' }
 OPController >> removeControllerAndModel [
 
-	self removeDependentConrollersAndModels.
-	self removeControllerAndDiagramElement.
-	self removeModel.
-	self model: nil
+	self viewModel removeModel
 ]
 
 { #category : 'destruction' }
@@ -326,11 +340,12 @@ OPController >> removeFromDiagramController [
 	self diagramController removeController: self
 ]
 
-{ #category : 'destruction' }
+{ #category : 'removing' }
 OPController >> removeModel [
-
-	self diagramController elementRemoved.
-	self model: nil
+	self
+		deprecated: 'Use #removeModel on ViewModel instead'
+		transformWith: '`@receiver removeModel' -> '`@receiver viewModel removeModel'.
+	^ self viewModel removeModel
 ]
 
 { #category : 'destruction' }
@@ -362,10 +377,10 @@ OPController >> showDenyFeedbackFor: aController [
 
 { #category : 'construction' }
 OPController >> showInDiagram: aDiagramController [
-
 	self showWithoutDependentInDiagram: aDiagramController.
-	^ self dependentElements do: [ :each |
-		  aDiagramController showInDiagramModel: each ]
+	self viewModel ifNotNil: [ :vm |
+		vm dependentElements do: [ :each |
+			aDiagramController showInDiagramModel: each ] ]
 ]
 
 { #category : 'canvas actions' }
@@ -380,6 +395,23 @@ OPController >> showWithoutDependentInDiagram: aDiagramController [
 	self subclassResponsibility
 ]
 
+{ #category : 'announcements' }
+OPController >> subscribeToViewModel [
+
+	self viewModel announcer weak
+		when: OPElementRenamed send: #modelChanged to: self;
+		when: OPModelChanged send: #modelChanged to: self;
+		when: OPModelRemoved do: [ :ann |
+				ann model ifNotNil: [ :removedModel |
+						removedModel == self model ifTrue: [ self modelRemoved ] ] ]
+		for: self
+]
+
+{ #category : 'announcements' }
+OPController >> unsubscribeFromViewModel [
+    self viewModel unsubscribe: self
+]
+
 { #category : 'event handling' }
 OPController >> updateAfterDiagramFocused [
 
@@ -388,6 +420,29 @@ OPController >> updateAfterDiagramFocused [
 
 { #category : 'validation' }
 OPController >> validate [
+	^ self viewModel validate
+]
 
-	"do nothing by default"
+{ #category : 'accessing' }
+OPController >> viewModel [
+    ^ viewModel
+]
+
+{ #category : 'accessing' }
+OPController >> viewModel: aViewModel [
+    viewModel ifNotNil: [ self unsubscribeFromViewModel ].
+    viewModel := aViewModel.
+    viewModel ifNotNil: [ self subscribeToViewModel ]
+]
+
+{ #category : 'accessing' }
+OPController >> viewModelRegistry [
+
+	^ viewModelRegistry
+]
+
+{ #category : 'accessing' }
+OPController >> viewModelRegistry: aViewModelRegistry [
+
+	viewModelRegistry := aViewModelRegistry
 ]

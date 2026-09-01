@@ -1,3 +1,6 @@
+"
+Represents a single registration entry within OPModelHandlerFactory, mapping a model class and an optional condition to a specific handler class.
+"
 Class {
 	#name : 'OPModelHandlerFactoryRegistration',
 	#superclass : 'Object',
@@ -6,9 +9,9 @@ Class {
 		'condition',
 		'handlerClass'
 	],
-	#category : 'OpenPonk-Core-Adapters',
+	#category : 'OpenPonk-Core-ViewModels',
 	#package : 'OpenPonk-Core',
-	#tag : 'Adapters'
+	#tag : 'ViewModels'
 }
 
 { #category : 'instance creation' }

@@ -1,5 +1,5 @@
 "
-I am fired when an Editor was closed.
+Announcement fired upon the closure of an editor instance within the workbench.
 "
 Class {
 	#name : 'OPEditorClosed',

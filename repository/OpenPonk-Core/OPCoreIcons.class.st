@@ -1,9 +1,6 @@
 "
-I am an icon pack for DynaCASE.
-
-[[[
-DCIcons current inspect.
-]]]
+Icon provider for the core OpenPonk infrastructure. 
+Extends OPIcons to deliver common generic icons (such as zoom, check, diagrams, and some legacy element types).
 "
 Class {
 	#name : 'OPCoreIcons',

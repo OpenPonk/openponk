@@ -1,3 +1,6 @@
+"
+Represents the spatial boundaries (position and extent) of a node within a diagram.
+"
 Class {
 	#name : 'OPNodeBounds',
 	#superclass : 'Object',

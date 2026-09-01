@@ -1,5 +1,5 @@
 "
-I am a menu group for layouts applicable to the current diagram.
+Commander menu group that aggregates all available layout algorithm commands applicable to the currently active diagram.
 "
 Class {
 	#name : 'OPLayoutDiagramMenuGroup',

@@ -1,3 +1,7 @@
+"
+Unit tests for OPNoteController. 
+Verifies the lifecycle mapping and shape interactions of visual note controllers.
+"
 Class {
 	#name : 'OPNoteControllerTest',
 	#superclass : 'OPDiagramOnlyControllerTest',
@@ -6,25 +10,25 @@ Class {
 	#tag : 'Controllers-Tests'
 }
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
+OPNoteControllerTest class >> diagramElementClass [
+
+	^ OPNote
+]
+
+{ #category : 'constants' }
 OPNoteControllerTest >> controllerClass [
 
 	^ OPNoteController
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPNoteControllerTest >> diagramControllerClass [
 
 	^ OPTestDiagramController
 ]
 
-{ #category : 'construction' }
-OPNoteControllerTest >> diagramElementClass [
-
-	^ OPNote
-]
-
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPNoteControllerTest >> diagramModelClass [
 
 	^ OPTestContainerModel

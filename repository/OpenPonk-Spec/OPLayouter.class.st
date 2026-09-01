@@ -1,5 +1,5 @@
 "
-I am base class for layouters to see what commonalities they have and should be eventually extracted up to OpenPonk.
+Abstract base class for applying automated graph layout algorithms (such as tree, grid, or circle layouts) to elements within an OpenPonk diagram via the OPDiagramController.
 "
 Class {
 	#name : 'OPLayouter',
@@ -12,7 +12,7 @@ Class {
 	#tag : 'Layouting'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPLayouter class >> supportedLayoutCommands [
 	^ {OPDominanceTreeLayoutCommand.
 	OPGridLayoutCommand.
@@ -25,44 +25,10 @@ OPLayouter class >> supports: aLayoutCommand [
 	^ self supportedLayoutCommands includes: aLayoutCommand
 ]
 
-{ #category : 'accessing' }
-OPLayouter >> allEdges [
-	^ self subclassResponsibility
-]
-
-{ #category : 'accessing' }
-OPLayouter >> allNodes [
-	^ self subclassResponsibility
-]
-
 { #category : 'userinterface' }
 OPLayouter >> applyLayout: aTwoArgBlock [
 
-	self basicApplyLayout: aTwoArgBlock
-]
-
-{ #category : 'userinterface' }
-OPLayouter >> basicApplyLayout: aTwoArgBlock [
-
-	| selectedBoxes allNodes nodes allEdges edges isPartialLayout oldEncompassingRectangle newEncompassingRectangle |
-	selectedBoxes := diagramController canvasPresenter selectedElements.
-	isPartialLayout := selectedBoxes size > 1.
-	allNodes := self allNodes.
-	nodes := RSGroup withAll: (isPartialLayout
-			          ifTrue: [ allNodes intersection: selectedBoxes ]
-			          ifFalse: [ allNodes ]).
-	allEdges := self allEdges reject: [ :each | each to = each from ].
-	edges := (allEdges select: [ :each |
-		          (nodes includes: each from) & (nodes includes: each to) ])
-		         asGroup.
-	oldEncompassingRectangle := nodes encompassingRectangle.
-	aTwoArgBlock value: nodes value: edges.
-	newEncompassingRectangle := nodes encompassingRectangle.
-	isPartialLayout
-		ifTrue: [
-			nodes translateTo: oldEncompassingRectangle center.
-			diagramController canvas signalUpdate ]
-		ifFalse: [ self updateCanvas ]
+	self subclassResponsibility
 ]
 
 { #category : 'layouts' }

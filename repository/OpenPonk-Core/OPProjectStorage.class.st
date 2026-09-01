@@ -1,5 +1,6 @@
 "
-I provide in-image persistance for DCProjects.
+Provides an in-image persistence registry for OPProjects. 
+Used primarily for development, testing, and memory-backed project management without filesystem dependencies.
 "
 Class {
 	#name : 'OPProjectStorage',
@@ -21,11 +22,10 @@ OPProjectStorage class >> default [
 	^ Default ifNil: [ Default := self new ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'class initialization' }
 OPProjectStorage class >> reset [
-	"self reset"
-	<script: 'self reset'>
 
+	<script>
 	Default := nil
 ]
 

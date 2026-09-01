@@ -1,3 +1,7 @@
+"
+Abstract base class for testing diagram edge elements. 
+Verifies the rendering, shape instantiation, and spatial connections of edges.
+"
 Class {
 	#name : 'OPAbstractEdgeTest',
 	#superclass : 'OPAbstractDiagramElementTest',

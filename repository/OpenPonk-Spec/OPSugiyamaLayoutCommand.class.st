@@ -1,3 +1,6 @@
+"
+Diagram toolbar command that applies a Sugiyama (layered/hierarchical) layout algorithm to the elements on the current diagram canvas.
+"
 Class {
 	#name : 'OPSugiyamaLayoutCommand',
 	#superclass : 'OPLayoutDiagramCommand',
@@ -11,7 +14,7 @@ OPSugiyamaLayoutCommand >> defaultMenuItemName [
 	^ 'Hierarchical'
 ]
 
-{ #category : 'accessing' }
+{ #category : 'execution' }
 OPSugiyamaLayoutCommand >> execute [
 	layouter sugiyamaLayout
 ]

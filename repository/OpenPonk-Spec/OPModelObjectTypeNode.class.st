@@ -1,3 +1,7 @@
+"
+Hierarchical node mapping types of model objects. 
+Used in UI contexts (like explorers or element trees) to group models by their class or metamodel type.
+"
 Class {
 	#name : 'OPModelObjectTypeNode',
 	#superclass : 'Object',
@@ -7,9 +11,9 @@ Class {
 		'name',
 		'children'
 	],
-	#category : 'OpenPonk-Spec-Utils',
+	#category : 'OpenPonk-Spec-Dialogs',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Utils'
+	#tag : 'Dialogs'
 }
 
 { #category : 'instance creation' }
@@ -121,7 +125,7 @@ OPModelObjectTypeNode >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPModelObjectTypeNode >> withAllChildren [
 	^ (Set with: self) , (children flatCollectAsSet: #withAllChildren)
 ]

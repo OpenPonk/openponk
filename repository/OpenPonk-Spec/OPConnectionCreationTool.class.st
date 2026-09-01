@@ -1,8 +1,6 @@
 "
-A palette item used to create connections between two existing items.
-This class should not be used directly, use instead
-DCPalette>>newConnectionCreationTool:
-
+Palette tool specifically designed for creating relationships (edges) between two existing diagram elements on the canvas. 
+Manages the source selection, target selection, and hover feedback.
 "
 Class {
 	#name : 'OPConnectionCreationTool',
@@ -35,7 +33,7 @@ OPConnectionCreationTool >> factory: aBlock [
 	factory := aBlock
 ]
 
-{ #category : 'protocol' }
+{ #category : 'hooks' }
 OPConnectionCreationTool >> hoveredController: aController [
 
 	^ hoverAction value: aController
@@ -57,7 +55,7 @@ OPConnectionCreationTool >> hoveredTargetController: aController [
 			 ifFalse: [ aController showDenyFeedbackFor: connectionController ])
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPConnectionCreationTool >> initialize [
 
 	super initialize.
@@ -69,10 +67,10 @@ OPConnectionCreationTool >> initialize [
 OPConnectionCreationTool >> select [
 
 	feedback := nil asValueHolder.
-	feedback whenChangedDo: [ :newVal :oldVal | 
-		oldVal ifNotNil: [ 
-			(newVal isNil or: [ oldVal feedback ~= newVal feedback ]) ifTrue: [ 
-				oldVal remove ] ] ].
+	feedback whenChangedDo: [ :newVal :oldVal |
+			oldVal ifNotNil: [
+					(newVal isNil or: [ oldVal feedback ~= newVal feedback ])
+						ifTrue: [ oldVal remove ] ] ].
 	connectionController := factory value.
 	self selectSource
 ]
@@ -93,7 +91,7 @@ OPConnectionCreationTool >> selectTarget [
 	                   self selectedTargetControllers: controllers ]
 ]
 
-{ #category : 'protocol' }
+{ #category : 'hooks' }
 OPConnectionCreationTool >> selectedControllers: aCollectionOfControllers [
 
 	^ selectionAction value: aCollectionOfControllers
@@ -133,7 +131,7 @@ OPConnectionCreationTool >> selectedTargetControllers: aCollectionOfControllers 
 	self deselect
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tool api' }
 OPConnectionCreationTool >> whenCreated: aOneArgBlock [
 	onComplete := aOneArgBlock
 ]

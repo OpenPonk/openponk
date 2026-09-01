@@ -1,3 +1,6 @@
+"
+Deprecated legacy class representing diagram camera settings. Refer to OPLegacyDiagramCamera for compatibility details.
+"
 Class {
 	#name : 'OPDiagramViewCamera',
 	#superclass : 'OPLegacyDiagramCamera',
@@ -5,10 +8,3 @@ Class {
 	#package : 'OpenPonk-Core',
 	#tag : 'LegacySupport-Diagrams'
 }
-
-{ #category : 'testing' }
-OPDiagramViewCamera class >> isDeprecated [
-	"renamed to OPDiagramCamera"
-
-	^ true
-]

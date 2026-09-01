@@ -1,5 +1,5 @@
 "
-I store a MemoryStore into a specified zip file and vice versa.
+Provides mechanisms to serialize and deserialize an OpenPonk project (represented via a MemoryStore) into a standard ZIP archive format.
 "
 Class {
 	#name : 'OPZipPersistence',

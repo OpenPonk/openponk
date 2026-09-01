@@ -1,8 +1,6 @@
 "
-A palette item used to create singular items in the view.
-This class should not be used directly, use instead.
-DCPalette>>newCreationTool:
-
+Palette tool specifically designed for creating new diagram nodes or entities on the canvas. 
+Manages the mouse interaction and placement of the new element.
 "
 Class {
 	#name : 'OPCreationTool',
@@ -29,7 +27,7 @@ OPCreationTool >> factory: aBlock [
 	factory := aBlock
 ]
 
-{ #category : 'callbacks' }
+{ #category : 'hooks' }
 OPCreationTool >> hoveredController: aController [
 
 	feedback value: ((aController canBeTargetFor: objectController)
@@ -37,7 +35,7 @@ OPCreationTool >> hoveredController: aController [
 			 ifFalse: [ aController showDenyFeedbackFor: objectController ])
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 OPCreationTool >> initialize [
 	super initialize.
 	onComplete := [ :ctrl |  ]
@@ -47,12 +45,12 @@ OPCreationTool >> initialize [
 OPCreationTool >> select [
 
 	feedback := nil asValueHolder.
-	feedback whenChangedDo: [ :newVal :oldVal | 
+	feedback whenChangedDo: [ :newVal :oldVal |
 		oldVal ifNotNil: [ oldVal remove ] ].
 	objectController := factory value
 ]
 
-{ #category : 'callbacks' }
+{ #category : 'hooks' }
 OPCreationTool >> selectedControllers: aCollectionOfControllers [
 
 	| targetController |

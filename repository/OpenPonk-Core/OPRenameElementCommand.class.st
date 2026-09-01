@@ -1,19 +1,6 @@
 "
-I am a UI command for renaming a model element.
-
-!! Requirements
-
-The model element has to implement #name: and #announcer
-
-!! Responsibility
-
-Show rename dialog.
-Rename an element.
-
-!! Collaborators
-
-DCCanvasModel
-DCNavigator
+UI command that handles the renaming of a model element. 
+Typically prompts the user with a dialog to provide a new name and applies the modification through the element's handler.
 "
 Class {
 	#name : 'OPRenameElementCommand',
@@ -34,5 +21,5 @@ OPRenameElementCommand >> execute [
 	result ifNil: [ ^ self ].
 	result ifEmpty: [ ^ self ].
 	controller model name: result.
-	controller model announcer announce: OPElementRenamed new
+	controller viewModel announcer announce: OPElementRenamed new
 ]

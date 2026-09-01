@@ -1,3 +1,6 @@
+"
+Represents a visual adornment (such as an icon or button) attached to a Roassal shape, providing contextual actions or feedback when clicked.
+"
 Class {
 	#name : 'OPRSAdornment',
 	#superclass : 'Object',
@@ -76,19 +79,19 @@ OPRSAdornment >> initialize [
 	self padding: 2
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPRSAdornment >> padding: aNumber [
 
 	padding := aNumber
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'removing' }
 OPRSAdornment >> remove [
 
 	self shape remove
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPRSAdornment >> shape [
 
 	| innerBox |

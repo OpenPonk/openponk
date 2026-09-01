@@ -1,30 +1,22 @@
+"
+Developer-oriented context menu command that opens a Pharo inspector directly on the diagram element mapped to the selected Roassal shape.
+"
 Class {
 	#name : 'OPInspectDiagramElementCommand',
-	#superclass : 'OPRoassalShapeDevCommand',
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#superclass : 'OPInspectDevCommand',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
 { #category : 'accessing' }
-OPInspectDiagramElementCommand >> defaultMenuIconName [
+OPInspectDiagramElementCommand >> itemType [
 
-	^ #glamorousInspect
+	^ 'diagram element'
 ]
 
 { #category : 'accessing' }
-OPInspectDiagramElementCommand >> defaultMenuItemName [
+OPInspectDiagramElementCommand >> items [
 
-	| basicName |
-	basicName := 'Inspect diagram element'.
-	diagramElements ifNil: [ ^ basicName ].
-	diagramElements size = 1 ifTrue: [ ^ basicName ].
-	^ GRInflector pluralize: basicName
-]
-
-{ #category : 'execution' }
-OPInspectDiagramElementCommand >> execute [
-
-	diagramElements size = 1 ifTrue: [ ^ diagramElements anyOne inspect ].
-	^ diagramElements inspect
+	^ diagramElements
 ]

@@ -1,3 +1,7 @@
+"
+Specialized map builder that generates visual dependency graphs. 
+Maps OpenPonk models or baseline dependencies using a themed tree layout with custom borders and labels.
+"
 Class {
 	#name : 'OPRSDependenciesMapBuilder',
 	#superclass : 'RSThemedMapBuilder',
@@ -41,7 +45,7 @@ OPRSDependenciesMapBuilder class >> openPonkBaselines [
 		                          OpenPonkGit ) asSet ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'actions' }
 OPRSDependenciesMapBuilder class >> resetOpenPonkBaselines [
 
 	<script>

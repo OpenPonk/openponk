@@ -1,9 +1,12 @@
+"
+Commander menu group that organizes commands responsible for toggling the visibility or presentation states of various shape components.
+"
 Class {
 	#name : 'OPToggleRoassalShapeMenuGroup',
 	#superclass : 'CmdMenuGroup',
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
 { #category : 'accessing' }

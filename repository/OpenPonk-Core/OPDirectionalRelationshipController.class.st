@@ -1,5 +1,6 @@
 "
-A DCRelationshipController is the parent class to all line based element controllers.
+Abstract base controller for directional relationship elements. 
+Manages the visual connection (edge) between a source and a target, coordinating with the respective view models and the underlying path routing.
 "
 Class {
 	#name : 'OPDirectionalRelationshipController',
@@ -28,17 +29,16 @@ OPDirectionalRelationshipController >> createDiagramElement [
 ]
 
 { #category : 'construction' }
-OPDirectionalRelationshipController >> dependingOnElements [
+OPDirectionalRelationshipController >> createModelIn: aParentModel [
 
-	^ super dependingOnElements , (Set
-		   with: ((self model
-				     ifNil: [ self source model ]
-				     ifNotNil: [ self modelSource ]) ifNil: [
-				    self error: 'There is no source of ' , self model asString ])
-		   with: ((self model
-				     ifNil: [ self target model ]
-				     ifNotNil: [ self modelTarget ]) ifNil: [
-				    self error: 'There is no target of ' , self model asString ]))
+	self viewModel: (self viewModelRegistry
+			 registerNewViewModelOfClass: self class viewModelClass
+			 createdBy: [ :newViewModel |
+					 newViewModel
+						 createModelFrom: self source viewModel
+						 to: self target viewModel
+						 in: aParentModel ]).
+	^ self model
 ]
 
 { #category : 'construction' }
@@ -53,18 +53,18 @@ OPDirectionalRelationshipController >> ensureShownDependenciesInDiagram: aDiagra
 OPDirectionalRelationshipController >> ensureSourceIn: aDiagramController [
 
 	^ source ifNil: [
-		  self source:
-			  (aDiagramController showWithoutDependentInDiagramModel:
-				   self modelSource) ]
+			  self source:
+				  (aDiagramController showWithoutDependentInDiagramModel:
+					   self viewModel modelSource) ]
 ]
 
 { #category : 'accessing' }
 OPDirectionalRelationshipController >> ensureTargetIn: aDiagramController [
 
 	^ target ifNil: [
-		  self target:
-			  (aDiagramController showWithoutDependentInDiagramModel:
-				   self modelTarget) ]
+			  self target:
+				  (aDiagramController showWithoutDependentInDiagramModel:
+					   self viewModel modelTarget) ]
 ]
 
 { #category : 'testing' }
@@ -74,35 +74,19 @@ OPDirectionalRelationshipController >> isTargetUsedAsContainer [
 ]
 
 { #category : 'accessing' }
-OPDirectionalRelationshipController >> modelSource: aModel in: aParentModel [
-	"answers whether model's source has been changed"
-
-	self modelSource = aModel ifTrue: [ ^ false ].
-	self model source: aModel.
-	^ true
+OPDirectionalRelationshipController >> modelSource [
+	self
+		deprecated: 'Use viewModel instead'
+		transformWith: '`@receiver modelSource' -> '`@receiver viewModel modelSource'.
+	^ self viewModel modelSource
 ]
 
 { #category : 'accessing' }
-OPDirectionalRelationshipController >> modelTarget: aModel in: aParentModel [
-	"answers whether model's target has been changed"
-
-	self modelTarget = aModel ifTrue: [ ^ false ].
-	self model target: aModel.
-	^ true
-]
-
-{ #category : 'construction' }
-OPDirectionalRelationshipController >> registerInSourceAndTargetInContainer: aParentModel [
-
-	self modelSource: self source model in: aParentModel.
-	self modelTarget: self target model in: aParentModel
-]
-
-{ #category : 'construction' }
-OPDirectionalRelationshipController >> registerModelIn: aParentModel [
-
-	self registerInSourceAndTargetInContainer: aParentModel.
-	super registerModelIn: aParentModel
+OPDirectionalRelationshipController >> modelTarget [
+	self
+		deprecated: 'Use viewModel instead'
+		transformWith: '`@receiver modelTarget' -> '`@receiver viewModel modelTarget'.
+	^ self viewModel modelTarget
 ]
 
 { #category : 'rendering' }

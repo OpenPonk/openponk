@@ -1,3 +1,6 @@
+"
+Provides a caching mechanism to map models or diagram elements to their respective controllers within a specific diagram controller.
+"
 Class {
 	#name : 'OPControllerCache',
 	#superclass : 'Object',

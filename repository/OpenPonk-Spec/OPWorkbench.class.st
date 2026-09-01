@@ -1,19 +1,20 @@
 "
-I am the topmost window of an opened Project.
+Core Spec presenter serving as the main workbench window for an opened OpenPonk project. 
+Orchestrates the layout containing the project tree, dynamic property forms, the diagram editor notebook, and the top toolbar.
 "
 Class {
 	#name : 'OPWorkbench',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'project',
-		'projectController',
 		'pluginRegistry',
-		'topToolbar',
+		'projectController',
+		'diagramsList',
+		'projectTree',
 		'editors',
 		'focusedEditor',
-		'projectTree',
 		'notebook',
-		'diagramsList'
+		'form',
+		'topToolbar'
 	],
 	#classInstVars : [
 		'isDevelopmentMode'
@@ -23,7 +24,7 @@ Class {
 	#tag : 'Windows'
 }
 
-{ #category : 'specs' }
+{ #category : 'layout' }
 OPWorkbench class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -32,13 +33,19 @@ OPWorkbench class >> defaultLayout [
 				   yourself)
 		  expand: false;
 		  add: (SpPanedLayout newLeftToRight
-				   add: (SpPanedLayout newTopToBottom
-						    add: #projectTree;
-						    add: #diagramsList;
+				   add: (SpPanedLayout newLeftToRight
+						    add: (SpPanedLayout newTopToBottom
+								     add: #projectTree;
+								     add: #diagramsList;
+								     yourself);
+						    positionOfSlider: self initialListsWidth;
+						    add: (SpBoxLayout newTopToBottom
+								     add: #notebook;
+								     yourself);
 						    yourself);
-				   positionOfSlider: self initialListsWidth;
-				   add: (SpBoxLayout newTopToBottom
-						    add: #notebook;
+				   positionOfSlider: self initialWidth - self initialFormWidth;
+				   add: (SpTabLayout new
+						    add: (SpScrollableLayout with: #form) label: 'Properties';
 						    yourself);
 				   yourself);
 		  yourself
@@ -62,13 +69,31 @@ OPWorkbench class >> developerSettingsOn: aBuilder [
 { #category : 'api' }
 OPWorkbench class >> initialExtent [
 
-	^ self currentWorld extent * 0.8 min: 1600 @ 1000
+	^ self currentWorld extent * 0.9 min: 1800 @ 1000
+]
+
+{ #category : 'api' }
+OPWorkbench class >> initialFormWidth [
+
+	^ self initialSidePaneWidth
 ]
 
 { #category : 'api' }
 OPWorkbench class >> initialListsWidth [
 
+	^ self initialSidePaneWidth
+]
+
+{ #category : 'api' }
+OPWorkbench class >> initialSidePaneWidth [
+
 	^ 250
+]
+
+{ #category : 'api' }
+OPWorkbench class >> initialWidth [
+
+	^ self initialExtent x
 ]
 
 { #category : 'settings' }
@@ -199,8 +224,14 @@ OPWorkbench >> focusedEditor [
 	^ focusedEditor
 ]
 
+{ #category : 'accessing - spec' }
+OPWorkbench >> form [
+	^ form
+]
+
 { #category : 'initialization' }
 OPWorkbench >> initialize [
+
 	pluginRegistry := OPPluginRegistry default.
 	editors := IdentityDictionary new.
 	super initialize
@@ -210,14 +241,16 @@ OPWorkbench >> initialize [
 OPWorkbench >> initializePresenters [
 
 	topToolbar := self instantiate: OPWorkbenchToolbar.
+	projectTree := self instantiate: OPProjectTree.
 	diagramsList := self instantiate: OPDiagramsList.
-	projectTree := self instantiate: OPProjectNavigator.
 	notebook := self newNotebook.
+	form := self instantiate: OPDynamicForm.
 	self focusOrder
 		add: topToolbar;
-		add: diagramsList;
 		add: projectTree;
-		add: notebook
+		add: diagramsList;
+		add: notebook;
+		add: form
 ]
 
 { #category : 'initialization' }
@@ -245,55 +278,66 @@ OPWorkbench >> notebook [
 OPWorkbench >> openEditorOn: aModel [
 
 	self openEditorOnDiagram:
-		(project diagrams detect: [ :each | each modelElement = aModel ])
+		(self project diagrams detect: [ :each | each modelElement = aModel ])
 ]
 
 { #category : 'opening' }
 OPWorkbench >> openEditorOnDiagram: aDiagram [
+    "Opens an editor for the diagram and subscribes to the respective view model."
+    | editor notebookPage plugin model viewModel |
+    (self projectController hasDiagram: aDiagram) ifTrue: [
+        ^ self focusEditorOf: aDiagram ].
+    model := aDiagram modelElement.
+    plugin := pluginRegistry pluginFor: model.
+    editor := OPEditor on: plugin.
+    editor workbench: self.
+    notebookPage := self newNotebookPage.
+    notebookPage beCloseable.
+    editors at: aDiagram put: {
+            (#editor -> editor).
+            (#page -> notebookPage) } asDictionary.
+    editor owner: notebook.
+    editor openEmptyModel: model.
+    
+    viewModel := self projectController viewModel registry viewModelFor: model.
+    self whenWindowClosedUnsubscribeFrom: viewModel.
+    viewModel announcer when: OPModelChanged send: #updateTabTitle to: self.
+    
+    editor palette rebuildWidget.
+    notebookPage
+        title: '[' , aDiagram name , '] ' , model name;
+        icon: plugin icon;
+        presenterProvider: [ editor ].
+    self announce: (OPEditorCreated on: editor).
+    notebook addPage: notebookPage.
+    self focusEditorOf: aDiagram.
+    ^ editor
+]
 
-	| editor notebookPage plugin model |
-	(self projectController hasDiagram: aDiagram) ifTrue: [
-		^ self focusEditorOf: aDiagram ].
-	model := aDiagram modelElement.
-	plugin := pluginRegistry pluginFor: model.
-	editor := OPEditor on: plugin.
-	editor workbench: self.
-	notebookPage := self newNotebookPage.
-	notebookPage beCloseable.
-	editors at: aDiagram put: {
-			(#editor -> editor).
-			(#page -> notebookPage) } asDictionary.
-	editor owner: notebook.
-	editor openEmptyModel: model.
-	self whenWindowClosedUnsubscribeFrom: model.
-	(model respondsTo: #weakWhenChangedSend:to:) ifTrue: [
-		model weakWhenChangedSend: #updateTabTitle to: self ].
-	editor palette rebuildWidget.
-	notebookPage
-		title: '[' , aDiagram name , '] ' , model name;
-		icon: plugin icon;
-		presenterProvider: [ editor ].
-	self announce: (OPEditorCreated on: editor).
-	notebook addPage: notebookPage.
-	self focusEditorOf: aDiagram.
-	^ editor
+{ #category : 'initialization' }
+OPWorkbench >> openFormOn: aController [
+
+	form target: aController
 ]
 
 { #category : 'project handling' }
 OPWorkbench >> openProject: aProject [
-
-	project := aProject.
-	(projectController := aProject controllerClass new)
-		project: project;
-		workbench: self.
-	topToolbar updateProjectMenu.
-	self whenWindowClosedUnsubscribeFrom: project.
-	project weakWhenChangedSend: #updateTitle to: self.
-	diagramsList project: project.
-	projectTree openOn: project.
-	projectController openDiagrams.
-	self hasWindow ifFalse: [ self open ].
-	self updateTitle
+    "Registers the project and subscribes to its view model events."
+    | pViewModel |
+    (projectController := aProject controllerClass new)
+        project: aProject;
+        workbench: self.
+    topToolbar updateProjectMenu.
+    
+    pViewModel := projectController viewModel.
+    self whenWindowClosedUnsubscribeFrom: pViewModel.
+    pViewModel announcer when: OPModelChanged send: #updateTitle to: self.
+    
+    diagramsList project: aProject.
+    projectTree openOn: pViewModel.
+    projectController openDiagrams.
+    self hasWindow ifFalse: [ self open ].
+    self updateTitle
 ]
 
 { #category : 'opening' }
@@ -307,6 +351,12 @@ OPWorkbench >> pageRemoved: aPage [
 { #category : 'accessing' }
 OPWorkbench >> pluginRegistry [
 	^ pluginRegistry
+]
+
+{ #category : 'accessing' }
+OPWorkbench >> project [
+
+	^ projectController project
 ]
 
 { #category : 'accessing' }
@@ -333,13 +383,16 @@ OPWorkbench >> showAllElementsInAllDiagrams [
 	self projectController controllers do: #zoomToFit
 ]
 
-{ #category : 'protocol' }
+{ #category : 'accessing - deprecated' }
 OPWorkbench >> title [
-	^ project
-		  ifNil: [ 'OpenPonk' ]
-		  ifNotNil: [ 
-			(project storageFile) ifNil: [ project name , ' - OpenPonk']
-									 	ifNotNil: [ project storageFile path pathString, ' - ', project name, ' - OpenPonk' ] ]
+
+	self projectController ifNil: [ ^ 'OpenPonk' ].
+
+	self project storageFile ifNil: [
+		^ self project name , ' - OpenPonk' ].
+
+	^ self project storageFile path pathString , ' - '
+	  , self project name , ' - OpenPonk'
 ]
 
 { #category : 'accessing - spec' }

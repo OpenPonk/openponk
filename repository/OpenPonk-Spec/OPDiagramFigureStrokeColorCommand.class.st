@@ -1,9 +1,12 @@
+"
+Context menu command that allows users to modify the stroke (border/line) color of the selected Roassal shape.
+"
 Class {
 	#name : 'OPDiagramFigureStrokeColorCommand',
 	#superclass : 'OPRoassalShapeColorCommand',
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
 { #category : 'accessing' }
@@ -21,7 +24,7 @@ OPDiagramFigureStrokeColorCommand class >> contextMenuActivation [
 		  for: OPCanvasPresenter
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPDiagramFigureStrokeColorCommand class >> defaultColorOf: aDiagramElement [
 
 	^ aDiagramElement defaultStrokeColor

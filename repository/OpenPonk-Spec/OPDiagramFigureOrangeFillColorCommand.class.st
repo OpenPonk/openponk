@@ -1,12 +1,15 @@
+"
+Context menu command that sets the fill color of the selected Roassal shape to orange.
+"
 Class {
 	#name : 'OPDiagramFigureOrangeFillColorCommand',
 	#superclass : 'OPDiagramFigureFillColorCommand',
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPDiagramFigureOrangeFillColorCommand class >> color [
 
 	^ Color paleOrange

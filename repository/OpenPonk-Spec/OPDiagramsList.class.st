@@ -1,7 +1,6 @@
 "
-I show a list of available diagram views for editing.
-
-Right-clicking on a view shows additional options.
+Spec presenter that displays a list of available diagram views within the active project. 
+Provides controls to open, rename, duplicate, and delete these diagrams.
 "
 Class {
 	#name : 'OPDiagramsList',
@@ -16,15 +15,14 @@ Class {
 		'openButton',
 		'createButton',
 		'cloneButton',
-		'notebook',
-		'adapters'
+		'viewModelRegistry'
 	],
 	#category : 'OpenPonk-Spec-Windows',
 	#package : 'OpenPonk-Spec',
 	#tag : 'Windows'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'layout' }
 OPDiagramsList class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -35,14 +33,7 @@ OPDiagramsList class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : 'accessing' }
-OPDiagramsList >> adapters [
-
-	^ adapters ifNil: [ 
-		  adapters := self workbench projectController navigatorAdapters ]
-]
-
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPDiagramsList >> connectPresenters [
 	super connectPresenters.
 	self initializeList
@@ -138,9 +129,8 @@ OPDiagramsList >> diagramsIn: aProject [
 
 { #category : 'retrieving' }
 OPDiagramsList >> displayFor: aDiagramView [
-
-	^ '[' , aDiagramView name , '] '
-	  , (self adapters displayFor: aDiagramView modelElement)
+    ^ '[' , aDiagramView name , '] '
+      , (self viewModelRegistry viewModelFor: aDiagramView modelElement) displayString
 ]
 
 { #category : 'initialization' }
@@ -171,19 +161,18 @@ OPDiagramsList >> heading [
 
 { #category : 'initialization' }
 OPDiagramsList >> initializeList [
-
-	list
-		display: [ :aView | self displayRowFor: aView ];
-		displayIcon: [ :aView | self adapters iconFor: aView modelElement ];
-		whenActivatedDo: [ 
-			list selectedItem ifNotNil: [ :aView | self openDiagram: aView ] ];
-		whenSelectionChangedDo: [ :item | 
-			self selectionChanged: item selectedItem ];
-		contextMenu: [ 
-			self contextMenu: self newMenu for: list selectedItem ]
+    list
+        display: [ :aView | self displayRowFor: aView ];
+        displayIcon: [ :aView | (self viewModelRegistry viewModelFor: aView modelElement) icon ];
+        whenActivatedDo: [ 
+            list selectedItem ifNotNil: [ :aView | self openDiagram: aView ] ];
+        whenSelectionChangedDo: [ :item | 
+            self selectionChanged: item selectedItem ];
+        contextMenu: [ 
+            self contextMenu: self newMenu for: list selectedItem ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPDiagramsList >> initializePresenters [
 
 	list := self newList.
@@ -334,6 +323,14 @@ OPDiagramsList >> updateContent [
 	diagrams
 		detect: #isSelected
 		ifFound: [ :view | list selectItem: view ]
+]
+
+{ #category : 'accessing' }
+OPDiagramsList >> viewModelRegistry [
+
+	^ viewModelRegistry ifNil: [
+			  viewModelRegistry := self workbench projectController
+				                       viewModelRegistry ]
 ]
 
 { #category : 'accessing - spec' }

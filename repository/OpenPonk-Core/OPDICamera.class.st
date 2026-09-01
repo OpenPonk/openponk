@@ -1,3 +1,6 @@
+"
+Deprecated legacy class representing diagram camera settings. Use OPDiagramCamera instead.
+"
 Class {
 	#name : 'OPDICamera',
 	#superclass : 'OPDiagramCamera',

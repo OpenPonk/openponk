@@ -1,6 +1,6 @@
 "
-I am a base class for announcements tied to Editor lifecycle.
-All my events are fired on the Workbench's announcer.
+Base class for announcements related to the lifecycle of an editor in OpenPonk. 
+Events are typically dispatched on the Workbench's announcer.
 "
 Class {
 	#name : 'OPEditorAnnouncements',

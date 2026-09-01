@@ -1,3 +1,6 @@
+"
+Specific anchoring reference strategy that positions a shape at a fixed absolute pixel distance from either the start or the end of a path.
+"
 Class {
 	#name : 'OPRSAnchorConstraintFixedDistanceReference',
 	#superclass : 'OPRSAnchorConstraintReference',
@@ -23,19 +26,19 @@ OPRSAnchorConstraintFixedDistanceReference >> distance: anInteger [
 	distance := anInteger
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'geometry' }
 OPRSAnchorConstraintFixedDistanceReference >> farPointOfSegment: aSegment [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'geometry' }
 OPRSAnchorConstraintFixedDistanceReference >> referencePointOfSegment: aSegment [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPRSAnchorConstraintFixedDistanceReference >> saveShapePositionIn: aConstraint [
 
 	| segment pointAlongLine pointOnLine absoluteDistanceToLine distanceToLine referencePoint |
@@ -62,7 +65,7 @@ OPRSAnchorConstraintFixedDistanceReference >> saveShapePositionIn: aConstraint [
 	distance := pointOnLine distanceTo: referencePoint
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'geometry' }
 OPRSAnchorConstraintFixedDistanceReference >> segmentIn: aConstraint [
 
 	^ self subclassResponsibility

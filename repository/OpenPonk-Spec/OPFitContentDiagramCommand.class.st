@@ -1,9 +1,12 @@
+"
+Diagram toolbar command that adjusts the camera zoom and pan to fit all currently rendered diagram elements within the visible canvas viewport.
+"
 Class {
 	#name : 'OPFitContentDiagramCommand',
 	#superclass : 'OPDiagramToolbarCommand',
-	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands',
+	#category : 'OpenPonk-Spec-Commands-CanvasPresenter',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-Toolbar-Commands'
+	#tag : 'Commands-CanvasPresenter'
 }
 
 { #category : 'activation' }

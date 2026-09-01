@@ -1,3 +1,6 @@
+"
+Abstract base class for strategies that determine which child or inner shapes should be dragged along when a parent shape is moved.
+"
 Class {
 	#name : 'OPRSSelectionDraggableInnerShapesProvider',
 	#superclass : 'Object',

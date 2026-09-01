@@ -1,10 +1,10 @@
 "
-I represent commands that are shown at a side of a diagram canvas as a toolbar with icons.
+Commander activation strategy for commands displayed as toolbar icons alongside the diagram canvas.
 "
 Class {
 	#name : 'OPDiagramToolbarActivation',
 	#superclass : 'CmdMenuCommandActivationStrategy',
-	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands',
+	#category : 'OpenPonk-Spec-Commands-CanvasPresenter',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-Toolbar-Commands'
+	#tag : 'Commands-CanvasPresenter'
 }

@@ -1,3 +1,7 @@
+"
+Acts as a proxy reference to a model object by encapsulating its UUID.
+Utilized during serialization or cross-referencing where the fully resolved object is not immediately accessible.
+"
 Class {
 	#name : 'OPModelObjectReference',
 	#superclass : 'Object',

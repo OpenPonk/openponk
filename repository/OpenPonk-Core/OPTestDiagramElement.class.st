@@ -1,3 +1,6 @@
+"
+Mock implementation of a diagram element used exclusively for OpenPonk unit and integration tests.
+"
 Class {
 	#name : 'OPTestDiagramElement',
 	#superclass : 'OPDiagramElement',

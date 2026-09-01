@@ -1,5 +1,5 @@
 "
-I am a serialization interface for undo/redo and persistence.
+Serializer specialized in exporting and importing domain models, facilitating persistence and state serialization for undo/redo operations.
 "
 Class {
 	#name : 'OPModelSerializer',
@@ -9,7 +9,7 @@ Class {
 	#tag : 'Persistence'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPModelSerializer class >> exportSubject [
 
 	^ #model

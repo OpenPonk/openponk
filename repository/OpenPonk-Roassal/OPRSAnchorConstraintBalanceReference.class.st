@@ -1,3 +1,6 @@
+"
+Specific anchoring reference strategy that positions a shape at a proportional distance (a balance percentage from 0.0 to 1.0) along a path's total length.
+"
 Class {
 	#name : 'OPRSAnchorConstraintBalanceReference',
 	#superclass : 'OPRSAnchorConstraintReference',
@@ -17,7 +20,7 @@ OPRSAnchorConstraintBalanceReference class >> balance: aNumber [
 		  yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'geometry' }
 OPRSAnchorConstraintBalanceReference >> anchorSegmentFrom: segments andPointFrom: lenghtFromStart [
 
 	| sum newSum |
@@ -36,13 +39,13 @@ OPRSAnchorConstraintBalanceReference >> balance: aNumber [
 	balance := aNumber
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'computing' }
 OPRSAnchorConstraintBalanceReference >> computeAbsoluteBalanceForLength: aNumber [
 
 	^ aNumber * ((balance min: 1) max: 0)
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPRSAnchorConstraintBalanceReference >> saveShapePositionIn: aConstraint [
 
 	| nearestPointInfo absoluteDistanceToLine distanceToLine |

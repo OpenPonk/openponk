@@ -1,9 +1,12 @@
+"
+Abstract base class for context menu commands that change visual color properties (such as fill, stroke, or font color) of selected Roassal shapes via their shape styles.
+"
 Class {
 	#name : 'OPRoassalShapeColorCommand',
 	#superclass : 'OPRoassalShapeCommand',
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
 { #category : 'testing' }

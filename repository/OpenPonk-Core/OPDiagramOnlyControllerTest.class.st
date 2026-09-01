@@ -1,3 +1,6 @@
+"
+Abstract base class for testing diagram-only element controllers (e.g., notes and boundaries) that do not possess a distinct domain model mapping.
+"
 Class {
 	#name : 'OPDiagramOnlyControllerTest',
 	#superclass : 'OPAbstractElementControllerTest',
@@ -30,7 +33,7 @@ OPDiagramOnlyControllerTest >> model [
 	^ controller ifNotNil: [ :ctrl | ctrl diagramElement ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPDiagramOnlyControllerTest >> modelClass [
 
 	^ self diagramElementClass
@@ -40,6 +43,13 @@ OPDiagramOnlyControllerTest >> modelClass [
 OPDiagramOnlyControllerTest >> newModel [
 
 	^ nil
+]
+
+{ #category : 'initialization' }
+OPDiagramOnlyControllerTest >> registerModel [
+	"do nothing"
+
+	
 ]
 
 { #category : 'tests - ui interaction' }
@@ -91,12 +101,18 @@ OPDiagramOnlyControllerTest >> testDescriptionName [
 
 	| diagramElement |
 	diagramElement := Mock new.
+	diagramElement stub class willReturn: self diagramElementClass.
 	diagramElement stub name willReturn: 'bravo'.
-	controller diagramElement: diagramElement.
-	controller descriptionName accessor write: 'charlie' to: controller.
+
+	controller model: diagramElement.
+
+	controller viewModel descriptionName accessor
+		write: 'charlie'
+		to: controller.
 	diagramElement should receive name: 'charlie'.
 	self
-		assert: (controller descriptionName accessor read: controller)
+		assert:
+		(controller viewModel descriptionName accessor read: controller)
 		equals: 'bravo'.
 	diagramElement should receive modelChanged
 ]

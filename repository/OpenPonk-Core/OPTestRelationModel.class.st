@@ -1,5 +1,6 @@
 "
-I am a mock representing an entity connecting two other entities.
+Mock domain model representing a directed relationship connecting a source and a target entity. 
+Used exclusively for unit and integration testing.
 "
 Class {
 	#name : 'OPTestRelationModel',

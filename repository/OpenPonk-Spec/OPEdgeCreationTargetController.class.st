@@ -1,3 +1,6 @@
+"
+Specialized transient controller responsible for rendering and managing the visual feedback while a user is actively routing a new edge on the canvas (an invisible box the edge is pointed to).
+"
 Class {
 	#name : 'OPEdgeCreationTargetController',
 	#superclass : 'Object',

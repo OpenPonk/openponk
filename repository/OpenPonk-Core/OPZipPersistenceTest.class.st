@@ -1,3 +1,7 @@
+"
+Unit tests for OPZipPersistence. 
+Tests the accurate archiving and extraction of the project's memory store into and from ZIP format files (including edge-cases like non-ASCII characters).
+"
 Class {
 	#name : 'OPZipPersistenceTest',
 	#superclass : 'TestCase',
@@ -9,7 +13,7 @@ Class {
 	#tag : 'Tests'
 }
 
-{ #category : 'initialization' }
+{ #category : 'running' }
 OPZipPersistenceTest >> setUp [
 	super setUp.
 	persistence := OPZipPersistence new

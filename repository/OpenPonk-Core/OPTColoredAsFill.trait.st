@@ -1,3 +1,7 @@
+"
+Trait extending OPTColored to update and manage a color as a fill color.
+Used by diagram elements to bind style properties to Roassal shape fill colors.
+"
 Trait {
 	#name : 'OPTColoredAsFill',
 	#traits : 'OPTColored',

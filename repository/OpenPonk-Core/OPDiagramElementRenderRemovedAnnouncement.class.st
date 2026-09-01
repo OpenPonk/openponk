@@ -1,3 +1,6 @@
+"
+Announcement fired when a diagram element's visual representation (Roassal shape) is removed from the canvas.
+"
 Class {
 	#name : 'OPDiagramElementRenderRemovedAnnouncement',
 	#superclass : 'OPDiagramElementAnnouncement',

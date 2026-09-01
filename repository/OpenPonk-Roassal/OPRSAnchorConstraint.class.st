@@ -1,3 +1,6 @@
+"
+Layout constraint used to anchor a shape (like a label) relative to a specific point or segment along a line or path (such as an edge).
+"
 Class {
 	#name : 'OPRSAnchorConstraint',
 	#superclass : 'RSObject',
@@ -29,7 +32,7 @@ OPRSAnchorConstraint >> addAnchorAndGuideLine [
 	shape signalUpdate
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPRSAnchorConstraint >> alwaysShowGuideLine [
 
 	alwaysShowGuideLine := true.
@@ -125,7 +128,7 @@ OPRSAnchorConstraint >> guideLine [
 	^ guideLine
 ]
 
-{ #category : 'building' }
+{ #category : 'initialization' }
 OPRSAnchorConstraint >> initialize [
 
 	super initialize.
@@ -161,7 +164,7 @@ OPRSAnchorConstraint >> moveShape [
 	self createUpdater update
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPRSAnchorConstraint >> noGuideLine [
 
 	self guideLine color: Color transparent
@@ -226,7 +229,7 @@ OPRSAnchorConstraint >> stick: aShape on: aLine [
 	self build
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPRSAnchorConstraint >> useGuideLine [
 
 	self guideLine color: (Color gray: 0.9)

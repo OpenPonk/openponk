@@ -1,5 +1,5 @@
 "
-I convert magritte descriptions into DynamicForm widgets.
+Magritte visitor that traverses Magritte descriptions and translates them into corresponding UI widgets within an OPDynamicForm.
 "
 Class {
 	#name : 'OPDynamicFormMagritteVisitor',
@@ -40,6 +40,16 @@ OPDynamicFormMagritteVisitor >> shouldIncludeLabelFor: aContainer [
 	^ aContainer priority > 0 & aContainer label isNotNil
 ]
 
+{ #category : 'accessing' }
+OPDynamicFormMagritteVisitor >> target [
+	^ controller
+]
+
+{ #category : 'accessing' }
+OPDynamicFormMagritteVisitor >> target: anObject [
+	controller := anObject
+]
+
 { #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visit: anObject [
 	((anObject respondsTo: #isVisible) and: [ anObject isVisible not ])
@@ -52,34 +62,34 @@ OPDynamicFormMagritteVisitor >> visitActionDescription: aDescription [
 	(form addButton: aDescription label) action: aDescription action
 ]
 
-{ #category : 'visiting' }
+{ #category : 'visiting-description' }
 OPDynamicFormMagritteVisitor >> visitBooleanDescription: aBooleanDescription [
 
 	(form addCheckbox: aBooleanDescription label)
-		state: (aBooleanDescription accessor read: controller);
+		state: (aBooleanDescription accessor read: self target);
 		whenChangedDo: [ :newValue |
-			aBooleanDescription accessor write: newValue to: controller ]
+			aBooleanDescription accessor write: newValue to: self target ]
 ]
 
 { #category : 'visiting' }
 OPDynamicFormMagritteVisitor >> visitLabelDescription: aStringDescription [
 
 	form addHeadingLabel: aStringDescription label.
-	form addLabel: (aStringDescription accessor read: controller)
+	form addLabel: (aStringDescription accessor read: self target)
 ]
 
-{ #category : 'visiting' }
+{ #category : 'visiting-description' }
 OPDynamicFormMagritteVisitor >> visitMemoDescription: aMemoDescription [
 
 	(aMemoDescription lineCount > aMemoDescription class defaultLineCount
 		 ifTrue: [ form addLongText: aMemoDescription label ]
 		 ifFalse: [ form addText: aMemoDescription label ])
-		text: (aMemoDescription accessor read: controller);
+		text: (aMemoDescription accessor read: self target);
 		whenTextChangedDo: [ :newValue | 
-			aMemoDescription accessor write: newValue asString to: controller ]
+			aMemoDescription accessor write: newValue asString to: self target ]
 ]
 
-{ #category : 'visiting' }
+{ #category : 'visiting-description' }
 OPDynamicFormMagritteVisitor >> visitMultipleOptionDescription: aMultipleOptionDescription [
 
 	| dropList |
@@ -94,12 +104,12 @@ OPDynamicFormMagritteVisitor >> visitMultipleOptionDescription: aMultipleOptionD
 		display: [ :each | aMultipleOptionDescription labelForOption: each ];
 		displayIcon: [ :each :item |
 			aMultipleOptionDescription iconForOption: each ];
-		selectItems: (aMultipleOptionDescription accessor read: controller);
+		selectItems: (aMultipleOptionDescription accessor read: self target);
 		whenSelectionChangedDo: [ :selection |
-			aMultipleOptionDescription accessor write: selection selectedItems to: controller ]
+			aMultipleOptionDescription accessor write: selection selectedItems to: self target ]
 ]
 
-{ #category : 'visiting' }
+{ #category : 'visiting-description' }
 OPDynamicFormMagritteVisitor >> visitPriorityContainer: aContainer [
 	(self shouldIncludeLabelFor: aContainer)
 		ifTrue: [ form addHeadingLabel: aContainer label ].
@@ -107,7 +117,7 @@ OPDynamicFormMagritteVisitor >> visitPriorityContainer: aContainer [
 	form addSeparator
 ]
 
-{ #category : 'visiting' }
+{ #category : 'visiting-description' }
 OPDynamicFormMagritteVisitor >> visitSingleOptionDescription: aSingleOptionDescription [
 
 	| dropList |
@@ -123,36 +133,37 @@ OPDynamicFormMagritteVisitor >> visitSingleOptionDescription: aSingleOptionDescr
 		displayIcon: [ :each :item | 
 			aSingleOptionDescription iconForOption: each ];
 		addAndSelectItemLabeled:
-			(aSingleOptionDescription accessor read: controller)
+			(aSingleOptionDescription accessor read: self target)
 		do: [  ];
 		whenSelectedItemChangedDo: [ :newValue | 
-			aSingleOptionDescription accessor write: newValue to: controller ]
+			aSingleOptionDescription accessor write: newValue to: self target ]
 ]
 
-{ #category : 'visiting' }
+{ #category : 'visiting-description' }
 OPDynamicFormMagritteVisitor >> visitStringDescription: aStringDescription [
 
-	aStringDescription isReadOnly ifTrue: [ 
+	aStringDescription isReadOnly ifTrue: [
 		^ self visitLabelDescription: aStringDescription ].
 	(form addTextInput: aStringDescription label)
-		text: ((aStringDescription accessor read: controller) ifNil: [ '' ]);
-		whenTextChangedDo: [ :newText | 
-			[ 
-			| newString |
-			newString := newText asString.
-			aStringDescription validate: newString.
-			aStringDescription accessor write: newString to: controller ]
-				on: MAValidationError
-				do: [ :e | 
-					OPWorkbench isDevelopmentMode
-						ifTrue: [ e pass ]
-						ifFalse: [ 
-							(GrowlMorph label: 'Error' contents: e asString)
-								backgroundColor: GrowlMorph theme dangerBackgroundColor;
-								openInWorld ] ] ]
+		text:
+			((aStringDescription accessor read: self target) ifNil: [ '' ]);
+		whenTextChangedDo: [ :newText |
+				[
+					| newString |
+					newString := newText asString.
+					aStringDescription validate: newString.
+					aStringDescription accessor write: newString to: self target ]
+					on: MAValidationError
+					do: [ :e |
+							OPWorkbench isDevelopmentMode
+								ifTrue: [ e pass ]
+								ifFalse: [
+										(GrowlMorph label: 'Error' contents: e asString)
+											backgroundColor: GrowlMorph theme dangerBackgroundColor;
+											openInWorld ] ] ]
 ]
 
-{ #category : 'visiting' }
+{ #category : 'visiting-description' }
 OPDynamicFormMagritteVisitor >> visitToManyRelationDescription: aMAToManyRelationDescription [
 
 	| label hasDisplay |
@@ -163,7 +174,7 @@ OPDynamicFormMagritteVisitor >> visitToManyRelationDescription: aMAToManyRelatio
 	              aMAToManyRelationDescription class
 		              defaultDisplayProperty.
 	hasDisplay ifTrue: [
-		(aMAToManyRelationDescription accessor read: controller) do: [ :each |
+		(aMAToManyRelationDescription accessor read: self target) do: [ :each |
 			form addLabel:
 				(aMAToManyRelationDescription displayStringFor: each) ] ].
 	(form addButton: 'Edit ' , (label ifNil: [ '' ])) action: [

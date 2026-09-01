@@ -1,3 +1,6 @@
+"
+Spec presenter that displays detailed metadata for a specific OpenPonk version, including its release name, build date, and commit information.
+"
 Class {
 	#name : 'OPVersionInfo',
 	#superclass : 'SpPresenter',
@@ -14,7 +17,7 @@ Class {
 	#tag : 'Dialogs'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'layout' }
 OPVersionInfo class >> defaultLayout [
 	^ SpGridLayout new
 		borderWidth: 0;
@@ -45,7 +48,8 @@ OPVersionInfo >> connectPresenters [
 
 { #category : 'initialization' }
 OPVersionInfo >> initialize [
-	onInfoDownloadBlock := [  ].
+
+	onInfoDownloadBlock := [ ].
 	super initialize
 ]
 

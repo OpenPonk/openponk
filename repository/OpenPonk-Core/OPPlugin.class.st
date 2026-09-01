@@ -1,13 +1,13 @@
 "
-I am the base class for all DC plugins. Subclass me to specify your plugin.
+Base class for all OpenPonk plugins. Subclass me to specify your plugin, describing its general information and providing access points.
 
 !! Responsibility
 
-Describe general info and access points of a plugin.
+Provide plugin metadata (such as name, version, and icon) and integration hooks (such as serializers and layout engines).
 
 !! Collaborators
 
-DCPluginRegistry
+OPPluginRegistry
 "
 Class {
 	#name : 'OPPlugin',

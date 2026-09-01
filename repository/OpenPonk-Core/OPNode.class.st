@@ -1,3 +1,7 @@
+"
+Structural diagram element representing a 2-dimensional node or vertex. 
+Manages spatial properties such as position, boundaries, and extent.
+"
 Class {
 	#name : 'OPNode',
 	#superclass : 'OPDiagramElement',
@@ -6,7 +10,7 @@ Class {
 	#tag : 'DiagramElements'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'rendering' }
 OPNode >> addedByMouseClickTo: aPoint [
 
 	self translateTo: aPoint

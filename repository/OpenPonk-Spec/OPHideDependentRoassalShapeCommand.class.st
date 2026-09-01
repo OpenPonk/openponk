@@ -1,9 +1,12 @@
+"
+Context menu command that explicitly hides all child or dependent shapes of the selected Roassal shape from the canvas.
+"
 Class {
 	#name : 'OPHideDependentRoassalShapeCommand',
 	#superclass : 'OPToggleRoassalShapeCommand',
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
 { #category : 'execution' }

@@ -1,5 +1,5 @@
 "
-I am Spec model to embed Roassal2 into DCEditor.
+Spec presenter responsible for embedding the Roassal canvas into the OpenPonk editor. Bridges user interactions on the canvas (like zooming, panning, and selections) to the OPDiagramController, and manages diagram export functionalities (PDF, PNG, SVG).
 "
 Class {
 	#name : 'OPCanvasPresenter',
@@ -132,12 +132,11 @@ OPCanvasPresenter >> initializeCanvas: aCanvas [
 							  hasDraggableAnimation: false;
 							  yourself).
 						 OPRSKeyNavigationCanvasInteraction new.
-						 OPRSZoomableCanvasInteraction new.
-						 "OPRSRemoveable new."
+						 RSZoomableCanvasInteraction new.
 						 RSScrollBarsCanvasInteraction new };
 				 configuration: (OPRSControlConfiguration new
 						  noLegend;
-						  hasZoomableAnimation: false;
+						  shouldAnimateZoom: false;
 						  yourself));
 		@ OPRSSelectableCanvas.
 
@@ -237,7 +236,7 @@ OPCanvasPresenter >> zoom: aScale [
 	self canvas signalUpdate
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'zoom' }
 OPCanvasPresenter >> zoomToFit [
 
 	self canvas shapes

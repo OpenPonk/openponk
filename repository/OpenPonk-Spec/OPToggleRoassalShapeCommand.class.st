@@ -1,12 +1,15 @@
+"
+Abstract base class for context menu commands that toggle the visibility or active boolean state of specific shape decorations (e.g., showing or hiding association labels).
+"
 Class {
 	#name : 'OPToggleRoassalShapeCommand',
 	#superclass : 'OPRoassalShapeCommand',
 	#instVars : [
 		'executor'
 	],
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
 { #category : 'testing' }

@@ -1,15 +1,15 @@
 "
-I contain commands related to the entire opened project.
+Commander menu group that organizes commands related to persisting the entire opened project, including save and save-as operations.
 "
 Class {
 	#name : 'OPWProjectSaveMenuGroup',
 	#superclass : 'CmdMenuGroup',
-	#category : 'OpenPonk-Spec-Commands',
+	#category : 'OpenPonk-Spec-Commands-Workbench',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Commands'
+	#tag : 'Commands-Workbench'
 }
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
 OPWProjectSaveMenuGroup >> isInlined [
 	^ true
 ]

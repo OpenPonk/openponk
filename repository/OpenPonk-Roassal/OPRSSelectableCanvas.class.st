@@ -1,3 +1,7 @@
+"
+Interaction applied to the background canvas. 
+Enables elastic box (lasso) selection of multiple shapes via click-and-drag, and manages the toggling of multi-select modes.
+"
 Class {
 	#name : 'OPRSSelectableCanvas',
 	#superclass : 'RSElasticBoxInteraction',
@@ -23,7 +27,7 @@ OPRSSelectableCanvas >> boxEnded: event [
 	event signalUpdate
 ]
 
-{ #category : 'hooks' }
+{ #category : 'accessing' }
 OPRSSelectableCanvas >> boxStartEvent [
 
 	^ RSMouseLeftDragStart
@@ -55,7 +59,7 @@ OPRSSelectableCanvas >> createCameraAnimation: event [
 	
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 OPRSSelectableCanvas >> defaultBox [
 
 	^ super defaultBox

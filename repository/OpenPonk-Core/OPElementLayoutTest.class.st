@@ -1,5 +1,6 @@
 "
-An OPElementLayoutTest is a test class for testing the behavior of OPElementLayout
+Unit tests for OPLegacyElementLayout. 
+Ensures that layout data (like extent and positions) accurately serializes and deserializes from JSON format.
 "
 Class {
 	#name : 'OPElementLayoutTest',
@@ -17,15 +18,17 @@ Class {
 
 { #category : 'running' }
 OPElementLayoutTest >> setUp [
+
+	super setUp.
 	elementLayout := OPLegacyElementLayout
-		withPosition: -10 @ 50
-		extent: 100 @ 200.
+		                 withPosition: -10 @ 50
+		                 extent: 100 @ 200.
 	relationshipLayout := OPLegacyElementLayout
-		withPathFromSource: 'element'
-		throughPoints:
-			{(100 @ 200).
-			(150 @ 200).
-			(150 @ 300)}.
+		                      withPathFromSource: 'element'
+		                      throughPoints: {
+				                      (100 @ 200).
+				                      (150 @ 200).
+				                      (150 @ 300) }.
 	elementLayoutJSON := '{
 	"extent" : {
 		"x" : 100,

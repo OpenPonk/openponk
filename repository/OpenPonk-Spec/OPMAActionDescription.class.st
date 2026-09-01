@@ -1,3 +1,6 @@
+"
+Specialized Magritte element description that represents an executable action rather than a data property. Used in dynamically generated forms to render interactive buttons bound to specific controller or model methods.
+"
 Class {
 	#name : 'OPMAActionDescription',
 	#superclass : 'MAElementDescription',

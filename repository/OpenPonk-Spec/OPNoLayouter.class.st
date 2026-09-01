@@ -1,3 +1,6 @@
+"
+Null Object implementation of OPLayouter that performs no automated layout operations, leaving element positions exactly as they are.
+"
 Class {
 	#name : 'OPNoLayouter',
 	#superclass : 'OPLayouter',
@@ -6,14 +9,11 @@ Class {
 	#tag : 'Layouting'
 }
 
-{ #category : 'accessing' }
-OPNoLayouter >> allEdges [
-	^ #()
-]
+{ #category : 'userinterface' }
+OPNoLayouter >> applyLayout: aTwoArgBlock [
+	"do nothing"
 
-{ #category : 'accessing' }
-OPNoLayouter >> allNodes [
-	^ #()
+	
 ]
 
 { #category : 'layouts' }

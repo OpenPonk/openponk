@@ -1,3 +1,7 @@
+"
+Unit tests for OPProject. 
+Verifies the basic structural integrity of a project, including tracking of domain models and their associated diagrams.
+"
 Class {
 	#name : 'OPProjectTest',
 	#superclass : 'TestCase',

@@ -1,3 +1,7 @@
+"
+Represents a styling configuration applied to diagram elements. 
+Holds style properties (like colors or fonts) and tracks which diagram elements utilize it, either as shared or local styles.
+"
 Class {
 	#name : 'OPShapeStyle',
 	#superclass : 'Object',

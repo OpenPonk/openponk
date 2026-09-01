@@ -1,7 +1,5 @@
 "
-I am a clickable button entry of the palette.
-
-You can configure both the underlying button and the palette tool through me.
+Spec button presenter representing a single selectable item (tool) inside an OpenPonk palette. Encapsulates an OPPaletteTool (such as a creation or connection tool) and handles its selection state and shortcuts.
 "
 Class {
 	#name : 'OPPaletteEntry',

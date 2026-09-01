@@ -1,3 +1,7 @@
+"
+Structural diagram element representing a relationship or connection rendered as a path/edge. 
+Manages routing points (waypoints) and holds references to the source and target elements.
+"
 Class {
 	#name : 'OPEdge',
 	#superclass : 'OPDiagramElement',
@@ -63,7 +67,7 @@ OPEdge >> remove [
 	self target: nil
 ]
 
-{ #category : 'rendering' }
+{ #category : 'interactions' }
 OPEdge >> selectableInteraction [
 
 	^ OPRSSelectable highlightColorBlue
@@ -103,14 +107,14 @@ OPEdge >> target: anElement [
 		          to: anElement
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPEdge >> updateFromRender [
 
 	self waypoints: roassalShape controlPoints.
 	super updateFromRender
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'rendering' }
 OPEdge >> updateRenderFromSelf [
 
 	self isRendered ifFalse: [ ^ self ].

@@ -1,3 +1,6 @@
+"
+I am a customized Morphic tab label. I extend TabLabelMorph to override the default selection fill styles and border rendering, ensuring tab headers within OpenPonk's notebook interfaces align with the application's specific visual theme.
+"
 Class {
 	#name : 'OPTabLabelMorph',
 	#superclass : 'TabLabelMorph',

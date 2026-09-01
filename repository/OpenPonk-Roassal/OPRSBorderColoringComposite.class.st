@@ -1,5 +1,8 @@
+"
+Specialized composite Roassal shape designed to manage and synchronize border colors and paint transparency logic across multiple nested child shapes simultaneously.
+"
 Class {
-	#name : 'RSBorderColoringComposite',
+	#name : 'OPRSBorderColoringComposite',
 	#superclass : 'RSComposite',
 	#instVars : [
 		'shapesToUseBorderColor',
@@ -10,8 +13,8 @@ Class {
 	#tag : 'Markers'
 }
 
-{ #category : 'accessing' }
-RSBorderColoringComposite >> borderColor: aColor [
+{ #category : 'border' }
+OPRSBorderColoringComposite >> borderColor: aColor [
 
 	self shapesToUsePaint do: [ :each | each borderColor: aColor ].
 	self shapesToUseBorderColor do: [ :each | 
@@ -19,67 +22,67 @@ RSBorderColoringComposite >> borderColor: aColor [
 ]
 
 { #category : 'accessing' }
-RSBorderColoringComposite >> color: aColor [
+OPRSBorderColoringComposite >> color: aColor [
 
 	aColor ifNil: [ ^ super color: aColor ].
 	self shapesToUsePaint do: [ :each | each color: aColor ]
 ]
 
-{ #category : 'as yet unclassified' }
-RSBorderColoringComposite >> initialize [
+{ #category : 'initialization' }
+OPRSBorderColoringComposite >> initialize [
 
 	super initialize.
 	shapesToUseBorderColor := IdentitySet new.
 	self paintWhiteForTransparentBorder
 ]
 
-{ #category : 'as yet unclassified' }
-RSBorderColoringComposite >> keepPaintTransparencyFromBorder [
+{ #category : 'modifying' }
+OPRSBorderColoringComposite >> keepPaintTransparencyFromBorder [
 
 	borderColoredShapesColorBlock := #yourself
 ]
 
 { #category : 'accessing' }
-RSBorderColoringComposite >> noPaint [
+OPRSBorderColoringComposite >> noPaint [
 
 	super noPaint.
 	self shapesToUsePaint do: [ :each | each noPaint ]
 ]
 
 { #category : 'accessing' }
-RSBorderColoringComposite >> paint: aPaint [
+OPRSBorderColoringComposite >> paint: aPaint [
 
 	aPaint ifNil: [ ^ super paint: aPaint ].
 	self shapesToUsePaint do: [ :each | each paint: aPaint ]
 ]
 
-{ #category : 'as yet unclassified' }
-RSBorderColoringComposite >> paintWhiteForTransparentBorder [
+{ #category : 'modifying' }
+OPRSBorderColoringComposite >> paintWhiteForTransparentBorder [
 
 	borderColoredShapesColorBlock := [ :color | 
 	                                 color withTransparencyAsWhite ]
 ]
 
-{ #category : 'as yet unclassified' }
-RSBorderColoringComposite >> removeShape: aShape [
+{ #category : 'removing' }
+OPRSBorderColoringComposite >> removeShape: aShape [
 
 	shapesToUseBorderColor remove: aShape ifAbsent: [  ]
 ]
 
-{ #category : 'as yet unclassified' }
-RSBorderColoringComposite >> shapesToUseBorderColor [
+{ #category : 'accessing' }
+OPRSBorderColoringComposite >> shapesToUseBorderColor [
 
 	^ shapesToUseBorderColor
 ]
 
-{ #category : 'as yet unclassified' }
-RSBorderColoringComposite >> shapesToUsePaint [
+{ #category : 'accessing' }
+OPRSBorderColoringComposite >> shapesToUsePaint [
 
 	^ self shapes difference: self shapesToUseBorderColor
 ]
 
-{ #category : 'as yet unclassified' }
-RSBorderColoringComposite >> useBorderColorAsPaintFor: aShape [
+{ #category : 'modifying' }
+OPRSBorderColoringComposite >> useBorderColorAsPaintFor: aShape [
 
 	(self shapes includes: aShape) ifFalse: [ self add: aShape ].
 	shapesToUseBorderColor add: aShape

@@ -1,3 +1,6 @@
+"
+Concrete shape style configuration holding standard visual properties for OpenPonk diagram elements, such as fill color, stroke color, width, and font attributes.
+"
 Class {
 	#name : 'OPOpenPonkShapeStyle',
 	#superclass : 'OPShapeStyle',

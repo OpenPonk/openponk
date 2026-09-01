@@ -1,12 +1,15 @@
+"
+Context menu command that sets the font color of the selected Roassal shape to gray.
+"
 Class {
 	#name : 'OPDiagramFigureGrayFontColorCommand',
 	#superclass : 'OPDiagramFigureFontColorCommand',
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPDiagramFigureGrayFontColorCommand class >> color [
 
 	^ Color lightGray

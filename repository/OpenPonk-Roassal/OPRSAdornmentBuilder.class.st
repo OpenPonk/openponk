@@ -1,3 +1,6 @@
+"
+Builder utility designed to easily construct and position multiple OPRSAdornments (icons and actions) around the borders or corners of a Roassal shape.
+"
 Class {
 	#name : 'OPRSAdornmentBuilder',
 	#superclass : 'Object',

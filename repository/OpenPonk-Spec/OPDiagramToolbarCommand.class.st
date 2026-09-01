@@ -1,5 +1,5 @@
 "
-I am command for diagram toolbar.
+Abstract base class for commands that appear in the OpenPonk diagram toolbar, extending CmdCommand for integration with the Commander framework.
 "
 Class {
 	#name : 'OPDiagramToolbarCommand',
@@ -7,9 +7,9 @@ Class {
 	#instVars : [
 		'diagramPresenter'
 	],
-	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands',
+	#category : 'OpenPonk-Spec-Commands-CanvasPresenter',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-Toolbar-Commands'
+	#tag : 'Commands-CanvasPresenter'
 }
 
 { #category : 'accessing' }

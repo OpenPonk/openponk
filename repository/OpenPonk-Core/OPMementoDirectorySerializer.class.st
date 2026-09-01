@@ -1,15 +1,16 @@
+"
+Serializer responsible for persisting and loading memento objects to and from a directory structure. 
+Orchestrates the serialization of both models and their corresponding diagrams.
+"
 Class {
 	#name : 'OPMementoDirectorySerializer',
 	#superclass : 'OPMementoSerializer',
-	#instVars : [
-		'rootFolder'
-	],
 	#category : 'OpenPonk-Core-Persistence',
 	#package : 'OpenPonk-Core',
 	#tag : 'Persistence'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPMementoDirectorySerializer class >> exportVersion [
 
 	^ 1

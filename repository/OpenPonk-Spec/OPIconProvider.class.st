@@ -1,3 +1,7 @@
+"
+Custom Spec icon provider for OpenPonk. 
+Resolves icon requests by querying OpenPonk's centralized icon registries.
+"
 Class {
 	#name : 'OPIconProvider',
 	#superclass : 'SpIconProvider',

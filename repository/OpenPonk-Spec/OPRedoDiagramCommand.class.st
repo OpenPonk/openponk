@@ -1,9 +1,12 @@
+"
+Diagram toolbar command that re-applies the most recently undone diagram action via the project's autosave/memento manager.
+"
 Class {
 	#name : 'OPRedoDiagramCommand',
 	#superclass : 'OPDiagramToolbarCommand',
-	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands',
+	#category : 'OpenPonk-Spec-Commands-CanvasPresenter',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-Toolbar-Commands'
+	#tag : 'Commands-CanvasPresenter'
 }
 
 { #category : 'activation' }

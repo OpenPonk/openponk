@@ -1,3 +1,7 @@
+"
+Spec presenter that displays version comparison information. 
+Shows the current OpenPonk version alongside the latest release and nightly builds to help users track updates and determine if an upgrade is available.
+"
 Class {
 	#name : 'OPVersionComparisonInfo',
 	#superclass : 'SpPresenter',
@@ -19,7 +23,7 @@ Class {
 	#tag : 'Dialogs'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'layout' }
 OPVersionComparisonInfo class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom

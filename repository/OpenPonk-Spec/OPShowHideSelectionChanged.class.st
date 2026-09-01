@@ -1,3 +1,6 @@
+"
+Abstract base announcement triggered when the user modifies their selection within a show/hide configuration dialog or element explorer.
+"
 Class {
 	#name : 'OPShowHideSelectionChanged',
 	#superclass : 'Announcement',

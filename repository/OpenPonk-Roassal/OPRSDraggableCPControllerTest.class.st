@@ -1,3 +1,6 @@
+"
+Unit tests verifying the calculation of routing points, particularly focusing on self-loops and their distance offsets, within OPRSDraggableCPController.
+"
 Class {
 	#name : 'OPRSDraggableCPControllerTest',
 	#superclass : 'TestCase',

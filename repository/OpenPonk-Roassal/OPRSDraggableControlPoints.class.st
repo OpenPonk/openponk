@@ -1,3 +1,7 @@
+"
+Roassal interaction that enables drag-and-drop manipulation of routing control points along a line or edge. 
+Creates visual handles at vertices and midpoints, allowing users to reshape edges dynamically.
+"
 Class {
 	#name : 'OPRSDraggableControlPoints',
 	#superclass : 'RSInteraction',
@@ -54,7 +58,7 @@ OPRSDraggableControlPoints >> initialize [
 	isActive := false
 ]
 
-{ #category : 'initialization' }
+{ #category : 'hooks' }
 OPRSDraggableControlPoints >> onShape: aLine [
 
 	line := aLine.

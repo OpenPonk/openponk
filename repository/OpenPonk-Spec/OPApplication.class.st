@@ -1,5 +1,6 @@
 "
-Spec Application for OpenPonk
+Root Spec application definition for OpenPonk. 
+Handles backend configuration and registers OpenPonk-specific icon providers.
 "
 Class {
 	#name : 'OPApplication',

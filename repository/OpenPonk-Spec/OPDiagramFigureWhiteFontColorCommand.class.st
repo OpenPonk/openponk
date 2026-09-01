@@ -1,12 +1,15 @@
+"
+Context menu command that sets the font color of the selected Roassal shape to white.
+"
 Class {
 	#name : 'OPDiagramFigureWhiteFontColorCommand',
 	#superclass : 'OPDiagramFigureFontColorCommand',
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPDiagramFigureWhiteFontColorCommand class >> color [
 
 	^ Color white

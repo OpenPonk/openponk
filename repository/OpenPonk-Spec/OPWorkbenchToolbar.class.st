@@ -1,5 +1,6 @@
 "
-I am top menu toolbar for Workbench.
+Spec presenter representing the top menu toolbar of the OPWorkbench. 
+Dynamically manages project-level menu items and injects editor-specific actions based on the currently focused diagram.
 "
 Class {
 	#name : 'OPWorkbenchToolbar',
@@ -13,7 +14,7 @@ Class {
 	#tag : 'Windows'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'layout' }
 OPWorkbenchToolbar class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom

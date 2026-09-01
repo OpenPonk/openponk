@@ -1,3 +1,7 @@
+"
+Concrete exporter responsible for rendering and saving an OpenPonk diagram canvas into a PNG raster image. 
+Allows for custom zoom/scaling during the export.
+"
 Class {
 	#name : 'OPCanvasPNGExporter',
 	#superclass : 'OPCanvasExporter',
@@ -27,7 +31,7 @@ OPCanvasPNGExporter class >> exportSilentlyDiagramController: aDiagramController
 		export
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPCanvasPNGExporter >> diagramController: aDiagramController to: aFileReference [
 
 	super diagramController: aDiagramController to: aFileReference.
@@ -47,7 +51,7 @@ OPCanvasPNGExporter >> roassalExporter [
 	^ self canvas pngExporter
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'hooks' }
 OPCanvasPNGExporter >> setupExporter [
 
 	^ super setupExporter

@@ -1,3 +1,7 @@
+"
+Specialized label designed to be attached to an OPEdge. 
+Manages positioning by calculating anchors and distances relative to the routing path of its parent edge.
+"
 Class {
 	#name : 'OPEdgeLabel',
 	#superclass : 'OPLabel',
@@ -27,14 +31,14 @@ OPEdgeLabel >> defaultMinDistance [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'adding' }
+{ #category : 'rendering' }
 OPEdgeLabel >> renderShapeDetails [
 
 	super renderShapeDetails.
 	self anchorToEdge
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPEdgeLabel >> updateFromRender [
 
 	self bounds: (OPNodeBounds
@@ -53,7 +57,7 @@ OPEdgeLabel >> updateRenderFromModel [
 	super updateRenderFromModel
 ]
 
-{ #category : 'roassal' }
+{ #category : 'rendering' }
 OPEdgeLabel >> updateRenderFromSelf [
 
 	self isRendered ifFalse: [ ^ self ].

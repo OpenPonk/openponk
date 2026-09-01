@@ -1,3 +1,7 @@
+"
+Attachment point strategy for lines connecting to rectangles. 
+Calculates attachment coordinates that force the line to exit the rectangle exactly orthogonally (at 90 degrees), ensuring orthogonal routing grids remain clean.
+"
 Class {
 	#name : 'OPRSOrthogonalBorderAttachPoint',
 	#superclass : 'RSBorderAttachPoint',

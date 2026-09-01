@@ -1,3 +1,6 @@
+"
+Null Object proxy acting as an empty or transparent Roassal shape, absorbing configuration messages without rendering anything on the canvas.
+"
 Class {
 	#name : 'OPRSEmptyShapeProxy',
 	#superclass : 'Object',

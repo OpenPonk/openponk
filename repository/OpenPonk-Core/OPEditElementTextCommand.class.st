@@ -1,3 +1,7 @@
+"
+UI command that encapsulates the action of editing a text property (attribute) of an element. 
+Uses an accessor block or selector to read and update the underlying text property.
+"
 Class {
 	#name : 'OPEditElementTextCommand',
 	#superclass : 'OPUICommand',

@@ -1,3 +1,7 @@
+"
+Unit tests for OPLabel. 
+Verifies the default behaviors, properties, and constraints of basic text labels on the canvas.
+"
 Class {
 	#name : 'OPLabelTest',
 	#superclass : 'OPAbstractLabelTest',

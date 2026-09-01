@@ -1,3 +1,6 @@
+"
+Utility that constructs and populates a specific OpenPonk palette for a given diagram controller, handling both common tool items and diagram-specific items.
+"
 Class {
 	#name : 'OPPaletteInitializer',
 	#superclass : 'Object',

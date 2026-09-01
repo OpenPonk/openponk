@@ -1,5 +1,7 @@
 "
-I am not actually a controller, but I do manage a Project.
+Coordinator for an OPProject. 
+Handles project-level lifecycle operations including saving, loading, merging, and coordinating with the active workbench and model handlers. 
+Manages the lifecycle of active diagram controllers within the project.
 "
 Class {
 	#name : 'OPProjectController',
@@ -9,9 +11,8 @@ Class {
 		'project',
 		'controllers',
 		'lastSave',
-		'disableAutosave',
 		'persistenceManager',
-		'navigatorAdapters'
+		'viewModelRegistry'
 	],
 	#classVars : [
 		'RecentProjects'
@@ -234,12 +235,6 @@ OPProjectController >> modelMementos [
 	^ self project models collect: [ :each | self modelMementoFor: each ]
 ]
 
-{ #category : 'accessing' }
-OPProjectController >> navigatorAdapters [
-
-	^ navigatorAdapters ifNil: [ OPNavigatorAdapters new ]
-]
-
 { #category : 'opening' }
 OPProjectController >> openDiagrams [
 
@@ -252,10 +247,10 @@ OPProjectController >> openDiagrams [
 		select: #isOpen
 		thenDo: [ :each | workbench openEditorOnDiagram: each ].
 	selected ifNotNil: [ workbench openEditorOnDiagram: selected ].
-	(project diagrams isNotEmpty and: [ 
-		 project diagrams noneSatisfy: #isOpen ]) ifTrue: [ 
-		project diagrams do: [ :eachDiagram | 
-			workbench openEditorOnDiagram: eachDiagram ] ]
+	(project diagrams isNotEmpty and: [
+		 project diagrams noneSatisfy: #isOpen ]) ifTrue: [
+			project diagrams do: [ :eachDiagram |
+				workbench openEditorOnDiagram: eachDiagram ] ]
 ]
 
 { #category : 'opening' }
@@ -422,6 +417,19 @@ OPProjectController >> updateDiagrams [
 
 	self project diagrams do: [ :eachDiagram | 
 		self updateDiagram: eachDiagram ]
+]
+
+{ #category : 'accessing' }
+OPProjectController >> viewModel [
+
+	^ self viewModelRegistry projectViewModel
+]
+
+{ #category : 'accessing' }
+OPProjectController >> viewModelRegistry [
+
+	^ viewModelRegistry ifNil: [
+		  viewModelRegistry := OPViewModelRegistry forProject: self project ]
 ]
 
 { #category : 'accessing' }

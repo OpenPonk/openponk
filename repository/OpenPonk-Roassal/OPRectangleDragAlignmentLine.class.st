@@ -1,3 +1,6 @@
+"
+Abstract mathematical alignment line (guideline) used to calculate snapping and alignment distances between rectangles during a drag operation.
+"
 Class {
 	#name : 'OPRectangleDragAlignmentLine',
 	#superclass : 'Object',
@@ -33,7 +36,7 @@ OPRectangleDragAlignmentLine class >> draggedFirst: draggedFirst draggedSecond: 
 	^ best
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPRectangleDragAlignmentLine >> adaptation2dOffset [
 
 	^ self subclassResponsibility
@@ -45,7 +48,7 @@ OPRectangleDragAlignmentLine >> adaptationDistance [
 	^ self adaptation2dOffset abs
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPRectangleDragAlignmentLine >> adaptationOffset [
 
 	^ self subclassResponsibility
@@ -76,7 +79,7 @@ OPRectangleDragAlignmentLine >> dragged: aPoint [
 ]
 
 { #category : 'accessing' }
-OPRectangleDragAlignmentLine >> draggedAdapated [
+OPRectangleDragAlignmentLine >> draggedAdapted [
 
 	^ self dragged + self adaptationOffset
 ]
@@ -93,7 +96,7 @@ OPRectangleDragAlignmentLine >> normalized [
 	^ (self dragged - self draggedAdapted) normalized
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPRectangleDragAlignmentLine >> resultingDistance [
 
 	^ self subclassResponsibility

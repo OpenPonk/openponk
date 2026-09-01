@@ -1,3 +1,7 @@
+"
+Abstract base class for testing diagram controllers. 
+Extends OPBaseControllerTest to provide specific scaffolding for controllers that govern an entire diagram space.
+"
 Class {
 	#name : 'OPAbstractDiagramControllerTest',
 	#superclass : 'OPBaseControllerTest',
@@ -16,6 +20,7 @@ OPAbstractDiagramControllerTest class >> isAbstract [
 OPAbstractDiagramControllerTest >> setUp [
 
 	super setUp.
+	controller viewModelRegistry: OPViewModelRegistry forNewProject.
 	controller model: model.
 	controller diagramElement: (OPOpenPonkDiagram forModelElement: model).
 	controller canvasPresenter: (OPCanvasPresenter new

@@ -1,3 +1,7 @@
+"
+Abstract base class for testing directional relationship controllers. 
+Verifies the establishment of connections between source and target controllers, as well as the cascading behavior of element removals.
+"
 Class {
 	#name : 'OPAbstractDirectionalRelationshipControllerTest',
 	#superclass : 'OPAbstractElementControllerTest',
@@ -57,14 +61,14 @@ OPAbstractDirectionalRelationshipControllerTest >> registerModel [
 	self assignModelTarget
 ]
 
-{ #category : 'initialization' }
+{ #category : 'running' }
 OPAbstractDirectionalRelationshipControllerTest >> setUp [
 
 	super setUp.
 	self setUpTarget
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
 OPAbstractDirectionalRelationshipControllerTest >> setUpCreationTarget [
 
 	self setUpSource
@@ -76,7 +80,7 @@ OPAbstractDirectionalRelationshipControllerTest >> setUpCreationTargetController
 	self setUpSourceController
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
 OPAbstractDirectionalRelationshipControllerTest >> setUpCreationTargetModel [
 
 	^ self setUpSourceModel
@@ -201,10 +205,10 @@ OPAbstractDirectionalRelationshipControllerTest >> testCreateModel [
 	self assert: controller model isNotNil.
 	self assert: createdModel equals: controller model.
 	self
-		assert: controller modelSource
+		assert: controller viewModel modelSource
 		equals: self sourceController model.
 	self
-		assert: controller modelTarget
+		assert: controller viewModel modelTarget
 		equals: self targetController model
 ]
 
@@ -242,12 +246,18 @@ OPAbstractDirectionalRelationshipControllerTest >> testRemovalOfSourceRemovesRel
 	self showInDiagram.
 	roassalShape := controller roassalShape.
 	self
+		assertCollection: diagramController modelsWithController
+		includesAll: { sourceModel }.
+	self
 		assertCollection: diagramController canvas edges
 		includesAll: { roassalShape }.
 	self
 		assertCollection: diagramController modelsWithController
 		includesAll: { model }.
-	controller removeControllerAndModel.
+	self sourceController removeControllerAndModel.
+	self
+		denyCollection: diagramController modelsWithController
+		includesAll: { sourceModel }.
 	self
 		denyCollection: diagramController canvas edges
 		includesAll: { roassalShape }.

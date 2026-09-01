@@ -1,9 +1,10 @@
 "
-I am a container for all plugins.
+Singleton registry container for all installed OpenPonk plugins. 
+Allows querying and discovering plugins based on controller classes or model compatibility.
 
 !! Collaborators
 
-DCPlugin
+OPPlugin
 "
 Class {
 	#name : 'OPPluginRegistry',

@@ -1,3 +1,6 @@
+"
+Selection strategy that explicitly prevents any inner or child shapes from being dragged along with a parent shape.
+"
 Class {
 	#name : 'OPRSSelectionDraggableNoInnerShapesProvider',
 	#superclass : 'OPRSSelectionDraggableInnerShapesProvider',

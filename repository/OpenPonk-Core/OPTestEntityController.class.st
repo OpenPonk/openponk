@@ -1,5 +1,6 @@
 "
-I am a mock class for testing ""regular"" model controllers.
+Mock element controller. 
+Used exclusively for testing interaction, rendering, and source/target resolution of domain entities.
 "
 Class {
 	#name : 'OPTestEntityController',
@@ -9,38 +10,23 @@ Class {
 	#tag : 'Controllers-Tests'
 }
 
-{ #category : 'testing' }
-OPTestEntityController >> canBeSourceFor: aController [
-	^ aController modelClass = OPTestRelationModel
-]
-
-{ #category : 'testing' }
-OPTestEntityController >> canBeTargetFor: aController [
-	^ aController modelClass = OPTestRelationModel
-]
-
 { #category : 'construction' }
-OPTestEntityController >> diagramElementClass [
+OPTestEntityController class >> diagramElementClass [
 
 	^ OPTestDiagramElement
 ]
 
 { #category : 'accessing' }
-OPTestEntityController >> modelClass [
-	^ OPTestEntityModel
+OPTestEntityController class >> viewModelClass [
+	^ OPTestEntityViewModel
 ]
 
 { #category : 'connecting' }
-OPTestEntityController >> parentContainerModel [
-
-	^ self diagramController model
+OPTestEntityController >> canBeSourceFor: aController [
+	^ aController modelClass = OPTestRelationModel
 ]
 
-{ #category : 'destruction' }
-OPTestEntityController >> removeModel [
-
-	| ownerModel |
-	ownerModel := self diagramController model.
-	ownerModel entities remove: self model.
-	super removeModel
+{ #category : 'connecting' }
+OPTestEntityController >> canBeTargetFor: aController [
+	^ aController modelClass = OPTestRelationModel
 ]

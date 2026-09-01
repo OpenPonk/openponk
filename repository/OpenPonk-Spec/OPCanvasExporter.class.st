@@ -1,3 +1,7 @@
+"
+Abstract base class for exporting an OpenPonk diagram canvas. 
+Coordinates the diagram controller, file selection, and visual rendering for export formats.
+"
 Class {
 	#name : 'OPCanvasExporter',
 	#superclass : 'Object',
@@ -27,7 +31,7 @@ OPCanvasExporter class >> exportSilentlyDiagramController: aDiagramController to
 		export
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPCanvasExporter class >> silent [
 
 	^ self new
@@ -113,7 +117,7 @@ OPCanvasExporter >> showFinishedPopup [
 		actionOnClick: [ file openInOSFileBrowser ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'actions' }
 OPCanvasExporter >> silent [
 
 	silently := true

@@ -324,21 +324,22 @@ OPProjectController >> replaceWritableProjectFile [
 
 { #category : 'saving' }
 OPProjectController >> saveProject [
-
-	| file |
+	| file message |
 	file := [ self writableProjectFile ]
 		        on: OPProjectSaveCanceledException
 		        do: [ ^ self inform: 'Saving canceled' ].
 	self project saveInImage.
 	self saveProjectTo: file.
-	UIManager default
-		inform: (String streamContents: [ :s |
-				 s << 'Project saved to ' << file pathString.
-				 s
-					 cr;
-					 cr.
-				 s << 'Click to open the directory' ])
-		actionOnClick: [ file openInOSFileBrowser ]
+	message := String streamContents: [ :s |
+		s << 'Project saved to ' << file pathString.
+		s cr; cr.
+		s << 'Click to open the directory' ].
+	(ProvideAnswerNotification signal: message) ifNil: [
+		(GrowlMorph 
+			openWithLabel: 'Information' translated 
+			contents: message)
+			vanishDelay: 5 seconds;
+			actionBlock: [ file openInOSFileBrowser ] ]
 ]
 
 { #category : 'saving' }

@@ -106,15 +106,17 @@ OPCanvasExporter >> setupExporter [
 
 { #category : 'actions' }
 OPCanvasExporter >> showFinishedPopup [
-
-	UIManager default
-		inform: (String streamContents: [ :s |
-				 s << 'Diagram saved to ' << file pathString.
-				 s
-					 cr;
-					 cr.
-				 s << 'Click to open the directory' ])
-		actionOnClick: [ file openInOSFileBrowser ]
+	| message |
+	message := String streamContents: [ :s |
+		s << 'Diagram saved to ' << file pathString.
+		s cr; cr.
+		s << 'Click to open the directory' ].
+	(ProvideAnswerNotification signal: message) ifNil: [
+		(GrowlMorph 
+			openWithLabel: 'Information' translated 
+			contents: message)
+			vanishDelay: 5 seconds;
+			actionBlock: [ file openInOSFileBrowser ] ]
 ]
 
 { #category : 'actions' }

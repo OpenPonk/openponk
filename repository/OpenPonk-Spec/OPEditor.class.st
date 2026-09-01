@@ -37,8 +37,7 @@ OPEditor class >> availableLayouts [
 { #category : 'settings' }
 OPEditor class >> canvasSectionWidth [
 
-	^ OPWorkbench initialWidth - OPWorkbench initialListsWidth
-	  - OPPalette initialWidth 
+	^ OPWorkbench initialWidth - OPWorkbench initialListsWidth - OPPalette initialWidth - OPDynamicForm initialWidth
 ]
 
 { #category : 'settings' }

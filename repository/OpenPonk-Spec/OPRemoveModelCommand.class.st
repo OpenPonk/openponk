@@ -14,19 +14,20 @@ OPRemoveModelCommand >> canBeExecuted [
 
 { #category : 'as yet unclassified' }
 OPRemoveModelCommand >> execute [
+
 	| vm ctrl model |
 	vm := self selectedViewModel.
 	model := vm model.
 	ctrl := self projectController.
 	SpConfirmDialog new
 		title: 'Delete model?';
-		label: 'Do you want to delete ', model name asString , '?';
+		message: 'Do you want to delete ' , model name asString , '?';
 		acceptLabel: 'Yes, delete it';
 		cancelLabel: 'Cancel';
 		onAccept: [
-			(ctrl hasModel: model)
-				ifTrue: [ ctrl removeModel: model ]
-				ifFalse: [ vm removeModel ] ];
+				(ctrl hasModel: model)
+					ifTrue: [ ctrl removeModel: model ]
+					ifFalse: [ vm removeModel ] ];
 		openDialog
 ]
 

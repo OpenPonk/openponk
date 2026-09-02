@@ -10,40 +10,40 @@ Class {
 	#tag : 'Dialogs'
 }
 
-{ #category : 'accessing' }
+{ #category : 'hooks' }
 OPCherryPickShowHidePresenter >> childrenFor: aViewModel [
 
-	| items |
-	items := aViewModel dependentElements collect: [ :each |
-		         each registry viewModelFor: each ].
-	^ items sortedAs: #modelDisplayString
+	^ (aViewModel dependentElements
+		   select: [ :each | diagramController hasSupportForModel: each ]
+		   thenCollect: [ :each | viewModelRegistry viewModelFor: each ]) asSortedCollection: [ :a :b |
+		  a modelDisplayString < b modelDisplayString ]
 ]
 
-{ #category : 'defaults' }
+{ #category : 'updating' }
 OPCherryPickShowHidePresenter >> findSelectedItems [
-	^ diagramController allModelElementsWithController
-		ifNotEmpty: [ :newElements | newElements copyWith: diagramController model ]
+
+	^ (diagramController controllers collect: [ :each | each viewModel ]) copyWith: diagramController viewModel
 ]
 
-{ #category : 'defaults' }
+{ #category : 'hooks' }
 OPCherryPickShowHidePresenter >> iconFor: aViewModel [
 
 	^ aViewModel icon
 ]
 
-{ #category : 'accessing' }
+{ #category : 'hooks' }
 OPCherryPickShowHidePresenter >> initialRoots [
 
 	^ { diagramController viewModel }
 ]
 
-{ #category : 'general' }
+{ #category : 'hooks' }
 OPCherryPickShowHidePresenter >> nameFor: aViewModel [
 
 	^ aViewModel modelDisplayString
 ]
 
-{ #category : 'accessing' }
+{ #category : 'hooks' }
 OPCherryPickShowHidePresenter >> selected: anAddedViewModel [
 
 	| executor |
@@ -52,7 +52,7 @@ OPCherryPickShowHidePresenter >> selected: anAddedViewModel [
 	^ { anAddedViewModel }
 ]
 
-{ #category : 'accessing' }
+{ #category : 'hooks' }
 OPCherryPickShowHidePresenter >> unselected: aRemovedViewModel [
 
 	| executor |

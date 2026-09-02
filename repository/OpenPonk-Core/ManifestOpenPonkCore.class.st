@@ -21,6 +21,13 @@ ManifestOpenPonkCore class >> ruleReTestClassNotInPackageWithTestEndingNameV1Fal
 ]
 
 { #category : 'code-critics' }
+ManifestOpenPonkCore class >> ruleRefersToClassRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGMethodDefinition #(#OPViewModel #modelType #false)) #'2026-09-02T14:19:14.522+02:00') )
+]
+
+{ #category : 'code-critics' }
 ManifestOpenPonkCore class >> ruleStringConcatenationRuleV1FalsePositive [
 
 	<ignoreForCoverage>

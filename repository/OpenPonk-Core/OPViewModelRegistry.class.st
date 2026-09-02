@@ -140,6 +140,12 @@ OPViewModelRegistry >> inspectTreeIn: specBuilder [
 ]
 
 { #category : 'accessing' }
+OPViewModelRegistry >> modelTypeFor: aModelObject [
+
+	^ (self viewModelFor: aModelObject) modelType
+]
+
+{ #category : 'accessing' }
 OPViewModelRegistry >> project [
 
 	^ project

@@ -51,8 +51,8 @@ OPViewModel >> = other [
 ]
 
 { #category : 'accessing' }
-OPViewModel >> allChildrenModels [
-	"Recursively gathers all hierarchical children in a cycle-proof way, preserving top-down breadth-first (level-order) topological order. 
+OPViewModel >> allChildren [
+	"Recursively gathers all hierarchical children viewModels in a cycle-proof way, preserving top-down breadth-first (level-order) topological order. 
 	 This ensures containers are rendered before their contents, and nodes before edges."
 
 	| all seen queue |
@@ -63,12 +63,20 @@ OPViewModel >> allChildrenModels [
 	[ queue isNotEmpty ] whileTrue: [
 			| current |
 			current := queue removeFirst.
-			current childrenModels do: [ :eachModel |
+			current children do: [ :eachViewModel |
+					| eachModel |
+					eachModel := eachViewModel model.
 					(seen includes: eachModel) ifFalse: [
 							seen add: eachModel.
-							all add: eachModel.
-							queue addLast: (self registry viewModelFor: eachModel) ] ] ].
+							all add: eachViewModel.
+							queue addLast: eachViewModel ] ] ].
 	^ all
+]
+
+{ #category : 'accessing' }
+OPViewModel >> allChildrenModels [
+
+	^ self allChildren collect: [ :each | each model ]
 ]
 
 { #category : 'private' }
@@ -288,6 +296,17 @@ OPViewModel >> modelRootViewModel [
 	^ self
 ]
 
+{ #category : 'accessing' }
+OPViewModel >> modelType [
+
+	| rawName |
+	rawName := self model className withoutPrefix: self modelRootViewModel class commonModelClassPrefix.
+	rawName ifEmpty: [ rawName := self model className withoutPrefix: OPViewModel commonModelClassPrefix ].
+	rawName ifEmpty: [ rawName := self model className ].
+
+	^ OPModelObjectType named: (rawName splitCamelCase joinUsing: ' ')
+]
+
 { #category : 'printing' }
 OPViewModel >> nameOfModel [
 
@@ -298,11 +317,8 @@ OPViewModel >> nameOfModel [
 
 { #category : 'accessing' }
 OPViewModel >> nameOfType [
-	| rawName |
-	rawName := self model className withoutPrefix: self modelRootViewModel class commonModelClassPrefix.
-	rawName ifEmpty: [ rawName := self model className withoutPrefix: OPViewModel commonModelClassPrefix ].
-	rawName ifEmpty: [ rawName := self model className ].
-	^ rawName splitCamelCase joinUsing: ' '
+
+	^ self modelType printWithNameSeparator: ' ' subtypesSeparator: ' '
 ]
 
 { #category : 'connecting' }

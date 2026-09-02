@@ -24,7 +24,7 @@ OPShowHideTabContentPresenter class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : 'hooks' }
 OPShowHideTabContentPresenter >> childrenFor: anItem [
 	^ self subclassResponsibility
 ]
@@ -35,22 +35,22 @@ OPShowHideTabContentPresenter >> connectPresenters [
 	self whenSelectionChangedDo: [ self updateSelectedItems ]
 ]
 
-{ #category : 'defaults' }
+{ #category : 'updating' }
 OPShowHideTabContentPresenter >> findSelectedItems [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'defaults' }
+{ #category : 'testing' }
 OPShowHideTabContentPresenter >> hasIcon [
 	^ self class includesSelector: #iconFor:
 ]
 
-{ #category : 'defaults' }
+{ #category : 'hooks' }
 OPShowHideTabContentPresenter >> iconFor: anItem [
 	^ nil
 ]
 
-{ #category : 'accessing' }
+{ #category : 'hooks' }
 OPShowHideTabContentPresenter >> initialRoots [
 	^ self subclassResponsibility
 ]
@@ -96,7 +96,7 @@ OPShowHideTabContentPresenter >> isSelected: anItem [
 	^ self selectedItems includes: anItem
 ]
 
-{ #category : 'general' }
+{ #category : 'hooks' }
 OPShowHideTabContentPresenter >> nameFor: anItem [
 	^ self subclassResponsibility
 ]
@@ -117,7 +117,7 @@ OPShowHideTabContentPresenter >> processAndUpdateUnselected: aRemovedItem [
 		announce: (OPShowHideElementsUnselected elements: removedElements)
 ]
 
-{ #category : 'accessing' }
+{ #category : 'hooks' }
 OPShowHideTabContentPresenter >> selected: anAddedItem [
 	^ self subclassResponsibility
 ]
@@ -133,12 +133,13 @@ OPShowHideTabContentPresenter >> setModelBeforeInitialization: aDiagramControlle
     viewModelRegistry := diagramController editor workbench projectController viewModelRegistry
 ]
 
-{ #category : 'accessing' }
+{ #category : 'hooks' }
 OPShowHideTabContentPresenter >> unselected: aRemovedItem [
+
 	^ self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
+{ #category : 'updating' }
 OPShowHideTabContentPresenter >> updateSelectedItems [
 
 	selectedItems := self findSelectedItems.

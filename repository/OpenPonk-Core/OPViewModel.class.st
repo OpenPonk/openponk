@@ -203,12 +203,6 @@ OPViewModel >> descriptionName [
 		  yourself
 ]
 
-{ #category : 'reflective operations' }
-OPViewModel >> doesNotUnderstand: aMessage [
-
-	^ aMessage sendTo: model
-]
-
 { #category : 'accessing' }
 OPViewModel >> essentialChildrenModels [
 	"Returns child or otherwise dependent model elements that are essential for own model (when talking about the parent, we should usually mention these model elements).

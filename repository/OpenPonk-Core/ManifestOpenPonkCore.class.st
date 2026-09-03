@@ -11,6 +11,13 @@ Class {
 }
 
 { #category : 'code-critics' }
+ManifestOpenPonkCore class >> ruleEmptyExceptionHandlerRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGMethodDefinition #(#'OPVersion class' #ofLastestNightlyOf: #true)) #'2026-09-04T00:55:25.949+02:00') )
+]
+
+{ #category : 'code-critics' }
 ManifestOpenPonkCore class >> ruleRTInvocationSequenceRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#OPTRelationshipWithPathPointsController #layout #false)) #'2021-07-21T17:15:27.877427+02:00') #(#(#RGMethodDefinition #(#OPTRelationshipWithPathPointsController #layout: #false)) #'2021-07-21T17:17:28.272427+02:00') )
 ]

@@ -8,9 +8,7 @@ Class {
 	#traits : 'TComparable',
 	#classTraits : 'TComparable classTrait',
 	#instVars : [
-		'commit',
 		'buildDate',
-		'commitDate',
 		'githubWorkflowRunId',
 		'repositoryName',
 		'releaseName'
@@ -20,9 +18,9 @@ Class {
 		'latest',
 		'runsCache'
 	],
-	#category : 'OpenPonk-Core-Persistence',
+	#category : 'OpenPonk-Core-Version',
 	#package : 'OpenPonk-Core',
-	#tag : 'Persistence'
+	#tag : 'Version'
 }
 
 { #category : 'accessing' }
@@ -56,25 +54,49 @@ OPVersion class >> currentWithRunId: anId repositoryName: aRepositoryName [
 ]
 
 { #category : 'instance creation' }
+OPVersion class >> fromReleaseJson: aRelease repositoryName: aRepositoryName [
+	^ self new fromReleaseJson: aRelease repositoryName: aRepositoryName
+]
+
+{ #category : 'instance creation' }
 OPVersion class >> fromRunJson: aRun [
 	^ self new fromRunJson: aRun
 ]
 
 { #category : 'fetching' }
-OPVersion class >> getRunsOf: aRepositoryName workflowName: aWorkflowName [
+OPVersion class >> getReleasesOf: aRepositoryName [
 
-	^ self runsCache
-		  at: aRepositoryName , '-' , aWorkflowName asLowercase
-		  ifAbsentPut: [ 
-			  | response |
-			  response := ZnEasy get:
-				              'https://api.github.com/repos/openponk/'
-				              , aRepositoryName , '/actions/workflows/'
-				              , aWorkflowName asLowercase
-				              , '.yml/runs?status=success&per_page=1'.
-			  response isError ifTrue: [ 
-				  (ZnHttpUnsuccessful response: response) signal ].
-			  (STONJSON fromString: response entity string) at: #workflow_runs ]
+	^ self runsCache at: aRepositoryName , '-releases' ifAbsentPut: [
+			  | client response githubToken |
+			  client := ZnClient new.
+			  client url:
+				  'https://api.github.com/repos/openponk/' , aRepositoryName
+				  , '/releases?per_page=30'.
+			  githubToken := OSEnvironment current
+				                 at: 'ACTIONS_READ_ACCESS_TOKEN'
+				                 ifAbsent: [ nil ].
+			  githubToken ifNotNil: [ :token |
+				  client request setAuthorization: 'Bearer ' , token ].
+			  response := client
+				              get;
+				              response.
+			  response code = 404
+				  ifTrue: [ #(  ) ]
+				  ifFalse: [
+						  response isError ifTrue: [
+							  (ZnHttpUnsuccessful response: response) signal ].
+						  STONJSON fromString: response entity string ] ]
+]
+
+{ #category : 'private' }
+OPVersion class >> isVersionTag: tagA greaterThanOrEqualTo: tagB [
+	| numsA numsB |
+	numsA := self versionNumbersFromTag: tagA.
+	numsB := self versionNumbersFromTag: tagB.
+	1 to: (numsA size min: numsB size) do: [ :i | 
+		(numsA at: i) = (numsB at: i) ifFalse: [ 
+			^ (numsA at: i) > (numsB at: i) ] ].
+	^ numsA size >= numsB size
 ]
 
 { #category : 'accessing' }
@@ -85,20 +107,50 @@ OPVersion class >> latest [
 
 { #category : 'accessing' }
 OPVersion class >> ofLastestNightlyOf: aRepositoryName [
-	^ self
-		fromRunJson:
-			((self getRunsOf: aRepositoryName workflowName: 'Nightly')
-				ifEmpty: [ ^ nil ]
-				ifNotEmpty: [ :runs | runs first ])
+
+	| releases nightlyJson title date version |
+	releases := self getReleasesOf: aRepositoryName.
+	nightlyJson := releases
+		               detect: [ :each |
+		               (each at: #tag_name ifAbsent: [ '' ]) = 'nightly' ]
+		               ifNone: [
+				               releases
+					               detect: [ :each |
+					               each at: #prerelease ifAbsent: [ false ] ]
+					               ifNone: [ nil ] ].
+	nightlyJson ifNil: [ ^ nil ].
+	version := self
+		           fromReleaseJson: nightlyJson
+		           repositoryName: aRepositoryName.
+	title := nightlyJson at: #name ifAbsent: [ '' ].
+	(title beginsWith: 'nightly-') ifTrue: [
+			[
+				date := (title allButFirst: 8) asDateAndTime.
+				version buildDate: date ]
+				on: Error
+				do: [ :e | "fallback on published_at" ] ].
+	^ version
 ]
 
 { #category : 'accessing' }
 OPVersion class >> ofLastestReleaseOf: aRepositoryName [
+
+	| releases stable |
+	releases := self getReleasesOf: aRepositoryName.
+	stable := releases select: [ :each |
+			          (each at: #prerelease ifAbsent: [ false ]) not and: [
+					          (each at: #draft ifAbsent: [ false ]) not and: [
+							          (each at: #tag_name ifAbsent: [ '' ]) matchesRegex:
+								          self semanticVersionRegex ] ] ].
+	stable ifEmpty: [ ^ nil ].
 	^ self
-		fromRunJson:
-			((self getRunsOf: aRepositoryName workflowName: 'Release')
-				ifEmpty: [ ^ nil ]
-				ifNotEmpty: [ :runs | runs first ])
+		  fromReleaseJson: (stable detectMax: [ :each |
+					   | parts |
+					   parts := ((each at: #tag_name) copyWithout: $v) splitOn: '.'.
+					   parts
+						   inject: 0
+						   into: [ :acc :n | acc * 1000 + (n asInteger ifNil: [ 0 ]) ] ])
+		  repositoryName: aRepositoryName
 ]
 
 { #category : 'class initialization' }
@@ -126,59 +178,52 @@ OPVersion class >> unknownRepositoryName [
 	^ 'Unknown / custom'
 ]
 
+{ #category : 'private' }
+OPVersion class >> versionNumbersFromTag: aTag [
+	| raw |
+	raw := (aTag beginsWith: 'v')
+		       ifTrue: [ aTag allButFirst ]
+		       ifFalse: [ aTag ].
+	^ (raw splitOn: '.') collect: [ :each | 
+		  each asInteger ifNil: [ 0 ] ]
+]
+
 { #category : 'comparing' }
 OPVersion >> < aComparable [
-	(self isRelease xor: [ aComparable isRelease ])
-		ifTrue: [ ^ false ].
-	self releaseName = aComparable releaseName
-		ifTrue: [ ^ self buildDate < aComparable buildDate ].
+
+	(self isRelease xor: [ aComparable isRelease ]) ifTrue: [ ^ false ].
+	self releaseName = aComparable releaseName ifTrue: [
+		^ self buildDate < aComparable buildDate ].
+	self isRelease ifTrue: [
+			^ (self class
+				   isVersionTag: self releaseName
+				   greaterThanOrEqualTo: aComparable releaseName) not ].
 	^ self releaseName < aComparable releaseName
 ]
 
 { #category : 'comparing' }
 OPVersion >> = aComparable [
-
+	self species = aComparable species ifFalse: [ ^ false ].
 	^ self releaseName = aComparable releaseName and: [
-		  self isRelease or: [
-			  self commit = aComparable commit and: [
-				  self buildDate = aComparable buildDate ] ] ]
+		  self isRelease or: [ self buildDate = aComparable buildDate ] ]
 ]
 
 { #category : 'accessing' }
 OPVersion >> buildDate [
+
 	buildDate ifNil: [ self downloadInfo ].
 	^ buildDate
 ]
 
 { #category : 'accessing' }
 OPVersion >> buildDate: aDateAndTime [
+
 	buildDate := aDateAndTime
 ]
 
 { #category : 'downloading' }
 OPVersion >> canDownloadInfo [
 	^ githubWorkflowRunId isNotNil and: [ self repositoryName isNotNil ]
-]
-
-{ #category : 'accessing' }
-OPVersion >> commit [
-	commit ifNil: [ self downloadInfo ].
-	^ commit
-]
-
-{ #category : 'accessing' }
-OPVersion >> commit: aString [
-	commit := aString
-]
-
-{ #category : 'accessing' }
-OPVersion >> commitDate [
-	^ commitDate
-]
-
-{ #category : 'accessing' }
-OPVersion >> commitDate: anObject [
-	commitDate := anObject
 ]
 
 { #category : 'downloading' }
@@ -188,38 +233,45 @@ OPVersion >> downloadInfo [
 ]
 
 { #category : 'instance creation' }
+OPVersion >> fromReleaseJson: aRelease repositoryName: aRepositoryName [
+
+	| date |
+	date := ((aRelease at: #published_at ifAbsent: [ nil ]) ifNil: [
+		         aRelease at: #created_at ]) asDateAndTime.
+	self
+		repositoryName: aRepositoryName;
+		githubWorkflowRunId: (aRelease at: #id);
+		releaseName: (aRelease at: #tag_name);
+		buildDate: date
+]
+
+{ #category : 'instance creation' }
 OPVersion >> fromRunJson: aRun [
-	| runCommit repository runReleaseName |
-	runCommit := aRun at: #head_commit.
+
+	| repository runReleaseName |
 	repository := aRun at: #repository.
 	runReleaseName := aRun at: #head_branch.
-	runReleaseName = 'master'
-		ifTrue: [ runReleaseName := 'nightly' ].
+	runReleaseName = 'master' ifTrue: [ runReleaseName := 'nightly' ].
 	self
 		repositoryName: (repository at: #name);
 		githubWorkflowRunId: (aRun at: #id);
 		releaseName: runReleaseName;
-		commit: (runCommit at: #id);
-		commitDate: (runCommit at: #timestamp) asDateAndTime asLocal;
-		buildDate: (aRun at: #created_at) asDateAndTime asLocal
+		buildDate: (aRun at: #created_at) asDateAndTime
 ]
 
 { #category : 'accessing' }
 OPVersion >> fullVersionString [
 	(repositoryName isNil or: [ githubWorkflowRunId isNil ])
 		ifTrue: [ ^ 'unknown' ].
-	^ String
-		streamContents: [ :stream | 
-			stream << self repositoryName << '-' << self releaseName.
-			self isRelease
-				ifFalse: [ stream << '-' << self commit ] ]
+	^ self repositoryName , '-' , self releaseName
 ]
 
 { #category : 'downloading' }
 OPVersion >> getOfLatest [
+
 	^ self isRelease
-		ifTrue: [ self getOfLatestRelease ]
-		ifFalse: [ self getOfLatestNightlyBuild ]
+		  ifTrue: [ self getOfLatestRelease ]
+		  ifFalse: [ self getOfLatestNightlyBuild ]
 ]
 
 { #category : 'downloading' }
@@ -292,9 +344,8 @@ OPVersion >> githubWorkflowRunId: anObject [
 
 { #category : 'comparing' }
 OPVersion >> hash [
-
 	self isRelease ifTrue: [ ^ self releaseName hash ].
-	^ self commit hash bitXor: self buildDate hash
+	^ self buildDate hash
 ]
 
 { #category : 'testing' }
@@ -315,7 +366,7 @@ OPVersion >> isRepositoryNameKnown [
 
 { #category : 'downloading' }
 OPVersion >> needsDownloadInfo [
-	^ commit isNil
+	^ buildDate isNil
 ]
 
 { #category : 'printing' }
@@ -327,12 +378,15 @@ OPVersion >> printOn: aStream [
 
 { #category : 'accessing' }
 OPVersion >> releaseName [
-	releaseName ifNil: [ self downloadInfo ].
-	^ releaseName
+
+	releaseName ifNil: [
+		self canDownloadInfo ifTrue: [ self downloadInfo ] ].
+	^ releaseName ifNil: [ 'unknown' ]
 ]
 
 { #category : 'accessing' }
 OPVersion >> releaseName: aString [
+
 	releaseName := aString
 ]
 

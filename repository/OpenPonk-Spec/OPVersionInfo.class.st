@@ -9,8 +9,7 @@ Class {
 		'releaseNameLabel',
 		'releaseName',
 		'buildDateLabel',
-		'buildDate',
-		'onInfoDownloadBlock'
+		'buildDate'
 	],
 	#category : 'OpenPonk-Spec-Dialogs',
 	#package : 'OpenPonk-Spec',
@@ -20,14 +19,13 @@ Class {
 { #category : 'layout' }
 OPVersionInfo class >> defaultLayout [
 	^ SpGridLayout new
-		borderWidth: 0;
-		beColumnNotHomogeneous;
-		add: #releaseNameLabel at: 1 @ 1;
-		add: #releaseName at: 2 @ 1;
-		add: #buildDateLabel at: 1 @ 2;
-		add: #buildDate at: 2 @ 2;
-		add: '' at: 1 @ 5 span: 2 @ 1;
-		yourself
+		  borderWidth: 0;
+		  beColumnNotHomogeneous;
+		  add: #releaseNameLabel atPoint: 1 @ 1;
+		  add: #releaseName atPoint: 2 @ 1;
+		  add: #buildDateLabel atPoint: 1 @ 2;
+		  add: #buildDate atPoint: 2 @ 2;
+		  yourself
 ]
 
 { #category : 'initialization' }
@@ -44,13 +42,6 @@ OPVersionInfo >> connectPresenters [
 			do: [ self setFailedInfo ] ]
 			forkAt: Processor userBackgroundPriority
 			named: 'Loading OpenPonk version info from GitHub' ]
-]
-
-{ #category : 'initialization' }
-OPVersionInfo >> initialize [
-
-	onInfoDownloadBlock := [ ].
-	super initialize
 ]
 
 { #category : 'initialization' }
@@ -73,14 +64,6 @@ OPVersionInfo >> initializePresenters [
 	buildDate label: unknownLabel
 ]
 
-{ #category : 'enumerating' }
-OPVersionInfo >> onInfoDownloadDo: aBlock [
-
-	version needsDownloadInfo
-		ifTrue: [ onInfoDownloadBlock := aBlock ]
-		ifFalse: aBlock
-]
-
 { #category : 'updating' }
 OPVersionInfo >> refreshInfo [
 
@@ -89,8 +72,7 @@ OPVersionInfo >> refreshInfo [
 		label: version releaseName;
 		url: 'https://github.com/OpenPonk/' , version repositoryName
 			, '/releases/tag/' , version releaseName.
-	buildDate label: version buildDate asStringYMDHM.
-	onInfoDownloadBlock value
+	buildDate label: version buildDate asLocal asStringYMDHM
 ]
 
 { #category : 'updating' }

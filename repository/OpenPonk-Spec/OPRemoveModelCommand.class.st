@@ -21,7 +21,7 @@ OPRemoveModelCommand >> execute [
 	ctrl := self projectController.
 	SpConfirmDialog new
 		title: 'Delete model?';
-		message: 'Do you want to delete ' , model name asString , '?';
+		label: 'Do you want to delete ' , model name asString , '?';
 		acceptLabel: 'Yes, delete it';
 		cancelLabel: 'Cancel';
 		onAccept: [

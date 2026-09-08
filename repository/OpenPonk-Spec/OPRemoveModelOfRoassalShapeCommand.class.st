@@ -107,39 +107,8 @@ OPRemoveModelOfRoassalShapeCommand >> executeWithConfirmation [
 
 { #category : 'execution' }
 OPRemoveModelOfRoassalShapeCommand >> executeWithoutConfirmation [
-
-	| allShown |
-	allShown := self showDependentAndReturnOriginallyShown.
-
 	roassalShapes do: [ :each |
 		(diagramController hasControllerForRoassalShape: each) ifTrue: [
 			diagramController removeModelOfRoassalShape: each ] ].
-
-	self removeAllNotOriginallyShown: allShown.
-
 	canvas signalUpdate
-]
-
-{ #category : 'execution' }
-OPRemoveModelOfRoassalShapeCommand >> removeAllNotOriginallyShown: allShown [
-
-	diagramController allModelElementsWithController
-		reject: [ :any | allShown includes: any ]
-		thenDo: [ :each |
-			diagramController
-				controllerForModel: each
-				ifFound: [ :controller |
-				controller removeControllerAndDiagramElement ] ]
-]
-
-{ #category : 'execution' }
-OPRemoveModelOfRoassalShapeCommand >> showDependentAndReturnOriginallyShown [
-
-	| executor allShown dependent |
-	executor := OPDiagramExplorer on: diagramController.
-	allShown := diagramController allModelElementsWithController asSet.
-	dependent := models flatCollect: [ :each |
-		             executor dependentFor: each ].
-	executor showElements: dependent.
-	^ allShown
 ]

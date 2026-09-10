@@ -462,6 +462,52 @@ OPAbstractElementControllerTest >> testModelForFigure [
 		equals: self model
 ]
 
+{ #category : 'testing - consistency' }
+OPAbstractElementControllerTest >> testMultiLineFormFieldsProperlyWrapInDiagramShapes [
+
+	| form multiLinePresenters |
+	self showInDiagram.
+
+	form := OPDynamicForm new.
+	[
+		form target: controller.
+
+		multiLinePresenters := form focusOrder select: [ :presenter |
+			                       (presenter isKindOf: SpTextPresenter) or: [
+				                       presenter isKindOf: (Smalltalk globals at: #OPLongTextPresenter ifAbsent: [ nil ]) ] ].
+
+		multiLinePresenters do: [ :presenter |
+				| originalText sentinel labelsWithNewline |
+				originalText := presenter text ifNil: [ '' ] ifNotNil: [ :text | text asString ].
+				sentinel := 'TEST_L1_' , UUID new asString , String cr , 'TEST_L2'.
+
+				presenter text: sentinel.
+				controller modelChanged.
+
+				labelsWithNewline := diagramController canvas allChildren select: [ :shape |
+						                     (shape isKindOf: RSLabel) and: [
+								                     shape text notNil and: [
+										                     (shape text includesSubstring: sentinel) or: [
+											                     (shape text includesSubstring: 'TEST_L1_') and: [
+												                     (shape text includes: Character cr) or: [ shape text includes: Character lf ] ] ] ] ] ].
+
+				self assert: labelsWithNewline isEmpty description: [
+						String streamContents: [ :stream |
+								stream
+									nextPutAll: 'Inconsistency in controller ';
+									nextPutAll: controller className;
+									nextPutAll: ': form field (';
+									nextPutAll: presenter className;
+									nextPutAll: ') propagates multiline text directly to single-line ';
+									nextPutAll: labelsWithNewline first className;
+									nextPutAll: ' in diagram element ';
+									nextPutAll: controller diagramElement className;
+									nextPutAll: '. Cairo cannot wrap this text and renders tofu glyphs.' ] ].
+
+				presenter text: originalText.
+				controller modelChanged ] ] ensure: [ form target: nil ]
+]
+
 { #category : 'tests - controllers' }
 OPAbstractElementControllerTest >> testNewControllerFor [
 

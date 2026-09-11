@@ -238,7 +238,7 @@ OPWorkbench >> initialize [
 
 { #category : 'initialization' }
 OPWorkbench >> initializePresenters [
-
+	self initializeShortcuts.
 	topToolbar := self instantiate: OPWorkbenchToolbar.
 	projectTree := self instantiate: OPProjectTree.
 	diagramsList := self instantiate: OPDiagramsList.
@@ -253,8 +253,17 @@ OPWorkbench >> initializePresenters [
 ]
 
 { #category : 'initialization' }
-OPWorkbench >> initializeWindow: aWindow [
+OPWorkbench >> initializeShortcuts [
+	"Register global shortcuts available in workbench"
+	self addShortcutWith: [ :action |
+		action
+			shortcutKey: $s actionModifier;
+			action: [ self saveProject ];
+			actionEnabled: [ projectController isNotNil ] ]
+]
 
+{ #category : 'initialization' }
+OPWorkbench >> initializeWindow: aWindow [
 	super initializeWindow: aWindow.
 
 	aWindow
@@ -263,9 +272,14 @@ OPWorkbench >> initializeWindow: aWindow [
 		initialExtent: self class initialExtent;
 		whenClosedDo: [
 			editors valuesDo: [ :each |
-					self
-						closedTabOfEditor: (each at: #editor)
-						whileClosingWorkbench: true ] ]
+				self
+					closedTabOfEditor: (each at: #editor)
+					whileClosingWorkbench: true ] ];
+		addShortcutWith: [ :action |
+			action
+				shortcutKey: $s actionModifier;
+				action: [ self saveProject ];
+				actionEnabled: [ projectController isNotNil ] ]
 ]
 
 { #category : 'accessing - spec' }
@@ -366,6 +380,14 @@ OPWorkbench >> projectController [
 { #category : 'accessing - spec' }
 OPWorkbench >> projectTree [
 	^ projectTree
+]
+
+{ #category : 'actions' }
+OPWorkbench >> saveProject [
+	"Save the currently opened project via its controller.
+	Fail explicitly if invoked in an invalid state without an active project."
+	self assert: projectController isNotNil description: 'Cannot save when no project is open'.
+	^ projectController saveProject
 ]
 
 { #category : 'opening' }

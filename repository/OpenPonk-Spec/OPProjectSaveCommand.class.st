@@ -15,6 +15,12 @@ OPProjectSaveCommand class >> toolbarMenuActivation [
 	^ OPWorkbenchActivation byItemOf: OPWProjectSaveMenuGroup order: 10 for: OPWorkbenchToolbar
 ]
 
+{ #category : 'activation' }
+OPProjectSaveCommand class >> toolbarShortcutActivation [
+	<classAnnotation>
+	^ CmdShortcutActivation by: $s meta for: OPWorkbenchToolbar
+]
+
 { #category : 'accessing' }
 OPProjectSaveCommand >> defaultMenuIconName [
 

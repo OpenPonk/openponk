@@ -14,23 +14,19 @@ BaselineOfOpenPonk >> baseline: spec [
 
 	<baseline>
 	spec for: #common do: [
-		self externalProjectsBaseline: spec.
-		self internalProjectsBaseline: spec.
-		spec
-			package: 'OpenPonk-Roassal'
-			with: [ spec requires: #( 'Roassal' 'RoassalExporters' ) ];
-			package: 'OpenPonk-Core' with: [
-				spec requires:
-						#( 'Magritte' 'Mocketry' 'XPath' 'NeoJSON' 'OpenPonk-Roassal' ) ];
-			package: 'OpenPonk-Morphic';
-			package: 'OpenPonk-Spec' with: [
-				spec requires:
-						#( 'NewTools' 'Magritte' 'OpenPonkSynchronizedLinks' 'OpenPonk-Morphic' ) ];
-			package: 'OpenPonk-Releaser'.
-		spec
-			group: 'default'
-			with: #( 'OpenPonk-Core' 'OpenPonk-Morphic' 'OpenPonk-Spec' );
-			group: 'dev' with: #( 'default' 'OpenPonk-Releaser' ) ]
+			spec postLoadDoIt: #postLoad.
+			self externalProjectsBaseline: spec.
+			self internalProjectsBaseline: spec.
+			spec
+				package: 'OpenPonk-Roassal' with: [ spec requires: #( 'Roassal' 'RoassalExporters' ) ];
+				package: 'OpenPonk-Core' with: [ spec requires: #( 'Magritte' 'Mocketry' 'XPath' 'NeoJSON' 'OpenPonk-Roassal' ) ];
+				package: 'OpenPonk-Morphic';
+				package: 'OpenPonk-Spec' with: [ spec requires: #( 'NewTools' 'Magritte' 'OpenPonkSynchronizedLinks'
+						   'OpenPonk-Morphic' ) ];
+				package: 'OpenPonk-Releaser'.
+			spec
+				group: 'default' with: #( 'OpenPonk-Core' 'OpenPonk-Morphic' 'OpenPonk-Spec' );
+				group: 'dev' with: #( 'default' 'OpenPonk-Releaser' ) ]
 ]
 
 { #category : 'baselines' }
@@ -77,6 +73,12 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 	spec
 		baseline: 'OpenPonkSynchronizedLinks'
 		with: [ spec repository: 'github://openponk/synchronized-links' ]
+]
+
+{ #category : 'actions' }
+BaselineOfOpenPonk >> postLoad [
+
+	OPPanedLayoutPatch apply
 ]
 
 { #category : 'baselines' }

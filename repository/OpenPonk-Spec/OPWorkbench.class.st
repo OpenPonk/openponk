@@ -26,32 +26,28 @@ Class {
 
 { #category : 'layout' }
 OPWorkbench class >> defaultLayout [
-
-	self flag: 'Switch to the commented code once https://github.com/pharo-spec/Spec/pull/1945 is integrated'.
-
 	^ SpBoxLayout newTopToBottom
-		  add: (SpBoxLayout newTopToBottom
-				   add: #topToolbar;
-				   yourself)
-		  expand: false;
-		  add: (SpPanedLayout newLeftToRight
-				   add: (SpPanedLayout newLeftToRight
-						    add: (SpPanedLayout newTopToBottom
-								     add: #projectTree;
-								     add: #diagramsList;
-								     yourself);
-						    positionOfSlider: self initialListsWidth;
-						    add: (SpBoxLayout newTopToBottom
-								     add: #notebook;
-								     yourself);
-						    yourself);
-				   positionOfSlider: self initialWidth - self initialFormWidth;
-				   "positionOfSlider: self initialFormWidth negated;"
-				   add: (SpTabLayout new
-						    add: (SpScrollableLayout with: #form) label: 'Properties';
-						    yourself);
-				   yourself);
-		  yourself
+		add: (SpBoxLayout newTopToBottom
+			add: #topToolbar;
+			yourself)
+		expand: false;
+		add: (SpPanedLayout newLeftToRight
+			add: (SpPanedLayout newLeftToRight
+				add: (SpPanedLayout newTopToBottom
+					add: #projectTree;
+					add: #diagramsList;
+					yourself);
+				positionOfSlider: self initialListsWidth;
+				add: (SpBoxLayout newTopToBottom
+					add: #notebook;
+					yourself);
+				yourself);
+			positionOfSlider: self initialFormWidth negated;
+			add: (SpTabLayout new
+				add: (SpScrollableLayout with: #form) label: 'Properties';
+				yourself);
+			yourself);
+		yourself
 ]
 
 { #category : 'settings' }

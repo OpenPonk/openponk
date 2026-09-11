@@ -111,7 +111,7 @@ OPDynamicForm >> addCheckbox: aName [
 { #category : 'private' }
 OPDynamicForm >> addControl: aControl [
 
-	components add: aControl.
+	self addPassiveControl: aControl.
 	self focusOrder add: aControl
 ]
 
@@ -160,7 +160,7 @@ OPDynamicForm >> addLabel: aLabel [
 	control := self newLabel.
 	control label: aLabel.
 
-	self addControl: control.
+	self addPassiveControl: control.
 	^ control
 ]
 
@@ -197,6 +197,12 @@ OPDynamicForm >> addNumberInput: aName [
 
 	self addControl: control.
 	^ control
+]
+
+{ #category : 'private' }
+OPDynamicForm >> addPassiveControl: aControl [
+
+	components add: aControl
 ]
 
 { #category : 'public - adding' }
@@ -327,11 +333,6 @@ OPDynamicForm >> target: anObjectWithBuildEditorForm [
 	target := anObjectWithBuildEditorForm.
 	target ifNotNil: [
 			target buildEditorForm: self.
-			target formEventsAnnouncer weak
-				when: OPElementFormNeedsRebuild
-				send: #rebuildForm
-				to: self ].
-	self
-		rebuildWidget;
-		takeKeyboardFocus
+			target formEventsAnnouncer weak when: OPElementFormNeedsRebuild send: #rebuildForm to: self ].
+	self rebuildWidget
 ]

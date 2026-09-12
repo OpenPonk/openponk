@@ -12,7 +12,6 @@ Class {
 		'controllers',
 		'editor',
 		'plugin',
-		'autosaveManager',
 		'modelToControllerCache',
 		'workbenchAnnouncer',
 		'layouter',
@@ -90,13 +89,6 @@ OPDiagramController >> announcer [
 OPDiagramController >> applyDefaultLayout [
 
 	self layouter defaultLayout
-]
-
-{ #category : 'accessing' }
-OPDiagramController >> autosaveManager [
-	^ autosaveManager
-		ifNil: [ autosaveManager := OPAutosaveManager
-				on: self plugin singleStringSerializer ]
 ]
 
 { #category : 'controllers management' }
@@ -383,18 +375,8 @@ OPDiagramController >> hasControllerForRoassalShape: aRoassalShape [
 ]
 
 { #category : 'testing' }
-OPDiagramController >> hasRedo [
-	^ self autosaveManager futureIsEmpty not
-]
-
-{ #category : 'testing' }
 OPDiagramController >> hasSupportForModel: aModel [
 	^ controllerFactory hasControllerFor: aModel
-]
-
-{ #category : 'testing' }
-OPDiagramController >> hasUndo [
-	^ self autosaveManager historyIsEmpty not
 ]
 
 { #category : 'figures' }
@@ -535,12 +517,6 @@ OPDiagramController >> plugin [
 OPDiagramController >> project [
 
 	^ self viewModelRegistry project
-]
-
-{ #category : 'undo/redo' }
-OPDiagramController >> redo [
-	self assert: [ self hasRedo ].
-	self loadState: self autosaveManager loadNext
 ]
 
 { #category : 'deprecated' }
@@ -738,12 +714,6 @@ OPDiagramController >> showWithoutDependentInDiagramModel: aModel [
 	^ (self newControllerFor: aModel)
 		  showWithoutDependentInDiagram: self;
 		  yourself
-]
-
-{ #category : 'undo/redo' }
-OPDiagramController >> undo [
-	self assert: [ self hasUndo ].
-	self loadState: self autosaveManager loadPrevious
 ]
 
 { #category : 'event handling' }

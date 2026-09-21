@@ -23,6 +23,14 @@ OPIcons class >> at: aName ifAbsent: aBlock [
 			  do: [ ^ aBlock value ] ]
 ]
 
+{ #category : 'accessing' }
+OPIcons class >> at: aSymbol ifPresent: aBlockClosure [
+	"Answer the result of evaluating aBlockClosure with the icon associated with aSymbol, or nil if absent."
+	| icon |
+	icon := self at: aSymbol ifAbsent: [ nil ].
+	^ icon ifNotNil: [ aBlockClosure value: icon ]
+]
+
 { #category : 'GT-InspectorExtensions' }
 OPIcons class >> iconSelectors [
 

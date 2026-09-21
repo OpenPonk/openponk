@@ -37,7 +37,7 @@ OPEditor class >> availableLayouts [
 { #category : 'settings' }
 OPEditor class >> canvasSectionWidth [
 
-	^ OPWorkbench initialWidth - OPWorkbench initialListsWidth - OPPalette initialWidth - OPDynamicForm initialWidth
+	^ OPWorkbench initialWidth - OPWorkbench initialListsWidth - OPPalette initialWidth - OPPropertiesForm initialWidth
 ]
 
 { #category : 'settings' }
@@ -142,11 +142,18 @@ OPEditor >> canvasPresenter [
 
 { #category : 'initialization' }
 OPEditor >> connectPresenters [
-
 	| menu |
+	super connectPresenters.
 	menu := OPDiagramToolbarActivation buildMenuInContext:
 		        (CmdSimpleToolContext for: canvasPresenter).
-	menu buildSpecMenuOn: canvasMenu
+	menu buildSpecMenuOn: canvasMenu.
+	canvasPresenter whenZoomChanged: [ :event |
+		| zoomText |
+		zoomText := (event newScale < 1
+			             ifTrue: [ '   ' ]
+			             ifFalse: [ '' ])
+		            , (event newScale * 100) rounded asString , '%'.
+		zoomLabel label: ' ' , zoomText ]
 ]
 
 { #category : 'private-focus' }
@@ -202,16 +209,16 @@ OPEditor >> initializePresenters [
 				diagramController removeAllControllers ] ] ]
 ]
 
-{ #category : 'diagram handling' }
+{ #category : 'figures' }
 OPEditor >> newDiagramControllerFor: aModel [
-
-	^ plugin diagramControllerClass new
-		  editor: self;
-		  workbenchAnnouncer: self workbench announcer;
-		  viewModelRegistry:
-			  self workbench projectController viewModelRegistry;
-		  model: aModel;
-		  yourself
+	| newDiagramController |
+	newDiagramController := plugin diagramControllerClass new.
+	self workbench projectController addDiagramController: newDiagramController.
+	^ newDiagramController
+		editor: self;
+		workbenchAnnouncer: self workbench announcer;
+		model: aModel;
+		yourself
 ]
 
 { #category : 'diagram handling' }
@@ -263,20 +270,6 @@ OPEditor >> tabClosedWhileClosingWorkbench: closingWorkbench [
 		self workbench projectController removeDiagramController:
 			diagramController ].
 	diagramController removeController
-]
-
-{ #category : 'updating' }
-OPEditor >> updateUndoRedo [
-	self flag: #unused.
-	"
-	| items |
-	items := canvasPresenter menuGroups flatCollect: #menuItems.
-	(items detect: [ :each | each name = 'Undo' ])
-		enabled: self diagramController hasUndo;
-		changed: #enabled with: {self diagramController hasUndo}.
-	(items detect: [ :each | each name = 'Redo' ])
-		enabled: self diagramController hasRedo;
-		changed: #enabled with: {self diagramController hasRedo}"
 ]
 
 { #category : 'accessing - spec' }

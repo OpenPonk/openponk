@@ -120,14 +120,13 @@ OPRSSelectableCanvas >> processDragStart: event [
 
 { #category : 'hooks' }
 OPRSSelectableCanvas >> selectShapes: aGroup byEvent: anEvent [
-
 	(multiselectEnabled not and: [ aGroup size > 1 ]) ifTrue: [ ^ self ].
 	super boxStarted: anEvent.
 	self announce:
 		((self createEvent: RSSelectionChangedEvent with: anEvent)
-			 oldSelectedShapes: selectedShapes;
-			 selectedShapes: (selectedShapes := aGroup);
-			 yourself).
+			oldSelectedShapes: selectedShapes;
+			selectedShapes: (selectedShapes := aGroup);
+			yourself).
 	self boxEnded: anEvent
 ]
 

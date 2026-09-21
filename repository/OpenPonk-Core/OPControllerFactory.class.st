@@ -58,7 +58,6 @@ OPControllerFactory >> registerCommonElements [
 
 { #category : 'api - accessing' }
 OPControllerFactory >> setupHandler: aHandler withModel: aModel [
-
-	aHandler viewModelRegistry: diagramController viewModelRegistry.
+	aHandler diagramController: diagramController.
 	super setupHandler: aHandler withModel: aModel
 ]

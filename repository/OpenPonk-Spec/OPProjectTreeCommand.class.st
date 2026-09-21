@@ -11,12 +11,12 @@ OPProjectTreeCommand class >> isAbstract [
 	^ self = OPProjectTreeCommand
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPProjectTreeCommand >> projectController [
 	^ self context projectController
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPProjectTreeCommand >> selectedViewModel [
 	^ self context selectedItem
 ]

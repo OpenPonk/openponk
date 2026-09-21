@@ -18,12 +18,15 @@ OPAbstractDiagramControllerTest class >> isAbstract [
 
 { #category : 'running' }
 OPAbstractDiagramControllerTest >> setUp [
-
+	| project projectController |
 	super setUp.
-	controller viewModelRegistry: OPViewModelRegistry forNewProject.
+	project := OPProject new.
+	model ifNotNil: [ :activeModel | project addModel: activeModel ].
+	projectController := OPProjectController forProject: project.
+	projectController addDiagramController: controller.
 	controller model: model.
 	controller diagramElement: (OPOpenPonkDiagram forModelElement: model).
 	controller canvasPresenter: (OPCanvasPresenter new
-			 canvas: RSCanvas new;
-			 yourself)
+		canvas: RSCanvas new;
+		yourself)
 ]

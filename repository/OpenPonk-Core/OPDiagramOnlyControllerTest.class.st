@@ -117,7 +117,39 @@ OPDiagramOnlyControllerTest >> testDescriptionName [
 	diagramElement should receive modelChanged
 ]
 
+{ #category : 'tests - undo/redo' }
+OPDiagramOnlyControllerTest >> testHideUndoRedo [
+	self testCreateUsingAddAsTarget.
+	self deny: controller isHideable
+]
+
 { #category : 'tests - destruction' }
 OPDiagramOnlyControllerTest >> testRemoveModel [
 	"do nothing - there is no model"
+]
+
+{ #category : 'tests - undo/redo' }
+OPDiagramOnlyControllerTest >> testRemoveUndoRedo [
+	| undoManager createdModel |
+	self testCreateUsingAddAsTarget.
+	undoManager := diagramController undoManager.
+	createdModel := controller model.
+
+	diagramController removeModelElement: createdModel.
+	self deny: (diagramController hasControllerForModel: createdModel).
+
+	undoManager undo.
+	self assert: (diagramController hasControllerForModel: createdModel).
+
+	undoManager redo.
+	self deny: (diagramController hasControllerForModel: createdModel).
+
+	undoManager undo.
+	self assert: (diagramController hasControllerForModel: createdModel)
+]
+
+{ #category : 'tests - undo/redo' }
+OPDiagramOnlyControllerTest >> testShowUndoRedo [
+	self testCreateUsingAddAsTarget.
+	self deny: controller isHideable
 ]

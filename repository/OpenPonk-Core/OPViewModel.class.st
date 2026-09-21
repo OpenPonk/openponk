@@ -90,6 +90,11 @@ OPViewModel >> announcer [
     ^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
+{ #category : 'converting' }
+OPViewModel >> asViewModel [
+	^ self
+]
+
 { #category : 'construction' }
 OPViewModel >> attachModelFrom: sourceViewModel to: targetViewModel [
 	"do nothing by default"
@@ -129,6 +134,12 @@ OPViewModel >> childrenModels [
 	^ self essentialChildrenModels
 ]
 
+{ #category : 'undo/redo' }
+OPViewModel >> commandForProperty: aSymbol accessor: anAccessor oldValue: anOldValue newValue: aNewValue [
+	"Subclasses may override to produce specialized reversible commands for specific properties."
+	^ nil
+]
+
 { #category : 'construction' }
 OPViewModel >> createModelFrom: sourceViewModel to: targetViewModel in: aParentModel [
 
@@ -149,12 +160,6 @@ OPViewModel >> createModelIn: aParentModel [
 { #category : 'accessing' }
 OPViewModel >> creationPriority [
 	^ 100
-]
-
-{ #category : 'ui-hooks' }
-OPViewModel >> creationUICommandClass [
-
-	^ OPNullUICommand
 ]
 
 { #category : 'accessing' }
@@ -179,28 +184,18 @@ OPViewModel >> dependingOnElements [
 
 { #category : 'forms' }
 OPViewModel >> descriptionAccessor: aSymbol [
-	^ MAPluggableAccessor
-		  read: [ :me | me model perform: aSymbol ]
-		  write: [ :me :newValue |
-			  me model perform: (aSymbol , ':') asSymbol with: newValue.
-			  self modelChanged ]
+	"Answer an OPModelPropertyAccessor preserving property name metadata."
+	^ OPModelPropertyAccessor on: aSymbol
 ]
 
 { #category : 'forms' }
 OPViewModel >> descriptionName [
-
 	<magritteDescription>
-	| accessor |
-	accessor := MAPluggableAccessor
-		            read: [ :me | me model name ]
-		            write: [ :me :newValue | 
-			            me model name: newValue.
-			            self modelChanged ].
 	^ MAStringDescription new
-		  accessor: accessor;
-		  label: 'Name';
-		  priority: 1;
-		  yourself
+		accessor: (self descriptionAccessor: #name);
+		label: 'Name';
+		priority: 1;
+		yourself
 ]
 
 { #category : 'accessing' }
@@ -291,6 +286,20 @@ OPViewModel >> modelRootViewModel [
 ]
 
 { #category : 'accessing' }
+OPViewModel >> modelSource [
+	^ (self model respondsTo: #source)
+		ifTrue: [ self model source ]
+		ifFalse: [ nil ]
+]
+
+{ #category : 'accessing' }
+OPViewModel >> modelTarget [
+	^ (self model respondsTo: #target)
+		ifTrue: [ self model target ]
+		ifFalse: [ nil ]
+]
+
+{ #category : 'accessing' }
 OPViewModel >> modelType [
 
 	| rawName |
@@ -313,6 +322,12 @@ OPViewModel >> nameOfModel [
 OPViewModel >> nameOfType [
 
 	^ self modelType printWithNameSeparator: ' ' subtypesSeparator: ' '
+]
+
+{ #category : 'actions' }
+OPViewModel >> openEditorWithApplication: anApplication undoManager: anUndoManager [
+	"Default hook for domain editors opened from property forms."
+	self maEdit
 ]
 
 { #category : 'connecting' }
@@ -344,10 +359,35 @@ OPViewModel >> projectViewModel [
     ^ self parentViewModel ifNotNil: [ :p | p projectViewModel ]
 ]
 
-{ #category : 'construction' }
+{ #category : 'as yet unclassified' }
+OPViewModel >> propertyNamed: aSymbol [
+	"Read a property value from the underlying domain model."
+	^ self model perform: aSymbol asSymbol
+]
+
+{ #category : 'accessing' }
+OPViewModel >> propertyNamed: aSymbol put: aValue [
+	"Mutate the target property. Dispatches form rebuild for structural properties and modelChanged for standard value updates."
+	| mutator isStructural |
+	aSymbol ifNil: [ ^ self ].
+	mutator := (aSymbol endsWith: ':')
+		ifTrue: [ aSymbol asSymbol ]
+		ifFalse: [ (aSymbol , ':') asSymbol ].
+	self model perform: mutator with: aValue.
+	isStructural := self structuralPropertySelectors includes: aSymbol asSymbol.
+	isStructural
+		ifTrue: [ self announcer announce: OPElementFormNeedsRebuild new ]
+		ifFalse: [ self modelChanged ]
+]
+
+{ #category : 'registering' }
 OPViewModel >> registerModelIn: aParentModel [
 
-	aParentModel add: self model
+	(aParentModel respondsTo: #addModel:)
+		ifTrue: [ ^ aParentModel addModel: self model ].
+	(aParentModel respondsTo: #add:)
+		ifTrue: [ ^ aParentModel add: self model ].
+	AssertionFailure signal: 'Unsupported parent model: ' , aParentModel printString
 ]
 
 { #category : 'accessing' }
@@ -378,6 +418,26 @@ OPViewModel >> removeModel [
 ]
 
 { #category : 'initialization' }
+OPViewModel >> restoreEndpointsWithSource: aSourceModel target: aTargetModel [
+	(aSourceModel isNotNil and: [ aTargetModel isNotNil ]) ifFalse: [ ^ self ].
+	self registry ifNotNil: [ :activeRegistry |
+		| sourceViewModel targetViewModel |
+		sourceViewModel := activeRegistry viewModelFor: aSourceModel.
+		targetViewModel := activeRegistry viewModelFor: aTargetModel.
+		(sourceViewModel isNotNil and: [ targetViewModel isNotNil ]) ifTrue: [
+			self attachModelFrom: sourceViewModel to: targetViewModel.
+			^ self ] ].
+	(self model respondsTo: #source:) ifTrue: [ self model source: aSourceModel ].
+	(self model respondsTo: #target:) ifTrue: [ self model target: aTargetModel ]
+]
+
+{ #category : 'accessing' }
+OPViewModel >> structuralPropertySelectors [
+	"Answer a collection of property selectors whose mutation structurally alters the editor form."
+	^ #( )
+]
+
+{ #category : 'initialization' }
 OPViewModel >> subscribeToModel [
     "Polymorphic hook for subclasses"
 ]
@@ -401,4 +461,9 @@ OPViewModel >> unsubscribeFromModel [
 OPViewModel >> validate [
 
 	"do nothing by default"
+]
+
+{ #category : 'accessing' }
+OPViewModel >> viewModel [
+	^ self
 ]

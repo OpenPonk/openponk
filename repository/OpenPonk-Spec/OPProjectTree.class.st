@@ -88,11 +88,14 @@ OPProjectTree >> initializeWindow: aWindow [
 
 { #category : 'accessing' }
 OPProjectTree >> openOn: aProjectViewModel [
-
 	projectViewModel := aProjectViewModel.
 	projectViewModel unsubscribe: self.
 	self whenWindowClosedUnsubscribeFrom: projectViewModel.
-	projectViewModel weakWhenChangedSend: #refresh to: self.
+	self whenWindowClosedUnsubscribeFrom: self projectController undoManager.
+	self projectController undoManager announcer weak
+		when: OPUndoRedoChanged
+		send: #refresh
+		to: self.
 	self refresh
 ]
 

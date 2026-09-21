@@ -6,6 +6,9 @@ Does not directly manage the domain model lifecycle, delegating that responsibil
 Class {
 	#name : 'OPElementController',
 	#superclass : 'OPController',
+	#instVars : [
+		'diagramController'
+	],
 	#category : 'OpenPonk-Core-Controllers',
 	#package : 'OpenPonk-Core',
 	#tag : 'Controllers'
@@ -43,10 +46,36 @@ OPElementController >> createModelIn: aParentModel andShowInDiagram: aDiagramCon
 	self showWithoutDependentInDiagram: aDiagramController
 ]
 
+{ #category : 'creation' }
+OPElementController >> creationCommandIn: aParentModel andShowInDiagram: aDiagramController [
+	^ self creationCommandIn: aParentModel andShowInDiagram: aDiagramController onPosition: nil
+]
+
+{ #category : 'creation' }
+OPElementController >> creationCommandIn: aParentModel andShowInDiagram: aDiagramController onPosition: aPoint [
+	^ OPCreateNodeCommand
+		controller: self
+		parentModel: aParentModel
+		diagramController: aDiagramController
+		position: aPoint
+]
+
 { #category : 'deprecation' }
 OPElementController >> dependingOnElements [
 	self deprecated: 'Use viewModel instead' transformWith: '`@receiver dependingOnElements' -> '`@receiver viewModel dependingOnElements'.
 	^ self viewModel ifNotNil: [ :vm | vm dependingOnElements ] ifNil: [ Set empty ]
+]
+
+{ #category : 'accessing' }
+OPElementController >> diagramController [
+
+	^ diagramController
+]
+
+{ #category : 'accessing' }
+OPElementController >> diagramController: aDiagramController [
+
+	diagramController := aDiagramController
 ]
 
 { #category : 'accessing' }
@@ -174,6 +203,11 @@ OPElementController >> owner [
 	^ self diagramController
 		  controllerForModel: parentViewModel model
 		  ifNone: [ nil ]
+]
+
+{ #category : 'accessing' }
+OPElementController >> projectController [
+	^ self diagramController projectController
 ]
 
 { #category : 'deprecated' }

@@ -1,6 +1,6 @@
 {
 	"include" : [
 		{ "repository" : "OpenPonk/class-editor", "branch" : "master", "build-dependent" : true },
-		{ "repository" : "OpenPonk/borm-model", "branch" : "master", "build-dependent" : true }
+		{ "repository" : "OpenPonk/openponk-model", "branch" : "master", "build-dependent" : true }
 	]
 }

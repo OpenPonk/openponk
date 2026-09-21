@@ -15,3 +15,14 @@ OPNoteViewModel class >> modelClass [
 
 	^ OPNote
 ]
+
+{ #category : 'as yet unclassified' }
+OPNoteViewModel >> buildEditorForm: aForm [
+	aForm bindLongText: 'Text' property: #text
+]
+
+{ #category : 'accessing' }
+OPNoteViewModel >> creationPriority [
+	"Notes behave as standard nodes, created alongside classifiers (10)."
+	^ 10
+]

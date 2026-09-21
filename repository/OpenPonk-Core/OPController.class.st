@@ -6,10 +6,8 @@ Class {
 	#name : 'OPController',
 	#superclass : 'Object',
 	#instVars : [
-		'diagramController',
 		'diagramElement',
-		'viewModel',
-		'viewModelRegistry'
+		'viewModel'
 	],
 	#category : 'OpenPonk-Core-Controllers',
 	#package : 'OpenPonk-Core',
@@ -28,25 +26,39 @@ OPController class >> viewModelClass [
 
 { #category : 'connecting' }
 OPController >> addAsSourceFor: aController [
-
 	(self canBeSourceFor: aController) ifFalse: [
-			self error: self class asString , ' cannot be source for '
-				, aController class asString ].
-	aController viewModelRegistry: self viewModelRegistry.
+		self error: self class asString , ' cannot be source for ' , aController class asString ].
+	aController diagramController: self diagramController.
 	aController source: self
 ]
 
-{ #category : 'connecting' }
+{ #category : 'user interface' }
 OPController >> addAsTargetFor: aController [
+	self addAsTargetFor: aController onPosition: nil
+]
 
+{ #category : 'user interface' }
+OPController >> addAsTargetFor: aController onPosition: aPoint [
+	| parentModel diagramCtrl activeUndoManager creationCommand |
 	(self canBeTargetFor: aController) ifFalse: [
-			self error: self class asString , ' cannot be target for '
-				, aController class asString ].
-	aController viewModelRegistry: self viewModelRegistry.
+		self error: self class asString , ' cannot be target for ' , aController class asString ].
+	aController diagramController: self diagramController.
 	aController target: self.
-	aController
-		createModelIn: (self parentWhenTargetFor: aController)
-		andShowInDiagram: self diagramController
+	parentModel := self parentWhenTargetFor: aController.
+	diagramCtrl := self diagramController.
+	creationCommand := aController creationCommandIn: parentModel andShowInDiagram: diagramCtrl onPosition: aPoint.
+	activeUndoManager := diagramCtrl ifNotNil: [ :activeDiagramController | activeDiagramController undoManager ].
+	activeUndoManager ifNotNil: [ :activeManager |
+		activeManager isInTransaction
+			ifTrue: [ activeManager execute: creationCommand ]
+			ifFalse: [ activeManager inTransaction: [ activeManager execute: creationCommand ] ]
+	] ifNil: [
+		creationCommand execute ]
+]
+
+{ #category : 'converting' }
+OPController >> asViewModel [
+	^ self viewModel
 ]
 
 { #category : 'forms' }
@@ -64,6 +76,13 @@ OPController >> canBeTargetFor: aController [
 	^ false
 ]
 
+{ #category : 'undo/redo' }
+OPController >> commandForProperty: aSymbol accessor: anAccessor oldValue: anOldValue newValue: aNewValue [
+	"Delegate domain command resolution to the underlying view model."
+	^ self viewModel ifNotNil: [ :vm |
+		vm commandForProperty: aSymbol accessor: anAccessor oldValue: anOldValue newValue: aNewValue ]
+]
+
 { #category : 'accessing' }
 OPController >> commonModelClassPrefix [
 
@@ -73,12 +92,6 @@ OPController >> commonModelClassPrefix [
 		'`@receiver commonModelClassPrefix' -> '`@receiver class viewModelClass commonModelClassPrefix'.
 
 	^ self class viewModelClass commonModelClassPrefix
-]
-
-{ #category : 'ui-hooks' }
-OPController >> creationUICommandClass [
-
-	^ self viewModel creationUICommandClass
 ]
 
 { #category : 'accessing' }
@@ -111,14 +124,8 @@ OPController >> diagram [
 
 { #category : 'accessing' }
 OPController >> diagramController [
-	^ diagramController
-]
 
-{ #category : 'accessing' }
-OPController >> diagramController: aDiagramController [
-
-	diagramController := aDiagramController.
-	self viewModelRegistry: diagramController viewModelRegistry
+	^ self subclassResponsibility
 ]
 
 { #category : 'accessing' }
@@ -164,6 +171,11 @@ OPController >> formEventsAnnouncer [
 OPController >> hideSelectionFeedback [
 
 	self deprecated: 'This should be done by shapes (diagram elements)'
+]
+
+{ #category : 'testing' }
+OPController >> isDiagramOnly [
+	^ false
 ]
 
 { #category : 'testing' }
@@ -249,11 +261,37 @@ OPController >> parentContainerModel [
 ]
 
 { #category : 'connecting' }
-OPController >> parentWhenTargetFor: aCreatedController [
+OPController >> parentModelInTarget: aTargetController [
+	"Default container resolution for general elements."
 
-	^ aCreatedController isTargetUsedAsContainer
-		  ifTrue: [ self model ]
-		  ifFalse: [ self viewModel parentContainerModel ]
+	^ self isTargetUsedAsContainer
+		  ifTrue: [ aTargetController model ]
+		  ifFalse: [ aTargetController viewModel parentContainerModel ]
+]
+
+{ #category : 'connecting' }
+OPController >> parentWhenTargetFor: aCreatedController [
+	"Answer the model that should contain aCreatedController when self acts as the target."
+
+	^ aCreatedController parentModelInTarget: self
+]
+
+{ #category : 'accessing' }
+OPController >> projectController [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'properties' }
+OPController >> propertyNamed: aSymbol [
+	"Delegate property query to the underlying view model if present."
+	^ self viewModel ifNotNil: [ :vm | vm propertyNamed: aSymbol ]
+]
+
+{ #category : 'properties' }
+OPController >> propertyNamed: aSymbol put: aValue [
+	"Delegate property mutation to the underlying view model if present."
+	self viewModel ifNotNil: [ :vm | vm propertyNamed: aSymbol put: aValue ]
 ]
 
 { #category : 'figures' }
@@ -350,9 +388,8 @@ OPController >> removeModel [
 
 { #category : 'destruction' }
 OPController >> removeRender [
-
 	self ensureDeselected.
-	self diagramElement removeRender
+	diagramElement ifNotNil: [ :elem | elem removeRender ]
 ]
 
 { #category : 'figures' }
@@ -397,14 +434,21 @@ OPController >> showWithoutDependentInDiagram: aDiagramController [
 
 { #category : 'announcements' }
 OPController >> subscribeToViewModel [
-
+	"Subscribe to view model announcements to keep the diagram element synchronized."
 	self viewModel announcer weak
 		when: OPElementRenamed send: #modelChanged to: self;
 		when: OPModelChanged send: #modelChanged to: self;
+		when: OPElementFormNeedsRebuild send: #modelChanged to: self;
 		when: OPModelRemoved do: [ :ann |
 				ann model ifNotNil: [ :removedModel |
 						removedModel == self model ifTrue: [ self modelRemoved ] ] ]
 		for: self
+]
+
+{ #category : 'accessing' }
+OPController >> undoManager [
+
+	^ self projectController undoManager
 ]
 
 { #category : 'announcements' }
@@ -438,11 +482,5 @@ OPController >> viewModel: aViewModel [
 { #category : 'accessing' }
 OPController >> viewModelRegistry [
 
-	^ viewModelRegistry
-]
-
-{ #category : 'accessing' }
-OPController >> viewModelRegistry: aViewModelRegistry [
-
-	viewModelRegistry := aViewModelRegistry
+	^ self projectController viewModelRegistry
 ]

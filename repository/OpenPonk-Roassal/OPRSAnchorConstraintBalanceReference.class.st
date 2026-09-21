@@ -34,6 +34,11 @@ OPRSAnchorConstraintBalanceReference >> anchorSegmentFrom: segments andPointFrom
 ]
 
 { #category : 'accessing' }
+OPRSAnchorConstraintBalanceReference >> balance [
+	^ balance
+]
+
+{ #category : 'accessing' }
 OPRSAnchorConstraintBalanceReference >> balance: aNumber [
 
 	balance := aNumber

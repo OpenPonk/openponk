@@ -33,24 +33,3 @@ OPNoteController class >> viewModelClass [
 
 	^ OPNoteViewModel
 ]
-
-{ #category : 'forms' }
-OPNoteController >> buildEditorForm: aForm [
-
-	(aForm addLongText: 'Text')
-		text: self diagramElement text;
-		whenTextChangedDo: [ :newValue | 
-			self diagramElement text: newValue asString.
-			self diagramElement updateText ]
-]
-
-{ #category : 'ui-hooks' }
-OPNoteController >> creationUICommandClass [
-
-	^ OPEditElementTextCommand
-]
-
-{ #category : 'accessing' }
-OPNoteController >> propertiesTarget [
-	^ self
-]

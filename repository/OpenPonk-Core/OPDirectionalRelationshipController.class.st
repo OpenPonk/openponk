@@ -41,6 +41,21 @@ OPDirectionalRelationshipController >> createModelIn: aParentModel [
 	^ self model
 ]
 
+{ #category : 'creation' }
+OPDirectionalRelationshipController >> creationCommandIn: aParentModel andShowInDiagram: aDiagramController [
+	^ OPCreateEdgeCommand
+		controller: self
+		source: self source
+		target: self target
+		parentModel: aParentModel
+		diagramController: aDiagramController
+]
+
+{ #category : 'creation' }
+OPDirectionalRelationshipController >> creationCommandIn: aParentModel andShowInDiagram: aDiagramController onPosition: aPoint [
+	^ self creationCommandIn: aParentModel andShowInDiagram: aDiagramController
+]
+
 { #category : 'construction' }
 OPDirectionalRelationshipController >> ensureShownDependenciesInDiagram: aDiagramController [
 

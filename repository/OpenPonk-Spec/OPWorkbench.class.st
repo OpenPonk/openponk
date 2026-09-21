@@ -27,10 +27,7 @@ Class {
 { #category : 'layout' }
 OPWorkbench class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
-		add: (SpBoxLayout newTopToBottom
-			add: #topToolbar;
-			yourself)
-		expand: false;
+		add: #topToolbar height: 34;
 		add: (SpPanedLayout newLeftToRight
 			add: (SpPanedLayout newLeftToRight
 				add: (SpPanedLayout newTopToBottom
@@ -161,12 +158,13 @@ OPWorkbench >> closedTabOfEditor: anEditor [
 
 { #category : 'opening' }
 OPWorkbench >> closedTabOfEditor: anEditor whileClosingWorkbench: discardChanges [
-
 	focusedEditor = anEditor ifTrue: [
 		focusedEditor := nil.
 		self announce: (OPEditorUnfocused on: anEditor) ].
-	topToolbar activeEditor: nil.
-	editors removeKey: anEditor diagramController diagramElement.
+	topToolbar focusedEditor: nil.
+	anEditor diagramController ifNotNil: [ :dc |
+		dc diagramElement ifNotNil: [ :de |
+			editors removeKey: de ifAbsent: [ ] ] ].
 	anEditor tabClosedWhileClosingWorkbench: discardChanges.
 	self announce: (OPEditorClosed on: anEditor)
 ]
@@ -180,6 +178,11 @@ OPWorkbench >> connectPresenters [
 			self focusEditorOf: (editors associations detect: [ :pair | 
 							 (pair value at: #page) = newPage ]) key ];
 		whenPageRemovedDo: [ :page | self pageRemoved: page ]
+]
+
+{ #category : 'api - focus' }
+OPWorkbench >> defaultKeyboardFocus [
+	^ topToolbar defaultKeyboardFocus
 ]
 
 { #category : 'accessing - spec' }
@@ -213,7 +216,7 @@ OPWorkbench >> focusEditorOf: aDiagram [
 	focusedEditor := editorTabInfo at: #editor.
 	aDiagram isSelected: true.
 	self announce: (OPEditorFocused on: focusedEditor).
-	topToolbar activeEditor: focusedEditor.
+	topToolbar focusedEditor: focusedEditor.
 	focusedEditor diagramController diagramElement: aDiagram.
 	focusedEditor diagramController diagramFocused
 ]
@@ -238,12 +241,11 @@ OPWorkbench >> initialize [
 
 { #category : 'initialization' }
 OPWorkbench >> initializePresenters [
-	self initializeShortcuts.
 	topToolbar := self instantiate: OPWorkbenchToolbar.
 	projectTree := self instantiate: OPProjectTree.
 	diagramsList := self instantiate: OPDiagramsList.
 	notebook := self newNotebook.
-	form := self instantiate: OPDynamicForm.
+	form := self instantiate: OPPropertiesForm.
 	self focusOrder
 		add: topToolbar;
 		add: projectTree;
@@ -253,33 +255,54 @@ OPWorkbench >> initializePresenters [
 ]
 
 { #category : 'initialization' }
-OPWorkbench >> initializeShortcuts [
-	"Register global shortcuts available in workbench"
-	self addShortcutWith: [ :action |
-		action
-			shortcutKey: $s actionModifier;
-			action: [ self saveProject ];
-			actionEnabled: [ projectController isNotNil ] ]
-]
-
-{ #category : 'initialization' }
 OPWorkbench >> initializeWindow: aWindow [
 	super initializeWindow: aWindow.
-
 	aWindow
 		windowIcon: OPCoreIcons openponkIcon;
 		title: self title;
 		initialExtent: self class initialExtent;
+		whenOpenedDo: [ self defaultKeyboardFocus takeKeyboardFocus ];
 		whenClosedDo: [
-			editors valuesDo: [ :each |
+			topToolbar unsubscribeFromUndoManager.
+			editors values copy do: [ :eachEditorInfo |
 				self
-					closedTabOfEditor: (each at: #editor)
-					whileClosingWorkbench: true ] ];
-		addShortcutWith: [ :action |
-			action
-				shortcutKey: $s actionModifier;
-				action: [ self saveProject ];
-				actionEnabled: [ projectController isNotNil ] ]
+					closedTabOfEditor: (eachEditorInfo at: #editor)
+					whileClosingWorkbench: true ] ].
+	self initializeWindowShortcuts: aWindow
+]
+
+{ #category : 'initialization' }
+OPWorkbench >> initializeWindowShortcuts: aWindow [
+	"Register global shortcuts directly on the window so that they are active regardless of inner focus."
+	aWindow addShortcutWith: [ :action |
+		action
+			shortcutKey: $s actionModifier;
+			action: [ self saveProject ];
+			actionEnabled: [ projectController isNotNil ] ].
+	aWindow addShortcutWith: [ :action |
+		action
+			shortcutKey: $z actionModifier;
+			action: [ projectController undoManager undo ];
+			actionEnabled: [
+				projectController isNotNil and: [
+				projectController undoManager isNotNil and: [
+				projectController undoManager canUndo ] ] ] ].
+	aWindow addShortcutWith: [ :action |
+		action
+			shortcutKey: $y actionModifier;
+			action: [ projectController undoManager redo ];
+			actionEnabled: [
+				projectController isNotNil and: [
+				projectController undoManager isNotNil and: [
+				projectController undoManager canRedo ] ] ] ].
+	aWindow addShortcutWith: [ :action |
+		action
+			shortcutKey: $z shift actionModifier;
+			action: [ projectController undoManager redo ];
+			actionEnabled: [
+				projectController isNotNil and: [
+				projectController undoManager isNotNil and: [
+				projectController undoManager canRedo ] ] ] ]
 ]
 
 { #category : 'accessing - spec' }
@@ -296,61 +319,72 @@ OPWorkbench >> openEditorOn: aModel [
 
 { #category : 'opening' }
 OPWorkbench >> openEditorOnDiagram: aDiagram [
-    "Opens an editor for the diagram and subscribes to the respective view model."
-    | editor notebookPage plugin model viewModel |
-    (self projectController hasDiagram: aDiagram) ifTrue: [
-        ^ self focusEditorOf: aDiagram ].
-    model := aDiagram modelElement.
-    plugin := pluginRegistry pluginFor: model.
-    editor := OPEditor on: plugin.
-    editor workbench: self.
-    notebookPage := self newNotebookPage.
-    notebookPage beCloseable.
-    editors at: aDiagram put: {
-            (#editor -> editor).
-            (#page -> notebookPage) } asDictionary.
-    editor owner: notebook.
-    editor openEmptyModel: model.
-    
-    viewModel := self projectController viewModel registry viewModelFor: model.
-    self whenWindowClosedUnsubscribeFrom: viewModel.
-    viewModel announcer when: OPModelChanged send: #updateTabTitle to: self.
-    
-    editor palette rebuildWidget.
-    notebookPage
-        title: '[' , aDiagram name , '] ' , model name;
-        icon: plugin icon;
-        presenterProvider: [ editor ].
-    self announce: (OPEditorCreated on: editor).
-    notebook addPage: notebookPage.
-    self focusEditorOf: aDiagram.
-    ^ editor
+	| editor notebookPage plugin model viewModel |
+	(self projectController hasDiagram: aDiagram) ifTrue: [
+		^ self focusEditorOf: aDiagram ].
+	model := aDiagram modelElement.
+	plugin := pluginRegistry pluginFor: model.
+	editor := OPEditor on: plugin.
+	editor workbench: self.
+	notebookPage := self newNotebookPage.
+	notebookPage beCloseable.
+	editors at: aDiagram put: {
+			(#editor -> editor).
+			(#page -> notebookPage) } asDictionary.
+	editor owner: notebook.
+	editor openEmptyModel: model.
+	editor diagramController diagramElement: aDiagram.
+	
+	viewModel := self projectController viewModel registry viewModelFor: model.
+	self whenWindowClosedUnsubscribeFrom: viewModel.
+	viewModel announcer when: OPModelChanged send: #updateTabTitle to: self.
+	
+	editor palette rebuildWidget.
+	notebookPage
+		title: '[' , aDiagram name , '] ' , model name;
+		icon: plugin icon;
+		presenterProvider: [ editor ].
+	self announce: (OPEditorCreated on: editor).
+	notebook addPage: notebookPage.
+	self focusEditorOf: aDiagram.
+	^ editor
 ]
 
-{ #category : 'initialization' }
-OPWorkbench >> openFormOn: aController [
-
-	form target: aController
+{ #category : 'opening' }
+OPWorkbench >> openFormOn: anObjectWithViewModel [
+	"Opens the dynamic form on the view model of the given controller or directly on the view model."
+	| targetViewModel |
+	targetViewModel := anObjectWithViewModel ifNotNil: [ anObjectWithViewModel asViewModel ].
+	form viewModel: targetViewModel
 ]
 
-{ #category : 'project handling' }
+{ #category : 'opening' }
 OPWorkbench >> openProject: aProject [
-    "Registers the project and subscribes to its view model events."
-    | pViewModel |
-    (projectController := aProject controllerClass new)
-        project: aProject;
-        workbench: self.
-    topToolbar updateProjectMenu.
-    
-    pViewModel := projectController viewModel.
-    self whenWindowClosedUnsubscribeFrom: pViewModel.
-    pViewModel announcer when: OPModelChanged send: #updateTitle to: self.
-    
-    diagramsList project: aProject.
-    projectTree openOn: pViewModel.
-    projectController openDiagrams.
-    self hasWindow ifFalse: [ self open ].
-    self updateTitle
+	"Registers the project, wires controllers, and injects undoManager into dynamic form."
+	| projectViewModel |
+	(projectController := aProject controllerClass forProject: aProject)
+		workbench: self.
+	topToolbar updateProjectMenu.
+	topToolbar registerUndoRedoAnnouncements.
+	form undoManager: projectController undoManager.
+	projectViewModel := projectController viewModel.
+	self whenWindowClosedUnsubscribeFrom: projectViewModel.
+	projectViewModel announcer when: OPModelChanged send: #updateTitle to: self.
+	self whenWindowClosedUnsubscribeFrom: projectController undoManager.
+	projectController undoManager announcer weak
+		when: OPUndoRedoChanged
+		send: #updateTabTitles
+		to: self.
+	diagramsList project: aProject.
+	projectTree openOn: projectViewModel.
+	projectController openDiagrams.
+	self hasWindow ifFalse: [ self open ].
+	self updateTitle
+]
+
+{ #category : 'accessing' }
+OPWorkbench >> pageFor: aDiagram [
+	^ (editors at: aDiagram ifAbsent: [ ^ nil ]) at: #page
 ]
 
 { #category : 'opening' }
@@ -364,6 +398,12 @@ OPWorkbench >> pageRemoved: aPage [
 { #category : 'accessing' }
 OPWorkbench >> pluginRegistry [
 	^ pluginRegistry
+]
+
+{ #category : 'accessing' }
+OPWorkbench >> pluginRegistry: aPluginRegistry [
+
+	pluginRegistry := aPluginRegistry
 ]
 
 { #category : 'accessing' }
@@ -390,18 +430,19 @@ OPWorkbench >> saveProject [
 	^ projectController saveProject
 ]
 
-{ #category : 'opening' }
+{ #category : 'actions' }
 OPWorkbench >> showAllElementsInAllDiagrams [
-
-	self projectController controllers do: [ :each | 
-		each
+	self projectController controllers do: [ :eachDiagramController | 
+		eachDiagramController
 			showAllElements;
 			applyDefaultLayout.
-		each canvas extent max <= 500 ifTrue: [ 
-			each canvasPresenter whenExtentChangedDo: [ :evt | 
-				each zoomToFit.
-				each canvasPresenter whenExtentChangedDo: [ :event |  ] ] ] ].
-	self projectController controllers do: #zoomToFit
+		eachDiagramController canvas extent max <= 500 ifTrue: [ 
+			eachDiagramController canvasPresenter whenExtentChangedDo: [ :anExtentEvent | 
+				eachDiagramController zoomToFit.
+				eachDiagramController canvasPresenter whenExtentChangedDo: [ :anIgnoredEvent | ] ] ] ].
+	self projectController controllers do: #zoomToFit.
+	self projectController undoManager ifNotNil: [ :activeUndoManager | 
+		activeUndoManager clear ]
 ]
 
 { #category : 'accessing - deprecated' }
@@ -421,14 +462,19 @@ OPWorkbench >> topToolbar [
 	^ topToolbar
 ]
 
-{ #category : 'protocol' }
+{ #category : 'updating' }
 OPWorkbench >> updateTabTitle [
+	self updateTabTitles
+]
 
-	| page diagramController |
-	page := notebook selectedPage ifNil: [ ^ self ].
-	diagramController := page activePresenter diagramController.
-	page title: '[' , diagramController diagramElement name , '] '
-		, diagramController model name
+{ #category : 'updating' }
+OPWorkbench >> updateTabTitles [
+	editors keysAndValuesDo: [ :diagram :dict |
+		| page model |
+		page := dict at: #page ifAbsent: [ nil ].
+		page ifNotNil: [
+			model := diagram modelElement.
+			page title: '[' , diagram name , '] ' , (model ifNotNil: #name ifNil: [ '' ]) ] ]
 ]
 
 { #category : 'protocol' }

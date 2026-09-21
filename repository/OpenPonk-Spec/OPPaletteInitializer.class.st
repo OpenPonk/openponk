@@ -29,20 +29,19 @@ OPPaletteInitializer >> addAll [
 	self filteredCommonItems do: #value
 ]
 
-{ #category : 'constants' }
+{ #category : 'accessing' }
 OPPaletteInitializer >> allCommonItemsByName [
-
 	^ { 
-		  (OPNoteController paletteItemName -> [ 
-		   (palette newCreationEntry: [ OPNoteController new ])
-			   label: 'Note';
-			   icon: (self iconNamed: #announcement);
-			   whenCreated: [ :ctrl | OPEditElementTextCommand executeOn: ctrl ] ]).
-		  (OPBoundaryController paletteItemName -> [ 
-		   (palette newCreationEntry: [ OPBoundaryController new ])
-			   label: 'Boundary';
-			   icon: (self iconNamed: #checkBoxOff);
-			   whenCreatedSetup ]) } asDictionary
+		(OPNoteController paletteItemName -> [ 
+			(palette newCreationEntry: [ OPNoteController new ])
+				label: 'Note';
+				icon: (self iconNamed: #announcement);
+				whenCreatedSetup ]).
+		(OPBoundaryController paletteItemName -> [ 
+			(palette newCreationEntry: [ OPBoundaryController new ])
+				label: 'Boundary';
+				icon: (self iconNamed: #checkBoxOff);
+				whenCreatedSetup ]) } asDictionary
 ]
 
 { #category : 'accessing' }

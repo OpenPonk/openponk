@@ -15,13 +15,12 @@ Class {
 
 { #category : 'running' }
 OPControllerFactoryTest >> setUp [
-
-	| diagramController |
+	| project projectController diagramController |
 	super setUp.
+	project := OPProject new.
+	projectController := OPProjectController forProject: project.
 	diagramController := OPTestDiagramController new.
-	diagramController viewModelRegistry:
-		OPViewModelRegistry forNewProject.
-
+	projectController addDiagramController: diagramController.
 	factory := OPControllerFactory new.
 	factory diagramController: diagramController
 ]

@@ -11,7 +11,8 @@ Class {
 		'storageFolder',
 		'storageFile',
 		'name',
-		'modelsAndDiagrams'
+		'modelsAndDiagrams',
+		'announcer'
 	],
 	#category : 'OpenPonk-Core-Models',
 	#package : 'OpenPonk-Core',
@@ -62,7 +63,7 @@ OPProject >> addModel: aModel [
 
 { #category : 'accessing' }
 OPProject >> announcer [
-	^ dirty announcer
+	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
 { #category : 'updating' }
@@ -79,6 +80,15 @@ OPProject >> controllerClass [
 OPProject >> copyDiagram: aDiagram [
 	| newDiagram |
 	newDiagram := aDiagram newCopy.
+	self addDiagram: newDiagram.
+	^ newDiagram
+]
+
+{ #category : 'adding' }
+OPProject >> copyDiagram: aDiagram named: aName [
+	| newDiagram |
+	newDiagram := aDiagram newCopy.
+	newDiagram name: aName.
 	self addDiagram: newDiagram.
 	^ newDiagram
 ]

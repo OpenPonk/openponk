@@ -15,7 +15,13 @@ OPTestContainerViewModel class >> modelClass [
     ^ OPTestContainerModel
 ]
 
-{ #category : 'private' }
+{ #category : 'removing' }
 OPTestContainerViewModel >> basicRemoveModel [
-	"Do nothing, container is root"
+
+	self parentContainerModel ifNotNil: [ :parentContainer |
+		(parentContainer respondsTo: #removeModel:)
+			ifTrue: [ parentContainer removeModel: self model ]
+			ifFalse: [
+				(parentContainer respondsTo: #remove:)
+					ifTrue: [ parentContainer remove: self model ] ] ]
 ]

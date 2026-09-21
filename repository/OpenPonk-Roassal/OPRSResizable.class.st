@@ -1,12 +1,15 @@
 "
-Interaction that decorates a shape with resize handles (typically at corners or edges), enabling the user to interactively scale or modify the shape's dimensions via mouse dragging.
+Interaction decorating shapes with resize handles. Tracks resize gestures and keeps handles synchronized with external extent changes.
 "
 Class {
 	#name : 'OPRSResizable',
 	#superclass : 'RSTransformable',
 	#instVars : [
 		'shape',
-		'handles'
+		'handles',
+		'isInteractivelyResizing',
+		'initialExtent',
+		'initialPosition'
 	],
 	#category : 'OpenPonk-Roassal-Interactions',
 	#package : 'OpenPonk-Roassal',
@@ -44,7 +47,6 @@ OPRSResizable >> connectWithCanvas [
 
 { #category : 'accessing - shapes' }
 OPRSResizable >> createHandleFor: association [
-
 	| handle |
 	handle := super createHandleFor: association.
 	handle
@@ -54,14 +56,62 @@ OPRSResizable >> createHandleFor: association [
 			b
 				width: 2;
 				color: Color blue ].
+	handle
+		when: RSMouseDragStart send: #handleDragStarted: to: self;
+		when: RSMouseDragEnd send: #handleDragEnded: to: self.
 	^ handle
+]
+
+{ #category : 'events' }
+OPRSResizable >> handleDragEnded: evt [
+
+	| currentExtent currentPos hasChanged targetCanvas resizedEvent |
+	isInteractivelyResizing := false.
+	shape ifNil: [ currentShape ifNotNil: [ :cs | shape := cs ] ].
+	shape ifNil: [ ^ self ].
+	currentExtent := shape extent copy.
+	currentPos := shape position copy.
+	hasChanged := initialExtent isNotNil and: [
+		              initialPosition isNotNil and: [ initialExtent ~= currentExtent or: [ initialPosition ~= currentPos ] ] ].
+	hasChanged ifTrue: [
+			resizedEvent := OPRSShapeResizedEvent new
+				                shape: shape;
+				                oldExtent: initialExtent;
+				                newExtent: currentExtent;
+				                oldPosition: initialPosition;
+				                newPosition: currentPos;
+				                yourself.
+			targetCanvas := (evt ifNotNil: [ evt canvas ]) ifNil: [ shape canvas ].
+			targetCanvas ifNotNil: [ :c | c announce: resizedEvent ] ].
+	initialExtent := nil.
+	initialPosition := nil
+]
+
+{ #category : 'events' }
+OPRSResizable >> handleDragStarted: evt [
+	isInteractivelyResizing := true.
+	shape ifNil: [ currentShape ifNotNil: [ :cs | shape := cs ] ].
+	shape ifNotNil: [
+		initialExtent := shape extent copy.
+		initialPosition := shape position copy ]
+]
+
+{ #category : 'accessing' }
+OPRSResizable >> handles [
+	^ handles
+]
+
+{ #category : 'testing' }
+OPRSResizable >> isInteractivelyResizing [
+	^ isInteractivelyResizing ifNil: [ isInteractivelyResizing := false ]
 ]
 
 { #category : 'hooks' }
 OPRSResizable >> onShape: aShape [
-
 	aShape isNode ifFalse: [ ^ self ].
 	shape := aShape.
+	currentShape := aShape.
+	shape propertyAt: self class put: self.
 	shape isInACanvas
 		ifTrue: [ self connectWithCanvas ]
 		ifFalse: [
@@ -75,9 +125,13 @@ OPRSResizable >> onShape: aShape [
 		when: OPRSDragFromSelectionStart send: #disableHandles: to: self;
 		when: OPRSDragFromSelectionEnd send: #enableHandles: to: self.
 	shape
+		when: RSExtentChangedEvent send: #relocateHandles to: self;
+		when: RSPositionChangedEvent send: #relocateHandles to: self.
+	shape
 		when: RSShapeRemovedEvent
 		do: [ :evt |
 			shape announcer unsubscribe: self.
+			shape removePropertyAt: self class ifAbsent: [  ].
 			shape removePropertyAt: self key ifAbsent: [  ].
 			self removeHandles: evt ]
 		for: self
@@ -90,16 +144,25 @@ OPRSResizable >> registerCanvasEventsIfNecessary: evt [
 	^ super registerCanvasEventsIfNecessary: evt
 ]
 
+{ #category : 'update' }
+OPRSResizable >> relocateHandles [
+	self isInteractivelyResizing ifTrue: [ ^ self ].
+	handles ifNil: [ ^ self ].
+	self updateHandles: nil
+]
+
 { #category : 'public' }
-OPRSResizable >> removeHandles: evt [
+OPRSResizable >> removeHandles: anEvent [
 
 	| canvas |
-	canvas := evt canvas.
+	canvas := anEvent
+		ifNotNil: [ :theEvent | theEvent canvas ]
+		ifNil: [ shape canvas ].
 	handles ifNil: [ ^ self ].
 
 	handles do: #remove.
 	handles := nil.
-	canvas ifNotNil: #signalUpdate
+	canvas ifNotNil: [ :theCanvas | theCanvas signalUpdate ]
 ]
 
 { #category : 'private' }
@@ -128,45 +191,47 @@ OPRSResizable >> showHandles: evt [
 ]
 
 { #category : 'update' }
-OPRSResizable >> updateCurrentShape: evt [
-
-	| handle newRec rect |
+OPRSResizable >> updateCurrentShape: anEvent [
+	| handle newRectangle normalizedRectangle currentRectangle |
 	currentShape ifNil: [ ^ self ].
-	handle := evt shape.
-	newRec := self
-		          perform: (handle model key , ':rectangle:') asSymbol
-		          withArguments: { 
-				          handle position.
-				          currentShape encompassingRectangle }.
+	handle := anEvent shape.
+	currentRectangle := currentShape encompassingRectangle.
+	newRectangle := self
+		perform: (handle model key , ':rectangle:') asSymbol
+		withArguments: {
+			handle position.
+			currentRectangle }.
 
-	rect := newRec value corner: newRec key.
+	normalizedRectangle := (newRectangle key min: newRectangle value)
+		corner: (newRectangle key max: newRectangle value).
 
-	currentShape extent: rect extent.
-	currentShape translateTo: rect floatCenter.
+	currentShape extent: normalizedRectangle extent.
+	currentShape translateTo: normalizedRectangle floatCenter.
 
-	self updateHandles: evt.
-	evt signalUpdate
+	self updateHandles: anEvent.
+	anEvent signalUpdate
 ]
 
 { #category : 'update' }
 OPRSResizable >> updateHandles: evt [
 
 	| canvas rect base points circles matrix |
+	currentShape ifNil: [ currentShape := shape ].
 	currentShape ifNil: [ ^ self ].
-	canvas := evt canvas.
-	rect := currentShape baseRectangle.
+	handles ifNil: [ ^ self ].
+	handles size < 2 ifTrue: [ ^ self ].
+	canvas := evt ifNotNil: [ evt canvas ] ifNil: [ currentShape canvas ].
+	rect := Rectangle center: 0 @ 0 extent: currentShape extent.
 	base := handles first.
 	circles := handles copyFrom: 2 to: handles size.
 	points := Array new: circles size.
 	matrix := currentShape matrix.
-	circles doWithIndex: [ :h :index | 
-		| position |
-		position := matrix transform: (h model key value: rect).
-		h position: position.
-		points at: index put: position ].
-	base points: points
-
-	"TODO
-	rotate := handles last.
-	rotate position: (matrix transform: rect topCenter - (0@30) )."
+	circles doWithIndex: [ :h :index |
+			| position |
+			position := matrix transform: (h model key value: rect).
+			h position: position.
+			points at: index put: position ].
+	base points: points.
+	base resetBBox.
+	canvas ifNotNil: [ :theCanvas | theCanvas signalUpdate ]
 ]

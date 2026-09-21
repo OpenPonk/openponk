@@ -6,8 +6,8 @@ Class {
 	#name : 'OPViewModelRegistry',
 	#superclass : 'Object',
 	#instVars : [
-		'viewModelsCache',
-		'project'
+		'project',
+		'viewModelsCache'
 	],
 	#classInstVars : [
 		'ViewModelClassesCache'
@@ -17,18 +17,16 @@ Class {
 	#tag : 'ViewModels'
 }
 
-{ #category : 'instance' }
+{ #category : 'instance creation' }
 OPViewModelRegistry class >> forNewProject [
-
 	^ self forProject: OPProject new
 ]
 
-{ #category : 'instance' }
+{ #category : 'instance creation' }
 OPViewModelRegistry class >> forProject: aProject [
-
 	^ self basicNew
-		  initializeForProject: aProject;
-		  yourself
+		initializeForProject: aProject;
+		yourself
 ]
 
 { #category : 'accessing' }
@@ -105,6 +103,12 @@ OPViewModelRegistry >> displayFor: aModel [
 	^ (self viewModelFor: aModel) modelDisplayString
 ]
 
+{ #category : 'testing' }
+OPViewModelRegistry >> hasViewModelFor: aModelObject [
+	"Answer whether a ViewModel is currently cached for the given model object."
+	^ viewModelsCache includesKey: aModelObject
+]
+
 { #category : 'accessing' }
 OPViewModelRegistry >> iconFor: aModel [
     ^ (self viewModelFor: aModel) icon
@@ -112,16 +116,15 @@ OPViewModelRegistry >> iconFor: aModel [
 
 { #category : 'initialization' }
 OPViewModelRegistry >> initialize [
-    super initialize.
-    viewModelsCache := WeakIdentityKeyDictionary new.
+	super initialize.
+	viewModelsCache := IdentityDictionary new
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 OPViewModelRegistry >> initializeForProject: aProject [
-
 	self initialize.
 	project := aProject.
-	self viewModelFor: aProject
+	self viewModelFor: project
 ]
 
 { #category : 'inspection' }
@@ -165,6 +168,13 @@ OPViewModelRegistry >> registerNewViewModelOfClass: aViewModelClass createdBy: a
 		yourself.
 	model := aModelCreationBlock value: viewModel.
 	^ viewModelsCache at: model put: viewModel
+]
+
+{ #category : 'adding' }
+OPViewModelRegistry >> registerViewModel: aViewModel for: aModelObject [
+	"Explicitly register an existing ViewModel instance for a model object, preserving identity."
+	viewModelsCache at: aModelObject put: aViewModel.
+	^ aViewModel
 ]
 
 { #category : 'accessing' }

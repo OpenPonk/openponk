@@ -18,6 +18,13 @@ ManifestOpenPonkCore class >> ruleEmptyExceptionHandlerRuleV1FalsePositive [
 ]
 
 { #category : 'code-critics' }
+ManifestOpenPonkCore class >> ruleExtraBlockRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGMethodDefinition #(#OPDiagramControllerTest #testWeakSubscriptionAllowsGarbageCollection #false)) #'2026-09-22T20:29:55.489+02:00') )
+]
+
+{ #category : 'code-critics' }
 ManifestOpenPonkCore class >> ruleRTInvocationSequenceRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#OPTRelationshipWithPathPointsController #layout #false)) #'2021-07-21T17:15:27.877427+02:00') #(#(#RGMethodDefinition #(#OPTRelationshipWithPathPointsController #layout: #false)) #'2021-07-21T17:17:28.272427+02:00') )
 ]
@@ -39,4 +46,11 @@ ManifestOpenPonkCore class >> ruleStringConcatenationRuleV1FalsePositive [
 
 	<ignoreForCoverage>
 	^ #(#(#(#RGMethodDefinition #(#OPMementoDirectorySerializer #loadModelFrom: #false)) #'2024-10-17T12:14:35.401+02:00') )
+]
+
+{ #category : 'code-critics' }
+ManifestOpenPonkCore class >> ruleTempsReadBeforeWrittenRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGMethodDefinition #(#OPDiagramControllerTest #testWeakSubscriptionAllowsGarbageCollection #false)) #'2026-09-22T20:30:15.584+02:00') )
 ]

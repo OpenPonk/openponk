@@ -25,15 +25,14 @@ OPProjectDirectoryMaterializerTest >> setUp [
 	self setUpBasicProject
 ]
 
-{ #category : 'instance creation' }
+{ #category : 'running' }
 OPProjectDirectoryMaterializerTest >> setUpBasicProject [
 	(project := OPProject new)
 		name: 'Test Project';
 		uuid: (UUID fromString: '7f5ee44a-1655-4061-a78e-db9578a2226c').
 	memoryRoot := FileSystem memory / 'test-project'.
 	project addModel: OPTestContainerModel new.
-	OPProjectController new
-		project: project;
+	(OPProjectController forProject: project)
 		workbench: OPWorkbench new;
 		saveProjectTo: memoryRoot.
 	root := (FileSystem zip: memoryRoot) open / 'project'

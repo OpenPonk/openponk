@@ -168,6 +168,35 @@ OPAbstractDirectionalRelationshipControllerTest >> targetModelClass [
 	^ self sourceModelClass
 ]
 
+{ #category : 'tests - undo/redo' }
+OPAbstractDirectionalRelationshipControllerTest >> testCascadeDeleteUndoRedo [
+	| undoManager relModel |
+	self testCreateUsingAddAsTarget.
+	undoManager := diagramController undoManager.
+	relModel := controller model.
+
+	diagramController removeModelElement: sourceModel.
+
+	self deny: (diagramController hasControllerForModel: relModel).
+	self deny: (diagramController hasControllerForModel: sourceModel).
+	self denyCollection: self allElements includesAny: { relModel . sourceModel }.
+
+	undoManager undo.
+	self assert: (diagramController hasControllerForModel: relModel).
+	self assert: (diagramController hasControllerForModel: sourceModel).
+	self assertCollection: self allElements includesAll: { relModel . sourceModel }.
+
+	undoManager redo.
+	self deny: (diagramController hasControllerForModel: relModel).
+	self deny: (diagramController hasControllerForModel: sourceModel).
+	self denyCollection: self allElements includesAny: { relModel . sourceModel }.
+
+	undoManager undo.
+	self assert: (diagramController hasControllerForModel: relModel).
+	self assert: (diagramController hasControllerForModel: sourceModel).
+	self assertCollection: self allElements includesAll: { relModel . sourceModel }
+]
+
 { #category : 'tests - construction' }
 OPAbstractDirectionalRelationshipControllerTest >> testCreateAndShow [
 

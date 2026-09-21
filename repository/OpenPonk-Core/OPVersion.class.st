@@ -55,12 +55,37 @@ OPVersion class >> currentWithRunId: anId repositoryName: aRepositoryName [
 
 { #category : 'instance creation' }
 OPVersion class >> fromReleaseJson: aRelease repositoryName: aRepositoryName [
-	^ self new fromReleaseJson: aRelease repositoryName: aRepositoryName
+	| version title date |
+	version := self new
+		releaseName: (aRelease at: #tag_name);
+		repositoryName: aRepositoryName;
+		buildDate: (DateAndTime fromString: (aRelease at: #published_at)) asLocal;
+		githubWorkflowRunId: (aRelease at: #id ifAbsent: [ nil ]);
+		yourself.
+	title := aRelease at: #name ifAbsent: [ '' ].
+	(title beginsWith: 'nightly-') ifTrue: [
+		[
+			date := (DateAndTime fromString: (title allButFirst: 8)) asLocal.
+			version buildDate: date
+		] on: Error do: [ :e | "fallback on published_at" ] ].
+	^ version
 ]
 
 { #category : 'instance creation' }
 OPVersion class >> fromRunJson: aRun [
-	^ self new fromRunJson: aRun
+	| version dateString repo |
+	dateString := aRun at: #created_at ifAbsent: [
+		(aRun at: #head_commit ifAbsent: [ aRun ]) at: #timestamp ].
+	repo := aRun at: #repository ifAbsent: [ nil ].
+	repo isDictionary ifTrue: [ repo := repo at: #name ifAbsent: [ nil ] ].
+	version := self new
+		releaseName: (aRun at: #head_branch);
+		repositoryName: repo;
+		githubWorkflowRunId: (aRun at: #id);
+		buildDate: (DateAndTime fromString: dateString) asLocal;
+		yourself.
+	version releaseName = 'master' ifTrue: [ version releaseName: 'nightly' ].
+	^ version
 ]
 
 { #category : 'fetching' }
@@ -230,33 +255,6 @@ OPVersion >> canDownloadInfo [
 OPVersion >> downloadInfo [
 	self githubWorkflowRunId ifNil: [ ^ self ].
 	^ self fromRunJson: self getRun
-]
-
-{ #category : 'instance creation' }
-OPVersion >> fromReleaseJson: aRelease repositoryName: aRepositoryName [
-
-	| date |
-	date := ((aRelease at: #published_at ifAbsent: [ nil ]) ifNil: [
-		         aRelease at: #created_at ]) asDateAndTime.
-	self
-		repositoryName: aRepositoryName;
-		githubWorkflowRunId: (aRelease at: #id);
-		releaseName: (aRelease at: #tag_name);
-		buildDate: date
-]
-
-{ #category : 'instance creation' }
-OPVersion >> fromRunJson: aRun [
-
-	| repository runReleaseName |
-	repository := aRun at: #repository.
-	runReleaseName := aRun at: #head_branch.
-	runReleaseName = 'master' ifTrue: [ runReleaseName := 'nightly' ].
-	self
-		repositoryName: (repository at: #name);
-		githubWorkflowRunId: (aRun at: #id);
-		releaseName: runReleaseName;
-		buildDate: (aRun at: #created_at) asDateAndTime
 ]
 
 { #category : 'accessing' }

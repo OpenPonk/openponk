@@ -32,6 +32,16 @@ OPNodeBounds class >> withPosition: aPositionPoint extent: anExtentPoint [
 		  yourself
 ]
 
+{ #category : 'as yet unclassified' }
+OPNodeBounds >> = anObject [
+	self == anObject ifTrue: [ ^ true ].
+	self class = anObject class ifFalse: [ ^ false ].
+	^ x = anObject x and: [ 
+		y = anObject y and: [ 
+			width = anObject width and: [ 
+				height = anObject height ] ] ]
+]
+
 { #category : 'accessing' }
 OPNodeBounds >> extent [
 
@@ -44,6 +54,14 @@ OPNodeBounds >> extent: aPoint [
 	self
 		width: aPoint x;
 		height: aPoint y
+]
+
+{ #category : 'as yet unclassified' }
+OPNodeBounds >> hash [
+	^ (((x hash hashMultiply
+		bitXor: y hash) hashMultiply
+		bitXor: width hash) hashMultiply
+		bitXor: height hash)
 ]
 
 { #category : 'accessing' }

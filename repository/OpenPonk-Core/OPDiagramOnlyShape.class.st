@@ -94,8 +94,8 @@ OPDiagramOnlyShape >> modelElements: aCollection [
 
 { #category : 'rendering' }
 OPDiagramOnlyShape >> updateRenderFromModel [
-
-	"do nothing - there is no model"
+	"Diagram-only elements act as their own model. Refresh visual rendering on model change."
+	self updateRenderFromSelf
 ]
 
 { #category : 'accessing' }

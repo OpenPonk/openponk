@@ -68,6 +68,22 @@ OPCreationTool >> selectedControllers: aCollectionOfControllers [
 	objectController := nil
 ]
 
+{ #category : 'canvas events' }
+OPCreationTool >> selectedControllers: aCollection onPosition: aPoint [
+	| targetController |
+	aCollection size = 1 ifFalse: [ ^ self ].
+	targetController := aCollection anyOne.
+	(targetController canBeTargetFor: objectController) ifFalse: [ ^ self ].
+	targetController addAsTargetFor: objectController onPosition: aPoint.
+	self palette selectSelectionTool.
+	objectController roassalShape
+		propertyAt: OPRSSelectable
+		ifPresent: [ :selectable |
+			selectable fakeClicked: objectController roassalShape ].
+	onComplete value: objectController.
+	objectController := nil
+]
+
 { #category : 'callbacks' }
 OPCreationTool >> whenCreated: aOneArgBlock [
 	onComplete := aOneArgBlock

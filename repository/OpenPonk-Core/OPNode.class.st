@@ -10,6 +10,16 @@ Class {
 	#tag : 'DiagramElements'
 }
 
+{ #category : 'testing' }
+OPNode class >> isEdge [
+	^ false
+]
+
+{ #category : 'testing' }
+OPNode class >> isNode [
+	^ true
+]
+
 { #category : 'rendering' }
 OPNode >> addedByMouseClickTo: aPoint [
 

@@ -63,6 +63,21 @@ OPNoShape >> ifNotExists: aFullBlockClosure [
 ]
 
 { #category : 'testing' }
+OPNoShape >> isEdge [
+	^ false
+]
+
+{ #category : 'testing' }
+OPNoShape >> isNoShape [
+	^ true
+]
+
+{ #category : 'testing' }
+OPNoShape >> isNode [
+	^ false
+]
+
+{ #category : 'testing' }
 OPNoShape >> isRendered [
 
 	^ false
@@ -126,11 +141,14 @@ OPNoShape >> recursivelyOwnedElement: aShape renderedIn: aCanvas [
 	
 ]
 
-{ #category : 'removing' }
+{ #category : 'rendering' }
 OPNoShape >> remove [
-	"do nothing"
+	"Null object pattern - do nothing"
+]
 
-	
+{ #category : 'rendering' }
+OPNoShape >> removeRender [
+	"Null object pattern - do nothing"
 ]
 
 { #category : 'accessing' }

@@ -1,7 +1,5 @@
 "
-Coordinator for an OPProject. 
-Handles project-level lifecycle operations including saving, loading, merging, and coordinating with the active workbench and model handlers. 
-Manages the lifecycle of active diagram controllers within the project.
+Coordinator for an OPProject. Handles project-level lifecycle operations including saving, loading, merging, undo/redo coordination, and active diagram controllers.
 "
 Class {
 	#name : 'OPProjectController',
@@ -12,7 +10,8 @@ Class {
 		'controllers',
 		'lastSave',
 		'persistenceManager',
-		'viewModelRegistry'
+		'viewModelRegistry',
+		'undoManager'
 	],
 	#classVars : [
 		'RecentProjects'
@@ -21,6 +20,13 @@ Class {
 	#package : 'OpenPonk-Core',
 	#tag : 'Controllers'
 }
+
+{ #category : 'instance creation' }
+OPProjectController class >> forProject: aProject [
+	^ self new
+		project: aProject;
+		yourself
+]
 
 { #category : 'instance creation' }
 OPProjectController class >> fromDirectory: aFolder [
@@ -87,9 +93,11 @@ OPProjectController class >> openModalFromFile [
 		  projectController
 ]
 
-{ #category : 'adding' }
-OPProjectController >> addDiagramController: aController [
-	controllers add: aController
+{ #category : 'managing' }
+OPProjectController >> addDiagramController: aDiagramController [
+	controllers add: aDiagramController.
+	(aDiagramController respondsTo: #projectController:) ifTrue: [
+		aDiagramController projectController: self ]
 ]
 
 { #category : 'saving' }
@@ -101,6 +109,18 @@ OPProjectController >> canProjectBeSavedToFile: aFileReference [
 	aFileReference size isZero
 		ifTrue: [ aFileReference delete ].
 	^ true
+]
+
+{ #category : 'as yet unclassified' }
+OPProjectController >> canRedo [
+	"Answer whether an action can be redone in the project."
+	^ self undoManager canRedo
+]
+
+{ #category : 'as yet unclassified' }
+OPProjectController >> canUndo [
+	"Answer whether an action can be undone in the project."
+	^ self undoManager canUndo
 ]
 
 { #category : 'accessing' }
@@ -134,7 +154,8 @@ OPProjectController >> hasModel: aModel diagram: aDiagram [
 { #category : 'initialization' }
 OPProjectController >> initialize [
 	super initialize.
-	controllers := OrderedCollection new
+	controllers := OrderedCollection new.
+	undoManager := OPUndoManager new
 ]
 
 { #category : 'saving' }
@@ -170,48 +191,35 @@ OPProjectController >> mergeModelsAndDiagramsIntoOne [
 
 	| showError plugins models plugin |
 	showError := [ :text |
-	             ^ (GrowlMorph
-		                label: 'Unable to merge models'
-		                contents: text)
-		               backgroundColor:
-			               GrowlMorph theme dangerBackgroundColor;
-		               labelColor: GrowlMorph theme textColor;
-		               textColor:
-			               GrowlMorph theme textColorForNonStandardBackground;
-		               openInWorld ].
+		             ^ (GrowlMorph label: 'Unable to merge models' contents: text)
+			               backgroundColor: GrowlMorph theme dangerBackgroundColor;
+			               labelColor: GrowlMorph theme textColor;
+			               textColor: GrowlMorph theme textColorForNonStandardBackground;
+			               openInWorld ].
 	models := self project models.
 	models ifEmpty: [ ^ showError value: 'There are no models' ].
 	(self project diagrams size < 2 and: [ models size < 2 ]) ifTrue: [
-		^ showError value:
-			  'The model is as merged as it can be - there have to be at least 2 models or 2 diagrams' ].
-	plugins := models collect: [ :each |
-		           OPPluginRegistry default pluginFor: each ].
-	plugins asSet size = 1 ifFalse: [
-		^ showError value:
-			  'All models must be of the same type/metamodel/plugin' ].
+		^ showError value: 'The model is as merged as it can be - there have to be at least 2 models or 2 diagrams' ].
+	plugins := models collect: [ :each | OPPluginRegistry default pluginFor: each ].
+	plugins asSet size = 1 ifFalse: [ ^ showError value: 'All models must be of the same type/metamodel/plugin' ].
 	plugin := plugins anyOne.
-	plugin supportsMergingModels ifFalse: [
-		^ showError value: 'Plugin of these models does not support merging' ].
-
+	plugin supportsMergingModels ifFalse: [ ^ showError value: 'Plugin of these models does not support merging' ].
 	SpConfirmDialog new
 		title: 'Merge all models and diagrams into one?';
-		label:
-			'This is irreversible and original models and diagrams will be lost.';
+		message: 'This is irreversible and original models and diagrams will be lost.';
 		acceptLabel: 'Yes, merge them';
 		cancelLabel: 'Cancel';
 		onAccept: [
-			| model diagram layouter |
-			model := plugin mergeModels: models.
-			self project diagrams do: [ :eachDiagram |
-					workbench closeEditorOfDiagram: eachDiagram ].
-			models do: [ :eachModel | self removeModel: eachModel ].
-			diagram := OPOpenPonkDiagram forModelElement: model.
-			diagram ownedElements:
-					(self project diagrams flatCollect: #ownedElements).
-			self project addDiagram: diagram.
-			layouter := (self openEditorOnDiagram: diagram) diagramController
-				            layouter.
-			layouter dominanceTreeLayout ];
+				| model diagram layouter |
+				self undoManager clear.
+				model := plugin mergeModels: models.
+				self project diagrams do: [ :eachDiagram | workbench closeEditorOfDiagram: eachDiagram ].
+				models do: [ :eachModel | self removeModel: eachModel ].
+				diagram := OPOpenPonkDiagram forModelElement: model.
+				diagram ownedElements: (self project diagrams flatCollect: #ownedElements).
+				self project addDiagram: diagram.
+				layouter := (self openEditorOnDiagram: diagram) diagramController layouter.
+				layouter dominanceTreeLayout ];
 		openDialog
 ]
 
@@ -289,6 +297,12 @@ OPProjectController >> recentProjects [
 	^ RecentProjects ifNil: [ RecentProjects := OrderedDictionary new ]
 ]
 
+{ #category : 'as yet unclassified' }
+OPProjectController >> redo [
+	"Redo the latest undone action in the active project."
+	self undoManager redo
+]
+
 { #category : 'removing' }
 OPProjectController >> removeDiagram: aDiagram [
 
@@ -298,10 +312,11 @@ OPProjectController >> removeDiagram: aDiagram [
 			 ifNone: [ ^ self ])
 ]
 
-{ #category : 'removing' }
-OPProjectController >> removeDiagramController: aController [
-
-	controllers remove: aController
+{ #category : 'managing' }
+OPProjectController >> removeDiagramController: aDiagramController [
+	controllers remove: aDiagramController ifAbsent: [ ].
+	(aDiagramController respondsTo: #projectController:) ifTrue: [
+		aDiagramController projectController: nil ]
 ]
 
 { #category : 'removing' }
@@ -310,6 +325,14 @@ OPProjectController >> removeModel: aModel [
 	(controllers select: [ :any | any model = aModel ]) do: [ :each | 
 		self removeDiagramController: each ].
 	project removeModel: aModel
+]
+
+{ #category : 'diagrams' }
+OPProjectController >> renameDiagram: aDiagram to: aNewName [
+	self undoManager execute: (OPRenameDiagramCommand
+		diagram: aDiagram
+		newName: aNewName
+		project: self project)
 ]
 
 { #category : 'saving' }
@@ -374,18 +397,14 @@ OPProjectController >> saveState: saveData to: aFile [
 		writeStreamDo: [ :stream | stream nextPutAll: (STON toJsonStringPretty: saveData) ]
 ]
 
-{ #category : 'diagram selecting' }
+{ #category : 'selection' }
 OPProjectController >> selectInDiagram: aModelElement [
-
-	controllers do: [ :dctrl | 
-		dctrl controllers do: [ :ctrl | 
-			ctrl model = aModelElement ifTrue: [ 
-				| palette |
-				palette := dctrl editor palette.
-				palette selectSelectionTool selectedTool 
-					selectedTargetControllers: { ctrl }.
-				dctrl editor canvasPresenter roassalView canvas camera 
-					translateTo: ctrl roassalShape position.
+	controllers do: [ :eachDiagramController |
+		eachDiagramController controllers do: [ :eachController |
+			eachController model = aModelElement ifTrue: [
+				eachDiagramController selectController: eachController.
+				eachDiagramController canvas camera
+					translateTo: eachController roassalShape position.
 				^ self ] ] ]
 ]
 
@@ -393,6 +412,18 @@ OPProjectController >> selectInDiagram: aModelElement [
 OPProjectController >> spApplication [
 
 	^ workbench application
+]
+
+{ #category : 'as yet unclassified' }
+OPProjectController >> undo [
+	"Undo the latest action in the active project."
+	self undoManager undo
+]
+
+{ #category : 'as yet unclassified' }
+OPProjectController >> undoManager [
+	"Answer the undo manager associated with this project controller."
+	^ undoManager ifNil: [ undoManager := OPUndoManager new ]
 ]
 
 { #category : 'opening' }
@@ -429,9 +460,8 @@ OPProjectController >> viewModel [
 
 { #category : 'accessing' }
 OPProjectController >> viewModelRegistry [
-
 	^ viewModelRegistry ifNil: [
-		  viewModelRegistry := OPViewModelRegistry forProject: self project ]
+		viewModelRegistry := OPViewModelRegistry forProject: self project ]
 ]
 
 { #category : 'accessing' }

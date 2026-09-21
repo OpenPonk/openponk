@@ -38,8 +38,15 @@ OPBoundNode >> bounds [
 
 { #category : 'accessing' }
 OPBoundNode >> bounds: anObject [
-
+	bounds = anObject ifTrue: [ ^ self ].
 	bounds := anObject
+]
+
+{ #category : 'memento' }
+OPBoundNode >> captureGeometryMemento [
+	self bounds ifNil: [
+		self isRendered ifTrue: [ self updateFromRender ] ].
+	^ self bounds ifNotNil: [ :currentBounds | currentBounds copy ]
 ]
 
 { #category : 'accessing' }
@@ -90,12 +97,16 @@ OPBoundNode >> position [
 
 { #category : 'rendering' }
 OPBoundNode >> renderIn: aCanvas [
-
 	self isRendered ifTrue: [ ^ self ].
 	super renderIn: aCanvas.
 	self bounds ifNil: [
 		self movesWithOtherShape ifFalse: [ self moveToEmptySpace ] ].
 	^ roassalShape
+]
+
+{ #category : 'memento' }
+OPBoundNode >> restoreGeometryFromMemento: aGeometryMemento [
+	aGeometryMemento ifNotNil: [ :savedBounds | self bounds: savedBounds copy ]
 ]
 
 { #category : 'interactions' }

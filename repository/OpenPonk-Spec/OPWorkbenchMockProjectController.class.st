@@ -25,6 +25,12 @@ OPWorkbenchMockProjectController >> isSaved [
 ]
 
 { #category : 'accessing' }
+OPWorkbenchMockProjectController >> project [
+	"Return a mock project instance to satisfy workbench window title and context requirements."
+	^ OPProject named: 'Test Project'
+]
+
+{ #category : 'accessing' }
 OPWorkbenchMockProjectController >> saveBlock: aBlock [
 	saveBlock := aBlock
 ]

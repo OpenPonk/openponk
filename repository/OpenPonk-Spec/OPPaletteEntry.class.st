@@ -90,9 +90,10 @@ OPPaletteEntry >> whenCreated: aOneArgBlock [
 	tool whenCreated: aOneArgBlock
 ]
 
-{ #category : 'tool api' }
+{ #category : 'actions' }
 OPPaletteEntry >> whenCreatedSetup [
 
-	self whenCreated: [ :ctrl | 
-		OPInitialSetElementCommand executeOn: ctrl ]
+	self whenCreated: [ :newlyCreatedCtrl |
+			newlyCreatedCtrl diagramController ifNotNil: [ :activeDiagramCtrl |
+				activeDiagramCtrl form ifNotNil: [ :form | form focusFirstInput ] ] ]
 ]

@@ -34,34 +34,17 @@ OPBoundaryController class >> viewModelClass [
 	^ OPBoundaryViewModel
 ]
 
-{ #category : 'connecting' }
+{ #category : 'user interface' }
 OPBoundaryController >> addAsTargetFor: aController [
-
-	^ self diagramController addAsTargetFor: aController
+	^ self addAsTargetFor: aController onPosition: nil
 ]
 
-{ #category : 'forms' }
-OPBoundaryController >> buildEditorForm: aForm [
-
-	(aForm addText: 'Name')
-		text: self diagramElement name;
-		whenTextChangedDo: [ :newValue | 
-			self diagramElement name: newValue asString.
-			self diagramElement updateText ]
+{ #category : 'user interface' }
+OPBoundaryController >> addAsTargetFor: aController onPosition: aPoint [
+	^ self diagramController addAsTargetFor: aController onPosition: aPoint
 ]
 
 { #category : 'connecting' }
 OPBoundaryController >> canBeTargetFor: aController [
 	^ self diagramController canBeTargetFor: aController
-]
-
-{ #category : 'ui-hooks' }
-OPBoundaryController >> creationUICommandClass [
-
-	^ OPRenameElementCommand
-]
-
-{ #category : 'accessing' }
-OPBoundaryController >> propertiesTarget [
-	^ self
 ]

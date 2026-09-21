@@ -6,30 +6,18 @@ Class {
 	#tag : 'Commands-ProjectTree'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'testing' }
 OPInspectViewModelCommand >> canBeExecuted [
-	^ self selectedViewModel isNotNil
+	^ OPWorkbench isDevelopmentMode and: [ self selectedViewModel isNotNil ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'executing' }
 OPInspectViewModelCommand >> execute [
 	self selectedViewModel inspect
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPInspectViewModelCommand >> initialize [
 	super initialize.
 	self name: 'Inspect ViewModel'
-]
-
-{ #category : 'as yet unclassified' }
-OPInspectViewModelCommand >> itemType [
-
-	^ 'view model'
-]
-
-{ #category : 'as yet unclassified' }
-OPInspectViewModelCommand >> items [
-
-	^ viewModels
 ]

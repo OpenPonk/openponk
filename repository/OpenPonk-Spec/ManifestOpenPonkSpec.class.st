@@ -19,7 +19,7 @@ ManifestOpenPonkSpec class >> ruleRBContainsRuleV1FalsePositive [
 ManifestOpenPonkSpec class >> ruleReShouldSendSuperInitializeAsFirstMessageV1FalsePositive [
 
 	<ignoreForCoverage>
-	^ #(#(#(#RGMethodDefinition #(#OPWorkbench #initialize #false)) #'2026-08-30T22:36:32.027+02:00') #(#(#RGMethodDefinition #(#OPDynamicForm #initialize #false)) #'2026-08-30T22:36:53.117+02:00') #(#(#RGMethodDefinition #(#OPPalette #initialize #false)) #'2026-08-30T22:37:01.49+02:00') #(#(#RGMethodDefinition #(#OPVersionInfo #initialize #false)) #'2026-08-30T22:37:21.918+02:00') #(#(#RGMethodDefinition #(#OPProjectBrowser #initialize #false)) #'2026-08-30T22:39:17.276+02:00') )
+	^ #(#(#(#RGMethodDefinition #(#OPWorkbench #initialize #false)) #'2026-08-30T22:36:32.027+02:00') #(#(#RGMethodDefinition #(#OPPropertiesForm #initialize #false)) #'2026-08-30T22:36:53.117+02:00') #(#(#RGMethodDefinition #(#OPPalette #initialize #false)) #'2026-08-30T22:37:01.49+02:00') #(#(#RGMethodDefinition #(#OPVersionInfo #initialize #false)) #'2026-08-30T22:37:21.918+02:00') #(#(#RGMethodDefinition #(#OPProjectBrowser #initialize #false)) #'2026-08-30T22:39:17.276+02:00') )
 ]
 
 { #category : 'code-critics' }

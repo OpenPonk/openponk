@@ -15,7 +15,8 @@ Class {
 		'openButton',
 		'createButton',
 		'cloneButton',
-		'viewModelRegistry'
+		'viewModelRegistry',
+		'undoManager'
 	],
 	#category : 'OpenPonk-Spec-Windows',
 	#package : 'OpenPonk-Spec',
@@ -71,7 +72,7 @@ OPDiagramsList >> contextMenu: aMenuPresenter for: aDiagram [
 	^ aMenuPresenter
 ]
 
-{ #category : 'actions' }
+{ #category : 'toolbar' }
 OPDiagramsList >> copyDiagram: aView [
 
 	| name newView |
@@ -86,8 +87,7 @@ OPDiagramsList >> copyDiagram: aView [
 		name isNotNil and: [ name isEmpty or: [ name = aView name ] ] ].
 	name ifNil: [ ^ self ].
 	self workbench projectController updateDiagrams.
-	newView := project copyDiagram: aView.
-	newView name: name.
+	newView := project copyDiagram: aView named: name.
 	self workbench openEditorOnDiagram: newView
 ]
 
@@ -241,35 +241,55 @@ OPDiagramsList >> project [
 
 { #category : 'accessing' }
 OPDiagramsList >> project: aProject [
-
 	project := aProject.
 	self whenWindowClosedUnsubscribeFrom: project.
-	self whenWindowClosedUnsubscribeFrom: self workbench.
-	project weakWhenChangedSend: #updateContent to: self.
-	self updateContent.
-	self workbench announcer
-		when: OPEditorUnfocused
-		do: [ :event | list resetListSelection ]
-		for: self.
-	self workbench announcer
-		when: OPEditorFocused
-		do: [ :event | self updateContent ]
-		for: self
+	self workbench ifNotNil: [ :aWorkbench |
+		self whenWindowClosedUnsubscribeFrom: aWorkbench.
+		aWorkbench announcer
+			when: OPEditorUnfocused
+			do: [ :event | list resetListSelection ]
+			for: self.
+		aWorkbench announcer
+			when: OPEditorFocused
+			do: [ :event | self updateContent ]
+			for: self ].
+
+	project announcer weak
+		when: OPDiagramAdded send: #updateContent to: self;
+		when: OPDiagramRemoved send: #updateContent to: self;
+		when: OPDiagramRenamed send: #updateContent to: self.
+
+	self updateContent
+]
+
+{ #category : 'accessing' }
+OPDiagramsList >> projectController [
+	^ self workbench ifNotNil: [ :aWorkbench | aWorkbench projectController ]
 ]
 
 { #category : 'actions' }
 OPDiagramsList >> renameDiagram: aView [
-
 	| name |
-	[ 
+	[
 	name := UIManager default
 		        request: 'Rename view "' , (self displayFor: aView) , '"'
 		        initialAnswer: aView name
-		        title: 'Rename' ] doWhileTrue: [ 
+		        title: 'Rename' ] doWhileTrue: [
 		name isNotNil and: [ name = aView name ] ].
 	name ifNil: [ ^ self ].
-	aView name: name.
-	list updateList
+	self renameDiagram: aView to: name
+]
+
+{ #category : 'actions' }
+OPDiagramsList >> renameDiagram: aDiagram to: aNewName [
+	self projectController
+		ifNotNil: [ :controller |
+			controller renameDiagram: aDiagram to: aNewName ]
+		ifNil: [
+			self undoManager execute: (OPRenameDiagramCommand
+				diagram: aDiagram
+				newName: aNewName
+				project: project) ]
 ]
 
 { #category : 'actions' }
@@ -299,6 +319,17 @@ OPDiagramsList >> selectionChanged: aDiagram [
 { #category : 'accessing - spec' }
 OPDiagramsList >> toolbar [
 	^ toolbar
+]
+
+{ #category : 'accessing' }
+OPDiagramsList >> undoManager [
+	^ undoManager ifNil: [
+		self projectController ifNotNil: [ :controller | controller undoManager ] ]
+]
+
+{ #category : 'accessing' }
+OPDiagramsList >> undoManager: anUndoManager [
+	undoManager := anUndoManager
 ]
 
 { #category : 'actions' }
@@ -335,5 +366,5 @@ OPDiagramsList >> viewModelRegistry [
 
 { #category : 'accessing - spec' }
 OPDiagramsList >> workbench [
-	^ owner workbench
+	^ owner ifNotNil: [ :anOwner | anOwner workbench ]
 ]

@@ -16,11 +16,9 @@ Class {
 
 { #category : 'running' }
 OPProjectControllerTest >> setUp [
-
 	super setUp.
-	controller := OPProjectController new.
 	project := OPProject new.
-	controller project: project.
+	controller := OPProjectController forProject: project.
 	OPPluginRegistry setDefaultForTesting
 ]
 
@@ -33,28 +31,42 @@ OPProjectControllerTest >> tearDown [
 
 { #category : 'tests' }
 OPProjectControllerTest >> testAddController [
-
-	| dc model |
-	dc := OPDiagramController new.
+	| diagramController model |
+	diagramController := OPDiagramController new.
 	model := OPTestContainerModel new.
-	dc viewModelRegistry: OPViewModelRegistry forNewProject.
-	dc model: model.
-	controller addDiagramController: dc.
-	self assert: controller controllers asArray equals: { dc }
+	controller addDiagramController: diagramController.
+	diagramController model: model.
+	self assert: controller controllers asArray equals: { diagramController }
 ]
 
 { #category : 'tests' }
 OPProjectControllerTest >> testRemoveController [
-
-	| dc model |
-	dc := OPDiagramController new.
+	| diagramController model |
+	diagramController := OPDiagramController new.
 	model := OPTestContainerModel new.
-	dc viewModelRegistry: OPViewModelRegistry forNewProject.
-	dc model: model.
-	controller addDiagramController: dc.
-	controller removeDiagramController: dc.
+	controller addDiagramController: diagramController.
+	diagramController model: model.
+	controller removeDiagramController: diagramController.
 	self deny: (controller hasModel: model).
-	self deny: (model announcer hasSubscriber: controller)
+	self deny: (model announcer hasSubscriber: diagramController)
+]
+
+{ #category : 'tests' }
+OPProjectControllerTest >> testRenameDiagramTransactively [
+	| diagram |
+	diagram := OPOpenPonkDiagram new.
+	diagram name: 'Old Name'.
+	project addDiagram: diagram.
+
+	controller renameDiagram: diagram to: 'New Name'.
+
+	self assert: diagram name equals: 'New Name'.
+
+	controller undoManager undo.
+	self assert: diagram name equals: 'Old Name'.
+
+	controller undoManager redo.
+	self assert: diagram name equals: 'New Name'
 ]
 
 { #category : 'tests' }

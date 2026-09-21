@@ -77,39 +77,25 @@ OPAbstractElementControllerTest >> registerModel [
 
 { #category : 'running' }
 OPAbstractElementControllerTest >> setUp [
-
-	| rootModel mockProject mockProjectViewModel |
+	| rootModel project projectController |
 	super setUp.
-	diagramController := self diagramControllerClass new.
 	rootModel := self diagramModelClass new.
+	project := OPProject new.
+	project addModel: rootModel.
 
-	mockProject := OPProject new.
-	mockProject stub models willReturn: { rootModel }.
-	diagramController viewModelRegistry:
-		(OPViewModelRegistry forProject: mockProject).
+	projectController := OPProjectController forProject: project.
 
+	diagramController := self diagramControllerClass new.
+	diagramController canvasPresenter: (OPCanvasPresenter new
+		canvas: RSCanvas new;
+		yourself).
+	diagramController diagramElement: (OPOpenPonkDiagram forModelElement: rootModel).
+
+	projectController addDiagramController: diagramController.
 	diagramController model: rootModel.
 
-	mockProjectViewModel := Mock new.
-	mockProjectViewModel stub model willReturn: mockProject.
-	mockProjectViewModel stub parentPackageViewModel willReturn: nil.
-	mockProjectViewModel stub packageViewModel willReturn: nil.
-	mockProjectViewModel stub parentViewModel willReturn: nil.
-	mockProjectViewModel stub projectViewModel willReturn:
-		mockProjectViewModel.
+	controller diagramController: diagramController.
 
-	diagramController viewModelRegistry stub projectViewModel
-		willReturn: mockProjectViewModel.
-	diagramController viewModelRegistry stub project willReturn:
-		mockProject.
-
-	controller viewModelRegistry: diagramController viewModelRegistry.
-
-	diagramController canvasPresenter: (OPCanvasPresenter new
-			 canvas: RSCanvas new;
-			 yourself).
-	diagramController diagramElement:
-		(OPOpenPonkDiagram forModelElement: diagramController model).
 	self setUpCreationTarget
 ]
 
@@ -161,41 +147,31 @@ OPAbstractElementControllerTest >> testAddController [
 	self assert: controller diagramController equals: diagramController
 ]
 
-{ #category : 'tests - ui interaction' }
+{ #category : 'tests' }
 OPAbstractElementControllerTest >> testBeingCopiedWithDiagram [
-
 	| diagram diagramElement diagramControllerOfCopy |
 	self assertEmpty: diagramController controllers.
 	self showInDiagram.
 	diagram := diagramController diagramElement.
 	diagramElement := controller diagramElement.
 	self assert: (diagramController hasControllerForModel: self model).
-	self
-		assertCollection: diagram allOwnedElements
-		includesAll: { diagramElement }.
-	self
-		assertCollection: diagramController controllers
-		includesAll: { controller }.
-	diagramControllerOfCopy := self diagramControllerClass new.
-	diagramControllerOfCopy viewModelRegistry:
-		(OPViewModelRegistry forProject: diagramController project).
-	diagramControllerOfCopy model: diagramController model.
-	
-	diagramControllerOfCopy diagramElement: diagram newCopy.
+	self assertCollection: diagram allOwnedElements includesAll: { diagramElement }.
+	self assertCollection: diagramController controllers includesAll: { controller }.
 
+	diagramControllerOfCopy := self diagramControllerClass new.
+	diagramController projectController addDiagramController: diagramControllerOfCopy.
+	diagramControllerOfCopy model: diagramController model.
+	diagramControllerOfCopy diagramElement: diagram newCopy.
 	diagramControllerOfCopy canvasPresenter: (OPCanvasPresenter new
-			 canvas: RSCanvas new;
-			 yourself).
+		canvas: RSCanvas new;
+		yourself).
 	diagramControllerOfCopy diagramFocused.
+
 	self
-		assertCollection:
-			(diagramControllerOfCopy diagram allOwnedElements collect:
-				 #modelElement)
-		hasSameElements:
-		(diagramController diagram allOwnedElements collect: #modelElement).
+		assertCollection: (diagramControllerOfCopy diagram allOwnedElements collect: #modelElement)
+		hasSameElements: (diagramController diagram allOwnedElements collect: #modelElement).
 	self
-		assertCollection:
-		(diagramControllerOfCopy controllers collect: #model)
+		assertCollection: (diagramControllerOfCopy controllers collect: #model)
 		hasSameElements: (diagramController controllers collect: #model)
 ]
 
@@ -215,9 +191,8 @@ OPAbstractElementControllerTest >> testBeingKeptWhenEditorFocusChanges [
 		includesAll: { controller }
 ]
 
-{ #category : 'tests - ui interaction' }
+{ #category : 'tests' }
 OPAbstractElementControllerTest >> testBeingRemovedAfterModelRemovalWhenNotRendered [
-
 	| diagram diagramElement newDiagramControllerBlock diagramControllerOfCopy controllerOfCopy recreatedDiagramController diagramOfCopy diagramElementOfCopy recreatedDiagram |
 	self
 		denyCollection: diagramController controllers
@@ -236,10 +211,10 @@ OPAbstractElementControllerTest >> testBeingRemovedAfterModelRemovalWhenNotRende
 		assertCollection: (diagramController controllers collect: #model)
 		includesAll: { model }.
 	self
-		assertCollection:
-		(diagram allOwnedElements flatCollect: #modelElements)
+		assertCollection: (diagramController controllers collect: #model)
 		includesAll: { model }.
 	self assert: diagramElement isRendered.
+
 	diagramController removeController.
 	self
 		denyCollection: diagramController controllers
@@ -250,38 +225,26 @@ OPAbstractElementControllerTest >> testBeingRemovedAfterModelRemovalWhenNotRende
 	self
 		denyCollection: (diagramController controllers collect: #model)
 		includesAll: { model }.
-	self
-		assertCollection:
-		(diagram allOwnedElements flatCollect: #modelElements)
-		includesAll: { model }.
 	self deny: diagramElement isRendered.
 
 	newDiagramControllerBlock := [ :copyOfDiagram |
-		                             | newDiagramController newRegistry |
-		                             newDiagramController := self
-			                                                     diagramControllerClass
-			                                                     new.
-		                             newRegistry := OPViewModelRegistry forProject: diagramController project.
+		| newDiagramController |
+		newDiagramController := self diagramControllerClass new.
+		diagramController projectController addDiagramController: newDiagramController.
+		newDiagramController model: diagramController model.
+		newDiagramController diagramElement: copyOfDiagram.
+		newDiagramController canvasPresenter: (OPCanvasPresenter new
+			canvas: RSCanvas new;
+			yourself).
+		newDiagramController diagramFocused.
+		newDiagramController ].
 
-		                             newDiagramController
-			                             viewModelRegistry: newRegistry.
-		                             newDiagramController model:
-			                             diagramController model.
-		                             newDiagramController diagramElement:
-			                             copyOfDiagram.
-		                             newDiagramController canvasPresenter:
-			                             (OPCanvasPresenter new
-				                              canvas: RSCanvas new;
-				                              yourself).
-		                             newDiagramController diagramFocused.
-		                             newDiagramController ].
-
-	diagramControllerOfCopy := newDiagramControllerBlock value:
-		                           diagram newCopy.
+	diagramControllerOfCopy := newDiagramControllerBlock value: diagram newCopy.
 	controllerOfCopy := diagramControllerOfCopy controllerForModel: model.
 	diagramOfCopy := diagramControllerOfCopy diagram.
 	diagramElementOfCopy := controllerOfCopy diagramElement.
 	diagramControllerOfCopy validate.
+
 	self
 		assertCollection: diagramControllerOfCopy controllers
 		includesAll: { controllerOfCopy }.
@@ -289,34 +252,23 @@ OPAbstractElementControllerTest >> testBeingRemovedAfterModelRemovalWhenNotRende
 		assertCollection: diagramOfCopy allOwnedElements
 		includesAll: { diagramElementOfCopy }.
 	self
-		assertCollection:
-		(diagramControllerOfCopy controllers collect: #model)
-		includesAll: { model }.
-	self
-		assertCollection:
-		(diagramOfCopy allOwnedElements flatCollect: #modelElements)
+		assertCollection: (diagramControllerOfCopy controllers collect: #model)
 		includesAll: { model }.
 	self assert: diagramElementOfCopy isRendered.
 
 	controllerOfCopy viewModel removeModel.
-	recreatedDiagramController := newDiagramControllerBlock value:
-		                              diagram.
+	recreatedDiagramController := newDiagramControllerBlock value: diagram.
 	recreatedDiagram := recreatedDiagramController diagramElement.
 	recreatedDiagramController validate.
+
 	self
-		denyCollection:
-		(recreatedDiagramController controllers collect: #model)
-		includesAll: { model }.
-	self
-		denyCollection:
-		(recreatedDiagram allOwnedElements flatCollect: #modelElements)
+		denyCollection: (recreatedDiagramController controllers collect: #model)
 		includesAll: { model }.
 	self deny: diagramElement isRendered
 ]
 
-{ #category : 'tests - ui interaction' }
+{ #category : 'tests' }
 OPAbstractElementControllerTest >> testBeingRemovedAfterModelRemovalWhenRendered [
-
 	self
 		denyCollection: diagramController controllers
 		includesAll: { controller }.
@@ -325,9 +277,6 @@ OPAbstractElementControllerTest >> testBeingRemovedAfterModelRemovalWhenRendered
 		assertCollection: diagramController controllers
 		includesAll: { controller }.
 	controller viewModel removeModel.
-
-	controller viewModelRegistry:
-		(OPViewModelRegistry forProject: diagramController project).
 	controller model: model.
 	diagramController diagramFocused.
 	self
@@ -391,6 +340,31 @@ OPAbstractElementControllerTest >> testCreateModel [
 		includesAll: { controller model }
 ]
 
+{ #category : 'tests - transactions' }
+OPAbstractElementControllerTest >> testCreateUndoRedo [
+	| undoManager createdModel createdDiagramElement |
+	self testCreateUsingAddAsTarget.
+	undoManager := diagramController undoManager.
+	createdModel := controller model.
+	createdDiagramElement := controller diagramElement.
+
+	undoManager undo.
+	self denyCollection: (diagramController controllers collect: #model) includesAny: { createdModel }.
+	self deny: createdDiagramElement isRendered.
+
+	undoManager redo.
+	self assertCollection: (diagramController controllers collect: #model) includesAll: { createdModel }.
+	self assert: createdDiagramElement isRendered.
+
+	undoManager undo.
+	self denyCollection: (diagramController controllers collect: #model) includesAny: { createdModel }.
+	self deny: createdDiagramElement isRendered.
+
+	undoManager redo.
+	self assertCollection: (diagramController controllers collect: #model) includesAll: { createdModel }.
+	self assert: createdDiagramElement isRendered
+]
+
 { #category : 'tests' }
 OPAbstractElementControllerTest >> testCreateUsingAddAsTarget [
 
@@ -440,6 +414,35 @@ OPAbstractElementControllerTest >> testDescriptionName [
 	diagramElement should receive modelChanged
 ]
 
+{ #category : 'tests - undo/redo' }
+OPAbstractElementControllerTest >> testHideUndoRedo [
+	| undoManager elementModel hideCommand |
+	self testCreateUsingAddAsTarget.
+	self assert: controller isHideable.
+	undoManager := diagramController undoManager.
+	elementModel := controller model.
+
+	hideCommand := OPHideDiagramElementCommand
+		model: elementModel
+		diagramController: diagramController.
+	undoManager inTransaction: [ undoManager execute: hideCommand ].
+
+	self deny: (diagramController hasControllerForModel: elementModel).
+	self assertCollection: self allElements includesAll: { elementModel }.
+
+	undoManager undo.
+	self assert: (diagramController hasControllerForModel: elementModel).
+	self assertCollection: self allElements includesAll: { elementModel }.
+
+	undoManager redo.
+	self deny: (diagramController hasControllerForModel: elementModel).
+	self assertCollection: self allElements includesAll: { elementModel }.
+
+	undoManager undo.
+	self assert: (diagramController hasControllerForModel: elementModel).
+	self assertCollection: self allElements includesAll: { elementModel }
+]
+
 { #category : 'tests' }
 OPAbstractElementControllerTest >> testIsSupported [
 
@@ -468,13 +471,12 @@ OPAbstractElementControllerTest >> testMultiLineFormFieldsProperlyWrapInDiagramS
 	| form multiLinePresenters |
 	self showInDiagram.
 
-	form := OPDynamicForm new.
+	form := OPPropertiesForm new.
 	[
-		form target: controller.
+		form viewModel: controller viewModel.
 
 		multiLinePresenters := form focusOrder select: [ :presenter |
-			                       (presenter isKindOf: SpTextPresenter) or: [
-				                       presenter isKindOf: (Smalltalk globals at: #OPLongTextPresenter ifAbsent: [ nil ]) ] ].
+			                       (presenter isKindOf: SpTextPresenter) or: [ presenter isKindOf: OPLongTextPresenter ] ].
 
 		multiLinePresenters do: [ :presenter |
 				| originalText sentinel labelsWithNewline |
@@ -505,7 +507,43 @@ OPAbstractElementControllerTest >> testMultiLineFormFieldsProperlyWrapInDiagramS
 									nextPutAll: '. Cairo cannot wrap this text and renders tofu glyphs.' ] ].
 
 				presenter text: originalText.
-				controller modelChanged ] ] ensure: [ form target: nil ]
+				controller modelChanged ] ] ensure: [ form viewModel: nil ]
+]
+
+{ #category : 'tests' }
+OPAbstractElementControllerTest >> testNaturalExtentNotOverriddenByFallback [
+	(controller diagramElement respondsTo: #shouldBeResizableByUser) ifFalse: [ ^ self ].
+	controller diagramElement shouldBeResizableByUser ifFalse: [ ^ self ].
+
+	self testCreateUsingAddAsTarget.
+
+	self
+		deny: controller diagramElement bounds extent
+		equals: 50 @ 50
+]
+
+{ #category : 'tests' }
+OPAbstractElementControllerTest >> testNaturalExtentPreservedOnCreation [
+	| expectedExtent actualExtent |
+	self diagramElementClass isNode ifFalse: [ ^ self ].
+
+	self showDependenciesInDiagram.
+	creationTargetController addAsTargetFor: controller onPosition: (100 @ 100).
+
+	(controller diagramElement respondsTo: #shouldBeResizableByUser) ifFalse: [ ^ self ].
+	controller diagramElement shouldBeResizableByUser ifFalse: [ ^ self ].
+
+	expectedExtent := controller diagramElement renderBasicShape extent.
+	actualExtent := controller diagramElement bounds extent.
+
+	self
+		assert: (actualExtent x closeTo: expectedExtent x precision: 1.0)
+		description: [ 'Expected width close to ' , expectedExtent x asString , ' but got ' , actualExtent x asString ].
+	self
+		assert: (actualExtent y closeTo: expectedExtent y precision: 1.0)
+		description: [ 'Expected height close to ' , expectedExtent y asString , ' but got ' , actualExtent y asString ].
+	(expectedExtent closeTo: (50 @ 50)) ifFalse: [
+		self deny: actualExtent equals: (50 @ 50) ]
 ]
 
 { #category : 'tests - controllers' }
@@ -520,10 +558,10 @@ OPAbstractElementControllerTest >> testOpenInForm [
 
 	| form |
 	self showInDiagram.
-	form := OPDynamicForm new.
+	form := OPPropertiesForm new.
 	diagramController stub form willReturn: form.
 	self assert: form layout children isEmpty.
-	diagramController openInForm: controller.
+	diagramController openInForm: controller viewModel.
 	self assert: form layout children isNotEmpty
 ]
 
@@ -570,6 +608,30 @@ OPAbstractElementControllerTest >> testRemoveModel [
 	self denyCollection: self allElements includesAll: { model }
 ]
 
+{ #category : 'tests - undo/redo' }
+OPAbstractElementControllerTest >> testRemoveUndoRedo [
+	| undoManager createdModel |
+	self testCreateUsingAddAsTarget.
+	undoManager := diagramController undoManager.
+	createdModel := controller model.
+
+	diagramController removeModelElement: createdModel.
+	self deny: (diagramController hasControllerForModel: createdModel).
+	self denyCollection: self allElements includesAny: { createdModel }.
+
+	undoManager undo.
+	self assert: (diagramController hasControllerForModel: createdModel).
+	self assertCollection: self allElements includesAll: { createdModel }.
+
+	undoManager redo.
+	self deny: (diagramController hasControllerForModel: createdModel).
+	self denyCollection: self allElements includesAny: { createdModel }.
+
+	undoManager undo.
+	self assert: (diagramController hasControllerForModel: createdModel).
+	self assertCollection: self allElements includesAll: { createdModel }
+]
+
 { #category : 'tests - controllers' }
 OPAbstractElementControllerTest >> testRoassalShapeForModel [
 
@@ -598,4 +660,31 @@ OPAbstractElementControllerTest >> testShowInDiagram [
 		equals: controller.
 	self assert: (diagramController canvas shapes anySatisfy: [ :each |
 			 each model isNotNil and: [ each model modelElement = self model ] ])
+]
+
+{ #category : 'tests - undo/redo' }
+OPAbstractElementControllerTest >> testShowUndoRedo [
+	| undoManager elementModel showCommand |
+	self testCreateUsingAddAsTarget.
+	undoManager := diagramController undoManager.
+	elementModel := controller model.
+
+	diagramController hideModelFromDiagram: elementModel.
+	self deny: (diagramController hasControllerForModel: elementModel).
+
+	showCommand := OPShowDiagramElementCommand
+		model: elementModel
+		diagramController: diagramController.
+	undoManager inTransaction: [ undoManager execute: showCommand ].
+
+	self assert: (diagramController hasControllerForModel: elementModel).
+
+	undoManager undo.
+	self deny: (diagramController hasControllerForModel: elementModel).
+
+	undoManager redo.
+	self assert: (diagramController hasControllerForModel: elementModel).
+
+	undoManager undo.
+	self deny: (diagramController hasControllerForModel: elementModel)
 ]

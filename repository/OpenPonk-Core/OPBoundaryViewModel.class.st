@@ -15,3 +15,9 @@ OPBoundaryViewModel class >> modelClass [
 
 	^ OPBoundary
 ]
+
+{ #category : 'accessing' }
+OPBoundaryViewModel >> creationPriority [
+	"Boundary elements must be created before classifiers (10) and edges (20) to stay in the background."
+	^ 5
+]

@@ -151,7 +151,7 @@ OPLegacyDiagram >> asJsonTo: stream [
 
 { #category : 'converting' }
 OPLegacyDiagram >> asOPDiagram [
-	| diagram viewModelRegistry allModelElements layoutsPerModel diagramController canvas controllersByModels |
+	| diagram project projectController viewModelRegistry allModelElements layoutsPerModel diagramController canvas controllersByModels |
 	diagram := OPOpenPonkDiagram forModelElement: self model.
 	[ :job |
 		job title: 'Transforming older version of project'.
@@ -160,50 +160,49 @@ OPLegacyDiagram >> asOPDiagram [
 		diagram isOpen: self isOpen.
 		diagram isSelected: self isSelected.
 		diagram camera: self camera.
-		
+
 		commonElements do: [ :each | each owningElement: diagram ].
-		
-		viewModelRegistry := OPViewModelRegistry forNewProject.
+
+		project := OPProject new.
+		project addModel: self model.
+		projectController := OPProjectController forProject: project.
+		viewModelRegistry := projectController viewModelRegistry.
 		job progress: 0.1.
 		allModelElements := ((Set with: self model)
-							 ,
-							 (viewModelRegistry allChildrenFor: self model)
-							 , commonElements collect: [ :each |
-								 each uuid -> each ]) asDictionary.
+			, (viewModelRegistry allChildrenFor: self model)
+			, commonElements collect: [ :each | each uuid -> each ]) asDictionary.
 		job progress: 0.2.
 		visibleElements := (visibleElements collect: [ :each |
-								each modelObjectFrom: allModelElements ])
-							   sorted: [ :a :b |
-							   viewModelRegistry dependsRoughlyTypeOf: b on: a ].
+			each modelObjectFrom: allModelElements ])
+			sorted: [ :a :b | viewModelRegistry dependsRoughlyTypeOf: b on: a ].
 		job progress: 0.3.
 		layoutsPerModel := (layout associations collect: [ :each |
-								(allModelElements at: each key) -> each value ])
-							   asDictionary.
+			(allModelElements at: each key) -> each value ]) asDictionary.
 		job progress: 0.4.
 		diagramController := (OPPluginRegistry default pluginFor: model)
-								 diagramControllerClass new.
+			diagramControllerClass new.
+		projectController addDiagramController: diagramController.
 		canvas := RSCanvas new.
 		diagramController
-			viewModelRegistry: viewModelRegistry;
 			model: model;
 			diagramElement: diagram;
-			canvasPresenter: canvas.
+			canvasPresenter: (OPCanvasPresenter new canvas: canvas; yourself).
 		job progress: 0.5.
-				
+
 		"Render the diagram first so that its roassalShape is assigned before adding elements"
 		diagram renderIn: canvas.
 		controllersByModels := (visibleElements copyWithout: model)
-								   collect: [ :each |
-									   | controller |
-									   controller := diagramController showWithoutDependentInDiagramModel: each.
-									   each -> controller ].
+			collect: [ :each |
+				| controller |
+				controller := diagramController showWithoutDependentInDiagramModel: each.
+				each -> controller ].
 		job progress: 0.8.
 		controllersByModels do: [ :eachModelAndController |
-				layoutsPerModel
-					at: eachModelAndController key
-					ifPresent: [ :eachLayout |
-							eachLayout applyToDiagramElement:
-								eachModelAndController value diagramElement ] ].
+			layoutsPerModel
+				at: eachModelAndController key
+				ifPresent: [ :eachLayout |
+					eachLayout applyToDiagramElement:
+						eachModelAndController value diagramElement ] ].
 		job progress: 0.9.
 		diagram removeRender.
 		job progress: 1 ] asJob run.

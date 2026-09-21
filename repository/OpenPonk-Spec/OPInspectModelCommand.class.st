@@ -6,17 +6,17 @@ Class {
 	#tag : 'Commands-ProjectTree'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'testing' }
 OPInspectModelCommand >> canBeExecuted [
 	^ self selectedViewModel isNotNil
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'executing' }
 OPInspectModelCommand >> execute [
 	self selectedViewModel model inspect
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPInspectModelCommand >> initialize [
 	super initialize.
 	self name: 'Inspect Model'

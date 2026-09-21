@@ -55,7 +55,7 @@ OPProjectBrowser class >> serviceOpen [
 
 	^ SimpleServiceEntry
 		  provider: self new
-		  label: 'Load'
+		  label: 'Open in OpenPonk'
 		  selector: #openProjectFromFile:
 		  description: 'Open OpenPonk project'
 ]

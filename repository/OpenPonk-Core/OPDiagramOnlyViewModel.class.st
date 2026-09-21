@@ -30,6 +30,12 @@ OPDiagramOnlyViewModel >> createModelIn: aParentModel [
 ]
 
 { #category : 'accessing' }
+OPDiagramOnlyViewModel >> dependingOnElements [
+	"Diagram-only elements (notes, boundaries) do not have domain dependencies."
+	^ Set empty
+]
+
+{ #category : 'accessing' }
 OPDiagramOnlyViewModel >> findParentViewModel [
 
 	| topOwner |
@@ -47,4 +53,10 @@ OPDiagramOnlyViewModel >> findParentViewModel [
 OPDiagramOnlyViewModel >> icon [
 
 	^ Smalltalk ui icons iconNamed: #empty
+]
+
+{ #category : 'construction' }
+OPDiagramOnlyViewModel >> registerModelIn: aParentModel [
+	"Diagram-only elements are purely visual annotations and not part of the persistent domain metamodel."
+	"Do nothing"
 ]

@@ -17,6 +17,19 @@ Class {
 	#tag : 'Polyline'
 }
 
+{ #category : 'events' }
+OPRSDraggableControlPoints >> announceWaypointsChangedFor: aLine old: oldWaypoints new: newWaypoints [
+	| event targetCanvas |
+	oldWaypoints = newWaypoints ifTrue: [ ^ self ].
+	event := OPRSEdgeWaypointsChangedEvent new
+		line: aLine;
+		oldWaypoints: oldWaypoints asArray copy;
+		newWaypoints: newWaypoints asArray copy;
+		yourself.
+	targetCanvas := aLine canvas.
+	targetCanvas ifNotNil: [ :c | c announce: event ]
+]
+
 { #category : 'actions' }
 OPRSDraggableControlPoints >> connectWithCanvas [
 
@@ -50,12 +63,22 @@ OPRSDraggableControlPoints >> enable [
 	self connectWithCanvas
 ]
 
+{ #category : 'accessing' }
+OPRSDraggableControlPoints >> handles [
+	^ handles
+]
+
 { #category : 'initialization' }
 OPRSDraggableControlPoints >> initialize [
 	super initialize.
 	handles := OrderedCollection new.
 	midpointHandles := OrderedCollection new.
 	isActive := false
+]
+
+{ #category : 'accessing' }
+OPRSDraggableControlPoints >> midpointHandles [
+	^ midpointHandles
 ]
 
 { #category : 'hooks' }
@@ -69,27 +92,33 @@ OPRSDraggableControlPoints >> onShape: aLine [
 
 { #category : 'actions' }
 OPRSDraggableControlPoints >> promoteFor: aLine handle: aMidpointHandle [
-
-	| newPoint |
-	"1. Add point at midpoint's place.
-	 2. Remove midpoint handle.
-	 3. Do full reload."
-	newPoint := aMidpointHandle shape position.
+	"Insert a new control point at midpoint position, supply initial waypoints to the new handle, rebuild handles, and transfer active drag focus to the newly created handle."
+	| originalWaypoints insertedIndex newControlPointHandle |
+	originalWaypoints := aLine controlPoints copy.
 	aLine from = aMidpointHandle from
 		ifTrue: [
+			insertedIndex := 2.
 			aLine controlPoints: {
 					aLine controlPoints first.
-					newPoint } , aLine controlPoints allButFirst ]
+					aMidpointHandle shape position } , aLine controlPoints allButFirst ]
 		ifFalse: [
 			| indexOfMidpointHandle |
-			indexOfMidpointHandle := handles detectIndex: [ :each |
-				                         each shape = aMidpointHandle from ].
+			indexOfMidpointHandle := handles detectIndex: [ :eachHandle |
+				                         eachHandle shape = aMidpointHandle from ].
+			insertedIndex := indexOfMidpointHandle + 2.
 			aLine controlPoints:
 				(aLine controlPoints first: indexOfMidpointHandle + 1)
-				, { newPoint }
+				, { aMidpointHandle shape position }
 				, (aLine controlPoints allButFirst: indexOfMidpointHandle + 1) ].
 	self rebuild.
-	aLine canvas morph resetShapeBeingDragged
+	newControlPointHandle := handles
+		detect: [ :eachHandle | eachHandle indexOfControlPoint = insertedIndex ]
+		ifNone: [ nil ].
+	newControlPointHandle ifNotNil: [ :targetHandle |
+		targetHandle initialWaypoints: originalWaypoints ].
+	aLine canvas ifNotNil: [ :targetCanvas |
+		targetCanvas morph ifNotNil: [ :canvasMorph |
+			canvasMorph resetShapeBeingDragged ] ]
 ]
 
 { #category : 'actions' }
@@ -154,4 +183,14 @@ OPRSDraggableControlPoints >> showMidpointHandles [
 	midpointHandles first beNearStart.
 	midpointHandles last beNearEnd.
 	midpointHandles do: #render
+]
+
+{ #category : 'handles' }
+OPRSDraggableControlPoints >> updateDuring: aBlock [
+	"Safely tear down handles before executing aBlock to prevent zombie handles from receiving update events during geometry changes, then restore handles if they were active."
+	| wasActive |
+	wasActive := isActive.
+	wasActive ifTrue: [ self removeHandles ].
+	aBlock value.
+	wasActive ifTrue: [ self showHandles ]
 ]

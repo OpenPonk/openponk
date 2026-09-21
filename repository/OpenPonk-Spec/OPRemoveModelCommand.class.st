@@ -6,32 +6,33 @@ Class {
 	#tag : 'Commands-ProjectTree'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'testing' }
 OPRemoveModelCommand >> canBeExecuted [
 	self selectedViewModel ifNil: [ ^ false ].
 	^ (self selectedViewModel isKindOf: OPProjectViewModel) not
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'executing' }
 OPRemoveModelCommand >> execute [
 
-	| vm ctrl model |
-	vm := self selectedViewModel.
-	model := vm model.
-	ctrl := self projectController.
+	| viewModel controller model |
+	viewModel := self selectedViewModel.
+	model := viewModel model.
+	controller := self projectController.
 	SpConfirmDialog new
 		title: 'Delete model?';
-		label: 'Do you want to delete ' , model name asString , '?';
+		message: 'Do you want to delete ' , model name asString , '?';
 		acceptLabel: 'Yes, delete it';
 		cancelLabel: 'Cancel';
 		onAccept: [
-				(ctrl hasModel: model)
-					ifTrue: [ ctrl removeModel: model ]
-					ifFalse: [ vm removeModel ] ];
+				| command undoManager |
+				undoManager := controller ifNotNil: [ :theController | theController undoManager ].
+				command := OPRemoveModelElementCommand model: model projectController: controller.
+				undoManager ifNotNil: [ :manager | manager inTransaction: [ manager execute: command ] ] ifNil: [ command execute ] ];
 		openDialog
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPRemoveModelCommand >> initialize [
 	super initialize.
 	self name: 'Remove'

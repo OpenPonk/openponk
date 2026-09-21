@@ -15,6 +15,16 @@ Class {
 	#tag : 'DiagramElements'
 }
 
+{ #category : 'testing' }
+OPEdge class >> isEdge [
+	^ true
+]
+
+{ #category : 'testing' }
+OPEdge class >> isNode [
+	^ false
+]
+
 { #category : 'rendering' }
 OPEdge class >> renderForController: aController [
 
@@ -44,6 +54,27 @@ OPEdge class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #source #target #waypoints )
 ]
 
+{ #category : 'rendering' }
+OPEdge >> addDraggableControlPointsInteraction [
+	(self roassalShape hasInteraction: OPRSDraggableControlPoints)
+		ifFalse: [ self roassalShape @ OPRSDraggableControlPoints ]
+]
+
+{ #category : 'rendering' }
+OPEdge >> addInteractions [
+	super addInteractions.
+	self shouldHaveDraggableControlPoints ifTrue: [
+		self addDraggableControlPointsInteraction ]
+]
+
+{ #category : 'memento' }
+OPEdge >> captureGeometryMemento [
+	^ {
+		self source.
+		self target.
+		(self waypoints ifNotNil: [ :currentWaypoints | currentWaypoints copy ]) }
+]
+
 { #category : 'accessing' }
 OPEdge >> innerWaypoints [
 
@@ -67,10 +98,23 @@ OPEdge >> remove [
 	self target: nil
 ]
 
+{ #category : 'memento' }
+OPEdge >> restoreGeometryFromMemento: aGeometryMemento [
+	aGeometryMemento ifNil: [ ^ self ].
+	aGeometryMemento first ifNotNil: [ :savedSource | self source: savedSource ].
+	aGeometryMemento second ifNotNil: [ :savedTarget | self target: savedTarget ].
+	aGeometryMemento third ifNotNil: [ :savedWaypoints | self waypoints: savedWaypoints copy ]
+]
+
 { #category : 'interactions' }
 OPEdge >> selectableInteraction [
 
 	^ OPRSSelectable highlightColorBlue
+]
+
+{ #category : 'testing' }
+OPEdge >> shouldHaveDraggableControlPoints [
+	^ true
 ]
 
 { #category : 'accessing' }
@@ -130,8 +174,10 @@ OPEdge >> updateRenderFromSelf [
 
 { #category : 'accessing' }
 OPEdge >> waypoints [
-
-	^ waypoints
+	^ waypoints ifNil: [
+		self isRendered
+			ifTrue: [ roassalShape controlPoints copy ]
+			ifFalse: [ #() ] ]
 ]
 
 { #category : 'accessing' }

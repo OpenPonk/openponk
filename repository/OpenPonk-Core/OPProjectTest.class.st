@@ -31,6 +31,24 @@ OPProjectTest >> testAddModel [
 ]
 
 { #category : 'tests' }
+OPProjectTest >> testCopyDiagramNamed [
+	| originalDiagram copiedDiagram |
+	project := OPProject new.
+	model := OPTestContainerModel new.
+	project addModel: model.
+	project ensureModelsHaveDiagrams.
+	originalDiagram := project diagrams first.
+	originalDiagram name: 'Original Diagram'.
+
+	copiedDiagram := project copyDiagram: originalDiagram named: 'Copied Diagram'.
+
+	self assert: copiedDiagram name equals: 'Copied Diagram'.
+	self assert: (project diagrams includes: copiedDiagram).
+	self assert: project diagrams size equals: 2.
+	self deny: copiedDiagram identicalTo: originalDiagram
+]
+
+{ #category : 'tests' }
 OPProjectTest >> testRemoveModel [
 	project := OPProject new.
 	model := OPTestContainerModel new.

@@ -21,8 +21,7 @@ OPModelObjectType class >> named: aString [
 
 { #category : 'instance creation' }
 OPModelObjectType class >> named: aString withSubtype: aType [
-
-	^ (self named: aString withSubtypes: { aType }) f
+	^ self named: aString withSubtypes: { aType }
 ]
 
 { #category : 'instance creation' }
@@ -81,7 +80,7 @@ OPModelObjectType >> includesNames: aCollectionOfNames [
 	^ self subtypes anySatisfy: [ :any | any includesNames: aCollectionOfSubtypeNames ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'testing' }
 OPModelObjectType >> includesTypeNode: aTypeNode [
 
 	^ self subtypes anySatisfy: [ :any | any includesTypeNode: aTypeNode ]

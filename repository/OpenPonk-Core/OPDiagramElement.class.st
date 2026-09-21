@@ -51,6 +51,16 @@ OPDiagramElement class >> isAbstract [
 	^ self = OPDiagramElement
 ]
 
+{ #category : 'testing' }
+OPDiagramElement class >> isEdge [
+	^ false
+]
+
+{ #category : 'testing' }
+OPDiagramElement class >> isNode [
+	^ false
+]
+
 { #category : 'rendering' }
 OPDiagramElement class >> renderForController: aController [
 
@@ -79,19 +89,18 @@ OPDiagramElement class >> stonAllInstVarNames [
 
 { #category : 'interactions' }
 OPDiagramElement >> addDraggableInteraction [
-
-	roassalShape @ RSDraggable
+	roassalShape @ OPRSDraggable
 ]
 
 { #category : 'interactions' }
 OPDiagramElement >> addEventForwardingFrom: anOriginalRoassalShape to: aTargetRoassalShape [
-
 	| forward |
 	forward := [ :event | aTargetRoassalShape announce: event ].
 	anOriginalRoassalShape
 		when: RSMouseEnter do: forward for: self;
 		when: RSMouseLeave do: forward for: self;
 		when: RSMouseClick do: forward for: self;
+		when: RSMouseDoubleClick do: forward for: self;
 		when: RSMouseDragStart do: forward for: self;
 		when: RSMouseDragEnd do: forward for: self;
 		when: RSMouseDragging do: forward for: self
@@ -208,6 +217,16 @@ OPDiagramElement >> attachedShapesDo: aBlock [
 ]
 
 { #category : 'accessing' }
+OPDiagramElement >> bounds [
+	^ nil
+]
+
+{ #category : 'accessing' }
+OPDiagramElement >> bounds: aNodeBounds [
+	"Subclasses with spatial bounds override this method."
+]
+
+{ #category : 'accessing' }
 OPDiagramElement >> canHaveController [
 
 	^ true
@@ -217,6 +236,11 @@ OPDiagramElement >> canHaveController [
 OPDiagramElement >> canvas [
 
 	^ roassalShape canvas
+]
+
+{ #category : 'memento' }
+OPDiagramElement >> captureGeometryMemento [
+	^ nil
 ]
 
 { #category : 'initialization' }
@@ -296,9 +320,29 @@ OPDiagramElement >> initialize [
 ]
 
 { #category : 'testing' }
+OPDiagramElement >> isDiagramElement [
+	^ true
+]
+
+{ #category : 'testing' }
 OPDiagramElement >> isDiagramOnly [
 
 	^ false
+]
+
+{ #category : 'testing' }
+OPDiagramElement >> isEdge [
+	^ self class isEdge
+]
+
+{ #category : 'testing' }
+OPDiagramElement >> isNoShape [
+	^ false
+]
+
+{ #category : 'testing' }
+OPDiagramElement >> isNode [
+	^ self class isNode
 ]
 
 { #category : 'testing' }
@@ -618,6 +662,11 @@ OPDiagramElement >> resolveModelElements: aCollection [
 						 'Diagram references non-existent model element. Try using Proceed to remove it'.
 					 ^ false ] ]).
 	^ true
+]
+
+{ #category : 'memento' }
+OPDiagramElement >> restoreGeometryFromMemento: aGeometryMemento [
+	"Subclasses override to restore their specific layout geometry."
 ]
 
 { #category : 'rendering' }

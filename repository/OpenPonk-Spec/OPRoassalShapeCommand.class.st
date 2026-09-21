@@ -52,3 +52,8 @@ OPRoassalShapeCommand >> readParametersFromContext: aToolContext [
 	viewModels := aToolContext viewModels.
 	models := aToolContext models
 ]
+
+{ #category : 'as yet unclassified' }
+OPRoassalShapeCommand >> undoManager [
+	^ diagramController ifNotNil: [ :ctrl115 | ctrl115 undoManager ]
+]

@@ -17,42 +17,17 @@ OPRemoveModelOfRoassalShapeCommand class >> canBeExecutedInContext: aToolContext
 		  aToolContext roassalShapes anySatisfy: [ :any | any canvas ~= any ] ]
 ]
 
-{ #category : 'testing' }
+{ #category : 'activation' }
 OPRemoveModelOfRoassalShapeCommand class >> canvasShortcutActivation [
-
 	<classAnnotation>
-	^ CmdShortcutActivation
-		  by: (KMKeyCombinationChoice withShortcuts: {
-					   (KMSingleKeyCombination new key:
-						    (KeyboardKey new withValue: 16rffff andName: #delete)).
-					   ((KMSingleKeyCombination new key:
-						     (KeyboardKey new withValue: 16rffff andName: #delete))
-						    modifiedBy: self skipConfirmationModifier) })
-		  for: OPCanvasPresenter
+	^ CmdShortcutActivation by: KeyboardKey delete asKeyCombination for: OPCanvasPresenter
 ]
 
-{ #category : 'accessing' }
-OPRemoveModelOfRoassalShapeCommand class >> lastEvent [
-
-	self flag:
-		'Part of ugly hack to find out if the modifier key was pressed'.
-		
-	^ lastEvent
-]
-
-{ #category : 'accessing' }
-OPRemoveModelOfRoassalShapeCommand class >> lastEvent: anEvent [
-
-	self flag:
-		'Part of ugly hack to find out if the modifier key was pressed'.
-
-	lastEvent := anEvent
-]
-
-{ #category : 'constants' }
-OPRemoveModelOfRoassalShapeCommand class >> skipConfirmationModifier [
-
-	^ KMModifier shift
+{ #category : 'execution' }
+OPRemoveModelOfRoassalShapeCommand >> basicExecute [
+	roassalShapes do: [ :eachShape |
+		(diagramController hasControllerForRoassalShape: eachShape) ifTrue: [
+			diagramController removeModelOfRoassalShape: eachShape ] ]
 ]
 
 { #category : 'accessing' }
@@ -69,46 +44,15 @@ OPRemoveModelOfRoassalShapeCommand >> defaultMenuItemName [
 		  ifFalse: [ 'Remove all ' , models size asString , ' from model' ]
 ]
 
-{ #category : 'utilities' }
-OPRemoveModelOfRoassalShapeCommand >> doAndReturnFocus: aBlock [
-
-	| result window wasActive |
-	window := diagramController canvasPresenter window window.
-	wasActive := window isActive.
-	result := aBlock value.
-	window activate.
-	^ result
-]
-
 { #category : 'execution' }
 OPRemoveModelOfRoassalShapeCommand >> execute [
-
-	self class lastEvent ifNotNil: [ :lastEvent |
-		(self class skipConfirmationModifier matchesEvent: lastEvent)
-			ifTrue: [ ^ self executeWithoutConfirmation ] ].
-	self executeWithConfirmation
-]
-
-{ #category : 'execution' }
-OPRemoveModelOfRoassalShapeCommand >> executeWithConfirmation [
-
-	| result |
-	result := self doAndReturnFocus: [
-		          UIManager default
-			          proceed:
-				          'Permanently remove from model? (to skip this confirmation, hold '
-				          , self class skipConfirmationModifier name
-				          , ' next time)'
-			          title: 'Remove?' ].
-	result ifNil: [ ^ self ].
-	result ifFalse: [ ^ self ].
-	self executeWithoutConfirmation
+	diagramController undoManager
+		ifNotNil: [ :manager | manager inTransaction: [ self basicExecute ] ]
+		ifNil: [ self basicExecute ].
+	canvas signalUpdate
 ]
 
 { #category : 'execution' }
 OPRemoveModelOfRoassalShapeCommand >> executeWithoutConfirmation [
-	roassalShapes do: [ :each |
-		(diagramController hasControllerForRoassalShape: each) ifTrue: [
-			diagramController removeModelOfRoassalShape: each ] ].
-	canvas signalUpdate
+	self execute
 ]

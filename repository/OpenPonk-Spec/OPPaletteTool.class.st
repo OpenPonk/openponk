@@ -72,6 +72,11 @@ OPPaletteTool >> selectedControllers: aCollectionOfControllers [
 	^ self subclassResponsibility
 ]
 
+{ #category : 'canvas events' }
+OPPaletteTool >> selectedControllers: aCollection onPosition: aPoint [
+	self selectedControllers: aCollection
+]
+
 { #category : 'accessing' }
 OPPaletteTool >> workbench [
 	^ palette workbench

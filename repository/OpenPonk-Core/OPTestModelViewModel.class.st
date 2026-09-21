@@ -42,20 +42,22 @@ OPTestModelViewModel >> dependentElements [
 { #category : 'accessing' }
 OPTestModelViewModel >> findParentViewModel [
 
-	| entities |
-	entities := self registry project models select: [ :each |
-		            each respondsTo: #entities ].
-	entities ifEmpty: [
-			entities := self registry projectViewModel childrenModels select: [
-				            :each | each respondsTo: #entities ] ].
+	| entities261 |
+	(self registry project models includes: self model)
+		ifTrue: [ ^ self registry projectViewModel ].
+	entities261 := self registry project models select: [ :eachModel261 |
+		eachModel261 respondsTo: #entities ].
+	entities261 ifEmpty: [
+		entities261 := self registry projectViewModel childrenModels select: [
+			:eachChildModel261 | eachChildModel261 respondsTo: #entities ] ].
 
-	[ entities isNotEmpty ] whileTrue: [
-			entities
-				detect: [ :any | any entities includes: self model ]
-				ifFound: [ :found | ^ self registry viewModelFor: found ]
-				ifNone: [
-						entities := (entities flatCollectAsSet: #entities) select: [
-							            :each | each respondsTo: #entities ] ] ].
+	[ entities261 isNotEmpty ] whileTrue: [
+		entities261
+			detect: [ :anyContainer261 | anyContainer261 entities includes: self model ]
+			ifFound: [ :foundContainer261 | ^ self registry viewModelFor: foundContainer261 ]
+			ifNone: [
+				entities261 := (entities261 flatCollectAsSet: #entities) select: [
+					:eachNestedEntity261 | eachNestedEntity261 respondsTo: #entities ] ] ].
 
 	^ nil
 ]

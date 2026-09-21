@@ -23,10 +23,11 @@ BaselineOfOpenPonk >> baseline: spec [
 				package: 'OpenPonk-Morphic';
 				package: 'OpenPonk-Spec' with: [ spec requires: #( 'NewTools' 'Magritte' 'OpenPonkSynchronizedLinks'
 						   'OpenPonk-Morphic' ) ];
-				package: 'OpenPonk-Releaser'.
+				package: 'OpenPonk-DevTools'.
 			spec
-				group: 'default' with: #( 'OpenPonk-Core' 'OpenPonk-Morphic' 'OpenPonk-Spec' );
-				group: 'dev' with: #( 'default' 'OpenPonk-Releaser' ) ]
+				group: 'default' with: #( 'OpenPonk-Core' 'OpenPonk-Spec' );
+				group: 'dev-plugin' with: #( 'OpenPonk-DevTools' );
+				group: 'dev' with: #( 'default' 'dev-plugin' ) ]
 ]
 
 { #category : 'baselines' }

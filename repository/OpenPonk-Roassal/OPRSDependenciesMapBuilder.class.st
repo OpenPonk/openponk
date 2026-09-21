@@ -53,19 +53,6 @@ OPRSDependenciesMapBuilder class >> resetOpenPonkBaselines [
 ]
 
 { #category : 'hooks - model' }
-OPRSDependenciesMapBuilder >> computeModels [
-
-	| verResults |
-	verResults := Smalltalk globals
-		              at: #BaselineOfOpenPonkOntoUMLVerifications
-		              ifAbsent: [ ^ super computeModels ].
-	[
-	Smalltalk globals removeKey: #BaselineOfOpenPonkOntoUMLVerifications.
-	super computeModels ] ensure: [
-		Smalltalk globals at: #BaselineOfOpenPonkOntoUMLVerifications put: verResults ]
-]
-
-{ #category : 'hooks - model' }
 OPRSDependenciesMapBuilder >> dependenciesFrom: aBMBaselineModel [
 
 	^ aBMBaselineModel baselineClass version projects

@@ -13,7 +13,9 @@ Class {
 { #category : 'rendering' }
 OPTestEdge >> renderBasicShape [
 
-	^ RSPolyline new
+	^ OPRSPolyline new
+		  withBorderAttachPoint;
+		  controlPointsController: OPRSDraggableCPController new;
 		  from: self source roassalShape;
 		  to: self target roassalShape;
 		  yourself

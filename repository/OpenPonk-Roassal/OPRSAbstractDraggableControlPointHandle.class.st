@@ -14,6 +14,11 @@ Class {
 	#tag : 'Polyline'
 }
 
+{ #category : 'accessing' }
+OPRSAbstractDraggableControlPointHandle >> clickBox [
+	^ clickBox
+]
+
 { #category : 'shapes' }
 OPRSAbstractDraggableControlPointHandle >> createClickBoxShape [
 

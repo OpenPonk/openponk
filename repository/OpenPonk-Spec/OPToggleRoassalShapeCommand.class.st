@@ -62,7 +62,6 @@ OPToggleRoassalShapeCommand >> execute [
 
 { #category : 'execution' }
 OPToggleRoassalShapeCommand >> prepareFullExecutionInContext: aToolContext [
-
 	super prepareFullExecutionInContext: aToolContext.
-	executor := OPDiagramExplorer on: diagramController
+	executor := OPDiagramExplorer on: self diagramController
 ]

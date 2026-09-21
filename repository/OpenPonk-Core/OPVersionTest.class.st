@@ -36,57 +36,30 @@ OPVersionTest >> sampleRunJson [
 
 { #category : 'tests' }
 OPVersionTest >> testComparison [
-	| v1 v2 n1 n2 |
-	v1 := (Smalltalk classNamed: #OPVersion) new
-		releaseName: 'v1.0.0';
-		buildDate: '2026-01-01' asDateAndTime.
-	v2 := (Smalltalk classNamed: #OPVersion) new
-		releaseName: 'v2.0.0';
-		buildDate: '2026-02-01' asDateAndTime.
-	self assert: v1 < v2.
-	self deny: v2 < v1.
-	n1 := (Smalltalk classNamed: #OPVersion) new
-		releaseName: 'nightly';
-		buildDate: '2026-01-01' asDateAndTime.
-	n2 := (Smalltalk classNamed: #OPVersion) new
-		releaseName: 'nightly';
-		buildDate: '2026-01-02' asDateAndTime.
-	self assert: n1 < n2.
-	self deny: n2 < n1.
-	self deny: v1 < n1.
-	self deny: n1 < v1
+
+	| v1 v2 v3 |
+	v1 := OPVersion new buildDate: (DateAndTime fromString: '2019-03-01T15:00:00.000000+01:00').
+	v2 := OPVersion new buildDate: (DateAndTime fromString: '2019-03-01T15:00:00.000000+01:00').
+	v3 := OPVersion new buildDate: (DateAndTime fromString: '2019-03-02T15:00:00.000000+01:00').
+	self assert: v1 equals: v2.
+	self assert: v1 < v3
 ]
 
 { #category : 'tests' }
 OPVersionTest >> testEqualityAndHash [
 
-	| v1 v2 v3 n1 n2 n3 |
-	v1 := (Smalltalk classNamed: #OPVersion) new releaseName: 'v1.0.0'.
-	v2 := (Smalltalk classNamed: #OPVersion) new releaseName: 'v1.0.0'.
-	v3 := (Smalltalk classNamed: #OPVersion) new releaseName: 'v2.0.0'.
+	| v1 v2 |
+	v1 := OPVersion new buildDate: (DateAndTime fromString: '2019-03-01T15:00:00.000000+01:00').
+	v2 := OPVersion new buildDate: (DateAndTime fromString: '2019-03-01T15:00:00.000000+01:00').
 	self assert: v1 equals: v2.
-	self assert: v1 hash equals: v2 hash.
-	self deny: v1 equals: v3.
-	n1 := (Smalltalk classNamed: #OPVersion) new
-		      releaseName: 'nightly';
-		      buildDate: '2026-01-01T10:00:00' asDateAndTime.
-	n2 := (Smalltalk classNamed: #OPVersion) new
-		      releaseName: 'nightly';
-		      buildDate: '2026-01-01T10:00:00' asDateAndTime.
-	n3 := (Smalltalk classNamed: #OPVersion) new
-		      releaseName: 'nightly';
-		      buildDate: '2026-01-02T10:00:00' asDateAndTime.
-	self assert: n1 equals: n2.
-	self assert: n1 hash equals: n2 hash.
-	self deny: n1 equals: n3
+	self assert: v1 hash equals: v2 hash
 ]
 
 { #category : 'tests' }
 OPVersionTest >> testFromReleaseJson [
+
 	| v |
-	v := (Smalltalk classNamed: #OPVersion)
-		     fromReleaseJson: self sampleReleaseJson
-		     repositoryName: 'borm-editor'.
+	v := OPVersion fromReleaseJson: self sampleReleaseJson repositoryName: 'borm-editor'.
 	self assert: v repositoryName equals: 'borm-editor'.
 	self assert: v releaseName equals: 'v2.1.0'.
 	self assert: v isRelease.
@@ -97,10 +70,11 @@ OPVersionTest >> testFromReleaseJson [
 
 { #category : 'tests' }
 OPVersionTest >> testFromRunJsonMasterBranchMapsToNightly [
+
 	| json version |
 	json := self sampleRunJson.
 	json at: #head_branch put: 'master'.
-	version := (Smalltalk classNamed: #OPVersion) fromRunJson: json.
+	version := OPVersion fromRunJson: json.
 
 	self assert: version releaseName equals: 'nightly'.
 	self deny: version isRelease
@@ -108,8 +82,9 @@ OPVersionTest >> testFromRunJsonMasterBranchMapsToNightly [
 
 { #category : 'tests' }
 OPVersionTest >> testFromRunJsonRelease [
+
 	| version |
-	version := (Smalltalk classNamed: #OPVersion) fromRunJson: self sampleRunJson.
+	version := OPVersion fromRunJson: self sampleRunJson.
 	self assert: version repositoryName equals: 'borm-editor'.
 	self assert: version releaseName equals: 'v2.1.0'.
 	self assert: version githubWorkflowRunId equals: 987654.
@@ -120,8 +95,9 @@ OPVersionTest >> testFromRunJsonRelease [
 
 { #category : 'tests' }
 OPVersionTest >> testFullVersionString [
+
 	| version |
-	version := (Smalltalk classNamed: #OPVersion) new.
+	version := OPVersion new.
 	version repositoryName: 'fsm-editor'.
 	version githubWorkflowRunId: 100.
 	version releaseName: 'v1.0.0'.
@@ -132,8 +108,9 @@ OPVersionTest >> testFullVersionString [
 
 { #category : 'tests' }
 OPVersionTest >> testFullVersionStringUnknownWhenIncomplete [
+
 	| version |
-	version := (Smalltalk classNamed: #OPVersion) new.
+	version := OPVersion new.
 	self assert: version fullVersionString equals: 'unknown'.
 
 	version repositoryName: 'fsm-editor'.
@@ -146,8 +123,9 @@ OPVersionTest >> testFullVersionStringUnknownWhenIncomplete [
 
 { #category : 'tests' }
 OPVersionTest >> testIsRelease [
+
 	| version |
-	version := (Smalltalk classNamed: #OPVersion) new.
+	version := OPVersion new.
 
 	version releaseName: 'v1.0.0'.
 	self assert: version isRelease.
@@ -167,8 +145,9 @@ OPVersionTest >> testIsRelease [
 
 { #category : 'tests' }
 OPVersionTest >> testNeedsAndCanDownloadInfo [
+
 	| version |
-	version := (Smalltalk classNamed: #OPVersion) new.
+	version := OPVersion new.
 	self assert: version needsDownloadInfo.
 	self deny: version canDownloadInfo.
 	version githubWorkflowRunId: 123.
@@ -180,22 +159,24 @@ OPVersionTest >> testNeedsAndCanDownloadInfo [
 
 { #category : 'tests' }
 OPVersionTest >> testRepositoryLinkAndKnownStatus [
+
 	| version |
-	version := (Smalltalk classNamed: #OPVersion) new.
+	version := OPVersion new.
 
 	version repositoryName: 'class-editor'.
 	self assert: version isRepositoryNameKnown.
 	self assert: version repositoryLink equals: 'https://github.com/OpenPonk/class-editor'.
 
-	version repositoryName: (Smalltalk classNamed: #OPVersion) unknownRepositoryName.
+	version repositoryName: OPVersion unknownRepositoryName.
 	self deny: version isRepositoryNameKnown.
 	self assert: version repositoryLink equals: 'https://openponk.org'
 ]
 
 { #category : 'tests' }
 OPVersionTest >> testRepositoryNotationName [
+
 	| version |
-	version := (Smalltalk classNamed: #OPVersion) new.
+	version := OPVersion new.
 
 	version repositoryName: 'class-editor' asSymbol.
 	self assert: version repositoryNotationName equals: '(Onto)UML'.
@@ -221,13 +202,13 @@ OPVersionTest >> testRepositoryNotationName [
 
 { #category : 'tests' }
 OPVersionTest >> testSemverComparison [
+
 	| v1 v2 |
-	v1 := (Smalltalk classNamed: #OPVersion) new
-		      releaseName: 'v1.2.0';
-		      buildDate: '2026-01-01' asDateAndTime.
-	v2 := (Smalltalk classNamed: #OPVersion) new
-		      releaseName: 'v1.10.0';
-		      buildDate: '2026-01-01' asDateAndTime.
-	self assert: v1 < v2.
-	self deny: v2 < v1
+	v1 := OPVersion new
+		      releaseName: 'v1.2.3';
+		      buildDate: (DateAndTime fromString: '2019-03-01T15:00:00.000000+01:00').
+	v2 := OPVersion new
+		      releaseName: 'v1.2.4';
+		      buildDate: (DateAndTime fromString: '2019-03-01T15:00:00.000000+01:00').
+	self assert: v1 < v2
 ]

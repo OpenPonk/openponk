@@ -38,5 +38,5 @@ OPTestContainerModel >> initialize [
 
 { #category : 'accessing' }
 OPTestContainerModel >> name [
-	^ 'container'
+	^ name ifNil: [ 'container' ]
 ]

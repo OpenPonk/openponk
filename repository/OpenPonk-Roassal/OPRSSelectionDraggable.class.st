@@ -10,7 +10,10 @@ Class {
 		'innerShapesProvider',
 		'draggedNodes',
 		'movedLinesWithControlPoints',
-		'alignmentLineShapes'
+		'alignmentLineShapes',
+		'initialPositions',
+		'initialLineControlPoints',
+		'initialAnchors'
 	],
 	#category : 'OpenPonk-Roassal-Interactions',
 	#package : 'OpenPonk-Roassal',
@@ -166,16 +169,34 @@ OPRSSelectionDraggable >> dragStepForEvent: evt [
 { #category : 'events' }
 OPRSSelectionDraggable >> endDrag: anEvent [
 
-	| event |
+	| event hasChanged |
 	event := OPRSDragFromSelectionEnd fromEvent: anEvent.
 	event
 		position: anEvent position;
 		morph: anEvent morph.
-	(draggedNodes copyWithout: anEvent shape) do: [ :each |
-		each announce: event ].
+	(draggedNodes copyWithout: anEvent shape) do: [ :eachNode | eachNode announce: event ].
 
 	self replaceAlignmentLinesWith: #(  ).
+
+	hasChanged := (draggedNodes anySatisfy: [ :eachNode |
+		               (initialPositions at: eachNode ifAbsent: [ eachNode position ]) ~= eachNode position ]) or: [
+			              movedLinesWithControlPoints anySatisfy: [ :eachLine |
+				              (initialLineControlPoints at: eachLine ifAbsent: [ eachLine innerControlPoints ]) ~= eachLine innerControlPoints ] ].
+
+	hasChanged ifTrue: [
+			anEvent canvas announce: (OPRSElementsDraggedEvent new
+					 shapes: draggedNodes copy;
+					 initialPositions: initialPositions copy;
+					 initialAnchors: (initialAnchors ifNotNil: [ :theAnchors | theAnchors copy ] ifNil: [ Dictionary new ]);
+					 lines: movedLinesWithControlPoints copy;
+					 initialLineControlPoints: initialLineControlPoints copy;
+					 yourself) ].
+
 	draggedNodes := #(  ).
+	initialPositions := nil.
+	initialAnchors := nil.
+	initialLineControlPoints := nil.
+	movedLinesWithControlPoints := #(  ).
 	event signalUpdate
 ]
 
@@ -268,7 +289,6 @@ OPRSSelectionDraggable >> shapesToDragInside: aContainerShape [
 
 { #category : 'events' }
 OPRSSelectionDraggable >> startDrag: anEvent [
-
 	| selectedShapes selectedShapesToMove event |
 	alignmentLineShapes := RSGroup new.
 
@@ -277,17 +297,31 @@ OPRSSelectionDraggable >> startDrag: anEvent [
 
 	selectedShapesToMove := (selectedShapes includes: anEvent shape)
 		                        ifTrue: [
-			                        selectedShapes select: [ :each |
-				                        each hasProperty: self propertyKey ] ]
+			                        selectedShapes select: [ :eachSelected |
+				                        eachSelected hasProperty: self propertyKey ] ]
 		                        ifFalse: [ { anEvent shape } ].
 
-	draggedNodes := selectedShapesToMove flatCollectAsSet: [
-		                :eachSelectedShape |
+	draggedNodes := selectedShapesToMove flatCollectAsSet: [ :eachSelectedShape |
 		                (Set with: eachSelectedShape)
 		                , (self shapesToDragInside: eachSelectedShape) ].
 
-	movedLinesWithControlPoints := self movedLinesWithControlPointsBy:
-		                               anEvent.
+	movedLinesWithControlPoints := self movedLinesWithControlPointsBy: anEvent.
+
+	initialPositions := Dictionary new.
+	draggedNodes do: [ :eachNode |
+		initialPositions at: eachNode put: eachNode position copy ].
+
+	initialAnchors := Dictionary new.
+	draggedNodes do: [ :eachNode |
+		(eachNode propertyAt: OPRSAnchorConstraint ifAbsent: [ nil ])
+			ifNotNil: [ :anchorConstraint |
+				initialAnchors
+					at: eachNode
+					put: { anchorConstraint balance . anchorConstraint distanceToLine } ] ].
+
+	initialLineControlPoints := Dictionary new.
+	movedLinesWithControlPoints do: [ :eachLine |
+		initialLineControlPoints at: eachLine put: eachLine innerControlPoints copy ].
 
 	unusedStep := 0 @ 0.
 
@@ -295,8 +329,8 @@ OPRSSelectionDraggable >> startDrag: anEvent [
 	event
 		position: anEvent position;
 		morph: anEvent morph.
-	(draggedNodes copyWithout: anEvent shape) do: [ :each |
-		each announce: event ]
+	(draggedNodes copyWithout: anEvent shape) do: [ :eachNode |
+		eachNode announce: event ]
 ]
 
 { #category : 'events' }

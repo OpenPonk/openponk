@@ -40,16 +40,16 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 
 	spec baseline: 'Magritte' with: [
 		spec
-			repository: 'github://JanBliznicenko/magritte:master';
+			repository: 'github://JanBliznicenko/magritte:p14fixes';
 			loads: #( Core 'Magritte-Morph' ) ].
 
 	spec
 		baseline: 'Mocketry'
-		with: [ spec repository: 'github://dionisiydk/Mocketry' ].
+		with: [ spec repository: 'github://dionisiydk/Mocketry:v7.0.4' ].
 
 	spec
 		baseline: 'NeoJSON'
-		with: [ spec repository: 'github://svenvc/NeoJSON:9af34bb' ].
+		with: [ spec repository: 'github://svenvc/NeoJSON:11e274d' ].
 
 	spec baseline: 'Roassal' with: [
 		spec

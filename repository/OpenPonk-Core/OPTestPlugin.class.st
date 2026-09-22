@@ -11,7 +11,6 @@ Class {
 
 { #category : 'testing' }
 OPTestPlugin class >> isTestingOnly [
-
 	^ true
 ]
 
@@ -26,6 +25,13 @@ OPTestPlugin >> diagramSerializerClass [
 ]
 
 { #category : 'accessing' }
+OPTestPlugin >> icon [
+	"Answers icon for test plugin."
+
+	^ Smalltalk ui icons iconNamed: #testRunner
+]
+
+{ #category : 'accessing' }
 OPTestPlugin >> layouterClass [
 	"Create your own subclass of OPLayouter or use OPNoLayouter which does nothing"
 
@@ -34,6 +40,8 @@ OPTestPlugin >> layouterClass [
 
 { #category : 'accessing' }
 OPTestPlugin >> modelClass [
+	"Answers model class used for instantiation."
+
 	^ OPTestContainerModel
 ]
 
@@ -44,7 +52,9 @@ OPTestPlugin >> modelSerializerClass [
 
 { #category : 'accessing' }
 OPTestPlugin >> name [
-	^ 'Plugin for testing'
+	"Answers test plugin name."
+
+	^ 'Test Plugin'
 ]
 
 { #category : 'accessing' }

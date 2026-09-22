@@ -135,10 +135,11 @@ OPWorkbench class >> settingsOn: aBuilder [
 	(aBuilder group: #openponk) label: 'OpenPonk'
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'closing' }
 OPWorkbench >> close [
+	"Closes the underlying workbench window."
 
-	self withWindowDo: [ :window | window close ]
+	self withWindowDo: [ :activeWindow | activeWindow close ]
 ]
 
 { #category : 'opening' }

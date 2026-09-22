@@ -41,6 +41,17 @@ OPPlugin >> = aComparable [
 		  self modelClass = aComparable modelClass ]
 ]
 
+{ #category : 'templates' }
+OPPlugin >> defaultProjectTemplates [
+	"Answers standard empty model templates for this plugin."
+
+	^ { (OPProjectTemplate
+			named: 'Empty ' , self name
+			icon: self icon
+			modelFactory: [ self newModel ]
+			isExample: false) }
+]
+
 { #category : 'accessing' }
 OPPlugin >> diagramClass [
 	self
@@ -52,6 +63,13 @@ OPPlugin >> diagramClass [
 { #category : 'accessing' }
 OPPlugin >> diagramControllerClass [
 	^ self subclassResponsibility
+]
+
+{ #category : 'templates' }
+OPPlugin >> exampleProjectTemplates [
+	"Subclasses or extension packages override this to provide demo models."
+
+	^ #(  )
 ]
 
 { #category : 'comparing' }
@@ -107,6 +125,13 @@ OPPlugin >> name [
 { #category : 'instance creation' }
 OPPlugin >> newModel [
 	^ self modelClass new
+]
+
+{ #category : 'templates' }
+OPPlugin >> projectTemplates [
+	"Answers all project templates supported by this plugin, including empty models and examples."
+
+	^ self defaultProjectTemplates , self exampleProjectTemplates
 ]
 
 { #category : 'accessing' }

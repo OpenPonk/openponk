@@ -11,7 +11,8 @@ Class {
 		'quickStartLabel',
 		'projectNameInput',
 		'pluginRegistry',
-		'diagramOptions',
+		'pluginsList',
+		'templatesList',
 		'createProjectButton',
 		'openProjectButton'
 	],
@@ -32,13 +33,12 @@ OPProjectBrowser class >> fileReaderServicesForFile: fullName suffix: suffix [
 
 { #category : 'world menu' }
 OPProjectBrowser class >> menuCommandOn: aBuilder [
-
 	<worldMenu>
 	(aBuilder item: #OpenPonk)
 		icon: OPCoreIcons openponkIcon;
-		action: [ self open ];
-		withSeparatorAfter;
-		order: 200
+		label: 'OpenPonk';
+		order: 200;
+		action: [ self open ]
 ]
 
 { #category : 'instance creation' }
@@ -62,11 +62,10 @@ OPProjectBrowser class >> serviceOpen [
 
 { #category : 'initialization' }
 OPProjectBrowser >> connectPresenters [
-
 	super connectPresenters.
 	recentList
 		items: OPProjectStorage default projects;
-		display: #name;
+		display: [ :project | project name ];
 		whenActivatedDo: [ 
 			self openProjectFromFile: recentList selectedItem storageFile ];
 		contextMenu: [ 
@@ -74,21 +73,40 @@ OPProjectBrowser >> connectPresenters [
 	projectNameInput whenTextChangedDo: [ :newValue | 
 		createProjectButton enabled: newValue isNotEmpty ].
 	createProjectButton action: [ self createProject ].
-	openProjectButton action: [ self openProjectFromFile ]
+	openProjectButton action: [ self openProjectFromFile ].
+
+	pluginsList
+		items: pluginRegistry plugins asOrderedCollection;
+		display: [ :plugin | plugin name ];
+		displayIcon: [ :plugin | plugin icon ];
+		whenSelectedItemChangedDo: [ :selectedPlugin | 
+			self updateTemplatesListFor: selectedPlugin ].
+
+	templatesList
+		display: [ :template | template name ];
+		displayIcon: [ :template | template icon ];
+		whenSelectedItemChangedDo: [ :selectedTemplate | 
+			self templateSelected: selectedTemplate ];
+		whenActivatedDo: [ self createProject ].
+
+	pluginsList selectIndex: 1
 ]
 
-{ #category : 'initialization' }
+{ #category : 'project handling' }
 OPProjectBrowser >> createProject [
-
-	| project |
+	| selectedTemplate model project workbench |
+	selectedTemplate := templatesList selectedItem.
+	selectedTemplate ifNil: [ ^ self ].
+	model := selectedTemplate createModel.
+	(model respondsTo: #name:) ifTrue: [ 
+		(selectedTemplate isExample not or: [ model name isNil ]) ifTrue: [ 
+			model name: projectNameInput text ] ].
 	project := OPProject named: projectNameInput text.
-	diagramOptions associations
-		detect: [ :eachAssoc | eachAssoc value state ]
-		ifFound: [ :eachAssoc | 
-			project addModel: (eachAssoc key newModel
-					 name: projectNameInput text;
-					 yourself) ].
-	self openProject: project
+	project addModel: model.
+	workbench := self openProject: project.
+	selectedTemplate isExample ifTrue: [ 
+		(workbench respondsTo: #showAllElementsInAllDiagrams) ifTrue: [ 
+			workbench showAllElementsInAllDiagrams ] ]
 ]
 
 { #category : 'accessing - spec' }
@@ -98,77 +116,70 @@ OPProjectBrowser >> createProjectButton [
 
 { #category : 'initialization' }
 OPProjectBrowser >> initialize [
-
-	diagramOptions := OrderedDictionary new.
 	pluginRegistry := OPPluginRegistry default.
 	super initialize
 ]
 
 { #category : 'initialization' }
 OPProjectBrowser >> initializeLayout [
+	| leftColumn listsLayout rightColumn |
+	leftColumn := SpBoxLayout newTopToBottom
+		spacing: 5;
+		add: #recentLabel height: self class labelHeight;
+		add: #recentList expand: true fill: true;
+		add: #openProjectButton height: self class buttonHeight;
+		yourself.
 
-	| rightColumn |
-	rightColumn := SpBoxLayout newTopToBottom.
-	rightColumn
-		add: self newNullPresenter height: 5;
-		add: #quickStartLabel height: self class buttonHeight.
-	diagramOptions do: [ :each | 
-		rightColumn add: each height: self class buttonHeight ].
-	rightColumn
-		add: self newNullPresenter;
+	listsLayout := SpPanedLayout newLeftToRight
+		positionOfSlider: 0.45;
+		add: #pluginsList;
+		add: #templatesList;
+		yourself.
+
+	rightColumn := SpBoxLayout newTopToBottom
+		spacing: 5;
+		add: #quickStartLabel height: self class labelHeight;
+		add: listsLayout expand: true fill: true;
 		add: #projectNameInput height: self class buttonHeight;
-		add: self newNullPresenter height: 5;
-		add: #createProjectButton height: self class buttonHeight.
+		add: #createProjectButton height: self class buttonHeight;
+		yourself.
 
 	self layout: (SpPanedLayout newLeftToRight
-			 add: (SpBoxLayout newTopToBottom
-					  add: self newNullPresenter height: 5;
-					  add: #recentLabel height: self class buttonHeight;
-					  add: #recentList expand: true fill: true;
-					  add: self newNullPresenter height: 5;
-					  add: #openProjectButton height: self class buttonHeight);
-			 add: rightColumn;
-			 yourself)
+		positionOfSlider: 0.45;
+		add: leftColumn;
+		add: rightColumn;
+		yourself)
 ]
 
 { #category : 'initialization' }
 OPProjectBrowser >> initializePresenters [
-
-	| radioButtons |
 	recentLabel := self newLabel label: 'Recent Projects'.
 	recentList := self newList.
 	quickStartLabel := self newLabel label: 'Quick Start'.
+	pluginsList := self newList.
+	templatesList := self newList.
 	projectNameInput := self newTextInput text: 'New Project'.
 	createProjectButton := self newButton label: 'Create Project'.
 	openProjectButton := self newButton label: 'Open Project...'.
-
-	pluginRegistry pluginsDo: [ :each |
-		diagramOptions at: each put: (self newRadioButton label: each name) ].
-
-	self initializeLayout.
-
-	radioButtons := diagramOptions asArray.
-	radioButtons size < 2 ifTrue: [ ^ self ].
-	radioButtons first associatedRadioButtons:
-		radioButtons copyWithoutFirst
+	self initializeLayout
 ]
 
 { #category : 'initialization' }
 OPProjectBrowser >> initializeWindow: aWindow [
-
 	super initializeWindow: aWindow.
 	aWindow
 		windowIcon: OPCoreIcons openponkIcon;
 		title: 'OpenPonk Project Browser';
-		initialExtent: 400 @ 400
+		initialExtent: 800 @ 350
 ]
 
 { #category : 'project handling' }
 OPProjectBrowser >> openProject: project [
-
+	| workbench |
 	project saveInImage.
-	project open.
-	self withWindowDo: [ :window | window close ]
+	workbench := project open.
+	self withWindowDo: [ :activeWindow | activeWindow close ].
+	^ workbench
 ]
 
 { #category : 'accessing - spec' }
@@ -194,6 +205,13 @@ OPProjectBrowser >> openProjectFromFile [
 OPProjectBrowser >> openProjectFromFile: aFile [
 
 	^ self openProject: (OPProjectController fromFile: aFile)
+]
+
+{ #category : 'accessing - spec' }
+OPProjectBrowser >> pluginsList [
+	"Answers the list presenter holding registered notation plugins."
+
+	^ pluginsList
 ]
 
 { #category : 'initialization' }
@@ -237,9 +255,34 @@ OPProjectBrowser >> recentList [
 	^ recentList
 ]
 
+{ #category : 'updating' }
+OPProjectBrowser >> templateSelected: aTemplate [
+	aTemplate ifNil: [ ^ self ].
+	projectNameInput text: aTemplate name
+]
+
+{ #category : 'accessing - spec' }
+OPProjectBrowser >> templatesList [
+	"Answers the list presenter holding project templates of the selected plugin."
+
+	^ templatesList
+]
+
 { #category : 'initialization' }
 OPProjectBrowser >> updateRecentList [
 	^ recentList
 		items: OPProjectStorage default projects;
 		updateList
+]
+
+{ #category : 'updating' }
+OPProjectBrowser >> updateTemplatesListFor: aPlugin [
+	| templates |
+	aPlugin ifNil: [ 
+		templatesList items: #(  ).
+		^ self ].
+	templates := aPlugin projectTemplates.
+	templatesList items: templates asOrderedCollection.
+	templates ifNotEmpty: [ 
+		templatesList selectIndex: 1 ]
 ]

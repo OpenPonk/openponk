@@ -326,8 +326,8 @@ OPViewModel >> nameOfType [
 
 { #category : 'actions' }
 OPViewModel >> openEditorWithApplication: anApplication undoManager: anUndoManager [
-	"Default hook for domain editors opened from property forms."
-	self maEdit
+	"Hook for domain editors opened from property forms. Subclasses override to launch specific editors."
+	^ self
 ]
 
 { #category : 'connecting' }

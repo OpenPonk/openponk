@@ -110,7 +110,7 @@ OPProjectTree >> refresh [
 
 	tree
 		roots: { projectViewModel };
-		expandRoots
+		expandAll
 ]
 
 { #category : 'accessing - spec' }

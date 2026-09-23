@@ -16,6 +16,12 @@ OPInspectModelCommand >> execute [
 	self selectedViewModel model inspect
 ]
 
+{ #category : 'accessing' }
+OPInspectModelCommand >> iconName [
+	"Answer the icon name for inspecting the underlying domain model."
+	^ #glamorousInspect
+]
+
 { #category : 'initialization' }
 OPInspectModelCommand >> initialize [
 	super initialize.

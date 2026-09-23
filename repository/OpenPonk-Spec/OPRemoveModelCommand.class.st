@@ -32,6 +32,12 @@ OPRemoveModelCommand >> execute [
 		openDialog
 ]
 
+{ #category : 'accessing' }
+OPRemoveModelCommand >> iconName [
+	"Answer the icon name for the remove action in the project tree context menu."
+	^ #glamorousTrash
+]
+
 { #category : 'initialization' }
 OPRemoveModelCommand >> initialize [
 	super initialize.

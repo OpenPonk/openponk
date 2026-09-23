@@ -6,13 +6,6 @@ Class {
 	#tag : 'Commands-ProjectTree'
 }
 
-{ #category : 'converting' }
-OPRenameProjectTreeCommand >> asSpecCommand [
-	^ super asSpecCommand
-		iconName: #glamorousEdit;
-		yourself
-]
-
 { #category : 'testing' }
 OPRenameProjectTreeCommand >> canBeExecuted [
 	^ self selectedViewModel isKindOf: OPProjectViewModel
@@ -21,6 +14,12 @@ OPRenameProjectTreeCommand >> canBeExecuted [
 { #category : 'executing' }
 OPRenameProjectTreeCommand >> execute [
 	self workbench renameProject
+]
+
+{ #category : 'accessing' }
+OPRenameProjectTreeCommand >> iconName [
+	"Answer the icon name for the rename action in the project tree context menu."
+	^ #glamorousEdit
 ]
 
 { #category : 'initialization' }

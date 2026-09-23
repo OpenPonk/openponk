@@ -345,6 +345,57 @@ OPRSResizableTest >> testBottomCenterHandleDragPreservesTopEdgeAnchor [
 ]
 
 { #category : 'tests' }
+OPRSResizableTest >> testMultiStepDraggingPreservesMovedEdgeDeltaAndOppositeAnchor [
+	| canvas box resizable scenarios |
+	canvas := RSCanvas new extent: 1000 @ 1000.
+	box := RSBox new
+		size: 200 @ 150;
+		position: 300 @ 300;
+		borderWidth: 6;
+		borderColor: Color black;
+		yourself.
+	canvas add: box.
+	resizable := OPRSResizable new.
+	resizable onShape: box.
+	resizable showHandles: (RSSelectionChangedEvent new canvas: canvas; yourself).
+	scenarios := {
+		"handleKey . stepVector . movedCoordinateExtractor . oppositeCoordinateExtractor . expectedTotalDelta"
+		{ #rightCenter . (1 @ 0) . [ :rectangle | rectangle right ] . [ :rectangle | rectangle left ] . 10 } .
+		{ #leftCenter . (-1 @ 0) . [ :rectangle | rectangle left ] . [ :rectangle | rectangle right ] . -10 } .
+		{ #bottomCenter . (0 @ 1) . [ :rectangle | rectangle bottom ] . [ :rectangle | rectangle top ] . 10 } .
+		{ #topCenter . (0 @ -1) . [ :rectangle | rectangle top ] . [ :rectangle | rectangle bottom ] . -10 } .
+		{ #bottomRight . (1 @ 1) . [ :rectangle | rectangle bottomRight ] . [ :rectangle | rectangle topLeft ] . (10 @ 10) }
+	}.
+	scenarios do: [ :eachScenario |
+		| handleKey stepVector movedCoordinateExtractor oppositeCoordinateExtractor expectedTotalDelta initialBounds targetHandle initialOppositeCoordinate initialMovedCoordinate |
+		handleKey := eachScenario at: 1.
+		stepVector := eachScenario at: 2.
+		movedCoordinateExtractor := eachScenario at: 3.
+		oppositeCoordinateExtractor := eachScenario at: 4.
+		expectedTotalDelta := eachScenario at: 5.
+		box extent: 200 @ 150.
+		box translateTo: 300 @ 300.
+		resizable updateHandles: nil.
+		initialBounds := box encompassingRectangle copy.
+		initialOppositeCoordinate := (oppositeCoordinateExtractor value: initialBounds) copy.
+		initialMovedCoordinate := (movedCoordinateExtractor value: initialBounds) copy.
+		targetHandle := resizable handles detect: [ :eachHandle |
+			(eachHandle model respondsTo: #key) and: [ eachHandle model key = handleKey ] ].
+		1 to: 10 do: [ :stepIndex |
+			| draggingEvent |
+			targetHandle translateBy: stepVector.
+			draggingEvent := RSMouseDragging new
+				shape: targetHandle;
+				step: stepVector;
+				position: targetHandle position;
+				canvas: canvas;
+				yourself.
+			resizable updateCurrentShape: draggingEvent ].
+		self assert: ((oppositeCoordinateExtractor value: box encompassingRectangle) closeTo: initialOppositeCoordinate precision: 0.001).
+		self assert: ((movedCoordinateExtractor value: box encompassingRectangle) closeTo: (initialMovedCoordinate + expectedTotalDelta) precision: 0.001) ]
+]
+
+{ #category : 'tests' }
 OPRSResizableTest >> testRightCenterHandleDragPreservesLeftAndTopEdgeAnchors [
 	"Verifies that dragging rightCenter handle strictly preserves left, top, and bottom edge coordinates without vertical growth"
 	| canvas box resizable handle initialTop initialLeft initialHeight draggingEvent |

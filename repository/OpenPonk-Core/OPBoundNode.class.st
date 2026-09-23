@@ -55,7 +55,7 @@ OPBoundNode >> extent [
 	^ (roassalShape ifNil: [ self bounds ]) extent
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'rendering' }
 OPBoundNode >> moveToEmptySpace [
 
 	| spacing neededSpace canvasRectangle possibleCanvas occupiedRectangles |

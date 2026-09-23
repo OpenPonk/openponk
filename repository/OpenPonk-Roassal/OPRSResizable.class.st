@@ -213,25 +213,25 @@ OPRSResizable >> updateCurrentShape: anEvent [
 ]
 
 { #category : 'update' }
-OPRSResizable >> updateHandles: evt [
-
-	| canvas rect base points circles matrix |
+OPRSResizable >> updateHandles: anEvent [
+	| canvas rect baseHandle handleCircles pointPositions transformationMatrix halfExtent |
 	currentShape ifNil: [ currentShape := shape ].
 	currentShape ifNil: [ ^ self ].
 	handles ifNil: [ ^ self ].
 	handles size < 2 ifTrue: [ ^ self ].
-	canvas := evt ifNotNil: [ evt canvas ] ifNil: [ currentShape canvas ].
-	rect := Rectangle center: 0 @ 0 extent: currentShape extent.
-	base := handles first.
-	circles := handles copyFrom: 2 to: handles size.
-	points := Array new: circles size.
-	matrix := currentShape matrix.
-	circles doWithIndex: [ :h :index |
-			| position |
-			position := matrix transform: (h model key value: rect).
-			h position: position.
-			points at: index put: position ].
-	base points: points.
-	base resetBBox.
+	canvas := anEvent ifNotNil: [ :event | event canvas ] ifNil: [ currentShape canvas ].
+	halfExtent := currentShape extent asFloatPoint / 2.0.
+	rect := Rectangle origin: halfExtent negated corner: halfExtent.
+	baseHandle := handles first.
+	handleCircles := handles copyFrom: 2 to: handles size.
+	pointPositions := Array new: handleCircles size.
+	transformationMatrix := currentShape matrix.
+	handleCircles doWithIndex: [ :eachHandle :index |
+		| handlePosition |
+		handlePosition := transformationMatrix transform: (eachHandle model key value: rect).
+		eachHandle position: handlePosition.
+		pointPositions at: index put: handlePosition ].
+	baseHandle points: pointPositions.
+	baseHandle resetBBox.
 	canvas ifNotNil: [ :theCanvas | theCanvas signalUpdate ]
 ]

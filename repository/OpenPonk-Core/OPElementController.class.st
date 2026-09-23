@@ -91,9 +91,11 @@ OPElementController >> diagramElementOwnerWithPossibleController [
 
 { #category : 'ui interaction' }
 OPElementController >> ensureDeselected [
-	self isRendered ifFalse: [ ^ self ].
-	self roassalShape propertyAt: OPRSSelectable ifPresent: [ :selectable |
-		selectable deselect: self roassalShape ]
+	self diagramController ifNotNil: [ :activeDiagramController |
+		activeDiagramController deselectController: self ].
+	(self isRendered and: [ self roassalShape canvas isNotNil ]) ifTrue: [
+		self roassalShape propertyAt: OPRSSelectable ifPresent: [ :selectable |
+			selectable deselect: self roassalShape ] ]
 ]
 
 { #category : 'accessing' }

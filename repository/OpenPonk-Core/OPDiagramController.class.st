@@ -343,6 +343,15 @@ OPDiagramController >> deselectAll [
 	self announcer announce: OPAllShapesDeselected new
 ]
 
+{ #category : 'selection' }
+OPDiagramController >> deselectController: aController [
+	"Deselect aController in the active palette tool and workbench form."
+	self editor ifNotNil: [ :activeEditor |
+		activeEditor palette ifNotNil: [ :activePalette |
+			activePalette selectedTool ifNotNil: [ :activeTool |
+				activeTool deselectController: aController ] ] ]
+]
+
 { #category : 'accessing' }
 OPDiagramController >> diagram [
 
@@ -688,8 +697,8 @@ OPDiagramController >> removeAllControllers [
 
 { #category : 'controllers management' }
 OPDiagramController >> removeController: aController [
-
-	self controllers remove: aController ifAbsent: [  ]
+	self deselectController: aController.
+	self controllers remove: aController ifAbsent: [ ]
 ]
 
 { #category : 'deprecated' }

@@ -65,6 +65,24 @@ OPDiagramControllerTest >> testCanBeTargetForEntity [
 				canBeTargetFor: (controller newControllerFor: OPTestEntityModel new))
 ]
 
+{ #category : 'tests' }
+OPDiagramControllerTest >> testDeselectControllerDelegatesToSelectionTool [
+	| mockEditor mockPalette mockTool targetController |
+	mockEditor := Mock new.
+	mockPalette := Mock new.
+	mockTool := Mock new.
+	targetController := Mock new.
+
+	mockEditor stub palette willReturn: mockPalette.
+	mockPalette stub selectedTool willReturn: mockTool.
+	mockTool stub deselectController: Any.
+
+	controller editor: mockEditor.
+	controller deselectController: targetController.
+
+	mockTool should receive deselectController: targetController
+]
+
 { #category : 'tests - ui interaction' }
 OPDiagramControllerTest >> testInitializePalette [
 
@@ -133,6 +151,26 @@ OPDiagramControllerTest >> testProjectControllerWiresUndoRedoCanvasUpdates [
 	projectController := OPProjectController new.
 	controller projectController: projectController.
 	self assert: (projectController undoManager announcer hasSubscriber: controller)
+]
+
+{ #category : 'tests' }
+OPDiagramControllerTest >> testRemoveControllerDeselectsController [
+	| mockEditor mockPalette mockTool targetController |
+	mockEditor := Mock new.
+	mockPalette := Mock new.
+	mockTool := Mock new.
+	targetController := Mock new.
+
+	mockEditor stub palette willReturn: mockPalette.
+	mockPalette stub selectedTool willReturn: mockTool.
+	mockTool stub deselectController: Any.
+
+	controller editor: mockEditor.
+	controller controllers add: targetController.
+	controller removeController: targetController.
+
+	mockTool should receive deselectController: targetController.
+	self deny: (controller controllers includes: targetController)
 ]
 
 { #category : 'tests' }

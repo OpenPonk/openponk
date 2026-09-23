@@ -45,9 +45,11 @@ OPViewModel class >> modelClass [
 ]
 
 { #category : 'comparing' }
-OPViewModel >> = other [
+OPViewModel >> = anObject [
 
-	^ model = other model
+	self == anObject ifTrue: [ ^ true ].
+	self class = anObject class ifFalse: [ ^ false ].
+	^ model = anObject model
 ]
 
 { #category : 'accessing' }

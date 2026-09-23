@@ -18,6 +18,11 @@ OPPaletteTool >> deselect [
 	self subclassResponsibility
 ]
 
+{ #category : 'hooks' }
+OPPaletteTool >> deselectController: aController [
+	"Polymorphic hook for tools handling selection. Subclasses override as needed." 
+]
+
 { #category : 'accessing' }
 OPPaletteTool >> diagramController [
 	^ palette diagramController

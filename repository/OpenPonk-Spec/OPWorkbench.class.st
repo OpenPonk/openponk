@@ -424,6 +424,20 @@ OPWorkbench >> projectTree [
 ]
 
 { #category : 'actions' }
+OPWorkbench >> renameProject [
+
+	| requestDialog |
+	requestDialog := SpRequestDialog new.
+	requestDialog
+		title: 'Rename Project';
+		message: 'Project name:';
+		text: self project name;
+		validateAnswer: [ :anAnswer | anAnswer isNotNil and: [ anAnswer trim isNotEmpty ] ];
+		onAccept: [ self projectController renameProjectTo: requestDialog text asString trim ];
+		openDialog
+]
+
+{ #category : 'actions' }
 OPWorkbench >> saveProject [
 	"Save the currently opened project via its controller.
 	Fail explicitly if invoked in an invalid state without an active project."

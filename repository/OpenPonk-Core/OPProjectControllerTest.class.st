@@ -70,6 +70,26 @@ OPProjectControllerTest >> testRenameDiagramTransactively [
 ]
 
 { #category : 'tests' }
+OPProjectControllerTest >> testRenameProjectToSameNameDoesNotRecordUndoCommand [
+	project name: 'Same Name'.
+	controller renameProjectTo: 'Same Name'.
+
+	self assert: project name equals: 'Same Name'.
+	self deny: controller undoManager canUndo
+]
+
+{ #category : 'tests' }
+OPProjectControllerTest >> testRenameProjectTransactively [
+	project name: 'Old Project'.
+	controller renameProjectTo: 'New Project'.
+	self assert: project name equals: 'New Project'.
+	controller undoManager undo.
+	self assert: project name equals: 'Old Project'.
+	controller undoManager redo.
+	self assert: project name equals: 'New Project'
+]
+
+{ #category : 'tests' }
 OPProjectControllerTest >> testSaveProjectEmpty [
 	| root store |
 	root := FileSystem memory / 'project.opp'.

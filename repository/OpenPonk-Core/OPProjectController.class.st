@@ -335,6 +335,14 @@ OPProjectController >> renameDiagram: aDiagram to: aNewName [
 		project: self project)
 ]
 
+{ #category : 'actions' }
+OPProjectController >> renameProjectTo: aNewName [
+	aNewName = self project name ifTrue: [ ^ self ].
+	self undoManager execute: (OPRenameProjectCommand
+		project: self project
+		newName: aNewName)
+]
+
 { #category : 'saving' }
 OPProjectController >> replaceWritableProjectFile [
 

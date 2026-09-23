@@ -58,6 +58,15 @@ OPProjectViewModel >> projectViewModel [
     ^ self
 ]
 
+{ #category : 'initialization' }
+OPProjectViewModel >> subscribeToModel [
+	super subscribeToModel.
+	self model announcer weak
+		when: OPProjectRenamed
+		send: #modelChanged
+		to: self
+]
+
 { #category : 'announcement registration' }
 OPProjectViewModel >> weakWhenChangedSend: aSelector to: aReceiver [
 

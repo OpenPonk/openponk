@@ -116,7 +116,7 @@ OPProjectBrowser >> createProjectButton [
 
 { #category : 'initialization' }
 OPProjectBrowser >> initialize [
-	pluginRegistry := OPPluginRegistry default.
+	pluginRegistry ifNil: [ pluginRegistry := OPPluginRegistry default ].
 	super initialize
 ]
 
@@ -207,6 +207,11 @@ OPProjectBrowser >> openProjectFromFile: aFile [
 	^ self openProject: (OPProjectController fromFile: aFile)
 ]
 
+{ #category : 'accessing' }
+OPProjectBrowser >> pluginRegistry [
+	^ pluginRegistry
+]
+
 { #category : 'accessing - spec' }
 OPProjectBrowser >> pluginsList [
 	"Answers the list presenter holding registered notation plugins."
@@ -253,6 +258,12 @@ OPProjectBrowser >> recentLabel [
 { #category : 'accessing - spec' }
 OPProjectBrowser >> recentList [
 	^ recentList
+]
+
+{ #category : 'accessing - model' }
+OPProjectBrowser >> setModelBeforeInitialization: aPluginRegistry [
+	super setModelBeforeInitialization: aPluginRegistry.
+	pluginRegistry := aPluginRegistry
 ]
 
 { #category : 'updating' }

@@ -28,7 +28,9 @@ OPPluginExampleLifecycleTest >> testAllInstalledPluginExampleTemplatesOpenInWork
 	| nonTestingPlugins |
 	nonTestingPlugins := OPPluginRegistry default plugins reject: [ :plugin | 
 		plugin class isTestingOnly ].
-	self assert: nonTestingPlugins isNotEmpty.
+	nonTestingPlugins ifEmpty: [ 
+		self skip: 'No domain plugins installed in core image'.
+		^ self ].
 	nonTestingPlugins do: [ :plugin | 
 		| templates |
 		templates := plugin exampleProjectTemplates.

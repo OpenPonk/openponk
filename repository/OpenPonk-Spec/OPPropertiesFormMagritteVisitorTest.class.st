@@ -40,25 +40,34 @@ OPPropertiesFormMagritteVisitorTest >> testToManyRelation [
 ]
 
 { #category : 'tests' }
-OPPropertiesFormMagritteVisitorTest >> testVisitorOpensPackageGeneralizationSetsEditorWithUndoManager [
-		"Verifies that Edit Generalization Sets button invokes the editor with transactional undoManager from form"
-		| package packageViewModel form visitor undoManager editButton |
-		package := OPUMLPackage new name: 'TestPackage'.
-		packageViewModel := OPUmlPackageViewModel new.
-		packageViewModel instVarNamed: 'model' put: package.
+OPPropertiesFormMagritteVisitorTest >> testVisitToManyRelationDescriptionAddsEditButtonToForm [
+	"Verifies that visitToManyRelationDescription: adds an Edit button whose action opens the editor on viewModel with form application and undoManager"
+	| form undoManager mockViewModel relationDescription editButton visitor |
+	form := OPPropertiesForm new.
+	undoManager := OPUndoManager new.
+	form undoManager: undoManager.
 
-		undoManager := OPUndoManager new.
-		form := OPPropertiesForm new.
-		form undoManager: undoManager.
+	mockViewModel := Mock new.
+	(mockViewModel stub openEditorWithApplication: Any undoManager: Any) willReturn: nil.
 
-		visitor := OPPropertiesFormMagritteVisitor new.
-		visitor form: form.
-		visitor viewModel: packageViewModel.
+	visitor := OPPropertiesFormMagritteVisitor new.
+	visitor form: form.
+	visitor viewModel: mockViewModel.
 
-		visitor visitToManyRelationDescription: packageViewModel descriptionGeneralizationSets.
+	relationDescription := MAToManyRelationDescription new.
+	relationDescription label: 'Items'.
+	relationDescription accessor: (MAPluggableAccessor
+		read: [ :modelElement | #( ) ]
+		write: [ :modelElement :newValue | ]).
 
-		editButton := form components detect: [ :eachComponent |
-			(eachComponent respondsTo: #label) and: [ eachComponent label beginsWith: 'Edit Generalization Sets' ] ].
+	visitor visitToManyRelationDescription: relationDescription.
 
-		self assert: editButton isNotNil
+	editButton := form components detect: [ :eachComponent |
+		(eachComponent respondsTo: #label) and: [ eachComponent label = 'Edit Items' ] ].
+
+	self assert: editButton isNotNil.
+
+	editButton click.
+
+	(mockViewModel should receive openEditorWithApplication: form application undoManager: undoManager) once
 ]

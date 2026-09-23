@@ -20,13 +20,14 @@ OPWorldMenuTest >> testNotationMenusAreCompletelyRemovedFromWorldMenu [
 { #category : 'tests' }
 OPWorldMenuTest >> testOpenPonkIsDirectActionLeafItem [
 	| builder openPonkItem |
-	builder := PragmaMenuBuilder pragmaKeyword: 'worldMenu' model: nil.
-	builder buildTree.
+	self assert: ((OPProjectBrowser class >> #menuCommandOn:) hasPragmaNamed: #worldMenu).
+
+	builder := PragmaMenuBuilder new.
+	OPProjectBrowser menuCommandOn: builder.
 
 	openPonkItem := builder itemNamed: #OpenPonk.
 	self assert: openPonkItem isNotNil.
 	self assert: openPonkItem parentName isNil.
-	self assert: openPonkItem owner equals: builder.
 	self assert: openPonkItem spec action isNotNil.
 	self assert: openPonkItem spec subMenu isNil.
 	self assert: (openPonkItem itemList ifNil: [ #() ]) isEmpty

@@ -12,8 +12,12 @@ Class {
 
 { #category : 'running' }
 OPProjectBrowserTest >> setUp [
+	| testRegistry |
 	super setUp.
-	browser := OPProjectBrowser newApplication: SpApplication defaultApplication
+	testRegistry := OPPluginRegistry new.
+	testRegistry add: OPTestPlugin new.
+	testRegistry add: OPTestSecondaryPlugin new.
+	browser := OPProjectBrowser newApplication: SpApplication defaultApplication model: testRegistry
 ]
 
 { #category : 'running' }
@@ -55,7 +59,8 @@ OPProjectBrowserTest >> testPluginSelectionUpdatesTemplates [
 { #category : 'tests' }
 OPProjectBrowserTest >> testPluginsListInitialized [
 	self assert: browser pluginsList class equals: SpListPresenter.
-	self assertCollection: browser pluginsList items hasSameElements: OPPluginRegistry default plugins
+	self assert: browser pluginsList items size equals: 2.
+	self assertCollection: browser pluginsList items hasSameElements: browser pluginRegistry plugins
 ]
 
 { #category : 'tests' }

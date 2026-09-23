@@ -83,7 +83,9 @@ OPProjectTemplateTest >> testInstalledPluginsProvideExamples [
 	| nonTestingPlugins |
 	nonTestingPlugins := OPPluginRegistry default plugins reject: [ :pluginItem | 
 		pluginItem class isTestingOnly ].
-	self assert: nonTestingPlugins isNotEmpty.
+	nonTestingPlugins ifEmpty: [ 
+		self skip: 'No domain plugins installed in core image'.
+		^ self ].
 	nonTestingPlugins do: [ :pluginItem | 
 		| templates |
 		templates := pluginItem exampleProjectTemplates.

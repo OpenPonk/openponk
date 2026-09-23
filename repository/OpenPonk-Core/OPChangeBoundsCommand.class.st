@@ -23,6 +23,12 @@ OPChangeBoundsCommand class >> element: aDiagramElement oldBounds: anOldBounds n
 		yourself
 ]
 
+{ #category : 'testing' }
+OPChangeBoundsCommand >> affectsModel [
+	"Bounds changes only alter diagram layout geometry, not the domain model."
+	^ false
+]
+
 { #category : 'accessing' }
 OPChangeBoundsCommand >> element [
 	^ element

@@ -114,7 +114,7 @@ OPWorkbenchToolbar >> defaultLayout [
 
 	^ SpBoxLayout newLeftToRight
 		  add: saveButton width: 28;
-		  add: SpNullPresenter new width: 6;
+		  add: SpNullPresenter new width: 10;
 		  add: undoButton width: 28;
 		  add: undoArrowButton width: 16;
 		  add: SpNullPresenter new width: 6;

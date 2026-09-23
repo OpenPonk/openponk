@@ -23,6 +23,12 @@ OPModifyEdgeWaypointsCommand class >> edge: anEdge oldWaypoints: anOldCollection
 		yourself
 ]
 
+{ #category : 'testing' }
+OPModifyEdgeWaypointsCommand >> affectsModel [
+	"Edge waypoint changes only alter diagram visual routing, not the domain model."
+	^ false
+]
+
 { #category : 'executing' }
 OPModifyEdgeWaypointsCommand >> applyWaypoints: aCollection [
 	| targetLine controlPointsInteraction |

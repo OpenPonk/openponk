@@ -19,6 +19,12 @@ OPDiagramElementVisibilityCommand class >> model: aModel diagramController: aDia
 		yourself
 ]
 
+{ #category : 'testing' }
+OPDiagramElementVisibilityCommand >> affectsModel [
+	"Showing or hiding diagram elements only alters canvas visibility, not the domain model."
+	^ false
+]
+
 { #category : 'factory' }
 OPDiagramElementVisibilityCommand >> createDescriptorFor: aDiagramElement [
 

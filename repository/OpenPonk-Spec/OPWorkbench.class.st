@@ -32,6 +32,7 @@ OPWorkbench class >> defaultLayout [
 			add: (SpPanedLayout newLeftToRight
 				add: (SpPanedLayout newTopToBottom
 					add: #projectTree;
+					positionOfSlider: 0.75;
 					add: #diagramsList;
 					yourself);
 				positionOfSlider: self initialListsWidth;
@@ -377,6 +378,7 @@ OPWorkbench >> openProject: aProject [
 		send: #updateTabTitles
 		to: self.
 	diagramsList project: aProject.
+	projectTree projectController: projectController.
 	projectTree openOn: projectViewModel.
 	projectController openDiagrams.
 	self hasWindow ifFalse: [ self open ].

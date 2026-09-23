@@ -42,6 +42,12 @@ OPCompositeCommand >> addAll: aCollection [
 	^ aCollection
 ]
 
+{ #category : 'testing' }
+OPCompositeCommand >> affectsModel [
+	"Answer whether any subcommand contained within this composite affects the domain model."
+	^ commands anySatisfy: [ :eachCommand | eachCommand affectsModel ]
+]
+
 { #category : 'enumerating' }
 OPCompositeCommand >> allLeafDescriptionsDo: aBlockClosure [
 	"Evaluate aBlockClosure recursively on all enclosed leaf command descriptions."

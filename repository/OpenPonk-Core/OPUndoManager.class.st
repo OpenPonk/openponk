@@ -23,9 +23,16 @@ OPUndoManager class >> defaultMaxUndoSteps [
 	^ 100
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'announcing' }
 OPUndoManager >> announceChanged [
-	self announcer announce: OPUndoRedoChanged new
+	"Announce history change without a specific triggering command."
+	self announceChangedFor: nil
+]
+
+{ #category : 'announcing' }
+OPUndoManager >> announceChangedFor: aCommand [
+	"Announce history change carrying the specific triggering command."
+	self announcer announce: (OPUndoRedoChanged command: aCommand)
 ]
 
 { #category : 'accessing' }
@@ -136,12 +143,12 @@ OPUndoManager >> maxUndoSteps: anInteger [
 	self announceChanged
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'private' }
 OPUndoManager >> pushToUndo: aCommand [
 	undoStack addLast: aCommand.
 	redoStack removeAll.
 	self enforceMaxUndoSteps.
-	self announceChanged
+	self announceChangedFor: aCommand
 ]
 
 { #category : 'actions api' }
@@ -153,13 +160,13 @@ OPUndoManager >> record: aCommand [
 		ifFalse: [ self recordDirectly: aCommand ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'private' }
 OPUndoManager >> recordDirectly: aCommand [
 	redoStack removeAll.
 	(undoStack isNotEmpty and: [ undoStack last canCoalesceWith: aCommand ])
 		ifTrue: [
 			undoStack last coalesceWith: aCommand.
-			self announceChanged ]
+			self announceChangedFor: undoStack last ]
 		ifFalse: [
 			self pushToUndo: aCommand ]
 ]
@@ -186,12 +193,12 @@ OPUndoManager >> redo [
 			command redo.
 			undoStack addLast: command.
 			self enforceMaxUndoSteps
-		] on: Exception do: [ :ex |
+		] on: Exception do: [ :exception |
 			undoStack removeAll.
-			ex pass ]
+			exception pass ]
 	] ensure: [
 		isExecutingUndoRedo := false.
-		self announceChanged ]
+		self announceChangedFor: command ]
 ]
 
 { #category : 'accessing' }
@@ -204,7 +211,7 @@ OPUndoManager >> transactionStack [
 	^ transactionStack
 ]
 
-{ #category : 'undo/redo' }
+{ #category : 'executing' }
 OPUndoManager >> undo [
 	"Execute undo of the last recorded command with exception isolation."
 	| command |
@@ -215,12 +222,12 @@ OPUndoManager >> undo [
 		[
 			command undo.
 			redoStack addLast: command
-		] on: Exception do: [ :ex |
+		] on: Exception do: [ :exception |
 			redoStack removeAll.
-			ex pass ]
+			exception pass ]
 	] ensure: [
 		isExecutingUndoRedo := false.
-		self announceChanged ]
+		self announceChangedFor: command ]
 ]
 
 { #category : 'accessing' }

@@ -24,6 +24,12 @@ OPChangeDiagramElementStylePropertyCommand class >> element: anElement property:
 		value: aValue
 ]
 
+{ #category : 'testing' }
+OPChangeDiagramElementStylePropertyCommand >> affectsModel [
+	"Style property changes only alter visual presentation, not the domain model."
+	^ false
+]
+
 { #category : 'accessing' }
 OPChangeDiagramElementStylePropertyCommand >> element [
 	^ element

@@ -12,6 +12,12 @@ Class {
 	#tag : 'UndoRedo'
 }
 
+{ #category : 'testing' }
+OPCommand >> affectsModel [
+	"Answer whether execution, undo, or redo of this command modifies the domain model structure or model properties."
+	^ true
+]
+
 { #category : 'enumerating' }
 OPCommand >> allLeafDescriptionsDo: aBlockClosure [
 	"Evaluate aBlockClosure with the description of this leaf command."

@@ -30,6 +30,12 @@ OPRenameDiagramCommand class >> diagram: aDiagram newName: aString project: aPro
 		yourself
 ]
 
+{ #category : 'testing' }
+OPRenameDiagramCommand >> affectsModel [
+	"Renaming a diagram alters diagram metadata, not the domain model."
+	^ false
+]
+
 { #category : 'announcing' }
 OPRenameDiagramCommand >> announceRenameFrom: fromName to: toName [
 	project ifNotNil: [ :p |

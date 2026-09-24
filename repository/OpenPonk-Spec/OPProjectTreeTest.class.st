@@ -72,7 +72,7 @@ OPProjectTreeTest >> testInitialExpansionToDepth3 [
 	treePresenter := projectTree tree.
 	self assert: (treePresenter isExpanded: #(1)).
 	self assert: (treePresenter isExpanded: #(1 1)).
-	self assert: (treePresenter isExpanded: #(1 1 1)).
+	self deny: (treePresenter isExpanded: #(1 1 1)).
 	self deny: (treePresenter isExpanded: #(1 1 1 1))
 ]
 

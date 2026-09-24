@@ -87,12 +87,13 @@ OPProjectTree >> currentShowIndex [
 
 { #category : 'actions' }
 OPProjectTree >> expandToDepth: maxDepthInteger [
+
 	tree roots withIndexDo: [ :eachRootViewModel :rootIndex |
-		self
-			expandViewModel: eachRootViewModel
-			atPath: { rootIndex }
-			currentDepth: 1
-			maxDepth: maxDepthInteger ]
+			self
+				expandViewModel: eachRootViewModel
+				atPath: { rootIndex }
+				currentDepth: 2 "depth 1 is the root - expanding the root expands to level 2"
+				maxDepth: maxDepthInteger ]
 ]
 
 { #category : 'private' }
@@ -192,13 +193,12 @@ OPProjectTree >> projectViewModel [
 
 { #category : 'actions' }
 OPProjectTree >> refresh [
+
 	| savedShowIndex |
 	savedShowIndex := self currentShowIndex.
 	self captureExpandedViewModels.
 	tree roots: { projectViewModel }.
-	self expandedViewModels isEmpty
-		ifTrue: [ self expandToDepth: 3 ]
-		ifFalse: [ self restoreExpansion ].
+	self expandedViewModels ifEmpty: [ self expandToDepth: 3 ] ifNotEmpty: [ self restoreExpansion ].
 	self restoreShowIndex: savedShowIndex
 ]
 

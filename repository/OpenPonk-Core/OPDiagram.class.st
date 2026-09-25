@@ -139,9 +139,7 @@ OPDiagram >> shouldBePositionableByUser [
 
 { #category : 'initialization' }
 OPDiagram >> updateFromRender [
-
 	self bounds: (OPNodeBounds
-			 withPosition: 0 @ 0
-			 extent: roassalShape encompassingRectangle extent).
-	self ownedElements do: #updateFromRender
+		withPosition: 0 @ 0
+		extent: roassalShape encompassingRectangle extent)
 ]

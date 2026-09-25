@@ -173,34 +173,6 @@ OPVersionTest >> testRepositoryLinkAndKnownStatus [
 ]
 
 { #category : 'tests' }
-OPVersionTest >> testRepositoryNotationName [
-
-	| version |
-	version := OPVersion new.
-
-	version repositoryName: 'class-editor' asSymbol.
-	self assert: version repositoryNotationName equals: '(Onto)UML'.
-
-	version repositoryName: 'borm-editor' asSymbol.
-	self assert: version repositoryNotationName equals: 'BORM'.
-
-	version repositoryName: 'fsm-editor' asSymbol.
-	self assert: version repositoryNotationName equals: 'FSM'.
-
-	version repositoryName: 'petrinets' asSymbol.
-	self assert: version repositoryNotationName equals: 'Petri nets'.
-
-	version repositoryName: 'BPMN' asSymbol.
-	self assert: version repositoryNotationName equals: 'BPMN'.
-
-	version repositoryName: 'plugins' asSymbol.
-	self assert: version repositoryNotationName equals: 'All plugins'.
-
-	version repositoryName: 'unknown-notation'.
-	self assert: version repositoryNotationName equals: 'unknown-notation'
-]
-
-{ #category : 'tests' }
 OPVersionTest >> testSemverComparison [
 
 	| v1 v2 |

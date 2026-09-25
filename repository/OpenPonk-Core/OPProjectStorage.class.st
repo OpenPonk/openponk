@@ -42,7 +42,10 @@ OPProjectStorage >> addFirst: aProject [
 
 { #category : 'removing' }
 OPProjectStorage >> ensureRemove: aProject [
-	projects removeAllSuchThat: [ :each | each storageFile = aProject storageFile ]
+	"Remove any project matching the UUID, or matching the storage file if defined."
+	projects removeAllSuchThat: [ :eachProject |
+		eachProject uuid = aProject uuid or: [
+			aProject storageFile isNotNil and: [ eachProject storageFile = aProject storageFile ] ] ]
 ]
 
 { #category : 'initialization' }

@@ -37,7 +37,7 @@ OPDiagramFigureColorCommandTest >> setUp [
 	(undoManager instVarNamed: #undoStack) removeAll
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'running' }
 OPDiagramFigureColorCommandTest >> tearDown [
 	classController := nil.
 	undoManager := nil.

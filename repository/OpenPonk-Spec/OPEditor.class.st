@@ -261,14 +261,13 @@ OPEditor >> setModelBeforeInitialization: aPlugin [
 	
 ]
 
-{ #category : 'updating' }
+{ #category : 'tabs' }
 OPEditor >> tabClosedWhileClosingWorkbench: closingWorkbench [
-
+	diagramController ifNotNil: [ :activeDiagramController |
+		activeDiagramController diagramElement ifNotNil: [ :activeDiagram |
+			self workbench projectController updateDiagram: activeDiagram ] ].
 	closingWorkbench ifFalse: [
-		self workbench projectController updateDiagram:
-			diagramController diagramElement.
-		self workbench projectController removeDiagramController:
-			diagramController ].
+		self workbench projectController removeDiagramController: diagramController ].
 	diagramController removeController
 ]
 

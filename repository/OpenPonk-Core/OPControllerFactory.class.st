@@ -56,6 +56,13 @@ OPControllerFactory >> registerCommonElements [
 		allSubclassesDo: [ :each | self register: each forModel: each modelClass ]
 ]
 
+{ #category : 'accessing' }
+OPControllerFactory >> registeredModelClasses [
+	"Answers a collection of all model classes that have a controller registered in this factory."
+
+	^ registrations keys
+]
+
 { #category : 'api - accessing' }
 OPControllerFactory >> setupHandler: aHandler withModel: aModel [
 	aHandler diagramController: diagramController.

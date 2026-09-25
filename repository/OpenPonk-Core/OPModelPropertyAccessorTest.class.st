@@ -37,7 +37,7 @@ OPModelPropertyAccessorTest >> testCanReadAndWrite [
 
 { #category : 'tests' }
 OPModelPropertyAccessorTest >> testCustomWriteBlockCompatibility [
-	"Verify that pluggable writeBlock customization (used by OPUmlClassifierItemViewModel) works seamlessly."
+	"Verify that pluggable writeBlock customization works seamlessly."
 
 	| accessor customCapturedValue |
 	accessor := OPModelPropertyAccessor on: #name.

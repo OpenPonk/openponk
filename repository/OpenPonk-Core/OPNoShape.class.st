@@ -102,14 +102,14 @@ OPNoShape >> orOwningElementWithPossibleController [
 ]
 
 { #category : 'initialization' }
-OPNoShape >> ownedElement: anOPPetriNetPTPlaceShape renderedIn: aRSCanvas [
+OPNoShape >> ownedElement: aDiagramElement renderedIn: aRSCanvas [
 	"do nothing"
 
 	
 ]
 
 { #category : 'initialization' }
-OPNoShape >> ownedElement: anOPPetriNetPTPlaceShape willRenderIn: aRSCanvas [
+OPNoShape >> ownedElement: aDiagramElement willRenderIn: aRSCanvas [
 	"do nothing"
 
 	

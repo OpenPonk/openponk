@@ -95,9 +95,9 @@ OPProjectController class >> openModalFromFile [
 
 { #category : 'managing' }
 OPProjectController >> addDiagramController: aDiagramController [
+	(controllers includes: aDiagramController) ifTrue: [ ^ self ].
 	controllers add: aDiagramController.
-	(aDiagramController respondsTo: #projectController:) ifTrue: [
-		aDiagramController projectController: self ]
+	aDiagramController projectController: self
 ]
 
 { #category : 'saving' }

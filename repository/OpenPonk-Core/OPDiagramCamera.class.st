@@ -22,6 +22,18 @@ OPDiagramCamera class >> newFrom: aCamera [
 		  yourself
 ]
 
+{ #category : 'comparing' }
+OPDiagramCamera >> = anObject [
+	self == anObject ifTrue: [ ^ true ].
+	self class = anObject class ifFalse: [ ^ false ].
+	^ scale = anObject scale and: [ position = anObject position ]
+]
+
+{ #category : 'comparing' }
+OPDiagramCamera >> hash [
+	^ scale hash bitXor: position hash
+]
+
 { #category : 'accessing' }
 OPDiagramCamera >> position [
 	^ position
@@ -31,6 +43,11 @@ OPDiagramCamera >> position [
 OPDiagramCamera >> position: aPoint [
 
 	position := aPoint
+]
+
+{ #category : 'accessing' }
+OPDiagramCamera >> scale [
+	^ scale
 ]
 
 { #category : 'accessing' }

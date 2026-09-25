@@ -862,27 +862,25 @@ OPDiagramController >> showAllElements [
 	self enableRefresh
 ]
 
-{ #category : 'rebuilding' }
+{ #category : 'showing elements' }
 OPDiagramController >> showDiagramElement: aDiagramElement [
-
+	"Show diagram element and recursively traverse all owned diagram elements regardless of prior rendering state."
 	aDiagramElement shouldHaveController ifTrue: [
 		| controller |
 		controller := self
 			              controllerForModel: aDiagramElement ownModelElement
-			              ifFound: [ :ctrl |
-				              ctrl isRendered ifTrue: [
-					              aDiagramElement isRendered ifTrue: [ ^ ctrl ].
-					              ^ self error:
-						                'Controller is already rendered by a different diagram element' ].
-				              ctrl ]
+			              ifFound: [ :foundController |
+				              (foundController isRendered and: [ aDiagramElement isRendered not ]) ifTrue: [
+					              self error: 'Controller is already rendered by a different diagram element' ].
+				              foundController ]
 			              ifNone: [
-			              self newControllerFor:
-				              aDiagramElement ownModelElement ].
-		controller
-			diagramElement: aDiagramElement;
-			showWithoutDependentInDiagram: self ].
-	aDiagramElement ownedElements do: [ :each |
-		self showDiagramElement: each ]
+				              self newControllerFor: aDiagramElement ownModelElement ].
+		controller diagramElement = aDiagramElement ifFalse: [
+			controller diagramElement: aDiagramElement ].
+		controller isRendered ifFalse: [
+			controller showWithoutDependentInDiagram: self ] ].
+	aDiagramElement ownedElements do: [ :eachChildElement |
+		self showDiagramElement: eachChildElement ]
 ]
 
 { #category : 'figures' }

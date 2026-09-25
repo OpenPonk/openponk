@@ -25,6 +25,19 @@ OPPlugin class >> isTestingOnly [
 	^ false
 ]
 
+{ #category : 'accessing' }
+OPPlugin class >> repositoryName [
+	"Answers the GitHub repository name for this plugin, or nil if none."
+	^ nil
+]
+
+{ #category : 'accessing' }
+OPPlugin class >> requiredPluginClasses [
+	"Answers a collection of plugin classes that this plugin directly depends on."
+
+	^ #()
+]
+
 { #category : 'comparing' }
 OPPlugin >> < aComparable [
 	"Answer whether the receiver is less than the argument."
@@ -81,7 +94,7 @@ OPPlugin >> hash [
 
 { #category : 'accessing' }
 OPPlugin >> icon [
-	^ OPCoreIcons opFsmDiagramIcon
+	^ OPCoreIcons openponkIcon
 ]
 
 { #category : 'testing' }

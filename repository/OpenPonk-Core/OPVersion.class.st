@@ -398,52 +398,29 @@ OPVersion >> repositoryLink [
 
 { #category : 'accessing' }
 OPVersion >> repositoryName [
-
-	| activePlugins repositoriesOfBaselines |
+	| activePlugins activeRepositories leafPlugins |
 	repositoryName ifNotNil: [ ^ repositoryName ].
-	repositoriesOfBaselines := {
-		                           (#BaselineOfOpenPonkClassEditor
-		                            -> #'class-editor').
-		                           (#BaselineOfOpenPonkBormEditor
-		                            -> #'borm-editor').
-		                           (#BaselineOfOpenPonkFsmEditor
-		                            -> #'fsm-editor').
-		                           (#BaselineOfOpenPonkPetriNets
-		                            -> #petrinets).
-		                           (#BaselineOfOpenPonkBPMN -> #BPMN).
-		                           (#BaselineOfOpenPonkMarkovChains
-		                            -> #'markov-chains') }.
+	activePlugins := (OPPlugin allSubclasses reject: #isAbstract)
+		select: [ :eachPluginClass | eachPluginClass repositoryName isNotNil ].
+	activeRepositories := (activePlugins collect: [ :eachPluginClass | eachPluginClass repositoryName ]) asSet.
 
-	activePlugins := repositoriesOfBaselines
-		                 select: [ :each |
-		                 Smalltalk hasClassNamed: each key ]
-		                 thenCollect: [ :each | each value ].
-	^ repositoryName := activePlugins size
-	                    >= repositoriesOfBaselines size
-		                    ifTrue: [ #plugins ]
-		                    ifFalse: [
-			                    activePlugins size = 1
-				                    ifTrue: [ activePlugins anyOne ]
-				                    ifFalse: [ self class unknownRepositoryName ] ]
+	"If all registered non-abstract plugins are loaded, this is the full bundle distribution."
+	(activePlugins size = (OPPlugin allSubclasses reject: #isAbstract) size and: [ activePlugins isNotEmpty ])
+		ifTrue: [ ^ repositoryName := #plugins ].
+
+	"Identify leaf plugins that are not prerequisites for any other loaded plugin."
+	leafPlugins := activePlugins reject: [ :eachPluginClass |
+		activePlugins anySatisfy: [ :eachOtherPluginClass |
+			eachOtherPluginClass requiredPluginClasses includes: eachPluginClass ] ].
+
+	"If exactly one leaf plugin is present, the image corresponds to that distribution."
+	leafPlugins size = 1 ifTrue: [
+		^ repositoryName := leafPlugins anyOne repositoryName ].
+
+	^ repositoryName := self class unknownRepositoryName
 ]
 
 { #category : 'accessing' }
 OPVersion >> repositoryName: aString [
 	repositoryName := aString
-]
-
-{ #category : 'accessing' }
-OPVersion >> repositoryNotationName [
-
-	| notationNames |
-	notationNames := { 
-		                 (#'class-editor' -> '(Onto)UML').
-		                 (#'borm-editor' -> 'BORM').
-		                 (#'fsm-editor' -> 'FSM').
-		                 (#petrinets -> 'Petri nets').
-		                 (#'BPMN' -> 'BPMN').
-		                 (#plugins -> 'All plugins') } asDictionary.
-	^ notationNames
-		  at: self repositoryName
-		  ifAbsent: [ self repositoryName ]
 ]

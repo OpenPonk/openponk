@@ -779,27 +779,30 @@ OPDiagramElement >> stonOn: stonWriter [
 
 { #category : 'initialization' }
 OPDiagramElement >> stonPostReferenceResolution [
-
-	"Hook that is called when references were resolved processing this object or one of its sub objects. This will most probably influence hash values. Override to take appropriate action."
-
-	ownedElements := (SRToManyLink
-		                  on: self
-		                  slot: #ownedElements
-		                  oppositeSlot: #owningElement)
-		                 addAll: ownedElements;
-		                 yourself.
-	sourceEdges := (SRToManyLink
-		                on: self
-		                slot: #sourceEdges
-		                oppositeSlot: #source)
-		               addAll: sourceEdges;
-		               yourself.
-	targetEdges := (SRToManyLink
-		                on: self
-		                slot: #targetEdges
-		                oppositeSlot: #target)
-		               addAll: targetEdges;
-		               yourself
+	"Hook that is called when references were resolved processing this object or one of its sub objects.
+	Initialize synchronized links using unchecked additions to avoid modifying unresolved STONReference proxies."
+	| rawOwnedElements rawSourceEdges rawTargetEdges |
+	rawOwnedElements := ownedElements.
+	rawSourceEdges := sourceEdges.
+	rawTargetEdges := targetEdges.
+	ownedElements := SRToManyLink
+		                 on: self
+		                 slot: #ownedElements
+		                 oppositeSlot: #owningElement.
+	rawOwnedElements ifNotNil: [ :elementsCollection |
+		elementsCollection do: [ :eachElement | ownedElements uncheckedAdd: eachElement ] ].
+	sourceEdges := SRToManyLink
+		               on: self
+		               slot: #sourceEdges
+		               oppositeSlot: #source.
+	rawSourceEdges ifNotNil: [ :edgesCollection |
+		edgesCollection do: [ :eachEdge | sourceEdges uncheckedAdd: eachEdge ] ].
+	targetEdges := SRToManyLink
+		               on: self
+		               slot: #targetEdges
+		               oppositeSlot: #target.
+	rawTargetEdges ifNotNil: [ :edgesCollection |
+		edgesCollection do: [ :eachEdge | targetEdges uncheckedAdd: eachEdge ] ]
 ]
 
 { #category : 'instance creation' }
@@ -904,10 +907,9 @@ OPDiagramElement >> unsubscribe: aReceiver [
 	^ self announcer unsubscribe: aReceiver
 ]
 
-{ #category : 'initialization' }
+{ #category : 'rendering' }
 OPDiagramElement >> updateFromRender [
-
-	self ownedElements do: #updateFromRender
+	"Do nothing - hook for subclasses."
 ]
 
 { #category : 'rendering' }

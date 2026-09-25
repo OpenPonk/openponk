@@ -7,7 +7,6 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'uuid',
-		'dirty',
 		'storageFolder',
 		'storageFile',
 		'name',
@@ -64,11 +63,6 @@ OPProject >> addModel: aModel [
 { #category : 'accessing' }
 OPProject >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
-]
-
-{ #category : 'updating' }
-OPProject >> changed [
-	dirty value: true
 ]
 
 { #category : 'accessing' }
@@ -151,13 +145,9 @@ OPProject >> hash [
 
 { #category : 'initialization' }
 OPProject >> initialize [
-
 	super initialize.
 	modelsAndDiagrams := Dictionary new asValueHolder.
-	name := NewValueHolder value: 'Unnamed project'.
-	dirty := false asValueHolder.
-	modelsAndDiagrams whenChangedDo: [ dirty value: true ].
-	name whenChangedDo: [ dirty value: true ]
+	name := NewValueHolder value: 'Unnamed project'
 ]
 
 { #category : 'as yet unclassified' }
@@ -261,12 +251,6 @@ OPProject >> storageFolder: aFilePath [
 	storageFolder := aFilePath
 ]
 
-{ #category : 'announcements' }
-OPProject >> unsubscribe: aSubscriber [
-
-	dirty announcer unsubscribe: aSubscriber
-]
-
 { #category : 'accessing' }
 OPProject >> uuid [
 
@@ -276,16 +260,4 @@ OPProject >> uuid [
 { #category : 'accessing' }
 OPProject >> uuid: aUUID [
 	uuid := aUUID
-]
-
-{ #category : 'announcements' }
-OPProject >> weakWhenChangedSend: aSelector to: aReceiver [
-
-	^ dirty announcer weak when: ValueChanged send: aSelector to: aReceiver
-]
-
-{ #category : 'announcements' }
-OPProject >> whenChangedSend: aSelector to: aReceiver [
-
-	^ dirty whenChangedSend: aSelector to: aReceiver
 ]

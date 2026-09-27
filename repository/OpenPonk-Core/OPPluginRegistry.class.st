@@ -54,6 +54,13 @@ OPPluginRegistry class >> withAll [
 		yourself
 ]
 
+{ #category : 'instance creation' }
+OPPluginRegistry class >> withAllForTesting [
+	^ self new
+		addAllForTesting;
+		yourself
+]
+
 { #category : 'adding' }
 OPPluginRegistry >> add: aPlugin [
 	plugins add: aPlugin
@@ -65,6 +72,12 @@ OPPluginRegistry >> addAll [
 	OPPlugin allSubclasses
 		reject: [ :each | each isAbstract or: [ each isTestingOnly ] ]
 		thenDo: [ :each | self add: each new ]
+]
+
+{ #category : 'adding' }
+OPPluginRegistry >> addAllForTesting [
+
+	OPPlugin allSubclasses reject: [ :each | each isAbstract ] thenDo: [ :each | self add: each new ]
 ]
 
 { #category : 'accessing' }

@@ -30,6 +30,11 @@ OPOpenPonkDiagram >> adaptBoundsToInnerBounds: anInnerRectangle [
 ]
 
 { #category : 'accessing' }
+OPOpenPonkDiagram >> camera [
+	^ camera
+]
+
+{ #category : 'accessing' }
 OPOpenPonkDiagram >> camera: aCamera [
 
 	camera := OPDiagramCamera newFrom: aCamera
@@ -75,9 +80,8 @@ OPOpenPonkDiagram >> newCopy [
 		  serializer materializeDiagramOf: self modelElement from: s ]
 ]
 
-{ #category : 'initialization' }
+{ #category : 'rendering' }
 OPOpenPonkDiagram >> updateFromRender [
-
 	super updateFromRender.
 	self camera: roassalShape camera
 ]

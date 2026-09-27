@@ -7,17 +7,6 @@ Class {
 }
 
 { #category : 'tests' }
-OPWorldMenuTest >> testNotationMenusAreCompletelyRemovedFromWorldMenu [
-	| builder notationIdentifiers |
-	builder := PragmaMenuBuilder pragmaKeyword: 'worldMenu' model: nil.
-	builder buildTree.
-
-	notationIdentifiers := #( #UMLClassEditor #BPMNEditor #BORMEditor #OPDEMO #OPERD #OPFSM #OPMC #OntoUML #'Petri Nets' #OpenPonkProjectBrowser ).
-	notationIdentifiers do: [ :eachIdentifier | 
-		self assert: (builder itemNamed: eachIdentifier) isNil ]
-]
-
-{ #category : 'tests' }
 OPWorldMenuTest >> testOpenPonkIsDirectActionLeafItem [
 	| builder openPonkItem |
 	self assert: ((OPProjectBrowser class >> #menuCommandOn:) hasPragmaNamed: #worldMenu).

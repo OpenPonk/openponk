@@ -66,9 +66,3 @@ OPProjectViewModel >> subscribeToModel [
 		send: #modelChanged
 		to: self
 ]
-
-{ #category : 'announcement registration' }
-OPProjectViewModel >> weakWhenChangedSend: aSelector to: aReceiver [
-
-	^ self model weakWhenChangedSend: aSelector to: aReceiver
-]

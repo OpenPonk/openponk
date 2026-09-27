@@ -32,6 +32,6 @@ OPMementoSerializer >> addFormatNameTo: aFileReference [
 ]
 
 { #category : 'accessing' }
-OPMementoSerializer >> plugin: anOPPetriNetsPlugin [ 
-	plugin := anOPPetriNetsPlugin
+OPMementoSerializer >> plugin: aPlugin [ 
+	plugin := aPlugin
 ]

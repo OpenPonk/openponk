@@ -14,7 +14,8 @@ Class {
 		'pluginsList',
 		'templatesList',
 		'createProjectButton',
-		'openProjectButton'
+		'openFromFileButton',
+		'openRecentButton'
 	],
 	#category : 'OpenPonk-Spec-Windows',
 	#package : 'OpenPonk-Spec',
@@ -63,33 +64,46 @@ OPProjectBrowser class >> serviceOpen [
 { #category : 'initialization' }
 OPProjectBrowser >> connectPresenters [
 	super connectPresenters.
-	recentList
-		items: OPProjectStorage default projects;
-		display: [ :project | project name ];
-		whenActivatedDo: [ 
-			self openProjectFromFile: recentList selectedItem storageFile ];
-		contextMenu: [ 
-			self projectMenu: self newMenu for: recentList selectedItem ].
-	projectNameInput whenTextChangedDo: [ :newValue | 
+	self connectRecentProjects.
+	self connectQuickStart
+]
+
+{ #category : 'initialization' }
+OPProjectBrowser >> connectQuickStart [
+	"Wires presenters for project creation, plugin selection, and template selection."
+	projectNameInput whenTextChangedDo: [ :newValue |
 		createProjectButton enabled: newValue isNotEmpty ].
 	createProjectButton action: [ self createProject ].
-	openProjectButton action: [ self openProjectFromFile ].
-
 	pluginsList
 		items: pluginRegistry plugins asOrderedCollection;
 		display: [ :plugin | plugin name ];
 		displayIcon: [ :plugin | plugin icon ];
-		whenSelectedItemChangedDo: [ :selectedPlugin | 
+		whenSelectedItemChangedDo: [ :selectedPlugin |
 			self updateTemplatesListFor: selectedPlugin ].
-
 	templatesList
 		display: [ :template | template name ];
 		displayIcon: [ :template | template icon ];
-		whenSelectedItemChangedDo: [ :selectedTemplate | 
+		whenSelectedItemChangedDo: [ :selectedTemplate |
 			self templateSelected: selectedTemplate ];
 		whenActivatedDo: [ self createProject ].
-
 	pluginsList selectIndex: 1
+]
+
+{ #category : 'initialization' }
+OPProjectBrowser >> connectRecentProjects [
+	"Wires presenters for recent projects list and recent actions."
+	recentList
+		items: OPProjectStorage default projects;
+		display: [ :eachProject | self projectLabelFor: eachProject ];
+		whenSelectionChangedDo: [ :selection |
+			openRecentButton enabled: selection selectedItem isNotNil ];
+		whenActivatedDo: [ :selection |
+			selection selectedItem ifNotNil: [ :selectedProject | self openProject: selectedProject ] ];
+		contextMenu: [
+			self projectMenu: self newMenu for: recentList selectedItem ].
+	openRecentButton action: [
+		recentList selectedItem ifNotNil: [ :selectedProject | self openProject: selectedProject ] ].
+	openFromFileButton action: [ self openProjectFromFile ]
 ]
 
 { #category : 'project handling' }
@@ -124,43 +138,47 @@ OPProjectBrowser >> initialize [
 OPProjectBrowser >> initializeLayout [
 	| leftColumn listsLayout rightColumn |
 	leftColumn := SpBoxLayout newTopToBottom
-		spacing: 5;
-		add: #recentLabel height: self class labelHeight;
-		add: #recentList expand: true fill: true;
-		add: #openProjectButton height: self class buttonHeight;
-		yourself.
-
+		              spacing: 5;
+		              add: #recentLabel height: self class labelHeight;
+		              add: #recentList expand: true fill: true;
+		              add: #openRecentButton height: self class buttonHeight;
+		              add: #openFromFileButton height: self class buttonHeight;
+		              yourself.
 	listsLayout := SpPanedLayout newLeftToRight
-		positionOfSlider: 0.45;
-		add: #pluginsList;
-		add: #templatesList;
-		yourself.
-
+		               positionOfSlider: 0.45;
+		               add: #pluginsList;
+		               add: #templatesList;
+		               yourself.
 	rightColumn := SpBoxLayout newTopToBottom
-		spacing: 5;
-		add: #quickStartLabel height: self class labelHeight;
-		add: listsLayout expand: true fill: true;
-		add: #projectNameInput height: self class buttonHeight;
-		add: #createProjectButton height: self class buttonHeight;
-		yourself.
-
+		               spacing: 5;
+		               add: #quickStartLabel height: self class labelHeight;
+		               add: listsLayout expand: true fill: true;
+		               add: #projectNameInput height: self class buttonHeight;
+		               add: #createProjectButton height: self class buttonHeight;
+		               yourself.
 	self layout: (SpPanedLayout newLeftToRight
-		positionOfSlider: 0.45;
-		add: leftColumn;
-		add: rightColumn;
-		yourself)
+			 positionOfSlider: 0.45;
+			 add: leftColumn;
+			 add: rightColumn;
+			 yourself)
 ]
 
 { #category : 'initialization' }
 OPProjectBrowser >> initializePresenters [
 	recentLabel := self newLabel label: 'Recent Projects'.
 	recentList := self newList.
+	openRecentButton := self newButton
+		                    label: 'Open Selected Recent';
+		                    enabled: false;
+		                    yourself.
+	openFromFileButton := self newButton
+		                      label: 'Open Project from File...';
+		                      yourself.
 	quickStartLabel := self newLabel label: 'Quick Start'.
 	pluginsList := self newList.
 	templatesList := self newList.
 	projectNameInput := self newTextInput text: 'New Project'.
 	createProjectButton := self newButton label: 'Create Project'.
-	openProjectButton := self newButton label: 'Open Project...'.
 	self initializeLayout
 ]
 
@@ -170,7 +188,12 @@ OPProjectBrowser >> initializeWindow: aWindow [
 	aWindow
 		windowIcon: OPCoreIcons openponkIcon;
 		title: 'OpenPonk Project Browser';
-		initialExtent: 800 @ 350
+		initialExtent: 900 @ 450
+]
+
+{ #category : 'accessing - spec' }
+OPProjectBrowser >> openFromFileButton [
+	^ openFromFileButton
 ]
 
 { #category : 'project handling' }
@@ -180,11 +203,6 @@ OPProjectBrowser >> openProject: project [
 	workbench := project open.
 	self withWindowDo: [ :activeWindow | activeWindow close ].
 	^ workbench
-]
-
-{ #category : 'accessing - spec' }
-OPProjectBrowser >> openProjectButton [
-	^ openProjectButton
 ]
 
 { #category : 'initialization' }
@@ -207,6 +225,11 @@ OPProjectBrowser >> openProjectFromFile: aFile [
 	^ self openProject: (OPProjectController fromFile: aFile)
 ]
 
+{ #category : 'accessing - spec' }
+OPProjectBrowser >> openRecentButton [
+	^ openRecentButton
+]
+
 { #category : 'accessing' }
 OPProjectBrowser >> pluginRegistry [
 	^ pluginRegistry
@@ -217,6 +240,16 @@ OPProjectBrowser >> pluginsList [
 	"Answers the list presenter holding registered notation plugins."
 
 	^ pluginsList
+]
+
+{ #category : 'private' }
+OPProjectBrowser >> projectLabelFor: aProject [
+	"Answers a formatted string label representing the project and its storage state."
+	^ String streamContents: [ :labelStream |
+		labelStream << aProject name asString.
+		aProject storageFile
+			ifNotNil: [ :file | labelStream << ' [' << file basename << ']' ]
+			ifNil: [ labelStream << ' [in image - unsaved]' ] ]
 ]
 
 { #category : 'initialization' }

@@ -87,6 +87,12 @@ OPDiagramElement class >> stonAllInstVarNames [
 	     #sharedStyle #localStyle #ownedElements )
 ]
 
+{ #category : 'layout' }
+OPDiagramElement >> adaptBoundsToInnerBounds: anInnerRectangle [
+	"Adapts this element bounds and position to encompass the given inner rectangle."
+	self isContainer ifFalse: [ self error: self printString , ' is not a container.' ]
+]
+
 { #category : 'interactions' }
 OPDiagramElement >> addDraggableInteraction [
 	roassalShape @ OPRSDraggable
@@ -263,23 +269,31 @@ OPDiagramElement >> diagramElementOfType: aType withModelElement: anElement ifFo
 			ifFound: [ :found | ^ aFoundBlock cull: found ] ]
 ]
 
+{ #category : 'accessing' }
+OPDiagramElement >> directNodeRoassalShapes [
+	"Answers roassal shapes of direct positionable node children, used for hierarchical layout calculations."
+	^ (self ownedElements
+		select: [ :eachChild | eachChild isPositionableByUser and: [ eachChild isRendered ] ]
+		thenCollect: [ :eachChild | eachChild roassalShape ]) asGroup
+]
+
 { #category : 'testing' }
 OPDiagramElement >> exists [
 
 	^ true
 ]
 
-{ #category : 'instance creation' }
-OPDiagramElement >> fromSton: stonReader [
-
-	stonReader parseMapDo: [ :instVarName :value |
+{ #category : 'ston-core' }
+OPDiagramElement >> fromSton: aStonReader [
+	aStonReader parseMapDo: [ :instVarName :value |
 		instVarName = #modelElements
 			ifTrue: [
 				self modelElements: (value collect: [ :each |
-						 OPModelObjectReference withUUID: ([ UUID fromString: each ]
-								  on: Error
-								  do: [ each ]) ]) ]
-			ifFalse: [ self instVarNamed: instVarName asString put: value ] ]
+					OPModelObjectReference withUUID: ([ UUID fromString: each ]
+						on: Error
+						do: [ each ]) ]) ]
+			ifFalse: [
+				self instVarNamed: (self stonInstVarNameFor: instVarName) asString put: value ] ]
 ]
 
 { #category : 'conditions' }
@@ -317,6 +331,40 @@ OPDiagramElement >> initialize [
 		               on: self
 		               slot: #targetEdges
 		               oppositeSlot: #target
+]
+
+{ #category : 'accessing' }
+OPDiagramElement >> innerDraggableRoassalShapes [
+	"Answers roassal shapes of all transitive positionable descendants that must move with this container during drag gestures."
+	^ (self allOwnedElements
+		select: [ :eachDescendant | eachDescendant isPositionableByUser and: [ eachDescendant isRendered ] ]
+		thenCollect: [ :eachDescendant | eachDescendant roassalShape ]) asGroup
+]
+
+{ #category : 'accessing' }
+OPDiagramElement >> innerNodeElements [
+	"Answers direct positionable semantic node elements contained in this element."
+	^ self ownedElements select: [ :eachChild | eachChild isPositionableByUser ]
+]
+
+{ #category : 'accessing' }
+OPDiagramElement >> innerNodeRoassalShapes [
+	"Answers rendered roassal shapes of direct semantic node elements."
+	^ (self innerNodeElements
+		select: [ :eachChild | eachChild isRendered ]
+		thenCollect: [ :eachChild | eachChild roassalShape ]) asGroup
+]
+
+{ #category : 'testing' }
+OPDiagramElement >> isBoundNode [
+
+	^ false
+]
+
+{ #category : 'testing' }
+OPDiagramElement >> isContainer [
+	"Answers whether this diagram element can act as a hierarchical spatial container for other elements."
+	^ false
 ]
 
 { #category : 'testing' }
@@ -767,6 +815,11 @@ OPDiagramElement >> sourceEdges: aCollection [
 	sourceEdges
 		removeAll;
 		addAll: aCollection
+]
+
+{ #category : 'ston-core' }
+OPDiagramElement >> stonInstVarNameFor: anInstVarName [
+	^ anInstVarName
 ]
 
 { #category : 'ston persistence' }

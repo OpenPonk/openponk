@@ -40,6 +40,15 @@ OPProjectControllerTest >> testAddController [
 ]
 
 { #category : 'tests' }
+OPProjectControllerTest >> testAddDiagramControllerIsIdempotent [
+	| diagramController |
+	diagramController := OPDiagramController new.
+	controller addDiagramController: diagramController.
+	controller addDiagramController: diagramController.
+	self assert: controller controllers size equals: 1
+]
+
+{ #category : 'tests' }
 OPProjectControllerTest >> testRemoveController [
 	| diagramController model |
 	diagramController := OPDiagramController new.

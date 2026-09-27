@@ -19,17 +19,20 @@ OPDiagramGeometrySnapshot class >> onNodes: aCollectionOfNodes [
 
 { #category : 'capturing' }
 OPDiagramGeometrySnapshot >> captureNodes: aCollectionOfNodes [
-	"Capture initial bounds and anchor parameters for all bound nodes in the collection."
+	"Capture initial bounds and anchor parameters for nodes that are positionable or resizable by the user."
+
 	initialBounds := Dictionary new.
 	initialAnchors := Dictionary new.
 	aCollectionOfNodes do: [ :eachShape |
 		(eachShape model isKindOf: OPBoundNode) ifTrue: [
 			| elementModel |
 			elementModel := eachShape model.
-			initialBounds at: elementModel put: (elementModel bounds ifNotNil: #copy ifNil: [
-				OPNodeBounds withPosition: eachShape position extent: eachShape extent ]).
-			(eachShape propertyAt: OPRSAnchorConstraint ifAbsent: [ nil ]) ifNotNil: [ :anchorConstraint |
-				initialAnchors at: elementModel put: { anchorConstraint balance . anchorConstraint distanceToLine } ] ] ]
+			(elementModel isPositionableByUser or: [ elementModel isResizableByUser ]) ifTrue: [
+				initialBounds at: elementModel put: (elementModel bounds
+					ifNotNil: [ :currentBounds | currentBounds copy ]
+					ifNil: [ OPNodeBounds withPosition: eachShape position extent: eachShape extent ]).
+				(eachShape propertyAt: OPRSAnchorConstraint ifAbsent: [ nil ]) ifNotNil: [ :anchorConstraint |
+					initialAnchors at: elementModel put: { anchorConstraint balance . anchorConstraint distanceToLine } ] ] ] ]
 ]
 
 { #category : 'private' }

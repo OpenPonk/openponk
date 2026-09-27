@@ -386,11 +386,6 @@ OPDiagramController >> diagramFocused [
 	self diagramElement updateRenderFromSelf
 ]
 
-{ #category : 'userinterface' }
-OPDiagramController >> disableRefresh [
-	self flag: #todo
-]
-
 { #category : 'event handling' }
 OPDiagramController >> edgeWaypointsChanged: anEvent [
 	| targetLine targetEdge command |
@@ -446,11 +441,6 @@ OPDiagramController >> elementsDragged: anEvent [
 	commands := (self commandsForDraggedShapes: anEvent) , (self commandsForDraggedLines: anEvent).
 	commands ifEmpty: [ ^ self ].
 	self executeDragCommands: commands
-]
-
-{ #category : 'userinterface' }
-OPDiagramController >> enableRefresh [
-	self flag: #todo
 ]
 
 { #category : 'figures' }
@@ -853,13 +843,10 @@ OPDiagramController >> shapeResized: anEvent [
 		ifNil: [ command execute ]
 ]
 
-{ #category : 'rebuilding' }
+{ #category : 'ui interaction' }
 OPDiagramController >> showAllElements [
-
-	self disableRefresh.
-	self allModelElementsWithPossibleController do: [ :each | 
-		self showWithoutDependentInDiagramModel: each ].
-	self enableRefresh
+	self allModelElementsWithPossibleController do: [ :eachModelElement |
+		self showWithoutDependentInDiagramModel: eachModelElement ]
 ]
 
 { #category : 'rebuilding' }

@@ -23,10 +23,21 @@ OPOpenPonkDiagram class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #isOpen #isSelected #camera )
 ]
 
+{ #category : 'layout' }
+OPOpenPonkDiagram >> adaptBoundsToInnerBounds: anInnerRectangle [
+	"Root diagram updates canvas view bounds without changing extent of a bounding box."
+	self isRendered ifTrue: [ self roassalShape signalUpdate ]
+]
+
 { #category : 'accessing' }
 OPOpenPonkDiagram >> camera: aCamera [
 
 	camera := OPDiagramCamera newFrom: aCamera
+]
+
+{ #category : 'testing' }
+OPOpenPonkDiagram >> isContainer [
+	^ true
 ]
 
 { #category : 'accessing' }

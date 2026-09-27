@@ -52,9 +52,10 @@ OPLayouter >> diagramController: aDiagramController [
 
 { #category : 'layouts' }
 OPLayouter >> dominanceTreeLayout [
+	"Applies a dominance tree layout to boxes, falling back silently to grid layout if cyclic dependencies are detected."
 
 	self applyLayout: [ :boxes :links |
-		(OPLayoutLoopDetector popupHaveLoopsBoxes: boxes links: links)
+		(OPLayoutLoopDetector haveLoopsBoxes: boxes links: links)
 			ifTrue: [ ^ self gridLayout ].
 		RSDominanceTreeLayout new
 			verticallyReverse;
@@ -84,15 +85,18 @@ OPLayouter >> roassalShapesFor: aCollection [
 
 { #category : 'layouts' }
 OPLayouter >> sugiyamaLayout [
+	"Applies a Sugiyama layout to boxes, falling back silently to grid layout if cyclic dependencies are detected."
 
-	self applyLayout: [ :boxes :links | 
+	self applyLayout: [ :boxes :links |
 		| centerY |
+		(OPLayoutLoopDetector haveLoopsBoxes: boxes links: links)
+			ifTrue: [ ^ self gridLayout ].
 		RSSugiyamaLayout new
 			verticalGap: 100;
 			horizontalGap: 100;
 			on: boxes edges: links.
 		centerY := (RSGroup withAll: boxes) encompassingRectangle center y.
-		boxes do: [ :each | 
+		boxes do: [ :each |
 			each translateBy: 0 @ 2 * (centerY - each position y) ] ]
 ]
 
@@ -103,10 +107,11 @@ OPLayouter >> supports: aLayoutCommand [
 
 { #category : 'layouts' }
 OPLayouter >> treeLayout [
+	"Applies a tree layout to boxes, falling back silently to grid layout if cyclic dependencies are detected."
 
 	self applyLayout: [ :boxes :links |
 		| centerY |
-		(OPLayoutLoopDetector popupHaveLoopsBoxes: boxes links: links)
+		(OPLayoutLoopDetector haveLoopsBoxes: boxes links: links)
 			ifTrue: [ ^ self gridLayout ].
 		RSTreeLayout new
 			verticalGap: 100;

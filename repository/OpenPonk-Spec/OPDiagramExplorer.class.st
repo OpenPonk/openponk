@@ -92,9 +92,9 @@ OPDiagramExplorer >> showElement: aModelObject [
 	self showElements: { aModelObject }
 ]
 
-{ #category : 'showing/hiding' }
+{ #category : 'operations' }
 OPDiagramExplorer >> showElements: aCollectionOfModelObjects [
-	| allModels queue toShow sortedElements |
+	| allModels queue toShow sortedElements transactionLabel |
 	aCollectionOfModelObjects ifEmpty: [ ^ self ].
 
 	allModels := Set new.
@@ -125,17 +125,12 @@ OPDiagramExplorer >> showElements: aCollectionOfModelObjects [
 	sortedElements := toShow sorted: [ :firstModel :secondModel |
 		(self viewModelRegistry viewModelFor: firstModel) creationPriority <= (self viewModelRegistry viewModelFor: secondModel) creationPriority ].
 
-	diagramController disableRefresh.
-	[
-		| transactionLabel |
-		transactionLabel := sortedElements size > 1 ifTrue: [ 'Show Elements' ] ifFalse: [ 'Show Element' ].
-		self undoManager inTransactionLabeled: transactionLabel do: [
-			sortedElements do: [ :eachModelObject |
-				self undoManager execute: (OPShowDiagramElementCommand
-					model: eachModelObject
-					diagramController: diagramController) ] ]
-	] ensure: [
-		diagramController enableRefresh ]
+	transactionLabel := sortedElements size > 1 ifTrue: [ 'Show Elements' ] ifFalse: [ 'Show Element' ].
+	self undoManager inTransactionLabeled: transactionLabel do: [
+		sortedElements do: [ :eachModelObject |
+			self undoManager execute: (OPShowDiagramElementCommand
+				model: eachModelObject
+				diagramController: diagramController) ] ]
 ]
 
 { #category : 'accessing' }

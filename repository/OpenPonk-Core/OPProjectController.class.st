@@ -95,6 +95,7 @@ OPProjectController class >> openModalFromFile [
 
 { #category : 'managing' }
 OPProjectController >> addDiagramController: aDiagramController [
+	(controllers includes: aDiagramController) ifTrue: [ ^ self ].
 	controllers add: aDiagramController.
 	(aDiagramController respondsTo: #projectController:) ifTrue: [
 		aDiagramController projectController: self ]
@@ -111,13 +112,13 @@ OPProjectController >> canProjectBeSavedToFile: aFileReference [
 	^ true
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'undo-redo' }
 OPProjectController >> canRedo [
 	"Answer whether an action can be redone in the project."
 	^ self undoManager canRedo
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'undo-redo' }
 OPProjectController >> canUndo [
 	"Answer whether an action can be undone in the project."
 	^ self undoManager canUndo
@@ -254,7 +255,7 @@ OPProjectController >> openDiagrams [
 	project diagrams
 		select: #isOpen
 		thenDo: [ :each | workbench openEditorOnDiagram: each ].
-	selected ifNotNil: [ workbench openEditorOnDiagram: selected ].
+	selected ifNotNil: [ workbench focusEditorOf: selected ].
 	(project diagrams isNotEmpty and: [
 		 project diagrams noneSatisfy: #isOpen ]) ifTrue: [
 			project diagrams do: [ :eachDiagram |
@@ -297,7 +298,7 @@ OPProjectController >> recentProjects [
 	^ RecentProjects ifNil: [ RecentProjects := OrderedDictionary new ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'undo-redo' }
 OPProjectController >> redo [
 	"Redo the latest undone action in the active project."
 	self undoManager redo
@@ -422,13 +423,13 @@ OPProjectController >> spApplication [
 	^ workbench application
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'undo-redo' }
 OPProjectController >> undo [
 	"Undo the latest action in the active project."
 	self undoManager undo
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'undo-redo' }
 OPProjectController >> undoManager [
 	"Answer the undo manager associated with this project controller."
 	^ undoManager ifNil: [ undoManager := OPUndoManager new ]

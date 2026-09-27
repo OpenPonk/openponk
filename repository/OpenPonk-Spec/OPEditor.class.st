@@ -209,7 +209,7 @@ OPEditor >> initializePresenters [
 				diagramController removeAllControllers ] ] ]
 ]
 
-{ #category : 'figures' }
+{ #category : 'initialization' }
 OPEditor >> newDiagramControllerFor: aModel [
 	| newDiagramController |
 	newDiagramController := plugin diagramControllerClass new.
@@ -221,12 +221,9 @@ OPEditor >> newDiagramControllerFor: aModel [
 		yourself
 ]
 
-{ #category : 'diagram handling' }
+{ #category : 'opening' }
 OPEditor >> openEmptyModel: aModel [
-
 	diagramController := self newDiagramControllerFor: aModel.
-	self workbench projectController addDiagramController:
-		diagramController.
 	canvasPresenter attachController: diagramController.
 	self rebuildWidget
 ]

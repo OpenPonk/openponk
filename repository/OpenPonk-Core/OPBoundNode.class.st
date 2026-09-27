@@ -55,6 +55,12 @@ OPBoundNode >> extent [
 	^ (roassalShape ifNil: [ self bounds ]) extent
 ]
 
+{ #category : 'testing' }
+OPBoundNode >> isBoundNode [
+
+	^ true
+]
+
 { #category : 'rendering' }
 OPBoundNode >> moveToEmptySpace [
 

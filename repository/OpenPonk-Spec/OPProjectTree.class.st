@@ -8,7 +8,6 @@ Class {
 	#instVars : [
 		'tree',
 		'projectViewModel',
-		'refreshButton',
 		'expandedViewModels',
 		'projectController'
 	],
@@ -16,22 +15,6 @@ Class {
 	#package : 'OpenPonk-Spec',
 	#tag : 'Windows'
 }
-
-{ #category : 'layout' }
-OPProjectTree class >> defaultLayout [
-
-	^ SpTabLayout new
-		  add: (SpBoxLayout newTopToBottom
-				   add: (SpBoxLayout newLeftToRight
-						    addLast: #refreshButton
-						    withConstraints: [ :constraints | constraints width: 25 ];
-						    yourself)
-				   height: self toolbarHeight;
-				   add: #tree;
-				   yourself)
-		  label: self title;
-		  yourself
-]
 
 { #category : 'specs' }
 OPProjectTree class >> title [
@@ -85,6 +68,18 @@ OPProjectTree >> currentShowIndex [
 			tableWidget showIndex ] ]
 ]
 
+{ #category : 'layout' }
+OPProjectTree >> defaultLayout [
+	"Answers the default layout containing the tree presenter wrapped in a box layout under a tab."
+
+	^ SpTabLayout new
+		add: (SpBoxLayout newTopToBottom
+			add: tree;
+			yourself)
+		label: self class title;
+		yourself
+]
+
 { #category : 'actions' }
 OPProjectTree >> expandToDepth: maxDepthInteger [
 
@@ -132,11 +127,7 @@ OPProjectTree >> initialize [
 { #category : 'initialization' }
 OPProjectTree >> initializePresenters [
 
-	self initializeTree.
-	refreshButton := self newButton.
-	refreshButton
-		icon: (self iconNamed: #glamorousRefresh);
-		action: [ self refresh ]
+	self initializeTree
 ]
 
 { #category : 'initialization' }
@@ -200,11 +191,6 @@ OPProjectTree >> refresh [
 	tree roots: { projectViewModel }.
 	self expandedViewModels ifEmpty: [ self expandToDepth: 3 ] ifNotEmpty: [ self restoreExpansion ].
 	self restoreShowIndex: savedShowIndex
-]
-
-{ #category : 'accessing - spec' }
-OPProjectTree >> refreshButton [
-	^ refreshButton
 ]
 
 { #category : 'actions' }

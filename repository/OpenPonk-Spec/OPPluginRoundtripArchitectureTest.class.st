@@ -1,3 +1,6 @@
+"
+Verifies that all registered OpenPonk plugins conform to architecture-wide roundtrip persistence contracts.
+"
 Class {
 	#name : 'OPPluginRoundtripArchitectureTest',
 	#superclass : 'TestCase',

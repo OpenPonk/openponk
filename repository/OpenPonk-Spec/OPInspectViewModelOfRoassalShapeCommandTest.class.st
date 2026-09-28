@@ -1,3 +1,6 @@
+"
+Tests execution of the diagnostic command opening an inspector on the view model of a selected canvas shape.
+"
 Class {
 	#name : 'OPInspectViewModelOfRoassalShapeCommandTest',
 	#superclass : 'TestCase',

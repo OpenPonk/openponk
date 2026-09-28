@@ -7,12 +7,11 @@ Class {
 	#superclass : 'SpPresenter',
 	#instVars : [
 		'workbench',
-		'zoomLabel',
 		'diagramController',
 		'plugin',
 		'canvasPresenter',
-		'canvasMenu',
-		'palette'
+		'palette',
+		'zoomToolbar'
 	],
 	#classInstVars : [
 		'currentLayout'
@@ -51,33 +50,6 @@ OPEditor class >> currentLayout [
 OPEditor class >> defaultLayout [
 
 	^ OPEditorLayout default
-]
-
-{ #category : 'toolbar' }
-OPEditor class >> developerToolbarMenu: aBuilder [
-
-	(aBuilder item: 'Inspect Controller...')
-		icon: (self iconNamed: #glamorousInspect);
-		action: [ aBuilder model diagramController inspect ].
-	aBuilder withSeparatorAfter
-]
-
-{ #category : 'toolbar' }
-OPEditor class >> diagramExportMenu: aBuilder [
-
-	(aBuilder item: #diagramExport)
-		label: 'Export diagram as...';
-		icon: (self iconNamed: #smallScreenshot).
-
-	(aBuilder item: 'Export as PNG...')
-		parent: #diagramExport;
-		action: [ aBuilder model canvasPresenter exportAsPng ].
-	(aBuilder item: 'Export as SVG...')
-		parent: #diagramExport;
-		action: [ aBuilder model canvasPresenter exportAsSvg ].
-	(aBuilder item: 'Export as PDF...')
-		parent: #diagramExport;
-		action: [ aBuilder model canvasPresenter exportAsPdf ]
 ]
 
 { #category : 'settings' }
@@ -122,19 +94,6 @@ OPEditor class >> settingsOn: aBuilder [
 		order: 40
 ]
 
-{ #category : 'toolbar' }
-OPEditor class >> toolbarMenu: aBuilder [
-
-	<opEditorToolbarMenu>
-	self developerToolbarMenu: aBuilder.
-	self diagramExportMenu: aBuilder
-]
-
-{ #category : 'accessing - spec' }
-OPEditor >> canvasMenu [
-	^ canvasMenu
-]
-
 { #category : 'accessing - spec' }
 OPEditor >> canvasPresenter [
 	^ canvasPresenter
@@ -142,18 +101,8 @@ OPEditor >> canvasPresenter [
 
 { #category : 'initialization' }
 OPEditor >> connectPresenters [
-	| menu |
-	super connectPresenters.
-	menu := OPDiagramToolbarActivation buildMenuInContext:
-		        (CmdSimpleToolContext for: canvasPresenter).
-	menu buildSpecMenuOn: canvasMenu.
-	canvasPresenter whenZoomChanged: [ :event |
-		| zoomText |
-		zoomText := (event newScale < 1
-			             ifTrue: [ '   ' ]
-			             ifFalse: [ '' ])
-		            , (event newScale * 100) rounded asString , '%'.
-		zoomLabel label: ' ' , zoomText ]
+	"Connects presenter events and hooks lifecycle announcements."
+	super connectPresenters
 ]
 
 { #category : 'private-focus' }
@@ -176,19 +125,18 @@ OPEditor >> form [
 
 { #category : 'initialization' }
 OPEditor >> initializePresenters [
-
-	canvasMenu := self newMenuBar.
+	"Initializes the child presenters and configures the editor window lifecycle."
 	canvasPresenter := self instantiate: OPCanvasPresenter.
+	zoomToolbar := self instantiate: OPZoomToolbarPresenter on: canvasPresenter.
 	palette := self instantiate: OPPalette.
-	(zoomLabel := self newLabel) label: '100%'.
 	self focusOrder
-		add: canvasMenu;
 		add: canvasPresenter;
+		add: zoomToolbar;
 		add: palette.
 	self class currentLayout applyOn: self.
 
-	self whenBuiltDo: [ :builtEvent |
-		self withWindowDo: [ :window |
+	self whenBuiltDo: [ :builtEvent | 
+		self withWindowDo: [ :window | 
 			| minimized |
 			minimized := false.
 			window window announcer
@@ -199,14 +147,15 @@ OPEditor >> initializePresenters [
 				when: WindowExpanded
 				do: [ minimized := false ]
 				for: self.
-			window whenResizingDo: [ :resizeEvent |
-				minimized ifFalse: [
+			window whenResizingDo: [ :resizeEvent | 
+				minimized ifFalse: [ 
 					self class currentLayout
 						resizePanelsOf: builtEvent widget
 						afterWindowResized: resizeEvent ] ].
-			window whenClosedDo: [
+			window whenClosedDo: [ 
 				window window announcer unsubscribe: self.
-				diagramController removeAllControllers ] ] ]
+				diagramController ifNotNil: [ :activeDiagramController | 
+					activeDiagramController removeAllControllers ] ] ] ]
 ]
 
 { #category : 'initialization' }
@@ -280,7 +229,8 @@ OPEditor >> workbench: aWorkbench [
 	workbench := aWorkbench
 ]
 
-{ #category : 'accessing - spec' }
-OPEditor >> zoomLabel [
-	^ zoomLabel
+{ #category : 'accessing' }
+OPEditor >> zoomToolbar [
+	"Answers the presenter providing viewport navigation controls."
+	^ zoomToolbar
 ]

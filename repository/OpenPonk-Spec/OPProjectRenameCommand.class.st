@@ -1,3 +1,6 @@
+"
+A workbench command that renames the active OpenPonk project via the transactional undo pipeline.
+"
 Class {
 	#name : 'OPProjectRenameCommand',
 	#superclass : 'OPProjectCommand',

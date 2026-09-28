@@ -1,3 +1,6 @@
+"
+Verifies that undoing model removal restores all dependent diagram controllers, shapes, and connection lines without leaking obsolete instances.
+"
 Class {
 	#name : 'OPModelRemovalUndoTest',
 	#superclass : 'TestCase',

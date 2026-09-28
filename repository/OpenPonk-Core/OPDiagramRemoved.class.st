@@ -1,3 +1,6 @@
+"
+An announcement emitted when an existing diagram is deleted from an OpenPonk project.
+"
 Class {
 	#name : 'OPDiagramRemoved',
 	#superclass : 'Announcement',

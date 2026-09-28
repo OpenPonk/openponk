@@ -1,3 +1,6 @@
+"
+A secondary test plugin registered in unit tests to verify multi-plugin workbench interactions.
+"
 Class {
 	#name : 'OPTestSecondaryPlugin',
 	#superclass : 'OPTestPlugin',

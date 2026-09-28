@@ -3,7 +3,7 @@ Diagram toolbar command that triggers a specific graph layout algorithm (such as
 "
 Class {
 	#name : 'OPLayoutDiagramCommand',
-	#superclass : 'OPDiagramToolbarCommand',
+	#superclass : 'OPDiagramCanvasCommand',
 	#instVars : [
 		'layouter'
 	],
@@ -18,9 +18,12 @@ OPLayoutDiagramCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : 'activation' }
-OPLayoutDiagramCommand class >> toolbarMenuActivation [
+OPLayoutDiagramCommand class >> diagramMenuActivation [
 	<classAnnotation>
-	^ OPDiagramToolbarActivation byItemOf: OPLayoutDiagramMenuGroup for: OPCanvasPresenter
+	^ OPDiagramMenuActivation
+		byItemOf: OPLayoutDiagramMenuGroup
+		order: 20
+		for: OPCanvasPresenter
 ]
 
 { #category : 'execution' }

@@ -1,3 +1,6 @@
+"
+A descriptor specifying the metadata, display label, and allowable child subtypes for a model entity within selection dialogs.
+"
 Class {
 	#name : 'OPModelObjectType',
 	#superclass : 'Object',

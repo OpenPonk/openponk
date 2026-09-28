@@ -1,3 +1,6 @@
+"
+Tests project template instantiation, factory evaluation, and initial diagram generation.
+"
 Class {
 	#name : 'OPProjectTemplateTest',
 	#superclass : 'TestCase',

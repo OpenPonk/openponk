@@ -1,3 +1,6 @@
+"
+An interactive command that initiates in-place name editing for the selected Roassal shape on the diagram canvas.
+"
 Class {
 	#name : 'OPRenameRoassalShapeCommand',
 	#superclass : 'OPRoassalShapeCommand',

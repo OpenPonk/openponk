@@ -1,3 +1,6 @@
+"
+Tests MetaLink installation, mutation capture, and record auditing performed by the OPMutationWatchdog.
+"
 Class {
 	#name : 'OPMutationWatchdogTest',
 	#superclass : 'TestCase',

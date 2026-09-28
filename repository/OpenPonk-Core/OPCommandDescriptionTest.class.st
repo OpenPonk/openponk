@@ -1,3 +1,6 @@
+"
+Tests human-readable transaction labeling and descriptive text formatting on transactional commands.
+"
 Class {
 	#name : 'OPCommandDescriptionTest',
 	#superclass : 'TestCase',

@@ -1,3 +1,6 @@
+"
+An announcement emitted when a new domain model or package is added to the active OpenPonk project.
+"
 Class {
 	#name : 'OPModelAdded',
 	#superclass : 'Announcement',

@@ -1,3 +1,6 @@
+"
+An announcement emitted when the root OpenPonk project is renamed, notifying observers of the previous and updated project titles.
+"
 Class {
 	#name : 'OPProjectRenamed',
 	#superclass : 'Announcement',

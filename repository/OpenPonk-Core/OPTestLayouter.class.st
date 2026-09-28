@@ -1,3 +1,6 @@
+"
+A mock layouter implementation utilized in SUnit tests to verify automatic element layout invocations.
+"
 Class {
 	#name : 'OPTestLayouter',
 	#superclass : 'OPNodesAndEdgesLayouter',

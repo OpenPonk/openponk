@@ -1,3 +1,6 @@
+"
+Tests transactional commands that hide diagram elements while preserving their underlying domain model entities.
+"
 Class {
 	#name : 'OPHideDiagramElementCommandTest',
 	#superclass : 'TestCase',

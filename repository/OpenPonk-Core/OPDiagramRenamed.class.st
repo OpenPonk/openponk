@@ -1,3 +1,6 @@
+"
+An announcement emitted whenever a diagram within an OpenPonk project is renamed, carrying references to the diagram, its former name, and its new name.
+"
 Class {
 	#name : 'OPDiagramRenamed',
 	#superclass : 'Announcement',

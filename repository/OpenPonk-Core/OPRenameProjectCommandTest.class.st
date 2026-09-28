@@ -1,3 +1,6 @@
+"
+Verifies transactional undo and redo support for project renaming operations.
+"
 Class {
 	#name : 'OPRenameProjectCommandTest',
 	#superclass : 'TestCase',

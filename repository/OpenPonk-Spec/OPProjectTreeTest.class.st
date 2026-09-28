@@ -1,3 +1,6 @@
+"
+Tests project tree node construction, hierarchical nesting, and selection propagation in the project tree.
+"
 Class {
 	#name : 'OPProjectTreeTest',
 	#superclass : 'TestCase',

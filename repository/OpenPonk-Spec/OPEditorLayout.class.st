@@ -37,15 +37,11 @@ OPEditorLayout >> applyOn: anEditor [
 
 { #category : 'specs' }
 OPEditorLayout >> canvasSectionLayout [
-
+	"Answers the layout arranging the canvas presenter and the zoom toolbar."
 	^ SpBoxLayout newTopToBottom
-		  add: #canvasPresenter;
-		  add: (SpBoxLayout newLeftToRight
-				   add: #canvasMenu;
-				   add: #zoomLabel expand: false;
-				   yourself)
-		  expand: false;
-		  yourself
+		add: #canvasPresenter;
+		add: #zoomToolbar expand: false;
+		yourself
 ]
 
 { #category : 'accessing' }

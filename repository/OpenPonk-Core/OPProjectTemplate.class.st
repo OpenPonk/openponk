@@ -1,3 +1,6 @@
+"
+A template definition encapsulating metadata, an icon, and a model factory block for instantiating new projects and example diagrams.
+"
 Class {
 	#name : 'OPProjectTemplate',
 	#superclass : 'Object',

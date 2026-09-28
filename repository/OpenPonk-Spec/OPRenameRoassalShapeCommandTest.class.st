@@ -1,3 +1,6 @@
+"
+Tests canvas-level interactive shape renaming and transactional command dispatching.
+"
 Class {
 	#name : 'OPRenameRoassalShapeCommandTest',
 	#superclass : 'TestCase',

@@ -1,3 +1,6 @@
+"
+A project tree command that removes the selected domain model element from the project using transactional undo.
+"
 Class {
 	#name : 'OPRemoveModelCommand',
 	#superclass : 'OPProjectTreeCommand',

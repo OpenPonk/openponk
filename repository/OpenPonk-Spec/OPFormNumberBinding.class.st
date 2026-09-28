@@ -1,3 +1,6 @@
+"
+A dynamic form field binding that synchronizes a numerical text input presenter with an integer or float domain model property.
+"
 Class {
 	#name : 'OPFormNumberBinding',
 	#superclass : 'OPFormFieldBinding',

@@ -1,3 +1,6 @@
+"
+Verifies transactional deletion of root model packages and clean cascading removal of dependent diagrams and views.
+"
 Class {
 	#name : 'OPRemoveRootModelCommandTest',
 	#superclass : 'TestCase',

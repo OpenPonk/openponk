@@ -1,3 +1,6 @@
+"
+An abstract base class for Commander 2 context menu commands available within the OpenPonk project browser tree.
+"
 Class {
 	#name : 'OPProjectTreeCommand',
 	#superclass : 'CmCommand',

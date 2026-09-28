@@ -1,3 +1,6 @@
+"
+A layout utility that records node boundaries and connection anchor constraints prior to layout execution and calculates transactional delta commands.
+"
 Class {
 	#name : 'OPDiagramGeometrySnapshot',
 	#superclass : 'Object',

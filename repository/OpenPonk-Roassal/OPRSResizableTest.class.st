@@ -1,3 +1,6 @@
+"
+Tests shape resizing interactions, boundary constraints, and visual feedback handles in Roassal canvas presenters.
+"
 Class {
 	#name : 'OPRSResizableTest',
 	#superclass : 'TestCase',

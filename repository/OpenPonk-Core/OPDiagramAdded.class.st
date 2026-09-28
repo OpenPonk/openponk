@@ -1,3 +1,6 @@
+"
+An announcement emitted when a new diagram is created and registered within the active OpenPonk project.
+"
 Class {
 	#name : 'OPDiagramAdded',
 	#superclass : 'Announcement',

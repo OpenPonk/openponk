@@ -1,3 +1,6 @@
+"
+Tests Morphic paned layout window resizing behaviors, splitter tracking, and boundary stability in Pharo.
+"
 Class {
 	#name : 'OPPanedLayoutPatchTest',
 	#superclass : 'TestCase',

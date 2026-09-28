@@ -1,3 +1,6 @@
+"
+Verifies the execution and model updating of the project tree rename command.
+"
 Class {
 	#name : 'OPRenameProjectTreeCommandTest',
 	#superclass : 'TestCase',

@@ -1,3 +1,6 @@
+"
+Tests element selection, multi-selection bounds, and canvas marquee tool interactions.
+"
 Class {
 	#name : 'OPSelectionToolTest',
 	#superclass : 'TestCase',

@@ -1,3 +1,6 @@
+"
+A reversible transactional command that modifies the name of an OpenPonk project and updates associated workbench headers.
+"
 Class {
 	#name : 'OPRenameProjectCommand',
 	#superclass : 'OPCommand',

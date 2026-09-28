@@ -1,3 +1,6 @@
+"
+Tests transactional color modification commands for diagram shapes and verifies undo/redo reversibility.
+"
 Class {
 	#name : 'OPDiagramFigureColorCommandTest',
 	#superclass : 'TestCase',

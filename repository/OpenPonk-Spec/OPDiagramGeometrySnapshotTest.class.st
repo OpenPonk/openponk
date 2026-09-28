@@ -1,3 +1,6 @@
+"
+Verifies geometric snapshot capturing, boundary difference calculation, and delta command generation.
+"
 Class {
 	#name : 'OPDiagramGeometrySnapshotTest',
 	#superclass : 'TestCase',

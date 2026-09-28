@@ -1,3 +1,6 @@
+"
+Verifies OpenPonk system entry points and action registrations in the Pharo World menu.
+"
 Class {
 	#name : 'OPWorldMenuTest',
 	#superclass : 'TestCase',

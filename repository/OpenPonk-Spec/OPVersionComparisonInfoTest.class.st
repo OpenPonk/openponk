@@ -1,3 +1,6 @@
+"
+Tests semantic version comparison, upgrade detection, and release notification formatting.
+"
 Class {
 	#name : 'OPVersionComparisonInfoTest',
 	#superclass : 'TestCase',

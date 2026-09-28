@@ -1,3 +1,6 @@
+"
+Tests dynamic property form generation, layout containment, and focus handling in workbench forms.
+"
 Class {
 	#name : 'OPPropertiesFormTest',
 	#superclass : 'TestCase',

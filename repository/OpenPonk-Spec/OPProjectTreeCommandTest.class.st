@@ -1,3 +1,6 @@
+"
+Tests contextual project tree command execution and hierarchy updates in the project browser.
+"
 Class {
 	#name : 'OPProjectTreeCommandTest',
 	#superclass : 'TestCase',

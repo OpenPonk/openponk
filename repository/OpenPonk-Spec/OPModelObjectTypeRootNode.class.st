@@ -1,3 +1,6 @@
+"
+The root node in the tree hierarchy of the model type selection dialog, coordinating available element categories.
+"
 Class {
 	#name : 'OPModelObjectTypeRootNode',
 	#superclass : 'OPModelObjectTypeParentNode',

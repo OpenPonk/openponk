@@ -1,3 +1,6 @@
+"
+A value object capturing the timestamp, target, slot, previous value, new value, and stack trace of a monitored slot mutation.
+"
 Class {
 	#name : 'OPMutationRecord',
 	#superclass : 'Object',

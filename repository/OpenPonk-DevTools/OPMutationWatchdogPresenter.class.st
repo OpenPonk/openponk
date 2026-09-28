@@ -1,3 +1,6 @@
+"
+A graphical user interface presenter displaying live slot mutation records gathered by OPMutationWatchdog.
+"
 Class {
 	#name : 'OPMutationWatchdogPresenter',
 	#superclass : 'SpPresenter',

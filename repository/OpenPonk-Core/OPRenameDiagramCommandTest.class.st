@@ -1,3 +1,6 @@
+"
+Verifies transactional undo and redo support for diagram renaming commands.
+"
 Class {
 	#name : 'OPRenameDiagramCommandTest',
 	#superclass : 'TestCase',

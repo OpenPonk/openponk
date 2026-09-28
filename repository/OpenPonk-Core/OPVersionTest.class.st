@@ -1,3 +1,6 @@
+"
+Tests semantic version parsing, comparison operators, and string serialization for OpenPonk version descriptors.
+"
 Class {
 	#name : 'OPVersionTest',
 	#superclass : 'TestCase',

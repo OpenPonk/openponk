@@ -1,3 +1,6 @@
+"
+Verifies value equality, coordinate conversions, and center-extent calculations in the OPNodeBounds value object.
+"
 Class {
 	#name : 'OPNodeBoundsTest',
 	#superclass : 'TestCase',

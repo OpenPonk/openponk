@@ -1,3 +1,6 @@
+"
+Tests project tree presentation, item selection, and context menu population in the project browser.
+"
 Class {
 	#name : 'OPProjectBrowserTest',
 	#superclass : 'TestCase',

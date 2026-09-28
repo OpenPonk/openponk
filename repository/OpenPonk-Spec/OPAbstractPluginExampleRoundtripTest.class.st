@@ -1,3 +1,6 @@
+"
+Abstract base test suite verifying export, save, and reload cycles for bundled plugin example models.
+"
 Class {
 	#name : 'OPAbstractPluginExampleRoundtripTest',
 	#superclass : 'TestCase',

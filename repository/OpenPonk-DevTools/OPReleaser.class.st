@@ -1,3 +1,6 @@
+"
+An automated release coordinator that manages Git branching, tag generation, and baseline updates during OpenPonk release cycles.
+"
 Class {
 	#name : 'OPReleaser',
 	#superclass : 'Object',

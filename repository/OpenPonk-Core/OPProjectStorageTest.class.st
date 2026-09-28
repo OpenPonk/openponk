@@ -1,3 +1,6 @@
+"
+Tests project serialization to disk archives (.opp), folder unpacking, and resource extraction.
+"
 Class {
 	#name : 'OPProjectStorageTest',
 	#superclass : 'TestCase',

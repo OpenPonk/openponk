@@ -1,3 +1,6 @@
+"
+Verifies that model element creation commands can be completely reversed and restored via the project undo manager.
+"
 Class {
 	#name : 'OPModelCreationUndoTest',
 	#superclass : 'TestCase',

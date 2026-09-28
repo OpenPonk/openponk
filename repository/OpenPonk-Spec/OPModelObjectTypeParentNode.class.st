@@ -1,3 +1,6 @@
+"
+A tree presenter composite node representing an expandable category in the model type selection dialog.
+"
 Class {
 	#name : 'OPModelObjectTypeParentNode',
 	#superclass : 'OPModelObjectTypeAbstractNode',

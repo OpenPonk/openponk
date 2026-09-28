@@ -1,3 +1,6 @@
+"
+Tests tool palette entry creation, icon bindings, and active tool switching in the diagram editor.
+"
 Class {
 	#name : 'OPPaletteEntryTest',
 	#superclass : 'TestCase',

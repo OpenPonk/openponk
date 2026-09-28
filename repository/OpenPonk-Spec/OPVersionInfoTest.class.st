@@ -1,3 +1,6 @@
+"
+Tests project version parsing, metadata extraction, and semantic version comparison.
+"
 Class {
 	#name : 'OPVersionInfoTest',
 	#superclass : 'TestCase',

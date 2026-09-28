@@ -1,3 +1,6 @@
+"
+Tests diagram element exploration, tree navigation, and visibility toggle operations in the diagram explorer.
+"
 Class {
 	#name : 'OPDiagramExplorerTest',
 	#superclass : 'TestCase',

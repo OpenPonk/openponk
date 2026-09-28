@@ -1,3 +1,6 @@
+"
+Integration test verifying synchronization between the diagrams list presenter and active workbench editors.
+"
 Class {
 	#name : 'OPDiagramsListIntegrationTest',
 	#superclass : 'TestCase',

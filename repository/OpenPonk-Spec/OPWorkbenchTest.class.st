@@ -1,3 +1,6 @@
+"
+Tests top-level workbench initialization, window layout, and active editor coordination.
+"
 Class {
 	#name : 'OPWorkbenchTest',
 	#superclass : 'TestCase',

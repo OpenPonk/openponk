@@ -1,3 +1,6 @@
+"
+An automatic diagram layouter that positions nodes and routes connections using a hierarchical layer-based layout algorithm.
+"
 Class {
 	#name : 'OPHierarchicalNodesAndEdgesLayouter',
 	#superclass : 'OPNodesAndEdgesLayouter',

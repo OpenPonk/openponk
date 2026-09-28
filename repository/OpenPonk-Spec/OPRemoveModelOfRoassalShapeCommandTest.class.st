@@ -1,3 +1,6 @@
+"
+Tests contextual deletion of the domain model entity associated with a selected canvas shape using transactional undo.
+"
 Class {
 	#name : 'OPRemoveModelOfRoassalShapeCommandTest',
 	#superclass : 'TestCase',

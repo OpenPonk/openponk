@@ -1,3 +1,6 @@
+"
+A compatibility patch addressing Morphic paned layout window resizing behaviors in Pharo.
+"
 Class {
 	#name : 'OPPanedLayoutPatch',
 	#superclass : 'Object',

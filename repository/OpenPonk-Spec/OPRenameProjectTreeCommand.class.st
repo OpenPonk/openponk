@@ -1,3 +1,6 @@
+"
+A project tree command that triggers the interactive renaming workflow for a selected project item.
+"
 Class {
 	#name : 'OPRenameProjectTreeCommand',
 	#superclass : 'OPProjectTreeCommand',

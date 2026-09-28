@@ -1,3 +1,6 @@
+"
+Tests diagram list presentation, selection events, and diagram activation in the workbench.
+"
 Class {
 	#name : 'OPDiagramsListTest',
 	#superclass : 'TestCase',

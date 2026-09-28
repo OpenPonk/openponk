@@ -3,7 +3,7 @@ Diagram toolbar command that opens a specialized dialog (explorer) allowing the 
 "
 Class {
 	#name : 'OPShowHideElementsInDiagramCommand',
-	#superclass : 'OPDiagramToolbarCommand',
+	#superclass : 'OPDiagramCanvasCommand',
 	#category : 'OpenPonk-Spec-Commands-CanvasPresenter',
 	#package : 'OpenPonk-Spec',
 	#tag : 'Commands-CanvasPresenter'
@@ -11,7 +11,17 @@ Class {
 
 { #category : 'testing' }
 OPShowHideElementsInDiagramCommand class >> canBeExecutedInContext: aToolContext [
+
 	^ aToolContext editor plugin supportsHidingElements
+]
+
+{ #category : 'activation' }
+OPShowHideElementsInDiagramCommand class >> diagramMenuActivation [
+	<classAnnotation>
+	^ OPDiagramMenuActivation
+		byItemOf: OPDiagramElementsMenuGroup
+		order: 10
+		for: OPCanvasPresenter
 ]
 
 { #category : 'accessing' }

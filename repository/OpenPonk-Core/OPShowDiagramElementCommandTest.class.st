@@ -1,3 +1,6 @@
+"
+Tests transactional commands that unhide and render hidden model elements on a diagram canvas.
+"
 Class {
 	#name : 'OPShowDiagramElementCommandTest',
 	#superclass : 'TestCase',

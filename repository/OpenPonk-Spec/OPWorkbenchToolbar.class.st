@@ -23,66 +23,35 @@ Class {
 	#tag : 'Windows'
 }
 
-{ #category : 'menus for editor' }
+{ #category : 'menus' }
 OPWorkbenchToolbar >> addDiagramMenu [
+	"Compatibility method delegating to #addEditorMenus."
+	self addEditorMenus
+]
 
-	self removeDiagramMenu.
-	menu menuGroups first addItem: [ :item |
-			item
+{ #category : 'menus' }
+OPWorkbenchToolbar >> addEditorMenus [
+	"Adds Model and Diagram menus to the toolbar menu bar for the currently focused editor."
+	| firstGroup modelSubMenu hasModelItems |
+	firstGroup := menu menuGroups first.
+	firstGroup menuItems removeAllSuchThat: [ :eachMenuItem | 
+		#( 'Model' 'Diagram' ) includes: eachMenuItem name ].
+	modelSubMenu := self modelMenu.
+	hasModelItems := modelSubMenu menuGroups anySatisfy: [ :eachGroup | 
+		eachGroup menuItems isNotEmpty ].
+	firstGroup
+		addItem: [ :modelItem | 
+			modelItem
+				name: 'Model';
+				icon: (self iconNamed: #package);
+				enabled: hasModelItems;
+				subMenu: modelSubMenu ];
+		addItem: [ :diagramItem | 
+			diagramItem
 				name: 'Diagram';
 				icon: (self iconNamed: #objects);
-				subMenu: self addDiagramMenuItems ].
+				subMenu: self diagramMenu ].
 	self updateMenu
-]
-
-{ #category : 'menus for editor' }
-OPWorkbenchToolbar >> addDiagramMenuItems [
-
-	| submenu |
-	submenu := self newMenu.
-	self
-		addDiagramMenuItems: ((PragmaMenuBuilder pragmaKeyword: #opEditorToolbarMenu model: focusedEditor)
-				 buildTree;
-				 itemList)
-		to: submenu.
-
-	self
-		addDiagramMenuItems: ((OPPragmaPluginMenuBuilder pragmaKeyword: #opEditorToolbarMenu: model: focusedEditor)
-				 buildTree;
-				 itemList)
-		to: submenu.
-
-	^ submenu
-]
-
-{ #category : 'menus for editor' }
-OPWorkbenchToolbar >> addDiagramMenuItems: menuRegistrations to: spMenu [
-
-	| itemEndingGroupIndex |
-	menuRegistrations ifEmpty: [ ^ spMenu ].
-	menuRegistrations last withSeparatorAfter.
-	itemEndingGroupIndex := menuRegistrations size.
-	spMenu addGroup: [ :group | 
-		menuRegistrations withIndexDo: [ :each :index | 
-			itemEndingGroupIndex >= index ifTrue: [ 
-				group addItem: [ :item | 
-					item
-						name: each label;
-						icon: each spec icon;
-						action: [ :arg | 
-							each spec action selector ifNotNil: [ 
-									each spec action cull: arg ] ].
-					(each itemList isNotNil and: [ each itemList isNotEmpty ]) 
-						ifTrue: [ 
-							| submenu |
-							submenu := self newMenu.
-							item subMenu: submenu.
-							self addDiagramMenuItems: each itemList to: submenu ] ].
-				each spec separator ifTrue: [ itemEndingGroupIndex := index ] ] ] ].
-	^ self
-		  addDiagramMenuItems:
-		  (menuRegistrations allButFirst: itemEndingGroupIndex)
-		  to: spMenu
 ]
 
 { #category : 'initialization' }
@@ -96,7 +65,7 @@ OPWorkbenchToolbar >> connectPresenters [
 					item
 						name: 'OpenPonk';
 						icon: (self iconNamed: #home);
-						subMenu: self opMenu ];
+						subMenu: self openponkMenu ];
 				addItem: [ :item | 
 					item
 						name: 'Project';
@@ -132,12 +101,23 @@ OPWorkbenchToolbar >> descriptionForCommand: aCommand atIndex: anInteger [
 	^ anInteger asString , '. ' , commandDescription
 ]
 
-{ #category : 'menus for editor' }
-OPWorkbenchToolbar >> focusedEditor: anEditor [
+{ #category : 'menus' }
+OPWorkbenchToolbar >> diagramMenu [
+	"Answers the menu presenter containing Commander diagram commands."
+	| subMenu commanderMenu |
+	subMenu := self newMenu.
+	commanderMenu := OPDiagramMenuActivation buildMenuInContext: (CmdSimpleToolContext for: focusedEditor canvasPresenter).
+	commanderMenu buildSpecMenuOn: subMenu.
+	^ subMenu
+]
 
+{ #category : 'accessing' }
+OPWorkbenchToolbar >> focusedEditor: anEditor [
+	"Sets the focused editor and updates toolbar menus accordingly."
 	focusedEditor := anEditor.
-	focusedEditor ifNil: [ self removeDiagramMenu ] ifNotNil: [ self addDiagramMenu ].
-	self updateMenu
+	focusedEditor
+		ifNil: [ self removeEditorMenus ]
+		ifNotNil: [ self addEditorMenus ]
 ]
 
 { #category : 'initialization' }
@@ -220,39 +200,46 @@ OPWorkbenchToolbar >> menu [
 	^ menu
 ]
 
-{ #category : 'menus for project' }
-OPWorkbenchToolbar >> opMenu [
+{ #category : 'menus' }
+OPWorkbenchToolbar >> modelMenu [
+	"Answers the menu presenter populated by active Commander 1 model commands for the focused editor."
+	| subMenu commanderMenu |
+	subMenu := self newMenu.
+	commanderMenu := OPModelMenuActivation buildMenuInContext: (CmdSimpleToolContext for: focusedEditor).
+	commanderMenu buildSpecMenuOn: subMenu.
+	^ subMenu
+]
 
-	| menu browser path |
-	menu := self newMenu.
-	menu
-		addGroup: [ :group | 
-			group
-				addItem: [ :item | 
-					item
-						name: 'Settings';
-						icon: (self iconNamed: #configuration);
-						action: [ 
-							browser := SettingBrowser new
-								           changePackageSet: { #'OpenPonk-Spec' asPackage };
-								           yourself.
-							path := (browser open submorphs detect: [ :each | 
-								         each isKindOf: MorphTreeMorph ]) nodeList.
-							browser expandNodePath: path first contents first path ] ];
-				addItem: [ :item | 
-					item
-						name: 'Check for new version';
-						icon: (self iconNamed: #smallUpdate);
-						action: [ 
-							(OPVersionComparisonInfo newApplication: SpApplication defaultApplication)
-								open ] ] ];
-		addGroup: [ :group | 
-			group addItem: [ :item | 
-				item
-					name: 'Close OpenPonk';
-					icon: (self iconNamed: #smallQuit);
-					action: [ WorldState saveAndQuit ] ] ].
-	^ menu
+{ #category : 'menus for project' }
+OPWorkbenchToolbar >> openponkMenu [
+
+	| openponkMenu browser path |
+	openponkMenu := self newMenu.
+	openponkMenu
+		addGroup: [ :group |
+				group
+					addItem: [ :item |
+							item
+								name: 'Settings';
+								icon: (self iconNamed: #configuration);
+								action: [
+										browser := SettingBrowser new
+											           changePackageSet: { #'OpenPonk-Spec' asPackage };
+											           yourself.
+										path := (browser open submorphs detect: [ :each | each isKindOf: MorphTreeMorph ]) nodeList.
+										browser expandNodePath: path first contents first path ] ];
+					addItem: [ :item |
+							item
+								name: 'Check for new version';
+								icon: (self iconNamed: #smallUpdate);
+								action: [ (OPVersionComparisonInfo newApplication: SpApplication defaultApplication) open ] ] ];
+		addGroup: [ :group |
+				group addItem: [ :item |
+						item
+							name: 'Close OpenPonk';
+							icon: (self iconNamed: #smallQuit);
+							action: [ WorldState saveAndQuit ] ] ].
+	^ openponkMenu
 ]
 
 { #category : 'accessing' }
@@ -328,10 +315,19 @@ OPWorkbenchToolbar >> registerUndoRedoAnnouncements [
 	self updateButtons
 ]
 
-{ #category : 'menus for editor' }
+{ #category : 'menus' }
 OPWorkbenchToolbar >> removeDiagramMenu [
+	"Compatibility method delegating to #removeEditorMenus."
+	self removeEditorMenus
+]
 
-	menu menuGroups first menuItems size > 2 ifTrue: [ menu menuGroups first menuItems removeLast ].
+{ #category : 'menus' }
+OPWorkbenchToolbar >> removeEditorMenus [
+	"Removes Model and Diagram menus from the toolbar menu bar."
+	| firstGroup |
+	firstGroup := menu menuGroups first.
+	firstGroup menuItems removeAllSuchThat: [ :eachMenuItem | 
+		#( 'Model' 'Diagram' ) includes: eachMenuItem name ].
 	self updateMenu
 ]
 

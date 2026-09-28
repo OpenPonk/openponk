@@ -1,3 +1,6 @@
+"
+Verifies that commands correctly declare whether their execution alters domain model semantics for undo tracking.
+"
 Class {
 	#name : 'OPCommandAffectsModelTest',
 	#superclass : 'TestCase',

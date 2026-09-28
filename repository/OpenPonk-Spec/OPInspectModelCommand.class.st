@@ -1,3 +1,6 @@
+"
+A project tree contextual command that opens a system inspector on the underlying domain model of the selected element.
+"
 Class {
 	#name : 'OPInspectModelCommand',
 	#superclass : 'OPProjectTreeCommand',

@@ -1,3 +1,6 @@
+"
+Abstract base test suite verifying clean initialization, opening, and tear-down of plugin example models.
+"
 Class {
 	#name : 'OPAbstractPluginExampleLifecycleTest',
 	#superclass : 'TestCase',

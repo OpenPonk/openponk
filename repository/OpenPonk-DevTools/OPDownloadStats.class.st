@@ -1,3 +1,6 @@
+"
+A release engineering utility that queries GitHub and GitLab APIs to compile OpenPonk download and release metrics.
+"
 Class {
 	#name : 'OPDownloadStats',
 	#superclass : 'Object',

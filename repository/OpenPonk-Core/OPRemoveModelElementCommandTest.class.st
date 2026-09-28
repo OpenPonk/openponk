@@ -1,3 +1,6 @@
+"
+Verifies transactional commands that remove domain model elements and cleanly tear down dependent diagram shapes.
+"
 Class {
 	#name : 'OPRemoveModelElementCommandTest',
 	#superclass : 'TestCase',

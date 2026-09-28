@@ -1,3 +1,6 @@
+"
+Verifies that all registered OpenPonk plugins conform to architecture-wide lifecycle contracts.
+"
 Class {
 	#name : 'OPPluginLifecycleArchitectureTest',
 	#superclass : 'TestCase',

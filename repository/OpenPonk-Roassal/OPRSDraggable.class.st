@@ -1,3 +1,6 @@
+"
+A Roassal interaction strategy that coordinates draggable canvas shapes with OpenPonk anchor constraints and position updates.
+"
 Class {
 	#name : 'OPRSDraggable',
 	#superclass : 'RSDraggable',

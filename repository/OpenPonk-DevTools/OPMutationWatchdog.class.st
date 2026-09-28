@@ -1,3 +1,6 @@
+"
+A developer diagnostic utility that installs MetaLinks on model slots to track and record unintended direct mutations bypassing the transactional undo pipeline.
+"
 Class {
 	#name : 'OPMutationWatchdog',
 	#superclass : 'Object',

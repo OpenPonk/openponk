@@ -1,3 +1,6 @@
+"
+A project tree command that opens a system inspector on the ViewModel bound to the selected project item.
+"
 Class {
 	#name : 'OPInspectViewModelCommand',
 	#superclass : 'OPProjectTreeCommand',

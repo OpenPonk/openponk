@@ -119,7 +119,7 @@ OPRSSelectionDraggableBorder >> dragBoxWidth: aNumber [
 OPRSSelectionDraggableBorder >> initialize [
 
 	super initialize.
-	dragBoxWidth := 10
+	dragBoxWidth := 12
 ]
 
 { #category : 'hooks' }

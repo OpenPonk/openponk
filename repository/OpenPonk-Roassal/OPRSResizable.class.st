@@ -50,7 +50,7 @@ OPRSResizable >> createHandleFor: association [
 	| handle |
 	handle := super createHandleFor: association.
 	handle
-		size: 9;
+		size: 14;
 		color: Color white;
 		borderDo: [ :b | 
 			b

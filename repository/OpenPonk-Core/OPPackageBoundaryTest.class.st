@@ -22,15 +22,24 @@ OPPackageBoundaryTest >> assertPackageNamed: aPackageName doesNotDependOnReposit
 
 { #category : 'private' }
 OPPackageBoundaryTest >> checkMethod: aCompiledMethod againstForbiddenRepositories: aSetOfRepositories repositoryMap: aDictionary into: aViolationsCollection [
-	"Checks a single compiled method for literals referencing behaviors from forbidden repositories."
-	aCompiledMethod literals do: [ :eachLiteral |
-		eachLiteral isVariableBinding ifTrue: [
-			| bindingValue |
-			bindingValue := eachLiteral value.
-			(bindingValue isBehavior and: [ bindingValue instanceSide package isNotNil ]) ifTrue: [
-				(aDictionary at: bindingValue instanceSide package name asString ifAbsent: [ nil ]) ifNotNil: [ :targetRepository |
-					(aSetOfRepositories includes: targetRepository) ifTrue: [
-						aViolationsCollection add: (aCompiledMethod printString , ' references ' , bindingValue name asString , ' from [' , targetRepository name asString , ']') ] ] ] ] ]
+	"Checks a compiled method and all its nested compiled blocks for literals referencing behaviors from forbidden repositories."
+
+	| codeUnitsToInspect currentCodeUnit |
+	codeUnitsToInspect := OrderedCollection with: aCompiledMethod.
+	[ codeUnitsToInspect notEmpty ] whileTrue: [
+			currentCodeUnit := codeUnitsToInspect removeFirst.
+			codeUnitsToInspect addAll: (currentCodeUnit literals select: [ :eachLiteral |
+						 eachLiteral isVariableBinding ifTrue: [
+								 | bindingValue |
+								 bindingValue := eachLiteral value.
+								 (bindingValue isBehavior and: [ bindingValue instanceSide package isNotNil ]) ifTrue: [
+										 (aDictionary at: bindingValue instanceSide package name asString ifAbsent: [ nil ]) ifNotNil: [ :targetRepository |
+												 (aSetOfRepositories includes: targetRepository) ifTrue: [
+														 aViolationsCollection add:
+															 aCompiledMethod printString , ' references ' , bindingValue name asString , ' from ['
+															 , targetRepository name asString , ']' ] ] ] ].
+						 (eachLiteral isKindOf: CompiledCode) ifTrue: [ codeUnitsToInspect add: eachLiteral ].
+						 eachLiteral isKindOf: BlockClosure ]) ]
 ]
 
 { #category : 'accessing' }

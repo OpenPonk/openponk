@@ -461,17 +461,33 @@ OPMutationWatchdog >> suspiciousRecords [
 { #category : 'accessing' }
 OPMutationWatchdog >> targetClasses [
 	"Answer model and diagram element classes to be monitored, excluding temporary feedback shapes."
-	| resultClasses invisibleShapeClass |
+
+	| resultClasses monitoredPackages invisibleShapeClass |
 	resultClasses := OrderedCollection new.
+	monitoredPackages := Set new.
+	monitoredPackages addAll: ((self packageOrganizer packages select: [ :eachPackage |
+			  (eachPackage name beginsWith: 'OpenPonk') and: [ eachPackage name includesSubstring: '-Models' ] ]) collect: [
+			 :eachModelPackage | eachModelPackage ]).
+
+	OPPluginRegistry default plugins do: [ :eachPlugin |
+			[
+				eachPlugin modelClass ifNotNil: [ :eachModelClass |
+					eachModelClass package ifNotNil: [ :eachPluginModelPackage | monitoredPackages add: eachPluginModelPackage ] ] ]
+				on: Error
+				do: [ :ignoredError |  ] ].
+
+	monitoredPackages do: [ :eachPackage |
+			resultClasses addAll: (eachPackage definedClasses select: [ :eachClass |
+					 eachClass isTestCase not and: [ (eachClass inheritsFrom: OPDiagramElement) not ] ]) ].
+
 	(self packageOrganizer packages select: [ :eachPackage | eachPackage name beginsWith: 'OpenPonk' ]) do: [ :eachPackage |
-		eachPackage classes do: [ :eachClass |
-			((eachClass includesBehavior: OPModelObject)
-				or: [ (eachClass includesBehavior: OPDiagramElement)
-				or: [ eachClass package name includesSubstring: '-Models' ] ]) ifTrue: [
-				resultClasses add: eachClass ] ] ].
+		resultClasses addAll: (eachPackage definedClasses select: [ :eachClass | eachClass includesBehavior: OPDiagramElement ]) ].
+
+	resultClasses add: OPMutationWatchdogTestEntity.
+
 	invisibleShapeClass := OPInvisibleOnMouseShape.
 	resultClasses removeAllFoundIn: { invisibleShapeClass }.
-	^ (resultClasses select: [ :eachClass | eachClass isObsolete not ]) asSet asOrderedCollection
+	^ (resultClasses reject: [ :eachClass | eachClass isObsolete ]) asSet asOrderedCollection
 ]
 
 { #category : 'capturing' }

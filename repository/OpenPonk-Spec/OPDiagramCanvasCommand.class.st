@@ -12,14 +12,30 @@ Class {
 	#tag : 'Commands-CanvasPresenter'
 }
 
+{ #category : 'accessing' }
+OPDiagramCanvasCommand class >> canvasPresenterFromContext: aToolContextOrCanvasPresenter [
+	"Answers the OPCanvasPresenter extracted from the given tool context or returns the canvas presenter directly."
+	(aToolContextOrCanvasPresenter isKindOf: CmdToolContext)
+		ifTrue: [ ^ aToolContextOrCanvasPresenter tool ].
+	^ aToolContextOrCanvasPresenter
+]
+
+{ #category : 'accessing' }
+OPDiagramCanvasCommand class >> editorFromContext: aToolContextOrCanvasPresenter [
+	"Answers the OPEditor owning the canvas presenter extracted from context."
+	| canvasPresenter |
+	canvasPresenter := self canvasPresenterFromContext: aToolContextOrCanvasPresenter.
+	^ canvasPresenter ifNotNil: [ :activeCanvasPresenter | activeCanvasPresenter editor ]
+]
+
 { #category : 'testing' }
 OPDiagramCanvasCommand class >> isAbstract [
 	^ self = OPDiagramCanvasCommand
 ]
 
 { #category : 'execution' }
-OPDiagramCanvasCommand >> prepareFullExecutionInContext: aCanvasPresenter [
-	"Initializes diagramPresenter with the canvas presenter wrapped in the tool context."
-	super prepareFullExecutionInContext: aCanvasPresenter.
-	diagramPresenter := aCanvasPresenter
+OPDiagramCanvasCommand >> prepareFullExecutionInContext: aToolContextOrCanvasPresenter [
+	"Initializes diagramPresenter with the canvas presenter extracted from the tool context or passed directly."
+	super prepareFullExecutionInContext: aToolContextOrCanvasPresenter.
+	diagramPresenter := self class canvasPresenterFromContext: aToolContextOrCanvasPresenter
 ]

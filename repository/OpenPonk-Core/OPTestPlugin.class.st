@@ -57,6 +57,12 @@ OPTestPlugin >> name [
 	^ 'Test Plugin'
 ]
 
+{ #category : 'testing' }
+OPTestPlugin >> supportsHidingElements [
+	"Answers true to enable diagram element visibility commands during tests."
+	^ true
+]
+
 { #category : 'accessing' }
 OPTestPlugin >> version [
 	^ '0.1.0-beta.2'

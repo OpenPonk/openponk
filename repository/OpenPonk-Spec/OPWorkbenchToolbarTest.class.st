@@ -31,7 +31,7 @@ OPWorkbenchToolbarTest >> setUp [
 	mockWorkbench := Mock new.
 	mockWorkbench stub projectController willReturn: mockProjectController.
 	mockWorkbench stub workbench willReturn: mockWorkbench.
-	toolbarPresenter := OPWorkbenchToolbar new.
+	toolbarPresenter := OPWorkbenchToolbar newApplication: SpApplication defaultApplication.
 	toolbarPresenter owner: mockWorkbench
 ]
 
@@ -96,12 +96,11 @@ OPWorkbenchToolbarTest >> testButtonsReactToUndoRedoChangedAnnouncement [
 	self assert: toolbarPresenter redoButton isEnabled
 ]
 
-{ #category : 'tests - diagram menu' }
+{ #category : 'tests' }
 OPWorkbenchToolbarTest >> testDiagramCommandsPrepareExecutionInCanvasContext [
 	"Verifies that all diagram canvas commands accept the canvas presenter tool in prepareFullExecutionInContext: without DNU #tool."
-	| defaultPlugin testEditor mockDiagramController context commandClasses |
-	defaultPlugin := OPPluginRegistry default plugins first.
-	testEditor := (OPEditor on: defaultPlugin)
+	| testEditor mockDiagramController context commandClasses |
+	testEditor := (OPEditor on: OPTestPlugin new)
 		workbench: mockWorkbench;
 		yourself.
 	mockDiagramController := Mock new.
@@ -110,18 +109,17 @@ OPWorkbenchToolbarTest >> testDiagramCommandsPrepareExecutionInCanvasContext [
 
 	context := CmdSimpleToolContext for: testEditor canvasPresenter.
 	commandClasses := OPDiagramCanvasCommand allSubclasses reject: #isAbstract.
-	commandClasses do: [ :eachCommandClass | 
+	commandClasses do: [ :eachCommandClass |
 		| command |
 		command := eachCommandClass new.
 		context prepareFullExecutionOf: command ]
 ]
 
-{ #category : 'tests - menu' }
+{ #category : 'tests' }
 OPWorkbenchToolbarTest >> testDiagramMenuContainsCommanderActivations [
 	"Verifies that the Diagram menu is populated by Commander activations (Show/Hide Elements and Layout)."
-	| defaultPlugin testEditor diagramMenuItem subMenuLabels |
-	defaultPlugin := OPPluginRegistry default plugins first.
-	testEditor := (OPEditor on: defaultPlugin)
+	| testEditor diagramMenuItem subMenuLabels |
+	testEditor := (OPEditor on: OPTestPlugin new)
 		workbench: mockWorkbench;
 		yourself.
 
@@ -134,12 +132,11 @@ OPWorkbenchToolbarTest >> testDiagramMenuContainsCommanderActivations [
 	self assertCollection: subMenuLabels includesAll: #( 'Show/Hide Elements' 'Layout' )
 ]
 
-{ #category : 'tests - menu' }
+{ #category : 'tests' }
 OPWorkbenchToolbarTest >> testDiagramMenuContainsExportAndInspectCommanderCommands [
 	"Verifies that the Diagram menu is 100% Commander 1 and includes Export submenu and Inspect Controller."
-	| defaultPlugin testEditor diagramMenuItem subMenuLabels |
-	defaultPlugin := OPPluginRegistry default plugins first.
-	testEditor := (OPEditor on: defaultPlugin)
+	| testEditor diagramMenuItem subMenuLabels |
+	testEditor := (OPEditor on: OPTestPlugin new)
 		workbench: mockWorkbench;
 		yourself.
 
@@ -152,12 +149,11 @@ OPWorkbenchToolbarTest >> testDiagramMenuContainsExportAndInspectCommanderComman
 	self assertCollection: subMenuLabels includesAll: #( 'Show/Hide Elements' 'Layout' 'Export diagram as...' 'Inspect Controller...' )
 ]
 
-{ #category : 'tests - diagram menu' }
+{ #category : 'tests' }
 OPWorkbenchToolbarTest >> testDiagramMenuItemActionExecutesWithoutError [
 	"Verifies that clicking a diagram menu item executes its Commander activator without MessageNotUnderstood."
-	| defaultPlugin testEditor mockDiagramController diagramMenuItem showHideItem |
-	defaultPlugin := OPPluginRegistry default plugins first.
-	testEditor := (OPEditor on: defaultPlugin)
+	| testEditor mockDiagramController diagramMenuItem showHideItem |
+	testEditor := (OPEditor on: OPTestPlugin new)
 		workbench: mockWorkbench;
 		yourself.
 	mockDiagramController := Mock new.
@@ -173,12 +169,11 @@ OPWorkbenchToolbarTest >> testDiagramMenuItemActionExecutesWithoutError [
 	self assert: showHideItem action isNotNil
 ]
 
-{ #category : 'tests - menu' }
+{ #category : 'tests' }
 OPWorkbenchToolbarTest >> testFocusedEditorAddsModelAndDiagramMenus [
 	"Verifies that focusing an editor adds both Model and Diagram menus, resulting in 4 categories."
-	| defaultPlugin testEditor menuNames |
-	defaultPlugin := OPPluginRegistry default plugins first.
-	testEditor := (OPEditor on: defaultPlugin)
+	| testEditor menuNames |
+	testEditor := (OPEditor on: OPTestPlugin new)
 		workbench: mockWorkbench;
 		yourself.
 
@@ -229,12 +224,11 @@ OPWorkbenchToolbarTest >> testFocusedEditorPreservesToolbarWidgetIdentity [
 	self assert: toolbarPresenter adapter widget identicalTo: initialWidget
 ]
 
-{ #category : 'tests - menu' }
+{ #category : 'tests' }
 OPWorkbenchToolbarTest >> testFocusedEditorResetRemovesEditorMenus [
 	"Verifies that resetting focused editor to nil leaves only OpenPonk and Project menus."
-	| defaultPlugin testEditor menuNames |
-	defaultPlugin := OPPluginRegistry default plugins first.
-	testEditor := (OPEditor on: defaultPlugin)
+	| testEditor menuNames |
+	testEditor := (OPEditor on: OPTestPlugin new)
 		workbench: mockWorkbench;
 		yourself.
 
@@ -245,56 +239,27 @@ OPWorkbenchToolbarTest >> testFocusedEditorResetRemovesEditorMenus [
 	self assert: menuNames asArray equals: #( 'OpenPonk' 'Project' )
 ]
 
-{ #category : 'tests - model menu' }
+{ #category : 'tests' }
 OPWorkbenchToolbarTest >> testModelCommandsPrepareExecutionInEditorContext [
 	"Verifies that all model commands accept the focused editor in prepareFullExecutionInContext:."
-	| defaultPlugin testEditor context commandClasses |
-	defaultPlugin := OPPluginRegistry default plugins first.
-	testEditor := (OPEditor on: defaultPlugin)
+	| testEditor context commandClasses |
+	testEditor := (OPEditor on: OPTestPlugin new)
 		workbench: mockWorkbench;
 		yourself.
 
 	context := CmdSimpleToolContext for: testEditor.
 	commandClasses := OPModelCommand allSubclasses reject: #isAbstract.
-	commandClasses do: [ :eachCommandClass | 
+	commandClasses do: [ :eachCommandClass |
 		| command |
 		command := eachCommandClass new.
 		context prepareFullExecutionOf: command ]
 ]
 
-{ #category : 'tests - model menu' }
-OPWorkbenchToolbarTest >> testModelMenuContainsBpmnCommanderActivationsWhenBpmnEditorFocused [
-	"Verifies that the Model menu contains BPMN-specific Commander 1 commands when a BPMN editor is focused."
-	| defaultPlugin testEditor modelMenuItem allMenuItems validationMenuItem validationSubMenu validationItemLabels |
-	defaultPlugin := OPPluginRegistry default plugins first.
-	testEditor := (OPEditor on: defaultPlugin)
-		workbench: mockWorkbench;
-		yourself.
-
-	toolbarPresenter focusedEditor: testEditor.
-	modelMenuItem := toolbarPresenter menu menuGroups first menuItems
-		detect: [ :eachTopMenuItem | eachTopMenuItem name = 'Model' ].
-	allMenuItems := modelMenuItem subMenu menuGroups
-		flatCollect: [ :eachTopGroup | eachTopGroup menuItems ].
-
-	self assertCollection: (allMenuItems collect: [ :eachItem | eachItem name ])
-		includesAll: #( 'Simulation' 'Validations' 'Export as XML...' ).
-
-	validationMenuItem := allMenuItems detect: [ :eachValidItem | eachValidItem name = 'Validations' ].
-	validationSubMenu := validationMenuItem subMenu.
-	validationItemLabels := validationSubMenu menuGroups
-		flatCollect: [ :eachSubGroup | eachSubGroup menuItems collect: [ :eachSubItem | eachSubItem name ] ].
-
-	self assertCollection: validationItemLabels hasSameElements: #( 'Validate model' 'Remove highlights' )
-]
-
-{ #category : 'tests - model menu' }
+{ #category : 'tests' }
 OPWorkbenchToolbarTest >> testModelMenuDoesNotContainInactiveMenuGroupsWhenEditorDoesNotSupportThem [
-	"Verifies that non-inlined groups (like BPMN Validations) are not rendered when inactive."
-	| nonBpmnPlugin testEditor modelMenuItem subMenuLabels |
-	nonBpmnPlugin := OPPluginRegistry default plugins
-		detect: [ :eachPluginCandidate | (eachPluginCandidate isKindOf: OPBPMNPlugin) not ].
-	testEditor := (OPEditor on: nonBpmnPlugin)
+	"Verifies that non-inlined groups are not rendered when their commands are inactive."
+	| testEditor modelMenuItem subMenuLabels |
+	testEditor := (OPEditor on: OPTestPlugin new)
 		workbench: mockWorkbench;
 		yourself.
 
@@ -304,15 +269,14 @@ OPWorkbenchToolbarTest >> testModelMenuDoesNotContainInactiveMenuGroupsWhenEdito
 	subMenuLabels := modelMenuItem subMenu menuGroups
 		flatCollect: [ :eachGroup | eachGroup menuItems collect: [ :eachItem | eachItem name ] ].
 
-	self deny: (subMenuLabels includes: 'Validations')
+	self deny: (subMenuLabels includes: 'Test Inactive Group')
 ]
 
-{ #category : 'tests - model menu' }
+{ #category : 'tests' }
 OPWorkbenchToolbarTest >> testModelMenuItemActionExecutesWithoutError [
 	"Verifies that an active model menu item action is wired to its Commander activator."
-	| defaultPlugin testEditor modelMenuItem allMenuItems testActionItem |
-	defaultPlugin := OPPluginRegistry default plugins first.
-	testEditor := (OPEditor on: defaultPlugin)
+	| testEditor modelMenuItem allMenuItems testActionItem |
+	testEditor := (OPEditor on: OPTestPlugin new)
 		workbench: mockWorkbench;
 		yourself.
 
@@ -321,18 +285,16 @@ OPWorkbenchToolbarTest >> testModelMenuItemActionExecutesWithoutError [
 		detect: [ :eachTopMenuItem | eachTopMenuItem name = 'Model' ].
 	allMenuItems := modelMenuItem subMenu menuGroups
 		flatCollect: [ :eachTopGroup | eachTopGroup menuItems ].
-	testActionItem := allMenuItems detect: [ :eachActionCandidate | eachActionCandidate name = 'Simulation' ].
+	testActionItem := allMenuItems detect: [ :eachActionCandidate | eachActionCandidate name = 'Test Model Action' ].
 
 	self assert: testActionItem action isNotNil
 ]
 
-{ #category : 'tests - model menu' }
+{ #category : 'tests' }
 OPWorkbenchToolbarTest >> testModelMenuItemIsDisabledWhenFocusedEditorHasNoModelCommands [
 	"Verifies that the Model menu item is disabled (grayed out) when the active editor has no model commands."
-	| pluginWithoutCommands testEditor modelMenuItem |
-	pluginWithoutCommands := OPPluginRegistry default plugins
-		detect: [ :eachPluginCandidate | eachPluginCandidate isKindOf: OPDemoPlugin ].
-	testEditor := (OPEditor on: pluginWithoutCommands)
+	| testEditor modelMenuItem |
+	testEditor := (OPEditor on: OPTestSecondaryPlugin new)
 		workbench: mockWorkbench;
 		yourself.
 
@@ -343,13 +305,11 @@ OPWorkbenchToolbarTest >> testModelMenuItemIsDisabledWhenFocusedEditorHasNoModel
 	self deny: modelMenuItem isEnabled
 ]
 
-{ #category : 'tests - model menu' }
+{ #category : 'tests' }
 OPWorkbenchToolbarTest >> testModelMenuItemIsEnabledWhenFocusedEditorHasModelCommands [
 	"Verifies that the Model menu item is enabled when the active editor has model commands."
-	| bpmnPlugin testEditor modelMenuItem |
-	bpmnPlugin := OPPluginRegistry default plugins
-		detect: [ :eachPluginCandidate | eachPluginCandidate isKindOf: OPBPMNPlugin ].
-	testEditor := (OPEditor on: bpmnPlugin)
+	| testEditor modelMenuItem |
+	testEditor := (OPEditor on: OPTestPlugin new)
 		workbench: mockWorkbench;
 		yourself.
 

@@ -11,8 +11,10 @@ Class {
 
 { #category : 'testing' }
 OPShowHideElementsInDiagramCommand class >> canBeExecutedInContext: aToolContext [
-
-	^ aToolContext editor plugin supportsHidingElements
+	"Answers true if the active editor plugin supports hiding elements."
+	| activeEditor |
+	activeEditor := self editorFromContext: aToolContext.
+	^ activeEditor isNotNil and: [ activeEditor plugin supportsHidingElements ]
 ]
 
 { #category : 'activation' }

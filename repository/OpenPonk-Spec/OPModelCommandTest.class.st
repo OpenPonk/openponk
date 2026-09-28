@@ -24,10 +24,10 @@ OPModelCommandTest >> setUp [
 	mockWorkbench stub projectController willReturn: projectController.
 	mockWorkbench stub workbench willReturn: mockWorkbench.
 	mockWorkbench stub announcer willReturn: Announcer new.
-	testEditor := (OPEditor on: (OPPluginRegistry default plugins detect: [ :eachPluginCandidate | eachPluginCandidate isKindOf: OPUmlClassEditorPlugin ]))
+	testEditor := (OPEditor on: OPTestPlugin new)
 		workbench: mockWorkbench;
 		yourself.
-	testEditor openEmptyModel: OPUMLPackage new.
+	testEditor openEmptyModel: OPTestContainerModel new.
 	testCommand := OPModelTestCommand new
 ]
 

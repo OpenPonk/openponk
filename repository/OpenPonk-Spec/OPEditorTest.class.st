@@ -16,7 +16,7 @@ Class {
 OPEditorTest >> setUp [
 	"Prepares the editor instance for testing without opening a UI window."
 	super setUp.
-	editor := (OPEditor on: OPPluginRegistry default plugins first)
+	editor := (OPEditor on: OPTestPlugin new)
 		application: SpApplication defaultApplication;
 		yourself
 ]

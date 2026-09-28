@@ -12,6 +12,27 @@ Class {
 	#tag : 'Tests'
 }
 
+{ #category : 'testing' }
+OPModelTestCommand class >> canBeExecutedInEditor: anEditor [
+	"Answers true if the active editor plugin is exactly OPTestPlugin."
+	^ anEditor plugin class = OPTestPlugin
+]
+
+{ #category : 'activation' }
+OPModelTestCommand class >> modelMenuActivation [
+	<classAnnotation>
+	^ OPModelMenuActivation
+		byItemOf: OPModelBasicMenuGroup
+		order: 10
+		for: OPEditor
+]
+
+{ #category : 'accessing' }
+OPModelTestCommand >> defaultMenuItemName [
+	"Answers the default display name in the menu."
+	^ 'Test Model Action'
+]
+
 { #category : 'execution' }
 OPModelTestCommand >> execute [
 	"Executes the test command."
@@ -24,7 +45,7 @@ OPModelTestCommand >> initialize [
 	executed := false
 ]
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
 OPModelTestCommand >> isExecuted [
 	"Answers true if the command has been executed."
 	^ executed

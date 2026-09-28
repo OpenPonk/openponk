@@ -5,7 +5,7 @@ Used exclusively for unit and integration testing.
 Class {
 	#name : 'OPTestEntityModel',
 	#superclass : 'OPTestAbstractModel',
-	#category : 'OpenPonk-Core-Controllers-Tests',
+	#category : 'OpenPonk-Core-Tests',
 	#package : 'OpenPonk-Core',
-	#tag : 'Controllers-Tests'
+	#tag : 'Tests'
 }

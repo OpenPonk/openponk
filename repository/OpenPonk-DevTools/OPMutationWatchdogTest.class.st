@@ -17,7 +17,7 @@ Class {
 OPMutationWatchdogTest >> setUp [
 	super setUp.
 	watchdog := OPMutationWatchdog new.
-	testEntity := OPErdEntity new
+	testEntity := OPMutationWatchdogTestEntity new
 ]
 
 { #category : 'running' }
@@ -46,21 +46,22 @@ OPMutationWatchdogTest >> testExportSuspiciousReportCopiesToClipboard [
 	"Verify that exportSuspiciousReport places formatted markdown into Clipboard and returns the text."
 	| record report |
 	record := OPMutationRecord new
-		timestamp: DateAndTime now
-		targetClass: 'OPErdEntity'
-		targetIdentity: '123'
-		slotName: #isWeak
-		oldValue: false
-		newValue: true
-		isTransacted: false
-		isSimulation: false
-		isInitialization: false
-		isUiTriggered: true
-		uiPresenterClass: 'OPErdEntityEditor'
-		stackTrace: #( 'OPErdEntityEditor >> #save' ).
+		timestamp: DateAndTime now;
+		targetClass: 'OPMutationWatchdogTestEntity';
+		targetIdentity: '123';
+		slotName: #isWeak;
+		oldValue: false;
+		newValue: true;
+		isTransacted: false;
+		isSimulation: false;
+		isInitialization: false;
+		isUiTriggered: true;
+		uiPresenterClass: 'OPTestPresenter';
+		stackTrace: #( 'OPTestPresenter >> #save' );
+		yourself.
 	watchdog records add: record.
 	report := watchdog exportSuspiciousReport.
-	self assert: (report includesSubstring: 'OPErdEntity >> #isWeak').
+	self assert: (report includesSubstring: 'OPMutationWatchdogTestEntity >> #isWeak').
 	self assert: Clipboard clipboardText equals: report
 ]
 
@@ -103,14 +104,13 @@ OPMutationWatchdogTest >> testLifecycleSelectorsAreClassifiedAsInitialization [
 
 { #category : 'tests' }
 OPMutationWatchdogTest >> testNakedMutationIsCaptured [
-
 	watchdog startWatching.
 	testEntity isWeak: true.
 	watchdog stopWatching.
 
 	self assert:
-		(watchdog records anySatisfy: [ :each |
-			 each targetClass = 'OPErdEntity' and: [ each slotName = #isWeak and: [ each newValue ] ] ])
+		(watchdog records anySatisfy: [ :eachRecord |
+			eachRecord targetClass = 'OPMutationWatchdogTestEntity' and: [ eachRecord slotName = #isWeak and: [ eachRecord newValue ] ] ])
 ]
 
 { #category : 'tests' }
@@ -131,8 +131,8 @@ OPMutationWatchdogTest >> testTransactedMutationIsNotSuspicious [
 	projectController undoManager inTransaction: [ testEntity name: 'Customer' ].
 	watchdog stopWatching.
 
-	self assert: (watchdog records anySatisfy: [ :each |
-		each slotName = #name and: [ each isTransacted and: [ each isSuspicious not ] ] ])
+	self assert: (watchdog records anySatisfy: [ :eachRecord |
+		eachRecord slotName = #name and: [ eachRecord isTransacted and: [ eachRecord isSuspicious not ] ] ])
 ]
 
 { #category : 'tests' }
@@ -155,5 +155,5 @@ OPMutationWatchdogTest >> testTransientSlotFiltering [
 	self assert: (watchdog isTransientSlot: #labeled onClass: OPBoundary).
 	self deny: (watchdog isTransientSlot: #name onClass: OPBoundary).
 	self deny: (watchdog isTransientSlot: #bounds onClass: OPBoundNode).
-	self deny: (watchdog isTransientSlot: #isWeak onClass: OPErdEntity)
+	self deny: (watchdog isTransientSlot: #isWeak onClass: OPMutationWatchdogTestEntity)
 ]

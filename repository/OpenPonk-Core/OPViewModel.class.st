@@ -361,7 +361,7 @@ OPViewModel >> projectViewModel [
     ^ self parentViewModel ifNotNil: [ :p | p projectViewModel ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'properties' }
 OPViewModel >> propertyNamed: aSymbol [
 	"Read a property value from the underlying domain model."
 	^ self model perform: aSymbol asSymbol

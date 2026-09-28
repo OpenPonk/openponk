@@ -53,6 +53,12 @@ OPAbstractPluginExampleRoundtripTest >> coveredModelClassesInTemplates [
 ]
 
 { #category : 'accessing' }
+OPAbstractPluginExampleRoundtripTest >> defaultTimeLimit [
+	"Answers a duration allowing multiple full workbench GUI roundtrips across all example templates in slow CI virtualized environments."
+	^ 1 minute
+]
+
+{ #category : 'accessing' }
 OPAbstractPluginExampleRoundtripTest >> plugin [
 	"Answers an instance of the plugin under test."
 	^ self pluginClass new

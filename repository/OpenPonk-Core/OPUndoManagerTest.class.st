@@ -251,20 +251,17 @@ OPUndoManagerTest >> testUndo [
 
 { #category : 'tests' }
 OPUndoManagerTest >> testUndoFailureDiscardsCommandAndClearsRedo [
-
-	| failingCmd caught |
-	failingCmd := OPUndoTestLoggingCommand log: OrderedCollection new value: #error.
-	failingCmd class compile: 'undo self error: ''Intended undo crash'' '.
-	undoManager record: failingCmd.
+	| failingCommand caughtException |
+	failingCommand := OPUndoTestFailingCommand new.
+	undoManager record: failingCommand.
 	self assert: undoManager undoStack size equals: 1.
-	caught := false.
+	caughtException := false.
 	[ undoManager undo ]
 		on: Error
-		do: [ :ex | caught := true ].
-	self assert: caught.
+		do: [ :anException | caughtException := true ].
+	self assert: caughtException.
 	self assert: undoManager undoStack isEmpty.
 	self assert: undoManager redoStack isEmpty.
 	self deny: undoManager isExecutingUndoRedo.
-	self deny: undoManager canUndo.
-	failingCmd class compile: 'undo log add: (''undo:'' , value asString)'
+	self deny: undoManager canUndo
 ]

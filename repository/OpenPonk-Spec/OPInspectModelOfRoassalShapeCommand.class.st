@@ -1,9 +1,12 @@
+"
+Context menu command that opens a Pharo inspector directly on the underlying domain model of the currently selected Roassal shape.
+"
 Class {
 	#name : 'OPInspectModelOfRoassalShapeCommand',
 	#superclass : 'OPRoassalShapeCommand',
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
 { #category : 'testing' }

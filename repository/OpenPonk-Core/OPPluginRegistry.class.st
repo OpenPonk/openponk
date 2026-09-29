@@ -1,9 +1,10 @@
 "
-I am a container for all plugins.
+Singleton registry container for all installed OpenPonk plugins. 
+Allows querying and discovering plugins based on controller classes or model compatibility.
 
 !! Collaborators
 
-DCPlugin
+OPPlugin
 "
 Class {
 	#name : 'OPPluginRegistry',
@@ -26,20 +27,37 @@ OPPluginRegistry class >> default [
 
 { #category : 'singleton' }
 OPPluginRegistry class >> resetDefault [
+
 	<script>
-	^ Default := nil
+	^ self setDefault: nil
 ]
 
 { #category : 'singleton' }
 OPPluginRegistry class >> setDefault: aDefault [
-	<script>
+
 	^ Default := aDefault
+]
+
+{ #category : 'singleton' }
+OPPluginRegistry class >> setDefaultForTesting [
+
+	<script>
+	^ self setDefault: (self new
+			   add: OPTestPlugin new;
+			   yourself)
 ]
 
 { #category : 'instance creation' }
 OPPluginRegistry class >> withAll [
 	^ self new
 		addAll;
+		yourself
+]
+
+{ #category : 'instance creation' }
+OPPluginRegistry class >> withAllForTesting [
+	^ self new
+		addAllForTesting;
 		yourself
 ]
 
@@ -50,12 +68,16 @@ OPPluginRegistry >> add: aPlugin [
 
 { #category : 'adding' }
 OPPluginRegistry >> addAll [
-	plugins := OrderedCollection new.
-	OPPlugin
-		allSubclassesWithLevelDo: [ :each :level | 
-			level > 0
-				ifTrue: [ plugins add: each new ] ]
-		startingLevel: 0
+
+	OPPlugin allSubclasses
+		reject: [ :each | each isAbstract or: [ each isTestingOnly ] ]
+		thenDo: [ :each | self add: each new ]
+]
+
+{ #category : 'adding' }
+OPPluginRegistry >> addAllForTesting [
+
+	OPPlugin allSubclasses reject: [ :each | each isAbstract ] thenDo: [ :each | self add: each new ]
 ]
 
 { #category : 'accessing' }
@@ -65,8 +87,9 @@ OPPluginRegistry >> hasPluginFor: aModel [
 
 { #category : 'initialization' }
 OPPluginRegistry >> initialize [
+
 	super initialize.
-	plugins := OrderedCollection new
+	plugins := SortedCollection new
 ]
 
 { #category : 'accessing' }

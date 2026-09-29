@@ -1,3 +1,7 @@
+"
+Abstract base class for exporting an OpenPonk diagram canvas. 
+Coordinates the diagram controller, file selection, and visual rendering for export formats.
+"
 Class {
 	#name : 'OPCanvasExporter',
 	#superclass : 'Object',
@@ -27,7 +31,7 @@ OPCanvasExporter class >> exportSilentlyDiagramController: aDiagramController to
 		export
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPCanvasExporter class >> silent [
 
 	^ self new
@@ -102,18 +106,20 @@ OPCanvasExporter >> setupExporter [
 
 { #category : 'actions' }
 OPCanvasExporter >> showFinishedPopup [
-
-	UIManager default
-		inform: (String streamContents: [ :s |
-				 s << 'Diagram saved to ' << file pathString.
-				 s
-					 cr;
-					 cr.
-				 s << 'Click to open the directory' ])
-		actionOnClick: [ file openInOSFileBrowser ]
+	| message |
+	message := String streamContents: [ :s |
+		s << 'Diagram saved to ' << file pathString.
+		s cr; cr.
+		s << 'Click to open the directory' ].
+	(ProvideAnswerNotification signal: message) ifNil: [
+		(GrowlMorph 
+			openWithLabel: 'Information' translated 
+			contents: message)
+			vanishDelay: 5 seconds;
+			actionBlock: [ file openInOSFileBrowser ] ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'actions' }
 OPCanvasExporter >> silent [
 
 	silently := true

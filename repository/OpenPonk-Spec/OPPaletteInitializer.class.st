@@ -1,3 +1,6 @@
+"
+Utility that constructs and populates a specific OpenPonk palette for a given diagram controller, handling both common tool items and diagram-specific items.
+"
 Class {
 	#name : 'OPPaletteInitializer',
 	#superclass : 'Object',
@@ -26,20 +29,19 @@ OPPaletteInitializer >> addAll [
 	self filteredCommonItems do: #value
 ]
 
-{ #category : 'constants' }
+{ #category : 'accessing' }
 OPPaletteInitializer >> allCommonItemsByName [
-
 	^ { 
-		  (OPNoteController paletteItemName -> [ 
-		   (palette newCreationEntry: [ OPNoteController new ])
-			   label: 'Note';
-			   icon: (self iconNamed: #announcement);
-			   whenCreated: [ :ctrl | OPEditElementTextCommand executeOn: ctrl ] ]).
-		  (OPBoundaryController paletteItemName -> [ 
-		   (palette newCreationEntry: [ OPBoundaryController new ])
-			   label: 'Boundary';
-			   icon: (self iconNamed: #checkBoxOff);
-			   whenCreatedSetup ]) } asDictionary
+		(OPNoteController paletteItemName -> [ 
+			(palette newCreationEntry: [ OPNoteController new ])
+				label: 'Note';
+				icon: (self iconNamed: #announcement);
+				whenCreatedSetup ]).
+		(OPBoundaryController paletteItemName -> [ 
+			(palette newCreationEntry: [ OPBoundaryController new ])
+				label: 'Boundary';
+				icon: (self iconNamed: #checkBoxOff);
+				whenCreatedSetup ]) } asDictionary
 ]
 
 { #category : 'accessing' }

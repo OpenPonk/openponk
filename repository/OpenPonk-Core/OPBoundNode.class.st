@@ -1,3 +1,7 @@
+"
+Diagram node that strictly maintains and updates its spatial bounds (position and extent). 
+Handles layout translations and coordinate rendering updates based on these constraints.
+"
 Class {
 	#name : 'OPBoundNode',
 	#superclass : 'OPNode',
@@ -17,7 +21,7 @@ OPBoundNode class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #bounds )
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 OPBoundNode >> allOwnedShapesPositionableByUser [
 
 	self isRendered ifFalse: [ ^ #(  ) ].
@@ -34,8 +38,15 @@ OPBoundNode >> bounds [
 
 { #category : 'accessing' }
 OPBoundNode >> bounds: anObject [
-
+	bounds = anObject ifTrue: [ ^ self ].
 	bounds := anObject
+]
+
+{ #category : 'memento' }
+OPBoundNode >> captureGeometryMemento [
+	self bounds ifNil: [
+		self isRendered ifTrue: [ self updateFromRender ] ].
+	^ self bounds ifNotNil: [ :currentBounds | currentBounds copy ]
 ]
 
 { #category : 'accessing' }
@@ -44,13 +55,13 @@ OPBoundNode >> extent [
 	^ (roassalShape ifNil: [ self bounds ]) extent
 ]
 
-{ #category : 'as yet unclassified' }
-OPBoundNode >> isResizableByUser [
+{ #category : 'testing' }
+OPBoundNode >> isBoundNode [
 
 	^ true
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'rendering' }
 OPBoundNode >> moveToEmptySpace [
 
 	| spacing neededSpace canvasRectangle possibleCanvas occupiedRectangles |
@@ -92,7 +103,6 @@ OPBoundNode >> position [
 
 { #category : 'rendering' }
 OPBoundNode >> renderIn: aCanvas [
-
 	self isRendered ifTrue: [ ^ self ].
 	super renderIn: aCanvas.
 	self bounds ifNil: [
@@ -100,7 +110,25 @@ OPBoundNode >> renderIn: aCanvas [
 	^ roassalShape
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'memento' }
+OPBoundNode >> restoreGeometryFromMemento: aGeometryMemento [
+	aGeometryMemento ifNotNil: [ :savedBounds | self bounds: savedBounds copy ]
+]
+
+{ #category : 'serialization' }
+OPBoundNode >> roundPositionsAndExtents [
+
+	self bounds ifNotNil: [ :theBounds | theBounds round ].
+	super roundPositionsAndExtents
+]
+
+{ #category : 'interactions' }
+OPBoundNode >> shouldBePositionableByUser [
+
+	^ true
+]
+
+{ #category : 'initialization' }
 OPBoundNode >> updateFromRender [
 
 	(self isResizableByUser or: [ self isPositionableByUser ]) ifTrue: [
@@ -119,7 +147,7 @@ OPBoundNode >> updateRenderFromBounds [
 		roassalShape translateTo: bounds position ]
 ]
 
-{ #category : 'roassal' }
+{ #category : 'rendering' }
 OPBoundNode >> updateRenderFromSelf [
 
 	self isRendered ifFalse: [ ^ self ].

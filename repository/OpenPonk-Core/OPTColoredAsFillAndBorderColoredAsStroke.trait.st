@@ -1,3 +1,6 @@
+"
+Trait combining OPTColoredAsFill and OPTBorderColoredAsStroke to manage both fill and border (stroke) colors from style properties.
+"
 Trait {
 	#name : 'OPTColoredAsFillAndBorderColoredAsStroke',
 	#traits : 'OPTColoredAsFill + OPTBorderColoredAsStroke',

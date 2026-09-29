@@ -1,8 +1,10 @@
+"
+Custom Roassal control configuration extending standard canvas interactions to support OpenPonk-specific behaviors like drag snapping, alignment margins, and camera constraints.
+"
 Class {
 	#name : 'OPRSControlConfiguration',
 	#superclass : 'RSControlConfiguration',
 	#instVars : [
-		'hasZoomableAnimation',
 		'keepCameraOnContent',
 		'dragSnapComparisonsAmount',
 		'dragSnapMargin'
@@ -69,7 +71,7 @@ OPRSControlConfiguration class >> keepCameraOnContent: aBoolean [
 	keepCameraOnContent := aBoolean
 ]
 
-{ #category : 'settings' }
+{ #category : 'accessing' }
 OPRSControlConfiguration class >> settingsOn: aBuilder [
 
 	<systemsettings>
@@ -106,9 +108,9 @@ OPRSControlConfiguration >> dragSnapComparisonsAmount [
 ]
 
 { #category : 'accessing' }
-OPRSControlConfiguration >> dragSnapComparisonsAmount: anObject [
+OPRSControlConfiguration >> dragSnapComparisonsAmount: anInteger [
 
-	dragSnapComparisonsAmount := anObject
+	dragSnapComparisonsAmount := anInteger
 ]
 
 { #category : 'accessing' }
@@ -118,21 +120,9 @@ OPRSControlConfiguration >> dragSnapMargin [
 ]
 
 { #category : 'accessing' }
-OPRSControlConfiguration >> dragSnapMargin: anObject [
+OPRSControlConfiguration >> dragSnapMargin: aNumber [
 
-	dragSnapMargin := anObject
-]
-
-{ #category : 'accessing' }
-OPRSControlConfiguration >> hasZoomableAnimation [
-
-	^ hasZoomableAnimation ifNil: [ true ]
-]
-
-{ #category : 'accessing' }
-OPRSControlConfiguration >> hasZoomableAnimation: anObject [
-
-	hasZoomableAnimation := anObject
+	dragSnapMargin := aNumber
 ]
 
 { #category : 'accessing' }
@@ -142,7 +132,7 @@ OPRSControlConfiguration >> keepCameraOnContent [
 ]
 
 { #category : 'accessing' }
-OPRSControlConfiguration >> keepCameraOnContent: anObject [
+OPRSControlConfiguration >> keepCameraOnContent: aBoolean [
 
-	keepCameraOnContent := anObject
+	keepCameraOnContent := aBoolean
 ]

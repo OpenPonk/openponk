@@ -1,3 +1,6 @@
+"
+Specialized transient handle that appears on a selected edge to allow the user to click and drag to create a brand new routing control point mid-segment.
+"
 Class {
 	#name : 'OPRSControlPointCreatorHandle',
 	#superclass : 'OPRSAbstractDraggableControlPointHandle',
@@ -12,12 +15,19 @@ Class {
 	#tag : 'Polyline'
 }
 
-{ #category : 'accessing' }
+{ #category : 'action' }
+OPRSControlPointCreatorHandle >> basicPromote [
+	"Perform silent control point promotion without announcing waypoints changed event to prevent premature rebuild during drag gesture."
+	(self fromPoint distanceTo: self toPoint) > 10 ifFalse: [ ^ self ].
+	(line propertyAt: OPRSDraggableControlPoints) promoteFor: line handle: self
+]
+
+{ #category : 'actions' }
 OPRSControlPointCreatorHandle >> beNearEnd [
 	nearEnd := true
 ]
 
-{ #category : 'accessing' }
+{ #category : 'actions' }
 OPRSControlPointCreatorHandle >> beNearStart [
 	nearStart := true
 ]
@@ -61,11 +71,19 @@ OPRSControlPointCreatorHandle >> on: aLine between: fromShape and: toShape [
 	to := toShape
 ]
 
-{ #category : 'actions' }
+{ #category : 'action' }
 OPRSControlPointCreatorHandle >> promote [
-
+	"Promote control point and announce waypoints changed event to record an undoable command for discrete user clicks."
+	| targetLine oldWaypoints interaction |
 	(self fromPoint distanceTo: self toPoint) > 10 ifFalse: [ ^ self ].
-	(line propertyAt: OPRSDraggableControlPoints) promoteFor: line handle: self
+	targetLine := line.
+	oldWaypoints := targetLine controlPoints copy.
+	interaction := targetLine propertyAt: OPRSDraggableControlPoints.
+	interaction promoteFor: targetLine handle: self.
+	interaction
+		announceWaypointsChangedFor: targetLine
+		old: oldWaypoints
+		new: targetLine controlPoints copy
 ]
 
 { #category : 'actions' }
@@ -80,7 +98,6 @@ OPRSControlPointCreatorHandle >> remove [
 
 { #category : 'rendering' }
 OPRSControlPointCreatorHandle >> render [
-
 	shape := self createShape.
 	shape model: line.
 	clickBox := self createClickBoxShape.
@@ -91,7 +108,7 @@ OPRSControlPointCreatorHandle >> render [
 	RSLocation new stick: shape on: clickBox.
 	clickBox
 		when: RSMouseDragStart
-		do: [ :event | self promote ]
+		do: [ :event | self basicPromote ]
 		for: self.
 	clickBox
 		when: RSMouseLeftClick
@@ -102,7 +119,7 @@ OPRSControlPointCreatorHandle >> render [
 		add: clickBox
 ]
 
-{ #category : 'shapes' }
+{ #category : 'accessing' }
 OPRSControlPointCreatorHandle >> size [
 
 	^ 5

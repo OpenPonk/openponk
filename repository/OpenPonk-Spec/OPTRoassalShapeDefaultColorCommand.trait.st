@@ -1,8 +1,12 @@
+"
+Trait used by layout and styling commands that interact with Roassal shapes. 
+Provides a standardized way to query and set default colors during command execution.
+"
 Trait {
 	#name : 'OPTRoassalShapeDefaultColorCommand',
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
 { #category : 'testing' }

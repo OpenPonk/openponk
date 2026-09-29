@@ -1,3 +1,6 @@
+"
+Encapsulates data representing the nearest point on a segmented path relative to an external coordinate, used by OPRSAnchorConstraint to calculate label placement.
+"
 Class {
 	#name : 'OPRSAnchorConstraintNearestPoint',
 	#superclass : 'RSObject',

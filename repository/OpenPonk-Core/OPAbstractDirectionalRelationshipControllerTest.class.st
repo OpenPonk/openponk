@@ -1,3 +1,7 @@
+"
+Abstract base class for testing directional relationship controllers. 
+Verifies the establishment of connections between source and target controllers, as well as the cascading behavior of element removals.
+"
 Class {
 	#name : 'OPAbstractDirectionalRelationshipControllerTest',
 	#superclass : 'OPAbstractElementControllerTest',
@@ -29,19 +33,19 @@ OPAbstractDirectionalRelationshipControllerTest >> assignModelTarget [
 	model target: targetModel
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPAbstractDirectionalRelationshipControllerTest >> creationTargetControllerClass [
 
 	^ self sourceControllerClass
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPAbstractDirectionalRelationshipControllerTest >> creationTargetModelClass [
 
 	^ self sourceModelClass
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPAbstractDirectionalRelationshipControllerTest >> prepareToShow [
 
 	controller source: self sourceController.
@@ -49,7 +53,7 @@ OPAbstractDirectionalRelationshipControllerTest >> prepareToShow [
 	super prepareToShow
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPAbstractDirectionalRelationshipControllerTest >> registerModel [
 
 	super registerModel.
@@ -57,14 +61,14 @@ OPAbstractDirectionalRelationshipControllerTest >> registerModel [
 	self assignModelTarget
 ]
 
-{ #category : 'initialization' }
+{ #category : 'running' }
 OPAbstractDirectionalRelationshipControllerTest >> setUp [
 
 	super setUp.
 	self setUpTarget
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
 OPAbstractDirectionalRelationshipControllerTest >> setUpCreationTarget [
 
 	self setUpSource
@@ -76,7 +80,7 @@ OPAbstractDirectionalRelationshipControllerTest >> setUpCreationTargetController
 	self setUpSourceController
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
 OPAbstractDirectionalRelationshipControllerTest >> setUpCreationTargetModel [
 
 	^ self setUpSourceModel
@@ -121,47 +125,76 @@ OPAbstractDirectionalRelationshipControllerTest >> setUpTargetModel [
 		                 diagramController model
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPAbstractDirectionalRelationshipControllerTest >> showDependenciesInDiagram [
 
 	super showDependenciesInDiagram.
 	targetController showWithoutDependentInDiagram: diagramController
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPAbstractDirectionalRelationshipControllerTest >> sourceController [
 
 	^ creationTargetController
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'constants' }
 OPAbstractDirectionalRelationshipControllerTest >> sourceControllerClass [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPAbstractDirectionalRelationshipControllerTest >> sourceModelClass [
 
 	^ self subclassResponsibility 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPAbstractDirectionalRelationshipControllerTest >> targetController [
 
 	^ targetController
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'constants' }
 OPAbstractDirectionalRelationshipControllerTest >> targetControllerClass [
 
 	^ self sourceControllerClass
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPAbstractDirectionalRelationshipControllerTest >> targetModelClass [
 
 	^ self sourceModelClass
+]
+
+{ #category : 'tests - undo/redo' }
+OPAbstractDirectionalRelationshipControllerTest >> testCascadeDeleteUndoRedo [
+	| undoManager relModel |
+	self testCreateUsingAddAsTarget.
+	undoManager := diagramController undoManager.
+	relModel := controller model.
+
+	diagramController removeModelElement: sourceModel.
+
+	self deny: (diagramController hasControllerForModel: relModel).
+	self deny: (diagramController hasControllerForModel: sourceModel).
+	self denyCollection: self allElements includesAny: { relModel . sourceModel }.
+
+	undoManager undo.
+	self assert: (diagramController hasControllerForModel: relModel).
+	self assert: (diagramController hasControllerForModel: sourceModel).
+	self assertCollection: self allElements includesAll: { relModel . sourceModel }.
+
+	undoManager redo.
+	self deny: (diagramController hasControllerForModel: relModel).
+	self deny: (diagramController hasControllerForModel: sourceModel).
+	self denyCollection: self allElements includesAny: { relModel . sourceModel }.
+
+	undoManager undo.
+	self assert: (diagramController hasControllerForModel: relModel).
+	self assert: (diagramController hasControllerForModel: sourceModel).
+	self assertCollection: self allElements includesAll: { relModel . sourceModel }
 ]
 
 { #category : 'tests - construction' }
@@ -201,10 +234,10 @@ OPAbstractDirectionalRelationshipControllerTest >> testCreateModel [
 	self assert: controller model isNotNil.
 	self assert: createdModel equals: controller model.
 	self
-		assert: controller modelSource
+		assert: controller viewModel modelSource
 		equals: self sourceController model.
 	self
-		assert: controller modelTarget
+		assert: controller viewModel modelTarget
 		equals: self targetController model
 ]
 
@@ -242,12 +275,18 @@ OPAbstractDirectionalRelationshipControllerTest >> testRemovalOfSourceRemovesRel
 	self showInDiagram.
 	roassalShape := controller roassalShape.
 	self
+		assertCollection: diagramController modelsWithController
+		includesAll: { sourceModel }.
+	self
 		assertCollection: diagramController canvas edges
 		includesAll: { roassalShape }.
 	self
 		assertCollection: diagramController modelsWithController
 		includesAll: { model }.
-	controller removeControllerAndModel.
+	self sourceController removeControllerAndModel.
+	self
+		denyCollection: diagramController modelsWithController
+		includesAll: { sourceModel }.
 	self
 		denyCollection: diagramController canvas edges
 		includesAll: { roassalShape }.
@@ -273,7 +312,7 @@ OPAbstractDirectionalRelationshipControllerTest >> testRoassalShapeWasRendered [
 		(diagramController canvas lines includes: controller roassalShape)
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 OPAbstractDirectionalRelationshipControllerTest >> testSetupOfTheTest [
 	"tests mostly whether the creationTarget is really the same thing as source - in case it is not, it is probably fault of the test class itself"
 

@@ -1,9 +1,12 @@
+"
+Context menu command that explicitly reveals and renders all child or dependent shapes of the selected Roassal shape on the canvas.
+"
 Class {
 	#name : 'OPShowDependentRoassalShapeCommand',
 	#superclass : 'OPToggleRoassalShapeCommand',
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
 { #category : 'execution' }

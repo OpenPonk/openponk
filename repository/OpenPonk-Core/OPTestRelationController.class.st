@@ -1,5 +1,5 @@
 "
-I am a mock controller for model entities representing relationships.
+Mock relationship controller used exclusively for testing directional relationship logic and visual edge interactions.
 "
 Class {
 	#name : 'OPTestRelationController',
@@ -10,19 +10,12 @@ Class {
 }
 
 { #category : 'construction' }
-OPTestRelationController >> diagramElementClass [
+OPTestRelationController class >> diagramElementClass [
 
 	^ OPTestEdge
 ]
 
 { #category : 'accessing' }
-OPTestRelationController >> modelClass [
-	^ OPTestRelationModel
-]
-
-{ #category : 'destruction' }
-OPTestRelationController >> removeModel [
-
-	self diagramController model entities remove: self model.
-	super removeModel
+OPTestRelationController class >> viewModelClass [
+	^ OPTestRelationViewModel
 ]

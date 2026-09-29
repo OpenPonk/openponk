@@ -1,16 +1,17 @@
 "
-I represent a collection of diagrams and settings opened in editor.
+Represents a complete OpenPonk project containing a collection of models and their associated diagrams.
+Tracks the persistence state (storage folder/file) and coordinates notifications when the project content changes.
 "
 Class {
 	#name : 'OPProject',
 	#superclass : 'Object',
 	#instVars : [
 		'uuid',
-		'dirty',
 		'storageFolder',
 		'storageFile',
 		'name',
-		'modelsAndDiagrams'
+		'modelsAndDiagrams',
+		'announcer'
 	],
 	#category : 'OpenPonk-Core-Models',
 	#package : 'OpenPonk-Core',
@@ -61,12 +62,7 @@ OPProject >> addModel: aModel [
 
 { #category : 'accessing' }
 OPProject >> announcer [
-	^ dirty announcer
-]
-
-{ #category : 'announcements' }
-OPProject >> changed [
-	dirty value: true
+	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
 { #category : 'accessing' }
@@ -78,6 +74,15 @@ OPProject >> controllerClass [
 OPProject >> copyDiagram: aDiagram [
 	| newDiagram |
 	newDiagram := aDiagram newCopy.
+	self addDiagram: newDiagram.
+	^ newDiagram
+]
+
+{ #category : 'adding' }
+OPProject >> copyDiagram: aDiagram named: aName [
+	| newDiagram |
+	newDiagram := aDiagram newCopy.
+	newDiagram name: aName.
 	self addDiagram: newDiagram.
 	^ newDiagram
 ]
@@ -140,22 +145,19 @@ OPProject >> hash [
 
 { #category : 'initialization' }
 OPProject >> initialize [
-
+	super initialize.
 	modelsAndDiagrams := Dictionary new asValueHolder.
-	name := NewValueHolder value: 'Unnamed project'.
-	dirty := false asValueHolder.
-	modelsAndDiagrams whenChangedDo: [ dirty value: true ].
-	name whenChangedDo: [ dirty value: true ]
+	name := NewValueHolder value: 'Unnamed project'
 ]
 
-{ #category : 'inspecting' }
-OPProject >> inspectionItems [
+{ #category : 'as yet unclassified' }
+OPProject >> inspectionItems: aBuilder [
 
 	<inspectorPresentationOrder: 100 title: 'Models and Diagrams'>
 	| diagramsByModels |
 	diagramsByModels := self modelsAndDiagrams.
 
-	^ SpTreePresenter new
+	^ aBuilder newTree
 		  roots: diagramsByModels keys;
 		  children: [ :each | diagramsByModels at: each ifAbsent: [ #(  ) ] ];
 		  display: #name;
@@ -233,8 +235,8 @@ OPProject >> storageFile [
 
 { #category : 'accessing' }
 OPProject >> storageFile: anObject [
-	storageFile := anObject.
-	^ storageFile
+
+	^ storageFile := anObject
 ]
 
 { #category : 'accessing' }
@@ -249,12 +251,6 @@ OPProject >> storageFolder: aFilePath [
 	storageFolder := aFilePath
 ]
 
-{ #category : 'announcements' }
-OPProject >> unsubscribe: aSubscriber [
-
-	dirty announcer unsubscribe: aSubscriber
-]
-
 { #category : 'accessing' }
 OPProject >> uuid [
 
@@ -264,16 +260,4 @@ OPProject >> uuid [
 { #category : 'accessing' }
 OPProject >> uuid: aUUID [
 	uuid := aUUID
-]
-
-{ #category : 'announcements' }
-OPProject >> weakWhenChangedSend: aSelector to: aReceiver [
-
-	^ dirty announcer weak when: ValueChanged send: aSelector to: aReceiver
-]
-
-{ #category : 'announcements' }
-OPProject >> whenChangedSend: aSelector to: aReceiver [
-
-	^ dirty whenChangedSend: aSelector to: aReceiver
 ]

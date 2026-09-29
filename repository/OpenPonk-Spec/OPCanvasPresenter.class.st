@@ -1,5 +1,5 @@
 "
-I am Spec model to embed Roassal2 into DCEditor.
+Spec presenter responsible for embedding the Roassal canvas into the OpenPonk editor. Bridges user interactions on the canvas (like zooming, panning, and selections) to the OPDiagramController, and manages diagram export functionalities (PDF, PNG, SVG).
 "
 Class {
 	#name : 'OPCanvasPresenter',
@@ -28,12 +28,16 @@ OPCanvasPresenter >> canvas [
 	^ currentCanvas
 ]
 
+{ #category : 'accessing' }
+OPCanvasPresenter >> canvas: aCanvas [
+	currentCanvas := aCanvas.
+	self initializeCanvas: currentCanvas.
+	^ currentCanvas
+]
+
 { #category : 'initialization' }
 OPCanvasPresenter >> connectPresenters [
-
 	super connectPresenters.
-	onZoomChange := [ :event |  ].
-	onExtentChange := [ :event |  ].
 	self whenBuiltDo: [ :adptr |
 		CmdKMDispatcher attachedTo: adptr widget withCommandsFrom: self ]
 ]
@@ -55,6 +59,11 @@ OPCanvasPresenter >> createCommandContextForSelection: selectedItems [
 { #category : 'accessing' }
 OPCanvasPresenter >> diagramController [
 	^ diagramController
+]
+
+{ #category : 'accessing' }
+OPCanvasPresenter >> diagramController: aDiagramController [
+	diagramController := aDiagramController
 ]
 
 { #category : 'accessing' }
@@ -117,14 +126,14 @@ OPCanvasPresenter >> exportAsSvg [
 
 { #category : 'initialization' }
 OPCanvasPresenter >> initialize [
-
 	super initialize.
+	onZoomChange := [ :event | ].
+	onExtentChange := [ :event | ].
 	self script: [ :canvas | self initializeCanvas: canvas ]
 ]
 
 { #category : 'initialization' }
 OPCanvasPresenter >> initializeCanvas: aCanvas [
-
 	aCanvas
 		@ (RSCanvasController new
 				 interactionsFromArray: {
@@ -132,12 +141,11 @@ OPCanvasPresenter >> initializeCanvas: aCanvas [
 							  hasDraggableAnimation: false;
 							  yourself).
 						 OPRSKeyNavigationCanvasInteraction new.
-						 OPRSZoomableCanvasInteraction new.
-						 "OPRSRemoveable new."
+						 RSZoomableCanvasInteraction new.
 						 RSScrollBarsCanvasInteraction new };
 				 configuration: (OPRSControlConfiguration new
 						  noLegend;
-						  hasZoomableAnimation: false;
+						  shouldAnimateZoom: false;
 						  yourself));
 		@ OPRSSelectableCanvas.
 
@@ -151,25 +159,12 @@ OPCanvasPresenter >> initializeCanvas: aCanvas [
 
 	aCanvas
 		when: RSExtentChangedEvent
-		do: [ :event | onExtentChange value: event ]
+		do: [ :event | onExtentChange ifNotNil: [ onExtentChange cull: event ] ]
 		for: self.
 	aCanvas
 		when: RSScaleChangedEvent
-		do: [ :event |
-			| zoomText |
-			zoomText := (event newScale < 1
-				             ifTrue: [ '   ' ]
-				             ifFalse: [ '' ])
-			            , (event newScale * 100) rounded asString , '%'.
-			onZoomChange value: event.
-			self editor zoomLabel label: ' ' , zoomText ]
+		do: [ :event | onZoomChange ifNotNil: [ onZoomChange cull: event ] ]
 		for: self
-]
-
-{ #category : 'events' }
-OPCanvasPresenter >> lastClickPosition: aPoint [
-
-	self deprecated: 'Last click is now handled by OPRSEventLogger'
 ]
 
 { #category : 'accessing' }
@@ -237,7 +232,7 @@ OPCanvasPresenter >> zoom: aScale [
 	self canvas signalUpdate
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'zoom' }
 OPCanvasPresenter >> zoomToFit [
 
 	self canvas shapes

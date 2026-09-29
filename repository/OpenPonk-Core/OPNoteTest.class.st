@@ -1,3 +1,7 @@
+"
+Unit tests for OPNote. 
+Ensures that visual notes are correctly constructed, rendered, and initialized without an underlying structural domain model.
+"
 Class {
 	#name : 'OPNoteTest',
 	#superclass : 'OPAbstractNodeTest',
@@ -17,7 +21,7 @@ OPNoteTest >> shapeClass [
 	^ OPNote
 ]
 
-{ #category : 'instance creation' }
+{ #category : 'running' }
 OPNoteTest >> testEmpty [
 
 	self skip

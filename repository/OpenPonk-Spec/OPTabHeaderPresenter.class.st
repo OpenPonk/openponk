@@ -1,3 +1,6 @@
+"
+Specialized Spec label presenter used to render customized tab headers within OpenPonk notebook components.
+"
 Class {
 	#name : 'OPTabHeaderPresenter',
 	#superclass : 'SpLabelPresenter',

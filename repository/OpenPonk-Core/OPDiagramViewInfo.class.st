@@ -1,3 +1,6 @@
+"
+Deprecated legacy class representing basic view metadata. Refer to OPDiagramInfo for compatibility details.
+"
 Class {
 	#name : 'OPDiagramViewInfo',
 	#superclass : 'OPDiagramInfo',

@@ -1,3 +1,7 @@
+"
+Unit tests for OPBoundaryController. 
+Verifies the interaction logic, target establishment, and rendering updates of boundary boxes in diagrams.
+"
 Class {
 	#name : 'OPBoundaryControllerTest',
 	#superclass : 'OPDiagramOnlyControllerTest',
@@ -6,25 +10,25 @@ Class {
 	#tag : 'Controllers-Tests'
 }
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
+OPBoundaryControllerTest class >> diagramElementClass [
+
+	^ OPBoundary
+]
+
+{ #category : 'constants' }
 OPBoundaryControllerTest >> controllerClass [
 
 	^ OPBoundaryController
 ]
 
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPBoundaryControllerTest >> diagramControllerClass [
 
 	^ OPTestDiagramController
 ]
 
-{ #category : 'construction' }
-OPBoundaryControllerTest >> diagramElementClass [
-
-	^ OPBoundary
-]
-
-{ #category : 'accessing' }
+{ #category : 'constants' }
 OPBoundaryControllerTest >> diagramModelClass [
 
 	^ OPTestContainerModel

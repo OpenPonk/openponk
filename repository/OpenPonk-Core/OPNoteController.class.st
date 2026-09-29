@@ -1,30 +1,35 @@
+"
+Controller managing OPNote diagram elements. 
+Operates as a diagram-only controller (having no underlying structural domain model) and provides user interactions such as resizing for visual note shapes.
+"
 Class {
 	#name : 'OPNoteController',
-	#superclass : 'OPCommonElementController',
+	#superclass : 'OPDiagramOnlyController',
 	#traits : 'OPTResizableFigureController',
 	#classTraits : 'OPTResizableFigureController classTrait',
-	#category : 'OpenPonk-Core-CommonElements',
+	#category : 'OpenPonk-Core-DiagramOnlyElements',
 	#package : 'OpenPonk-Core',
-	#tag : 'CommonElements'
+	#tag : 'DiagramOnlyElements'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'construction' }
+OPNoteController class >> diagramElementClass [
+	^ OPNote
+]
+
+{ #category : 'accessing' }
+OPNoteController class >> modelClass [
+
+	^ OPNote
+]
+
+{ #category : 'constants' }
 OPNoteController class >> paletteItemName [
 	^ #note
 ]
 
-{ #category : 'forms' }
-OPNoteController >> buildEditorForm: aForm [
+{ #category : 'accessing' }
+OPNoteController class >> viewModelClass [
 
-	(aForm addLongText: 'Text')
-		text: self diagramElement text;
-		whenTextChangedDo: [ :newValue | 
-			self diagramElement text: newValue asString.
-			self diagramElement updateText ]
-]
-
-{ #category : 'construction' }
-OPNoteController >> diagramElementClass [
-
-	^ OPNote
+	^ OPNoteViewModel
 ]

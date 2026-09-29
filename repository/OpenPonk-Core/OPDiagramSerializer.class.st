@@ -1,3 +1,6 @@
+"
+Abstract base class for serializers specifically focused on serializing and materializing diagram representations (visual layouts and configuration).
+"
 Class {
 	#name : 'OPDiagramSerializer',
 	#superclass : 'OPSerializer',
@@ -6,7 +9,7 @@ Class {
 	#tag : 'Persistence'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPDiagramSerializer class >> exportSubject [
 
 	^ #diagram
@@ -20,11 +23,18 @@ OPDiagramSerializer >> materializeDiagramOf: aModel from: aStream [
 ]
 
 { #category : 'serialize/materialize' }
+OPDiagramSerializer >> prepareSerializationOfDiagram: aDiagram [
+
+	aDiagram roundPositionsAndExtents
+]
+
+{ #category : 'serialize/materialize' }
 OPDiagramSerializer >> serializeDiagram: aDiagram [
 	"Serialize a diagram returned by your controller to a string"
 
-	^ String
-		streamContents: [ :stream | self serializeDiagram: aDiagram to: stream ]
+	self prepareSerializationOfDiagram: aDiagram.
+
+	^ String streamContents: [ :stream | self serializeDiagram: aDiagram to: stream ]
 ]
 
 { #category : 'serialize/materialize' }

@@ -1,3 +1,7 @@
+"
+Abstract base Spec presenter for the individual tab pages within OPShowHidePresenter. 
+Manages a tree view with checkboxes to track which diagram elements are selected for visibility.
+"
 Class {
 	#name : 'OPShowHideTabContentPresenter',
 	#superclass : 'SpPresenter',
@@ -5,14 +9,14 @@ Class {
 		'diagramController',
 		'tree',
 		'selectedItems',
-		'adapters'
+		'viewModelRegistry'
 	],
 	#category : 'OpenPonk-Spec-Dialogs',
 	#package : 'OpenPonk-Spec',
 	#tag : 'Dialogs'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'layout' }
 OPShowHideTabContentPresenter class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -20,7 +24,7 @@ OPShowHideTabContentPresenter class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : 'hooks' }
 OPShowHideTabContentPresenter >> childrenFor: anItem [
 	^ self subclassResponsibility
 ]
@@ -31,22 +35,22 @@ OPShowHideTabContentPresenter >> connectPresenters [
 	self whenSelectionChangedDo: [ self updateSelectedItems ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'updating' }
 OPShowHideTabContentPresenter >> findSelectedItems [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'defaults' }
+{ #category : 'testing' }
 OPShowHideTabContentPresenter >> hasIcon [
 	^ self class includesSelector: #iconFor:
 ]
 
-{ #category : 'defaults' }
+{ #category : 'hooks' }
 OPShowHideTabContentPresenter >> iconFor: anItem [
 	^ nil
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'hooks' }
 OPShowHideTabContentPresenter >> initialRoots [
 	^ self subclassResponsibility
 ]
@@ -92,7 +96,7 @@ OPShowHideTabContentPresenter >> isSelected: anItem [
 	^ self selectedItems includes: anItem
 ]
 
-{ #category : 'general' }
+{ #category : 'hooks' }
 OPShowHideTabContentPresenter >> nameFor: anItem [
 	^ self subclassResponsibility
 ]
@@ -113,7 +117,7 @@ OPShowHideTabContentPresenter >> processAndUpdateUnselected: aRemovedItem [
 		announce: (OPShowHideElementsUnselected elements: removedElements)
 ]
 
-{ #category : 'accessing' }
+{ #category : 'hooks' }
 OPShowHideTabContentPresenter >> selected: anAddedItem [
 	^ self subclassResponsibility
 ]
@@ -123,20 +127,19 @@ OPShowHideTabContentPresenter >> selectedItems [
 	^ selectedItems ifNil: [ self updateSelectedItems ]
 ]
 
-{ #category : 'accessing model' }
+{ #category : 'accessing - model' }
 OPShowHideTabContentPresenter >> setModelBeforeInitialization: aDiagramController [
-
-	diagramController := aDiagramController.
-	adapters := diagramController editor workbench projectController
-		            navigatorAdapters
+    diagramController := aDiagramController.
+    viewModelRegistry := diagramController editor workbench projectController viewModelRegistry
 ]
 
-{ #category : 'accessing' }
+{ #category : 'hooks' }
 OPShowHideTabContentPresenter >> unselected: aRemovedItem [
+
 	^ self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
+{ #category : 'updating' }
 OPShowHideTabContentPresenter >> updateSelectedItems [
 
 	selectedItems := self findSelectedItems.

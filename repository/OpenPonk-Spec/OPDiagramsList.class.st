@@ -1,7 +1,6 @@
 "
-I show a list of available diagram views for editing.
-
-Right-clicking on a view shows additional options.
+Spec presenter that displays a list of available diagram views within the active project. 
+Provides controls to open, rename, duplicate, and delete these diagrams.
 "
 Class {
 	#name : 'OPDiagramsList',
@@ -16,15 +15,15 @@ Class {
 		'openButton',
 		'createButton',
 		'cloneButton',
-		'notebook',
-		'adapters'
+		'viewModelRegistry',
+		'undoManager'
 	],
 	#category : 'OpenPonk-Spec-Windows',
 	#package : 'OpenPonk-Spec',
 	#tag : 'Windows'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'layout' }
 OPDiagramsList class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -35,14 +34,7 @@ OPDiagramsList class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : 'accessing' }
-OPDiagramsList >> adapters [
-
-	^ adapters ifNil: [ 
-		  adapters := self workbench projectController navigatorAdapters ]
-]
-
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPDiagramsList >> connectPresenters [
 	super connectPresenters.
 	self initializeList
@@ -80,7 +72,7 @@ OPDiagramsList >> contextMenu: aMenuPresenter for: aDiagram [
 	^ aMenuPresenter
 ]
 
-{ #category : 'actions' }
+{ #category : 'toolbar' }
 OPDiagramsList >> copyDiagram: aView [
 
 	| name newView |
@@ -95,8 +87,7 @@ OPDiagramsList >> copyDiagram: aView [
 		name isNotNil and: [ name isEmpty or: [ name = aView name ] ] ].
 	name ifNil: [ ^ self ].
 	self workbench projectController updateDiagrams.
-	newView := project copyDiagram: aView.
-	newView name: name.
+	newView := project copyDiagram: aView named: name.
 	self workbench openEditorOnDiagram: newView
 ]
 
@@ -138,9 +129,8 @@ OPDiagramsList >> diagramsIn: aProject [
 
 { #category : 'retrieving' }
 OPDiagramsList >> displayFor: aDiagramView [
-
-	^ '[' , aDiagramView name , '] '
-	  , (self adapters displayFor: aDiagramView modelElement)
+    ^ '[' , aDiagramView name , '] '
+      , (self viewModelRegistry viewModelFor: aDiagramView modelElement) displayString
 ]
 
 { #category : 'initialization' }
@@ -171,19 +161,18 @@ OPDiagramsList >> heading [
 
 { #category : 'initialization' }
 OPDiagramsList >> initializeList [
-
-	list
-		display: [ :aView | self displayRowFor: aView ];
-		displayIcon: [ :aView | self adapters iconFor: aView modelElement ];
-		whenActivatedDo: [ 
-			list selectedItem ifNotNil: [ :aView | self openDiagram: aView ] ];
-		whenSelectionChangedDo: [ :item | 
-			self selectionChanged: item selectedItem ];
-		contextMenu: [ 
-			self contextMenu: self newMenu for: list selectedItem ]
+    list
+        display: [ :aView | self displayRowFor: aView ];
+        displayIcon: [ :aView | (self viewModelRegistry viewModelFor: aView modelElement) icon ];
+        whenActivatedDo: [ 
+            list selectedItem ifNotNil: [ :aView | self openDiagram: aView ] ];
+        whenSelectionChangedDo: [ :item | 
+            self selectionChanged: item selectedItem ];
+        contextMenu: [ 
+            self contextMenu: self newMenu for: list selectedItem ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPDiagramsList >> initializePresenters [
 
 	list := self newList.
@@ -252,35 +241,55 @@ OPDiagramsList >> project [
 
 { #category : 'accessing' }
 OPDiagramsList >> project: aProject [
-
 	project := aProject.
 	self whenWindowClosedUnsubscribeFrom: project.
-	self whenWindowClosedUnsubscribeFrom: self workbench.
-	project weakWhenChangedSend: #updateContent to: self.
-	self updateContent.
-	self workbench announcer
-		when: OPEditorUnfocused
-		do: [ :event | list resetListSelection ]
-		for: self.
-	self workbench announcer
-		when: OPEditorFocused
-		do: [ :event | self updateContent ]
-		for: self
+	self workbench ifNotNil: [ :aWorkbench |
+		self whenWindowClosedUnsubscribeFrom: aWorkbench.
+		aWorkbench announcer
+			when: OPEditorUnfocused
+			do: [ :event | list resetListSelection ]
+			for: self.
+		aWorkbench announcer
+			when: OPEditorFocused
+			do: [ :event | self updateContent ]
+			for: self ].
+
+	project announcer weak
+		when: OPDiagramAdded send: #updateContent to: self;
+		when: OPDiagramRemoved send: #updateContent to: self;
+		when: OPDiagramRenamed send: #updateContent to: self.
+
+	self updateContent
+]
+
+{ #category : 'accessing' }
+OPDiagramsList >> projectController [
+	^ self workbench ifNotNil: [ :aWorkbench | aWorkbench projectController ]
 ]
 
 { #category : 'actions' }
 OPDiagramsList >> renameDiagram: aView [
-
 	| name |
-	[ 
+	[
 	name := UIManager default
 		        request: 'Rename view "' , (self displayFor: aView) , '"'
 		        initialAnswer: aView name
-		        title: 'Rename' ] doWhileTrue: [ 
+		        title: 'Rename' ] doWhileTrue: [
 		name isNotNil and: [ name = aView name ] ].
 	name ifNil: [ ^ self ].
-	aView name: name.
-	list updateList
+	self renameDiagram: aView to: name
+]
+
+{ #category : 'actions' }
+OPDiagramsList >> renameDiagram: aDiagram to: aNewName [
+	self projectController
+		ifNotNil: [ :controller |
+			controller renameDiagram: aDiagram to: aNewName ]
+		ifNil: [
+			self undoManager execute: (OPRenameDiagramCommand
+				diagram: aDiagram
+				newName: aNewName
+				project: project) ]
 ]
 
 { #category : 'actions' }
@@ -312,6 +321,17 @@ OPDiagramsList >> toolbar [
 	^ toolbar
 ]
 
+{ #category : 'accessing' }
+OPDiagramsList >> undoManager [
+	^ undoManager ifNil: [
+		self projectController ifNotNil: [ :controller | controller undoManager ] ]
+]
+
+{ #category : 'accessing' }
+OPDiagramsList >> undoManager: anUndoManager [
+	undoManager := anUndoManager
+]
+
 { #category : 'actions' }
 OPDiagramsList >> unselectedDiagram [
 	deleteButton
@@ -336,7 +356,15 @@ OPDiagramsList >> updateContent [
 		ifFound: [ :view | list selectItem: view ]
 ]
 
+{ #category : 'accessing' }
+OPDiagramsList >> viewModelRegistry [
+
+	^ viewModelRegistry ifNil: [
+			  viewModelRegistry := self workbench projectController
+				                       viewModelRegistry ]
+]
+
 { #category : 'accessing - spec' }
 OPDiagramsList >> workbench [
-	^ owner workbench
+	^ owner ifNotNil: [ :anOwner | anOwner workbench ]
 ]

@@ -1,3 +1,6 @@
+"
+Camera positioning strategy that zooms and centers the view to fit the current shapes while applying a specific scale and padding.
+"
 Class {
 	#name : 'OPRSCustomScaleCamSetter',
 	#superclass : 'RSZoomToShapesSetter',
@@ -18,7 +21,7 @@ OPRSCustomScaleCamSetter class >> scale: aNumber [
 		  yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : 'hooks' }
 OPRSCustomScaleCamSetter >> extent [
 
 	^ canvas encompassingRectangle extent * self scale + self padding
@@ -56,7 +59,7 @@ OPRSCustomScaleCamSetter >> scale: aScale [
 	scale := aScale
 ]
 
-{ #category : 'initialization' }
+{ #category : 'hooks' }
 OPRSCustomScaleCamSetter >> setCamera [
 
 	| rect |

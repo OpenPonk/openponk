@@ -1,3 +1,7 @@
+"
+Trait extending OPTColored to update and manage a color as a font color.
+Used by textual diagram elements to bind style properties to Roassal shape text colors.
+"
 Trait {
 	#name : 'OPTColoredAsFont',
 	#traits : 'OPTColored',

@@ -1,3 +1,7 @@
+"
+Null Object implementation of a Roassal interaction. 
+Performs no actions when attached to a shape, serving as a safe default or placeholder.
+"
 Class {
 	#name : 'OPRSNoInteraction',
 	#superclass : 'RSInteraction',

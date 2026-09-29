@@ -1,5 +1,6 @@
 "
-I am a mock class for testing ""diagram"" model controllers.
+Mock diagram controller. 
+Used exclusively for testing diagram lifecycle operations, palette initialization, and sub-controller coordination.
 "
 Class {
 	#name : 'OPTestDiagramController',
@@ -9,7 +10,13 @@ Class {
 	#tag : 'Controllers-Tests'
 }
 
-{ #category : 'testing' }
+{ #category : 'accessing' }
+OPTestDiagramController class >> viewModelClass [
+
+	^ OPTestContainerViewModel
+]
+
+{ #category : 'connecting' }
 OPTestDiagramController >> canBeTargetFor: aController [
 
 	^ (super canBeTargetFor: aController) or: [
@@ -23,13 +30,7 @@ OPTestDiagramController >> controllerFactory [
 		register: OPTestRelationController forModel: OPTestRelationModel
 ]
 
-{ #category : 'accessing' }
-OPTestDiagramController >> elementsToShowInside [
-
-	^ self model entities
-]
-
-{ #category : 'destruction' }
+{ #category : 'ui interaction' }
 OPTestDiagramController >> initializePalette: aPalette [
 	(aPalette newCreationEntry: [ OPTestEntityController new ]) label: 'Entity'
 ]

@@ -1,3 +1,6 @@
+"
+Diagram toolbar command that applies a dominance tree layout algorithm to the elements on the current diagram canvas.
+"
 Class {
 	#name : 'OPDominanceTreeLayoutCommand',
 	#superclass : 'OPLayoutDiagramCommand',
@@ -11,7 +14,7 @@ OPDominanceTreeLayoutCommand >> defaultMenuItemName [
 	^ 'Dominance Tree'
 ]
 
-{ #category : 'accessing' }
+{ #category : 'execution' }
 OPDominanceTreeLayoutCommand >> execute [
 	layouter dominanceTreeLayout
 ]

@@ -1,3 +1,7 @@
+"
+Structural diagram element representing a relationship or connection rendered as a path/edge. 
+Manages routing points (waypoints) and holds references to the source and target elements.
+"
 Class {
 	#name : 'OPEdge',
 	#superclass : 'OPDiagramElement',
@@ -10,6 +14,16 @@ Class {
 	#package : 'OpenPonk-Core',
 	#tag : 'DiagramElements'
 }
+
+{ #category : 'testing' }
+OPEdge class >> isEdge [
+	^ true
+]
+
+{ #category : 'testing' }
+OPEdge class >> isNode [
+	^ false
+]
 
 { #category : 'rendering' }
 OPEdge class >> renderForController: aController [
@@ -40,6 +54,27 @@ OPEdge class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #source #target #waypoints )
 ]
 
+{ #category : 'rendering' }
+OPEdge >> addDraggableControlPointsInteraction [
+	(self roassalShape hasInteraction: OPRSDraggableControlPoints)
+		ifFalse: [ self roassalShape @ OPRSDraggableControlPoints ]
+]
+
+{ #category : 'rendering' }
+OPEdge >> addInteractions [
+	super addInteractions.
+	self shouldHaveDraggableControlPoints ifTrue: [
+		self addDraggableControlPointsInteraction ]
+]
+
+{ #category : 'memento' }
+OPEdge >> captureGeometryMemento [
+	^ {
+		self source.
+		self target.
+		(self waypoints ifNotNil: [ :currentWaypoints | currentWaypoints copy ]) }
+]
+
 { #category : 'accessing' }
 OPEdge >> innerWaypoints [
 
@@ -63,10 +98,30 @@ OPEdge >> remove [
 	self target: nil
 ]
 
-{ #category : 'rendering' }
+{ #category : 'memento' }
+OPEdge >> restoreGeometryFromMemento: aGeometryMemento [
+	aGeometryMemento ifNil: [ ^ self ].
+	aGeometryMemento first ifNotNil: [ :savedSource | self source: savedSource ].
+	aGeometryMemento second ifNotNil: [ :savedTarget | self target: savedTarget ].
+	aGeometryMemento third ifNotNil: [ :savedWaypoints | self waypoints: savedWaypoints copy ]
+]
+
+{ #category : 'serialization' }
+OPEdge >> roundPositionsAndExtents [
+
+	self waypoints: (self waypoints collect: [ :each | each rounded ]).
+	super roundPositionsAndExtents
+]
+
+{ #category : 'interactions' }
 OPEdge >> selectableInteraction [
 
 	^ OPRSSelectable highlightColorBlue
+]
+
+{ #category : 'testing' }
+OPEdge >> shouldHaveDraggableControlPoints [
+	^ true
 ]
 
 { #category : 'accessing' }
@@ -103,14 +158,14 @@ OPEdge >> target: anElement [
 		          to: anElement
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPEdge >> updateFromRender [
 
 	self waypoints: roassalShape controlPoints.
 	super updateFromRender
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'rendering' }
 OPEdge >> updateRenderFromSelf [
 
 	self isRendered ifFalse: [ ^ self ].
@@ -126,8 +181,10 @@ OPEdge >> updateRenderFromSelf [
 
 { #category : 'accessing' }
 OPEdge >> waypoints [
-
-	^ waypoints
+	^ waypoints ifNil: [
+		self isRendered
+			ifTrue: [ roassalShape controlPoints copy ]
+			ifFalse: [ #() ] ]
 ]
 
 { #category : 'accessing' }

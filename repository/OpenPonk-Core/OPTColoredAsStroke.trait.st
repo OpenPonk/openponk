@@ -1,3 +1,6 @@
+"
+Trait extending OPTColored to update and manage a color as a stroke color.
+"
 Trait {
 	#name : 'OPTColoredAsStroke',
 	#traits : 'OPTColored',

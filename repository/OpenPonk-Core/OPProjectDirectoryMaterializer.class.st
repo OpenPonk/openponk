@@ -1,5 +1,5 @@
 "
-I take a folder and try to materialize a project from it.
+Specialized serializer that reads a structured directory and materializes it into a complete OpenPonk project, restoring domain models, diagrams, and mementos.
 "
 Class {
 	#name : 'OPProjectDirectoryMaterializer',
@@ -9,13 +9,13 @@ Class {
 	#tag : 'Persistence'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPProjectDirectoryMaterializer class >> exportSubject [
 
 	^ #project
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPProjectDirectoryMaterializer class >> exportVersion [
 
 	^ 0

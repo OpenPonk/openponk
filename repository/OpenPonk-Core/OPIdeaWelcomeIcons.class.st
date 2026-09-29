@@ -1,3 +1,6 @@
+"
+Icon provider for the OpenPonk welcome screen, supplying icons for creating, opening, and importing projects.
+"
 Class {
 	#name : 'OPIdeaWelcomeIcons',
 	#superclass : 'OPIcons',

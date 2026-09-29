@@ -1,3 +1,7 @@
+"
+Abstract base class for setting up test environments for diagram elements. 
+Provides the boilerplate initialization for a canvas, a model instance, and a shape instance required by unit tests.
+"
 Class {
 	#name : 'OPAbstractDiagramElementTest',
 	#superclass : 'TestCase',

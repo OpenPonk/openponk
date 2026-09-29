@@ -1,3 +1,7 @@
+"
+Unit tests for OPProjectController. 
+Verifies the management of open diagrams, projects, model additions/removals, and persistence boundaries (saving projects).
+"
 Class {
 	#name : 'OPProjectControllerTest',
 	#superclass : 'TestCase',
@@ -12,38 +16,86 @@ Class {
 
 { #category : 'running' }
 OPProjectControllerTest >> setUp [
-	controller := OPProjectController new.
+	super setUp.
 	project := OPProject new.
-	controller project: project.
-	OPPluginRegistry setDefault: (OPPluginRegistry new add: OPTestPlugin new)
+	controller := OPProjectController forProject: project.
+	OPPluginRegistry setDefaultForTesting
 ]
 
 { #category : 'running' }
 OPProjectControllerTest >> tearDown [
-	OPPluginRegistry resetDefault
+
+	OPPluginRegistry resetDefault.
+	super tearDown
 ]
 
 { #category : 'tests' }
 OPProjectControllerTest >> testAddController [
-
-	| dc model |
-	dc := OPDiagramController new.
+	| diagramController model |
+	diagramController := OPDiagramController new.
 	model := OPTestContainerModel new.
-	dc model: model.
-	controller addDiagramController: dc.
-	self assert: controller controllers asArray equals: { dc }
+	controller addDiagramController: diagramController.
+	diagramController model: model.
+	self assert: controller controllers asArray equals: { diagramController }
+]
+
+{ #category : 'tests' }
+OPProjectControllerTest >> testAddDiagramControllerIsIdempotent [
+	| diagramController |
+	diagramController := OPDiagramController new.
+	controller addDiagramController: diagramController.
+	controller addDiagramController: diagramController.
+	self assert: controller controllers size equals: 1
 ]
 
 { #category : 'tests' }
 OPProjectControllerTest >> testRemoveController [
-	| dc model |
-	dc := OPDiagramController new.
+	| diagramController model |
+	diagramController := OPDiagramController new.
 	model := OPTestContainerModel new.
-	dc model: model.
-	controller addDiagramController: dc.
-	controller removeDiagramController: dc.
+	controller addDiagramController: diagramController.
+	diagramController model: model.
+	controller removeDiagramController: diagramController.
 	self deny: (controller hasModel: model).
-	self deny: (model announcer hasSubscriber: controller)
+	self deny: (model announcer hasSubscriber: diagramController)
+]
+
+{ #category : 'tests' }
+OPProjectControllerTest >> testRenameDiagramTransactively [
+	| diagram |
+	diagram := OPOpenPonkDiagram new.
+	diagram name: 'Old Name'.
+	project addDiagram: diagram.
+
+	controller renameDiagram: diagram to: 'New Name'.
+
+	self assert: diagram name equals: 'New Name'.
+
+	controller undoManager undo.
+	self assert: diagram name equals: 'Old Name'.
+
+	controller undoManager redo.
+	self assert: diagram name equals: 'New Name'
+]
+
+{ #category : 'tests' }
+OPProjectControllerTest >> testRenameProjectToSameNameDoesNotRecordUndoCommand [
+	project name: 'Same Name'.
+	controller renameProjectTo: 'Same Name'.
+
+	self assert: project name equals: 'Same Name'.
+	self deny: controller undoManager canUndo
+]
+
+{ #category : 'tests' }
+OPProjectControllerTest >> testRenameProjectTransactively [
+	project name: 'Old Project'.
+	controller renameProjectTo: 'New Project'.
+	self assert: project name equals: 'New Project'.
+	controller undoManager undo.
+	self assert: project name equals: 'Old Project'.
+	controller undoManager redo.
+	self assert: project name equals: 'New Project'
 ]
 
 { #category : 'tests' }

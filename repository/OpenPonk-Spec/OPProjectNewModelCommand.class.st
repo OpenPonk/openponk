@@ -1,9 +1,12 @@
+"
+Workbench toolbar command that initializes a new, empty domain model (of a user-selected metamodel or notation) within the current project.
+"
 Class {
 	#name : 'OPProjectNewModelCommand',
 	#superclass : 'OPProjectCommand',
-	#category : 'OpenPonk-Spec-Commands',
+	#category : 'OpenPonk-Spec-Commands-Workbench',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Commands'
+	#tag : 'Commands-Workbench'
 }
 
 { #category : 'activation' }
@@ -27,11 +30,12 @@ OPProjectNewModelCommand >> defaultMenuItemName [
 OPProjectNewModelCommand >> execute [
 
 	OPPluginRegistry default plugins ifEmpty: [
-		^ GrowlMorph
-			  openWithLabel: 'OpenPonk: No plugins'
-			  contents:
-			  'Cannot add a model unless there is at least one OpenPonk plugin loaded'
-			  backgroundColor: GrowlMorph theme dangerBackgroundColor ].
+			^ GrowlMorph
+				  openWithLabel: 'OpenPonk: No plugins'
+				  contents:
+				  'Cannot add a model unless there is at least one OpenPonk plugin loaded'
+				  backgroundColor: GrowlMorph theme dangerBackgroundColor
+				  labelColor: GrowlMorph theme textColorForNonStandardBackground ].
 	(OPModelTypeSelector
 		 newApplication: SpApplication defaultApplication
 		 model: projectController) open

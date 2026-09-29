@@ -1,3 +1,7 @@
+"
+Base class for visual diagram elements.
+Holds visual properties (styles, bounds, Roassal shapes) and references the underlying model elements. For diagram-only elements, serves directly as the primary model.
+"
 Class {
 	#name : 'OPDiagramElement',
 	#superclass : 'Object',
@@ -9,7 +13,8 @@ Class {
 		'sharedStyle',
 		'localStyle',
 		'ownedElements',
-		'roassalShape'
+		'roassalShape',
+		'announcer'
 	],
 	#category : 'OpenPonk-Core-DiagramElements',
 	#package : 'OpenPonk-Core',
@@ -24,7 +29,7 @@ OPDiagramElement class >> forModelElement: anObject [
 		  yourself
 ]
 
-{ #category : 'rendering' }
+{ #category : 'evaluating' }
 OPDiagramElement class >> in: anOwner [
 
 	^ self new
@@ -44,6 +49,16 @@ OPDiagramElement class >> in: anOwner forModelElement: anObject [
 { #category : 'testing' }
 OPDiagramElement class >> isAbstract [
 	^ self = OPDiagramElement
+]
+
+{ #category : 'testing' }
+OPDiagramElement class >> isEdge [
+	^ false
+]
+
+{ #category : 'testing' }
+OPDiagramElement class >> isNode [
+	^ false
 ]
 
 { #category : 'rendering' }
@@ -72,21 +87,26 @@ OPDiagramElement class >> stonAllInstVarNames [
 	     #sharedStyle #localStyle #ownedElements )
 ]
 
+{ #category : 'layout' }
+OPDiagramElement >> adaptBoundsToInnerBounds: anInnerRectangle [
+	"Adapts this element bounds and position to encompass the given inner rectangle."
+	self isContainer ifFalse: [ self error: self printString , ' is not a container.' ]
+]
+
 { #category : 'interactions' }
 OPDiagramElement >> addDraggableInteraction [
-
-	roassalShape @ RSDraggable
+	roassalShape @ OPRSDraggable
 ]
 
 { #category : 'interactions' }
 OPDiagramElement >> addEventForwardingFrom: anOriginalRoassalShape to: aTargetRoassalShape [
-
 	| forward |
 	forward := [ :event | aTargetRoassalShape announce: event ].
 	anOriginalRoassalShape
 		when: RSMouseEnter do: forward for: self;
 		when: RSMouseLeave do: forward for: self;
 		when: RSMouseClick do: forward for: self;
+		when: RSMouseDoubleClick do: forward for: self;
 		when: RSMouseDragStart do: forward for: self;
 		when: RSMouseDragEnd do: forward for: self;
 		when: RSMouseDragging do: forward for: self
@@ -150,9 +170,8 @@ OPDiagramElement >> addedByMouseClickTo: aPoint [
 { #category : 'enumerating' }
 OPDiagramElement >> allOwnedElements [
 
-	^ self ownedElements
-	  ,
-	  (self ownedElements flatCollect: [ :each | each allOwnedElements ])
+	^ (self ownedElements flatCollectAsSet: [ :each |
+		   each allOwnedElements ]) , self ownedElements
 ]
 
 { #category : 'enumerating' }
@@ -166,6 +185,27 @@ OPDiagramElement >> allOwnedShapesPositionableByUser [
 OPDiagramElement >> allShapesPositionableByUser [
 
 	^ self topMostOwningElement allOwnedShapesPositionableByUser
+]
+
+{ #category : 'announcing' }
+OPDiagramElement >> announceRenderRemoved: aRoassalShape [
+
+	self announcer announce: (OPDiagramElementRenderRemovedAnnouncement
+			 forDiagramElement: self
+			 roassalShape: aRoassalShape)
+]
+
+{ #category : 'announcing' }
+OPDiagramElement >> announceRendered [
+
+	self announcer announce:
+		(OPDiagramElementRenderedAnnouncement forDiagramElement: self)
+]
+
+{ #category : 'accessing' }
+OPDiagramElement >> announcer [
+
+	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
 { #category : 'accessing' }
@@ -183,6 +223,16 @@ OPDiagramElement >> attachedShapesDo: aBlock [
 ]
 
 { #category : 'accessing' }
+OPDiagramElement >> bounds [
+	^ nil
+]
+
+{ #category : 'accessing' }
+OPDiagramElement >> bounds: aNodeBounds [
+	"Subclasses with spatial bounds override this method."
+]
+
+{ #category : 'accessing' }
 OPDiagramElement >> canHaveController [
 
 	^ true
@@ -192,6 +242,11 @@ OPDiagramElement >> canHaveController [
 OPDiagramElement >> canvas [
 
 	^ roassalShape canvas
+]
+
+{ #category : 'memento' }
+OPDiagramElement >> captureGeometryMemento [
+	^ nil
 ]
 
 { #category : 'initialization' }
@@ -214,23 +269,31 @@ OPDiagramElement >> diagramElementOfType: aType withModelElement: anElement ifFo
 			ifFound: [ :found | ^ aFoundBlock cull: found ] ]
 ]
 
+{ #category : 'accessing' }
+OPDiagramElement >> directNodeRoassalShapes [
+	"Answers roassal shapes of direct positionable node children, used for hierarchical layout calculations."
+	^ (self ownedElements
+		select: [ :eachChild | eachChild isPositionableByUser and: [ eachChild isRendered ] ]
+		thenCollect: [ :eachChild | eachChild roassalShape ]) asGroup
+]
+
 { #category : 'testing' }
 OPDiagramElement >> exists [
 
 	^ true
 ]
 
-{ #category : 'instance creation' }
-OPDiagramElement >> fromSton: stonReader [
-
-	stonReader parseMapDo: [ :instVarName :value |
+{ #category : 'ston-core' }
+OPDiagramElement >> fromSton: aStonReader [
+	aStonReader parseMapDo: [ :instVarName :value |
 		instVarName = #modelElements
 			ifTrue: [
 				self modelElements: (value collect: [ :each |
-						 OPModelObjectReference withUUID: ([ UUID fromString: each ]
-								  on: Error
-								  do: [ each ]) ]) ]
-			ifFalse: [ self instVarNamed: instVarName asString put: value ] ]
+					OPModelObjectReference withUUID: ([ UUID fromString: each ]
+						on: Error
+						do: [ each ]) ]) ]
+			ifFalse: [
+				self instVarNamed: (self stonInstVarNameFor: instVarName) asString put: value ] ]
 ]
 
 { #category : 'conditions' }
@@ -270,6 +333,45 @@ OPDiagramElement >> initialize [
 		               oppositeSlot: #target
 ]
 
+{ #category : 'accessing' }
+OPDiagramElement >> innerDraggableRoassalShapes [
+	"Answers roassal shapes of all transitive positionable descendants that must move with this container during drag gestures."
+	^ (self allOwnedElements
+		select: [ :eachDescendant | eachDescendant isPositionableByUser and: [ eachDescendant isRendered ] ]
+		thenCollect: [ :eachDescendant | eachDescendant roassalShape ]) asGroup
+]
+
+{ #category : 'accessing' }
+OPDiagramElement >> innerNodeElements [
+	"Answers direct positionable semantic node elements contained in this element."
+	^ self ownedElements select: [ :eachChild | eachChild isPositionableByUser ]
+]
+
+{ #category : 'accessing' }
+OPDiagramElement >> innerNodeRoassalShapes [
+	"Answers rendered roassal shapes of direct semantic node elements."
+	^ (self innerNodeElements
+		select: [ :eachChild | eachChild isRendered ]
+		thenCollect: [ :eachChild | eachChild roassalShape ]) asGroup
+]
+
+{ #category : 'testing' }
+OPDiagramElement >> isBoundNode [
+
+	^ false
+]
+
+{ #category : 'testing' }
+OPDiagramElement >> isContainer [
+	"Answers whether this diagram element can act as a hierarchical spatial container for other elements."
+	^ false
+]
+
+{ #category : 'testing' }
+OPDiagramElement >> isDiagramElement [
+	^ true
+]
+
 { #category : 'testing' }
 OPDiagramElement >> isDiagramOnly [
 
@@ -277,9 +379,24 @@ OPDiagramElement >> isDiagramOnly [
 ]
 
 { #category : 'testing' }
+OPDiagramElement >> isEdge [
+	^ self class isEdge
+]
+
+{ #category : 'testing' }
+OPDiagramElement >> isNoShape [
+	^ false
+]
+
+{ #category : 'testing' }
+OPDiagramElement >> isNode [
+	^ self class isNode
+]
+
+{ #category : 'testing' }
 OPDiagramElement >> isPositionableByUser [
 
-	^ false
+	^ self isRendered and: [ self shouldBePositionableByUser ]
 ]
 
 { #category : 'testing' }
@@ -297,9 +414,23 @@ OPDiagramElement >> isRenderedWithOwnedElements [
 ]
 
 { #category : 'testing' }
+OPDiagramElement >> isResizableByUser [
+
+	^ self isRendered and: [ self shouldBeResizableByUser ]
+]
+
+{ #category : 'testing' }
 OPDiagramElement >> isSelectable [
 
 	^ roassalShape isSelectable
+]
+
+{ #category : 'testing' }
+OPDiagramElement >> isTransient [
+	"Answers whether this element is only a temporary visual scaffolding
+	 that should not be serialized."
+	
+	^ false
 ]
 
 { #category : 'accessing' }
@@ -383,13 +514,13 @@ OPDiagramElement >> ownModelElement [
 	^ self modelElements ifEmpty: [ nil ] ifNotEmpty: #first
 ]
 
-{ #category : 'initialization' }
+{ #category : 'rendering' }
 OPDiagramElement >> ownedElement: aShape renderedIn: aCanvas [
 
 	self recursivelyOwnedElement: aShape renderedIn: aCanvas
 ]
 
-{ #category : 'initialization' }
+{ #category : 'rendering' }
 OPDiagramElement >> ownedElement: aShape willRenderIn: aCanvas [
 
 	self isRendered ifTrue: [
@@ -398,6 +529,13 @@ OPDiagramElement >> ownedElement: aShape willRenderIn: aCanvas [
 			  description:
 			  'Reusing same diagram element for 2 canvases not allowed' ].
 	self renderIn: aCanvas
+]
+
+{ #category : 'rendering' }
+OPDiagramElement >> ownedElementRemovedRender: aDiagramElement [
+
+	"hook - do nothing by default"
+	
 ]
 
 { #category : 'accessing' }
@@ -483,11 +621,16 @@ OPDiagramElement >> removeLocalStylePropertyNamed: aName [
 { #category : 'removing' }
 OPDiagramElement >> removeRender [
 
+	| oldRoassalShape |
 	self ownedElements do: [ :each | each removeRender ].
 	roassalShape ifNil: [ ^ self ].
 	self attachedShapesDo: [ :each | each remove ].
+	roassalShape announcer unsubscribe: self.
 	roassalShape remove.
-	roassalShape := nil
+	oldRoassalShape := roassalShape.
+	roassalShape := nil.
+	self owningElement ownedElementRemovedRender: self.
+	self announceRenderRemoved: oldRoassalShape
 ]
 
 { #category : 'rendering' }
@@ -521,12 +664,21 @@ OPDiagramElement >> renderIn: aCanvas [
 	self renderShapeDetails.
 	self addInteractions.
 	self createOwnedElementsWithoutController.
-	self ownedElements do: [ :each | each renderIn: aCanvas ].
+	self renderOwnedElementsWithoutController.
 	self updateRenderFromModel.
 	self updateRenderFromStyles.
 	self updateRenderFromSelf.
 	self owningElement ownedElement: self renderedIn: aCanvas.
+	self announceRendered.
 	^ roassalShape
+]
+
+{ #category : 'rendering' }
+OPDiagramElement >> renderOwnedElementsWithoutController [
+
+	self ownedElements
+		reject: [ :each | each shouldHaveController ]
+		thenDo: [ :each | each renderIn: self canvas ]
 ]
 
 { #category : 'rendering' }
@@ -568,6 +720,11 @@ OPDiagramElement >> resolveModelElements: aCollection [
 	^ true
 ]
 
+{ #category : 'memento' }
+OPDiagramElement >> restoreGeometryFromMemento: aGeometryMemento [
+	"Subclasses override to restore their specific layout geometry."
+]
+
 { #category : 'rendering' }
 OPDiagramElement >> roassalShape [
 
@@ -579,6 +736,44 @@ OPDiagramElement >> roassalShapeUnsubscribe: aSubscriber [
 
 	roassalShape ifNil: [ ^ self ].
 	roassalShape announcer unsubscribe: aSubscriber
+]
+
+{ #category : 'rendering' }
+OPDiagramElement >> roassalShapeWhen: anAnnouncementClass send: aSelector to: aReceiver [
+
+	| subscription |
+	self isRendered ifTrue: [
+			self
+				roassalShapeWithoutCheckWhen: anAnnouncementClass
+				send: aSelector
+				to: aReceiver ].
+	subscription := nil.
+	subscription := self announcer
+		                when: OPDiagramElementRenderedAnnouncement
+		                do: [
+				                self
+					                roassalShapeWithoutCheckWhen: anAnnouncementClass
+					                send: aSelector
+					                to: aReceiver.
+				                subscription ifNotNil: [
+					                self announcer removeSubscription: subscription ] ]
+		                for: aReceiver
+]
+
+{ #category : 'rendering' }
+OPDiagramElement >> roassalShapeWithoutCheckWhen: anAnnouncementClass send: aSelector to: aReceiver [
+
+	self roassalShape
+		when: anAnnouncementClass
+		send: aSelector
+		to: aReceiver
+]
+
+{ #category : 'serialization' }
+OPDiagramElement >> roundPositionsAndExtents [
+	"hook - do nothing by default"
+
+	self ownedElements do: [ :each | each roundPositionsAndExtents ]
 ]
 
 { #category : 'interactions' }
@@ -637,44 +832,45 @@ OPDiagramElement >> sourceEdges: aCollection [
 		addAll: aCollection
 ]
 
+{ #category : 'ston-core' }
+OPDiagramElement >> stonInstVarNameFor: anInstVarName [
+	^ anInstVarName
+]
+
 { #category : 'ston persistence' }
 OPDiagramElement >> stonOn: stonWriter [
 
-	stonWriter writeObject: self streamMap: [ :dictionary | 
-		self class stonAllInstVarNames do: [ :each | 
-			| value |
-			value := self instVarNamed: each.
-			each = #modelElements ifTrue: [ 
-				value := modelElements collect: [ :eachModelElement | 
-					         eachModelElement uuid asString ] ].
-			(value isKindOf: SRToManyLink) ifTrue: [ 
-				value := Array withAll: value ].
-			value ifNotNil: [ dictionary at: each asSymbol put: value ] ] ]
+	stonWriter writeObject: self streamMap: [ :dictionary |
+			self class stonAllInstVarNames do: [ :instVarName |
+				self stonVariable: instVarName to: dictionary ] ]
 ]
 
 { #category : 'initialization' }
 OPDiagramElement >> stonPostReferenceResolution [
-
-	"Hook that is called when references were resolved processing this object or one of its sub objects. This will most probably influence hash values. Override to take appropriate action."
-
-	ownedElements := (SRToManyLink
-		                  on: self
-		                  slot: #ownedElements
-		                  oppositeSlot: #owningElement)
-		                 addAll: ownedElements;
-		                 yourself.
-	sourceEdges := (SRToManyLink
-		                on: self
-		                slot: #sourceEdges
-		                oppositeSlot: #source)
-		               addAll: sourceEdges;
-		               yourself.
-	targetEdges := (SRToManyLink
-		                on: self
-		                slot: #targetEdges
-		                oppositeSlot: #target)
-		               addAll: targetEdges;
-		               yourself
+	"Hook that is called when references were resolved processing this object or one of its sub objects.
+	Initialize synchronized links using unchecked additions to avoid modifying unresolved STONReference proxies."
+	| rawOwnedElements rawSourceEdges rawTargetEdges |
+	rawOwnedElements := ownedElements.
+	rawSourceEdges := sourceEdges.
+	rawTargetEdges := targetEdges.
+	ownedElements := SRToManyLink
+		                 on: self
+		                 slot: #ownedElements
+		                 oppositeSlot: #owningElement.
+	rawOwnedElements ifNotNil: [ :elementsCollection |
+		elementsCollection do: [ :eachElement | ownedElements uncheckedAdd: eachElement ] ].
+	sourceEdges := SRToManyLink
+		               on: self
+		               slot: #sourceEdges
+		               oppositeSlot: #source.
+	rawSourceEdges ifNotNil: [ :edgesCollection |
+		edgesCollection do: [ :eachEdge | sourceEdges uncheckedAdd: eachEdge ] ].
+	targetEdges := SRToManyLink
+		               on: self
+		               slot: #targetEdges
+		               oppositeSlot: #target.
+	rawTargetEdges ifNotNil: [ :edgesCollection |
+		edgesCollection do: [ :eachEdge | targetEdges uncheckedAdd: eachEdge ] ]
 ]
 
 { #category : 'instance creation' }
@@ -688,6 +884,27 @@ OPDiagramElement >> stonProcessSubObjects: block [
 		self
 			instVarNamed: each
 			put: (block value: (self instVarNamed: each)) ]
+]
+
+{ #category : 'ston persistence' }
+OPDiagramElement >> stonVariable: instVarName to: aDictionary [
+
+	| value |
+	value := self instVarNamed: instVarName.
+
+	value ifNil: [ ^ self ].
+
+	instVarName = #modelElements ifTrue: [
+			value := value collect: [ :eachModelElement |
+				         eachModelElement uuid asString ] ].
+
+	(value isKindOf: SRToManyLink) ifTrue: [
+		value := Array withAll: value ].
+
+	(instVarName = #ownedElements and: [ value isNotNil ]) ifTrue: [
+		value := value reject: [ :eachElement | eachElement isTransient ] ].
+
+	aDictionary at: instVarName asSymbol put: value
 ]
 
 { #category : 'initialization' }
@@ -752,10 +969,15 @@ OPDiagramElement >> topMostOwningElement [
 		  else: [ self ]
 ]
 
-{ #category : 'initialization' }
-OPDiagramElement >> updateFromRender [
+{ #category : 'subscription' }
+OPDiagramElement >> unsubscribe: aReceiver [
 
-	self ownedElements do: #updateFromRender
+	^ self announcer unsubscribe: aReceiver
+]
+
+{ #category : 'rendering' }
+OPDiagramElement >> updateFromRender [
+	"Do nothing - hook for subclasses."
 ]
 
 { #category : 'rendering' }
@@ -776,4 +998,13 @@ OPDiagramElement >> updateRenderFromSelf [
 OPDiagramElement >> updateRenderFromStyles [
 
 	self ownedElements select: #isRendered thenDo: #updateRenderFromStyles
+]
+
+{ #category : 'announcing' }
+OPDiagramElement >> when: anAnnouncementClass send: aSelector to: aReceiver [
+
+	^ self announcer
+		  when: anAnnouncementClass
+		  send: aSelector
+		  to: aReceiver
 ]

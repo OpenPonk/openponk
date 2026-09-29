@@ -1,41 +1,50 @@
+"
+Controller managing OPBoundary diagram elements. 
+Operates as a diagram-only controller without a corresponding domain model, and manages interactions such as user-driven resizing for visual boundaries.
+"
 Class {
 	#name : 'OPBoundaryController',
-	#superclass : 'OPCommonElementController',
+	#superclass : 'OPDiagramOnlyController',
 	#traits : 'OPTResizableFigureController',
 	#classTraits : 'OPTResizableFigureController classTrait',
-	#category : 'OpenPonk-Core-CommonElements',
+	#category : 'OpenPonk-Core-DiagramOnlyElements',
 	#package : 'OpenPonk-Core',
-	#tag : 'CommonElements'
+	#tag : 'DiagramOnlyElements'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'construction' }
+OPBoundaryController class >> diagramElementClass [
+	^ OPBoundary
+]
+
+{ #category : 'accessing' }
+OPBoundaryController class >> modelClass [
+
+	^ OPBoundary
+]
+
+{ #category : 'constants' }
 OPBoundaryController class >> paletteItemName [
 	^ #boundary
 ]
 
-{ #category : 'connecting' }
-OPBoundaryController >> addAsTargetFor: aController [
+{ #category : 'accessing' }
+OPBoundaryController class >> viewModelClass [
 
-	^ self diagramController addAsTargetFor: aController
+	^ OPBoundaryViewModel
 ]
 
-{ #category : 'forms' }
-OPBoundaryController >> buildEditorForm: aForm [
+{ #category : 'user interface' }
+OPBoundaryController >> addAsTargetFor: aController [
+	^ self addAsTargetFor: aController onPosition: nil
+]
 
-	(aForm addText: 'Name')
-		text: self diagramElement name;
-		whenTextChangedDo: [ :newValue | 
-			self diagramElement name: newValue asString.
-			self diagramElement updateText ]
+{ #category : 'user interface' }
+OPBoundaryController >> addAsTargetFor: aController onPosition: aPoint [
+	^ self diagramController addAsTargetFor: aController onPosition: aPoint
 ]
 
 { #category : 'connecting' }
 OPBoundaryController >> canBeTargetFor: aController [
 	^ self diagramController canBeTargetFor: aController
-]
-
-{ #category : 'construction' }
-OPBoundaryController >> diagramElementClass [
-
-	^ OPBoundary
 ]

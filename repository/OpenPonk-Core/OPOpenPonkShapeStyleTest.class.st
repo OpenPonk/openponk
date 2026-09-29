@@ -1,3 +1,7 @@
+"
+Unit tests for OPOpenPonkShapeStyle. 
+Verifies property assignment, inheritance, and overriding behavior for both local and shared shape styles.
+"
 Class {
 	#name : 'OPOpenPonkShapeStyleTest',
 	#superclass : 'TestCase',

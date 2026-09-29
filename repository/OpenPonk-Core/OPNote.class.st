@@ -1,3 +1,7 @@
+"
+Visual note or comment box in a diagram. 
+As a diagram-only shape, exists independently of the structural domain model, displaying wrapped text within a visually distinct shape (commonly drawn with a folded corner).
+"
 Class {
 	#name : 'OPNote',
 	#superclass : 'OPDiagramOnlyShapeWithText',
@@ -17,9 +21,9 @@ Class {
 		'triangle',
 		'lines'
 	],
-	#category : 'OpenPonk-Core-CommonElements',
+	#category : 'OpenPonk-Core-DiagramOnlyElements',
 	#package : 'OpenPonk-Core',
-	#tag : 'CommonElements'
+	#tag : 'DiagramOnlyElements'
 }
 
 { #category : 'ston-core' }
@@ -200,7 +204,7 @@ OPNote >> renderBasicShape [
 		  yourself
 ]
 
-{ #category : 'creating - subelements' }
+{ #category : 'rendering' }
 OPNote >> renderShapeDetails [
 
 	super renderShapeDetails.
@@ -209,13 +213,13 @@ OPNote >> renderShapeDetails [
 	self createOwnedFillBoxes.
 	self createOwnedCornerTriangle.
 	self createOwnedBorderLines.
-	self updateOwnedElements.
+	self updateAttachedElements.
 	self roassalShape
 		when: RSPositionChangedEvent
-		do: [ self updateOwnedElements ]
+		do: [ self updateAttachedElements ]
 		for: self;
 		when: RSExtentChangedEvent
-		do: [ self updateOwnedElements ]
+		do: [ self updateAttachedElements ]
 		for: self
 ]
 
@@ -223,12 +227,6 @@ OPNote >> renderShapeDetails [
 OPNote >> selectableInteraction [
 
 	^ OPRSSelectable
-]
-
-{ #category : 'creating - subelements' }
-OPNote >> shouldBePositionableByUser [
-
-	^ true
 ]
 
 { #category : 'interactions' }
@@ -249,7 +247,7 @@ OPNote >> text: aString [
 ]
 
 { #category : 'rendering' }
-OPNote >> updateOwnedElements [
+OPNote >> updateAttachedElements [
 
 	bottomRightBox translateTo:
 		roassalShape encompassingRectangle bottomRight.

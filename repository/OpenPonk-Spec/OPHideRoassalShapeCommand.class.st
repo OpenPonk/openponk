@@ -1,9 +1,12 @@
+"
+Context menu command that explicitly hides the selected Roassal shape from the active diagram canvas.
+"
 Class {
 	#name : 'OPHideRoassalShapeCommand',
 	#superclass : 'OPToggleRoassalShapeCommand',
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
 { #category : 'testing' }

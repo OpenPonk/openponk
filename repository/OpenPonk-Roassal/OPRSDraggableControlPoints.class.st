@@ -1,3 +1,7 @@
+"
+Roassal interaction that enables drag-and-drop manipulation of routing control points along a line or edge. 
+Creates visual handles at vertices and midpoints, allowing users to reshape edges dynamically.
+"
 Class {
 	#name : 'OPRSDraggableControlPoints',
 	#superclass : 'RSInteraction',
@@ -13,7 +17,20 @@ Class {
 	#tag : 'Polyline'
 }
 
-{ #category : 'private' }
+{ #category : 'events' }
+OPRSDraggableControlPoints >> announceWaypointsChangedFor: aLine old: oldWaypoints new: newWaypoints [
+	| event targetCanvas |
+	oldWaypoints = newWaypoints ifTrue: [ ^ self ].
+	event := OPRSEdgeWaypointsChangedEvent new
+		line: aLine;
+		oldWaypoints: oldWaypoints asArray copy;
+		newWaypoints: newWaypoints asArray copy;
+		yourself.
+	targetCanvas := aLine canvas.
+	targetCanvas ifNotNil: [ :c | c announce: event ]
+]
+
+{ #category : 'actions' }
 OPRSDraggableControlPoints >> connectWithCanvas [
 
 	| interaction |
@@ -37,13 +54,18 @@ OPRSDraggableControlPoints >> connectWithCanvas [
 		for: self
 ]
 
-{ #category : 'initialization' }
+{ #category : 'actions' }
 OPRSDraggableControlPoints >> enable [
 
 	canvas := line canvas.
 	line propertyAt: self class put: self.
 	line when: RSShapeRemovedEvent do: [ self remove ] for: self.
 	self connectWithCanvas
+]
+
+{ #category : 'accessing' }
+OPRSDraggableControlPoints >> handles [
+	^ handles
 ]
 
 { #category : 'initialization' }
@@ -54,7 +76,12 @@ OPRSDraggableControlPoints >> initialize [
 	isActive := false
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
+OPRSDraggableControlPoints >> midpointHandles [
+	^ midpointHandles
+]
+
+{ #category : 'hooks' }
 OPRSDraggableControlPoints >> onShape: aLine [
 
 	line := aLine.
@@ -63,32 +90,38 @@ OPRSDraggableControlPoints >> onShape: aLine [
 		ifNotNil: [ self enable ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPRSDraggableControlPoints >> promoteFor: aLine handle: aMidpointHandle [
-
-	| newPoint |
-	"1. Add point at midpoint's place.
-	 2. Remove midpoint handle.
-	 3. Do full reload."
-	newPoint := aMidpointHandle shape position.
+	"Insert a new control point at midpoint position, supply initial waypoints to the new handle, rebuild handles, and transfer active drag focus to the newly created handle."
+	| originalWaypoints insertedIndex newControlPointHandle |
+	originalWaypoints := aLine controlPoints copy.
 	aLine from = aMidpointHandle from
 		ifTrue: [
+			insertedIndex := 2.
 			aLine controlPoints: {
 					aLine controlPoints first.
-					newPoint } , aLine controlPoints allButFirst ]
+					aMidpointHandle shape position } , aLine controlPoints allButFirst ]
 		ifFalse: [
 			| indexOfMidpointHandle |
-			indexOfMidpointHandle := handles detectIndex: [ :each |
-				                         each shape = aMidpointHandle from ].
+			indexOfMidpointHandle := handles detectIndex: [ :eachHandle |
+				                         eachHandle shape = aMidpointHandle from ].
+			insertedIndex := indexOfMidpointHandle + 2.
 			aLine controlPoints:
 				(aLine controlPoints first: indexOfMidpointHandle + 1)
-				, { newPoint }
+				, { aMidpointHandle shape position }
 				, (aLine controlPoints allButFirst: indexOfMidpointHandle + 1) ].
 	self rebuild.
-	aLine canvas morph resetShapeBeingDragged
+	newControlPointHandle := handles
+		detect: [ :eachHandle | eachHandle indexOfControlPoint = insertedIndex ]
+		ifNone: [ nil ].
+	newControlPointHandle ifNotNil: [ :targetHandle |
+		targetHandle initialWaypoints: originalWaypoints ].
+	aLine canvas ifNotNil: [ :targetCanvas |
+		targetCanvas morph ifNotNil: [ :canvasMorph |
+			canvasMorph resetShapeBeingDragged ] ]
 ]
 
-{ #category : 'private' }
+{ #category : 'actions' }
 OPRSDraggableControlPoints >> rebuild [
 
 	isActive ifFalse: [ ^ self ].
@@ -98,16 +131,19 @@ OPRSDraggableControlPoints >> rebuild [
 	line signalUpdate
 ]
 
-{ #category : 'private' }
+{ #category : 'actions' }
 OPRSDraggableControlPoints >> remove [
 
 	self removeHandles.
 	line announcer unsubscribe: self.
 	canvas ifNil: [ ^ self ].
+	canvas
+		propertyAt: OPRSSelectableCanvas
+		ifPresent: [ :interaction | interaction announcer unsubscribe: self ].
 	canvas announcer unsubscribe: self
 ]
 
-{ #category : 'private' }
+{ #category : 'actions' }
 OPRSDraggableControlPoints >> removeHandles [
 	isActive
 		ifFalse: [ ^ self ].
@@ -119,7 +155,7 @@ OPRSDraggableControlPoints >> removeHandles [
 	isActive := false
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPRSDraggableControlPoints >> showHandles [
 
 	isActive ifTrue: [ ^ self ].
@@ -133,18 +169,28 @@ OPRSDraggableControlPoints >> showHandles [
 	isActive := true
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPRSDraggableControlPoints >> showMidpointHandles [
 
-	((line isKindOf: RSBezier) and: [ line controlPoints size >= 4 ]) 
+	((line isKindOf: RSBezier) and: [ line controlPoints size >= 4 ])
 		ifTrue: [ ^ self ].
 	midpointHandles := { line from }
 	                   , (handles collect: [ :each | each shape ])
-	                   , { line to } overlappingPairsCollect: [ :from :to | 
+	                   , { line to } overlappingPairsCollect: [ :from :to |
 		                   OPRSControlPointCreatorHandle new
 			                   on: line between: from and: to;
 			                   yourself ].
 	midpointHandles first beNearStart.
 	midpointHandles last beNearEnd.
 	midpointHandles do: #render
+]
+
+{ #category : 'handles' }
+OPRSDraggableControlPoints >> updateDuring: aBlock [
+	"Safely tear down handles before executing aBlock to prevent zombie handles from receiving update events during geometry changes, then restore handles if they were active."
+	| wasActive |
+	wasActive := isActive.
+	wasActive ifTrue: [ self removeHandles ].
+	aBlock value.
+	wasActive ifTrue: [ self showHandles ]
 ]

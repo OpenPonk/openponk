@@ -1,3 +1,6 @@
+"
+Spec presenter extending standard save-file dialogs to support diagram exports. Injects custom controls, such as zoom and scale percentage configurations, to adjust the output image before saving.
+"
 Class {
 	#name : 'OPExportImageDialog',
 	#superclass : 'StSaveFilePresenter',
@@ -11,7 +14,7 @@ Class {
 	#tag : 'Dialogs'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'layout' }
 OPExportImageDialog class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -44,14 +47,14 @@ OPExportImageDialog >> confirmed [
 	okAction cull: file cull: zoomNumber
 ]
 
-{ #category : 'actions' }
+{ #category : 'initialization' }
 OPExportImageDialog >> connectPresenters [
 
 	super connectPresenters.
 	self initializeZoom
 ]
 
-{ #category : 'actions' }
+{ #category : 'initialization' }
 OPExportImageDialog >> initializePresenters [
 
 	super initializePresenters.

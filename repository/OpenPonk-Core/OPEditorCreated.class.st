@@ -1,5 +1,5 @@
 "
-I am fired when a brand new Editor was created.
+Announcement fired upon the creation of a new editor instance within the workbench.
 "
 Class {
 	#name : 'OPEditorCreated',

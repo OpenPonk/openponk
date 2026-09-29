@@ -1,9 +1,12 @@
+"
+Commander menu group that organizes commands related to opening existing projects.
+"
 Class {
 	#name : 'OPWProjectOpenMenuGroup',
 	#superclass : 'CmdMenuGroup',
-	#category : 'OpenPonk-Spec-Commands',
+	#category : 'OpenPonk-Spec-Commands-Workbench',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Commands'
+	#tag : 'Commands-Workbench'
 }
 
 { #category : 'testing' }

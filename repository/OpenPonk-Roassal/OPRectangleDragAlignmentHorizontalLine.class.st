@@ -1,3 +1,6 @@
+"
+Horizontal alignment line used to calculate Y-axis snapping offsets between dragged and static rectangles.
+"
 Class {
 	#name : 'OPRectangleDragAlignmentHorizontalLine',
 	#superclass : 'OPRectangleDragAlignmentLine',

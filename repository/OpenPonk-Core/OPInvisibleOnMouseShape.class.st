@@ -1,3 +1,7 @@
+"
+Specialized helper shape used for managing specific user interactions. 
+Provides an invisible tracking area or hotspot that responds to mouse movements on the canvas.
+"
 Class {
 	#name : 'OPInvisibleOnMouseShape',
 	#superclass : 'OPBoundNode',
@@ -23,7 +27,7 @@ OPInvisibleOnMouseShape >> mouseMovedBy: event [
 		signalUpdate
 ]
 
-{ #category : 'rendering' }
+{ #category : 'removing' }
 OPInvisibleOnMouseShape >> removeRender [
 
 	| canvas |

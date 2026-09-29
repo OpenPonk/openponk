@@ -1,7 +1,5 @@
 "
-I am a clickable button entry of the palette.
-
-You can configure both the underlying button and the palette tool through me.
+Spec button presenter representing a single selectable item (tool) inside an OpenPonk palette. Encapsulates an OPPaletteTool (such as a creation or connection tool) and handles its selection state and shortcuts.
 "
 Class {
 	#name : 'OPPaletteEntry',
@@ -92,9 +90,10 @@ OPPaletteEntry >> whenCreated: aOneArgBlock [
 	tool whenCreated: aOneArgBlock
 ]
 
-{ #category : 'tool api' }
+{ #category : 'actions' }
 OPPaletteEntry >> whenCreatedSetup [
 
-	self whenCreated: [ :ctrl | 
-		OPInitialSetElementCommand executeOn: ctrl ]
+	self whenCreated: [ :newlyCreatedCtrl |
+			newlyCreatedCtrl diagramController ifNotNil: [ :activeDiagramCtrl |
+				activeDiagramCtrl form ifNotNil: [ :form | form focusFirstInput ] ] ]
 ]

@@ -1,3 +1,6 @@
+"
+Layout constraint used to anchor a shape (like a label) relative to a specific point or segment along a line or path (such as an edge).
+"
 Class {
 	#name : 'OPRSAnchorConstraint',
 	#superclass : 'RSObject',
@@ -29,7 +32,7 @@ OPRSAnchorConstraint >> addAnchorAndGuideLine [
 	shape signalUpdate
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPRSAnchorConstraint >> alwaysShowGuideLine [
 
 	alwaysShowGuideLine := true.
@@ -49,6 +52,19 @@ OPRSAnchorConstraint >> anchorShape [
 ]
 
 { #category : 'accessing' }
+OPRSAnchorConstraint >> anchorState [
+	^ { self balance . self distanceToLine }
+]
+
+{ #category : 'accessing' }
+OPRSAnchorConstraint >> balance [
+	"Answer the balance of the position reference, or nil if not applicable."
+	^ (positionReference respondsTo: #balance)
+		ifTrue: [ positionReference balance ]
+		ifFalse: [ nil ]
+]
+
+{ #category : 'accessing' }
 OPRSAnchorConstraint >> balance: aNumber [
 
 	positionReference := OPRSAnchorConstraintBalanceReference new
@@ -56,44 +72,31 @@ OPRSAnchorConstraint >> balance: aNumber [
 		            yourself
 ]
 
-{ #category : 'building' }
+{ #category : 'public - lines' }
 OPRSAnchorConstraint >> build [
-
-	shape propertyAt: self class put: self.
+	shape ifNotNil: [ shape propertyAt: self class put: self ].
+	(shape isNil or: [ line isNil ]) ifTrue: [ ^ self ].
 	shape when: RSShapeRemovedEvent do: [ self remove ] for: self.
 	line when: RSShapeRemovedEvent do: [ self remove ] for: self.
-	line from
-		when: RSPositionChangedEvent
-		do: [ self moveShape ]
-		for: self.
-	line to when: RSPositionChangedEvent do: [ self moveShape ] for: self.
-	line from when: RSExtentChangedEvent do: [ self moveShape ] for: self.
-	line to when: RSExtentChangedEvent do: [ self moveShape ] for: self.
-	line
-		when: OPRSDraggedControlPointsEvent
-		do: [ self moveShape ]
-		for: self.
+	line from ifNotNil: [ :fromShape |
+		fromShape when: RSPositionChangedEvent do: [ self moveShape ] for: self.
+		fromShape when: RSExtentChangedEvent do: [ self moveShape ] for: self ].
+	line to ifNotNil: [ :toShape |
+		toShape when: RSPositionChangedEvent do: [ self moveShape ] for: self.
+		toShape when: RSExtentChangedEvent do: [ self moveShape ] for: self ].
+	line when: OPRSDraggedControlPointsEvent do: [ self moveShape ] for: self.
 	line when: RSPositionChangedEvent do: [ self moveShape ] for: self.
 	shape when: RSExtentChangedEvent do: [ self moveShape ] for: self.
 	shape when: RSMouseDragging do: [ self saveShapePosition ] for: self.
 	alwaysShowGuideLine
 		ifTrue: [
-			^ shape isInACanvas
-				  ifTrue: [ self addAnchorAndGuideLine ]
-				  ifFalse: [
-					  shape
-						  when: RSShapeAddedEvent
-						  do: [ self addAnchorAndGuideLine ]
-						  for: self ] ]
+			shape isInACanvas
+				ifTrue: [ self addAnchorAndGuideLine ]
+				ifFalse: [
+					shape when: RSShapeAddedEvent do: [ self addAnchorAndGuideLine ] for: self ] ]
 		ifFalse: [
-			shape
-				when: RSMouseLeftDragStart
-				do: [ self addAnchorAndGuideLine ]
-				for: self.
-			shape
-				when: RSMouseDragEnd
-				do: [ self removeAnchorAndGuideLine ]
-				for: self ]
+			shape when: RSMouseLeftDragStart do: [ self addAnchorAndGuideLine ] for: self.
+			shape when: RSMouseDragEnd do: [ self removeAnchorAndGuideLine ] for: self ]
 ]
 
 { #category : 'accessing' }
@@ -107,6 +110,11 @@ OPRSAnchorConstraint >> createUpdater [
 		  distanceToLine: distanceToLine;
 		  minDistanceToLine: minDistanceToLine;
 		  yourself
+]
+
+{ #category : 'accessing' }
+OPRSAnchorConstraint >> distanceToLine [
+	^ distanceToLine
 ]
 
 { #category : 'accessing' }
@@ -125,7 +133,7 @@ OPRSAnchorConstraint >> guideLine [
 	^ guideLine
 ]
 
-{ #category : 'building' }
+{ #category : 'initialization' }
 OPRSAnchorConstraint >> initialize [
 
 	super initialize.
@@ -157,11 +165,10 @@ OPRSAnchorConstraint >> minDistanceToLine: aNumber [
 
 { #category : 'updating' }
 OPRSAnchorConstraint >> moveShape [
-
 	self createUpdater update
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPRSAnchorConstraint >> noGuideLine [
 
 	self guideLine color: Color transparent
@@ -226,7 +233,7 @@ OPRSAnchorConstraint >> stick: aShape on: aLine [
 	self build
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 OPRSAnchorConstraint >> useGuideLine [
 
 	self guideLine color: (Color gray: 0.9)

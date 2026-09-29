@@ -1,9 +1,6 @@
 "
-unlike my parent, by default I
-
-* pretty print
-* output with LF instead of CR
-* sort properties lexicographically
+Customized NeoJSONWriter. 
+Enforces deterministic outputs by pretty-printing, utilizing LF line endings exclusively, and sorting properties lexicographically.
 "
 Class {
 	#name : 'OPJsonWriter',

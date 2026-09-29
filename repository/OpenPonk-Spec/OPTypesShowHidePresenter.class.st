@@ -1,3 +1,6 @@
+"
+Concrete Spec presenter used within OPShowHidePresenter. Provides a tree view that groups diagram elements by their metamodel types (classes), allowing users to show or hide entire categories of elements at once.
+"
 Class {
 	#name : 'OPTypesShowHidePresenter',
 	#superclass : 'OPShowHideTabContentPresenter',
@@ -6,96 +9,66 @@ Class {
 	#tag : 'Dialogs'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 OPTypesShowHidePresenter >> allElements [
-	^ diagramController allModelElementsWithPossibleController
+
+	^ diagramController allModelElementsWithPossibleController copyWithout: diagramController model
 ]
 
-{ #category : 'accessing' }
+{ #category : 'hooks' }
 OPTypesShowHidePresenter >> childrenFor: aNode [
+
 	^ aNode children
 ]
 
-{ #category : 'defaults' }
+{ #category : 'utilities' }
+OPTypesShowHidePresenter >> elementsWithTypesInNode: aNode [
+
+	^ self allElements select: [ :eachElement | aNode matchesType: (viewModelRegistry modelTypeFor: eachElement) ]
+]
+
+{ #category : 'updating' }
 OPTypesShowHidePresenter >> findSelectedItems [
-	| visibleElements hidableElementTypes |
-	visibleElements := diagramController allModelElementsWithController.
-	hidableElementTypes := ((adapters allChildrenFor: diagramController model)
-									collect: [ :element | element class ]) asSet.
-	"Returns all children from getAllNodes x where such visible element exists, that it is hideable and x is its type"
-		"The hidability condition excludes OPNote and OPBoundary"
-	^ (self getAllNodes
-		select: [ :typeTree | 
-			visibleElements anySatisfy:
-					[ :element | 
-						(hidableElementTypes anySatisfy: [:type| type = (element class)])
-							and: [typeTree includesType: (diagramController typeOfModel: element)]]])
-		ifNotEmpty: [ :newNodes | newNodes copyWith: (OPModelObjectTypeNode named: 'All') ]
+
+	| controllers |
+	controllers := diagramController controllers.
+	^ tree roots anyOne withAllChildren select: [ :typeNode |
+		  controllers anySatisfy: [ :controller | typeNode matchesType: controller viewModel modelType ] ]
 ]
 
-{ #category : 'defaults' }
-OPTypesShowHidePresenter >> getAllNodes [
-	^ self getRootNode withAllChildren
-]
-
-{ #category : 'defaults' }
+{ #category : 'accessing' }
 OPTypesShowHidePresenter >> getRootNode [
-	^ OPModelObjectTypeNode
-		named: 'All'
-		withChildrenFromTypes:
-			((adapters allChildrenFor: diagramController model)
-				collect: [ :each | diagramController typeOfModel: each ])
+
+	^ OPModelObjectTypeRootNode withChildrenFromTypes: (self allElements collect: [ :each | viewModelRegistry modelTypeFor: each ])
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'hooks' }
 OPTypesShowHidePresenter >> initialRoots [
-	^ {self getRootNode}
+
+	^ { (OPModelObjectTypeRootNode withChildrenFromTypes:
+		   (self allElements collect: [ :each | viewModelRegistry modelTypeFor: each ])) }
 ]
 
-{ #category : 'general' }
+{ #category : 'hooks' }
 OPTypesShowHidePresenter >> nameFor: aNode [
 	^ aNode name
 ]
 
-{ #category : 'as yet unclassified' }
-OPTypesShowHidePresenter >> possibleTypeLeafNames [
-	^ self getRootNode leafNames
-]
+{ #category : 'hooks' }
+OPTypesShowHidePresenter >> selected: aSelectedTypeNode [
 
-{ #category : 'accessing' }
-OPTypesShowHidePresenter >> selected: added [
-	| typesToShow elementsToShow executor |
-	typesToShow := added leafNames.
-	elementsToShow := self allElements
-		select: [ :eachElement | 
-			typesToShow
-				includes: (diagramController typeOfModel: eachElement) mostSpecificName ].
+	| elementsToShow executor |
+	elementsToShow := self elementsWithTypesInNode: aSelectedTypeNode.
 	executor := OPDiagramExplorer on: diagramController.
 	executor showElements: elementsToShow.
 	^ elementsToShow
 ]
 
-{ #category : 'as yet unclassified' }
-OPTypesShowHidePresenter >> selectedLeafNames [
-	| allTypeLeafNames visibleElements |
-	allTypeLeafNames := self possibleTypeLeafNames.
-	visibleElements := self allElements
-		select: [ :each | diagramController isVisibleInDiagram: each ].
-	^ allTypeLeafNames
-		select: [ :eachName | 
-			visibleElements
-				anySatisfy:
-					[ :each | (diagramController typeOfModel: each) mostSpecificName = eachName ] ]
-]
+{ #category : 'hooks' }
+OPTypesShowHidePresenter >> unselected: aRemovedTypeNode [
 
-{ #category : 'accessing' }
-OPTypesShowHidePresenter >> unselected: removed [
-	| typesToHide elementsToHide executor |
-	typesToHide := removed leafNames.
-	elementsToHide := self allElements
-		select: [ :eachElement | 
-			typesToHide
-				includes: (diagramController typeOfModel: eachElement) mostSpecificName ].
+	| elementsToHide executor |
+	elementsToHide := self elementsWithTypesInNode: aRemovedTypeNode.
 	executor := OPDiagramExplorer on: diagramController.
 	executor hideElements: elementsToHide.
 	^ elementsToHide

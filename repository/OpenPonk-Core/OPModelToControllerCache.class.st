@@ -1,3 +1,6 @@
+"
+Specialized cache that maps domain model instances to their corresponding element controllers within a diagram context.
+"
 Class {
 	#name : 'OPModelToControllerCache',
 	#superclass : 'OPControllerCache',

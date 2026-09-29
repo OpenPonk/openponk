@@ -1,3 +1,7 @@
+"
+Trait providing behavior to update and manage a border color mapped as a stroke color.
+Used by diagram elements to bind style properties to Roassal shape stroke colors.
+"
 Trait {
 	#name : 'OPTBorderColoredAsStroke',
 	#category : 'OpenPonk-Core-DiagramElements',

@@ -1,5 +1,6 @@
 "
-I am command for figure context menu.
+Abstract base class for Commander framework commands that operate on visual Roassal shapes via context menus or shortcuts. 
+Resolves the context to map selected shapes to their corresponding diagram elements, ViewModels, and controllers.
 "
 Class {
 	#name : 'OPRoassalShapeCommand',
@@ -10,14 +11,15 @@ Class {
 		'models',
 		'controllers',
 		'diagramElements',
-		'roassalShapes'
+		'roassalShapes',
+		'viewModels'
 	],
 	#classInstVars : [
 		'lastEvent'
 	],
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
 { #category : 'activation' }
@@ -26,29 +28,15 @@ OPRoassalShapeCommand class >> contextMenuActivation [
 	^ CmdContextMenuActivation byRootGroupItemFor: OPCanvasPresenter
 ]
 
-{ #category : 'example' }
-OPRoassalShapeCommand class >> example [
-	| proj model |
-	proj := OPProject new.
-	model := OPTestContainerModel new.
-	model entities add: OPTestEntityModel new.
-	proj addModel: model.
-	proj open
-]
-
-{ #category : 'example' }
-OPRoassalShapeCommand class >> example2 [
-	| c a |
-	c := OPCanvasPresenter new.
-	a := CmdContextMenuActivation
-		buildContextMenuFor: c
-		inContext: (OPRoassalShapeContext for: c).
-	a openInWindow
-]
-
 { #category : 'testing' }
 OPRoassalShapeCommand class >> isAbstract [
 	^ self = OPRoassalShapeCommand
+]
+
+{ #category : 'accessing' }
+OPRoassalShapeCommand >> diagramController [
+
+	^ diagramController
 ]
 
 { #category : 'execution' }
@@ -59,7 +47,13 @@ OPRoassalShapeCommand >> readParametersFromContext: aToolContext [
 	diagramController := aToolContext diagramController.
 	canvas := diagramController canvas.
 	roassalShapes := aToolContext roassalShapes.
-	models := aToolContext models.
 	controllers := aToolContext controllers.
-	diagramElements := aToolContext diagramElements
+	diagramElements := aToolContext diagramElements.
+	viewModels := aToolContext viewModels.
+	models := aToolContext models
+]
+
+{ #category : 'as yet unclassified' }
+OPRoassalShapeCommand >> undoManager [
+	^ diagramController ifNotNil: [ :ctrl115 | ctrl115 undoManager ]
 ]

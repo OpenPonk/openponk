@@ -1,5 +1,8 @@
 "
-A DCDiagramController is the parent class to controller classes that control whole diagrams. It (its decendant) creates a palette / menu  for specific diagram. It also handles the changes in diagram, e.g. removal of element. 
+Primary controller managing a single diagram. 
+Coordinates the layout, rendering canvas, shape addition/removal, and user interactions. 
+Creates and manages specific element controllers utilizing OPControllerFactory. 
+Bridges visual Roassal shapes with their logical controllers and underlying ViewModels.
 "
 Class {
 	#name : 'OPDiagramController',
@@ -9,16 +12,15 @@ Class {
 		'controllers',
 		'editor',
 		'plugin',
-		'autosaveManager',
 		'modelToControllerCache',
 		'workbenchAnnouncer',
 		'layouter',
 		'controllerFactory',
-		'lastSelectionPosition',
 		'canvasPresenter',
 		'roassalShapeToControllerCache',
 		'roassalShapeAdded',
-		'roassalShapesBeingAdded'
+		'roassalShapesBeingAdded',
+		'projectController'
 	],
 	#category : 'OpenPonk-Core-Controllers',
 	#package : 'OpenPonk-Core',
@@ -35,6 +37,22 @@ OPDiagramController >> addAllElements [
 	^ self showAllElements
 ]
 
+{ #category : 'events' }
+OPDiagramController >> addCanvasInteractionEventsFor: aCanvas [
+	aCanvas
+		when: OPRSElementsDraggedEvent
+		send: #elementsDragged:
+		to: self.
+	aCanvas
+		when: OPRSShapeResizedEvent
+		send: #shapeResized:
+		to: self.
+	aCanvas
+		when: OPRSEdgeWaypointsChangedEvent
+		send: #edgeWaypointsChanged:
+		to: self
+]
+
 { #category : 'controllers management' }
 OPDiagramController >> addController: aController [
 	aController diagramController: self.
@@ -43,10 +61,13 @@ OPDiagramController >> addController: aController [
 
 { #category : 'accessing' }
 OPDiagramController >> addMouseEventsFor: aRoassalShape [
-
 	aRoassalShape
 		when: RSMouseRightClick
 		do: [ :event | self roassalShapeContextClicked: event ]
+		for: self.
+	aRoassalShape
+		when: RSMouseDoubleClick
+		do: [ :event | self roassalShapeDoubleClicked: event ]
 		for: self.
 	aRoassalShape
 		when: RSMouseEnter
@@ -63,16 +84,18 @@ OPDiagramController >> allModelElementsWithController [
 
 { #category : 'enumerating' }
 OPDiagramController >> allModelElementsWithPossibleController [
-	"all elements that could be directly hidden on diagram"
-
-	^ (Set with: self model) , self elementsToShowInside
+			"Returns only elements that can have a dedicated controller."
+			^ Array streamContents: [ :stream |
+				stream nextPut: self model.
+				self viewModel allChildrenModels do: [ :each |
+					(each ~= self model and: [ self hasSupportForModel: each ])
+						ifTrue: [ stream nextPut: each ] ] ]
 ]
 
 { #category : 'enumerating' }
 OPDiagramController >> allModelElementsWithPossibleDiagramElement [
-	"all model elements that can have diagram elements (even if cannot have controller)"
-
-	^ self allModelElementsWithPossibleController
+			"Returns all elements that have ANY diagram element (even labels without controller)."
+			^ Array with: self model withAll: self viewModel allChildrenModels
 ]
 
 { #category : 'accessing' }
@@ -85,13 +108,6 @@ OPDiagramController >> announcer [
 OPDiagramController >> applyDefaultLayout [
 
 	self layouter defaultLayout
-]
-
-{ #category : 'accessing' }
-OPDiagramController >> autosaveManager [
-	^ autosaveManager
-		ifNil: [ autosaveManager := OPAutosaveManager
-				on: self plugin singleStringSerializer ]
 ]
 
 { #category : 'controllers management' }
@@ -135,8 +151,20 @@ OPDiagramController >> cachedControllerForRoassalShape: aRoassalShape ifNone: aB
 
 { #category : 'connecting' }
 OPDiagramController >> canBeTargetFor: aController [
-	^ (aController isKindOf: OPCommonElementController)
-		and: [ aController class ~= OPCommonElementController ]
+
+	^ aController class inheritsFrom: OPDiagramOnlyController
+]
+
+{ #category : 'testing' }
+OPDiagramController >> canRedo [
+
+	^ self undoManager ifNil: [ false ] ifNotNil: [ :manager | manager canRedo ]
+]
+
+{ #category : 'testing' }
+OPDiagramController >> canUndo [
+
+	^ self undoManager ifNil: [ false ] ifNotNil: [ :manager | manager canUndo ]
 ]
 
 { #category : 'accessing' }
@@ -152,9 +180,67 @@ OPDiagramController >> canvasPresenter [
 
 { #category : 'accessing' }
 OPDiagramController >> canvasPresenter: aCanvasPresenter [
-
 	canvasPresenter := aCanvasPresenter.
-	self addMouseEventsFor: canvasPresenter canvas
+	(canvasPresenter respondsTo: #diagramController:) ifTrue: [
+		canvasPresenter diagramController: self ].
+	self addMouseEventsFor: canvasPresenter canvas.
+	self addCanvasInteractionEventsFor: canvasPresenter canvas
+]
+
+{ #category : 'private' }
+OPDiagramController >> commandsForDraggedLines: anEvent [
+	"Answer collection of waypoint change commands for all affected edges."
+	| commands |
+	commands := OrderedCollection new.
+	anEvent lines do: [ :eachLine |
+		(eachLine model isKindOf: OPEdge) ifTrue: [
+			| edgeModel oldControlPoints newControlPoints |
+			edgeModel := eachLine model.
+			oldControlPoints := anEvent initialLineControlPoints at: eachLine ifAbsent: [ eachLine innerControlPoints ].
+			newControlPoints := eachLine innerControlPoints.
+			oldControlPoints ~= newControlPoints ifTrue: [
+				commands add: (OPModifyEdgeWaypointsCommand
+					edge: edgeModel
+					oldWaypoints: { eachLine controlPoints first } , oldControlPoints , { eachLine controlPoints last }
+					newWaypoints: eachLine controlPoints copy) ] ] ].
+	^ commands
+]
+
+{ #category : 'canvas-drag' }
+OPDiagramController >> commandsForDraggedShapes: anEvent [
+	"Answer collection of bounds change commands for all dragged nodes."
+	| commands |
+	commands := OrderedCollection new.
+	anEvent shapes do: [ :eachShape |
+		(eachShape model isKindOf: OPBoundNode) ifTrue: [
+			| elementModel oldPosition newPosition |
+			elementModel := eachShape model.
+			oldPosition := anEvent initialPositions at: eachShape ifAbsent: [ eachShape position ].
+			newPosition := eachShape position.
+			oldPosition ~= newPosition ifTrue: [
+				| oldBounds newBounds |
+				oldBounds := OPNodeBounds withPosition: oldPosition extent: eachShape extent.
+				newBounds := OPNodeBounds withPosition: newPosition extent: eachShape extent.
+				commands add: ((anEvent hasInitialAnchorFor: eachShape)
+					ifTrue: [
+						| oldAnchorState anchorConstraint |
+						oldAnchorState := anEvent initialAnchorFor: eachShape.
+						anchorConstraint := eachShape propertyAt: OPRSAnchorConstraint.
+						(OPChangeAnchoredBoundsCommand
+							element: elementModel
+							oldBounds: oldBounds
+							newBounds: newBounds)
+							oldBalance: oldAnchorState first
+							newBalance: anchorConstraint balance
+							oldDistanceToLine: oldAnchorState second
+							newDistanceToLine: anchorConstraint distanceToLine;
+							yourself ]
+					ifFalse: [
+						OPChangeBoundsCommand
+							element: elementModel
+							oldBounds: oldBounds
+							newBounds: newBounds ]) ] ] ].
+	^ commands
 ]
 
 { #category : 'accessing' }
@@ -169,7 +255,7 @@ OPDiagramController >> commonElements [
 
 { #category : 'accessing' }
 OPDiagramController >> controllerFactory [
-	^ OPControllerFactory withCommonElements
+	^ OPControllerFactory withCommonElementsFor: self
 ]
 
 { #category : 'controllers management' }
@@ -248,8 +334,22 @@ OPDiagramController >> createController: aModel [
 
 { #category : 'protocol-canvas' }
 OPDiagramController >> deselectAll [
-
+	self canvas ifNotNil: [ :c |
+		c propertyAt: OPRSSelectableCanvas ifPresent: [ :interaction |
+			interaction selectedShapes ifNotEmpty: [
+				interaction 
+					selectShapes: RSGroup new 
+					byEvent: (RSMouseClick new canvas: c; position: 0@0; yourself) ] ] ].
 	self announcer announce: OPAllShapesDeselected new
+]
+
+{ #category : 'selection' }
+OPDiagramController >> deselectController: aController [
+	"Deselect aController in the active palette tool and workbench form."
+	self editor ifNotNil: [ :activeEditor |
+		activeEditor palette ifNotNil: [ :activePalette |
+			activePalette selectedTool ifNotNil: [ :activeTool |
+				activeTool deselectController: aController ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -270,15 +370,8 @@ OPDiagramController >> diagram: aDiagram [
 
 { #category : 'accessing' }
 OPDiagramController >> diagramController [
+
 	^ self
-]
-
-{ #category : 'accessing' }
-OPDiagramController >> diagramController: aController [
-
-	aController ifNil: [ ^ self ].
-	aController = self ifTrue: [ ^ self ].
-	self error: 'Cannot assign diagramController to diagramController'
 ]
 
 { #category : 'rebuilding' }
@@ -293,9 +386,30 @@ OPDiagramController >> diagramFocused [
 	self diagramElement updateRenderFromSelf
 ]
 
-{ #category : 'userinterface' }
-OPDiagramController >> disableRefresh [
-	self flag: #todo
+{ #category : 'event handling' }
+OPDiagramController >> edgeWaypointsChanged: anEvent [
+	| targetLine targetEdge command |
+	(self undoManager isNotNil and: [ self undoManager isExecutingUndoRedo ])
+		ifTrue: [ ^ self ].
+	targetLine := anEvent line.
+	targetLine ifNil: [ ^ self ].
+	targetEdge := (targetLine model isKindOf: OPEdge)
+		ifTrue: [ targetLine model ]
+		ifFalse: [
+			(self controllerForRoassalShape: targetLine ifNone: [ nil ])
+				ifNotNil: [ :edgeController |
+					(edgeController diagramElement isKindOf: OPEdge)
+						ifTrue: [ edgeController diagramElement ]
+						ifFalse: [ nil ] ] ].
+	targetEdge ifNil: [ ^ self ].
+	anEvent oldWaypoints = anEvent newWaypoints ifTrue: [ ^ self ].
+	command := OPModifyEdgeWaypointsCommand
+		edge: targetEdge
+		oldWaypoints: anEvent oldWaypoints
+		newWaypoints: anEvent newWaypoints.
+	self undoManager
+		ifNotNil: [ :activeUndoManager | activeUndoManager execute: command ]
+		ifNil: [ command execute ]
 ]
 
 { #category : 'ui interaction' }
@@ -318,9 +432,15 @@ OPDiagramController >> elementRemoved [
 				projectTree refresh ] ] ]
 ]
 
-{ #category : 'userinterface' }
-OPDiagramController >> enableRefresh [
-	self flag: #todo
+{ #category : 'ui interactions' }
+OPDiagramController >> elementsDragged: anEvent [
+	"Handle canvas drag event by recording moved nodes and line waypoints into an undoable transaction."
+	| commands |
+	(self undoManager isNotNil and: [ self undoManager isExecutingUndoRedo ])
+		ifTrue: [ ^ self ].
+	commands := (self commandsForDraggedShapes: anEvent) , (self commandsForDraggedLines: anEvent).
+	commands ifEmpty: [ ^ self ].
+	self executeDragCommands: commands
 ]
 
 { #category : 'figures' }
@@ -337,6 +457,19 @@ OPDiagramController >> ensureControllerFor: aModel [
 OPDiagramController >> ensureDeselected [
 
 	self deselectAll
+]
+
+{ #category : 'private' }
+OPDiagramController >> executeDragCommands: aCollectionOfCommands [
+	"Execute drag change commands within a labeled undo transaction."
+	| transactionLabel |
+	transactionLabel := aCollectionOfCommands size > 1 ifTrue: [ 'Move Elements' ] ifFalse: [ 'Move Element' ].
+	self undoManager
+		ifNotNil: [ :activeUndoManager |
+			activeUndoManager inTransactionLabeled: transactionLabel do: [
+				aCollectionOfCommands do: [ :eachCommand | activeUndoManager execute: eachCommand ] ] ]
+		ifNil: [
+			aCollectionOfCommands do: [ :eachCommand | eachCommand execute ] ]
 ]
 
 { #category : 'accessing' }
@@ -373,18 +506,8 @@ OPDiagramController >> hasControllerForRoassalShape: aRoassalShape [
 ]
 
 { #category : 'testing' }
-OPDiagramController >> hasRedo [
-	^ self autosaveManager futureIsEmpty not
-]
-
-{ #category : 'testing' }
 OPDiagramController >> hasSupportForModel: aModel [
 	^ controllerFactory hasControllerFor: aModel
-]
-
-{ #category : 'testing' }
-OPDiagramController >> hasUndo [
-	^ self autosaveManager historyIsEmpty not
 ]
 
 { #category : 'figures' }
@@ -395,11 +518,13 @@ OPDiagramController >> hideAllElements [
 	self canvas signalUpdate
 ]
 
-{ #category : 'figures' }
+{ #category : 'showing/hiding' }
 OPDiagramController >> hideModelFromDiagram: aModel [
 	self
 		controllerForModel: aModel
-		ifFound: [ :ctrl | ctrl removeControllerAndDiagramElement ]
+		ifFound: [ :ctrl |
+			ctrl removeControllerAndDiagramElement.
+			self updateCanvas ]
 ]
 
 { #category : 'protocol-canvas' }
@@ -416,7 +541,7 @@ OPDiagramController >> hoverRoassalShape: aRoassalShape [
 
 { #category : 'ui interaction' }
 OPDiagramController >> incompatiblePaletteItemNames [
-	^ OPCommonElementController allSubclasses
+	^ OPDiagramOnlyController allSubclasses
 		reject: [ :eachClass | self canBeTargetFor: eachClass new ]
 		thenCollect: [ :each | each paletteItemName ]
 ]
@@ -427,7 +552,6 @@ OPDiagramController >> initialize [
 	super initialize.
 	roassalShapeAdded := [ :roassalShape |  ].
 	controllerFactory := self controllerFactory.
-	diagramController := self.
 	roassalShapesBeingAdded := Set new.
 	modelToControllerCache := OPModelToControllerCache for: self.
 	roassalShapeToControllerCache := OPRoassalShapeToControllerCache for: self
@@ -468,11 +592,6 @@ OPDiagramController >> loadState: aMemento [
 ]
 
 { #category : 'accessing' }
-OPDiagramController >> modelClass [
-	^ self plugin modelClass
-]
-
-{ #category : 'accessing' }
 OPDiagramController >> modelForFigure: aFigure [
 	self
 		deprecated: 'use #modelForRoassalShape: instead'
@@ -504,12 +623,9 @@ OPDiagramController >> modelsWithController [
 
 { #category : 'accessing' }
 OPDiagramController >> nameOfTypeForModel: aModel [
-	self
-		deprecated: 'use #name on typeOfModel: instead'
-		transformWith:
-			'`@receiver nameOfTypeForModel: `@argument'
-				-> '(`@receiver typeOfModel: `@argument) name'.
-	^ (self typeOfModel: aModel) name
+
+	self deprecated: 'use #nameOfType on the viewModel of the model'.
+	^ (self viewModelRegistry viewModelFor: aModel) nameOfType
 ]
 
 { #category : 'controllers management' }
@@ -519,15 +635,9 @@ OPDiagramController >> newControllerFor: aModel [
 ]
 
 { #category : 'ui interaction' }
-OPDiagramController >> openInForm: aController [
-	self form editController: aController
-]
+OPDiagramController >> openInForm: aViewModel [
 
-{ #category : 'connecting' }
-OPDiagramController >> parentContainerModel [
-	"I do not have any further parent"
-
-	^ self model
+	self form viewModel: aViewModel
 ]
 
 { #category : 'accessing' }
@@ -535,10 +645,30 @@ OPDiagramController >> plugin [
 	^ plugin ifNil: [ OPPluginRegistry default pluginForController: self ]
 ]
 
+{ #category : 'accessing' }
+OPDiagramController >> project [
+
+	^ self projectController project
+]
+
+{ #category : 'accessing' }
+OPDiagramController >> projectController [
+
+	^ projectController
+]
+
+{ #category : 'accessing' }
+OPDiagramController >> projectController: aProjectController [
+	self unsubscribeFromUndoManager.
+	projectController := aProjectController.
+	projectController ifNotNil: [ self subscribeToUndoManager ]
+]
+
 { #category : 'undo/redo' }
 OPDiagramController >> redo [
-	self assert: [ self hasRedo ].
-	self loadState: self autosaveManager loadNext
+	"Redo the latest undone action in the active project."
+
+	self undoManager ifNotNil: [ :manager | manager redo ]
 ]
 
 { #category : 'deprecated' }
@@ -546,13 +676,6 @@ OPDiagramController >> registerModelEvents: aModel [
 	self deprecated: 'Use #model: and #internalSubscribeTo: instead'.
 	"super registerModelEvents: aModel.
 	aModel announcer when: OPElementChanged do: [ :evt | self saveState ]"
-]
-
-{ #category : 'deprecated' }
-OPDiagramController >> remove [
-
-	self error:
-		'There should be no need to call #remove on DiagramController'
 ]
 
 { #category : 'destruction' }
@@ -564,8 +687,8 @@ OPDiagramController >> removeAllControllers [
 
 { #category : 'controllers management' }
 OPDiagramController >> removeController: aController [
-
-	self controllers remove: aController ifAbsent: [  ]
+	self deselectController: aController.
+	self controllers remove: aController ifAbsent: [ ]
 ]
 
 { #category : 'deprecated' }
@@ -599,45 +722,31 @@ OPDiagramController >> removeFromModel: aModel [
 ]
 
 { #category : 'deprecated' }
-OPDiagramController >> removeModel [
-	self deprecated: 'should not implement'.
-	^ self shouldNotImplement
-]
-
-{ #category : 'deprecated' }
-OPDiagramController >> removeModelElement: aModelElement [
-	self deprecated: 'Use removeModel on its controller instead.'.
-"	model remove: aModelElement"
-
-	(self controllerForModel: aModelElement) removeModel
+OPDiagramController >> removeModelElement: aModel [
+	| command |
+	command := OPRemoveModelElementCommand
+		model: aModel
+		diagramController: self.
+	self undoManager
+		ifNotNil: [ :mgr | mgr inTransaction: [ mgr execute: command ] ]
+		ifNil: [ command execute ]
 ]
 
 { #category : 'destruction' }
 OPDiagramController >> removeModelOfRoassalShape: aRoassalShape [
-
+	| controller |
 	aRoassalShape ifNil: [ ^ self ].
-	(self controllerForRoassalShape: aRoassalShape)
-		removeControllerAndModel
+	controller := self controllerForRoassalShape: aRoassalShape ifNone: [ ^ self ].
+	self removeModelElement: controller model
 ]
 
-{ #category : 'accessing' }
+{ #category : 'figures' }
 OPDiagramController >> rendered: aController [
-
-	(roassalShapesBeingAdded includes: aController)
-		ifFalse: [
-			self traceCr:
-				'DiagramController>>#addedFigureFor: added figure not previously marked as being added' ]
-		ifTrue: [ roassalShapesBeingAdded remove: aController ].
-
-
-	lastSelectionPosition ifNotNil: [
-		aController diagramElement addedByMouseClickTo:
-			lastSelectionPosition.
-		lastSelectionPosition := nil ].
+	roassalShapesBeingAdded remove: aController ifAbsent: [ ].
 	self addMouseEventsFor: aController roassalShape
 ]
 
-{ #category : 'accessing' }
+{ #category : 'figures' }
 OPDiagramController >> roassalShape [
 
 	^ self canvas
@@ -657,6 +766,15 @@ OPDiagramController >> roassalShapeContextClicked: anEvent [
 	menu popUpInWorld
 ]
 
+{ #category : 'events' }
+OPDiagramController >> roassalShapeDoubleClicked: anEvent [
+	"Handle double click on shapes: select target controller and focus the first form input."
+	| ctrl |
+	ctrl := self controllerForRoassalShape: anEvent shape ifNone: [ ^ self ].
+	self selectController: ctrl.
+	self form ifNotNil: #focusFirstInput
+]
+
 { #category : 'accessing' }
 OPDiagramController >> roassalShapeForModel: aModel [
 
@@ -672,57 +790,84 @@ OPDiagramController >> saveState [
 	self editor workbench projectController autoSave: memento"
 ]
 
-{ #category : 'ui interaction' }
+{ #category : 'selection' }
 OPDiagramController >> selectController: aController [
-
-	self editor palette selectSelectionTool selectedTool 
-		selectedTargetControllers: { aController }
+	"Select a controller in diagram palette and workbench form."
+	self editor ifNotNil: [ :activeEditor |
+		activeEditor palette selectSelectionTool selectedTool
+			selectedControllers: { aController } ]
 ]
 
 { #category : 'accessing' }
 OPDiagramController >> selectedElements [
-
 	^ (self canvas propertyAt: OPRSSelectableCanvas) selectedShapes
 ]
 
-{ #category : 'protocol-canvas' }
+{ #category : 'canvas events' }
 OPDiagramController >> selectedShapes: shapes onPosition: aPoint [
-
-	lastSelectionPosition := aPoint.
-	self editor palette selectedTool selectedControllers:
-		(shapes collect: [ :each | self controllerForRoassalShape: each ])
+	self editor ifNotNil: [ :activeEditor |
+		activeEditor palette ifNotNil: [ :activePalette |
+			activePalette selectedTool ifNotNil: [ :activeTool |
+				| controllers |
+				controllers := shapes collect: [ :eachShape | self controllerForRoassalShape: eachShape ].
+				activeTool selectedControllers: controllers onPosition: aPoint.
+				^ self ] ] ].
+	"Headless execution fallback"
+	shapes detect: #isSelectable ifFound: [ :shape |
+		(shape propertyAt: OPRSSelectable) doHighlightShapes: shapes ]
 ]
 
-{ #category : 'rebuilding' }
+{ #category : 'events' }
+OPDiagramController >> shapeResized: anEvent [
+	| shape node oldBounds newBounds command |
+	(self undoManager isNotNil and: [ self undoManager isExecutingUndoRedo ])
+		ifTrue: [ ^ self ].
+	shape := anEvent shape.
+	(shape isNotNil and: [ shape model isKindOf: OPBoundNode ])
+		ifFalse: [ ^ self ].
+	node := shape model.
+	((anEvent oldExtent = anEvent newExtent) and: [ anEvent oldPosition = anEvent newPosition ])
+		ifTrue: [ ^ self ].
+	oldBounds := OPNodeBounds
+		withPosition: anEvent oldPosition
+		extent: anEvent oldExtent.
+	newBounds := OPNodeBounds
+		withPosition: anEvent newPosition
+		extent: anEvent newExtent.
+	command := OPChangeBoundsCommand
+		element: node
+		oldBounds: oldBounds
+		newBounds: newBounds.
+	self undoManager
+		ifNotNil: [ :mgr | mgr execute: command ]
+		ifNil: [ command execute ]
+]
+
+{ #category : 'ui interaction' }
 OPDiagramController >> showAllElements [
-
-	self disableRefresh.
-	self allModelElementsWithPossibleController do: [ :each | 
-		self showWithoutDependentInDiagramModel: each ].
-	self enableRefresh
+	self allModelElementsWithPossibleController do: [ :eachModelElement |
+		self showWithoutDependentInDiagramModel: eachModelElement ]
 ]
 
-{ #category : 'rebuilding' }
+{ #category : 'showing elements' }
 OPDiagramController >> showDiagramElement: aDiagramElement [
-
+	"Show diagram element and recursively traverse all owned diagram elements regardless of prior rendering state."
 	aDiagramElement shouldHaveController ifTrue: [
 		| controller |
 		controller := self
 			              controllerForModel: aDiagramElement ownModelElement
-			              ifFound: [ :ctrl |
-				              ctrl isRendered ifTrue: [
-					              aDiagramElement isRendered ifTrue: [ ^ ctrl ].
-					              ^ self error:
-						                'Controller is already rendered by a different diagram element' ].
-				              ctrl ]
+			              ifFound: [ :foundController |
+				              (foundController isRendered and: [ aDiagramElement isRendered not ]) ifTrue: [
+					              self error: 'Controller is already rendered by a different diagram element' ].
+				              foundController ]
 			              ifNone: [
-			              self newControllerFor:
-				              aDiagramElement ownModelElement ].
-		controller
-			diagramElement: aDiagramElement;
-			showWithoutDependentInDiagram: self ].
-	aDiagramElement ownedElements do: [ :each |
-		self showDiagramElement: each ]
+				              self newControllerFor: aDiagramElement ownModelElement ].
+		controller diagramElement = aDiagramElement ifFalse: [
+			controller diagramElement: aDiagramElement ].
+		controller isRendered ifFalse: [
+			controller showWithoutDependentInDiagram: self ] ].
+	aDiagramElement ownedElements do: [ :eachChildElement |
+		self showDiagramElement: eachChildElement ]
 ]
 
 { #category : 'figures' }
@@ -751,18 +896,25 @@ OPDiagramController >> showWithoutDependentInDiagramModel: aModel [
 		  yourself
 ]
 
-{ #category : 'accessing' }
-OPDiagramController >> typeOfModel: aModel [
-	^ OPModelObjectType
-		named:
-			((aModel className withoutPrefix: self commonModelClassPrefix)
-				splitCamelCase joinUsing: ' ')
+{ #category : 'undo/redo' }
+OPDiagramController >> subscribeToUndoManager [
+	self projectController undoManager announcer weak
+		when: OPUndoRedoChanged
+		send: #updateCanvas
+		to: self
 ]
 
 { #category : 'undo/redo' }
 OPDiagramController >> undo [
-	self assert: [ self hasUndo ].
-	self loadState: self autosaveManager loadPrevious
+	"Undo the latest action in the active project."
+
+	self undoManager ifNotNil: [ :manager | manager undo ]
+]
+
+{ #category : 'undo/redo' }
+OPDiagramController >> unsubscribeFromUndoManager [
+	projectController ifNotNil: [ :activeProjectController |
+		activeProjectController undoManager announcer unsubscribe: self ]
 ]
 
 { #category : 'event handling' }
@@ -775,14 +927,16 @@ OPDiagramController >> updateAfterDiagramFocused [
 	self controllers
 		reject: [ :each | each isDiagramOnly ]
 		thenDo: [ :each |
-			(modelElementsToKeep includes: each model)
-				ifTrue: [ each updateAfterDiagramFocused ]
-				ifFalse: [ each removeControllerAndDiagramElement ] ].
+				(modelElementsToKeep includes: each model)
+					ifTrue: [ each updateAfterDiagramFocused ]
+					ifFalse: [ each removeControllerAndDiagramElement ] ].
 	self diagramElement allOwnedElements asIdentitySet
 		reject: [ :each |
-			each isDiagramOnly or: [
-				modelElementsToKeep includes: each modelElement ] ]
-		thenDo: [ :each | each remove ]
+				each isDiagramOnly or: [
+					modelElementsToKeep includes: each modelElement ] ]
+		thenDo: [ :each |
+				each remove.
+				each owningElement: nil ]
 ]
 
 { #category : 'userinterface' }
@@ -804,8 +958,7 @@ OPDiagramController >> updateView [
 
 { #category : 'validation' }
 OPDiagramController >> validate [
-
-	self controllers do: [ :each | each validate ]
+	self controllers do: [ :each | each viewModel validate ]
 ]
 
 { #category : 'accessing' }

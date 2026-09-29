@@ -1,3 +1,6 @@
+"
+Selection strategy that identifies and moves all shapes completely contained within the spatial bounds of a dragged parent shape.
+"
 Class {
 	#name : 'OPRSSelectionDraggableContainedShapesProvider',
 	#superclass : 'OPRSSelectionDraggableInnerShapesProvider',

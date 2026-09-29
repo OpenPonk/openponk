@@ -1,3 +1,7 @@
+"
+Diagram element representing a textual label. 
+Manages font properties (size, color, family, emphasis) and handles text rendering updates.
+"
 Class {
 	#name : 'OPLabel',
 	#superclass : 'OPBoundNode',
@@ -77,13 +81,7 @@ OPLabel >> fontSize [
 		  ifAbsent: [ self defaultFontSize ]
 ]
 
-{ #category : 'testing' }
-OPLabel >> isResizableByUser [
-
-	^ false
-]
-
-{ #category : 'accessing' }
+{ #category : 'actions' }
 OPLabel >> noText [
 
 	self text: ''
@@ -97,7 +95,7 @@ OPLabel >> renderBasicShape [
 		  yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : 'actions' }
 OPLabel >> resetText [
 
 	self text: nil

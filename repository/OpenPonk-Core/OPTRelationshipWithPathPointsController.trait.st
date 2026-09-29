@@ -1,3 +1,7 @@
+"
+Trait used by controllers of relationships rendered as paths with routing points.
+Provides access to source and target models and their corresponding diagram elements.
+"
 Trait {
 	#name : 'OPTRelationshipWithPathPointsController',
 	#category : 'OpenPonk-Core-Controllers',
@@ -8,13 +12,13 @@ Trait {
 { #category : 'accessing' }
 OPTRelationshipWithPathPointsController >> modelSource [
 
-	^ self model ifNotNil: [ :foundModel | foundModel source ]
+	^ self viewModel modelSource
 ]
 
 { #category : 'accessing' }
 OPTRelationshipWithPathPointsController >> modelTarget [
 
-	^ self model ifNotNil: [ :foundModel | foundModel target ]
+	^ self viewModel modelTarget
 ]
 
 { #category : 'accessing' }

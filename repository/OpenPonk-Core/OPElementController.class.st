@@ -1,49 +1,86 @@
 "
-A DCElementController an abstract class which should be a parent for all elements in diagram, such as classes, states.
-It has method which handles the creation of the form for specific element. The controller is also responsible for specification of the view of an element. The precise definition of the form and the view is done by descendants.
+Abstract base class for controllers managing specific diagram elements (such as nodes and edges). 
+Coordinates the visual representation (Roassal shapes) and interacts with the element's ViewModel. 
+Does not directly manage the domain model lifecycle, delegating that responsibility to the ViewModel.
 "
 Class {
 	#name : 'OPElementController',
 	#superclass : 'OPController',
+	#instVars : [
+		'diagramController'
+	],
 	#category : 'OpenPonk-Core-Controllers',
 	#package : 'OpenPonk-Core',
 	#tag : 'Controllers'
 }
 
 { #category : 'construction' }
+OPElementController class >> diagramElementClass [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'construction' }
 OPElementController >> createDiagramElement [
 
 	^ self diagramElement: (self diagramElementClass
-			   in: self ownerDiagramElement
+			   in: self intendedOwningDiagramElement
 			   forModelElement: self model)
 ]
 
 { #category : 'construction' }
 OPElementController >> createModelIn: aParentModel [
 
-	self model: self modelClass new.
-	self registerModelIn: aParentModel.
+	self viewModel: (self viewModelRegistry
+			 registerNewViewModelOfClass: self class viewModelClass
+			 createdBy: [ :newViewModel |
+			 newViewModel createModelIn: aParentModel ]).
 	^ self model
 ]
 
 { #category : 'construction' }
 OPElementController >> createModelIn: aParentModel andShowInDiagram: aDiagramController [
-
+	self diagramController: aDiagramController.
 	self removeDiagramElement.
 	self createModelIn: aParentModel.
 	self showWithoutDependentInDiagram: aDiagramController
 ]
 
-{ #category : 'construction' }
-OPElementController >> dependingOnElements [
-
-	^ Set empty
+{ #category : 'creation' }
+OPElementController >> creationCommandIn: aParentModel andShowInDiagram: aDiagramController [
+	^ self creationCommandIn: aParentModel andShowInDiagram: aDiagramController onPosition: nil
 ]
 
-{ #category : 'construction' }
-OPElementController >> diagramElementClass [
+{ #category : 'creation' }
+OPElementController >> creationCommandIn: aParentModel andShowInDiagram: aDiagramController onPosition: aPoint [
+	^ OPCreateNodeCommand
+		controller: self
+		parentModel: aParentModel
+		diagramController: aDiagramController
+		position: aPoint
+]
 
-	^ self subclassResponsibility
+{ #category : 'deprecation' }
+OPElementController >> dependingOnElements [
+	self deprecated: 'Use viewModel instead' transformWith: '`@receiver dependingOnElements' -> '`@receiver viewModel dependingOnElements'.
+	^ self viewModel ifNotNil: [ :vm | vm dependingOnElements ] ifNil: [ Set empty ]
+]
+
+{ #category : 'accessing' }
+OPElementController >> diagramController [
+
+	^ diagramController
+]
+
+{ #category : 'accessing' }
+OPElementController >> diagramController: aDiagramController [
+
+	diagramController := aDiagramController
+]
+
+{ #category : 'accessing' }
+OPElementController >> diagramElementClass [
+    ^ self class diagramElementClass
 ]
 
 { #category : 'diagram elements' }
@@ -52,21 +89,13 @@ OPElementController >> diagramElementOwnerWithPossibleController [
 	^ self diagramElement owningElementWithPossibleController
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'ui interaction' }
 OPElementController >> ensureDeselected [
-
-	| roassalShape |
-	self isRendered ifFalse: [ ^ self ].
-	roassalShape := self roassalShape.
-	roassalShape isSelectable ifFalse: [ ^ self ].
-	roassalShape isSelected ifFalse: [ ^ self ].
-	roassalShape propertyAt: OPRSSelectable ifPresent: [ :selectable |
-		selectable clicked: roassalShape by: (RSMouseLeftClick new
-				 controlKeyPressed: true;
-				 canvas: roassalShape canvas;
-				 shape: roassalShape;
-				 position: roassalShape position;
-				 yourself) ]
+	self diagramController ifNotNil: [ :activeDiagramController |
+		activeDiagramController deselectController: self ].
+	(self isRendered and: [ self roassalShape canvas isNotNil ]) ifTrue: [
+		self roassalShape propertyAt: OPRSSelectable ifPresent: [ :selectable |
+			selectable deselect: self roassalShape ] ]
 ]
 
 { #category : 'accessing' }
@@ -85,9 +114,9 @@ OPElementController >> ensureDiagramElement [
 
 { #category : 'construction' }
 OPElementController >> ensureShownDependenciesInDiagram: aDiagramController [
-
-	^ self dependingOnElements do: [ :each |
-		  aDiagramController showWithoutDependentInDiagramModel: each ]
+	self viewModel ifNotNil: [ :vm |
+		vm dependingOnElements do: [ :each |
+			aDiagramController showWithoutDependentInDiagramModel: each ] ]
 ]
 
 { #category : 'figures' }
@@ -109,6 +138,32 @@ OPElementController >> hookDiagramElement [
 	"do nothing by default"
 
 	
+]
+
+{ #category : 'diagram elements' }
+OPElementController >> intendedModelOfOwningDiagramElement [
+
+	| parentViewModel |
+	parentViewModel := self viewModel parentViewModel.
+	[
+		parentViewModel isNotNil and: [
+				parentViewModel model isNotNil and: [
+						(self diagramController hasControllerForModel:
+							 parentViewModel model) not ] ] ] whileTrue: [
+		parentViewModel := parentViewModel parentViewModel ].
+
+	^ parentViewModel ifNotNil: [ :parentVM | parentVM model ]
+]
+
+{ #category : 'diagram elements' }
+OPElementController >> intendedOwningDiagramElement [
+
+	| model |
+	model := self intendedModelOfOwningDiagramElement.
+	(model isNil or: [ model = self diagramController model ]) ifTrue: [
+		^ self diagramController diagramElement ].
+	^ (self diagramController controllerForModel:
+		   self intendedModelOfOwningDiagramElement) diagramElement
 ]
 
 { #category : 'testing' }
@@ -138,20 +193,23 @@ OPElementController >> loadModel [
 { #category : 'diagram elements' }
 OPElementController >> owner [
 
+	| parentViewModel |
+	parentViewModel := self viewModel parentViewModel.
+	[
+		parentViewModel isNotNil and: [
+				parentViewModel model isNotNil and: [
+						(self diagramController hasControllerForModel:
+							 parentViewModel model) not ] ] ] whileTrue: [
+		parentViewModel := parentViewModel parentViewModel ].
+
 	^ self diagramController
+		  controllerForModel: parentViewModel model
+		  ifNone: [ nil ]
 ]
 
-{ #category : 'diagram elements' }
-OPElementController >> ownerDiagramElement [
-
-	^ self owner diagramElement
-]
-
-{ #category : 'connecting' }
-OPElementController >> parentContainerModel [
-	"Redefine to answer model that acts as a primary container of my model and other elements on my model's level. If I am always directly inside diagramController without any intermediate structure, this may answer self diagramController model"
-
-	^ self model owner
+{ #category : 'accessing' }
+OPElementController >> projectController [
+	^ self diagramController projectController
 ]
 
 { #category : 'deprecated' }
@@ -167,14 +225,10 @@ OPElementController >> registerModelEvents: aModel [
 
 { #category : 'construction' }
 OPElementController >> registerModelIn: aParentModel [
-
-	self registerModelInContainer: aParentModel
-]
-
-{ #category : 'construction' }
-OPElementController >> registerModelInContainer: aParentModel [
-
-	aParentModel add: self model
+	self 
+		deprecated: 'Use viewModel registerModelIn: instead' 
+		transformWith: '`@receiver registerModelIn: `@arg' -> '`@receiver viewModel registerModelIn: `@arg'.
+	^ self viewModel ifNotNil: [ :vm | vm registerModelIn: aParentModel ]
 ]
 
 { #category : 'deprecated' }
@@ -244,9 +298,7 @@ OPElementController >> target: aController [
 { #category : 'diagram elements' }
 OPElementController >> unhookDiagramElement [
 
-	"do nothing by default"
-
-	
+	self unhookRoassalShape
 ]
 
 { #category : 'diagram elements' }

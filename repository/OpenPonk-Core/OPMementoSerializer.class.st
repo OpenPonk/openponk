@@ -1,3 +1,6 @@
+"
+Serializer responsible for exporting and importing memento objects, which represent snapshots of project state used for undo/redo and persistence operations.
+"
 Class {
 	#name : 'OPMementoSerializer',
 	#superclass : 'OPSerializer',
@@ -9,7 +12,7 @@ Class {
 	#tag : 'Persistence'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPMementoSerializer class >> exportSubject [
 
 	^ #modelWithDiagrams
@@ -29,6 +32,6 @@ OPMementoSerializer >> addFormatNameTo: aFileReference [
 ]
 
 { #category : 'accessing' }
-OPMementoSerializer >> plugin: anOPPetriNetsPlugin [ 
-	plugin := anOPPetriNetsPlugin
+OPMementoSerializer >> plugin: aPlugin [ 
+	plugin := aPlugin
 ]

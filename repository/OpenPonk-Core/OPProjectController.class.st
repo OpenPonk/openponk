@@ -1,5 +1,5 @@
 "
-I am not actually a controller, but I do manage a Project.
+Coordinator for an OPProject. Handles project-level lifecycle operations including saving, loading, merging, undo/redo coordination, and active diagram controllers.
 "
 Class {
 	#name : 'OPProjectController',
@@ -9,9 +9,9 @@ Class {
 		'project',
 		'controllers',
 		'lastSave',
-		'disableAutosave',
 		'persistenceManager',
-		'navigatorAdapters'
+		'viewModelRegistry',
+		'undoManager'
 	],
 	#classVars : [
 		'RecentProjects'
@@ -20,6 +20,13 @@ Class {
 	#package : 'OpenPonk-Core',
 	#tag : 'Controllers'
 }
+
+{ #category : 'instance creation' }
+OPProjectController class >> forProject: aProject [
+	^ self new
+		project: aProject;
+		yourself
+]
 
 { #category : 'instance creation' }
 OPProjectController class >> fromDirectory: aFolder [
@@ -86,9 +93,11 @@ OPProjectController class >> openModalFromFile [
 		  projectController
 ]
 
-{ #category : 'adding' }
-OPProjectController >> addDiagramController: aController [
-	controllers add: aController
+{ #category : 'managing' }
+OPProjectController >> addDiagramController: aDiagramController [
+	(controllers includes: aDiagramController) ifTrue: [ ^ self ].
+	controllers add: aDiagramController.
+	aDiagramController projectController: self
 ]
 
 { #category : 'saving' }
@@ -100,6 +109,18 @@ OPProjectController >> canProjectBeSavedToFile: aFileReference [
 	aFileReference size isZero
 		ifTrue: [ aFileReference delete ].
 	^ true
+]
+
+{ #category : 'undo-redo' }
+OPProjectController >> canRedo [
+	"Answer whether an action can be redone in the project."
+	^ self undoManager canRedo
+]
+
+{ #category : 'undo-redo' }
+OPProjectController >> canUndo [
+	"Answer whether an action can be undone in the project."
+	^ self undoManager canUndo
 ]
 
 { #category : 'accessing' }
@@ -133,7 +154,8 @@ OPProjectController >> hasModel: aModel diagram: aDiagram [
 { #category : 'initialization' }
 OPProjectController >> initialize [
 	super initialize.
-	controllers := OrderedCollection new
+	controllers := OrderedCollection new.
+	undoManager := OPUndoManager new
 ]
 
 { #category : 'saving' }
@@ -169,48 +191,35 @@ OPProjectController >> mergeModelsAndDiagramsIntoOne [
 
 	| showError plugins models plugin |
 	showError := [ :text |
-	             ^ (GrowlMorph
-		                label: 'Unable to merge models'
-		                contents: text)
-		               backgroundColor:
-			               GrowlMorph theme dangerBackgroundColor;
-		               labelColor: GrowlMorph theme textColor;
-		               textColor:
-			               GrowlMorph theme textColorForNonStandardBackground;
-		               openInWorld ].
+		             ^ (GrowlMorph label: 'Unable to merge models' contents: text)
+			               backgroundColor: GrowlMorph theme dangerBackgroundColor;
+			               labelColor: GrowlMorph theme textColor;
+			               textColor: GrowlMorph theme textColorForNonStandardBackground;
+			               openInWorld ].
 	models := self project models.
 	models ifEmpty: [ ^ showError value: 'There are no models' ].
 	(self project diagrams size < 2 and: [ models size < 2 ]) ifTrue: [
-		^ showError value:
-			  'The model is as merged as it can be - there have to be at least 2 models or 2 diagrams' ].
-	plugins := models collect: [ :each |
-		           OPPluginRegistry default pluginFor: each ].
-	plugins asSet size = 1 ifFalse: [
-		^ showError value:
-			  'All models must be of the same type/metamodel/plugin' ].
+		^ showError value: 'The model is as merged as it can be - there have to be at least 2 models or 2 diagrams' ].
+	plugins := models collect: [ :each | OPPluginRegistry default pluginFor: each ].
+	plugins asSet size = 1 ifFalse: [ ^ showError value: 'All models must be of the same type/metamodel/plugin' ].
 	plugin := plugins anyOne.
-	plugin supportsMergingModels ifFalse: [
-		^ showError value: 'Plugin of these models does not support merging' ].
-
+	plugin supportsMergingModels ifFalse: [ ^ showError value: 'Plugin of these models does not support merging' ].
 	SpConfirmDialog new
 		title: 'Merge all models and diagrams into one?';
-		label:
-			'This is irreversible and original models and diagrams will be lost.';
+		message: 'This is irreversible and original models and diagrams will be lost.';
 		acceptLabel: 'Yes, merge them';
 		cancelLabel: 'Cancel';
 		onAccept: [
-			| model diagram layouter |
-			model := plugin mergeModels: models.
-			self project diagrams do: [ :eachDiagram |
-					workbench closeEditorOfDiagram: eachDiagram ].
-			models do: [ :eachModel | self removeModel: eachModel ].
-			diagram := OPOpenPonkDiagram forModelElement: model.
-			diagram ownedElements:
-					(self project diagrams flatCollect: #ownedElements).
-			self project addDiagram: diagram.
-			layouter := (self openEditorOnDiagram: diagram) diagramController
-				            layouter.
-			layouter dominanceTreeLayout ];
+				| model diagram layouter |
+				self undoManager clear.
+				model := plugin mergeModels: models.
+				self project diagrams do: [ :eachDiagram | workbench closeEditorOfDiagram: eachDiagram ].
+				models do: [ :eachModel | self removeModel: eachModel ].
+				diagram := OPOpenPonkDiagram forModelElement: model.
+				diagram ownedElements: (self project diagrams flatCollect: #ownedElements).
+				self project addDiagram: diagram.
+				layouter := (self openEditorOnDiagram: diagram) diagramController layouter.
+				layouter dominanceTreeLayout ];
 		openDialog
 ]
 
@@ -234,12 +243,6 @@ OPProjectController >> modelMementos [
 	^ self project models collect: [ :each | self modelMementoFor: each ]
 ]
 
-{ #category : 'accessing' }
-OPProjectController >> navigatorAdapters [
-
-	^ navigatorAdapters ifNil: [ OPNavigatorAdapters new ]
-]
-
 { #category : 'opening' }
 OPProjectController >> openDiagrams [
 
@@ -251,11 +254,11 @@ OPProjectController >> openDiagrams [
 	project diagrams
 		select: #isOpen
 		thenDo: [ :each | workbench openEditorOnDiagram: each ].
-	selected ifNotNil: [ workbench openEditorOnDiagram: selected ].
-	(project diagrams isNotEmpty and: [ 
-		 project diagrams noneSatisfy: #isOpen ]) ifTrue: [ 
-		project diagrams do: [ :eachDiagram | 
-			workbench openEditorOnDiagram: eachDiagram ] ]
+	selected ifNotNil: [ workbench focusEditorOf: selected ].
+	(project diagrams isNotEmpty and: [
+		 project diagrams noneSatisfy: #isOpen ]) ifTrue: [
+			project diagrams do: [ :eachDiagram |
+				workbench openEditorOnDiagram: eachDiagram ] ]
 ]
 
 { #category : 'opening' }
@@ -294,6 +297,12 @@ OPProjectController >> recentProjects [
 	^ RecentProjects ifNil: [ RecentProjects := OrderedDictionary new ]
 ]
 
+{ #category : 'undo-redo' }
+OPProjectController >> redo [
+	"Redo the latest undone action in the active project."
+	self undoManager redo
+]
+
 { #category : 'removing' }
 OPProjectController >> removeDiagram: aDiagram [
 
@@ -303,10 +312,11 @@ OPProjectController >> removeDiagram: aDiagram [
 			 ifNone: [ ^ self ])
 ]
 
-{ #category : 'removing' }
-OPProjectController >> removeDiagramController: aController [
-
-	controllers remove: aController
+{ #category : 'managing' }
+OPProjectController >> removeDiagramController: aDiagramController [
+	controllers remove: aDiagramController ifAbsent: [ ].
+	(aDiagramController respondsTo: #projectController:) ifTrue: [
+		aDiagramController projectController: nil ]
 ]
 
 { #category : 'removing' }
@@ -317,32 +327,51 @@ OPProjectController >> removeModel: aModel [
 	project removeModel: aModel
 ]
 
+{ #category : 'diagrams' }
+OPProjectController >> renameDiagram: aDiagram to: aNewName [
+	self undoManager execute: (OPRenameDiagramCommand
+		diagram: aDiagram
+		newName: aNewName
+		project: self project)
+]
+
+{ #category : 'actions' }
+OPProjectController >> renameProjectTo: aNewName [
+	aNewName = self project name ifTrue: [ ^ self ].
+	self undoManager execute: (OPRenameProjectCommand
+		project: self project
+		newName: aNewName)
+]
+
 { #category : 'saving' }
 OPProjectController >> replaceWritableProjectFile [
 
 	^ self project storageFile: ((StSaveFilePresenter new
 			    title: 'Set a file for saving an OpenPonk project';
 			    extensions: #( opp ) named: 'OP projects';
-			    openModal) ifNil: [ OPProjectSaveCanceledException signal ])
+			    openModal;
+			    selectedEntry) ifNil: [ OPProjectSaveCanceledException signal ])
 ]
 
 { #category : 'saving' }
 OPProjectController >> saveProject [
 
-	| file |
+	| file message |
 	file := [ self writableProjectFile ]
 		        on: OPProjectSaveCanceledException
-		        do: [ ^ self inform: 'Saving canceled' ].
+		        do: [ ^ InformativeNotification signal: 'Saving canceled' ].
 	self project saveInImage.
 	self saveProjectTo: file.
-	UIManager default
-		inform: (String streamContents: [ :s |
-				 s << 'Project saved to ' << file pathString.
-				 s
-					 cr;
-					 cr.
-				 s << 'Click to open the directory' ])
-		actionOnClick: [ file openInOSFileBrowser ]
+	message := String streamContents: [ :s |
+			           s << 'Project saved to ' << file pathString.
+			           s
+				           cr;
+				           cr.
+			           s << 'Click to open the directory' ].
+	(ProvideAnswerNotification signal: message) ifNil: [
+			(GrowlMorph openWithLabel: 'Information' translated contents: message)
+				vanishDelay: 5 seconds;
+				actionBlock: [ file openInOSFileBrowser ] ]
 ]
 
 { #category : 'saving' }
@@ -376,18 +405,14 @@ OPProjectController >> saveState: saveData to: aFile [
 		writeStreamDo: [ :stream | stream nextPutAll: (STON toJsonStringPretty: saveData) ]
 ]
 
-{ #category : 'diagram selecting' }
+{ #category : 'selection' }
 OPProjectController >> selectInDiagram: aModelElement [
-
-	controllers do: [ :dctrl | 
-		dctrl controllers do: [ :ctrl | 
-			ctrl model = aModelElement ifTrue: [ 
-				| palette |
-				palette := dctrl editor palette.
-				palette selectSelectionTool selectedTool 
-					selectedTargetControllers: { ctrl }.
-				dctrl editor canvasPresenter roassalView canvas camera 
-					translateTo: ctrl roassalShape position.
+	controllers do: [ :eachDiagramController |
+		eachDiagramController controllers do: [ :eachController |
+			eachController model = aModelElement ifTrue: [
+				eachDiagramController selectController: eachController.
+				eachDiagramController canvas camera
+					translateTo: eachController roassalShape position.
 				^ self ] ] ]
 ]
 
@@ -395,6 +420,18 @@ OPProjectController >> selectInDiagram: aModelElement [
 OPProjectController >> spApplication [
 
 	^ workbench application
+]
+
+{ #category : 'undo-redo' }
+OPProjectController >> undo [
+	"Undo the latest action in the active project."
+	self undoManager undo
+]
+
+{ #category : 'undo-redo' }
+OPProjectController >> undoManager [
+	"Answer the undo manager associated with this project controller."
+	^ undoManager ifNil: [ undoManager := OPUndoManager new ]
 ]
 
 { #category : 'opening' }
@@ -421,6 +458,18 @@ OPProjectController >> updateDiagrams [
 
 	self project diagrams do: [ :eachDiagram | 
 		self updateDiagram: eachDiagram ]
+]
+
+{ #category : 'accessing' }
+OPProjectController >> viewModel [
+
+	^ self viewModelRegistry projectViewModel
+]
+
+{ #category : 'accessing' }
+OPProjectController >> viewModelRegistry [
+	^ viewModelRegistry ifNil: [
+		viewModelRegistry := OPViewModelRegistry forProject: self project ]
 ]
 
 { #category : 'accessing' }

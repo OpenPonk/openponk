@@ -1,9 +1,12 @@
+"
+Developer-oriented context menu command that opens a Pharo inspector directly on the controller managing the selected Roassal shape.
+"
 Class {
 	#name : 'OPInspectControllerOfRoassalShapeCommand',
-	#superclass : 'OPRoassalShapeDevCommand',
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#superclass : 'OPInspectDevCommand',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
 { #category : 'testing' }
@@ -13,24 +16,13 @@ OPInspectControllerOfRoassalShapeCommand class >> canvasShortcutActivation [
 ]
 
 { #category : 'accessing' }
-OPInspectControllerOfRoassalShapeCommand >> defaultMenuIconName [
+OPInspectControllerOfRoassalShapeCommand >> itemType [
 
-	^ #glamorousInspect
+	^ 'controller'
 ]
 
 { #category : 'accessing' }
-OPInspectControllerOfRoassalShapeCommand >> defaultMenuItemName [
+OPInspectControllerOfRoassalShapeCommand >> items [
 
-	| basicName |
-	basicName := 'Inspect controller'.
-	controllers ifNil: [ ^ basicName ].
-	controllers size = 1 ifTrue: [ ^ basicName ].
-	^ GRInflector pluralize: basicName
-]
-
-{ #category : 'execution' }
-OPInspectControllerOfRoassalShapeCommand >> execute [
-
-	controllers size = 1 ifTrue: [ ^ controllers anyOne inspect ].
-	^ controllers inspect
+	^ controllers
 ]

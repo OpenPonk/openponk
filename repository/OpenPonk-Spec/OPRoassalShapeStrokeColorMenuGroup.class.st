@@ -1,12 +1,15 @@
+"
+Commander menu group that organizes context menu commands specifically for modifying the stroke (border or line) color of selected Roassal shapes.
+"
 Class {
 	#name : 'OPRoassalShapeStrokeColorMenuGroup',
 	#superclass : 'OPRoassalShapeColorMenuGroup',
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'hooks' }
 OPRoassalShapeStrokeColorMenuGroup class >> colors [
 
 	^ {
@@ -21,7 +24,7 @@ OPRoassalShapeStrokeColorMenuGroup class >> colors [
 		  Color magenta }
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'hooks' }
 OPRoassalShapeStrokeColorMenuGroup class >> styleAttribute [
 
 	^ #strokeColor

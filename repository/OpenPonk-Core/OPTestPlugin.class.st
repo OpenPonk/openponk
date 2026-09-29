@@ -1,16 +1,18 @@
 "
-I am plugin used for testing.
-
-DO NOT SUBCLASS DCPlugin.
-Instead set & reset the default of DCPluginRegistry.
+Mock implementation of an OpenPonk plugin used exclusively for testing the plugin architecture and project loading mechanisms.
 "
 Class {
 	#name : 'OPTestPlugin',
-	#superclass : 'Object',
+	#superclass : 'OPPlugin',
 	#category : 'OpenPonk-Core-Tests',
 	#package : 'OpenPonk-Core',
 	#tag : 'Tests'
 }
+
+{ #category : 'testing' }
+OPTestPlugin class >> isTestingOnly [
+	^ true
+]
 
 { #category : 'accessing' }
 OPTestPlugin >> diagramControllerClass [
@@ -23,12 +25,23 @@ OPTestPlugin >> diagramSerializerClass [
 ]
 
 { #category : 'accessing' }
-OPTestPlugin >> isPluginFor: aModel [
-	^ self modelClass = aModel class
+OPTestPlugin >> icon [
+	"Answers icon for test plugin."
+
+	^ Smalltalk ui icons iconNamed: #testRunner
+]
+
+{ #category : 'accessing' }
+OPTestPlugin >> layouterClass [
+	"Create your own subclass of OPLayouter or use OPNoLayouter which does nothing"
+
+	^ OPNoLayouter
 ]
 
 { #category : 'accessing' }
 OPTestPlugin >> modelClass [
+	"Answers model class used for instantiation."
+
 	^ OPTestContainerModel
 ]
 
@@ -39,25 +52,15 @@ OPTestPlugin >> modelSerializerClass [
 
 { #category : 'accessing' }
 OPTestPlugin >> name [
-	^ 'Plugin for testing'
-]
+	"Answers test plugin name."
 
-{ #category : 'accessing' }
-OPTestPlugin >> serializer [
-
-	^ OPMementoDirectorySerializer forPlugin: self
+	^ 'Test Plugin'
 ]
 
 { #category : 'testing' }
 OPTestPlugin >> supportsHidingElements [
-
-	^ false
-]
-
-{ #category : 'testing' }
-OPTestPlugin >> supportsMergingModels [
-
-	^ false
+	"Answers true to enable diagram element visibility commands during tests."
+	^ true
 ]
 
 { #category : 'accessing' }

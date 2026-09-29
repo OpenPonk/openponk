@@ -1,5 +1,5 @@
 "
-My job is to store a project with all the plugins into a provided directory.
+Specialized serializer responsible for exporting an OpenPonk project—including its domain models, diagrams, and mementos—into a structured file directory.
 "
 Class {
 	#name : 'OPProjectDirectorySerializer',
@@ -12,19 +12,19 @@ Class {
 	#tag : 'Persistence'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPProjectDirectorySerializer class >> exportSubject [
 
 	^ #project
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPProjectDirectorySerializer class >> exportVersion [
 
 	^ 1
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'formatting' }
 OPProjectDirectorySerializer class >> formatName [
 
 	^ #directory

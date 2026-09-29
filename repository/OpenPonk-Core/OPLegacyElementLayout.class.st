@@ -1,3 +1,7 @@
+"
+Represents a legacy layout configuration (position, extent, path) for a diagram element.
+Retained strictly for backward compatibility and migration to the current layout architecture.
+"
 Class {
 	#name : 'OPLegacyElementLayout',
 	#superclass : 'Object',

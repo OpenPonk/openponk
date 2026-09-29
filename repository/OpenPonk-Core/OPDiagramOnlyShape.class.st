@@ -1,15 +1,18 @@
+"
+Abstract base class for diagram elements that exist purely visually and lack a corresponding domain model element (such as notes or boundaries). 
+Maintains my own UUID to support independent diagram serialization.
+"
 Class {
 	#name : 'OPDiagramOnlyShape',
 	#superclass : 'OPBoundNode',
 	#traits : 'TComparable',
 	#classTraits : 'TComparable classTrait',
 	#instVars : [
-		'uuid',
-		'announcer'
+		'uuid'
 	],
-	#category : 'OpenPonk-Core-CommonElements',
+	#category : 'OpenPonk-Core-DiagramOnlyElements',
 	#package : 'OpenPonk-Core',
-	#tag : 'CommonElements'
+	#tag : 'DiagramOnlyElements'
 }
 
 { #category : 'accessing' }
@@ -56,12 +59,6 @@ OPDiagramOnlyShape >> = aComparable [
 	^ aComparable class = self class and: [ self uuid = aComparable uuid ]
 ]
 
-{ #category : 'accessing' }
-OPDiagramOnlyShape >> announcer [
-
-	^ announcer ifNil: [ announcer := Announcer new ]
-]
-
 { #category : 'comparing' }
 OPDiagramOnlyShape >> hash [
 	"Hash must be redefined whenever = is redefined."
@@ -97,21 +94,12 @@ OPDiagramOnlyShape >> modelElements: aCollection [
 
 { #category : 'rendering' }
 OPDiagramOnlyShape >> updateRenderFromModel [
-
-	"do nothing - there is no model"
+	"Diagram-only elements act as their own model. Refresh visual rendering on model change."
+	self updateRenderFromSelf
 ]
 
 { #category : 'accessing' }
 OPDiagramOnlyShape >> uuid [
 
 	^ uuid
-]
-
-{ #category : 'announcement registration' }
-OPDiagramOnlyShape >> when: anAnnouncementClass send: aSelector to: aReceiver [
-
-	^ self announcer
-		  when: anAnnouncementClass
-		  send: aSelector
-		  to: aReceiver
 ]

@@ -1,11 +1,15 @@
+"
+Trait used by diagram elements representing resizable figures containing a text label.
+Handles text wrapping, padding, and layout rendering.
+"
 Trait {
 	#name : 'OPTResizableFigureWithText',
 	#instVars : [
 		'labeled'
 	],
-	#category : 'OpenPonk-Core-CommonElements',
+	#category : 'OpenPonk-Core-DiagramOnlyElements',
 	#package : 'OpenPonk-Core',
-	#tag : 'CommonElements'
+	#tag : 'DiagramOnlyElements'
 }
 
 { #category : 'removing' }
@@ -32,7 +36,7 @@ OPTResizableFigureWithText >> renderLabel [
 		for: self
 ]
 
-{ #category : 'creating - subelements' }
+{ #category : 'rendering' }
 OPTResizableFigureWithText >> renderShapeDetails [
 
 	super renderShapeDetails.

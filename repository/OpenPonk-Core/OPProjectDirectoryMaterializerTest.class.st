@@ -1,3 +1,7 @@
+"
+Unit tests for OPProjectDirectoryMaterializer. 
+Verifies the reconstruction of a full OPProject, alongside its diagrams and mementos, from a structured directory source.
+"
 Class {
 	#name : 'OPProjectDirectoryMaterializerTest',
 	#superclass : 'TestCase',
@@ -14,21 +18,21 @@ Class {
 
 { #category : 'running' }
 OPProjectDirectoryMaterializerTest >> setUp [
+
 	super setUp.
-	OPPluginRegistry setDefault: (OPPluginRegistry new add: OPTestPlugin new).
+	OPPluginRegistry setDefaultForTesting.
 	reader := OPProjectDirectoryMaterializer new.
 	self setUpBasicProject
 ]
 
-{ #category : 'instance creation' }
+{ #category : 'running' }
 OPProjectDirectoryMaterializerTest >> setUpBasicProject [
 	(project := OPProject new)
 		name: 'Test Project';
 		uuid: (UUID fromString: '7f5ee44a-1655-4061-a78e-db9578a2226c').
 	memoryRoot := FileSystem memory / 'test-project'.
 	project addModel: OPTestContainerModel new.
-	OPProjectController new
-		project: project;
+	(OPProjectController forProject: project)
 		workbench: OPWorkbench new;
 		saveProjectTo: memoryRoot.
 	root := (FileSystem zip: memoryRoot) open / 'project'
@@ -36,7 +40,9 @@ OPProjectDirectoryMaterializerTest >> setUpBasicProject [
 
 { #category : 'running' }
 OPProjectDirectoryMaterializerTest >> tearDown [
-	OPPluginRegistry resetDefault
+
+	OPPluginRegistry resetDefault.
+	super tearDown
 ]
 
 { #category : 'tests' }

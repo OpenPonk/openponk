@@ -1,3 +1,6 @@
+"
+Icon provider for graph and diagram manipulation tools, supplying icons for zooming, layouting, and exporting.
+"
 Class {
 	#name : 'OPIdeaGraphIcons',
 	#superclass : 'OPIcons',

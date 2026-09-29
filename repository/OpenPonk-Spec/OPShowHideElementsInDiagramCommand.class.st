@@ -1,14 +1,29 @@
+"
+Diagram toolbar command that opens a specialized dialog (explorer) allowing the user to selectively show or hide specific model elements within the current diagram.
+"
 Class {
 	#name : 'OPShowHideElementsInDiagramCommand',
-	#superclass : 'OPDiagramToolbarCommand',
-	#category : 'OpenPonk-Spec-Diagram-Toolbar-Commands',
+	#superclass : 'OPDiagramCanvasCommand',
+	#category : 'OpenPonk-Spec-Commands-CanvasPresenter',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-Toolbar-Commands'
+	#tag : 'Commands-CanvasPresenter'
 }
 
 { #category : 'testing' }
 OPShowHideElementsInDiagramCommand class >> canBeExecutedInContext: aToolContext [
-	^ aToolContext editor plugin supportsHidingElements
+	"Answers true if the active editor plugin supports hiding elements."
+	| activeEditor |
+	activeEditor := self editorFromContext: aToolContext.
+	^ activeEditor isNotNil and: [ activeEditor plugin supportsHidingElements ]
+]
+
+{ #category : 'activation' }
+OPShowHideElementsInDiagramCommand class >> diagramMenuActivation [
+	<classAnnotation>
+	^ OPDiagramMenuActivation
+		byItemOf: OPDiagramElementsMenuGroup
+		order: 10
+		for: OPCanvasPresenter
 ]
 
 { #category : 'accessing' }

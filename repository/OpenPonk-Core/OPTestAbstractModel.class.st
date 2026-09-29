@@ -1,8 +1,12 @@
+"
+Mock implementation of a model element used exclusively for OpenPonk unit and integration tests.
+"
 Class {
 	#name : 'OPTestAbstractModel',
 	#superclass : 'Model',
 	#instVars : [
-		'uuid'
+		'uuid',
+		'name'
 	],
 	#category : 'OpenPonk-Core-Controllers-Tests',
 	#package : 'OpenPonk-Core',
@@ -16,9 +20,20 @@ OPTestAbstractModel >> = other [
 		  self uuid = other uuid and: [ self name = other name ] ]
 ]
 
+{ #category : 'comparing' }
+OPTestAbstractModel >> hash [
+
+	^ self uuid hash bitXor: self name hash
+]
+
 { #category : 'accessing' }
 OPTestAbstractModel >> name [
-	^ 'model'
+	^ name ifNil: [ 'model' ]
+]
+
+{ #category : 'accessing' }
+OPTestAbstractModel >> name: aString [
+	name := aString
 ]
 
 { #category : 'subscription' }

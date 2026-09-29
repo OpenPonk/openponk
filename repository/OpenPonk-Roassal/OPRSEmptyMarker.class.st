@@ -1,3 +1,6 @@
+"
+Roassal marker that represents an explicitly empty or transparent end decoration for a line, ensuring bounding boxes and line attachments calculate correctly even without visible arrows.
+"
 Class {
 	#name : 'OPRSEmptyMarker',
 	#superclass : 'RSMarker',

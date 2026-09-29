@@ -1,12 +1,12 @@
 "
-I close the opened workbench.
+Workbench toolbar command that prompts the user (if unsaved) and closes the currently active OpenPonk workbench window and project.
 "
 Class {
 	#name : 'OPProjectExitCommand',
 	#superclass : 'OPProjectCommand',
-	#category : 'OpenPonk-Spec-Commands',
+	#category : 'OpenPonk-Spec-Commands-Workbench',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Commands'
+	#tag : 'Commands-Workbench'
 }
 
 { #category : 'activation' }
@@ -29,7 +29,7 @@ OPProjectExitCommand >> defaultMenuItemName [
 	^ 'Close Project'
 ]
 
-{ #category : 'accessing' }
+{ #category : 'execution' }
 OPProjectExitCommand >> execute [
 
 	workbench close

@@ -1,18 +1,21 @@
+"
+Commander menu group that organizes context menu commands specifically for modifying the font color of text within selected Roassal shapes.
+"
 Class {
 	#name : 'OPRoassalShapeFontColorMenuGroup',
 	#superclass : 'OPRoassalShapeColorMenuGroup',
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'hooks' }
 OPRoassalShapeFontColorMenuGroup class >> colors [
 
 	^ OPRoassalShapeStrokeColorMenuGroup colors
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'hooks' }
 OPRoassalShapeFontColorMenuGroup class >> styleAttribute [
 
 	^ #fontColor

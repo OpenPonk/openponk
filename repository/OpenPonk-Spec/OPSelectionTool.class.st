@@ -1,6 +1,6 @@
 "
-A palette item used for selecting items in the view.
-This class should not be used directly and is created automatically with every DCPalette.
+Palette tool dedicated to selecting and highlighting existing items on the diagram canvas. 
+Typically the default active tool in any OpenPonk palette.
 "
 Class {
 	#name : 'OPSelectionTool',
@@ -20,6 +20,19 @@ OPSelectionTool >> deselect [
 	self selectedControllers: {  }
 ]
 
+{ #category : 'hooks' }
+OPSelectionTool >> deselectController: aController [
+	"Deselect aController if present, update canvas highlights, and synchronize the workbench form."
+	(self selectedControllers includes: aController) ifFalse: [ ^ self ].
+	self selectedControllers: (self selectedControllers copyWithout: aController)
+]
+
+{ #category : 'initialization' }
+OPSelectionTool >> initialize [
+	super initialize.
+	selectedControllers := #( )
+]
+
 { #category : 'accessing' }
 OPSelectionTool >> palette: aPalette [
 
@@ -36,21 +49,28 @@ OPSelectionTool >> select [
 	selectedControllers := {  }
 ]
 
-{ #category : 'protocol' }
-OPSelectionTool >> selectedControllers: aCollectionOfControllers [
+{ #category : 'accessing' }
+OPSelectionTool >> selectedControllers [
+	"Answer the collection of currently selected controllers."
+	^ selectedControllers ifNil: [ selectedControllers := #( ) ]
+]
 
+{ #category : 'hooks' }
+OPSelectionTool >> selectedControllers: aCollectionOfControllers [
 	| originalRoassalShapes newRoassalShapes |
-	originalRoassalShapes := selectedControllers
-		                         select: #isRendered
-		                         thenCollect: #roassalShape.
-	newRoassalShapes := aCollectionOfControllers collect: #roassalShape.
+	originalRoassalShapes := self selectedControllers
+		                         select: [ :eachController | eachController isRendered ]
+		                         thenCollect: [ :eachController | eachController roassalShape ].
+	newRoassalShapes := aCollectionOfControllers
+		                    select: [ :eachController | eachController isRendered ]
+		                    thenCollect: [ :eachController | eachController roassalShape ].
 	originalRoassalShapes , newRoassalShapes
 		detect: #isSelectable
-		ifFound: [ :shape |
-			(shape propertyAt: OPRSSelectable) doHighlightShapes:
+		ifFound: [ :foundShape |
+			(foundShape propertyAt: OPRSSelectable) doHighlightShapes:
 				newRoassalShapes ].
 	selectedControllers := aCollectionOfControllers.
-	self editor openFormOn: (aCollectionOfControllers size = 1
-			 ifTrue: [ aCollectionOfControllers anyOne ]
-			 ifFalse: [ nil ])
+	self workbench openFormOn:
+		(aCollectionOfControllers size = 1 ifTrue: [
+			 aCollectionOfControllers anyOne ])
 ]

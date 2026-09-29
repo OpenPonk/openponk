@@ -1,3 +1,7 @@
+"
+Concrete Spec presenter used within OPShowHidePresenter. 
+Provides a tree view that allows users to manually ""cherry-pick"" specific individual model elements to show or hide on the diagram canvas.
+"
 Class {
 	#name : 'OPCherryPickShowHidePresenter',
 	#superclass : 'OPShowHideTabContentPresenter',
@@ -6,45 +10,53 @@ Class {
 	#tag : 'Dialogs'
 }
 
-{ #category : 'accessing' }
-OPCherryPickShowHidePresenter >> childrenFor: aModelObject [
-	^ adapters
-		sort: (adapters dependentFor: aModelObject in: diagramController model)
+{ #category : 'hooks' }
+OPCherryPickShowHidePresenter >> childrenFor: aViewModel [
+
+	^ (aViewModel dependentElements
+		   select: [ :each | diagramController hasSupportForModel: each ]
+		   thenCollect: [ :each | viewModelRegistry viewModelFor: each ]) asSortedCollection: [ :a :b |
+		  a modelDisplayString < b modelDisplayString ]
 ]
 
-{ #category : 'defaults' }
+{ #category : 'updating' }
 OPCherryPickShowHidePresenter >> findSelectedItems [
-	^ diagramController allModelElementsWithController
-		ifNotEmpty: [ :newElements | newElements copyWith: diagramController model ]
+
+	^ (diagramController controllers collect: [ :each | each viewModel ]) copyWith: diagramController viewModel
 ]
 
-{ #category : 'defaults' }
-OPCherryPickShowHidePresenter >> iconFor: aModelObject [
-	^ adapters iconFor: aModelObject
+{ #category : 'hooks' }
+OPCherryPickShowHidePresenter >> iconFor: aViewModel [
+
+	^ aViewModel icon
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'hooks' }
 OPCherryPickShowHidePresenter >> initialRoots [
-	^ {diagramController model}
+
+	^ { diagramController viewModel }
 ]
 
-{ #category : 'general' }
-OPCherryPickShowHidePresenter >> nameFor: anObject [
-	^ adapters displayFor: anObject
+{ #category : 'hooks' }
+OPCherryPickShowHidePresenter >> nameFor: aViewModel [
+
+	^ aViewModel modelDisplayString
 ]
 
-{ #category : 'accessing' }
-OPCherryPickShowHidePresenter >> selected: added [
+{ #category : 'hooks' }
+OPCherryPickShowHidePresenter >> selected: anAddedViewModel [
+
 	| executor |
 	executor := OPDiagramExplorer on: diagramController.
-	executor showElement: added.
-	^ {added}
+	executor showElement: anAddedViewModel model.
+	^ { anAddedViewModel }
 ]
 
-{ #category : 'accessing' }
-OPCherryPickShowHidePresenter >> unselected: removed [
+{ #category : 'hooks' }
+OPCherryPickShowHidePresenter >> unselected: aRemovedViewModel [
+
 	| executor |
 	executor := OPDiagramExplorer on: diagramController.
-	executor hideElement: removed.
-	^ {removed}
+	executor hideElement: aRemovedViewModel model.
+	^ { aRemovedViewModel }
 ]

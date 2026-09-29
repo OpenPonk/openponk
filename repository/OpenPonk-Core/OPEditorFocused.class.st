@@ -1,5 +1,5 @@
 "
-I am fired when an editor was focused (tab switched to this editor).
+Announcement fired when an existing editor instance receives UI focus.
 "
 Class {
 	#name : 'OPEditorFocused',

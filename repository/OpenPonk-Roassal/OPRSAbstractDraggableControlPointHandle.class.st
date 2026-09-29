@@ -1,3 +1,6 @@
+"
+Abstract base class for draggable handles used to manipulate control points (routing points) along an edge or path within a Roassal canvas.
+"
 Class {
 	#name : 'OPRSAbstractDraggableControlPointHandle',
 	#superclass : 'Object',
@@ -10,6 +13,11 @@ Class {
 	#package : 'OpenPonk-Roassal',
 	#tag : 'Polyline'
 }
+
+{ #category : 'accessing' }
+OPRSAbstractDraggableControlPointHandle >> clickBox [
+	^ clickBox
+]
 
 { #category : 'shapes' }
 OPRSAbstractDraggableControlPointHandle >> createClickBoxShape [
@@ -53,7 +61,7 @@ OPRSAbstractDraggableControlPointHandle >> shape [
 	^ shape
 ]
 
-{ #category : 'shapes' }
+{ #category : 'accessing' }
 OPRSAbstractDraggableControlPointHandle >> size [
 
 	^ self subclassResponsibility

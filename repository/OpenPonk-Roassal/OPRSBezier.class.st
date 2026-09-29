@@ -1,3 +1,7 @@
+"
+Extension of the standard Roassal Bezier shape. 
+Provides custom implementations to accurately calculate intersection radii and segment components for complex curved lines.
+"
 Class {
 	#name : 'OPRSBezier',
 	#superclass : 'RSBezier',

@@ -1,3 +1,6 @@
+"
+Specific feedback builder designed to apply accept/deny visual highlights (like border colors or shadow glows) onto node shapes (like rectangles or circles) during interactions.
+"
 Class {
 	#name : 'OPRSNodeADFeedback',
 	#superclass : 'OPRSAcceptDenyFeedbackBuilder',

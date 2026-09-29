@@ -1,3 +1,7 @@
+"
+Abstract base class for testing diagram nodes. 
+Verifies spatial translations, rendering behavior, constraints, and Roassal shape creation for diagram nodes.
+"
 Class {
 	#name : 'OPAbstractNodeTest',
 	#superclass : 'OPAbstractDiagramElementTest',

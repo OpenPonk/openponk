@@ -1,3 +1,6 @@
+"
+Selection strategy that identifies child shapes to be dragged using a custom, user-provided block evaluation.
+"
 Class {
 	#name : 'OPRSSelectionDraggableCustomShapesProvider',
 	#superclass : 'OPRSSelectionDraggableInnerShapesProvider',
@@ -23,7 +26,7 @@ OPRSSelectionDraggableCustomShapesProvider >> block: aBlock [
 	block := aBlock
 ]
 
-{ #category : 'asserting' }
+{ #category : 'initialization' }
 OPRSSelectionDraggableCustomShapesProvider >> initialize [
 
 	super initialize.

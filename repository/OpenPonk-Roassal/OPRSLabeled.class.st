@@ -1,3 +1,7 @@
+"
+Specialized labeling interaction that attaches text to a Roassal shape. 
+Extends standard labels by supporting font family, emphasis, maximum wrapping width, and dynamic text updates.
+"
 Class {
 	#name : 'OPRSLabeled',
 	#superclass : 'RSLabeled',

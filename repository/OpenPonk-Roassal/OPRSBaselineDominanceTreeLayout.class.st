@@ -1,3 +1,6 @@
+"
+Layout algorithm extending the horizontal dominance tree layout, specifically tailored to handle OpenPonk baseline dependency hierarchies and nesting levels.
+"
 Class {
 	#name : 'OPRSBaselineDominanceTreeLayout',
 	#superclass : 'RSHorizontalDominanceTreeLayout',
@@ -18,7 +21,7 @@ OPRSBaselineDominanceTreeLayout >> nestingLevelFor: aNodeFigure [
 		  ifFalse: [ parentsNesting max + 1 ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'private' }
 OPRSBaselineDominanceTreeLayout >> parentsFor: aNode [
 
 	^ self cachedParents at: aNode ifAbsentPut: [

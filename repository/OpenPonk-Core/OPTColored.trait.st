@@ -1,3 +1,6 @@
+"
+Trait providing basic behavior for colored elements, bridging style properties to their visual representation.
+"
 Trait {
 	#name : 'OPTColored',
 	#category : 'OpenPonk-Core-DiagramElements',

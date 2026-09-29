@@ -1,9 +1,11 @@
+"
+Unit tests verifying the correct dispatching of lifecycle announcements (such as focused, unfocused, and closed events) by the OpenPonk workbench editors.
+"
 Class {
 	#name : 'OPEditorAnnouncementsTest',
 	#superclass : 'TestCase',
 	#instVars : [
 		'workbench',
-		'editor',
 		'announcer',
 		'plugin',
 		'project'
@@ -13,9 +15,10 @@ Class {
 	#tag : 'Tests'
 }
 
-{ #category : 'initialization' }
+{ #category : 'running' }
 OPEditorAnnouncementsTest >> setUp [
 
+	super setUp.
 	plugin := Mock new.
 	plugin stub diagramControllerClass willReturn:
 		OPTestDiagramController.
@@ -34,8 +37,9 @@ OPEditorAnnouncementsTest >> setUp [
 
 { #category : 'running' }
 OPEditorAnnouncementsTest >> tearDown [
-	super tearDown.
-	OPPluginRegistry resetDefault
+
+	OPPluginRegistry resetDefault.
+	super tearDown
 ]
 
 { #category : 'tests' }

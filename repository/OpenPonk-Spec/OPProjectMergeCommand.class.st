@@ -1,9 +1,12 @@
+"
+Workbench toolbar command that prompts the user to select another OpenPonk project file and merges its models and diagrams into the currently active project.
+"
 Class {
 	#name : 'OPProjectMergeCommand',
 	#superclass : 'OPProjectCommand',
-	#category : 'OpenPonk-Spec-Commands',
+	#category : 'OpenPonk-Spec-Commands-Workbench',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Commands'
+	#tag : 'Commands-Workbench'
 }
 
 { #category : 'activation' }

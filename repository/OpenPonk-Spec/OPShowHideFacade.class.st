@@ -1,3 +1,6 @@
+"
+Simplified facade providing high-level commands to systematically show or hide collections of diagram elements and trigger automated layout updates.
+"
 Class {
 	#name : 'OPShowHideFacade',
 	#superclass : 'Object',

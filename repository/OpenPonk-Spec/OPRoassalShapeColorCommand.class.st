@@ -1,9 +1,12 @@
+"
+Abstract base class for context menu commands that change visual color properties (such as fill, stroke, or font color) of selected Roassal shapes via their shape styles.
+"
 Class {
 	#name : 'OPRoassalShapeColorCommand',
 	#superclass : 'OPRoassalShapeCommand',
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
 { #category : 'testing' }
@@ -116,12 +119,21 @@ OPRoassalShapeColorCommand >> defaultMenuItemName [
 
 { #category : 'execution' }
 OPRoassalShapeColorCommand >> execute [
-
-	diagramElements
-		select: [ :each |
-		each supportsColorChangeOfType: self class colorAttribute ]
-		thenDo: [ :each |
-			self executeOn: each ]
+	| targets commands |
+	targets := diagramElements select: [ :eachTarget115 |
+		           eachTarget115 supportsColorChangeOfType:
+			           self class colorAttribute ].
+	targets ifEmpty: [ ^ self ].
+	commands := targets collect: [ :eachTarget115 |
+		            OPChangeDiagramElementStylePropertyCommand
+			            element: eachTarget115
+			            property: self class colorAttribute
+			            value: (self class colorFor: eachTarget115) ].
+	self undoManager
+		ifNotNil: [ :mgr115 |
+			mgr115 inTransaction: [
+				commands do: [ :eachCmd115 | mgr115 execute: eachCmd115 ] ] ]
+		ifNil: [ commands do: [ :eachCmd115 | eachCmd115 execute ] ]
 ]
 
 { #category : 'execution' }

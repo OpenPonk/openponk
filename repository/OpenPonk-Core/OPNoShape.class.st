@@ -1,3 +1,7 @@
+"
+Implements the Null Object pattern for Roassal shapes or diagram elements. 
+Provides a safe, no-operation interface for scenarios where an element temporarily or permanently lacks a visual representation.
+"
 Class {
 	#name : 'OPNoShape',
 	#superclass : 'UndefinedObject',
@@ -21,7 +25,7 @@ OPNoShape class >> new [
 	^ self instance
 ]
 
-{ #category : 'initialization' }
+{ #category : 'class initialization' }
 OPNoShape class >> reset [
 
 	<script>
@@ -59,12 +63,27 @@ OPNoShape >> ifNotExists: aFullBlockClosure [
 ]
 
 { #category : 'testing' }
+OPNoShape >> isEdge [
+	^ false
+]
+
+{ #category : 'testing' }
+OPNoShape >> isNoShape [
+	^ true
+]
+
+{ #category : 'testing' }
+OPNoShape >> isNode [
+	^ false
+]
+
+{ #category : 'testing' }
 OPNoShape >> isRendered [
 
 	^ false
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPNoShape >> modelChanged [
 
 	"do nothing"
@@ -83,15 +102,22 @@ OPNoShape >> orOwningElementWithPossibleController [
 ]
 
 { #category : 'initialization' }
-OPNoShape >> ownedElement: anOPPetriNetPTPlaceShape renderedIn: aRSCanvas [
+OPNoShape >> ownedElement: aDiagramElement renderedIn: aRSCanvas [
 	"do nothing"
 
 	
 ]
 
 { #category : 'initialization' }
-OPNoShape >> ownedElement: anOPPetriNetPTPlaceShape willRenderIn: aRSCanvas [
+OPNoShape >> ownedElement: aDiagramElement willRenderIn: aRSCanvas [
 	"do nothing"
+
+	
+]
+
+{ #category : 'rendering' }
+OPNoShape >> ownedElementRemovedRender: aDiagramElement [
+	"hook - do nothing by default"
 
 	
 ]
@@ -122,11 +148,14 @@ OPNoShape >> recursivelyOwnedElement: aShape renderedIn: aCanvas [
 	
 ]
 
-{ #category : 'removing' }
+{ #category : 'rendering' }
 OPNoShape >> remove [
-	"do nothing"
+	"Null object pattern - do nothing"
+]
 
-	
+{ #category : 'rendering' }
+OPNoShape >> removeRender [
+	"Null object pattern - do nothing"
 ]
 
 { #category : 'accessing' }
@@ -135,7 +164,7 @@ OPNoShape >> roassalShape [
 	^ nil
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'rendering' }
 OPNoShape >> roassalShapeUnsubscribe: aSubscriber [
 	"do nothing"
 

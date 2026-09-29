@@ -1,3 +1,7 @@
+"
+Represents the root visual model of a diagram. 
+Specialized bound node containing metadata such as the diagram's name, documentation, and the coordinate resolution for the rendering canvas.
+"
 Class {
 	#name : 'OPDiagram',
 	#superclass : 'OPBoundNode',
@@ -45,21 +49,9 @@ OPDiagram >> documentation: anObject [
 ]
 
 { #category : 'testing' }
-OPDiagram >> isPositionableByUser [
-
-	^ false
-]
-
-{ #category : 'testing' }
 OPDiagram >> isRendered [
 
 	^ roassalShape isNotNil
-]
-
-{ #category : 'testing' }
-OPDiagram >> isResizableByUser [
-
-	^ false
 ]
 
 { #category : 'accessing' }
@@ -88,7 +80,7 @@ OPDiagram >> name: anObject [
 	name := anObject
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 OPDiagram >> ownedElement: aShape willRenderIn: aCanvas [
 
 	self canvas: aCanvas
@@ -139,11 +131,15 @@ OPDiagram >> resolution: anObject [
 	resolution := anObject
 ]
 
-{ #category : 'rendering' }
-OPDiagram >> updateFromRender [
+{ #category : 'interactions' }
+OPDiagram >> shouldBePositionableByUser [
 
+	^ false
+]
+
+{ #category : 'initialization' }
+OPDiagram >> updateFromRender [
 	self bounds: (OPNodeBounds
-			 withPosition: 0 @ 0
-			 extent: roassalShape encompassingRectangle extent).
-	self ownedElements do: #updateFromRender
+		withPosition: 0 @ 0
+		extent: roassalShape encompassingRectangle extent)
 ]

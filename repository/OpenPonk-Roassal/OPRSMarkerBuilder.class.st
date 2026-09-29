@@ -1,3 +1,6 @@
+"
+Utility builder for constructing visual markers (like arrows, diamonds, or circles) to decorate the ends of Roassal lines and edges.
+"
 Class {
 	#name : 'OPRSMarkerBuilder',
 	#superclass : 'Object',
@@ -62,7 +65,7 @@ OPRSMarkerBuilder class >> diamondShapeWithLetter: aCharacter [
 		         fontSize: 9;
 		         translateBy: -0.5 @ 10;
 		         yourself.
-	^ RSBorderColoringComposite new
+	^ OPRSBorderColoringComposite new
 		  shapes: { 
 				  self diamondShape.
 				  label };
@@ -129,7 +132,7 @@ OPRSMarkerBuilder class >> example [
 		add: l.
 
 	c @ RSDraggableCanvasInteraction.
-	c @ OPRSZoomableCanvasInteraction.
+	c @ RSZoomableCanvasInteraction.
 
 	c zoomToFit.
 

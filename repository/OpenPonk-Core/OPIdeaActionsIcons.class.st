@@ -1,3 +1,6 @@
+"
+Icon provider for standard action icons (such as properties) used within the OpenPonk UI.
+"
 Class {
 	#name : 'OPIdeaActionsIcons',
 	#superclass : 'OPIcons',

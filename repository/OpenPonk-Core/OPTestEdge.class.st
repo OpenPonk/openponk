@@ -1,3 +1,7 @@
+"
+Mock diagram edge. 
+Used exclusively for rendering and connection logic tests.
+"
 Class {
 	#name : 'OPTestEdge',
 	#superclass : 'OPEdge',
@@ -9,7 +13,9 @@ Class {
 { #category : 'rendering' }
 OPTestEdge >> renderBasicShape [
 
-	^ RSPolyline new
+	^ OPRSPolyline new
+		  withBorderAttachPoint;
+		  controlPointsController: OPRSDraggableCPController new;
 		  from: self source roassalShape;
 		  to: self target roassalShape;
 		  yourself

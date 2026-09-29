@@ -1,5 +1,5 @@
 "
-I am a base class for workbench toolbar commands.
+Abstract base class for Commander framework commands that operate on the workbench toolbar, managing project-level actions such as saving, opening, or merging projects.
 "
 Class {
 	#name : 'OPProjectCommand',
@@ -9,9 +9,9 @@ Class {
 		'projectController',
 		'workbench'
 	],
-	#category : 'OpenPonk-Spec-Commands',
+	#category : 'OpenPonk-Spec-Commands-Workbench',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Commands'
+	#tag : 'Commands-Workbench'
 }
 
 { #category : 'testing' }
@@ -27,7 +27,7 @@ OPProjectCommand class >> toolbarMenuActivation [
 		for: OPWorkbenchToolbar
 ]
 
-{ #category : 'accessing' }
+{ #category : 'execution' }
 OPProjectCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	workbenchToolbar := aToolContext.

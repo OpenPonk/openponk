@@ -1,3 +1,7 @@
+"
+Abstract base class for serializers in OpenPonk. 
+Provides common definitions for file extensions, formatting names, and versioning for importing and exporting project artifacts.
+"
 Class {
 	#name : 'OPSerializer',
 	#superclass : 'Object',
@@ -15,13 +19,13 @@ OPSerializer class >> exportInfo [
 		  format: self formatName
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPSerializer class >> exportSubject [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPSerializer class >> exportVersion [
 
 	^ self subclassResponsibility
@@ -62,19 +66,19 @@ OPSerializer class >> forExportInfoFile: aFile [
 			   (NeoJSONReader on: s) nextAs: OPExportInfo ])
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'formatting' }
 OPSerializer class >> formatName [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPSerializer class >> maxImportVersion [
 
 	^ self exportVersion
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPSerializer class >> minImportVersion [
 
 	^ self subclassResponsibility

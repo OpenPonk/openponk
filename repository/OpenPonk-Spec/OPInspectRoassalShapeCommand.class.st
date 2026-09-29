@@ -1,30 +1,22 @@
+"
+Developer-oriented context menu command that opens a Pharo inspector directly on the selected Roassal shape instance itself.
+"
 Class {
 	#name : 'OPInspectRoassalShapeCommand',
-	#superclass : 'OPRoassalShapeDevCommand',
-	#category : 'OpenPonk-Spec-Diagram-RoassalShape-Commands',
+	#superclass : 'OPInspectDevCommand',
+	#category : 'OpenPonk-Spec-Commands-RoassalShape',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Diagram-RoassalShape-Commands'
+	#tag : 'Commands-RoassalShape'
 }
 
 { #category : 'accessing' }
-OPInspectRoassalShapeCommand >> defaultMenuIconName [
+OPInspectRoassalShapeCommand >> itemType [
 
-	^ #glamorousInspect
+	^ 'roassal shape'
 ]
 
 { #category : 'accessing' }
-OPInspectRoassalShapeCommand >> defaultMenuItemName [
+OPInspectRoassalShapeCommand >> items [
 
-	| basicName |
-	basicName := 'Inspect figure'.
-	roassalShapes ifNil: [ ^ basicName ].
-	roassalShapes size = 1 ifTrue: [ ^ basicName ].
-	^ GRInflector pluralize: basicName
-]
-
-{ #category : 'execution' }
-OPInspectRoassalShapeCommand >> execute [
-
-	roassalShapes size = 1 ifTrue: [ ^ roassalShapes anyOne inspect ].
-	^ roassalShapes inspect
+	^ roassalShapes
 ]

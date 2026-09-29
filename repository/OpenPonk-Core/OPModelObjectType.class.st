@@ -1,3 +1,6 @@
+"
+A descriptor specifying the metadata, display label, and allowable child subtypes for a model entity within selection dialogs.
+"
 Class {
 	#name : 'OPModelObjectType',
 	#superclass : 'Object',
@@ -5,11 +8,11 @@ Class {
 	#classTraits : 'TComparable classTrait',
 	#instVars : [
 		'name',
-		'subtype'
+		'subtypes'
 	],
-	#category : 'OpenPonk-Core-Controllers',
+	#category : 'OpenPonk-Core-ViewModels',
 	#package : 'OpenPonk-Core',
-	#tag : 'Controllers'
+	#tag : 'ViewModels'
 }
 
 { #category : 'instance creation' }
@@ -21,47 +24,76 @@ OPModelObjectType class >> named: aString [
 
 { #category : 'instance creation' }
 OPModelObjectType class >> named: aString withSubtype: aType [
+	^ self named: aString withSubtypes: { aType }
+]
+
+{ #category : 'instance creation' }
+OPModelObjectType class >> named: aString withSubtypes: aTypeCollection [
+
 	^ (self named: aString)
-		subtype: aType;
-		yourself
+		  addSubtypes: aTypeCollection;
+		  yourself
 ]
 
 { #category : 'comparing' }
 OPModelObjectType >> < aComparable [
 	"Answer whether the receiver is less than the argument."
 
-	^ name < aComparable name
+	name = aComparable name ifFalse: [ ^ name < aComparable name ].
+	subtypes withIndexDo: [ :each :index |
+			aComparable subtypes size < index ifTrue: [ ^ false ].
+			each = (aComparable subtypes at: index) ifFalse: [ ^ each < (aComparable subtypes at: index) ] ].
+	^ subtypes size ~= aComparable subtypes size
 ]
 
 { #category : 'comparing' }
 OPModelObjectType >> = aComparable [
 	"Answer whether the receiver and aComparable represent the same object."
 
-	^ self == aComparable
-		or: [ self class == aComparable class
-				and: [ name = aComparable name
-						and: [ (subtype isNil and: [ aComparable subtype isNil ])
-								or:
-									[ aComparable subtype isNotNil and: [ subtype = aComparable subtype ] ] ] ] ]
+	^ name = aComparable name and: [ subtypes = aComparable subtypes ]
+]
+
+{ #category : 'accessing' }
+OPModelObjectType >> addSubtypes: aCollectionOfTypes [
+
+	subtypes addAll: aCollectionOfTypes
+]
+
+{ #category : 'testing' }
+OPModelObjectType >> hasSubtypes [
+
+	^ subtypes isNotEmpty
 ]
 
 { #category : 'comparing' }
 OPModelObjectType >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
-	^ name hash
+	^ name hash bitXor: (subtypes ifNotEmpty: [ :subs | subs first ]) hash
 ]
 
-{ #category : 'as yet unclassified' }
-OPModelObjectType >> mostSpecific [
-	subtype ifNil: [ ^ self ].
-	^ subtype mostSpecific
+{ #category : 'testing' }
+OPModelObjectType >> includesNames: aCollectionOfNames [
+
+	| aCollectionOfSubtypeNames |
+	aCollectionOfNames ifEmpty: [ ^ true ].
+	self name = aCollectionOfNames first ifFalse: [ ^ false ].
+	aCollectionOfSubtypeNames := aCollectionOfNames copyWithoutFirst.
+	aCollectionOfSubtypeNames ifEmpty: [ ^ true ].
+	^ self subtypes anySatisfy: [ :any | any includesNames: aCollectionOfSubtypeNames ]
 ]
 
-{ #category : 'accessing' }
-OPModelObjectType >> mostSpecificName [
-	subtype ifNil: [ ^ name ].
-	^ subtype mostSpecificName
+{ #category : 'testing' }
+OPModelObjectType >> includesTypeNode: aTypeNode [
+
+	^ self subtypes anySatisfy: [ :any | any includesTypeNode: aTypeNode ]
+]
+
+{ #category : 'initialization' }
+OPModelObjectType >> initialize [
+
+	super initialize.
+	subtypes := SortedCollection new
 ]
 
 { #category : 'accessing' }
@@ -85,20 +117,23 @@ OPModelObjectType >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : 'accessing' }
-OPModelObjectType >> subtype [
-	^ subtype
+{ #category : 'printing' }
+OPModelObjectType >> printWithNameSeparator: aNameSeparator subtypesSeparator: aSubtypesSeparator [
+
+	^ String streamContents: [ :s | self printWithNameSeparator: aNameSeparator subtypesSeparator: aSubtypesSeparator on: s ]
+]
+
+{ #category : 'printing' }
+OPModelObjectType >> printWithNameSeparator: aNameSeparator subtypesSeparator: aSubtypesSeparator on: aStream [
+
+	aStream nextPutAll: self name.
+	subtypes ifEmpty: [ ^ self ].
+	aStream << aNameSeparator.
+	subtypes do: [ :each | aStream nextPutAll: each name ] separatedBy: [ aStream << aSubtypesSeparator ]
 ]
 
 { #category : 'accessing' }
-OPModelObjectType >> subtype: aType [
-	subtype := aType
-]
+OPModelObjectType >> subtypes [
 
-{ #category : 'as yet unclassified' }
-OPModelObjectType >> withAllSubtypes [
-	| set |
-	set := Set with: self.
-	subtype ifNil: [ ^ set ].
-	^ set , subtype withAllSubtypes
+	^ subtypes
 ]

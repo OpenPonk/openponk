@@ -1,5 +1,6 @@
 "
-I represent a basic info about the view that is detached from its actual content. I exist mainly to separate per-application info about what is opened/how the views are ordered.
+Represents basic metadata about a diagram view (such as name, order, and selection state) detached from its actual content.
+Exists primarily to track per-application information regarding opened views and their arrangement.
 "
 Class {
 	#name : 'OPDiagramInfo',
@@ -70,18 +71,10 @@ OPDiagramInfo >> isSelected: anObject [
 	isSelected := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : 'accessing - deprecated' }
 OPDiagramInfo >> model [
-	self deprecated: 'We no longer have means to find the project'.
-	
-	"self
-		assert: [ self project isNotNil ]
-		description: 'Cannot retrieve model of a detached view.'.
-	^ self project models
-		detect: [ :each | 
-			each typeName = self modelType
-				and:
-					[ each name = self modelName and: [ each version = self modelVersion ] ] ]"
+    self deprecated: 'We no longer have means to find the project'.
+    ^ nil
 ]
 
 { #category : 'accessing' }

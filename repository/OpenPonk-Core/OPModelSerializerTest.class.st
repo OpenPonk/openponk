@@ -1,3 +1,7 @@
+"
+Abstract base class for testing model serializers. 
+Verifies that models successfully roundtrip (serialize and deserialize) without data loss or corruption.
+"
 Class {
 	#name : 'OPModelSerializerTest',
 	#superclass : 'TestCase',
@@ -26,7 +30,7 @@ OPModelSerializerTest >> serializerClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
+{ #category : 'running' }
 OPModelSerializerTest >> setUp [
 	super setUp.
 	serializer := self serializerClass new.

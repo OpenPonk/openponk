@@ -1,3 +1,6 @@
+"
+Encapsulates metadata about an export operation, including the subject, format, and version of the exported data.
+"
 Class {
 	#name : 'OPExportInfo',
 	#superclass : 'Object',

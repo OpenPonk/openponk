@@ -1,3 +1,7 @@
+"
+Specialized control point (CP) controller that manages the routing points for self-loop edges. 
+Calculates default offsets to ensure self-loops are visibly offset from their source nodes.
+"
 Class {
 	#name : 'OPRSDraggableCPController',
 	#superclass : 'RSAbstractCPController',
@@ -95,18 +99,18 @@ OPRSDraggableCPController >> innerControlPointsFor: aLine [
 		                                 copy.
 	oldShapeEncompassingRectangle := oldInnerCPs
 		                                 ifEmpty: [
-			                                 aLine
-				                                 propertyAt: self class
-				                                 put:
-				                                 newShapeEncompassingRectangle.
-			                                 ^ self
-				                                   defaultInnerSelfControlPointsFor:
-				                                   aLine ]
+				                                 aLine
+					                                 propertyAt: self class
+					                                 put:
+					                                 newShapeEncompassingRectangle.
+				                                 ^ self
+					                                   defaultInnerSelfControlPointsFor:
+					                                   aLine ]
 		                                 ifNotEmpty: [
-			                                 aLine
-				                                 propertyAt: self class
-				                                 ifAbsent: [
-				                                 newShapeEncompassingRectangle ] ].
+				                                 aLine
+					                                 propertyAt: self class
+					                                 ifAbsent: [
+					                                 newShapeEncompassingRectangle ] ].
 
 	aLine propertyAt: self class put: newShapeEncompassingRectangle.
 
@@ -114,21 +118,21 @@ OPRSDraggableCPController >> innerControlPointsFor: aLine [
 		ifTrue: [ ^ oldInnerCPs ].
 
 	^ oldInnerCPs collect: [ :each |
-		  each + (Point
-			   x: (each x < oldShapeEncompassingRectangle center x
-					    ifTrue: [
-						    newShapeEncompassingRectangle left
-						    - oldShapeEncompassingRectangle left ]
-					    ifFalse: [
-						    newShapeEncompassingRectangle right
-						    - oldShapeEncompassingRectangle right ])
-			   y: (each y > oldShapeEncompassingRectangle center y
-					    ifTrue: [
-						    newShapeEncompassingRectangle bottom
-						    - oldShapeEncompassingRectangle bottom ]
-					    ifFalse: [
-						    newShapeEncompassingRectangle top
-						    - oldShapeEncompassingRectangle top ])) ]
+			  each + (Point
+				   x: (each x < oldShapeEncompassingRectangle center x
+						    ifTrue: [
+								    newShapeEncompassingRectangle left
+								    - oldShapeEncompassingRectangle left ]
+						    ifFalse: [
+								    newShapeEncompassingRectangle right
+								    - oldShapeEncompassingRectangle right ])
+				   y: (each y > oldShapeEncompassingRectangle center y
+						    ifTrue: [
+								    newShapeEncompassingRectangle bottom
+								    - oldShapeEncompassingRectangle bottom ]
+						    ifFalse: [
+							    newShapeEncompassingRectangle top
+							    - oldShapeEncompassingRectangle top ])) ]
 ]
 
 { #category : 'accessing' }

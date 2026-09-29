@@ -1,5 +1,6 @@
 "
-I represent camera positioning over the view.
+Represents a legacy camera positioning (offset and zoom) over a diagram view.
+Retained strictly for backward compatibility.
 "
 Class {
 	#name : 'OPLegacyDiagramCamera',

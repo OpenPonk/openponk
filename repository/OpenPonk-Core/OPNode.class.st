@@ -1,3 +1,7 @@
+"
+Structural diagram element representing a 2-dimensional node or vertex. 
+Manages spatial properties such as position, boundaries, and extent.
+"
 Class {
 	#name : 'OPNode',
 	#superclass : 'OPDiagramElement',
@@ -6,7 +10,17 @@ Class {
 	#tag : 'DiagramElements'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'testing' }
+OPNode class >> isEdge [
+	^ false
+]
+
+{ #category : 'testing' }
+OPNode class >> isNode [
+	^ true
+]
+
+{ #category : 'rendering' }
 OPNode >> addedByMouseClickTo: aPoint [
 
 	self translateTo: aPoint
@@ -28,14 +42,6 @@ OPNode >> extent [
 OPNode >> height [
 
 	^ self extent y
-]
-
-{ #category : 'testing' }
-OPNode >> isPositionableByUser [
-
-	^ self isRendered and: [
-		  self roassalShape isSelectionDraggable or: [
-			  self roassalShape hasInteraction: RSDraggable ] ]
 ]
 
 { #category : 'testing' }

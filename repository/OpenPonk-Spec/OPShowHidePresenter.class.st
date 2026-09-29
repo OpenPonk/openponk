@@ -1,3 +1,7 @@
+"
+Spec presenter that provides a tabbed dialog interface for selectively showing or hiding model elements within the current diagram. 
+Manages different filtering strategies via my notebook pages.
+"
 Class {
 	#name : 'OPShowHidePresenter',
 	#superclass : 'SpPresenter',
@@ -10,7 +14,7 @@ Class {
 	#tag : 'Dialogs'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'layout' }
 OPShowHidePresenter class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -74,7 +78,7 @@ OPShowHidePresenter >> refreshPage: aPage [
 			takeKeyboardFocus ]
 ]
 
-{ #category : 'accessing model' }
+{ #category : 'accessing - model' }
 OPShowHidePresenter >> setModelBeforeInitialization: aDiagramController [
 	diagramController := aDiagramController
 ]

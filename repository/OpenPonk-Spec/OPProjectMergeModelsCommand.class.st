@@ -1,9 +1,12 @@
+"
+Workbench toolbar command that merges specific domain models from a selected source into the current project, reconciling differences.
+"
 Class {
 	#name : 'OPProjectMergeModelsCommand',
 	#superclass : 'OPProjectCommand',
-	#category : 'OpenPonk-Spec-Commands',
+	#category : 'OpenPonk-Spec-Commands-Workbench',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Commands'
+	#tag : 'Commands-Workbench'
 }
 
 { #category : 'testing' }

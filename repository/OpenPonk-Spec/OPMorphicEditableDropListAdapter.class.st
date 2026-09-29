@@ -1,3 +1,6 @@
+"
+Spec adapter linking OPEditableDropListPresenter to its Morphic backend representation (OPEditableDropListMorph). Handles the widget construction and synchronization for editable dropdown lists.
+"
 Class {
 	#name : 'OPMorphicEditableDropListAdapter',
 	#superclass : 'SpMorphicDropListAdapter',

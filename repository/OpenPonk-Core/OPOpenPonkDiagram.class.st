@@ -1,3 +1,7 @@
+"
+Concrete implementation of an OpenPonk diagram. 
+Extends the structural OPDiagram by holding active session state variables, such as camera positioning, open/closed status, and current selections.
+"
 Class {
 	#name : 'OPOpenPonkDiagram',
 	#superclass : 'OPDiagram',
@@ -19,10 +23,26 @@ OPOpenPonkDiagram class >> stonAllInstVarNames [
 	^ super stonAllInstVarNames , #( #isOpen #isSelected #camera )
 ]
 
+{ #category : 'layout' }
+OPOpenPonkDiagram >> adaptBoundsToInnerBounds: anInnerRectangle [
+	"Root diagram updates canvas view bounds without changing extent of a bounding box."
+	self isRendered ifTrue: [ self roassalShape signalUpdate ]
+]
+
+{ #category : 'accessing' }
+OPOpenPonkDiagram >> camera [
+	^ camera
+]
+
 { #category : 'accessing' }
 OPOpenPonkDiagram >> camera: aCamera [
 
 	camera := OPDiagramCamera newFrom: aCamera
+]
+
+{ #category : 'testing' }
+OPOpenPonkDiagram >> isContainer [
+	^ true
 ]
 
 { #category : 'accessing' }
@@ -60,14 +80,13 @@ OPOpenPonkDiagram >> newCopy [
 		  serializer materializeDiagramOf: self modelElement from: s ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'rendering' }
 OPOpenPonkDiagram >> updateFromRender [
-
 	super updateFromRender.
 	self camera: roassalShape camera
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'rendering' }
 OPOpenPonkDiagram >> updateRenderFromSelf [
 
 	self isRendered ifFalse: [ ^ self ].

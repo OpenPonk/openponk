@@ -1,3 +1,7 @@
+"
+Unit tests for OPProjectDirectorySerializer. 
+Verifies the correct decomposition and serialization of an OPProject into its constituent models and diagrams within a directory structure.
+"
 Class {
 	#name : 'OPProjectDirectorySerializerTest',
 	#superclass : 'TestCase',
@@ -11,14 +15,17 @@ Class {
 
 { #category : 'running' }
 OPProjectDirectorySerializerTest >> setUp [
+
 	super setUp.
 	persistence := OPProjectDirectorySerializer new.
-	OPPluginRegistry setDefault: (OPPluginRegistry new add: OPTestPlugin new)
+	OPPluginRegistry setDefaultForTesting
 ]
 
 { #category : 'running' }
 OPProjectDirectorySerializerTest >> tearDown [
-	OPPluginRegistry resetDefault
+
+	OPPluginRegistry resetDefault.
+	super tearDown
 ]
 
 { #category : 'tests' }

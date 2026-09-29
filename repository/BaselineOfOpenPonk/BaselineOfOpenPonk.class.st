@@ -14,23 +14,20 @@ BaselineOfOpenPonk >> baseline: spec [
 
 	<baseline>
 	spec for: #common do: [
-		self externalProjectsBaseline: spec.
-		self internalProjectsBaseline: spec.
-		spec
-			package: 'OpenPonk-Roassal'
-			with: [ spec requires: #( 'Roassal' 'RoassalExporters' ) ];
-			package: 'OpenPonk-Core' with: [
-				spec requires:
-						#( 'Magritte' 'Mocketry' 'XPath' 'NeoJSON' 'OpenPonk-Roassal' ) ];
-			package: 'OpenPonk-Morphic';
-			package: 'OpenPonk-Spec' with: [
-				spec requires:
-						#( 'NewTools' 'Magritte' 'OpenPonkSynchronizedLinks' 'OpenPonk-Morphic' ) ];
-			package: 'OpenPonk-Releaser'.
-		spec
-			group: 'default'
-			with: #( 'OpenPonk-Core' 'OpenPonk-Morphic' 'OpenPonk-Spec' );
-			group: 'dev' with: #( 'default' 'OpenPonk-Releaser' ) ]
+			spec postLoadDoIt: #postLoad.
+			self externalProjectsBaseline: spec.
+			self internalProjectsBaseline: spec.
+			spec
+				package: 'OpenPonk-Roassal' with: [ spec requires: #( 'Roassal' 'RoassalExporters' ) ];
+				package: 'OpenPonk-Core' with: [ spec requires: #( 'Magritte' 'Mocketry' 'XPath' 'NeoJSON' 'OpenPonk-Roassal' ) ];
+				package: 'OpenPonk-Morphic';
+				package: 'OpenPonk-Spec' with: [ spec requires: #( 'Magritte' 'OpenPonkSynchronizedLinks'
+						   'OpenPonk-Morphic' ) ];
+				package: 'OpenPonk-DevTools'.
+			spec
+				group: 'default' with: #( 'OpenPonk-Core' 'OpenPonk-Spec' );
+				group: 'dev-plugin' with: #( 'OpenPonk-DevTools' );
+				group: 'dev' with: #( 'default' 'dev-plugin' ) ]
 ]
 
 { #category : 'baselines' }
@@ -43,32 +40,27 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 
 	spec baseline: 'Magritte' with: [
 		spec
-			repository: 'github://JanBliznicenko/magritte:6d92c9d';
+			repository: 'github://JanBliznicenko/magritte:p14fixes';
 			loads: #( Core 'Magritte-Morph' ) ].
 
 	spec
 		baseline: 'Mocketry'
-		with: [ spec repository: 'github://dionisiydk/Mocketry:v7.0.2' ].
+		with: [ spec repository: 'github://dionisiydk/Mocketry:v7.0.4' ].
 
 	spec
 		baseline: 'NeoJSON'
-		with: [ spec repository: 'github://svenvc/NeoJSON:17efabc' ].
+		with: [ spec repository: 'github://svenvc/NeoJSON:11e274d' ].
 
 	spec baseline: 'Roassal' with: [
 		spec
-			repository: 'github://pharo-graphics/Roassal:v1.06f';
+			repository: 'github://pharo-graphics/Roassal:b70f26f';
 			loads: #Full;
 			postLoadDoIt: #removeRoassalExplicitRequirements ].
 
 	spec
 		baseline: 'RoassalExporters'
 		with: [
-		spec repository: 'github://pharo-graphics/RoassalExporters:v1.02' ].
-
-	spec baseline: 'NewTools' with: [
-		spec
-			repository: 'github://pharo-spec/NewTools:Pharo12';
-			loads: #( FileBrowser ) ]
+		spec repository: 'github://pharo-graphics/RoassalExporters:v1.02' ]
 ]
 
 { #category : 'baselines' }
@@ -77,6 +69,12 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 	spec
 		baseline: 'OpenPonkSynchronizedLinks'
 		with: [ spec repository: 'github://openponk/synchronized-links:v4.1.x' ]
+]
+
+{ #category : 'actions' }
+BaselineOfOpenPonk >> postLoad [
+
+	OPPanedLayoutPatch apply
 ]
 
 { #category : 'baselines' }

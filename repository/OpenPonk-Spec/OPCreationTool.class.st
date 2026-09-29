@@ -1,8 +1,6 @@
 "
-A palette item used to create singular items in the view.
-This class should not be used directly, use instead.
-DCPalette>>newCreationTool:
-
+Palette tool specifically designed for creating new diagram nodes or entities on the canvas. 
+Manages the mouse interaction and placement of the new element.
 "
 Class {
 	#name : 'OPCreationTool',
@@ -29,7 +27,7 @@ OPCreationTool >> factory: aBlock [
 	factory := aBlock
 ]
 
-{ #category : 'callbacks' }
+{ #category : 'hooks' }
 OPCreationTool >> hoveredController: aController [
 
 	feedback value: ((aController canBeTargetFor: objectController)
@@ -37,7 +35,7 @@ OPCreationTool >> hoveredController: aController [
 			 ifFalse: [ aController showDenyFeedbackFor: objectController ])
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 OPCreationTool >> initialize [
 	super initialize.
 	onComplete := [ :ctrl |  ]
@@ -47,12 +45,12 @@ OPCreationTool >> initialize [
 OPCreationTool >> select [
 
 	feedback := nil asValueHolder.
-	feedback whenChangedDo: [ :newVal :oldVal | 
+	feedback whenChangedDo: [ :newVal :oldVal |
 		oldVal ifNotNil: [ oldVal remove ] ].
 	objectController := factory value
 ]
 
-{ #category : 'callbacks' }
+{ #category : 'hooks' }
 OPCreationTool >> selectedControllers: aCollectionOfControllers [
 
 	| targetController |
@@ -62,9 +60,27 @@ OPCreationTool >> selectedControllers: aCollectionOfControllers [
 		^ self ].
 	targetController addAsTargetFor: objectController.
 	self palette selectSelectionTool.
-	self palette selectedTool selectedControllers: { objectController }.
+	objectController roassalShape
+		propertyAt: OPRSSelectable
+		ifPresent: [ :selectable |
+		selectable fakeClicked: objectController roassalShape ].
 	onComplete value: objectController.
-	self editor openFormOn: objectController.
+	objectController := nil
+]
+
+{ #category : 'canvas events' }
+OPCreationTool >> selectedControllers: aCollection onPosition: aPoint [
+	| targetController |
+	aCollection size = 1 ifFalse: [ ^ self ].
+	targetController := aCollection anyOne.
+	(targetController canBeTargetFor: objectController) ifFalse: [ ^ self ].
+	targetController addAsTargetFor: objectController onPosition: aPoint.
+	self palette selectSelectionTool.
+	objectController roassalShape
+		propertyAt: OPRSSelectable
+		ifPresent: [ :selectable |
+			selectable fakeClicked: objectController roassalShape ].
+	onComplete value: objectController.
 	objectController := nil
 ]
 

@@ -1,3 +1,6 @@
+"
+Specialized Morphic UI element representing a drop-down list that also allows custom text entry. Serves as the backend widget for OPEditableDropListPresenter.
+"
 Class {
 	#name : 'OPEditableDropListMorph',
 	#superclass : 'EditableDropListMorph',
@@ -24,7 +27,7 @@ OPEditableDropListMorph >> listHeight [
 	^ super listHeight + 12
 ]
 
-{ #category : 'instance creation' }
+{ #category : 'drawing' }
 OPEditableDropListMorph >> newListMorph [
 
 	"Answer a new list morph"

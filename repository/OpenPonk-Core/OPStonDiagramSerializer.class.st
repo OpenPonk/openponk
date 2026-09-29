@@ -1,3 +1,6 @@
+"
+Serializer responsible for converting diagram representations to and from STON format.
+"
 Class {
 	#name : 'OPStonDiagramSerializer',
 	#superclass : 'OPDiagramSerializer',
@@ -6,7 +9,7 @@ Class {
 	#tag : 'Persistence'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPStonDiagramSerializer class >> exportVersion [
 
 	^ 2
@@ -29,7 +32,8 @@ OPStonDiagramSerializer >> materializeDiagramOf: aModel from: aStream [
 
 	| diagram innerElements |
 	diagram := STON fromStream: aStream.
-	innerElements := OPNavigatorAdapters new allChildrenFor: aModel.
+	innerElements := OPViewModelRegistry forNewProject allChildrenFor:
+		                 aModel.
 	diagram resolveAllModelElements:
 		(innerElements asArray copyWith: aModel).
 	^ diagram

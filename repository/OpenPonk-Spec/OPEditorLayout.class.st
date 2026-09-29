@@ -1,3 +1,6 @@
+"
+Abstract base class defining the spatial layout (arrangement of the palette, canvas, and property panels) for an OpenPonk editor window using the Spec UI framework.
+"
 Class {
 	#name : 'OPEditorLayout',
 	#superclass : 'Object',
@@ -34,21 +37,11 @@ OPEditorLayout >> applyOn: anEditor [
 
 { #category : 'specs' }
 OPEditorLayout >> canvasSectionLayout [
-
+	"Answers the layout arranging the canvas presenter and the zoom toolbar."
 	^ SpBoxLayout newTopToBottom
-		  add: #canvasPresenter;
-		  add: (SpBoxLayout newLeftToRight
-				   add: #canvasMenu;
-				   add: #zoomLabel expand: false;
-				   yourself)
-		  expand: false;
-		  yourself
-]
-
-{ #category : 'specs' }
-OPEditorLayout >> formSectionLayout [
-
-	^ self scrollableTabWith: #form label: 'Properties'
+		add: #canvasPresenter;
+		add: #zoomToolbar expand: false;
+		yourself
 ]
 
 { #category : 'accessing' }

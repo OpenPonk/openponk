@@ -7,6 +7,8 @@ CmdMenuGroup >> buildSpecMenuInlineOn: aGroup [
 
 { #category : '*OpenPonk-Spec' }
 CmdMenuGroup >> buildSpecMenuOn: aMenu [
+	"Builds this group onto a Spec menu presenter, skipping inactive groups."
+	self isActive ifFalse: [ ^ self ].
 	aMenu
 		addGroup: [ :group | 
 			self isInlined

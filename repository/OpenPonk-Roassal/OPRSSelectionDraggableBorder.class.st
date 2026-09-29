@@ -1,3 +1,7 @@
+"
+Specialized draggable interaction used for visual boundaries. 
+Maintains and updates invisible drag boxes (handles) around the boundary to facilitate unified resizing and movement.
+"
 Class {
 	#name : 'OPRSSelectionDraggableBorder',
 	#superclass : 'OPRSSelectionDraggable',
@@ -115,7 +119,7 @@ OPRSSelectionDraggableBorder >> dragBoxWidth: aNumber [
 OPRSSelectionDraggableBorder >> initialize [
 
 	super initialize.
-	dragBoxWidth := 10
+	dragBoxWidth := 12
 ]
 
 { #category : 'hooks' }

@@ -1,9 +1,10 @@
+"
+Diagram toolbar command that triggers a specific graph layout algorithm (such as tree, grid, or circle layout) to automatically arrange elements on the current canvas.
+"
 Class {
 	#name : 'OPLayoutDiagramCommand',
-	#superclass : 'OPDiagramToolbarCommand',
+	#superclass : 'OPDiagramCanvasCommand',
 	#instVars : [
-		'selector',
-		'label',
 		'layouter'
 	],
 	#category : 'OpenPonk-Spec-Layouting',
@@ -17,12 +18,15 @@ OPLayoutDiagramCommand class >> canBeExecutedInContext: aToolContext [
 ]
 
 { #category : 'activation' }
-OPLayoutDiagramCommand class >> toolbarMenuActivation [
+OPLayoutDiagramCommand class >> diagramMenuActivation [
 	<classAnnotation>
-	^ OPDiagramToolbarActivation byItemOf: OPLayoutDiagramMenuGroup for: OPCanvasPresenter
+	^ OPDiagramMenuActivation
+		byItemOf: OPLayoutDiagramMenuGroup
+		order: 20
+		for: OPCanvasPresenter
 ]
 
-{ #category : 'accessing' }
+{ #category : 'execution' }
 OPLayoutDiagramCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	layouter := diagramPresenter diagramController layouter

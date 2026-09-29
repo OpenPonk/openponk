@@ -1,3 +1,7 @@
+"
+Stores metadata for this package. 
+These meta data are used by other tools such as the SmalllintManifestChecker and the critics Browser.
+"
 Class {
 	#name : 'ManifestOpenPonkCore',
 	#superclass : 'PackageManifest',
@@ -5,6 +9,20 @@ Class {
 	#package : 'OpenPonk-Core',
 	#tag : 'Manifest'
 }
+
+{ #category : 'code-critics' }
+ManifestOpenPonkCore class >> ruleEmptyExceptionHandlerRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGMethodDefinition #(#'OPVersion class' #ofLastestNightlyOf: #true)) #'2026-09-04T00:55:25.949+02:00') )
+]
+
+{ #category : 'code-critics' }
+ManifestOpenPonkCore class >> ruleExtraBlockRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGMethodDefinition #(#OPDiagramControllerTest #testWeakSubscriptionAllowsGarbageCollection #false)) #'2026-09-22T20:29:55.489+02:00') )
+]
 
 { #category : 'code-critics' }
 ManifestOpenPonkCore class >> ruleRTInvocationSequenceRuleV1FalsePositive [
@@ -17,8 +35,22 @@ ManifestOpenPonkCore class >> ruleReTestClassNotInPackageWithTestEndingNameV1Fal
 ]
 
 { #category : 'code-critics' }
+ManifestOpenPonkCore class >> ruleRefersToClassRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGMethodDefinition #(#OPViewModel #modelType #false)) #'2026-09-02T14:19:14.522+02:00') )
+]
+
+{ #category : 'code-critics' }
 ManifestOpenPonkCore class >> ruleStringConcatenationRuleV1FalsePositive [
 
 	<ignoreForCoverage>
 	^ #(#(#(#RGMethodDefinition #(#OPMementoDirectorySerializer #loadModelFrom: #false)) #'2024-10-17T12:14:35.401+02:00') )
+]
+
+{ #category : 'code-critics' }
+ManifestOpenPonkCore class >> ruleTempsReadBeforeWrittenRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGMethodDefinition #(#OPDiagramControllerTest #testWeakSubscriptionAllowsGarbageCollection #false)) #'2026-09-22T20:30:15.584+02:00') )
 ]

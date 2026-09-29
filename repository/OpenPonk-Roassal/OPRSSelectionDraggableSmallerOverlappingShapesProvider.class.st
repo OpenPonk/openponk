@@ -1,3 +1,6 @@
+"
+Selection strategy that identifies and moves shapes that spatially overlap the dragged parent shape, provided they are physically smaller than the parent.
+"
 Class {
 	#name : 'OPRSSelectionDraggableSmallerOverlappingShapesProvider',
 	#superclass : 'OPRSSelectionDraggableInnerShapesProvider',

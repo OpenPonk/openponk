@@ -1,3 +1,7 @@
+"
+Specialized map builder that generates visual dependency graphs. 
+Maps OpenPonk models or baseline dependencies using a themed tree layout with custom borders and labels.
+"
 Class {
 	#name : 'OPRSDependenciesMapBuilder',
 	#superclass : 'RSThemedMapBuilder',
@@ -41,24 +45,11 @@ OPRSDependenciesMapBuilder class >> openPonkBaselines [
 		                          OpenPonkGit ) asSet ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'actions' }
 OPRSDependenciesMapBuilder class >> resetOpenPonkBaselines [
 
 	<script>
 	openPonkBaselines := nil
-]
-
-{ #category : 'hooks - model' }
-OPRSDependenciesMapBuilder >> computeModels [
-
-	| verResults |
-	verResults := Smalltalk globals
-		              at: #BaselineOfOpenPonkOntoUMLVerifications
-		              ifAbsent: [ ^ super computeModels ].
-	[
-	Smalltalk globals removeKey: #BaselineOfOpenPonkOntoUMLVerifications.
-	super computeModels ] ensure: [
-		Smalltalk globals at: #BaselineOfOpenPonkOntoUMLVerifications put: verResults ]
 ]
 
 { #category : 'hooks - model' }

@@ -1,3 +1,6 @@
+"
+Represents the spatial boundaries (position and extent) of a node within a diagram.
+"
 Class {
 	#name : 'OPNodeBounds',
 	#superclass : 'Object',
@@ -29,6 +32,16 @@ OPNodeBounds class >> withPosition: aPositionPoint extent: anExtentPoint [
 		  yourself
 ]
 
+{ #category : 'comparing' }
+OPNodeBounds >> = anObject [
+	self == anObject ifTrue: [ ^ true ].
+	self class = anObject class ifFalse: [ ^ false ].
+	^ x = anObject x and: [ 
+		y = anObject y and: [ 
+			width = anObject width and: [ 
+				height = anObject height ] ] ]
+]
+
 { #category : 'accessing' }
 OPNodeBounds >> extent [
 
@@ -43,6 +56,14 @@ OPNodeBounds >> extent: aPoint [
 		height: aPoint y
 ]
 
+{ #category : 'comparing' }
+OPNodeBounds >> hash [
+	^ (((x hash hashMultiply
+		bitXor: y hash) hashMultiply
+		bitXor: width hash) hashMultiply
+		bitXor: height hash)
+]
+
 { #category : 'accessing' }
 OPNodeBounds >> height [
 
@@ -50,9 +71,8 @@ OPNodeBounds >> height [
 ]
 
 { #category : 'accessing' }
-OPNodeBounds >> height: anObject [
-
-	height := anObject rounded
+OPNodeBounds >> height: aNumber [
+	height := aNumber
 ]
 
 { #category : 'accessing' }
@@ -73,7 +93,7 @@ OPNodeBounds >> origin: aPoint [
 OPNodeBounds >> position [
 	"center point"
 
-	^ self origin + (self extent / 2) rounded
+	^ self origin + (self extent / 2)
 ]
 
 { #category : 'accessing' }
@@ -84,7 +104,7 @@ OPNodeBounds >> position: aPoint [
 		assert: self extent isNotNil
 		description:
 		'Extent (width and height) must be set before setting position (origin x and y)'.
-	self origin: aPoint - (self extent / 2) rounded
+	self origin: aPoint - (self extent / 2)
 ]
 
 { #category : 'accessing' }
@@ -97,7 +117,16 @@ OPNodeBounds >> position: aPositionPoint extent: anExtentPoint [
 		position: aPositionPoint
 ]
 
-{ #category : 'accessing' }
+{ #category : 'transforming' }
+OPNodeBounds >> round [
+
+	self x: self x rounded.
+	self y: self y rounded.
+	self width: self width rounded.
+	self height: self height rounded
+]
+
+{ #category : 'transforming' }
 OPNodeBounds >> translateTo: aPoint [
 
 	"center point"
@@ -112,9 +141,8 @@ OPNodeBounds >> width [
 ]
 
 { #category : 'accessing' }
-OPNodeBounds >> width: anObject [
-
-	width := anObject rounded
+OPNodeBounds >> width: aNumber [
+	width := aNumber
 ]
 
 { #category : 'accessing' }
@@ -124,9 +152,8 @@ OPNodeBounds >> x [
 ]
 
 { #category : 'accessing' }
-OPNodeBounds >> x: anObject [
-
-	x := anObject rounded
+OPNodeBounds >> x: aNumber [
+	x := aNumber
 ]
 
 { #category : 'accessing' }
@@ -136,7 +163,6 @@ OPNodeBounds >> y [
 ]
 
 { #category : 'accessing' }
-OPNodeBounds >> y: anObject [
-
-	y := anObject rounded
+OPNodeBounds >> y: aNumber [
+	y := aNumber
 ]

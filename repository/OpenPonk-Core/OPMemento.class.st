@@ -1,3 +1,7 @@
+"
+Represents a snapshot of the application state (models and diagrams) used within the undo/redo mechanism.
+Encapsulates the state at a specific point in time for later restoration.
+"
 Class {
 	#name : 'OPMemento',
 	#superclass : 'Object',

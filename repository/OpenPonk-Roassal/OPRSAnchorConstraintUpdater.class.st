@@ -1,3 +1,7 @@
+"
+Computational engine behind OPRSAnchorConstraint. 
+Responsible for recalculating and applying the position of a shape relative to its anchor line when the line moves.
+"
 Class {
 	#name : 'OPRSAnchorConstraintUpdater',
 	#superclass : 'RSObject',
@@ -152,14 +156,14 @@ OPRSAnchorConstraintUpdater >> moveAwayFromSegment: aSegment [
 				aSegment vector normal * (distanceToLine + self extraDistance) ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'updating' }
 OPRSAnchorConstraintUpdater >> moveShape [
 
 	shape translateTo: self anchorPoint.
 	self moveShapeAwayFromCollisions
 ]
 
-{ #category : 'accessing' }
+{ #category : 'updating' }
 OPRSAnchorConstraintUpdater >> moveShapeAwayFromCollisions [
 
 	| from to |

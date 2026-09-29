@@ -1,12 +1,15 @@
+"
+Workbench toolbar command that prompts the user to select and load an existing OpenPonk project from the filesystem.
+"
 Class {
 	#name : 'OPProjectOpenCommand',
 	#superclass : 'OPProjectCommand',
-	#category : 'OpenPonk-Spec-Commands',
+	#category : 'OpenPonk-Spec-Commands-Workbench',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Commands'
+	#tag : 'Commands-Workbench'
 }
 
-{ #category : 'accessing' }
+{ #category : 'activation' }
 OPProjectOpenCommand class >> toolbarMenuActivation [
 	<classAnnotation>
 	^ OPWorkbenchActivation byItemOf: OPWProjectOpenMenuGroup order: 10 for: OPWorkbenchToolbar
@@ -23,7 +26,7 @@ OPProjectOpenCommand >> defaultMenuItemName [
 	^ 'Open Project...'
 ]
 
-{ #category : 'accessing' }
+{ #category : 'execution' }
 OPProjectOpenCommand >> execute [
 	OPProjectController openFromFile
 ]

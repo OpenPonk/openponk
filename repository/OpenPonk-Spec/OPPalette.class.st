@@ -1,17 +1,14 @@
 "
-I am a container and manager for palette entries. I am added as part of DCEditor.
+Spec presenter acting as a container and manager for palette tools within an OpenPonk editor. 
+Coordinates the selection and instantiation of element creation tools, connection tools, and the default selection tool.
 
 !! Responsibility
-
-Be a container for entries.
-Manage changes between tools.
+Serve as a container for palette entries.
+Manage state changes and focus between active tools.
 
 !! Collaborators
-
-DCPaletteEntry
-DCPaletteTool
-DCEditor
-
+OPPaletteTool
+OPEditor
 "
 Class {
 	#name : 'OPPalette',
@@ -27,7 +24,7 @@ Class {
 	#tag : 'Palettes'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'layout' }
 OPPalette class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -72,11 +69,6 @@ OPPalette >> createPaletteFor: aDiagramController [
 		forController: diagramController.
 	self selectSelectionTool.
 	diagramController whenAllDeselectedDo: [ self selectSelectionTool ] for: self
-]
-
-{ #category : 'building widgets' }
-OPPalette >> createWidgets [
-	items do: [ :item | self assign: item to: ('button' , item hash asString) asSymbol ]
 ]
 
 { #category : 'private' }

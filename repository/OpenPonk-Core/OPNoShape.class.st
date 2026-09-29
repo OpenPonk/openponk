@@ -115,6 +115,13 @@ OPNoShape >> ownedElement: aDiagramElement willRenderIn: aRSCanvas [
 	
 ]
 
+{ #category : 'rendering' }
+OPNoShape >> ownedElementRemovedRender: aDiagramElement [
+	"hook - do nothing by default"
+
+	
+]
+
 { #category : 'accessing' }
 OPNoShape >> ownedElements [
 

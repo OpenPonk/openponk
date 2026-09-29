@@ -514,13 +514,13 @@ OPDiagramElement >> ownModelElement [
 	^ self modelElements ifEmpty: [ nil ] ifNotEmpty: #first
 ]
 
-{ #category : 'initialization' }
+{ #category : 'rendering' }
 OPDiagramElement >> ownedElement: aShape renderedIn: aCanvas [
 
 	self recursivelyOwnedElement: aShape renderedIn: aCanvas
 ]
 
-{ #category : 'initialization' }
+{ #category : 'rendering' }
 OPDiagramElement >> ownedElement: aShape willRenderIn: aCanvas [
 
 	self isRendered ifTrue: [
@@ -529,6 +529,13 @@ OPDiagramElement >> ownedElement: aShape willRenderIn: aCanvas [
 			  description:
 			  'Reusing same diagram element for 2 canvases not allowed' ].
 	self renderIn: aCanvas
+]
+
+{ #category : 'rendering' }
+OPDiagramElement >> ownedElementRemovedRender: aDiagramElement [
+
+	"hook - do nothing by default"
+	
 ]
 
 { #category : 'accessing' }
@@ -622,6 +629,7 @@ OPDiagramElement >> removeRender [
 	roassalShape remove.
 	oldRoassalShape := roassalShape.
 	roassalShape := nil.
+	self owningElement ownedElementRemovedRender: self.
 	self announceRenderRemoved: oldRoassalShape
 ]
 

@@ -21,7 +21,7 @@ BaselineOfOpenPonk >> baseline: spec [
 				package: 'OpenPonk-Roassal' with: [ spec requires: #( 'Roassal' 'RoassalExporters' ) ];
 				package: 'OpenPonk-Core' with: [ spec requires: #( 'Magritte' 'Mocketry' 'XPath' 'NeoJSON' 'OpenPonk-Roassal' ) ];
 				package: 'OpenPonk-Morphic';
-				package: 'OpenPonk-Spec' with: [ spec requires: #( 'NewTools' 'Magritte' 'OpenPonkSynchronizedLinks'
+				package: 'OpenPonk-Spec' with: [ spec requires: #( 'Magritte' 'OpenPonkSynchronizedLinks'
 						   'OpenPonk-Morphic' ) ];
 				package: 'OpenPonk-DevTools'.
 			spec
@@ -60,12 +60,7 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 	spec
 		baseline: 'RoassalExporters'
 		with: [
-		spec repository: 'github://pharo-graphics/RoassalExporters:v1.02' ].
-
-	spec baseline: 'NewTools' with: [
-		spec
-			repository: 'github://pharo-spec/NewTools:Pharo14';
-			loads: #( FileBrowser ) ]
+		spec repository: 'github://pharo-graphics/RoassalExporters:v1.02' ]
 ]
 
 { #category : 'baselines' }

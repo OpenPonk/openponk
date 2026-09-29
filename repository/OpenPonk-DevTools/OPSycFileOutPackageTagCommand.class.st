@@ -38,7 +38,7 @@ OPSycFileOutPackageTagCommand >> execute [
 
 	^ Fileouter
 		  fileoutNamed: filename
-		  cofigureWith: [ :fileouter | tags do: [ :eachTag | eachTag classes do: [ :eachClass | fileouter addFullClass: eachClass ] ] ]
+		  configureWith: [ :fileouter | tags do: [ :eachTag | eachTag classes do: [ :eachClass | fileouter addFullClass: eachClass ] ] ]
 ]
 
 { #category : 'execution' }

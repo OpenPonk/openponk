@@ -36,11 +36,11 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 	spec
 		baseline: 'XPath'
 		with: [
-		spec repository: 'github://pharo-contributions/XML-XPath:v2.3.x' ].
+		spec repository: 'github://pharo-contributions/XML-XPath:v2.3.0' ].
 
 	spec baseline: 'Magritte' with: [
 		spec
-			repository: 'github://JanBliznicenko/magritte:p14fixes';
+			repository: 'github://JanBliznicenko/magritte:dcb9e61';
 			loads: #( Core 'Magritte-Morph' ) ].
 
 	spec
@@ -68,7 +68,7 @@ BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 
 	spec
 		baseline: 'OpenPonkSynchronizedLinks'
-		with: [ spec repository: 'github://openponk/synchronized-links:v4.1.x' ]
+		with: [ spec repository: 'github://openponk/synchronized-links:v5.0.0' ]
 ]
 
 { #category : 'actions' }

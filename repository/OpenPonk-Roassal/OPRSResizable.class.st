@@ -62,27 +62,26 @@ OPRSResizable >> createHandleFor: association [
 	^ handle
 ]
 
-{ #category : 'events' }
-OPRSResizable >> handleDragEnded: evt [
-
+{ #category : 'event handling' }
+OPRSResizable >> handleDragEnded: anEvent [
 	| currentExtent currentPos hasChanged targetCanvas resizedEvent |
 	isInteractivelyResizing := false.
-	shape ifNil: [ currentShape ifNotNil: [ :cs | shape := cs ] ].
+	shape ifNil: [ currentShape ifNotNil: [ :foundShape | shape := foundShape ] ].
 	shape ifNil: [ ^ self ].
 	currentExtent := shape extent copy.
 	currentPos := shape position copy.
 	hasChanged := initialExtent isNotNil and: [
-		              initialPosition isNotNil and: [ initialExtent ~= currentExtent or: [ initialPosition ~= currentPos ] ] ].
+		initialPosition isNotNil and: [ initialExtent ~= currentExtent or: [ initialPosition ~= currentPos ] ] ].
 	hasChanged ifTrue: [
-			resizedEvent := OPRSShapeResizedEvent new
-				                shape: shape;
-				                oldExtent: initialExtent;
-				                newExtent: currentExtent;
-				                oldPosition: initialPosition;
-				                newPosition: currentPos;
-				                yourself.
-			targetCanvas := (evt ifNotNil: [ evt canvas ]) ifNil: [ shape canvas ].
-			targetCanvas ifNotNil: [ :c | c announce: resizedEvent ] ].
+		resizedEvent := OPRSShapeResizedEvent new
+			shape: shape;
+			oldExtent: initialExtent;
+			newExtent: currentExtent;
+			oldPosition: initialPosition;
+			newPosition: currentPos;
+			yourself.
+		targetCanvas := (anEvent ifNotNil: [ anEvent canvas ]) ifNil: [ shape canvas ].
+		targetCanvas ifNotNil: [ :activeCanvas | activeCanvas announce: resizedEvent ] ].
 	initialExtent := nil.
 	initialPosition := nil
 ]

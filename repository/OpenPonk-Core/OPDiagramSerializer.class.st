@@ -23,11 +23,18 @@ OPDiagramSerializer >> materializeDiagramOf: aModel from: aStream [
 ]
 
 { #category : 'serialize/materialize' }
+OPDiagramSerializer >> prepareSerializationOfDiagram: aDiagram [
+
+	aDiagram roundPositionsAndExtents
+]
+
+{ #category : 'serialize/materialize' }
 OPDiagramSerializer >> serializeDiagram: aDiagram [
 	"Serialize a diagram returned by your controller to a string"
 
-	^ String
-		streamContents: [ :stream | self serializeDiagram: aDiagram to: stream ]
+	self prepareSerializationOfDiagram: aDiagram.
+
+	^ String streamContents: [ :stream | self serializeDiagram: aDiagram to: stream ]
 ]
 
 { #category : 'serialize/materialize' }

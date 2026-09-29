@@ -32,7 +32,7 @@ OPNodeBounds class >> withPosition: aPositionPoint extent: anExtentPoint [
 		  yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'comparing' }
 OPNodeBounds >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
 	self class = anObject class ifFalse: [ ^ false ].
@@ -56,7 +56,7 @@ OPNodeBounds >> extent: aPoint [
 		height: aPoint y
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'comparing' }
 OPNodeBounds >> hash [
 	^ (((x hash hashMultiply
 		bitXor: y hash) hashMultiply
@@ -71,9 +71,8 @@ OPNodeBounds >> height [
 ]
 
 { #category : 'accessing' }
-OPNodeBounds >> height: anObject [
-
-	height := anObject rounded
+OPNodeBounds >> height: aNumber [
+	height := aNumber
 ]
 
 { #category : 'accessing' }
@@ -94,7 +93,7 @@ OPNodeBounds >> origin: aPoint [
 OPNodeBounds >> position [
 	"center point"
 
-	^ self origin + (self extent / 2) rounded
+	^ self origin + (self extent / 2)
 ]
 
 { #category : 'accessing' }
@@ -105,7 +104,7 @@ OPNodeBounds >> position: aPoint [
 		assert: self extent isNotNil
 		description:
 		'Extent (width and height) must be set before setting position (origin x and y)'.
-	self origin: aPoint - (self extent / 2) rounded
+	self origin: aPoint - (self extent / 2)
 ]
 
 { #category : 'accessing' }
@@ -118,7 +117,16 @@ OPNodeBounds >> position: aPositionPoint extent: anExtentPoint [
 		position: aPositionPoint
 ]
 
-{ #category : 'accessing' }
+{ #category : 'transforming' }
+OPNodeBounds >> round [
+
+	self x: self x rounded.
+	self y: self y rounded.
+	self width: self width rounded.
+	self height: self height rounded
+]
+
+{ #category : 'transforming' }
 OPNodeBounds >> translateTo: aPoint [
 
 	"center point"
@@ -133,9 +141,8 @@ OPNodeBounds >> width [
 ]
 
 { #category : 'accessing' }
-OPNodeBounds >> width: anObject [
-
-	width := anObject rounded
+OPNodeBounds >> width: aNumber [
+	width := aNumber
 ]
 
 { #category : 'accessing' }
@@ -145,9 +152,8 @@ OPNodeBounds >> x [
 ]
 
 { #category : 'accessing' }
-OPNodeBounds >> x: anObject [
-
-	x := anObject rounded
+OPNodeBounds >> x: aNumber [
+	x := aNumber
 ]
 
 { #category : 'accessing' }
@@ -157,7 +163,6 @@ OPNodeBounds >> y [
 ]
 
 { #category : 'accessing' }
-OPNodeBounds >> y: anObject [
-
-	y := anObject rounded
+OPNodeBounds >> y: aNumber [
+	y := aNumber
 ]

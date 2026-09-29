@@ -761,6 +761,13 @@ OPDiagramElement >> roassalShapeWithoutCheckWhen: anAnnouncementClass send: aSel
 		to: aReceiver
 ]
 
+{ #category : 'serialization' }
+OPDiagramElement >> roundPositionsAndExtents [
+	"hook - do nothing by default"
+
+	self ownedElements do: [ :each | each roundPositionsAndExtents ]
+]
+
 { #category : 'interactions' }
 OPDiagramElement >> selectableInteraction [
 

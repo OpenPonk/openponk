@@ -106,6 +106,13 @@ OPEdge >> restoreGeometryFromMemento: aGeometryMemento [
 	aGeometryMemento third ifNotNil: [ :savedWaypoints | self waypoints: savedWaypoints copy ]
 ]
 
+{ #category : 'serialization' }
+OPEdge >> roundPositionsAndExtents [
+
+	self waypoints: (self waypoints collect: [ :each | each rounded ]).
+	super roundPositionsAndExtents
+]
+
 { #category : 'interactions' }
 OPEdge >> selectableInteraction [
 

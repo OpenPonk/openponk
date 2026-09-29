@@ -115,6 +115,13 @@ OPBoundNode >> restoreGeometryFromMemento: aGeometryMemento [
 	aGeometryMemento ifNotNil: [ :savedBounds | self bounds: savedBounds copy ]
 ]
 
+{ #category : 'serialization' }
+OPBoundNode >> roundPositionsAndExtents [
+
+	self bounds ifNotNil: [ :theBounds | theBounds round ].
+	super roundPositionsAndExtents
+]
+
 { #category : 'interactions' }
 OPBoundNode >> shouldBePositionableByUser [
 

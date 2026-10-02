@@ -65,9 +65,9 @@ OPSelectionToolTest >> testSelectedControllersHighlightsRenderedShapes [
 	renderedController := Mock new.
 	renderedController stub isRendered willReturn: true.
 	renderedController stub roassalShape willReturn: mockShape.
-	mockSelectable stub doHighlightShapes: Any.
-	
+	mockSelectable stub doHighlightShapes: Any onCanvas: Any.
+
 	selectionTool selectedControllers: { renderedController }.
-	
-	mockSelectable should receive doHighlightShapes: { mockShape }
+
+	mockSelectable should receive doHighlightShapes: { mockShape } onCanvas: mockShape canvas
 ]

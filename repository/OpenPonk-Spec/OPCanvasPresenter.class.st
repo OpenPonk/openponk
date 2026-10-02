@@ -56,6 +56,32 @@ OPCanvasPresenter >> createCommandContextForSelection: selectedItems [
 	^ OPRoassalShapeContext for: self of: selectedItems
 ]
 
+{ #category : 'exporting' }
+OPCanvasPresenter >> defaultExportFileNameWithExtension: anExtension [
+	| baseName |
+	baseName := self diagramController
+		ifNotNil: [ :activeDiagramController |
+			activeDiagramController viewModel
+				ifNotNil: [ :activeViewModel | activeViewModel nameOfModel ] ]
+		ifNil: [ nil ].
+	(baseName isNil or: [ baseName trimBoth isEmpty ])
+		ifTrue: [ baseName := 'diagram' ].
+	^ (FileNameSanitizer sanitize: baseName trimBoth) , '.' , anExtension
+]
+
+{ #category : 'exporting' }
+OPCanvasPresenter >> defaultExportFolder [
+	self workbench ifNotNil: [ :activeWorkbench |
+		activeWorkbench projectController ifNotNil: [ :currentProjectController |
+			currentProjectController project ifNotNil: [ :currentProject |
+				currentProject storageFile ifNotNil: [ :file |
+					file parent ifNotNil: [ :folder |
+						folder exists ifTrue: [ ^ folder ] ] ].
+				currentProject storageFolder ifNotNil: [ :folder |
+					folder exists ifTrue: [ ^ folder ] ] ] ] ].
+	^ FileSystem workingDirectory
+]
+
 { #category : 'accessing' }
 OPCanvasPresenter >> diagramController [
 	^ diagramController
@@ -73,31 +99,37 @@ OPCanvasPresenter >> editor [
 
 { #category : 'toolbar' }
 OPCanvasPresenter >> exportAsPdf [
-
-	self flag: 'default name not supported in file browser'.
-	OPExportImageDialog new
+	| dialog |
+	dialog := StSaveFilePresenter new
 		title: 'Choose a PDF file to export the diagram';
-		okAction: [ :file :zoom |
-			OPCanvasPDFExporter
-				exportDiagramController: diagramController
-				to: file ];
+		nameText: (self defaultExportFileNameWithExtension: 'pdf');
+		defaultFolder: self defaultExportFolder;
+		okAction: [ :file |
+			self exportWithCleanCanvasDo: [
+				OPCanvasPDFExporter
+					exportDiagramController: diagramController
+					to: file ] ];
 		extensions: #( pdf ) named: 'PDF documents';
-		open
+		yourself.
+	dialog openModal
 ]
 
 { #category : 'toolbar' }
 OPCanvasPresenter >> exportAsPng [
-
-	self flag: 'default name not supported in file browser'.
-	OPExportImageDialog new
+	| dialog |
+	dialog := OPExportImageDialog new
 		title: 'Choose a PNG file to export the diagram';
+		nameText: (self defaultExportFileNameWithExtension: 'png');
+		defaultFolder: self defaultExportFolder;
 		okAction: [ :file :zoom |
-			OPCanvasPNGExporter
-				exportDiagramController: diagramController
-				to: file
-				zoom: zoom ];
+			self exportWithCleanCanvasDo: [
+				OPCanvasPNGExporter
+					exportDiagramController: diagramController
+					to: file
+					zoom: zoom ] ];
 		extensions: #( png ) named: 'PNG images';
-		open
+		yourself.
+	dialog openModal
 ]
 
 { #category : 'toolbar' }
@@ -110,18 +142,26 @@ OPCanvasPresenter >> exportAsPng: aFile [
 
 { #category : 'toolbar' }
 OPCanvasPresenter >> exportAsSvg [
-
-	self flag: 'default name not supported in file browser'.
-	StSaveFilePresenter new
+	| dialog |
+	dialog := StSaveFilePresenter new
 		title: 'Choose a SVG file to export the diagram';
+		nameText: (self defaultExportFileNameWithExtension: 'svg');
+		defaultFolder: self defaultExportFolder;
 		okAction: [ :file |
-			OPCanvasSVGExporter
-				exportDiagramController: diagramController
-				to: file ];
+			self exportWithCleanCanvasDo: [
+				OPCanvasSVGExporter
+					exportDiagramController: diagramController
+					to: file ] ];
 		extensions: #( svg ) named: 'SVG images';
-		"defaultName:
-			self editor diagramController model name asFileName , '.svg';"
-			open
+		yourself.
+	dialog openModal
+]
+
+{ #category : 'exporting' }
+OPCanvasPresenter >> exportWithCleanCanvasDo: aBlock [
+	^ self diagramController
+		ifNotNil: [ :activeDiagramController | activeDiagramController withoutSelectionDo: aBlock ]
+		ifNil: [ aBlock value ]
 ]
 
 { #category : 'initialization' }

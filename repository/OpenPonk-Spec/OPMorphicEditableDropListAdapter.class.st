@@ -11,8 +11,7 @@ Class {
 
 { #category : 'factory' }
 OPMorphicEditableDropListAdapter >> addToList: anItem [
-
-	self model addAndSelectItemLabeled: anItem copy do: [  ]
+	self model addAndSelectItemLabeled: anItem asString do: [  ]
 ]
 
 { #category : 'factory' }

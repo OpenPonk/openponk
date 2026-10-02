@@ -16,7 +16,7 @@ OPNoteViewModel class >> modelClass [
 	^ OPNote
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'forms' }
 OPNoteViewModel >> buildEditorForm: aForm [
 	aForm bindLongText: 'Text' property: #text
 ]
@@ -25,4 +25,10 @@ OPNoteViewModel >> buildEditorForm: aForm [
 OPNoteViewModel >> creationPriority [
 	"Notes behave as standard nodes, created alongside classifiers (10)."
 	^ 10
+]
+
+{ #category : 'printing' }
+OPNoteViewModel >> nameOfModel [
+
+	^ self model text ifNil: [ '' ]
 ]

@@ -332,14 +332,22 @@ OPDiagramController >> createController: aModel [
 	^ self newControllerFor: aModel
 ]
 
-{ #category : 'protocol-canvas' }
+{ #category : 'selection' }
 OPDiagramController >> deselectAll [
-	self canvas ifNotNil: [ :c |
-		c propertyAt: OPRSSelectableCanvas ifPresent: [ :interaction |
+	self editor ifNotNil: [ :activeEditor |
+		activeEditor palette ifNotNil: [ :activePalette |
+			activePalette selectedTool ifNotNil: [ :activeTool |
+				activeTool deselect ] ] ].
+	self canvas ifNotNil: [ :activeCanvas |
+		activeCanvas propertyAt: OPRSSelectableCanvas ifPresent: [ :interaction |
 			interaction selectedShapes ifNotEmpty: [
-				interaction 
-					selectShapes: RSGroup new 
-					byEvent: (RSMouseClick new canvas: c; position: 0@0; yourself) ] ] ].
+				| shapesToUnhighlight |
+				shapesToUnhighlight := interaction selectedShapes copy.
+				interaction
+					selectShapes: RSGroup new
+					byEvent: (RSMouseClick new canvas: activeCanvas; position: 0 @ 0; yourself).
+				shapesToUnhighlight detect: #isSelectable ifFound: [ :selectableShape |
+					(selectableShape propertyAt: OPRSSelectable) unhighlightRecordedShapes: activeCanvas ] ] ] ].
 	self announcer announce: OPAllShapesDeselected new
 ]
 
@@ -798,6 +806,29 @@ OPDiagramController >> selectController: aController [
 			selectedControllers: { aController } ]
 ]
 
+{ #category : 'selection' }
+OPDiagramController >> selectControllers: aCollectionOfControllers [
+	self editor ifNotNil: [ :activeEditor |
+		activeEditor palette selectSelectionTool selectedTool
+			selectedControllers: aCollectionOfControllers asArray ]
+]
+
+{ #category : 'selection' }
+OPDiagramController >> selectedControllers [
+	^ self editor
+		ifNotNil: [ :activeEditor |
+			activeEditor palette
+				ifNotNil: [ :activePalette |
+					activePalette selectedTool
+						ifNotNil: [ :activeTool |
+							(activeTool respondsTo: #selectedControllers)
+								ifTrue: [ activeTool selectedControllers ]
+								ifFalse: [ #( ) ] ]
+						ifNil: [ #( ) ] ]
+				ifNil: [ #( ) ] ]
+		ifNil: [ #( ) ]
+]
+
 { #category : 'accessing' }
 OPDiagramController >> selectedElements [
 	^ (self canvas propertyAt: OPRSSelectableCanvas) selectedShapes
@@ -1011,6 +1042,15 @@ OPDiagramController >> willRender: aController [
 	(roassalShapesBeingAdded includes: aController) ifTrue: [ 
 		self notify: 'Same controller is already being added' ].
 	roassalShapesBeingAdded add: aController
+]
+
+{ #category : 'selection' }
+OPDiagramController >> withoutSelectionDo: aBlock [
+	| previousControllers |
+	previousControllers := self selectedControllers copy.
+	self deselectAll.
+	^ [ aBlock value ] ensure: [ 
+		self selectControllers: previousControllers ]
 ]
 
 { #category : 'accessing' }

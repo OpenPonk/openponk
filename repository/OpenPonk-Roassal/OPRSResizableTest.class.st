@@ -348,6 +348,48 @@ OPRSResizableTest >> testBottomCenterHandleDragPreservesTopEdgeAnchor [
 ]
 
 { #category : 'tests' }
+OPRSResizableTest >> testDeselectRemovesHandlesAndSubsequentDragDoesNotRestoreThem [
+	| canvas box resizable dragStartEvt dragEndEvt |
+	canvas := RSCanvas new.
+	canvas @ OPRSSelectableCanvas.
+
+	box := RSBox new
+		size: 60;
+		color: Color white;
+		borderColor: Color black;
+		yourself.
+	canvas add: box.
+	box @ OPRSSelectable.
+	box @ OPRSResizable.
+	box @ OPRSSelectionDraggable.
+
+	resizable := box propertyAt: OPRSResizable.
+
+	"1. Select shape and verify handles are displayed"
+	resizable showHandles: (OPRSSelectionEndEvent new canvas: canvas; selectedShapes: { box }; yourself).
+	self
+		assert: resizable handles isNotEmpty
+		description: 'Handles must be present when selected'.
+
+	"2. Deselect shape"
+	resizable removeHandles: (OPRSSelectionEndEvent new canvas: canvas; selectedShapes: #( ); yourself).
+	self
+		assert: resizable handles isNil
+		description: 'Handles must be nil after deselection'.
+
+	"3. Drag the unselected shape"
+	dragStartEvt := RSMouseDragStart new shape: box; canvas: canvas; position: 10 @ 10; yourself.
+	box announce: dragStartEvt.
+	dragEndEvt := RSMouseDragEnd new shape: box; canvas: canvas; position: 30 @ 30; yourself.
+	box announce: dragEndEvt.
+
+	"4. Assert handles did NOT reappear on unselected shape"
+	self
+		assert: (resizable handles isNil or: [ resizable handles isEmpty ])
+		description: 'Dragging an unselected shape must not cause resize handles to reappear'
+]
+
+{ #category : 'tests' }
 OPRSResizableTest >> testMultiStepDraggingPreservesMovedEdgeDeltaAndOppositeAnchor [
 	| canvas box resizable scenarios |
 	canvas := RSCanvas new extent: 1000 @ 1000.

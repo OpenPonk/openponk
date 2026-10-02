@@ -66,6 +66,96 @@ OPPropertiesFormTest >> testBindNumberInputUpdatesModelAndUndoReverts [
 ]
 
 { #category : 'tests' }
+OPPropertiesFormTest >> testEditableDropListAdapterAddToListConvertsTextToString [
+	| presenter adapter |
+	presenter := OPEditableDropListPresenter new.
+	adapter := OPMorphicEditableDropListAdapter new.
+	adapter adapt: presenter.
+	adapter addToList: '2..4' asText.
+
+	self assert: presenter selectedItem isString description: 'Presenter selectedItem must be a String'.
+	self assert: presenter selectedItem equals: '2..4'
+]
+
+{ #category : 'tests' }
+OPPropertiesFormTest >> testExtensibleSingleOptionAppliesCustomValueToPresenter [
+	| dummyTarget visitor description control |
+	dummyTarget := OPPropertiesFormDummyViewModel new.
+	dummyTarget value: '0..5'.
+	form viewModel: dummyTarget.
+	visitor := OPPropertiesFormMagritteVisitor new.
+	visitor form: form.
+	visitor viewModel: dummyTarget.
+	description := MASingleOptionDescription new
+		beExtensible;
+		options: #( '0..1' '1..1' '0..*' '1..*' );
+		reference: MAStringDescription new;
+		accessor: #value;
+		label: 'Multiplicity';
+		yourself.
+	visitor visit: description.
+	control := form components detect: [ :each | (each respondsTo: #isEditable) and: [ each isEditable ] ] ifNone: [ nil ].
+	self assert: control notNil description: 'Control should be created'.
+	self assert: control selectedItem equals: '0..5'
+]
+
+{ #category : 'tests' }
+OPPropertiesFormTest >> testExtensibleSingleOptionWritingCustomValueUpdatesModelAndUndoReverts [
+	| dummyTarget undoManager visitor description control binding |
+	undoManager := OPUndoManager new.
+	form undoManager: undoManager.
+	dummyTarget := OPPropertiesFormDummyViewModel new.
+	dummyTarget value: '0..1'.
+	form viewModel: dummyTarget.
+	visitor := OPPropertiesFormMagritteVisitor new.
+	visitor form: form.
+	visitor viewModel: dummyTarget.
+	description := MASingleOptionDescription new
+		beExtensible;
+		options: #( '0..1' '1..1' '0..*' '1..*' );
+		reference: MAStringDescription new;
+		accessor: #value;
+		label: 'Multiplicity';
+		yourself.
+	visitor visit: description.
+	control := form components detect: [ :each | (each respondsTo: #isEditable) and: [ each isEditable ] ] ifNone: [ nil ].
+	binding := form bindings detect: [ :each | each presenter = control ].
+
+	binding presenterValueChanged: '0..7'.
+	self assert: dummyTarget value equals: '0..7'.
+
+	undoManager undo.
+	self assert: dummyTarget value equals: '0..1'.
+	self assert: control selectedItem equals: '0..1'
+]
+
+{ #category : 'tests' }
+OPPropertiesFormTest >> testExtensibleSingleOptionWritingThroughMorphicAdapterUpdatesModel [
+	| dummyTarget visitor description control adapter |
+	dummyTarget := OPPropertiesFormDummyViewModel new.
+	dummyTarget value: '0..1'.
+	form viewModel: dummyTarget.
+	visitor := OPPropertiesFormMagritteVisitor new.
+	visitor form: form.
+	visitor viewModel: dummyTarget.
+	description := MASingleOptionDescription new
+		beExtensible;
+		options: #( '0..1' '1..1' '0..*' '1..*' );
+		reference: MAStringDescription new;
+		accessor: #value;
+		label: 'Multiplicity';
+		yourself.
+	visitor visit: description.
+	control := form components detect: [ :each | (each respondsTo: #isEditable) and: [ each isEditable ] ].
+	adapter := OPMorphicEditableDropListAdapter new.
+	adapter adapt: control.
+
+	adapter addToList: '2..4' asText.
+	self assert: dummyTarget value equals: '2..4'.
+	self assert: dummyTarget value isString
+]
+
+{ #category : 'tests' }
 OPPropertiesFormTest >> testFocusFirstInputSelectsAllText [
 	"Verify that focusing the first input also selects its entire text content for immediate overwriting."
 	| nameInput |
@@ -122,4 +212,26 @@ OPPropertiesFormTest >> testTargetDoesNotStealKeyboardFocus [
 	spyForm viewModel: dummyTarget.
 
 	self deny: spyForm focusTaken
+]
+
+{ #category : 'tests' }
+OPPropertiesFormTest >> testVisitingExtensibleSingleOptionDescriptionCreatesEditableControl [
+	| dummyTarget visitor description control |
+	dummyTarget := OPPropertiesFormDummyViewModel new.
+	dummyTarget value: '0..1'.
+	form viewModel: dummyTarget.
+	visitor := OPPropertiesFormMagritteVisitor new.
+	visitor form: form.
+	visitor viewModel: dummyTarget.
+	description := MASingleOptionDescription new
+		beExtensible;
+		options: #( '0..1' '1..1' '0..*' '1..*' );
+		reference: MAStringDescription new;
+		accessor: #value;
+		label: 'Multiplicity';
+		yourself.
+	visitor visit: description.
+	control := form components detect: [ :each | (each respondsTo: #isEditable) and: [ each isEditable ] ] ifNone: [ nil ].
+	self assert: control notNil description: 'Extensible single option must create an editable control'.
+	self assert: control isEditable
 ]

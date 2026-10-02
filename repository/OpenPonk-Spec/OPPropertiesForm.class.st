@@ -292,6 +292,39 @@ OPPropertiesForm >> bindDroplist: aLabel property: aSymbol items: aCollection [
 ]
 
 { #category : 'binding' }
+OPPropertiesForm >> bindEditableDroplist: aLabel accessor: anAccessor description: aDescription [
+	^ self
+		bindEditableDroplist: aLabel
+		accessor: anAccessor
+		description: aDescription
+		configuration: nil
+]
+
+{ #category : 'binding' }
+OPPropertiesForm >> bindEditableDroplist: aLabel accessor: anAccessor description: aDescription configuration: aConfigBlock [
+	| control binding |
+	control := self addEditableDroplist: aLabel.
+	aConfigBlock ifNotNil: [ aConfigBlock value: control ].
+	binding := OPFormDropListBinding new
+		form: self
+		presenter: control
+		accessor: anAccessor
+		description: aDescription.
+	self bindings add: binding.
+	^ control
+]
+
+{ #category : 'binding' }
+OPPropertiesForm >> bindEditableDroplist: aLabel property: aSymbol items: aCollection [
+	^ self
+		bindEditableDroplist: aLabel
+		accessor: (OPModelPropertyAccessor on: aSymbol)
+		description: nil
+		configuration: [ :dropListControl |
+			dropListControl items: aCollection asOrderedCollection ]
+]
+
+{ #category : 'binding' }
 OPPropertiesForm >> bindLongText: aLabel accessor: anAccessor description: aDescription [
 	| control binding |
 	control := self addLongText: aLabel.

@@ -20,3 +20,8 @@ SpDropListPresenter >> addSilentlyItemLabeled: aString do: aBlock [
 
 	model add: item
 ]
+
+{ #category : '*OpenPonk-Spec-Form' }
+SpDropListPresenter >> isEditable [
+	^ false
+]

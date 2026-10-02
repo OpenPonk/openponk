@@ -128,6 +128,17 @@ OPProjectController >> controllers [
 	^ controllers
 ]
 
+{ #category : 'saving' }
+OPProjectController >> defaultProjectFileName [
+	| baseName |
+	baseName := self project
+		ifNotNil: [ :currentProject |
+			currentProject name ifNotNil: [ :projectName | projectName trimBoth ] ]
+		ifNil: [ nil ].
+	(baseName isNil or: [ baseName isEmpty ]) ifTrue: [ baseName := 'project' ].
+	^ (FileNameSanitizer sanitize: baseName) , '.opp'
+]
+
 { #category : 'accessing' }
 OPProjectController >> enabledPlugins [
 	^ OPPluginRegistry default plugins
@@ -345,12 +356,19 @@ OPProjectController >> renameProjectTo: aNewName [
 
 { #category : 'saving' }
 OPProjectController >> replaceWritableProjectFile [
-
-	^ self project storageFile: ((StSaveFilePresenter new
-			    title: 'Set a file for saving an OpenPonk project';
-			    extensions: #( opp ) named: 'OP projects';
-			    openModal;
-			    selectedEntry) ifNil: [ OPProjectSaveCanceledException signal ])
+	| dialog |
+	dialog := StSaveFilePresenter new
+		title: 'Set a file for saving an OpenPonk project';
+		extensions: #( opp ) named: 'OP projects';
+		nameText: self defaultProjectFileName;
+		yourself.
+	self project storageFile ifNotNil: [ :file |
+		file parent ifNotNil: [ :parent |
+			parent exists ifTrue: [ dialog defaultFolder: parent ] ] ].
+	dialog openModal.
+	(dialog cancelled or: [ dialog selectedEntry isNil ])
+		ifTrue: [ OPProjectSaveCanceledException signal ].
+	^ self project storageFile: dialog selectedEntry
 ]
 
 { #category : 'saving' }
@@ -376,9 +394,10 @@ OPProjectController >> saveProject [
 
 { #category : 'saving' }
 OPProjectController >> saveProjectAs [
+
 	[ self replaceWritableProjectFile ]
 		on: OPProjectSaveCanceledException
-		do: [ ^ self inform: 'Saving canceled' ].
+		do: [ ^ InformativeNotification signal: 'Saving canceled' ].
 	self saveProject
 ]
 

@@ -66,6 +66,23 @@ OPDiagramControllerTest >> testCanBeTargetForEntity [
 ]
 
 { #category : 'tests' }
+OPDiagramControllerTest >> testDeselectAllDelegatesToSelectionTool [
+	| mockEditor mockPalette mockTool |
+	mockEditor := Mock new.
+	mockPalette := Mock new.
+	mockTool := Mock new.
+
+	mockEditor stub palette willReturn: mockPalette.
+	mockPalette stub selectedTool willReturn: mockTool.
+	mockTool stub deselect.
+
+	controller editor: mockEditor.
+	controller deselectAll.
+
+	mockTool should receive deselect
+]
+
+{ #category : 'tests' }
 OPDiagramControllerTest >> testDeselectControllerDelegatesToSelectionTool [
 	| mockEditor mockPalette mockTool targetController |
 	mockEditor := Mock new.
@@ -251,4 +268,31 @@ OPDiagramControllerTest >> testWeakSubscriptionAllowsGarbageCollection [
 	self
 		assert: weakHolder first isNil
 		description: 'Diagram controller must be collected by GC when not strongly referenced elsewhere'
+]
+
+{ #category : 'tests' }
+OPDiagramControllerTest >> testWithoutSelectionDoDeselectsAndRestoresSelection [
+	| mockEditor mockPalette mockTool targetController wasExecuted |
+	mockEditor := Mock new.
+	mockPalette := Mock new.
+	mockTool := Mock new.
+	targetController := Mock new.
+	wasExecuted := false.
+
+	mockEditor stub palette willReturn: mockPalette.
+	mockPalette stub selectSelectionTool willReturn: mockPalette.
+	mockPalette stub selectedTool willReturn: mockTool.
+	mockTool stub deselect.
+	mockTool stub selectedControllers willReturn: { targetController }.
+	mockTool stub selectedControllers: Any.
+
+	controller editor: mockEditor.
+	controller selectController: targetController.
+
+	controller withoutSelectionDo: [
+		wasExecuted := true.
+		mockTool should receive deselect ].
+
+	self assert: wasExecuted description: 'Execution block must be evaluated'.
+	mockTool should receive selectedControllers: { targetController }
 ]

@@ -152,13 +152,13 @@ OPRSResizable >> relocateHandles [
 
 { #category : 'public' }
 OPRSResizable >> removeHandles: anEvent [
-
 	| canvas |
 	canvas := anEvent
 		ifNotNil: [ :theEvent | theEvent canvas ]
-		ifNil: [ shape canvas ].
+		ifNil: [ shape ifNotNil: [ shape canvas ] ].
+	shape ifNotNil: [ shape removePropertyAt: self key ifAbsent: [ ] ].
+	currentShape ifNotNil: [ currentShape removePropertyAt: self key ifAbsent: [ ] ].
 	handles ifNil: [ ^ self ].
-
 	handles do: #remove.
 	handles := nil.
 	canvas ifNotNil: [ :theCanvas | theCanvas signalUpdate ]

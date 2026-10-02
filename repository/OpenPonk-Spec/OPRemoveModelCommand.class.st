@@ -17,22 +17,15 @@ OPRemoveModelCommand >> canBeExecuted [
 
 { #category : 'executing' }
 OPRemoveModelCommand >> execute [
-
-	| viewModel controller model |
+	| viewModel controller model command undoManager |
 	viewModel := self selectedViewModel.
 	model := viewModel model.
 	controller := self projectController.
-	SpConfirmDialog new
-		title: 'Delete model?';
-		message: 'Do you want to delete ' , model name asString , '?';
-		acceptLabel: 'Yes, delete it';
-		cancelLabel: 'Cancel';
-		onAccept: [
-				| command undoManager |
-				undoManager := controller ifNotNil: [ :theController | theController undoManager ].
-				command := OPRemoveModelElementCommand model: model projectController: controller.
-				undoManager ifNotNil: [ :manager | manager inTransaction: [ manager execute: command ] ] ifNil: [ command execute ] ];
-		openDialog
+	undoManager := controller ifNotNil: [ :theController | theController undoManager ].
+	command := OPRemoveModelElementCommand model: model projectController: controller.
+	undoManager
+		ifNotNil: [ :manager | manager inTransaction: [ manager execute: command ] ]
+		ifNil: [ command execute ]
 ]
 
 { #category : 'accessing' }

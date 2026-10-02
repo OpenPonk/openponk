@@ -302,8 +302,13 @@ OPRSSelectionDraggable >> startDrag: anEvent [
 		                        ifFalse: [ { anEvent shape } ].
 
 	draggedNodes := selectedShapesToMove flatCollectAsSet: [ :eachSelectedShape |
-		                (Set with: eachSelectedShape)
-		                , (self shapesToDragInside: eachSelectedShape) ].
+		                | innerShapes |
+		                innerShapes := eachSelectedShape
+			                               propertyAt: self propertyKey
+			                               ifPresent: [ :eachInteraction |
+				                               eachInteraction shapesToDragInside: eachSelectedShape ]
+			                               ifAbsent: [ Set empty ].
+		                (Set with: eachSelectedShape) , innerShapes ].
 
 	movedLinesWithControlPoints := self movedLinesWithControlPointsBy: anEvent.
 

@@ -134,16 +134,27 @@ OPPropertiesFormMagritteVisitor >> visitPriorityContainer: aContainer [
 
 { #category : 'visiting-description' }
 OPPropertiesFormMagritteVisitor >> visitSingleOptionDescription: aSingleOptionDescription [
-	form
-		bindDroplist: aSingleOptionDescription label
-		accessor: aSingleOptionDescription accessor
-		description: aSingleOptionDescription
-		configuration: [ :dropList |
-			dropList
-				items: aSingleOptionDescription options;
-				enabled: aSingleOptionDescription isReadOnly not;
-				display: [ :each | aSingleOptionDescription labelForOption: each ];
-				displayIcon: [ :each :item | aSingleOptionDescription iconForOption: each ] ]
+	| configurationBlock |
+	configurationBlock := [ :dropList |
+		dropList
+			items: aSingleOptionDescription options;
+			enabled: aSingleOptionDescription isReadOnly not;
+			display: [ :each | aSingleOptionDescription labelForOption: each ];
+			displayIcon: [ :each :item | aSingleOptionDescription iconForOption: each ] ].
+
+	aSingleOptionDescription isExtensible
+		ifTrue: [
+			form
+				bindEditableDroplist: aSingleOptionDescription label
+				accessor: aSingleOptionDescription accessor
+				description: aSingleOptionDescription
+				configuration: configurationBlock ]
+		ifFalse: [
+			form
+				bindDroplist: aSingleOptionDescription label
+				accessor: aSingleOptionDescription accessor
+				description: aSingleOptionDescription
+				configuration: configurationBlock ]
 ]
 
 { #category : 'visiting-description' }

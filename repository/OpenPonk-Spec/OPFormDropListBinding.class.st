@@ -16,7 +16,12 @@ OPFormDropListBinding >> applyModelValueToPresenter: aValue [
 		ifNotNil: [
 			((presenter respondsTo: #selectItem:) and: [
 				(presenter respondsTo: #items) and: [ presenter items includes: aValue ] ])
-					ifTrue: [ presenter selectItem: aValue ] ]
+					ifTrue: [ presenter selectItem: aValue ]
+					ifFalse: [
+						self isExtensible ifTrue: [
+							presenter disableSelectionDuring: [
+								presenter items: (presenter items copyWith: aValue).
+								presenter selectItem: aValue ] ] ] ]
 		ifNil: [
 			(presenter respondsTo: #resetSelection)
 				ifTrue: [ presenter resetSelection ]
@@ -28,4 +33,10 @@ OPFormDropListBinding >> applyModelValueToPresenter: aValue [
 OPFormDropListBinding >> connectPresenter [
 	presenter whenSelectedItemChangedDo: [ :newItem |
 		self presenterValueChanged: newItem ]
+]
+
+{ #category : 'testing' }
+OPFormDropListBinding >> isExtensible [
+	(description isNotNil and: [ description isExtensible ]) ifTrue: [ ^ true ].
+	^ presenter isEditable
 ]

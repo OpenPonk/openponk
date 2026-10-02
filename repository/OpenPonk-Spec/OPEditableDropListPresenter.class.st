@@ -15,6 +15,11 @@ OPEditableDropListPresenter class >> adapterName [
 	^ #OPMorphicEditableDropListAdapter
 ]
 
+{ #category : 'testing' }
+OPEditableDropListPresenter >> isEditable [
+	^ true
+]
+
 { #category : 'api' }
 OPEditableDropListPresenter >> items: aList [
 	super items: aList asOrderedCollection

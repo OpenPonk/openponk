@@ -59,16 +59,17 @@ OPSelectionTool >> selectedControllers [
 OPSelectionTool >> selectedControllers: aCollectionOfControllers [
 	| originalRoassalShapes newRoassalShapes |
 	originalRoassalShapes := self selectedControllers
-		                         select: [ :eachController | eachController isRendered ]
-		                         thenCollect: [ :eachController | eachController roassalShape ].
+		select: [ :eachController | eachController isRendered ]
+		thenCollect: [ :eachController | eachController roassalShape ].
 	newRoassalShapes := aCollectionOfControllers
-		                    select: [ :eachController | eachController isRendered ]
-		                    thenCollect: [ :eachController | eachController roassalShape ].
+		select: [ :eachController | eachController isRendered ]
+		thenCollect: [ :eachController | eachController roassalShape ].
 	originalRoassalShapes , newRoassalShapes
 		detect: #isSelectable
 		ifFound: [ :foundShape |
-			(foundShape propertyAt: OPRSSelectable) doHighlightShapes:
-				newRoassalShapes ].
+			(foundShape propertyAt: OPRSSelectable)
+				doHighlightShapes: newRoassalShapes
+				onCanvas: foundShape canvas ].
 	selectedControllers := aCollectionOfControllers.
 	self workbench openFormOn:
 		(aCollectionOfControllers size = 1 ifTrue: [

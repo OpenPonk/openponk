@@ -11,6 +11,13 @@ Class {
 }
 
 { #category : 'code-critics' }
+ManifestOpenPonkSpec class >> ruleCollectSelectNotUsedRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGMethodDefinition #(#OPWorkbenchToolbar #openSettings #false)) #'2026-10-04T18:00:26.176+02:00') )
+]
+
+{ #category : 'code-critics' }
 ManifestOpenPonkSpec class >> ruleRBContainsRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#OPModelTypeSelector #addModel #false)) #'2021-03-04T21:09:27.51689+01:00') )
 ]

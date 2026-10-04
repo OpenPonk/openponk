@@ -136,6 +136,20 @@ OPWorkbench class >> settingsOn: aBuilder [
 	(aBuilder group: #openponk) label: 'OpenPonk'
 ]
 
+{ #category : 'settings' }
+OPWorkbench class >> zoomerSettingsOn: aBuilder [
+
+	<systemsettings>
+	(aBuilder button: #open)
+		parent: #openponk;
+		order: 25;
+		target: OPZoomer;
+		isTransient: true;
+		label: 'Display zoom / scaling tool';
+		description: 'Open utility to adjust SDL2 display scaling factor and DPI.';
+		buttonLabel: 'Open scaling tool'
+]
+
 { #category : 'closing' }
 OPWorkbench >> close [
 	"Closes the underlying workbench window."

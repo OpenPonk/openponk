@@ -210,35 +210,37 @@ OPWorkbenchToolbar >> modelMenu [
 	^ subMenu
 ]
 
-{ #category : 'menus for project' }
+{ #category : 'actions' }
+OPWorkbenchToolbar >> openSettings [
+	(StSettingsBrowser newApplication: StPharoApplication current)
+		open;
+		select: 'openponk'
+]
+
+{ #category : 'menus' }
 OPWorkbenchToolbar >> openponkMenu [
 
-	| openponkMenu browser path |
+	| openponkMenu |
 	openponkMenu := self newMenu.
 	openponkMenu
 		addGroup: [ :group |
-				group
-					addItem: [ :item |
-							item
-								name: 'Settings';
-								icon: (self iconNamed: #configuration);
-								action: [
-										browser := SettingBrowser new
-											           changePackageSet: { #'OpenPonk-Spec' asPackage };
-											           yourself.
-										path := (browser open submorphs detect: [ :each | each isKindOf: MorphTreeMorph ]) nodeList.
-										browser expandNodePath: path first contents first path ] ];
-					addItem: [ :item |
-							item
-								name: 'Check for new version';
-								icon: (self iconNamed: #smallUpdate);
-								action: [ (OPVersionComparisonInfo newApplication: SpApplication defaultApplication) open ] ] ];
+			group
+				addItem: [ :item |
+					item
+						name: 'Settings';
+						icon: (self iconNamed: #configuration);
+						action: [ self openSettings ] ];
+				addItem: [ :item |
+					item
+						name: 'Check for new version';
+						icon: (self iconNamed: #smallUpdate);
+						action: [ (OPVersionComparisonInfo newApplication: SpApplication defaultApplication) open ] ] ];
 		addGroup: [ :group |
-				group addItem: [ :item |
-						item
-							name: 'Close OpenPonk';
-							icon: (self iconNamed: #smallQuit);
-							action: [ WorldState saveAndQuit ] ] ].
+			group addItem: [ :item |
+				item
+					name: 'Close OpenPonk';
+					icon: (self iconNamed: #smallQuit);
+					action: [ WorldState saveAndQuit ] ] ].
 	^ openponkMenu
 ]
 

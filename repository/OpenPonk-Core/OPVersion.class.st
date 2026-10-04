@@ -136,21 +136,14 @@ OPVersion class >> ofLastestNightlyOf: aRepositoryName [
 	| releases nightlyJson title date version |
 	releases := self getReleasesOf: aRepositoryName.
 	nightlyJson := releases
-		               detect: [ :each |
-		               (each at: #tag_name ifAbsent: [ '' ]) = 'nightly' ]
-		               ifNone: [
-				               releases
-					               detect: [ :each |
-					               each at: #prerelease ifAbsent: [ false ] ]
-					               ifNone: [ nil ] ].
+		               detect: [ :each | (each at: #tag_name ifAbsent: [ '' ]) = 'nightly' ]
+		               ifNone: [ releases detect: [ :each | each at: #prerelease ifAbsent: [ false ] ] ifNone: [ nil ] ].
 	nightlyJson ifNil: [ ^ nil ].
-	version := self
-		           fromReleaseJson: nightlyJson
-		           repositoryName: aRepositoryName.
+	version := self fromReleaseJson: nightlyJson repositoryName: aRepositoryName.
 	title := nightlyJson at: #name ifAbsent: [ '' ].
 	(title beginsWith: 'nightly-') ifTrue: [
 			[
-				date := (title allButFirst: 8) asDateAndTime.
+				date := DateAndTime fromString: (title allButFirst: 8).
 				version buildDate: date ]
 				on: Error
 				do: [ :e | "fallback on published_at" ] ].

@@ -266,10 +266,15 @@ OPWorkbenchTest >> testUndoShortcutOnWindowExecutesUndoManager [
 
 { #category : 'tests' }
 OPWorkbenchTest >> testZoomerSettingsRegisteredUnderOpenPonk [
-
-	| pragma |
-	pragma := (Pragma allNamed: #systemsettings)
-		          detect: [ :each | each method selector = #zoomerSettingsOn: and: [ each method methodClass = OPWorkbench class ] ]
-		          ifNone: [ nil ].
-	self assert: pragma isNotNil description: 'OPWorkbench class must declare #zoomerSettingsOn: with <systemsettings>'
+	| method pragma |
+	self assert: (OPWorkbench class includesSelector: #zoomerSettingsOn:)
+		description: 'OPWorkbench class must define #zoomerSettingsOn:'.
+	method := OPWorkbench class >> #zoomerSettingsOn:.
+	pragma := method pragmaAt: #systemsettings.
+	self assert: pragma isNotNil
+		description: 'OPWorkbench class must declare #zoomerSettingsOn: with <systemsettings>'.
+	self assert: (method sourceCode includesSubstring: 'parent: #openponk')
+		description: 'Zoomer setting in OPWorkbench must be registered under #openponk'.
+	self assert: (method sourceCode includesSubstring: 'target: OPZoomer')
+		description: 'Zoomer setting in OPWorkbench must target OPZoomer'
 ]

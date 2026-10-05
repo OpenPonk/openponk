@@ -1,5 +1,5 @@
 "
-Context menu command that sets the fill color of the selected Roassal shape to yellow.
+A canvas command for applying yellow fillColor to selected diagram elements.
 "
 Class {
 	#name : 'OPDiagramFigureYellowFillColorCommand',

@@ -8,7 +8,8 @@ Class {
 	#instVars : [
 		'name',
 		'documentation',
-		'resolution'
+		'resolution',
+		'styleSheet'
 	],
 	#category : 'OpenPonk-Core-DiagramElements',
 	#package : 'OpenPonk-Core',
@@ -37,6 +38,13 @@ OPDiagram >> canvas: aCanvas [
 ]
 
 { #category : 'accessing' }
+OPDiagram >> defaultStyleSheet [
+	^ self findPlugin
+		ifNotNil: [ :plugin | plugin styleSheet copy ]
+		ifNil: [ OPStyleSheet new ]
+]
+
+{ #category : 'accessing' }
 OPDiagram >> documentation [
 
 	^ documentation
@@ -46,6 +54,17 @@ OPDiagram >> documentation [
 OPDiagram >> documentation: anObject [
 
 	documentation := anObject
+]
+
+{ #category : 'private' }
+OPDiagram >> findPlugin [
+	| model matchingPlugins |
+	model := self ownModelElement ifNil: [ self modelElement ].
+	model ifNil: [ ^ nil ].
+	matchingPlugins := OPPluginRegistry default plugins select: [ :eachPlugin | eachPlugin isPluginFor: model ].
+	matchingPlugins ifEmpty: [ ^ nil ].
+	matchingPlugins size = 1 ifTrue: [ ^ matchingPlugins anyOne ].
+	^ (matchingPlugins sorted: [ :a :b | a class allSuperclasses includes: b class ]) first
 ]
 
 { #category : 'testing' }
@@ -135,6 +154,16 @@ OPDiagram >> resolution: anObject [
 OPDiagram >> shouldBePositionableByUser [
 
 	^ false
+]
+
+{ #category : 'accessing' }
+OPDiagram >> styleSheet [
+	^ styleSheet ifNil: [ styleSheet := self defaultStyleSheet ]
+]
+
+{ #category : 'accessing' }
+OPDiagram >> styleSheet: aStyleSheet [
+	styleSheet := aStyleSheet
 ]
 
 { #category : 'initialization' }

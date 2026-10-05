@@ -108,19 +108,18 @@ OPProjectBrowser >> connectRecentProjects [
 
 { #category : 'project handling' }
 OPProjectBrowser >> createProject [
+
 	| selectedTemplate model project workbench |
 	selectedTemplate := templatesList selectedItem.
 	selectedTemplate ifNil: [ ^ self ].
 	model := selectedTemplate createModel.
-	(model respondsTo: #name:) ifTrue: [ 
-		(selectedTemplate isExample not or: [ model name isNil ]) ifTrue: [ 
-			model name: projectNameInput text ] ].
-	project := OPProject named: projectNameInput text.
+	(model respondsTo: #name:) ifTrue: [
+		(selectedTemplate isExample not or: [ model name isNil ]) ifTrue: [ model name: self projectName ] ].
+	project := OPProject named: self projectName.
 	project addModel: model.
 	workbench := self openProject: project.
-	selectedTemplate isExample ifTrue: [ 
-		(workbench respondsTo: #showAllElementsInAllDiagrams) ifTrue: [ 
-			workbench showAllElementsInAllDiagrams ] ]
+	selectedTemplate isExample ifTrue: [
+		(workbench respondsTo: #showAllElementsInAllDiagrams) ifTrue: [ workbench showAllElementsInAllDiagrams ] ]
 ]
 
 { #category : 'accessing - spec' }
@@ -271,6 +270,15 @@ OPProjectBrowser >> projectMenu: aMenuPresenter for: aProject [
 				aProject removeFromImage.
 				self updateRecentList ] ].
 	^ aMenuPresenter
+]
+
+{ #category : 'accessing' }
+OPProjectBrowser >> projectName [
+
+	| text |
+	text := projectNameInput text.
+	(text beginsWith: 'Empty ') ifTrue: [ ^ text allButFirst: 6 ].
+	^ text
 ]
 
 { #category : 'accessing - spec' }

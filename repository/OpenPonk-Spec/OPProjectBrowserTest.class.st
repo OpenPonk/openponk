@@ -70,7 +70,7 @@ OPProjectBrowserTest >> testCreateProjectDispatchesToOpenProject [
 		nil ].
 	browser createProject.
 	self assert: openedProjects size equals: 1.
-	self assert: openedProjects first name equals: browser projectNameInput text.
+	self assert: openedProjects first name equals: browser projectName.
 	self assert: openedProjects first models isNotEmpty
 ]
 

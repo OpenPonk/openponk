@@ -1,5 +1,5 @@
 "
-Context menu command that sets the fill color of the selected Roassal shape to gray.
+A canvas command for applying gray fillColor to selected diagram elements.
 "
 Class {
 	#name : 'OPDiagramFigureGrayFillColorCommand',

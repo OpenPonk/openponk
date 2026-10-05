@@ -15,6 +15,11 @@ OPRoassalShapeFontColorMenuGroup class >> colors [
 	^ OPRoassalShapeStrokeColorMenuGroup colors
 ]
 
+{ #category : 'accessing' }
+OPRoassalShapeFontColorMenuGroup class >> commandSuperclass [
+	^ OPDiagramFigureFontColorCommand
+]
+
 { #category : 'hooks' }
 OPRoassalShapeFontColorMenuGroup class >> styleAttribute [
 

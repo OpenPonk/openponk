@@ -66,8 +66,8 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 { #category : 'baselines' }
 BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 
-	spec baseline: 'OpenPonkSynchronizedLinks' with: [ spec repository: 'github://OpenPonk/synchronized-links' ].
-	spec baseline: 'OpenPonkZoomer' with: [ spec repository: 'github://OpenPonk/zoomer:main' ]
+	spec baseline: 'OpenPonkSynchronizedLinks' with: [ spec repository: 'github://OpenPonk/synchronized-links:v5.1.0' ].
+	spec baseline: 'OpenPonkZoomer' with: [ spec repository: 'github://OpenPonk/zoomer:v5.1.0' ]
 ]
 
 { #category : 'actions' }

@@ -54,15 +54,26 @@ OPPlugin >> = aComparable [
 		  self modelClass = aComparable modelClass ]
 ]
 
+{ #category : 'accessing' }
+OPPlugin >> defaultModelName [
+
+	^ self name
+]
+
 { #category : 'templates' }
 OPPlugin >> defaultProjectTemplates [
 	"Answers standard empty model templates for this plugin."
 
 	^ { (OPProjectTemplate
-			named: 'Empty ' , self name
-			icon: self icon
-			modelFactory: [ self newModel ]
-			isExample: false) }
+		   named: 'Empty ' , self defaultModelName
+		   icon: self icon
+		   modelFactory: [ self newModel ]
+		   isExample: false) }
+]
+
+{ #category : 'accessing' }
+OPPlugin >> defaultStyleSheet [
+	^ OPStyleSheet new
 ]
 
 { #category : 'accessing' }
@@ -153,14 +164,14 @@ OPPlugin >> serializer [
 ]
 
 { #category : 'accessing' }
-OPPlugin >> simpleName [
-	^ self name capitalized
-		select: [ :each | each isLetter and: [ each asciiValue <= 127 ] ]
-]
-
-{ #category : 'accessing' }
-OPPlugin >> singleStringSerializer [
-	^ self serializer
+OPPlugin >> styleSheet [
+	| sheet pluginRules |
+	sheet := self defaultStyleSheet copy.
+	pluginRules := OPNotationStyleRegistry default rulesForPlugin: self.
+	pluginRules keysAndValuesDo: [ :typeName :properties |
+		properties keysAndValuesDo: [ :propSymbol :val |
+			sheet atType: typeName set: propSymbol to: val ] ].
+	^ sheet
 ]
 
 { #category : 'testing' }

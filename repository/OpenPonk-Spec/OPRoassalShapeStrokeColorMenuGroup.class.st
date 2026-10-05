@@ -24,6 +24,11 @@ OPRoassalShapeStrokeColorMenuGroup class >> colors [
 		  Color magenta }
 ]
 
+{ #category : 'accessing' }
+OPRoassalShapeStrokeColorMenuGroup class >> commandSuperclass [
+	^ OPDiagramFigureStrokeColorCommand
+]
+
 { #category : 'hooks' }
 OPRoassalShapeStrokeColorMenuGroup class >> styleAttribute [
 

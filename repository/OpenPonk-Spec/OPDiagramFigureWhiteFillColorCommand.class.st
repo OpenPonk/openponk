@@ -1,5 +1,5 @@
 "
-Context menu command that sets the fill color of the selected Roassal shape to white.
+A canvas command for applying white fillColor to selected diagram elements.
 "
 Class {
 	#name : 'OPDiagramFigureWhiteFillColorCommand',

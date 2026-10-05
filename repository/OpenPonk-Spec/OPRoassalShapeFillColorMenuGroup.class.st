@@ -21,7 +21,14 @@ OPRoassalShapeFillColorMenuGroup class >> colors [
 		  Color paleRed.
 		  Color paleOrange.
 		  Color paleGreen.
-		  Color paleMagenta }
+		  Color paleMagenta.
+		  (Color fromHexString: 'DCE5EC').
+		  (Color fromHexString: 'D6FCEB') }
+]
+
+{ #category : 'accessing' }
+OPRoassalShapeFillColorMenuGroup class >> commandSuperclass [
+	^ OPDiagramFigureFillColorCommand
 ]
 
 { #category : 'hooks' }

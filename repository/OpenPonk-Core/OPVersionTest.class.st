@@ -67,7 +67,7 @@ OPVersionTest >> testFromReleaseJson [
 	self assert: v releaseName equals: 'v2.1.0'.
 	self assert: v isRelease.
 	self deny: v needsDownloadInfo.
-	self assert: v buildDate equals: '2026-09-01T10:05:00Z' asDateAndTime asLocal.
+	self assert: v buildDate equals: (DateAndTime fromString: '2026-09-01T10:05:00Z') asLocal.
 	self assert: v fullVersionString equals: 'borm-editor-v2.1.0'
 ]
 
@@ -93,7 +93,7 @@ OPVersionTest >> testFromRunJsonRelease [
 	self assert: version githubWorkflowRunId equals: 987654.
 	self assert: version isRelease.
 	self deny: version needsDownloadInfo.
-	self assert: version buildDate equals: '2026-09-01T10:05:00Z' asDateAndTime asLocal
+	self assert: version buildDate equals: (DateAndTime fromString: '2026-09-01T10:05:00Z') asLocal
 ]
 
 { #category : 'tests' }

@@ -15,6 +15,14 @@ OPTestPlugin class >> isTestingOnly [
 ]
 
 { #category : 'accessing' }
+OPTestPlugin >> defaultStyleSheet [
+	| sheet |
+	sheet := super defaultStyleSheet.
+	sheet atType: 'Kind' set: #fillColor to: Color paleGreen.
+	^ sheet
+]
+
+{ #category : 'accessing' }
 OPTestPlugin >> diagramControllerClass [
 	^ OPTestDiagramController
 ]

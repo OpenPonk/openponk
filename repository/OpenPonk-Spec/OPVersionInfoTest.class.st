@@ -41,7 +41,7 @@ OPVersionInfoTest >> testInitializeWhenDownloadPossible [
 OPVersionInfoTest >> testInitializeWithKnownRelease [
 
 	| version presenter date |
-	date := '2026-08-15T12:00:00+00:00' asDateAndTime.
+	date := DateAndTime fromString: '2026-08-15T12:00:00+00:00'.
 	version := OPVersion new
 		           releaseName: 'v1.0.0';
 		           repositoryName: 'class-editor';

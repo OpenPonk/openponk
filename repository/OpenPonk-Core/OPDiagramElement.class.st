@@ -915,11 +915,15 @@ OPDiagramElement >> styleChanged [
 
 { #category : 'accessing' }
 OPDiagramElement >> stylePropertyNamed: aName ifAbsent: aBlock [
-
 	| nameSymbol |
 	nameSymbol := aName asSymbol.
 	self localStyle ifNotNil: [ :style |
 		style at: nameSymbol ifPresent: [ :value | ^ value ] ].
+	self styleSheet ifNotNil: [ :sheet |
+		sheet
+			propertyNamed: nameSymbol
+			forElement: self
+			ifPresent: [ :value | ^ value ] ].
 	self sharedStyle ifNotNil: [ :style |
 		style at: nameSymbol ifPresent: [ :value | ^ value ] ].
 	self owningElement ifExists: [ :owner |
@@ -932,6 +936,22 @@ OPDiagramElement >> stylePropertyNamed: aName put: aValue [
 
 	self localStyle ifNil: [ self localStyle: OPOpenPonkShapeStyle new ].
 	self localStyle at: aName asSymbol put: aValue
+]
+
+{ #category : 'accessing' }
+OPDiagramElement >> styleSheet [
+	^ self owningElement ifExists: [ :owner | owner styleSheet ]
+]
+
+{ #category : 'accessing' }
+OPDiagramElement >> styleTypeNames [
+	| names model |
+	names := OrderedCollection new.
+	model := self ownModelElement ifNil: [ self modelElement ].
+	model ifNotNil: [
+		names addIfNotPresent: model className asString ].
+	names addIfNotPresent: self className asString.
+	^ names
 ]
 
 { #category : 'initialization' }

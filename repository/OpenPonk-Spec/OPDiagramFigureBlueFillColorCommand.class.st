@@ -1,5 +1,5 @@
 "
-Context menu command that sets the fill color of the selected Roassal shape to blue.
+A canvas command for applying blue fillColor to selected diagram elements.
 "
 Class {
 	#name : 'OPDiagramFigureBlueFillColorCommand',

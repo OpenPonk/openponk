@@ -21,8 +21,8 @@ BaselineOfOpenPonk >> baseline: spec [
 				package: 'OpenPonk-Roassal' with: [ spec requires: #( 'Roassal' 'RoassalExporters' ) ];
 				package: 'OpenPonk-Core' with: [ spec requires: #( 'Magritte' 'Mocketry' 'XPath' 'NeoJSON' 'OpenPonk-Roassal' ) ];
 				package: 'OpenPonk-Morphic';
-				package: 'OpenPonk-Spec' with: [ spec requires: #( 'Magritte' 'OpenPonkSynchronizedLinks'
-						   'OpenPonk-Morphic' ) ];
+				package: 'OpenPonk-Spec'
+				with: [ spec requires: #( 'Magritte' 'OpenPonkSynchronizedLinks' 'OpenPonkZoomer' 'OpenPonk-Morphic' ) ];
 				package: 'OpenPonk-DevTools'.
 			spec
 				group: 'default' with: #( 'OpenPonk-Core' 'OpenPonk-Spec' );
@@ -66,15 +66,14 @@ BaselineOfOpenPonk >> externalProjectsBaseline: spec [
 { #category : 'baselines' }
 BaselineOfOpenPonk >> internalProjectsBaseline: spec [
 
-	spec
-		baseline: 'OpenPonkSynchronizedLinks'
-		with: [ spec repository: 'github://OpenPonk/synchronized-links:v5.0.1' ]
+	spec baseline: 'OpenPonkSynchronizedLinks' with: [ spec repository: 'github://OpenPonk/synchronized-links' ].
+	spec baseline: 'OpenPonkZoomer' with: [ spec repository: 'github://OpenPonk/zoomer:main' ]
 ]
 
 { #category : 'actions' }
 BaselineOfOpenPonk >> postLoad [
 
-	OPPanedLayoutPatch apply
+	(Smalltalk classNamed: #OPPanedLayoutPatch) apply
 ]
 
 { #category : 'baselines' }

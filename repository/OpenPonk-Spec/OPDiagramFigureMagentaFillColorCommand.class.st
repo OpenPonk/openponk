@@ -1,5 +1,5 @@
 "
-Context menu command that sets the fill color of the selected Roassal shape to magenta.
+A canvas command for applying magenta fillColor to selected diagram elements.
 "
 Class {
 	#name : 'OPDiagramFigureMagentaFillColorCommand',

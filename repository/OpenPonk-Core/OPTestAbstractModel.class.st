@@ -26,6 +26,13 @@ OPTestAbstractModel >> hash [
 	^ self uuid hash bitXor: self name hash
 ]
 
+{ #category : 'initialization' }
+OPTestAbstractModel >> initialize [
+
+	super initialize.
+	uuid := UUID new
+]
+
 { #category : 'accessing' }
 OPTestAbstractModel >> name [
 	^ name ifNil: [ 'model' ]
@@ -45,7 +52,7 @@ OPTestAbstractModel >> unsubscribe: anOPTestDiagramController [
 { #category : 'accessing' }
 OPTestAbstractModel >> uuid [
 
-	^ uuid ifNil: [ uuid := UUID new ]
+	^ uuid
 ]
 
 { #category : 'accessing' }

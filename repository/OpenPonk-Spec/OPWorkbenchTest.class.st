@@ -263,3 +263,18 @@ OPWorkbenchTest >> testUndoShortcutOnWindowExecutesUndoManager [
 		mockUndoManager should receive undo
 	] ensure: [ windowPresenter close ]
 ]
+
+{ #category : 'tests' }
+OPWorkbenchTest >> testZoomerSettingsRegisteredUnderOpenPonk [
+	| method pragma |
+	self assert: (OPWorkbench class includesSelector: #zoomerSettingsOn:)
+		description: 'OPWorkbench class must define #zoomerSettingsOn:'.
+	method := OPWorkbench class >> #zoomerSettingsOn:.
+	pragma := method pragmaAt: #systemsettings.
+	self assert: pragma isNotNil
+		description: 'OPWorkbench class must declare #zoomerSettingsOn: with <systemsettings>'.
+	self assert: (method sourceCode includesSubstring: 'parent: #openponk')
+		description: 'Zoomer setting in OPWorkbench must be registered under #openponk'.
+	self assert: (method sourceCode includesSubstring: 'target: OPZoomer')
+		description: 'Zoomer setting in OPWorkbench must target OPZoomer'
+]

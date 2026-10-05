@@ -1,5 +1,5 @@
 "
-Context menu command that sets the fill color of the selected Roassal shape to be fully transparent.
+A canvas command for applying transparent fillColor to selected diagram elements.
 "
 Class {
 	#name : 'OPDiagramFigureTransparentFillColorCommand',
@@ -13,6 +13,13 @@ Class {
 OPDiagramFigureTransparentFillColorCommand class >> color [
 
 	^ Color transparent
+]
+
+{ #category : 'accessing' }
+OPDiagramFigureTransparentFillColorCommand >> defaultMenuIcon [
+	^ Morph new
+		color: Color white;
+		asFormOfSize: 30@20
 ]
 
 { #category : 'accessing' }

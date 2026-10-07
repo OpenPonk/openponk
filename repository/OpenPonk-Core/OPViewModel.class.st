@@ -104,6 +104,12 @@ OPViewModel >> attachModelFrom: sourceViewModel to: targetViewModel [
 	
 ]
 
+{ #category : 'accessing' }
+OPViewModel >> auxiliaryRemovalCommandsIn: aProjectController [
+	"Subclasses can return auxiliary commands (such as property nullifications) to be executed within the removal transaction."
+	^ #()
+]
+
 { #category : 'private' }
 OPViewModel >> basicRemoveModel [
 	"Specific domain model removal logic - removal from owner, disconnecting from peers, etc."
@@ -229,6 +235,17 @@ OPViewModel >> hash [
 { #category : 'accessing' }
 OPViewModel >> icon [
 	^ self subclassResponsibility
+]
+
+{ #category : 'testing' }
+OPViewModel >> isRemovable [
+	self isSystemElement ifTrue: [ ^ false ].
+	^ true
+]
+
+{ #category : 'testing' }
+OPViewModel >> isSystemElement [
+	^ false
 ]
 
 { #category : 'accessing' }

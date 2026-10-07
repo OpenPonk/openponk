@@ -41,6 +41,11 @@ OPProjectViewModel >> icon [
 	^ OPCoreIcons openponkIcon
 ]
 
+{ #category : 'testing' }
+OPProjectViewModel >> isRemovable [
+	^ false
+]
+
 { #category : 'accessing' }
 OPProjectViewModel >> modelRootViewModel [
 

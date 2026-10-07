@@ -159,12 +159,14 @@ OPPropertiesFormMagritteVisitor >> visitSingleOptionDescription: aSingleOptionDe
 
 { #category : 'visiting-description' }
 OPPropertiesFormMagritteVisitor >> visitStringDescription: aStringDescription [
-	aStringDescription isReadOnly ifTrue: [
-		^ self visitLabelDescription: aStringDescription ].
-	form
-		bindTextInput: aStringDescription label
-		accessor: aStringDescription accessor
-		description: aStringDescription
+
+	| control completion |
+	aStringDescription isReadOnly ifTrue: [ ^ self visitLabelDescription: aStringDescription ].
+	control := form bindTextInput: aStringDescription label accessor: aStringDescription accessor description: aStringDescription.
+	(aStringDescription hasProperty: #entryCompletion) ifFalse: [ ^ self ].
+	completion := aStringDescription propertyAt: #entryCompletion.
+	completion chooseBlock ifNil: [ completion chooseBlock: [ :token | control text: token ] ].
+	control entryCompletion: completion
 ]
 
 { #category : 'visiting-description' }

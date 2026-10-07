@@ -12,7 +12,7 @@ Class {
 { #category : 'testing' }
 OPRemoveModelCommand >> canBeExecuted [
 	self selectedViewModel ifNil: [ ^ false ].
-	^ (self selectedViewModel isKindOf: OPProjectViewModel) not
+	^ self selectedViewModel isRemovable
 ]
 
 { #category : 'executing' }

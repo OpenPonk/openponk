@@ -40,6 +40,24 @@ OPPropertiesFormMagritteVisitorTest >> testToManyRelation [
 ]
 
 { #category : 'tests' }
+OPPropertiesFormMagritteVisitorTest >> testVisitStringDescriptionWithEntryCompletion [
+	| form desc visitor presenter completion |
+	form := OPPropertiesForm new.
+	desc := MAStringDescription new.
+	desc label: 'Type'.
+	desc accessor: (MAPluggableAccessor read: [ :m | 'foo' ] write: [ :m :v | ]).
+	completion := EntryCompletion new.
+	desc propertyAt: #entryCompletion put: completion.
+
+	visitor := OPPropertiesFormMagritteVisitor new.
+	visitor form: form.
+	visitor visitStringDescription: desc.
+
+	presenter := form components detect: [ :each | each isKindOf: SpTextInputFieldPresenter ].
+	self assert: presenter entryCompletion equals: completion
+]
+
+{ #category : 'tests' }
 OPPropertiesFormMagritteVisitorTest >> testVisitToManyRelationDescriptionAddsEditButtonToForm [
 	"Verifies that visitToManyRelationDescription: adds an Edit button whose action opens the editor on viewModel with form application and undoManager"
 	| form undoManager mockViewModel relationDescription editButton visitor |

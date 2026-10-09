@@ -66,7 +66,10 @@ OPWorkbench class >> developerSettingsOn: aBuilder [
 { #category : 'api' }
 OPWorkbench class >> initialExtent [
 
-	^ self currentWorld extent * 0.9 min: 1800 @ 1000
+	| barsHeight |
+	barsHeight := (self currentWorld submorphs detect: [ :each | each isMenubar ] ifFound: [ :bar | bar height ] ifNone: [ 18 ])
+	              + (self currentWorld submorphs detect: [ :each | each isTaskbar ] ifFound: [ :bar | bar height ] ifNone: [ 29 ]).
+	^ self currentWorld extent * 0.9 - (0 @ barsHeight)
 ]
 
 { #category : 'api' }
@@ -277,7 +280,9 @@ OPWorkbench >> initializeWindow: aWindow [
 		windowIcon: OPCoreIcons openponkIcon;
 		title: self title;
 		initialExtent: self class initialExtent;
-		whenOpenedDo: [ self defaultKeyboardFocus takeKeyboardFocus ];
+		whenOpenedDo: [
+			aWindow maximize.
+			self defaultKeyboardFocus takeKeyboardFocus ];
 		whenClosedDo: [
 			topToolbar unsubscribeFromUndoManager.
 			editors values copy do: [ :eachEditorInfo |

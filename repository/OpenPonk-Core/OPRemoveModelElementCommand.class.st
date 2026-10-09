@@ -102,31 +102,36 @@ OPRemoveModelElementCommand >> diagramElementDescriptors [
 
 { #category : 'executing' }
 OPRemoveModelElementCommand >> execute [
-
 	viewModel ifNil: [ ^ self ].
 
-	"1. Cascade remove dependent elements within transaction."
+	"1. Cascade auxiliary pre-removal commands within transaction."
+	(viewModel auxiliaryRemovalCommandsIn: projectController) do: [ :auxCommand |
+		self undoManager execute: auxCommand ].
+
+	"2. Cascade remove dependent elements within transaction."
 	viewModel dependentElements asSet do: [ :dependentModel |
-			(self isModelPresent: dependentModel) ifTrue: [
-					| dependentCommand |
-					dependentCommand := self class model: dependentModel projectController: projectController.
-					self undoManager execute: dependentCommand ] ].
+		(self isModelPresent: dependentModel) ifTrue: [
+			| dependentCommand |
+			dependentCommand := self class model: dependentModel projectController: projectController.
+			self undoManager execute: dependentCommand ] ].
 
-	"2. Detach visual elements from closed diagrams."
-	diagramElementDescriptors do: [ :descriptor | descriptor diagram isRendered ifFalse: [ descriptor diagramElement remove ] ].
+	"3. Detach visual elements from closed diagrams."
+	diagramElementDescriptors do: [ :descriptor |
+		descriptor diagram isRendered ifFalse: [ descriptor diagramElement remove ] ].
 
-	"3. Remove all associated diagrams of the model from the project."
+	"4. Remove all associated diagrams of the model from the project."
 	self project ifNotNil: [ :currentProject |
-			associatedDiagrams do: [ :diagram |
-					currentProject removeDiagram: diagram.
-					currentProject announcer announce: (OPDiagramRemoved diagram: diagram) ] ].
+		associatedDiagrams do: [ :diagram |
+			currentProject removeDiagram: diagram.
+			currentProject announcer announce: (OPDiagramRemoved diagram: diagram) ] ].
 
-	"4. Perform domain removal and announce."
+	"5. Perform domain removal and announce."
 	viewModel basicRemoveModel.
 	viewModel unsubscribeFromModel.
 	viewModel unregisterFromRegistry.
 	viewModel announceRemoval.
-	self project ifNotNil: [ :currentProject | currentProject announcer announce: (OPModelRemoved model: model) ]
+	self project ifNotNil: [ :currentProject |
+		currentProject announcer announce: (OPModelRemoved model: model) ]
 ]
 
 { #category : 'initialization' }
@@ -191,7 +196,7 @@ OPRemoveModelElementCommand >> setModel: aModel projectController: aProjectContr
 	self captureState
 ]
 
-{ #category : 'undo/redo' }
+{ #category : 'executing' }
 OPRemoveModelElementCommand >> undo [
 	self undoModel.
 	self undoDiagram

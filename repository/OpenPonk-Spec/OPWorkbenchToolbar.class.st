@@ -217,27 +217,33 @@ OPWorkbenchToolbar >> openSettings [
 		select: 'openponk'
 ]
 
-{ #category : 'menus' }
+{ #category : 'menu' }
 OPWorkbenchToolbar >> openponkMenu [
-
 	| openponkMenu |
 	openponkMenu := self newMenu.
 	openponkMenu
-		addGroup: [ :group |
-			group
-				addItem: [ :item |
-					item
+		addGroup: [ :firstGroup |
+			firstGroup
+				addItem: [ :menuItem |
+					menuItem
+						name: 'New project';
+						icon: OPCoreIcons openponkIcon;
+						action: [ OPProjectBrowser open ] ] ];
+		addGroup: [ :secondGroup |
+			secondGroup
+				addItem: [ :menuItem |
+					menuItem
 						name: 'Settings';
 						icon: (self iconNamed: #configuration);
 						action: [ self openSettings ] ];
-				addItem: [ :item |
-					item
+				addItem: [ :menuItem |
+					menuItem
 						name: 'Check for new version';
 						icon: (self iconNamed: #smallUpdate);
 						action: [ (OPVersionComparisonInfo newApplication: SpApplication defaultApplication) open ] ] ];
-		addGroup: [ :group |
-			group addItem: [ :item |
-				item
+		addGroup: [ :thirdGroup |
+			thirdGroup addItem: [ :menuItem |
+				menuItem
 					name: 'Close OpenPonk';
 					icon: (self iconNamed: #smallQuit);
 					action: [ WorldState saveAndQuit ] ] ].

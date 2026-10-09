@@ -265,6 +265,14 @@ OPWorkbenchTest >> testUndoShortcutOnWindowExecutesUndoManager [
 ]
 
 { #category : 'tests' }
+OPWorkbenchTest >> testWorkbenchWindowIsMaximizedWhenOpened [
+	| windowPresenter |
+	windowPresenter := workbench open.
+	self assert: windowPresenter isMaximized
+		description: 'Workbench window must be maximized upon opening'
+]
+
+{ #category : 'tests' }
 OPWorkbenchTest >> testZoomerSettingsRegisteredUnderOpenPonk [
 	| method pragma |
 	self assert: (OPWorkbench class includesSelector: #zoomerSettingsOn:)

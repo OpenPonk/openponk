@@ -321,6 +321,19 @@ OPWorkbenchToolbarTest >> testModelMenuItemIsEnabledWhenFocusedEditorHasModelCom
 ]
 
 { #category : 'tests' }
+OPWorkbenchToolbarTest >> testOpenPonkMenuItemIsFirstWithSeparator [
+	| toolbarPresenter openponkMenu firstGroup firstItem |
+	toolbarPresenter := OPWorkbenchToolbar new.
+	openponkMenu := toolbarPresenter openponkMenu.
+	self assert: openponkMenu menuGroups size equals: 3.
+	firstGroup := openponkMenu menuGroups first.
+	self assert: firstGroup menuItems size equals: 1.
+	firstItem := firstGroup menuItems first.
+	self assert: firstItem name equals: 'New project'.
+	self assert: firstItem icon bits equals: OPCoreIcons openponkIcon bits
+]
+
+{ #category : 'tests' }
 OPWorkbenchToolbarTest >> testRedoButtonDelegatesToUndoManager [
 	mockUndoManager stub redo willReturn: nil.
 	toolbarPresenter redoButton performAction.

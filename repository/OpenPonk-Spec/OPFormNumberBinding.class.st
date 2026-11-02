@@ -4,9 +4,9 @@ A dynamic form field binding that synchronizes a numerical text input presenter 
 Class {
 	#name : 'OPFormNumberBinding',
 	#superclass : 'OPFormFieldBinding',
-	#category : 'OpenPonk-Spec-Form-Bindings',
+	#category : 'OpenPonk-Spec-Form',
 	#package : 'OpenPonk-Spec',
-	#tag : 'Form-Bindings'
+	#tag : 'Form'
 }
 
 { #category : 'updating' }

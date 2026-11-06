@@ -8,13 +8,13 @@ Class {
 	#instVars : [
 		'pluginRegistry',
 		'projectController',
-		'diagramsList',
 		'projectTree',
 		'editors',
 		'focusedEditor',
 		'notebook',
 		'form',
-		'topToolbar'
+		'topToolbar',
+		'diagramsTree'
 	],
 	#classInstVars : [
 		'isDevelopmentMode'
@@ -33,7 +33,7 @@ OPWorkbench class >> defaultLayout [
 				add: (SpPanedLayout newTopToBottom
 					add: #projectTree;
 					positionOfSlider: 0.75;
-					add: #diagramsList;
+					add: #diagramsTree;
 					yourself);
 				positionOfSlider: self initialListsWidth;
 				add: (SpBoxLayout newTopToBottom
@@ -189,14 +189,33 @@ OPWorkbench >> closedTabOfEditor: anEditor whileClosingWorkbench: discardChanges
 ]
 
 { #category : 'initialization' }
+OPWorkbench >> connectDiagramsTree [
+
+	self whenWindowClosedDo: [
+			self project announcer unsubscribe: diagramsTree.
+			self announcer unsubscribe: diagramsTree ].
+	self project announcer weak
+		when: OPDiagramAdded send: #refresh to: diagramsTree;
+		when: OPDiagramRemoved send: #refresh to: diagramsTree;
+		when: OPDiagramRenamed send: #refresh to: diagramsTree;
+		when: OPModelAdded send: #refresh to: diagramsTree;
+		when: OPModelRemoved send: #refresh to: diagramsTree;
+		when: OPProjectRenamed send: #refresh to: diagramsTree.
+	self announcer when: OPEditorUnfocused send: #diagramUnfocused to: diagramsTree.
+	self announcer when: OPEditorFocused send: #diagramFocused to: diagramsTree.
+	self projectController undoManager announcer weak when: OPUndoRedoChanged send: #undoRedoChanged: to: diagramsTree
+]
+
+{ #category : 'initialization' }
 OPWorkbench >> connectPresenters [
 
 	super connectPresenters.
 	notebook
-		whenSelectedPageChangedDo: [ :newPage | 
-			self focusEditorOf: (editors associations detect: [ :pair | 
-							 (pair value at: #page) = newPage ]) key ];
-		whenPageRemovedDo: [ :page | self pageRemoved: page ]
+		whenSelectedPageChangedDo: [ :newPage |
+			self focusEditorOf: (editors associations detect: [ :pair | (pair value at: #page) = newPage ]) key ];
+		whenPageRemovedDo: [ :page | self pageRemoved: page ].
+
+	self whenBuiltDo: [ self connectDiagramsTree ]
 ]
 
 { #category : 'api - focus' }
@@ -211,8 +230,8 @@ OPWorkbench >> deleteDiagram: aDiagram [
 ]
 
 { #category : 'accessing - spec' }
-OPWorkbench >> diagramsList [
-	^ diagramsList
+OPWorkbench >> diagramsTree [
+	^ diagramsTree
 ]
 
 { #category : 'opening' }
@@ -262,13 +281,13 @@ OPWorkbench >> initialize [
 OPWorkbench >> initializePresenters [
 	topToolbar := self instantiate: OPWorkbenchToolbar.
 	projectTree := self instantiate: OPProjectTree.
-	diagramsList := self instantiate: OPDiagramsList.
+	diagramsTree := self instantiate: OPDiagramsTree.
 	notebook := self newNotebook.
 	form := self instantiate: OPPropertiesForm.
 	self focusOrder
 		add: topToolbar;
 		add: projectTree;
-		add: diagramsList;
+		add: diagramsTree;
 		add: notebook;
 		add: form
 ]
@@ -396,7 +415,8 @@ OPWorkbench >> openProject: aProject [
 		when: OPUndoRedoChanged
 		send: #updateTabTitles
 		to: self.
-	diagramsList project: aProject.
+	diagramsTree projectController: projectController.
+	diagramsTree openOn: projectViewModel.
 	projectTree projectController: projectController.
 	projectTree openOn: projectViewModel.
 	projectController openDiagrams.

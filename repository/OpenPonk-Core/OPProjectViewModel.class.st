@@ -42,6 +42,12 @@ OPProjectViewModel >> icon [
 ]
 
 { #category : 'testing' }
+OPProjectViewModel >> isForRootModel [
+
+	^ false
+]
+
+{ #category : 'testing' }
 OPProjectViewModel >> isRemovable [
 	^ false
 ]

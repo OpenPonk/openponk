@@ -16,14 +16,13 @@ Class {
 { #category : 'comparing' }
 OPTestAbstractModel >> = other [
 
-	^ other isNotNil and: [
-		  self uuid = other uuid and: [ self name = other name ] ]
+	^ other isNotNil and: [ self uuid = other uuid ]
 ]
 
 { #category : 'comparing' }
 OPTestAbstractModel >> hash [
 
-	^ self uuid hash bitXor: self name hash
+	^ self uuid hash
 ]
 
 { #category : 'initialization' }

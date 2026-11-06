@@ -238,6 +238,12 @@ OPViewModel >> icon [
 ]
 
 { #category : 'testing' }
+OPViewModel >> isForRootModel [
+
+	^ self = self modelRootViewModel
+]
+
+{ #category : 'testing' }
 OPViewModel >> isRemovable [
 	self isSystemElement ifTrue: [ ^ false ].
 	^ true

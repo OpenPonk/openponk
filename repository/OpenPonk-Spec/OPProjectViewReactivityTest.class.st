@@ -38,17 +38,18 @@ OPProjectViewReactivityTest >> tearDown [
 ]
 
 { #category : 'tests' }
-OPProjectViewReactivityTest >> testDiagramsListReactsToDiagramAddedAndRemovedWithoutUndoRedoChanged [
-	| newDiagram |
+OPProjectViewReactivityTest >> testDiagramsTreeReactsToDiagramAddedAndRemovedWithoutUndoRedoChanged [
+	| newDiagram packageViewModel |
+	packageViewModel := workbench projectController viewModelRegistry viewModelFor: packageModel.
 	newDiagram := (OPOpenPonkDiagram forModelElement: packageModel) name: 'SecondDiagram'.
 
 	project addDiagram: newDiagram.
 	project announcer announce: (OPDiagramAdded diagram: newDiagram).
-	self assert: (workbench diagramsList list items includes: newDiagram).
+	self assert: ((workbench diagramsTree tree childrenFor: packageViewModel) includes: newDiagram).
 
 	project removeDiagram: newDiagram.
 	project announcer announce: (OPDiagramRemoved diagram: newDiagram).
-	self deny: (workbench diagramsList list items includes: newDiagram)
+	self deny: ((workbench diagramsTree tree childrenFor: packageViewModel) includes: newDiagram)
 ]
 
 { #category : 'tests' }

@@ -39,3 +39,8 @@ OPProjectTreeCommand >> projectController [
 OPProjectTreeCommand >> selectedViewModel [
 	^ self context selectedItem
 ]
+
+{ #category : 'accessing' }
+OPProjectTreeCommand >> workbench [
+	^ self context workbench
+]

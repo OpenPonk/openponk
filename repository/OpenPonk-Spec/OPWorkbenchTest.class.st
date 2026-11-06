@@ -28,7 +28,11 @@ OPWorkbenchTest >> tearDown [
 
 { #category : 'tests' }
 OPWorkbenchTest >> testInitialKeyboardFocusIsOnMenuBar [
-	| window activeFocusMorph menuBarMorph |
+	| window activeFocusMorph menuBarMorph mockProjectController mockProject |
+	mockProjectController := Mock new.
+	mockProject := Mock new.
+	mockProjectController stub project willReturn: mockProject.
+	workbench instVarNamed: 'projectController' put: mockProjectController.
 	window := workbench open.
 	activeFocusMorph := window adapter widget activeHand keyboardFocus.
 	menuBarMorph := workbench topToolbar menu adapter widget.
@@ -39,8 +43,11 @@ OPWorkbenchTest >> testInitialKeyboardFocusIsOnMenuBar [
 { #category : 'tests' }
 OPWorkbenchTest >> testPanesRetainWidthOnWorkbenchResize [
 
-	| window initialTreeWidth initialFormWidth |
-	workbench := OPWorkbench new.
+	| window initialTreeWidth initialFormWidth mockProjectController mockProject |
+	mockProjectController := Mock new.
+	mockProject := Mock new.
+	mockProjectController stub project willReturn: mockProject.
+	workbench instVarNamed: 'projectController' put: mockProjectController.
 	window := workbench open.
 	window adapter widget extent: 1000 @ 700.
 	window adapter widget fullBounds.
@@ -49,10 +56,8 @@ OPWorkbenchTest >> testPanesRetainWidthOnWorkbenchResize [
 	initialFormWidth := workbench form adapter widget width.
 
 	self assert: initialTreeWidth equals: OPWorkbench initialListsWidth.
-	"SpTabLayout applies a 10 px inset (5 px on each side) to its contents"
 	self assert: initialFormWidth equals: OPWorkbench initialFormWidth - 10.
 
-	"Resize open window morph horizontally by +400 px"
 	window adapter widget extent: 1400 @ 700.
 	window adapter widget fullBounds.
 
@@ -266,10 +271,14 @@ OPWorkbenchTest >> testUndoShortcutOnWindowExecutesUndoManager [
 
 { #category : 'tests' }
 OPWorkbenchTest >> testWorkbenchWindowIsMaximizedWhenOpened [
-	| windowPresenter |
+
+	| windowPresenter mockProjectController mockProject |
+	mockProjectController := Mock new.
+	mockProject := Mock new.
+	mockProjectController stub project willReturn: mockProject.
+	workbench instVarNamed: 'projectController' put: mockProjectController.
 	windowPresenter := workbench open.
-	self assert: windowPresenter isMaximized
-		description: 'Workbench window must be maximized upon opening'
+	self assert: windowPresenter isMaximized description: 'Workbench window must be maximized upon opening'
 ]
 
 { #category : 'tests' }

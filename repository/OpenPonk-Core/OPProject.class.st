@@ -145,9 +145,10 @@ OPProject >> hash [
 
 { #category : 'initialization' }
 OPProject >> initialize [
+
 	super initialize.
-	modelsAndDiagrams := Dictionary new asValueHolder.
-	name := NewValueHolder value: 'Unnamed project'
+	modelsAndDiagrams := Dictionary new.
+	name := 'Unnamed project'
 ]
 
 { #category : 'as yet unclassified' }
@@ -184,7 +185,7 @@ OPProject >> models [
 { #category : 'accessing' }
 OPProject >> modelsAndDiagrams [
 
-	^ modelsAndDiagrams value
+	^ modelsAndDiagrams
 ]
 
 { #category : 'accessing' }

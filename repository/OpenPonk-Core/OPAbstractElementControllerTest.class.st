@@ -395,11 +395,8 @@ OPAbstractElementControllerTest >> testCreateUsingAddAsTarget [
 OPAbstractElementControllerTest >> testDescriptionName [
 
 	| diagramElement |
-	model := Mock new.
-	model stub class willReturn: self modelClass.
 	model stub name willReturn: 'bravo'.
 	diagramElement := Mock new.
-	diagramElement stub class willReturn: self diagramElementClass.
 	controller diagramController: diagramController.
 	controller model: model.
 	controller diagramElement: diagramElement.

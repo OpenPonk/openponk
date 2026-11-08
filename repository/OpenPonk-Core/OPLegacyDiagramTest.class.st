@@ -45,12 +45,11 @@ OPLegacyDiagramTest >> testAsJsonComplex [
 { #category : 'tests' }
 OPLegacyDiagramTest >> testAsJsonModel [
 
-	| model |
-	model := Mock new.
-	model stub class willReturn: OPTestContainerModel.
-	model stub name willReturn: 'testComp'.
-	model stub typeName willReturn: 'Component'.
-	diagram := OPLegacyDiagram new model: model.
+	| mockModel |
+	mockModel := Mock new.
+	mockModel stub name willReturn: 'testComp'.
+	mockModel stub typeName willReturn: 'Component'.
+	diagram := OPLegacyDiagram new model: mockModel.
 	self
 		assert: (STON fromString: diagram asJson)
 		equals:

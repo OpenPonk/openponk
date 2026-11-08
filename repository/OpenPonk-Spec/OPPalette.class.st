@@ -170,7 +170,7 @@ OPPalette >> newConnectionCreationTool: aLabel factory: aBlock icon: anIcon [
 OPPalette >> newCreationEntry: aFactoryBlock [
 	| entry |
 	entry := self addEntry.
-	entry tool: (OPCreationTool new palette: self).
+	entry tool: (OPNodeCreationTool new palette: self).
 	entry factory: aFactoryBlock.
 	^ entry
 ]
@@ -179,7 +179,7 @@ OPPalette >> newCreationEntry: aFactoryBlock [
 OPPalette >> newCreationTool: aFactoryBlock [
 	| item tool |
 	item := self addEntry.
-	(tool := OPCreationTool new)
+	(tool := OPNodeCreationTool new)
 		palette: self;
 		factory: aFactoryBlock.
 	item action: [ self selectItem: item tool: tool ].
@@ -195,7 +195,7 @@ OPPalette >> newCreationTool: aLabel factory: aBlock [
 OPPalette >> newCreationTool: aLabel factory: aBlock icon: anIcon [
 	| item tool |
 	item := self addEntry.
-	(tool := OPCreationTool new)
+	(tool := OPNodeCreationTool new)
 		palette: self;
 		factory: aBlock.
 	item
@@ -208,7 +208,7 @@ OPPalette >> newCreationTool: aLabel factory: aBlock icon: anIcon [
 OPPalette >> newCreationTool: aFactoryBlock with: aToolConfigBlock [
 	| item tool |
 	item := self addEntry.
-	(tool := OPCreationTool new)
+	(tool := OPNodeCreationTool new)
 		palette: self;
 		factory: aFactoryBlock.
 	item action: [ self selectItem: item tool: tool ].

@@ -736,7 +736,7 @@ OPDiagramController >> removeModelElement: aModel [
 		model: aModel
 		diagramController: self.
 	self undoManager
-		ifNotNil: [ :mgr | mgr inTransaction: [ mgr execute: command ] ]
+		ifNotNil: [ :undoManager | undoManager inTransaction: [ undoManager execute: command ] ]
 		ifNil: [ command execute ]
 ]
 
@@ -777,10 +777,11 @@ OPDiagramController >> roassalShapeContextClicked: anEvent [
 { #category : 'events' }
 OPDiagramController >> roassalShapeDoubleClicked: anEvent [
 	"Handle double click on shapes: select target controller and focus the first form input."
+
 	| ctrl |
 	ctrl := self controllerForRoassalShape: anEvent shape ifNone: [ ^ self ].
 	self selectController: ctrl.
-	self form ifNotNil: #focusFirstInput
+	self form ifNotNil: [ :form | form focusFirstInput ]
 ]
 
 { #category : 'accessing' }

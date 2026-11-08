@@ -4,12 +4,8 @@ Manages the source selection, target selection, and hover feedback.
 "
 Class {
 	#name : 'OPConnectionCreationTool',
-	#superclass : 'OPPaletteTool',
+	#superclass : 'OPCreationTool',
 	#instVars : [
-		'connectionController',
-		'factory',
-		'feedback',
-		'onComplete',
 		'hoverAction',
 		'selectionAction',
 		'edgeCreationTargetController'
@@ -34,25 +30,25 @@ OPConnectionCreationTool >> factory: aBlock [
 ]
 
 { #category : 'hooks' }
-OPConnectionCreationTool >> hoveredController: aController [
+OPConnectionCreationTool >> hoveredController: aSourceOrTargetController [
 
-	^ hoverAction value: aController
+	^ hoverAction value: aSourceOrTargetController
 ]
 
 { #category : 'callbacks' }
-OPConnectionCreationTool >> hoveredSourceController: aController [
+OPConnectionCreationTool >> hoveredSourceController: aSourceController [
 
-	feedback value: ((aController canBeSourceFor: connectionController)
-			 ifTrue: [ aController showAcceptFeedbackFor: connectionController ]
-			 ifFalse: [ aController showDenyFeedbackFor: connectionController ])
+	feedback value: ((aSourceController canBeSourceFor: controller)
+			 ifTrue: [ aSourceController showAcceptFeedbackFor: controller ]
+			 ifFalse: [ aSourceController showDenyFeedbackFor: controller ])
 ]
 
 { #category : 'callbacks' }
-OPConnectionCreationTool >> hoveredTargetController: aController [
+OPConnectionCreationTool >> hoveredTargetController: aTargetController [
 
-	feedback value: ((aController canBeTargetFor: connectionController)
-			 ifTrue: [ aController showAcceptFeedbackFor: connectionController ]
-			 ifFalse: [ aController showDenyFeedbackFor: connectionController ])
+	feedback value: ((aTargetController canBeTargetFor: controller)
+			 ifTrue: [ aTargetController showAcceptFeedbackFor: controller ]
+			 ifFalse: [ aTargetController showDenyFeedbackFor: controller ])
 ]
 
 { #category : 'initialization' }
@@ -71,24 +67,22 @@ OPConnectionCreationTool >> select [
 			oldVal ifNotNil: [
 					(newVal isNil or: [ oldVal feedback ~= newVal feedback ])
 						ifTrue: [ oldVal remove ] ] ].
-	connectionController := factory value.
+	controller := factory value.
 	self selectSource
 ]
 
 { #category : 'protocol' }
 OPConnectionCreationTool >> selectSource [
 
-	hoverAction := [ :controller | self hoveredSourceController: controller ].
-	selectionAction := [ :controllers | 
-	                   self selectedSourceControllers: controllers ]
+	hoverAction := [ :sourceController | self hoveredSourceController: sourceController ].
+	selectionAction := [ :sourceControllers | self selectedSourceControllers: sourceControllers ]
 ]
 
 { #category : 'protocol' }
 OPConnectionCreationTool >> selectTarget [
 
-	hoverAction := [ :controller | self hoveredTargetController: controller ].
-	selectionAction := [ :controllers | 
-	                   self selectedTargetControllers: controllers ]
+	hoverAction := [ :targetController | self hoveredTargetController: targetController ].
+	selectionAction := [ :targetControllers | self selectedTargetControllers: targetControllers ]
 ]
 
 { #category : 'hooks' }
@@ -103,12 +97,9 @@ OPConnectionCreationTool >> selectedSourceControllers: aCollectionOfControllers 
 	| targetController |
 	aCollectionOfControllers size = 1 ifFalse: [ ^ self ].
 	targetController := aCollectionOfControllers anyOne.
-	(targetController canBeSourceFor: connectionController) ifFalse: [ 
-		^ self ].
-	targetController addAsSourceFor: connectionController.
-	edgeCreationTargetController := OPEdgeCreationTargetController 
-		                                renderForEdgeController:
-		                                connectionController.
+	(targetController canBeSourceFor: controller) ifFalse: [ ^ self ].
+	targetController addAsSourceFor: controller.
+	edgeCreationTargetController := OPEdgeCreationTargetController renderForEdgeController: controller.
 	self selectTarget
 ]
 
@@ -118,16 +109,11 @@ OPConnectionCreationTool >> selectedTargetControllers: aCollectionOfControllers 
 	| targetController |
 	aCollectionOfControllers size = 1 ifFalse: [ ^ self ].
 	targetController := aCollectionOfControllers anyOne.
-	(targetController canBeTargetFor: connectionController) ifFalse: [
-		^ self ].
-	targetController addAsTargetFor: connectionController.
+	(targetController canBeTargetFor: controller) ifFalse: [ ^ self ].
+	targetController addAsTargetFor: controller.
 	self palette selectSelectionTool.
-	connectionController roassalShape
-		propertyAt: OPRSSelectable
-		ifPresent: [ :selectable |
-			selectable fakeClicked: connectionController roassalShape ].
-	onComplete value: connectionController.
-	connectionController := nil.
+	controller roassalShape propertyAt: OPRSSelectable ifPresent: [ :selectable | selectable fakeClicked: controller roassalShape ].
+	self doOnCompleteActions.
 	self deselect
 ]
 

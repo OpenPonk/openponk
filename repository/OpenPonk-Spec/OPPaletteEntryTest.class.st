@@ -11,44 +11,38 @@ Class {
 
 { #category : 'tests' }
 OPPaletteEntryTest >> testWhenCreatedSetupFocusesForm [
-	"Verify that whenCreatedSetup configures the completion block to focus the dynamic form without modal dialogs."
-	| paletteEntry creationTool dummyCtrl dummyDiagramCtrl formSpy completionBlock |
+	"Verify that creation tool completes and focuses the dynamic form without modal dialogs."
+	| paletteEntry creationTool dummyController dummyDiagramController formSpy |
 	paletteEntry := OPPaletteEntry new.
-	creationTool := OPCreationTool new.
+	creationTool := OPNodeCreationTool new.
 	paletteEntry tool: creationTool.
-
-	paletteEntry whenCreatedSetup.
-
-	completionBlock := creationTool instVarNamed: #onComplete.
-	self assert: completionBlock isNotNil.
 
 	formSpy := OPPropertiesFormFocusSpy new.
 	formSpy addTextInput: 'Name'.
 
-	dummyDiagramCtrl := Mock new.
-	dummyDiagramCtrl stub form willReturn: formSpy.
+	dummyDiagramController := Mock new.
+	dummyDiagramController stub form willReturn: formSpy.
 
-	dummyCtrl := Mock new.
-	dummyCtrl stub diagramController willReturn: dummyDiagramCtrl.
+	dummyController := Mock new.
+	dummyController stub diagramController willReturn: dummyDiagramController.
 
-	completionBlock value: dummyCtrl.
+	creationTool instVarNamed: #controller put: dummyController.
+	creationTool doOnCompleteActions.
 
 	self assert: formSpy focusTaken
 ]
 
 { #category : 'tests' }
 OPPaletteEntryTest >> testWhenCreatedSetupWithoutDiagramController [
-	"Verify that whenCreatedSetup safely executes for headless controllers without a diagram controller."
-	| paletteEntry creationTool dummyCtrl completionBlock |
+	"Verify that creation tool safely executes completion for headless controllers without a diagram controller."
+	| paletteEntry creationTool dummyController |
 	paletteEntry := OPPaletteEntry new.
-	creationTool := OPCreationTool new.
+	creationTool := OPNodeCreationTool new.
 	paletteEntry tool: creationTool.
 
-	paletteEntry whenCreatedSetup.
+	dummyController := Mock new.
+	dummyController stub diagramController willReturn: nil.
 
-	completionBlock := creationTool instVarNamed: #onComplete.
-	dummyCtrl := Mock new.
-	dummyCtrl stub diagramController willReturn: nil.
-
-	completionBlock value: dummyCtrl
+	creationTool instVarNamed: #controller put: dummyController.
+	creationTool doOnCompleteActions
 ]

@@ -38,7 +38,8 @@ OPRenameRoassalShapeCommand >> defaultMenuItemName [
 
 { #category : 'execution' }
 OPRenameRoassalShapeCommand >> execute [
+
 	self canBeExecuted ifFalse: [ ^ self ].
 	diagramController selectController: controllers anyOne.
-	diagramController form ifNotNil: #focusFirstInput
+	diagramController form ifNotNil: [ :form | form focusFirstInput ]
 ]

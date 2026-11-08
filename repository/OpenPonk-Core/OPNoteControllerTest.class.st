@@ -56,3 +56,23 @@ OPNoteControllerTest >> testBuildEditorFormDelegatesToViewModelAndRegistersTextB
 	form bindings first writeModelValue: 'Updated Note Text'.
 	self assert: note text equals: 'Updated Note Text'
 ]
+
+{ #category : 'tests' }
+OPNoteControllerTest >> testDescriptionName [
+
+	| diagramElement |
+	diagramElement := self diagramElementClass new.
+	diagramElement stub text willReturn: 'bravo'.
+
+	controller model: diagramElement.
+
+	controller viewModel descriptionName accessor
+		write: 'charlie'
+		to: controller.
+	diagramElement should receive text: 'charlie'.
+	self
+		assert:
+		(controller viewModel descriptionName accessor read: controller)
+		equals: 'bravo'.
+	diagramElement should receive modelChanged
+]

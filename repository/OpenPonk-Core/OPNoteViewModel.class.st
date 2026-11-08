@@ -27,6 +27,17 @@ OPNoteViewModel >> creationPriority [
 	^ 10
 ]
 
+{ #category : 'forms' }
+OPNoteViewModel >> descriptionName [
+
+	<magritteDescription>
+	^ MAMemoDescription new
+		accessor: (self descriptionAccessor: #text);
+		label: 'Text';
+		priority: 1;
+		yourself
+]
+
 { #category : 'printing' }
 OPNoteViewModel >> nameOfModel [
 

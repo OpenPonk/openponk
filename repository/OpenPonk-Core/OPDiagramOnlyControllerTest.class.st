@@ -100,8 +100,7 @@ OPDiagramOnlyControllerTest >> testCreateUsingAddAsTarget [
 OPDiagramOnlyControllerTest >> testDescriptionName [
 
 	| diagramElement |
-	diagramElement := Mock new.
-	diagramElement stub class willReturn: self diagramElementClass.
+	diagramElement := self diagramElementClass new.
 	diagramElement stub name willReturn: 'bravo'.
 
 	controller model: diagramElement.

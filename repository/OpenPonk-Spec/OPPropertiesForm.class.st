@@ -437,10 +437,10 @@ OPPropertiesForm >> editController: aController [
 { #category : 'focus' }
 OPPropertiesForm >> focusFirstInput [
 	"Explicitly request keyboard focus on the first input control and select all its text if applicable."
+
 	self focusOrder ifNotEmpty: [ :controls |
-		self takeKeyboardFocus.
-		(controls first respondsTo: #selectAll) ifTrue: [
-			controls first selectAll ] ]
+			self takeKeyboardFocus.
+			(controls first respondsTo: #selectAll) ifTrue: [ controls first selectAll ] ]
 ]
 
 { #category : 'initialization' }

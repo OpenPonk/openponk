@@ -50,15 +50,6 @@ OPPalette >> addEntry [
 	^ entry
 ]
 
-{ #category : 'building widgets' }
-OPPalette >> alignButtons [
-	"align content of all buttons to left"
-
-	items
-		select: [ :each | (each isKindOf: OPPaletteEntry) and: [ each widget isNotNil ] ]
-		thenDo: [ :each | each widget widget submorphs first listCentering: #topLeft ]
-]
-
 { #category : 'protocol' }
 OPPalette >> createPaletteFor: aDiagramController [
 

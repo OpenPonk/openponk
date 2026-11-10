@@ -84,8 +84,7 @@ OPDownloadStats class >> platformColumns [
 
 { #category : 'constants' }
 OPDownloadStats class >> platforms [
-
-	^ #( linux mac 'mac-ARM' win )
+	^ #( linux 'mac-intel' 'mac-arm' win )
 ]
 
 { #category : 'processing' }
@@ -98,8 +97,7 @@ OPDownloadStats class >> printRowSumOf: rowIndex to: s [
 
 { #category : 'result-columns' }
 OPDownloadStats class >> resultColumns [
-
-	^ 2 + self platforms size
+	^ self nonPlatformColumns + self platformColumns
 ]
 
 { #category : 'result-columns' }

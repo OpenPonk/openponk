@@ -52,21 +52,50 @@ OPDiagramFigureColorCommandTest >> tearDown [
 ]
 
 { #category : 'tests' }
+OPDiagramFigureColorCommandTest >> testDefaultFillColorCommandRemovesLocalStylePropertyAndIsUndoable [
+	| shape element coloredCommand defaultCommand toolContext |
+	element := classController diagramElement.
+	shape := classController roassalShape.
+	toolContext := OPRoassalShapeContext for: diagramController canvasPresenter of: { shape }.
+	coloredCommand := OPDiagramFigureMagentaFillColorCommand new.
+	coloredCommand readParametersFromContext: toolContext.
+	coloredCommand execute.
+	self
+		assert: (element localStyle includesKey: #fillColor)
+		description: 'Magenta fill color command should store #fillColor in localStyle'.
+	self assert: element fillColor equals: OPDiagramFigureMagentaFillColorCommand color.
+	defaultCommand := OPDiagramFigureDefaultFillColorCommand new.
+	defaultCommand readParametersFromContext: toolContext.
+	defaultCommand execute.
+	self
+		deny: (element localStyle includesKey: #fillColor)
+		description: 'Default fill color command should remove #fillColor from localStyle'.
+	undoManager undo.
+	self
+		assert: (element localStyle includesKey: #fillColor)
+		description: 'Undoing default fill color command should restore #fillColor in localStyle'.
+	self assert: element fillColor equals: OPDiagramFigureMagentaFillColorCommand color.
+	undoManager redo.
+	self
+		deny: (element localStyle includesKey: #fillColor)
+		description: 'Redoing default fill color command should remove #fillColor from localStyle again'
+]
+
+{ #category : 'tests' }
 OPDiagramFigureColorCommandTest >> testMagentaFillColorCommandIsUndoable [
+
 	| shape initialColor command toolContext targetColor |
 	shape := classController roassalShape.
 	initialColor := classController diagramElement fillColor.
 	targetColor := OPDiagramFigureMagentaFillColorCommand color.
 
 	command := OPDiagramFigureMagentaFillColorCommand new.
-	toolContext := OPRoassalShapeContext
-		for: diagramController canvasPresenter
-		of: { shape }.
+	toolContext := OPRoassalShapeContext for: diagramController canvasPresenter of: { shape }.
 	command readParametersFromContext: toolContext.
 	command execute.
 
 	self assert: classController diagramElement fillColor equals: targetColor.
-	self deny: (undoManager instVarNamed: #undoStack) isEmpty.
+	self denyEmpty: (undoManager instVarNamed: #undoStack).
 
 	undoManager undo.
 	self assert: classController diagramElement fillColor equals: initialColor.

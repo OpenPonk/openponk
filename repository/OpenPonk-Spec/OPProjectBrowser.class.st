@@ -205,13 +205,6 @@ OPProjectBrowser >> openProject: project [
 ]
 
 { #category : 'initialization' }
-OPProjectBrowser >> openProjectFromDirectory [
-
-	^ OPProjectController fromDirectoryDo: [ :aProject | 
-		  self openProject: aProject ]
-]
-
-{ #category : 'initialization' }
 OPProjectBrowser >> openProjectFromFile [
 
 	^ OPProjectController fromFileDo: [ :aProject | 
@@ -249,14 +242,6 @@ OPProjectBrowser >> projectLabelFor: aProject [
 		aProject storageFile
 			ifNotNil: [ :file | labelStream << ' [' << file basename << ']' ]
 			ifNil: [ labelStream << ' [in image - unsaved]' ] ]
-]
-
-{ #category : 'initialization' }
-OPProjectBrowser >> projectMenu: aMenuPresenter [
-
-	self
-		projectMenu: aMenuPresenter
-		for: (recentList selectedItem ifNil: [ ^ aMenuPresenter ])
 ]
 
 { #category : 'initialization' }

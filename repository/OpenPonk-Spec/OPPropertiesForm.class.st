@@ -511,12 +511,6 @@ OPPropertiesForm >> removeLast [
 ]
 
 { #category : 'private' }
-OPPropertiesForm >> removeLast: anAmount [
-
-	anAmount timesRepeat: [ self removeLast ]
-]
-
-{ #category : 'private' }
 OPPropertiesForm >> reset [
 	components := OrderedCollection new.
 	bindings := OrderedCollection new.

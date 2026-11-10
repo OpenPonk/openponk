@@ -102,6 +102,7 @@ OPRemoveModelElementCommandTest >> testCaptureDiagramElementsSynchronizesBoundsF
 
 { #category : 'tests' }
 OPRemoveModelElementCommandTest >> testCascadeRemovalAndUndoRedoMultiDiagramWithEdgeAndWaypoints [
+
 	| project container nodeA nodeB edge diagram1 diagram2 controller1 controller2 manager command nodeElement1 nodeElement2 edgeElement1 edgeElement2 initialWaypoints projectController |
 	project := OPProject new.
 	container := OPTestContainerModel new.
@@ -130,31 +131,46 @@ OPRemoveModelElementCommandTest >> testCascadeRemovalAndUndoRedoMultiDiagramWith
 
 	controller1 := OPTestDiagramController new.
 	projectController addDiagramController: controller1.
-	controller1 model: container; diagramElement: diagram1.
-	controller1 canvasPresenter: (OPCanvasPresenter new canvas: RSCanvas new; yourself).
+	controller1
+		model: container;
+		diagramElement: diagram1.
+	controller1 canvasPresenter: (OPCanvasPresenter new
+			 canvas: RSCanvas new;
+			 yourself).
 
 	controller2 := OPTestDiagramController new.
 	projectController addDiagramController: controller2.
-	controller2 model: container; diagramElement: diagram2.
-	controller2 canvasPresenter: (OPCanvasPresenter new canvas: RSCanvas new; yourself).
+	controller2
+		model: container;
+		diagramElement: diagram2.
+	controller2 canvasPresenter: (OPCanvasPresenter new
+			 canvas: RSCanvas new;
+			 yourself).
 
-	controller1 showInDiagramModel: nodeA; showInDiagramModel: nodeB; showInDiagramModel: edge.
-	controller2 showInDiagramModel: nodeA; showInDiagramModel: nodeB; showInDiagramModel: edge.
+	controller1
+		showInDiagramModel: nodeA;
+		showInDiagramModel: nodeB;
+		showInDiagramModel: edge.
+	controller2
+		showInDiagramModel: nodeA;
+		showInDiagramModel: nodeB;
+		showInDiagramModel: edge.
 
 	nodeElement1 := (controller1 controllerForModel: nodeA) diagramElement.
 	nodeElement2 := (controller2 controllerForModel: nodeA) diagramElement.
 	nodeElement1 bounds: (OPNodeBounds withPosition: 100 @ 100 extent: 50 @ 50).
 	nodeElement2 bounds: (OPNodeBounds withPosition: 300 @ 300 extent: 80 @ 80).
 
-	initialWaypoints := { 10 @ 10 . 50 @ 50 . 100 @ 100 }.
+	initialWaypoints := {
+		                    (10 @ 10).
+		                    (50 @ 50).
+		                    (100 @ 100) }.
 	edgeElement1 := (controller1 controllerForModel: edge) diagramElement.
 	edgeElement2 := (controller2 controllerForModel: edge) diagramElement.
 	edgeElement1 waypoints: initialWaypoints copy.
 	edgeElement2 waypoints: initialWaypoints copy.
 
-	command := OPRemoveModelElementCommand
-		model: nodeA
-		projectController: projectController.
+	command := OPRemoveModelElementCommand model: nodeA projectController: projectController.
 	manager inTransaction: [ manager execute: command ].
 
 	self assert: controller1 controllers size equals: 1.
@@ -171,7 +187,7 @@ OPRemoveModelElementCommandTest >> testCascadeRemovalAndUndoRedoMultiDiagramWith
 	self assert: (controller1 controllerForModel: edge) diagramElement waypoints equals: initialWaypoints.
 	self assert: (controller2 controllerForModel: edge) diagramElement waypoints equals: initialWaypoints.
 	self assert: (controller1 controllerForModel: edge) diagramElement source equals: nodeElement1.
-	self assert: (nodeElement1 sourceEdges includes: (controller1 controllerForModel: edge) diagramElement).
+	self assertCollection: nodeElement1 sourceEdges includesAll: { (controller1 controllerForModel: edge) diagramElement }.
 
 	manager redo.
 
@@ -182,31 +198,30 @@ OPRemoveModelElementCommandTest >> testCascadeRemovalAndUndoRedoMultiDiagramWith
 
 { #category : 'tests' }
 OPRemoveModelElementCommandTest >> testCascadeRemovalAndUndoRedoWithoutDiagramInProject [
+
 	| removeCommand |
 	self assert: diagramController controllers size equals: 3.
 	self assert: containerModel entities size equals: 3.
 
-	removeCommand := OPRemoveModelElementCommand
-		model: nodeModel1
-		diagramController: diagramController.
+	removeCommand := OPRemoveModelElementCommand model: nodeModel1 diagramController: diagramController.
 	undoManager inTransaction: [ undoManager execute: removeCommand ].
 
 	self assert: diagramController controllers size equals: 1.
 	self assert: containerModel entities size equals: 1.
-	self deny: (containerModel entities includes: nodeModel1).
-	self deny: (containerModel entities includes: edgeModel).
+	self denyCollection: containerModel entities includesAny: { nodeModel1 }.
+	self denyCollection: containerModel entities includesAny: { edgeModel }.
 
 	undoManager undo.
 	self assert: diagramController controllers size equals: 3.
 	self assert: containerModel entities size equals: 3.
-	self assert: (containerModel entities includes: nodeModel1).
-	self assert: (containerModel entities includes: edgeModel).
+	self assertCollection: containerModel entities includesAll: { nodeModel1 }.
+	self assertCollection: containerModel entities includesAll: { edgeModel }.
 
 	undoManager redo.
 	self assert: diagramController controllers size equals: 1.
 	self assert: containerModel entities size equals: 1.
-	self deny: (containerModel entities includes: nodeModel1).
-	self deny: (containerModel entities includes: edgeModel)
+	self denyCollection: containerModel entities includesAny: { nodeModel1 }.
+	self denyCollection: containerModel entities includesAny: { edgeModel }
 ]
 
 { #category : 'tests' }

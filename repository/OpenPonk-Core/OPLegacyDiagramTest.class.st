@@ -66,6 +66,66 @@ OPLegacyDiagramTest >> testAsJsonModel2 [
 ]
 
 { #category : 'tests' }
+OPLegacyDiagramTest >> testAsOPDiagramConvertsLegacyLayoutsAndCommonElements [
+	| container entity1 entity2 rel note legacy opDiagram entity1Element entity2Element relElement |
+	[
+		OPPluginRegistry setDefaultForTesting.
+		container := OPTestContainerModel new.
+		container instVarNamed: #uuid put: UUID new.
+		entity1 := OPTestEntityModel new.
+		entity1 instVarNamed: #uuid put: UUID new.
+		entity2 := OPTestEntityModel new.
+		entity2 instVarNamed: #uuid put: UUID new.
+		rel := OPTestRelationModel new
+			source: entity1;
+			target: entity2;
+			yourself.
+		rel instVarNamed: #uuid put: UUID new.
+		container
+			add: entity1;
+			add: entity2;
+			add: rel.
+		note := OPNote new text: 'Migrated Note'; yourself.
+
+		legacy := OPLegacyDiagram emptyOfModel: container.
+		legacy
+			name: 'Legacy Diagram';
+			isOpen: true;
+			isSelected: true;
+			order: 2;
+			camera: (OPLegacyDiagramCamera new offset: 15 @ 25; zoom: 1.25; yourself);
+			commonElements: { note };
+			visibleElements: {
+				OPModelObjectReference withUUID: entity1 uuid.
+				OPModelObjectReference withUUID: entity2 uuid.
+				OPModelObjectReference withUUID: rel uuid.
+				OPModelObjectReference withUUID: note uuid };
+			layout: {
+				entity1 uuid -> (OPLegacyElementLayout withPosition: 100 @ 120 extent: 80 @ 60).
+				entity2 uuid -> (OPLegacyElementLayout withPosition: 300 @ 120).
+				rel uuid -> (OPLegacyElementLayout
+					withPathFromSource: entity1 uuid
+					throughPoints: { 100 @ 120 . 200 @ 160 . 300 @ 120 }) } asDictionary.
+
+		opDiagram := legacy asOPDiagram.
+		self assert: opDiagram class identicalTo: OPOpenPonkDiagram.
+		self assert: opDiagram name equals: 'Legacy Diagram'.
+		self assert: opDiagram isOpen description: 'Converted diagram should preserve isOpen'.
+		self assert: opDiagram isSelected description: 'Converted diagram should preserve isSelected'.
+		self assert: (opDiagram ownedElements includes: note)
+			description: 'Converted diagram should own migrated common element note'.
+
+		entity1Element := opDiagram ownedElements detect: [ :each | each modelElement == entity1 ].
+		entity2Element := opDiagram ownedElements detect: [ :each | each modelElement == entity2 ].
+		relElement := opDiagram ownedElements detect: [ :each | each modelElement == rel ].
+		self assert: entity1Element bounds position equals: 100 @ 120.
+		self assert: entity1Element bounds extent equals: 80 @ 60.
+		self assert: entity2Element bounds position equals: 300 @ 120.
+		self assert: relElement innerWaypoints asArray equals: { 200 @ 160 }
+	] ensure: [ OPPluginRegistry resetDefault ]
+]
+
+{ #category : 'tests' }
 OPLegacyDiagramTest >> testFromJsonComplex [
 
 	| personUUID personUUIDstring person |
@@ -95,12 +155,11 @@ OPLegacyDiagramTest >> testFromJsonComplex [
 
 { #category : 'tests' }
 OPLegacyDiagramTest >> testModel [
-
-	| model  |
+	| model |
 	model := OPTestContainerModel new.
 	diagram := OPLegacyDiagram new.
 	self assert: diagram modelType equals: 'UndefinedObject'.
-	self assert: diagram model isNil.
+	self assert: diagram model isNil description: 'New OPLegacyDiagram should have nil model initially'.
 	self assert: diagram modelName equals: 'UndefinedObject'.
 	diagram model: model.
 	self assert: diagram modelType equals: 'OPTestContainerModel'.
@@ -112,22 +171,22 @@ OPLegacyDiagramTest >> testModel [
 
 { #category : 'tests' }
 OPLegacyDiagramTest >> testNewCopy [
+
 	| model project newView |
 	model := OPTestContainerModel new.
 	project := OPProject new.
 	project addModel: model.
 	diagram := OPLegacyDiagram new
-		name: 'original';
-		camera:
-			(OPLegacyDiagramCamera new
-				offset: 20 @ 30;
-				zoom: 1.2);
-		model: model;
-		isOpen: true;
-		isSelected: false;
-		order: 7.
+		           name: 'original';
+		           camera: (OPLegacyDiagramCamera new
+				            offset: 20 @ 30;
+				            zoom: 1.2);
+		           model: model;
+		           isOpen: true;
+		           isSelected: false;
+		           order: 7.
 	newView := diagram newCopy.
-	self deny: newView = diagram.
+	self deny: newView equals: diagram.
 	self assert: newView name equals: 'copy of original'.
 	self assert: newView model equals: model.
 	diagram

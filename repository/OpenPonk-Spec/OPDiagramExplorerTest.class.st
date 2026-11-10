@@ -93,40 +93,54 @@ OPDiagramExplorerTest >> testHideAllElementsExecutesInUndoTransaction [
 { #category : 'tests' }
 OPDiagramExplorerTest >> testHideElementAndUndo [
 	self assert: diagramController controllers size equals: 3.
-
 	explorer hideElement: nodeModel1.
-
-	"Node and its connecting edge must be hidden from diagram"
 	self assert: diagramController controllers size equals: 1.
-	self assert: (diagramController controllerForModel: nodeModel1 ifNone: [ nil ]) isNil.
-
-	"Undo must restore both visual elements and controllers"
+	self assert: (diagramController controllerForModel: nodeModel1 ifNone: [ nil ]) isNil
+		description: 'Hidden node1 should not have a controller'.
 	undoManager undo.
-
 	self assert: diagramController controllers size equals: 3.
-	self assert: (diagramController controllerForModel: nodeModel1 ifNone: [ nil ]) isNotNil.
+	self assert: (diagramController controllerForModel: nodeModel1 ifNone: [ nil ]) isNotNil
+		description: 'Undoing hide should restore node1 controller'.
 	self assert: (diagramController controllerForModel: edgeModel ifNone: [ nil ]) isNotNil
+		description: 'Undoing hide should restore connected edge controller'
 ]
 
 { #category : 'tests' }
 OPDiagramExplorerTest >> testHideMultipleElementsInSingleTransaction [
 	self assert: diagramController controllers size equals: 3.
-
 	explorer hideElements: { nodeModel1 . nodeModel2 }.
-
-	"All nodes and edges must be hidden"
-	self assert: diagramController controllers isEmpty.
-
-	"A single undo must restore all elements together"
+	self assertEmpty: diagramController controllers.
 	undoManager undo.
 	self assert: diagramController controllers size equals: 3.
-	self assert: (diagramController controllerForModel: nodeModel1 ifNone: [ nil ]) isNotNil.
-	self assert: (diagramController controllerForModel: nodeModel2 ifNone: [ nil ]) isNotNil.
-	self assert: (diagramController controllerForModel: edgeModel ifNone: [ nil ]) isNotNil.
-
-	"Redo must re-hide them all"
+	self assert: (diagramController controllerForModel: nodeModel1 ifNone: [ nil ]) isNotNil
+		description: 'Node 1 controller should be restored after undo'.
+	self assert: (diagramController controllerForModel: nodeModel2 ifNone: [ nil ]) isNotNil
+		description: 'Node 2 controller should be restored after undo'.
+	self assert: (diagramController controllerForModel: edgeModel ifNone: [ nil ]) isNotNil
+		description: 'Edge controller should be restored after undo'.
 	undoManager redo.
-	self assert: diagramController controllers isEmpty
+	self assertEmpty: diagramController controllers
+]
+
+{ #category : 'tests' }
+OPDiagramExplorerTest >> testShowAndHideRootModelAndDependentsAndIdempotentShow [
+	self assert: explorer diagramController identicalTo: diagramController.
+	self denyEmpty: (explorer dependentFor: containerModel).
+
+	explorer showElements: { nodeModel1 }.
+	self assert: diagramController controllers size equals: 3.
+
+	explorer hideElement: containerModel.
+	self assertEmpty: diagramController controllers.
+
+	explorer showElement: containerModel.
+	self assert: diagramController controllers size equals: 3.
+
+	explorer hideDependentFor: containerModel.
+	self assertEmpty: diagramController controllers.
+
+	explorer showDependentFor: containerModel.
+	self assert: diagramController controllers size equals: 3
 ]
 
 { #category : 'tests' }
@@ -135,18 +149,14 @@ OPDiagramExplorerTest >> testShowElementAndUndo [
 	hiddenNode := OPTestEntityModel new.
 	hiddenNode instVarNamed: #uuid put: UUID new.
 	containerModel add: hiddenNode.
-
-	self assert: (diagramController controllerForModel: hiddenNode ifNone: [ nil ]) isNil.
-
-	explorer showElement: hiddenNode.
-
-	"Node must now have an active controller in diagram"
-	self assert: (diagramController controllerForModel: hiddenNode ifNone: [ nil ]) isNotNil.
-
-	"Undo must hide the element again"
-	undoManager undo.
-
 	self assert: (diagramController controllerForModel: hiddenNode ifNone: [ nil ]) isNil
+		description: 'Newly added model element should not have a controller before showElement:'.
+	explorer showElement: hiddenNode.
+	self assert: (diagramController controllerForModel: hiddenNode ifNone: [ nil ]) isNotNil
+		description: 'showElement: should create and attach a controller for hiddenNode'.
+	undoManager undo.
+	self assert: (diagramController controllerForModel: hiddenNode ifNone: [ nil ]) isNil
+		description: 'Undoing showElement: should remove the controller'
 ]
 
 { #category : 'accessing' }

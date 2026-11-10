@@ -26,11 +26,13 @@ ManifestOpenPonkCore class >> ruleExtraBlockRuleV1FalsePositive [
 
 { #category : 'code-critics' }
 ManifestOpenPonkCore class >> ruleRTInvocationSequenceRuleV1FalsePositive [
+	<ignoreForCoverage>
 	^ #(#(#(#RGMethodDefinition #(#OPTRelationshipWithPathPointsController #layout #false)) #'2021-07-21T17:15:27.877427+02:00') #(#(#RGMethodDefinition #(#OPTRelationshipWithPathPointsController #layout: #false)) #'2021-07-21T17:17:28.272427+02:00') )
 ]
 
 { #category : 'code-critics' }
 ManifestOpenPonkCore class >> ruleReTestClassNotInPackageWithTestEndingNameV1FalsePositive [
+	<ignoreForCoverage>
 	^ #(#(#(#RGPackageDefinition #(#'OpenPonk-Core')) #'2020-05-27T10:56:37.652665+02:00') )
 ]
 

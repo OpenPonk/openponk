@@ -66,6 +66,104 @@ OPDiagramControllerTest >> testCanBeTargetForEntity [
 ]
 
 { #category : 'tests' }
+OPDiagramControllerTest >> testCanvasInteractionEventsAndCachesAndQueries [
+	| project container entityA entityB testCanvas diagram projectController diagramController controllerA controllerB resizeEvent dragEvent waypointsEvent edgeShape |
+	project := OPProject new.
+	container := OPTestContainerModel new.
+	entityA := container add: OPTestEntityModel new.
+	entityB := container add: OPTestEntityModel new.
+	project addModel: container.
+	testCanvas := RSCanvas new.
+	diagram := OPOpenPonkDiagram forModelElement: container.
+	diagram canvas: testCanvas.
+	project addDiagram: diagram.
+	projectController := OPProjectController forProject: project.
+	diagramController := OPTestDiagramController new.
+	projectController addDiagramController: diagramController.
+	diagramController
+		model: container;
+		diagramElement: diagram;
+		canvasPresenter: (OPCanvasPresenter new canvas: testCanvas; yourself).
+	diagramController addCanvasInteractionEventsFor: testCanvas.
+	diagramController subscribeToUndoManager.
+	controllerA := diagramController showInDiagramModel: entityA.
+	controllerB := diagramController showInDiagramModel: entityB.
+	self
+		assert: (diagramController isVisibleInDiagram: entityA)
+		description: 'Entity A should be reported as visible in diagram after showInDiagramModel:'.
+	self assertCollection: diagramController visibleElements includesAll: { entityA . entityB }.
+	self assert: (diagramController cachedControllerForModel: entityA) identicalTo: controllerA.
+	self assert: (diagramController cachedControllerForRoassalShape: controllerA roassalShape) identicalTo: controllerA.
+	self
+		assert: (diagramController hasControllerForRoassalShape: controllerA roassalShape)
+		description: 'Diagram controller should have controller for controllerA roassalShape'.
+	self
+		assert: (diagramController hasControllerForRoassalShape: testCanvas)
+		description: 'Diagram controller should recognize its own canvas in hasControllerForRoassalShape:'.
+	self
+		deny: (diagramController hasControllerForRoassalShape: RSBox new)
+		description: 'Unregistered RSBox should not have a controller in diagramController'.
+	self
+		assert: diagramController incompatiblePaletteItemNames isCollection
+		description: 'incompatiblePaletteItemNames should return a collection'.
+	resizeEvent := OPRSShapeResizedEvent new
+		shape: controllerA roassalShape;
+		oldPosition: 0 @ 0;
+		newPosition: 10 @ 10;
+		oldExtent: 50 @ 50;
+		newExtent: 80 @ 60;
+		yourself.
+	diagramController shapeResized: resizeEvent.
+	self assert: controllerA diagramElement bounds extent equals: 80 @ 60.
+	projectController undoManager undo.
+	self assert: controllerA diagramElement bounds extent equals: 50 @ 50.
+	controllerA roassalShape translateTo: 40 @ 50.
+	dragEvent := OPRSElementsDraggedEvent new
+		shapes: { controllerA roassalShape };
+		lines: #();
+		initialPositions: (IdentityDictionary with: controllerA roassalShape -> (0 @ 0));
+		initialLineControlPoints: IdentityDictionary new;
+		initialAnchors: IdentityDictionary new;
+		yourself.
+	diagramController elementsDragged: dragEvent.
+	self assert: controllerA diagramElement bounds position equals: 40 @ 50.
+	projectController undoManager undo.
+	self assert: controllerA diagramElement bounds position equals: 0 @ 0.
+	edgeShape := OPTestEdge new
+		source: controllerA diagramElement;
+		target: controllerB diagramElement;
+		renderIn: testCanvas;
+		yourself.
+	waypointsEvent := OPRSEdgeWaypointsChangedEvent new
+		line: edgeShape roassalShape;
+		oldWaypoints: { 0 @ 0 . 100 @ 100 };
+		newWaypoints: { 0 @ 0 . 50 @ 80 . 100 @ 100 };
+		yourself.
+	diagramController edgeWaypointsChanged: waypointsEvent.
+	self assert: edgeShape waypoints size equals: 3.
+	projectController undoManager undo.
+	self assert: edgeShape waypoints size equals: 2.
+	diagramController updateAfterDiagramFocused.
+	diagramController zoomToFit.
+	diagramController ensureDeselected
+]
+
+{ #category : 'tests' }
+OPDiagramControllerTest >> testCommonElementsAndBoundaryControllerDelegation [
+	| noteCtrl boundaryCtrl |
+	self assertEmpty: controller commonElementControllers.
+	self assertEmpty: controller commonElements.
+	noteCtrl := OPNoteController new.
+	controller addController: noteCtrl.
+	self assert: (controller commonElementControllers includes: noteCtrl) description: 'Diagram-only note controller should be included in commonElementControllers'.
+	self assert: (controller commonElements includes: noteCtrl model) description: 'Note model should be included in commonElements'.
+
+	boundaryCtrl := OPBoundaryController new.
+	boundaryCtrl diagramController: controller.
+	self assert: (boundaryCtrl canBeTargetFor: OPNoteController new) description: 'Boundary controller should delegate canBeTargetFor: to diagramController'
+]
+
+{ #category : 'tests' }
 OPDiagramControllerTest >> testDeselectAllDelegatesToSelectionTool [
 	| mockEditor mockPalette mockTool |
 	mockEditor := Mock new.
@@ -98,6 +196,89 @@ OPDiagramControllerTest >> testDeselectControllerDelegatesToSelectionTool [
 	controller deselectController: targetController.
 
 	mockTool should receive deselectController: targetController
+]
+
+{ #category : 'tests' }
+OPDiagramControllerTest >> testElementControllerAndDiagramElementInteractionsAndQueries [
+	| project container entityA entityB testCanvas diagram projectController diagramController controllerA controllerB elementA nonContainerEdge acceptFeedback denyFeedback stonString restoredElement |
+	project := OPProject new.
+	container := OPTestContainerModel new.
+	entityA := container add: OPTestEntityModel new.
+	entityB := container add: OPTestEntityModel new.
+	project addModel: container.
+	testCanvas := RSCanvas new.
+	testCanvas @ OPRSSelectableCanvas.
+	diagram := OPOpenPonkDiagram forModelElement: container.
+	diagram canvas: testCanvas.
+	project addDiagram: diagram.
+	projectController := OPProjectController forProject: project.
+	diagramController := OPTestDiagramController new.
+	projectController addDiagramController: diagramController.
+	diagramController
+		model: container;
+		diagramElement: diagram;
+		canvasPresenter: (OPCanvasPresenter new canvas: testCanvas; yourself).
+	controllerA := diagramController showInDiagramModel: entityA.
+	controllerB := diagramController showInDiagramModel: entityB.
+	elementA := controllerA diagramElement.
+	self assert: controllerA asViewModel identicalTo: controllerA viewModel.
+	self assert: controllerA formEventsAnnouncer identicalTo: controllerA viewModel announcer.
+	self
+		assert: controllerA isTargetUsedAsContainer
+		description: 'Default element controller should use target as container'.
+	self assert: (controllerA parentModelInTarget: diagramController) identicalTo: container.
+	self
+		deny: controllerA isCommon
+		description: 'Standard element controller should not be marked as common'.
+	self
+		assert: controllerA elementsToShowInside isCollection
+		description: 'elementsToShowInside should answer a collection'.
+	self
+		assert: controllerA dependentControllers isCollection
+		description: 'dependentControllers should answer a collection'.
+	self
+		deny: (controllerA creationCommandIn: container andShowInDiagram: diagramController)
+		equals: nil.
+	self assert: controllerA intendedOwningDiagramElement identicalTo: diagram.
+	self assert: controllerA diagramElementOwnerWithPossibleController identicalTo: diagram.
+	acceptFeedback := controllerA showAcceptFeedbackFor: controllerB.
+	acceptFeedback ifNotNil: [ acceptFeedback remove ].
+	denyFeedback := controllerA showDenyFeedbackFor: controllerB.
+	denyFeedback ifNotNil: [ denyFeedback remove ].
+	self
+		assert: elementA isDiagramElement
+		description: 'Diagram element should answer true to isDiagramElement'.
+	self
+		deny: elementA isTransient
+		description: 'Standard diagram element should not be transient'.
+	self
+		assert: elementA isRenderedWithOwnedElements
+		description: 'Rendered element without unrendered children should report isRenderedWithOwnedElements = true'.
+	self assert: elementA topMostOwningElement identicalTo: diagram.
+	self denyEmpty: elementA styleTypeNames.
+	self denyEmpty: elementA allShapesPositionableByUser.
+	self assertEmpty: elementA innerNodeElements.
+	self assertEmpty: elementA innerNodeRoassalShapes.
+	self assertEmpty: elementA directNodeRoassalShapes.
+	self assertEmpty: elementA innerDraggableRoassalShapes.
+	elementA pushFront.
+	elementA pushBack.
+	elementA roundPositionsAndExtents.
+	nonContainerEdge := OPTestEdge new.
+	self
+		deny: nonContainerEdge isContainer
+		description: 'Edge diagram element should not be a container'.
+	self
+		deny: nonContainerEdge movesWithOtherShape
+		description: 'Edge diagram element should not move with other shape by default'.
+	self
+		deny: nonContainerEdge supportsColorChange
+		description: 'OPTestEdge without color accessors should not support color change'.
+	self should: [ nonContainerEdge adaptBoundsToInnerBounds: (0 @ 0 corner: 10 @ 10) ] raise: Error.
+	stonString := STON toString: elementA.
+	restoredElement := STON fromString: stonString.
+	self assert: restoredElement class equals: elementA class.
+	controllerA ensureDeselected
 ]
 
 { #category : 'tests - ui interaction' }
@@ -172,6 +353,7 @@ OPDiagramControllerTest >> testProjectControllerWiresUndoRedoCanvasUpdates [
 
 { #category : 'tests' }
 OPDiagramControllerTest >> testRemoveControllerDeselectsController [
+
 	| mockEditor mockPalette mockTool targetController |
 	mockEditor := Mock new.
 	mockPalette := Mock new.
@@ -187,7 +369,7 @@ OPDiagramControllerTest >> testRemoveControllerDeselectsController [
 	controller removeController: targetController.
 
 	mockTool should receive deselectController: targetController.
-	self deny: (controller controllers includes: targetController)
+	self denyCollection: controller controllers includesAny: { targetController }
 ]
 
 { #category : 'tests' }
@@ -211,11 +393,12 @@ OPDiagramControllerTest >> testSelectController [
 
 { #category : 'tests - construction' }
 OPDiagramControllerTest >> testShowModelInDiagram [
-
-	| entity |
+	| entity shownController |
 	controller model: model.
 	entity := OPTestEntityModel new.
-	controller showWithoutDependentInDiagramModel: entity
+	shownController := controller showWithoutDependentInDiagramModel: entity.
+	self assert: (controller hasControllerForModel: entity).
+	self assertCollection: controller controllers includesAll: { shownController }
 ]
 
 { #category : 'tests - construction' }

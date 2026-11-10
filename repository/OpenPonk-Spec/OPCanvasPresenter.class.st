@@ -76,9 +76,7 @@ OPCanvasPresenter >> defaultExportFolder [
 			currentProjectController project ifNotNil: [ :currentProject |
 				currentProject storageFile ifNotNil: [ :file |
 					file parent ifNotNil: [ :folder |
-						folder exists ifTrue: [ ^ folder ] ] ].
-				currentProject storageFolder ifNotNil: [ :folder |
-					folder exists ifTrue: [ ^ folder ] ] ] ] ].
+						folder exists ifTrue: [ ^ folder ] ] ] ] ] ].
 	^ FileSystem workingDirectory
 ]
 
@@ -210,16 +208,6 @@ OPCanvasPresenter >> initializeCanvas: aCanvas [
 { #category : 'accessing' }
 OPCanvasPresenter >> model [
 	^ diagramController model
-]
-
-{ #category : 'accessing' }
-OPCanvasPresenter >> roassalView [
-
-	self
-		deprecated: 'Use #canvas instead.'
-		transformWith:
-		'`@receiver roassalView' -> '`@receiver canvas'.
-	^ self canvas
 ]
 
 { #category : 'accessing' }

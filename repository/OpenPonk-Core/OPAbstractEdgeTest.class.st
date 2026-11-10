@@ -18,15 +18,15 @@ OPAbstractEdgeTest >> testRenderSimplifiedForController [
 
 	diagramController := Mock new.
 	diagramController stub canvas willReturn: canvas.
-	
+
 	rsBox := RSBox new.
-	
+
 	connectedShape := OPDiagramElement new.
 	connectedShape stub roassalShape willReturn: rsBox.
-	
+
 	connectedController := Mock new.
 	connectedController stub diagramElement willReturn: connectedShape.
-	
+
 
 	controller := Mock new.
 	controller stub diagramController willReturn: diagramController.
@@ -34,6 +34,5 @@ OPAbstractEdgeTest >> testRenderSimplifiedForController [
 	controller stub target willReturn: connectedController.
 
 	self shapeClass renderSimplifiedForController: controller.
-
-	self assert: canvas shapes isNotEmpty
+	self denyEmpty: canvas shapes
 ]

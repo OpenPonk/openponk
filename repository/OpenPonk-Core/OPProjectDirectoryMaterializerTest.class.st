@@ -51,6 +51,17 @@ OPProjectDirectoryMaterializerTest >> testMissingProject [
 ]
 
 { #category : 'tests' }
+OPProjectDirectoryMaterializerTest >> testNoModelFound [
+	| emptyFolder serializer |
+	emptyFolder := FileSystem memory / 'empty-model-folder'.
+	emptyFolder ensureCreateDirectory.
+	serializer := OPMementoDirectorySerializer forPlugin: OPTestPlugin new.
+	self
+		should: [ serializer loadModelFrom: emptyFolder ]
+		raise: OPNoModelFound
+]
+
+{ #category : 'tests' }
 OPProjectDirectoryMaterializerTest >> testPluginReferenceKnown [
 	self
 		assert: {reader pluginForName: #OPTestPlugin pluginVersion: OPTestPlugin new version}
@@ -61,7 +72,7 @@ OPProjectDirectoryMaterializerTest >> testPluginReferenceKnown [
 OPProjectDirectoryMaterializerTest >> testPluginReferenceUnknown [
 	self
 		should: [ reader pluginForName: 'Unknown' pluginVersion: '0.0.0' ]
-		raise: Error
+		raise: OPUnknownPlugin
 ]
 
 { #category : 'tests' }
@@ -73,16 +84,11 @@ OPProjectDirectoryMaterializerTest >> testRead [
 OPProjectDirectoryMaterializerTest >> testReadMemento [
 
 	| memento |
-	memento := reader
-		           readMementoFrom:
-		           root / 'models' / project models first uuid asString
-		           asPlugin: OPTestPlugin new.
-	self
-		assert: memento model className
-		equals: project models first className.
+	memento := reader readMementoFrom: root / 'models' / project models first uuid asString asPlugin: OPTestPlugin new.
+	self assert: memento model className equals: project models first className.
 	self assert: memento model name equals: project models first name.
 	self assert: memento model uuid equals: project models first uuid.
-	self assert: memento diagrams isEmpty
+	self assertEmpty: memento diagrams
 ]
 
 { #category : 'tests' }
@@ -111,4 +117,28 @@ OPProjectDirectoryMaterializerTest >> testReadProject [
 { #category : 'running' }
 OPProjectDirectoryMaterializerTest >> testSetUp [
 	self assert: (root / 'project.json') exists
+]
+
+{ #category : 'tests' }
+OPProjectDirectoryMaterializerTest >> testUnsupportedExportInfo [
+	| unsupportedInfo |
+	unsupportedInfo := OPExportInfo new
+		subject: #unknownSubject;
+		version: 999;
+		format: #unknownFormat;
+		yourself.
+	self
+		should: [ OPSerializer forExportInfo: unsupportedInfo ]
+		raise: OPUnsupportedSerializer
+]
+
+{ #category : 'tests' }
+OPProjectDirectoryMaterializerTest >> testUnsupportedExporter [
+	| invalidProjectFile |
+	invalidProjectFile := FileSystem memory / 'invalid-project.json'.
+	invalidProjectFile writeStreamDo: [ :stream |
+		stream nextPutAll: '{"export":{"exporter":"OtherTool"},"project":{"name":"Test","uuid":"7f5ee44a-1655-4061-a78e-db9578a2226c"}}' ].
+	self
+		should: [ reader readProjectInfoFrom: invalidProjectFile ]
+		raise: OPUnsupportedSerializer
 ]

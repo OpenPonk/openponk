@@ -119,19 +119,6 @@ OPElementController >> ensureShownDependenciesInDiagram: aDiagramController [
 			aDiagramController showWithoutDependentInDiagramModel: each ] ]
 ]
 
-{ #category : 'figures' }
-OPElementController >> figure: aFigure [
-
-	self deprecated:
-		'Figure (Roassal shape) cannot be set directly anymore.'
-]
-
-{ #category : 'deprecated' }
-OPElementController >> figureLabel: aLabelName text: aString [
-	self deprecated: 'Method will be removed without replacement.'
-"	(figure labels at: aLabelName) trachelShape text: aString"
-]
-
 { #category : 'construction' }
 OPElementController >> hookDiagramElement [
 
@@ -183,13 +170,6 @@ OPElementController >> isHideable [
 	^ true
 ]
 
-{ #category : 'deprecated' }
-OPElementController >> loadModel [
-	self deprecated: 'Method will be removed without replacement.'
-"	self model ifNil: [ self model: self createModel ].
-	^ self model"
-]
-
 { #category : 'diagram elements' }
 OPElementController >> owner [
 
@@ -210,17 +190,6 @@ OPElementController >> owner [
 { #category : 'accessing' }
 OPElementController >> projectController [
 	^ self diagramController projectController
-]
-
-{ #category : 'deprecated' }
-OPElementController >> registerModelEvents: aModel [
-	self deprecated: 'Use model: and internalSubscribeTo: instead.'.
-"	super registerModelEvents: aModel.
-	aModel
-		when: OPElementChanged
-		do: [ :event | 
-			aModel owner isNotNil & figure isNotNil
-				ifTrue: [ self refreshFigure ] ]"
 ]
 
 { #category : 'construction' }
@@ -264,18 +233,6 @@ OPElementController >> renderDiagramElement [
 	self diagramElement renderIn: self diagramController canvas.
 	self diagramController rendered: self.
 	^ self roassalShape
-]
-
-{ #category : 'construction' }
-OPElementController >> renderFigureIn: aCanvas [
-
-	self
-		deprecated: 'Use #createDiagramElement and #renderDiagramElement without parameter.'
-		transformWith: '`@receiver renderFigureIn: `@statements1'
-			-> '`@receiver createDiagramElement; renderDiagramElement'.
-	^ self
-		  createDiagramElement;
-		  renderDiagramElement
 ]
 
 { #category : 'construction' }

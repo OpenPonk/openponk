@@ -23,15 +23,6 @@ OPLayoutLoopDetector class >> haveLoopsBoxes: boxes links: links [
 		  haveLoops
 ]
 
-{ #category : 'actions' }
-OPLayoutLoopDetector class >> popupHaveLoopsBoxes: boxes links: links [
-
-	^ self new
-		  boxes: boxes;
-		  links: links;
-		  popupHaveLoops
-]
-
 { #category : 'accessing' }
 OPLayoutLoopDetector >> boxes [
 
@@ -87,21 +78,4 @@ OPLayoutLoopDetector >> links [
 OPLayoutLoopDetector >> links: anObject [
 
 	links addAll: anObject
-]
-
-{ #category : 'as yet unclassified' }
-OPLayoutLoopDetector >> popupHaveLoops [
-
-	^ self haveLoops
-		  ifTrue: [
-			  (GrowlMorph
-				   label: 'Failed to lay out'
-				   contents:
-					   'OpenPonk failed to lay out shapes. Using simple grid layout...')
-				  backgroundColor: GrowlMorph theme warningBackgroundColor;
-				  labelColor: GrowlMorph theme textColor;
-				  textColor: GrowlMorph theme textColorForNonStandardBackground;
-				  openInWorld.
-			  ^ true ]
-		  ifFalse: [ false ]
 ]

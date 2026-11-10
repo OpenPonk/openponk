@@ -69,7 +69,7 @@ OPProjectDirectoryMaterializer >> pluginForName: aName pluginVersion: aVersion [
 	| plugin |
 	plugin := OPPluginRegistry default plugins
 		detect: [ :each | each className = aName and: [ each version = aVersion ] ]
-		ifNone: [ ^ self error: 'Unrecognized plugin ' , aName , ' version ' , aVersion ].
+		ifNone: [ OPUnknownPlugin signal: 'Unrecognized plugin ' , aName , ' version ' , aVersion ].
 	^ plugin
 ]
 
@@ -97,7 +97,7 @@ OPProjectDirectoryMaterializer >> readMementoFrom: aFolder asPlugin: aPlugin [
 				                yourself ]
 		                ifNone: [ aPlugin serializer ].
 	^ (materializer loadMementoFrom: aFolder) ifNil: [ 
-		  self error:
+		  OPSerializationWithEmptyResult signal:
 			  'Unable to deserialize memento from ' , aFolder greaseString ]
 ]
 
@@ -124,7 +124,7 @@ OPProjectDirectoryMaterializer >> readProjectInfoFrom: aFile [
 	exporter := (json at: 'export' ifAbsent: [ json at: 'exporter' ]) 
 		            at: 'exporter'.
 	exporter = self exporter ifFalse: [ 
-		self error: 'Unsupported exporter ' , exporter ].
+		OPUnsupportedSerializer signal: 'Unsupported exporter ' , exporter ].
 	project := OPProject new.
 	project name: ((json at: 'project') at: 'name').
 	project uuid: (UUID fromString: ((json at: 'project') at: 'uuid')).

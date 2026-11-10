@@ -308,8 +308,7 @@ OPAbstractDirectionalRelationshipControllerTest >> testRemoveController [
 OPAbstractDirectionalRelationshipControllerTest >> testRoassalShapeWasRendered [
 
 	self showInDiagram.
-	self assert:
-		(diagramController canvas lines includes: controller roassalShape)
+	self assertCollection: diagramController canvas lines includesAll: { controller roassalShape }
 ]
 
 { #category : 'tests' }

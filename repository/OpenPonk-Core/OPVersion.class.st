@@ -38,22 +38,6 @@ OPVersion class >> current: aVersion [
 ]
 
 { #category : 'instance creation' }
-OPVersion class >> currentWithRunId: anId projectName: aProjectName [
-	^ self
-		current:
-			(self new
-				githubWorkflowRunId: anId;
-				repositoryName: aProjectName;
-				downloadInfo;
-				yourself)
-]
-
-{ #category : 'instance creation' }
-OPVersion class >> currentWithRunId: anId repositoryName: aRepositoryName [
-	^ self currentWithRunId: anId projectName: aRepositoryName
-]
-
-{ #category : 'instance creation' }
 OPVersion class >> fromReleaseJson: aRelease repositoryName: aRepositoryName [
 	| version title date |
 	version := self new
@@ -337,11 +321,6 @@ OPVersion >> githubWorkflowRunId: anObject [
 OPVersion >> hash [
 	self isRelease ifTrue: [ ^ self releaseName hash ].
 	^ self buildDate hash
-]
-
-{ #category : 'testing' }
-OPVersion >> isMostRecent [
-	^ self getOfLatest = self
 ]
 
 { #category : 'accessing' }

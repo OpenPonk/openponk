@@ -167,12 +167,6 @@ OPController >> formEventsAnnouncer [
 	^ self viewModel announcer
 ]
 
-{ #category : 'canvas actions' }
-OPController >> hideSelectionFeedback [
-
-	self deprecated: 'This should be done by shapes (diagram elements)'
-]
-
 { #category : 'testing' }
 OPController >> isDiagramOnly [
 	^ false
@@ -294,17 +288,6 @@ OPController >> propertyNamed: aSymbol put: aValue [
 	self viewModel ifNotNil: [ :vm | vm propertyNamed: aSymbol put: aValue ]
 ]
 
-{ #category : 'figures' }
-OPController >> refreshFigure [
-
-	self
-		deprecated: 'Use #modelChanged instead'
-		transformWith: '`@receiver refreshFigure'
-			-> '`@receiver modelChanged'.
-
-	^ self modelChanged
-]
-
 { #category : 'deprecated' }
 OPController >> remove [
 
@@ -334,15 +317,6 @@ OPController >> removeControllerAndDiagramElement [
 OPController >> removeControllerAndModel [
 
 	self viewModel removeModel
-]
-
-{ #category : 'destruction' }
-OPController >> removeDependentConrollersAndModels [
-
-	self dependentControllers do: [ :each |
-		self diagramController
-			controllerForModel: each model
-			ifFound: [ :found | found removeControllerAndModel ] ]
 ]
 
 { #category : 'destruction' }
@@ -418,12 +392,6 @@ OPController >> showInDiagram: aDiagramController [
 	self viewModel ifNotNil: [ :vm |
 		vm dependentElements do: [ :each |
 			aDiagramController showInDiagramModel: each ] ]
-]
-
-{ #category : 'canvas actions' }
-OPController >> showSelectionFeedback [
-
-	self deprecated: 'This should be done by shapes (diagram elements)'
 ]
 
 { #category : 'construction' }

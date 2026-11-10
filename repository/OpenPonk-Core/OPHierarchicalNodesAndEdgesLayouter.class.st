@@ -23,17 +23,6 @@ OPHierarchicalNodesAndEdgesLayouter >> allRenderedNodeShapes [
 ]
 
 { #category : 'accessing' }
-OPHierarchicalNodesAndEdgesLayouter >> containerControllersBottomUp [
-	"Answers all active container controllers in diagram, ordered bottom-up by nesting depth (deepest first)."
-
-	| containerControllers |
-	containerControllers := diagramController controllers select: [ :eachController |
-		eachController isContainer and: [ eachController ~~ diagramController ] ].
-	^ containerControllers asOrderedCollection sorted: [ :controllerA :controllerB |
-		(self depthFor: controllerA) > (self depthFor: controllerB) ]
-]
-
-{ #category : 'accessing' }
 OPHierarchicalNodesAndEdgesLayouter >> containerElementsBottomUp [
 	"Answers all active container diagram elements in diagram, ordered bottom-up by nesting depth (deepest first)."
 	| rootDiagram containerElements |

@@ -42,28 +42,26 @@ OPRemoveRootModelCommandTest >> tearDown [
 
 { #category : 'tests' }
 OPRemoveRootModelCommandTest >> testExecuteRemovesModelAndAssociatedDiagramAndAnnounces [
+
 	| removeCommand announcedClasses |
-	removeCommand := OPRemoveModelElementCommand
-		model: packageModel
-		projectController: projectController.
+	removeCommand := OPRemoveModelElementCommand model: packageModel projectController: projectController.
 
 	removeCommand execute.
 
 	self deny: (project hasModel: packageModel).
-	self deny: (project diagrams includes: diagram).
+	self denyCollection: project diagrams includesAny: { diagram }.
 
 	announcedClasses := announcedEvents collect: #class.
 	self assertCollection: announcedClasses includesAll: {
-		OPModelRemoved .
-		OPDiagramRemoved }
+			OPModelRemoved.
+			OPDiagramRemoved }
 ]
 
 { #category : 'tests' }
 OPRemoveRootModelCommandTest >> testRedoReappliesRemovalAndAnnounces [
+
 	| removeCommand announcedClasses |
-	removeCommand := OPRemoveModelElementCommand
-		model: packageModel
-		projectController: projectController.
+	removeCommand := OPRemoveModelElementCommand model: packageModel projectController: projectController.
 
 	removeCommand execute.
 	removeCommand undo.
@@ -71,30 +69,29 @@ OPRemoveRootModelCommandTest >> testRedoReappliesRemovalAndAnnounces [
 	removeCommand redo.
 
 	self deny: (project hasModel: packageModel).
-	self deny: (project diagrams includes: diagram).
+	self denyCollection: project diagrams includesAny: { diagram }.
 
 	announcedClasses := announcedEvents collect: #class.
 	self assertCollection: announcedClasses includesAll: {
-		OPModelRemoved .
-		OPDiagramRemoved }
+			OPModelRemoved.
+			OPDiagramRemoved }
 ]
 
 { #category : 'tests' }
 OPRemoveRootModelCommandTest >> testUndoRestoresModelAndAssociatedDiagramAndAnnounces [
+
 	| removeCommand announcedClasses |
-	removeCommand := OPRemoveModelElementCommand
-		model: packageModel
-		projectController: projectController.
+	removeCommand := OPRemoveModelElementCommand model: packageModel projectController: projectController.
 
 	removeCommand execute.
 	announcedEvents removeAll.
 	removeCommand undo.
 
 	self assert: (project hasModel: packageModel).
-	self assert: (project diagrams includes: diagram).
+	self assertCollection: project diagrams includesAll: { diagram }.
 
 	announcedClasses := announcedEvents collect: #class.
 	self assertCollection: announcedClasses includesAll: {
-		OPModelAdded .
-		OPDiagramAdded }
+			OPModelAdded.
+			OPDiagramAdded }
 ]

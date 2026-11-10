@@ -5,7 +5,8 @@ Class {
 	#name : 'OPEditorTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'editor'
+		'editor',
+		'workbench'
 	],
 	#category : 'OpenPonk-Spec-Tests',
 	#package : 'OpenPonk-Spec',
@@ -15,18 +16,21 @@ Class {
 { #category : 'running' }
 OPEditorTest >> setUp [
 	"Prepares the editor instance for testing without opening a UI window."
+
 	super setUp.
 	editor := (OPEditor on: OPTestPlugin new)
-		application: SpApplication defaultApplication;
-		yourself
+		          application: SpApplication defaultApplication;
+		          yourself.
+	workbench := nil
 ]
 
 { #category : 'running' }
 OPEditorTest >> tearDown [
 	"Deterministically closes any open morphic windows associated with the test editor."
-	editor ifNotNil: [ :activeEditor | 
-		activeEditor withWindowDo: [ :windowPresenter | 
-			windowPresenter isOpen ifTrue: [ windowPresenter close ] ] ].
+
+	editor ifNotNil: [ :activeEditor |
+		activeEditor withWindowDo: [ :windowPresenter | windowPresenter isOpen ifTrue: [ windowPresenter close ] ] ].
+	workbench ifNotNil: [ :currentWorkbench | currentWorkbench close ].
 	super tearDown
 ]
 
@@ -42,72 +46,80 @@ OPEditorTest >> testCanvasSectionLayoutContainsZoomToolbar [
 	self denyCollection: bottomLayoutChildren includesAny: #( #canvasMenu #zoomLabel )
 ]
 
-{ #category : 'tests - lifecycle' }
+{ #category : 'tests' }
 OPEditorTest >> testCloseWindowWithoutDiagramControllerDoesNotError [
-	"Verifies that closing an editor window whose diagramController is nil does not raise MessageNotUnderstood."
-	| windowPresenter |
-	windowPresenter := editor asWindow.
-	windowPresenter open.
-	windowPresenter close
+	| window |
+	window := editor open.
+	window close.
+	self deny: window isDisplayed description: 'Closed editor window should no longer be displayed'
 ]
 
-{ #category : 'tests - presenters' }
+{ #category : 'tests' }
+OPEditorTest >> testEditorLayoutsSwitching [
+	| layoutNames |
+	[
+		layoutNames := OPEditor availableLayoutNames.
+		self assertCollection: layoutNames hasSameElements: #( 'Palette on left' 'Palette on right' ).
+		self assert: OPEditor defaultLayout name equals: 'Palette on left'.
+		self assert: OPEditor canvasSectionWidth > 0 description: 'canvasSectionWidth should be positive'.
+
+		OPEditor layoutName: 'Palette on right'.
+		self assert: OPEditor layoutName equals: 'Palette on right'.
+		OPEditor setDefaultLayout.
+		self assert: OPEditor layoutName equals: 'Palette on left'
+	] ensure: [ OPEditor setDefaultLayout ]
+]
+
+{ #category : 'tests' }
 OPEditorTest >> testInitializePresentersInstantiatesZoomToolbar [
-	"Verifies that the editor initializes a zoom toolbar presenter bound to its canvas presenter."
-	self assert: editor zoomToolbar isNotNil.
-	self assert: (editor zoomToolbar isKindOf: OPZoomToolbarPresenter).
+	self assert: editor zoomToolbar isNotNil description: 'Editor zoomToolbar should be initialized'.
+	self assert: (editor zoomToolbar isKindOf: OPZoomToolbarPresenter) description: 'zoomToolbar should be an OPZoomToolbarPresenter'.
 	self assert: editor zoomToolbar canvasPresenter equals: editor canvasPresenter
 ]
 
 { #category : 'tests' }
 OPEditorTest >> testTabClosedWhileClosingWorkbenchUpdatesDiagram [
-	| testProject testContainerModel testDiagram workbench activeEditor canvas initialCamera |
+
+	| testProject testContainerModel testDiagram activeEditor canvas initialCamera |
 	testProject := OPProject named: 'CoreEditorCloseUnitTest'.
 	testContainerModel := OPTestContainerModel new.
 	testDiagram := OPOpenPonkDiagram forModelElement: testContainerModel.
 	testProject addModel: testContainerModel.
 	testProject addDiagram: testDiagram.
 
-	[
-		workbench := OPWorkbench new.
-		workbench pluginRegistry: OPPluginRegistry withAllForTesting.
-		workbench openProject: testProject.
-		workbench openEditorOnDiagram: testDiagram.
-		activeEditor := workbench focusedEditor.
-		canvas := activeEditor canvasPresenter canvas.
-		canvas camera scale: 2.75.
-
-		activeEditor tabClosedWhileClosingWorkbench: true.
-
-		initialCamera := testDiagram camera.
-		self assert: initialCamera isNotNil.
-		self assert: (initialCamera scale - 2.75) abs < 0.001.
-	] ensure: [
-		workbench ifNotNil: [ :currentWorkbench | currentWorkbench close ] ]
+	workbench := OPWorkbench new.
+	workbench pluginRegistry: OPPluginRegistry withAllForTesting.
+	workbench openProject: testProject.
+	workbench openEditorOnDiagram: testDiagram.
+	activeEditor := workbench focusedEditor.
+	canvas := activeEditor canvasPresenter canvas.
+	canvas camera scale: 2.75.
+	activeEditor tabClosedWhileClosingWorkbench: true.
+	initialCamera := testDiagram camera.
+	self assert: initialCamera isNotNil description: 'Diagram camera should be saved when tab closes'.
+	self assert: (initialCamera scale - 2.75) abs < 0.001 description: 'Saved diagram camera scale should match canvas camera scale'
 ]
 
-{ #category : 'tests - layout' }
+{ #category : 'tests' }
 OPEditorTest >> testZoomToolbarButtonsFitWithinToolbarBounds [
-	"Verifies that all zoom toolbar buttons fit within the toolbar bounds and are not vertically clipped."
 	| toolbarMorph buttonMorphs |
 	editor build.
 	toolbarMorph := editor zoomToolbar adapter widget.
 	toolbarMorph extent: 300 @ 28.
 	toolbarMorph fullBounds.
-	buttonMorphs := toolbarMorph allMorphs select: [ :eachButton | 
+	buttonMorphs := toolbarMorph allMorphs select: [ :eachButton |
 		eachButton isKindOf: PluggableButtonMorph ].
 	self assert: buttonMorphs size equals: 4.
 	self assert: toolbarMorph height equals: 28.
-	buttonMorphs do: [ :eachButtonMorph | 
-		self assert: eachButtonMorph height <= 28 ]
+	buttonMorphs do: [ :eachButtonMorph |
+		self assert: eachButtonMorph height <= 28 description: 'Each zoom toolbar button should fit within the 28px toolbar height' ]
 ]
 
-{ #category : 'tests - presenters' }
+{ #category : 'tests' }
 OPEditorTest >> testZoomToolbarControlsEditorCanvasZoom [
-	"Verifies that interacting with the editor zoom toolbar updates the canvas camera scale."
 	editor canvasPresenter zoom: 1.0.
 	editor zoomToolbar zoomIn.
-	self assert: (editor canvasPresenter zoom - 1.25) abs < 0.001.
+	self assert: (editor canvasPresenter zoom - 1.25) abs < 0.001 description: 'Zooming in should increase canvas zoom to 1.25'.
 	editor zoomToolbar zoomReset.
-	self assert: (editor canvasPresenter zoom - 1.0) abs < 0.001
+	self assert: (editor canvasPresenter zoom - 1.0) abs < 0.001 description: 'Resetting zoom should restore canvas zoom to 1.0'
 ]

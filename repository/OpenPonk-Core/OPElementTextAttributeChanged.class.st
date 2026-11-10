@@ -13,18 +13,6 @@ Class {
 	#tag : 'UICommands'
 }
 
-{ #category : 'instance creation' }
-OPElementTextAttributeChanged class >> withAttributeName: aString [
-	^ self new
-		attributeName: aString;
-		yourself
-]
-
-{ #category : 'accessing' }
-OPElementTextAttributeChanged >> attributeName: aString [
-	attributeName := aString
-]
-
 { #category : 'initialization' }
 OPElementTextAttributeChanged >> initialize [
 	attributeName := ''

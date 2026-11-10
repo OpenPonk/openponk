@@ -36,8 +36,9 @@ OPDiagramGeometrySnapshotTest >> tearDown [
 
 { #category : 'tests' }
 OPDiagramGeometrySnapshotTest >> testDeltaCommandsEmptyWhenNoGeometryChanged [
+
 	snapshot := OPDiagramGeometrySnapshot onNodes: (RSGroup with: shape).
-	self assert: snapshot deltaCommands isEmpty
+	self assertEmpty: snapshot deltaCommands
 ]
 
 { #category : 'tests' }

@@ -28,12 +28,6 @@ OPTRoassalShapeDefaultColorCommand classSide >> color [
 ]
 
 { #category : 'accessing' }
-OPTRoassalShapeDefaultColorCommand classSide >> colorFor: aDiagramElement [
-
-	^ self defaultColorOf: aDiagramElement
-]
-
-{ #category : 'accessing' }
 OPTRoassalShapeDefaultColorCommand >> color [
 
 	| defaultColors |
@@ -43,7 +37,9 @@ OPTRoassalShapeDefaultColorCommand >> color [
 ]
 
 { #category : 'execution' }
-OPTRoassalShapeDefaultColorCommand >> executeOn: aDiagramElement [
-
-	aDiagramElement removeLocalStylePropertyNamed: self class colorAttribute
+OPTRoassalShapeDefaultColorCommand >> commandFor: aDiagramElement [
+	^ OPChangeDiagramElementStylePropertyCommand
+		element: aDiagramElement
+		property: self class colorAttribute
+		value: nil
 ]

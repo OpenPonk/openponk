@@ -8,7 +8,6 @@ Class {
 		'workbench',
 		'project',
 		'controllers',
-		'lastSave',
 		'persistenceManager',
 		'viewModelRegistry',
 		'undoManager'
@@ -41,15 +40,6 @@ OPProjectController class >> fromDirectory: aFolder [
 	^ materializer loadProjectFrom: aFolder asFileReference
 ]
 
-{ #category : 'opening' }
-OPProjectController class >> fromDirectoryDo: aBlock [
-
-	StOpenDirectoryPresenter new
-		title: 'Choose an OpenPonk project directory';
-		okAction: [ :dir | aBlock value: (self fromDirectory: dir) ];
-		open
-]
-
 { #category : 'instance creation' }
 OPProjectController class >> fromFile: aFile [
 
@@ -72,25 +62,9 @@ OPProjectController class >> fromFileDo: aBlock [
 ]
 
 { #category : 'opening' }
-OPProjectController class >> modalFromFile [
-
-	^ StOpenFilePresenter new
-		  title: 'Choose an OpenPonk project';
-		  extensions: #( opp ) named: 'OP projects';
-		  openModal
-]
-
-{ #category : 'opening' }
 OPProjectController class >> openFromFile [
 
 	self fromFileDo: [ :project | project open ]
-]
-
-{ #category : 'opening' }
-OPProjectController class >> openModalFromFile [
-
-	^ (self fromFile: (self modalFromFile ifNil: [ ^ nil ])) open
-		  projectController
 ]
 
 { #category : 'managing' }
@@ -167,21 +141,6 @@ OPProjectController >> initialize [
 	super initialize.
 	controllers := OrderedCollection new.
 	undoManager := OPUndoManager new
-]
-
-{ #category : 'saving' }
-OPProjectController >> initializeProjectFolder: aFolder [
-	(aFolder / 'models') ensureCreateDirectory
-]
-
-{ #category : 'saving' }
-OPProjectController >> lastSave [
-	^ lastSave
-]
-
-{ #category : 'loading' }
-OPProjectController >> loadStateFrom: aFile [
-	^ STON fromStream: aFile readStream
 ]
 
 { #category : 'merging' }
@@ -291,16 +250,6 @@ OPProjectController >> project [
 { #category : 'accessing' }
 OPProjectController >> project: aProject [
 	project := aProject
-]
-
-{ #category : 'accessing' }
-OPProjectController >> projectFolder [
-	self project storageFolder
-		ifNil: [ self project
-				storageFolder:
-					(UIManager default
-						chooseDirectory: 'Choose Directory where your project should be stored') ].
-	^ self project storageFolder
 ]
 
 { #category : 'accessing' }
@@ -415,13 +364,6 @@ OPProjectController >> saveProjectTo: aFile [
 		saveProject: self project withMementos: self modelMementos.
 	OPZipPersistence new save: store to: aFile.
 	workbench updateTitle
-]
-
-{ #category : 'saving' }
-OPProjectController >> saveState: saveData to: aFile [
-	aFile
-		ensureDelete;
-		writeStreamDo: [ :stream | stream nextPutAll: (STON toJsonStringPretty: saveData) ]
 ]
 
 { #category : 'selection' }

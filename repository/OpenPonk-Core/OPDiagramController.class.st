@@ -18,7 +18,6 @@ Class {
 		'controllerFactory',
 		'canvasPresenter',
 		'roassalShapeToControllerCache',
-		'roassalShapeAdded',
 		'roassalShapesBeingAdded',
 		'projectController'
 	],
@@ -26,16 +25,6 @@ Class {
 	#package : 'OpenPonk-Core',
 	#tag : 'Controllers'
 }
-
-{ #category : 'deprecated' }
-OPDiagramController >> addAllElements [
-
-	self
-		deprecated: 'Use #showAllElements instead.'
-		transformWith:
-		'`@receiver addAllElements' -> '`@receiver showAllElements'.
-	^ self showAllElements
-]
 
 { #category : 'events' }
 OPDiagramController >> addCanvasInteractionEventsFor: aCanvas [
@@ -73,13 +62,6 @@ OPDiagramController >> addMouseEventsFor: aRoassalShape [
 		when: RSMouseEnter
 		do: [ :event | self hoverRoassalShape: event shape ]
 		for: self
-]
-
-{ #category : 'enumerating' }
-OPDiagramController >> allModelElementsWithController [
-	"Should return all elements that could be directly hidden on diagram but are currently shown"
-
-	^ self controllers collect: [ :each | each model ]
 ]
 
 { #category : 'enumerating' }
@@ -305,31 +287,9 @@ OPDiagramController >> controllerForRoassalShape: aFigure ifNone: aBlock [
 	"^ self controllers detect: [ :ctrl | ctrl figure = aFigure ]"
 ]
 
-{ #category : 'deprecated' }
-OPDiagramController >> controllerNameFor: aModel [
-	self deprecated: 'no replacement'
-"	^ modelToControllerMapping at: aModel class"
-]
-
 { #category : 'controllers management' }
 OPDiagramController >> controllers [
 	^ controllers ifNil: [ controllers := Set new ]
-]
-
-{ #category : 'testing' }
-OPDiagramController >> controllersOfVisibleElements: aCollectionOfModelObject [
-	^ aCollectionOfModelObject
-		collect: [ :each | self controllerForModel: each ifNone: [ nil ] ]
-		thenSelect: [ :each | each isNotNil ]
-]
-
-{ #category : 'deprecated' }
-OPDiagramController >> createController: aModel [
-	self
-		deprecated: 'Use newControllerFor: instead'
-		on: '8 November 2017'
-		in: 'Pharo-6.0-60519-'.
-	^ self newControllerFor: aModel
 ]
 
 { #category : 'selection' }
@@ -431,15 +391,6 @@ OPDiagramController >> editor: anEditor [
 	editor := anEditor
 ]
 
-{ #category : 'destruction' }
-OPDiagramController >> elementRemoved [
-
-	self editor ifNotNil: [ :foundEditor |
-		foundEditor workbench ifNotNil: [ :workbench |
-			workbench projectTree ifNotNil: [ :projectTree |
-				projectTree refresh ] ] ]
-]
-
 { #category : 'ui interactions' }
 OPDiagramController >> elementsDragged: anEvent [
 	"Handle canvas drag event by recording moved nodes and line waypoints into an undoable transaction."
@@ -449,16 +400,6 @@ OPDiagramController >> elementsDragged: anEvent [
 	commands := (self commandsForDraggedShapes: anEvent) , (self commandsForDraggedLines: anEvent).
 	commands ifEmpty: [ ^ self ].
 	self executeDragCommands: commands
-]
-
-{ #category : 'figures' }
-OPDiagramController >> ensureControllerFor: aModel [
-
-	| controller |
-	self controllerForModel: aModel ifFound: [ :ctrl | ^ ctrl ].
-	controller := self newControllerFor: aModel.
-	self addController: controller.
-	^ controller
 ]
 
 { #category : 'ui interaction' }
@@ -478,17 +419,6 @@ OPDiagramController >> executeDragCommands: aCollectionOfCommands [
 				aCollectionOfCommands do: [ :eachCommand | activeUndoManager execute: eachCommand ] ] ]
 		ifNil: [
 			aCollectionOfCommands do: [ :eachCommand | eachCommand execute ] ]
-]
-
-{ #category : 'accessing' }
-OPDiagramController >> figureAdded: aFigure [
-
-	self
-		deprecated: 'Use rendered: instead'
-		transformWith: '`@receiver figureAdded: `@statements1'
-			->
-			'`@receiver rendered: (`@receiver controllerForRoassalShape: `@statements1)'.
-	^ self rendered: (self controllerForRoassalShape: aFigure)
 ]
 
 { #category : 'ui interaction' }
@@ -556,9 +486,7 @@ OPDiagramController >> incompatiblePaletteItemNames [
 
 { #category : 'initialization' }
 OPDiagramController >> initialize [
-
 	super initialize.
-	roassalShapeAdded := [ :roassalShape |  ].
 	controllerFactory := self controllerFactory.
 	roassalShapesBeingAdded := Set new.
 	modelToControllerCache := OPModelToControllerCache for: self.
@@ -586,54 +514,15 @@ OPDiagramController >> layouter: aLayouter [
 	layouter := aLayouter
 ]
 
-{ #category : 'undo/redo' }
-OPDiagramController >> loadState: aMemento [
-"	| oldModel |
-	aMemento ifNil: [ ^ self ].
-	oldModel := self model.
-	model := aMemento model.
-	model announcer: oldModel announcer.
-	self rebuild.
-	self diagram: aMemento diagram.
-	self logCr: aMemento diagram.
-	self editor updateUndoRedo"
-]
-
-{ #category : 'accessing' }
-OPDiagramController >> modelForFigure: aFigure [
-	self
-		deprecated: 'use #modelForRoassalShape: instead'
-		transformWith:
-			'`@receiver modelForFigure: `@argument'
-				-> '`@receiver modelForRoassalShape: `@argument'.
-
-	^ self modelForRoassalShape: aFigure
-]
-
 { #category : 'accessing' }
 OPDiagramController >> modelForRoassalShape: aRoassalShape [
 	^ (self controllerForRoassalShape: aRoassalShape) model
-]
-
-{ #category : 'accessing' }
-OPDiagramController >> modelToControllerMapping [
-	self
-		deprecated: 'Use #controllerFactory instead'
-		transformWith: '`@receiver modelToControllerMapping' -> '`@receiver controllerFactory'.
-	^ self controllerFactory 
 ]
 
 { #category : 'controllers management' }
 OPDiagramController >> modelsWithController [
 
 	^ self controllers collect: #model
-]
-
-{ #category : 'accessing' }
-OPDiagramController >> nameOfTypeForModel: aModel [
-
-	self deprecated: 'use #nameOfType on the viewModel of the model'.
-	^ (self viewModelRegistry viewModelFor: aModel) nameOfType
 ]
 
 { #category : 'controllers management' }
@@ -679,13 +568,6 @@ OPDiagramController >> redo [
 	self undoManager ifNotNil: [ :manager | manager redo ]
 ]
 
-{ #category : 'deprecated' }
-OPDiagramController >> registerModelEvents: aModel [
-	self deprecated: 'Use #model: and #internalSubscribeTo: instead'.
-	"super registerModelEvents: aModel.
-	aModel announcer when: OPElementChanged do: [ :evt | self saveState ]"
-]
-
 { #category : 'destruction' }
 OPDiagramController >> removeAllControllers [
 
@@ -697,36 +579,6 @@ OPDiagramController >> removeAllControllers [
 OPDiagramController >> removeController: aController [
 	self deselectController: aController.
 	self controllers remove: aController ifAbsent: [ ]
-]
-
-{ #category : 'deprecated' }
-OPDiagramController >> removeControllerOf: aModelElement [
-	self
-		deprecated: 'Use #removeController: and #removeController instead'
-		on: '8 November 2017'
-		in: 'Pharo-6.0-60519-'.
-	^ self removeController: (self controllerForModel: aModelElement)
-]
-
-{ #category : 'destruction' }
-OPDiagramController >> removeFromCanvas: aRoassalShape [
-
-	self
-		deprecated: 'use removeModelOfRoassalShape: instead'
-		transformWith: '`@rcv removeFromCanvas: `@arg'
-			-> '`@rcv removeModelOfRoassalShape: `@arg'
-]
-
-{ #category : 'deprecated' }
-OPDiagramController >> removeFromModel: aModel [
-	"Remove aModel from the diagram.
-	It is aModel's owner's controller responsibility to remove it.
-	The assertion tests whether aModel is attached to the current controller chain.
-	"
-	self deprecated: 'Use #removeModel on its controller instead.'
-
-"	self assert: (self controllerForModel: aModel) model = aModel.
-	(self controllerForModel: aModel owner) removeModelElement: aModel"
 ]
 
 { #category : 'deprecated' }
@@ -788,15 +640,6 @@ OPDiagramController >> roassalShapeDoubleClicked: anEvent [
 OPDiagramController >> roassalShapeForModel: aModel [
 
 	^ (self controllerForModel: aModel) roassalShape
-]
-
-{ #category : 'undo/redo' }
-OPDiagramController >> saveState [
-"	| memento |
-	memento := self memento.
-	self autosaveManager saveState: memento.
-	self editor updateUndoRedo.
-	self editor workbench projectController autoSave: memento"
 ]
 
 { #category : 'selection' }
@@ -977,17 +820,6 @@ OPDiagramController >> updateCanvas [
 	self canvas signalUpdate
 ]
 
-{ #category : 'userinterface' }
-OPDiagramController >> updateView [
-
-	self
-		deprecated: 'Use #updateCanvas instead.'
-		transformWith:
-		'`@receiver updateView'
-		-> '`@receiver updateCanvas'.
-	^ self updateCanvas
-]
-
 { #category : 'validation' }
 OPDiagramController >> validate [
 	self controllers do: [ :each | each viewModel validate ]
@@ -1009,18 +841,6 @@ OPDiagramController >> visibleElements [
 ]
 
 { #category : 'accessing' }
-OPDiagramController >> visibleElements: aCollection [
-	| executor |
-	aCollection ifEmpty: [ ^ self ].
-	executor := OPShowHideFacade on: self.
-	executor hideAll.
-	executor
-		showElements:
-			(self allModelElementsWithPossibleController
-				select: [ :each | aCollection anySatisfy: [ :any | any = each ] ])
-]
-
-{ #category : 'accessing' }
 OPDiagramController >> when: anEvent do: aBlock for: aSubscriber [
 
 	^ self announcer when: anEvent do: aBlock for: aSubscriber
@@ -1030,11 +850,6 @@ OPDiagramController >> when: anEvent do: aBlock for: aSubscriber [
 OPDiagramController >> whenAllDeselectedDo: aBlock for: aSubscriber [
 
 	self when: OPAllShapesDeselected do: aBlock for: aSubscriber
-]
-
-{ #category : 'protocol-events' }
-OPDiagramController >> whenFigureAdded: aBlock [
-	roassalShapeAdded := aBlock ifNil: [ [ :figure |  ] ]
 ]
 
 { #category : 'accessing' }

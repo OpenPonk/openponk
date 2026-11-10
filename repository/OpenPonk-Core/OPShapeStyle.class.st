@@ -31,11 +31,10 @@ OPShapeStyle >> addedAsLocalToStyledElement: aDiagramElement [
 
 { #category : 'accessing' }
 OPShapeStyle >> addedAsSharedToStyledElement: aDiagramElement [
-
-	aDiagramElement sharedStyle = self ifFalse: [ 
-		'This style was not added as shared style to the element' ].
-	(styledElements size = 1 and: [ 
-		 styledElements anyOne localStyle == self ]) ifTrue: [ 
+	aDiagramElement sharedStyle = self ifFalse: [
+		self error: 'This style was not added as shared style to the element' ].
+	(styledElements size = 1 and: [
+		styledElements anyOne localStyle == self ]) ifTrue: [
 		self error: 'Cannot use style as shared if already used as local' ].
 	styledElements add: aDiagramElement
 ]

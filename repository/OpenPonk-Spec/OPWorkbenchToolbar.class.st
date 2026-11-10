@@ -24,12 +24,6 @@ Class {
 }
 
 { #category : 'menus' }
-OPWorkbenchToolbar >> addDiagramMenu [
-	"Compatibility method delegating to #addEditorMenus."
-	self addEditorMenus
-]
-
-{ #category : 'menus' }
 OPWorkbenchToolbar >> addEditorMenus [
 	"Adds Model and Diagram menus to the toolbar menu bar for the currently focused editor."
 	| firstGroup modelSubMenu hasModelItems |
@@ -321,12 +315,6 @@ OPWorkbenchToolbar >> registerUndoRedoAnnouncements [
 			send: #updateButtons
 			to: self ].
 	self updateButtons
-]
-
-{ #category : 'menus' }
-OPWorkbenchToolbar >> removeDiagramMenu [
-	"Compatibility method delegating to #removeEditorMenus."
-	self removeEditorMenus
 ]
 
 { #category : 'menus' }

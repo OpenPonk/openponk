@@ -7,6 +7,49 @@ Class {
 }
 
 { #category : 'tests' }
+OPCanvasPresenterTest >> testCommandContextAndDefaultExportFolderAndZoom [
+	| project container testCanvas diagram projectController diagramController workbench presenter diagramFile zoomed extentChanged |
+	project := OPProject new.
+	container := OPTestContainerModel new.
+	project addModel: container.
+	testCanvas := RSCanvas new.
+	diagram := OPOpenPonkDiagram forModelElement: container.
+	diagram canvas: testCanvas.
+	project addDiagram: diagram.
+	projectController := OPProjectController forProject: project.
+	workbench := OPWorkbench new.
+	workbench instVarNamed: #projectController put: projectController.
+	projectController workbench: workbench.
+	diagramController := OPTestDiagramController new.
+	projectController addDiagramController: diagramController.
+	presenter := OPCanvasPresenter new canvas: testCanvas; yourself.
+	diagramController
+		model: container;
+		diagramElement: diagram;
+		canvasPresenter: presenter.
+	presenter attachController: diagramController.
+	diagramController showInDiagramModel: (container add: OPTestEntityModel new).
+	diagramFile := FileSystem workingDirectory / 'dummy.opp'.
+	project storageFile: diagramFile.
+	presenter owner: (OPEditor new instVarNamed: #workbench put: workbench; yourself).
+	self assert: presenter defaultExportFolder equals: FileSystem workingDirectory.
+	self assert: presenter createCommandContext class equals: OPRoassalShapeContext.
+	zoomed := false.
+	extentChanged := false.
+	presenter whenZoomChanged: [ :evt | zoomed := true ].
+	presenter whenExtentChangedDo: [ :evt | extentChanged := true ].
+	presenter zoom: 1.5.
+	self assert: presenter zoom closeTo: 1.5.
+	self
+		assert: zoomed
+		description: 'Changing zoom scale should invoke whenZoomChanged callback'.
+	presenter zoom: 100.
+	self assert: presenter zoom closeTo: 1.5.
+	presenter zoomToFit.
+	presenter signalUpdate
+]
+
+{ #category : 'tests' }
 OPCanvasPresenterTest >> testDefaultExportFileNameUsesSanitizer [
 	| canvasPresenter diagramController viewModel |
 	canvasPresenter := OPCanvasPresenter new.

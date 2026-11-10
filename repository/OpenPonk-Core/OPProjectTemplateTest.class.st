@@ -83,24 +83,24 @@ OPProjectTemplateTest >> testEquality [
 
 { #category : 'tests' }
 OPProjectTemplateTest >> testInstalledPluginsProvideExamples [
+
 	| nonTestingPlugins |
-	nonTestingPlugins := OPPluginRegistry default plugins reject: [ :pluginItem | 
-		pluginItem class isTestingOnly ].
-	nonTestingPlugins ifEmpty: [ 
-		self skip: 'No domain plugins installed in core image'.
-		^ self ].
-	nonTestingPlugins do: [ :pluginItem | 
-		| templates |
-		templates := pluginItem exampleProjectTemplates.
-		self assert: templates isNotEmpty description: ('Plugin ' , pluginItem name , ' must provide at least one example template').
-		templates do: [ :templateItem | 
-			| modelItem |
-			self assert: templateItem isExample.
-			self assert: templateItem name isNotEmpty.
-			self assert: templateItem icon isNotNil.
-			modelItem := templateItem createModel.
-			self assert: modelItem isNotNil.
-			self assert: (self isModelNonEmpty: modelItem) description: ('Template ' , templateItem name , ' created an empty model') ] ]
+	nonTestingPlugins := OPPluginRegistry default plugins reject: [ :pluginItem | pluginItem class isTestingOnly ].
+	nonTestingPlugins ifEmpty: [
+			self skip: 'No domain plugins installed in core image'.
+			^ self ].
+	nonTestingPlugins do: [ :pluginItem |
+			| templates |
+			templates := pluginItem exampleProjectTemplates.
+			self assert: templates isNotEmpty description: 'Plugin ' , pluginItem name , ' must provide at least one example template'.
+			templates do: [ :templateItem |
+					| modelItem |
+					self assert: templateItem isExample.
+					self denyEmpty: templateItem name.
+					self assert: templateItem icon isNotNil.
+					modelItem := templateItem createModel.
+					self assert: modelItem isNotNil.
+					self assert: (self isModelNonEmpty: modelItem) description: 'Template ' , templateItem name , ' created an empty model' ] ]
 ]
 
 { #category : 'tests' }

@@ -37,14 +37,6 @@ OPRSSelectionDraggable class >> thatAlsoDragsShapesProvidedByBlock: aBlock [
 ]
 
 { #category : 'instance creation' }
-OPRSSelectionDraggable class >> thatAlsoDragsSmallerOverlappingShapes [
-
-	^ self new
-		  dragAlsoSmallerOverlappingShapes;
-		  yourself
-]
-
-{ #category : 'instance creation' }
 OPRSSelectionDraggable class >> thatDoesNotDragAnyInnerShapes [
 
 	"default"
@@ -74,12 +66,6 @@ OPRSSelectionDraggable >> dragAlsoShapesProvidedByBlock: aBlock [
 
 	self innerShapesProvider:
 		(OPRSSelectionDraggableCustomShapesProvider withBlock: aBlock)
-]
-
-{ #category : 'inner shapes' }
-OPRSSelectionDraggable >> dragAlsoSmallerOverlappingShapes [
-
-	self innerShapesProvider: OPRSSelectionDraggableSmallerOverlappingShapesProvider new
 ]
 
 { #category : 'inner shapes' }

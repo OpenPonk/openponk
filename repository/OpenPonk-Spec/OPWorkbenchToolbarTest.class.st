@@ -99,7 +99,7 @@ OPWorkbenchToolbarTest >> testButtonsReactToUndoRedoChangedAnnouncement [
 { #category : 'tests' }
 OPWorkbenchToolbarTest >> testDiagramCommandsPrepareExecutionInCanvasContext [
 	"Verifies that all diagram canvas commands accept the canvas presenter tool in prepareFullExecutionInContext: without DNU #tool."
-	| testEditor mockDiagramController context commandClasses |
+	| testEditor mockDiagramController context commandClasses preparedCommands |
 	testEditor := (OPEditor on: OPTestPlugin new)
 		workbench: mockWorkbench;
 		yourself.
@@ -109,10 +109,12 @@ OPWorkbenchToolbarTest >> testDiagramCommandsPrepareExecutionInCanvasContext [
 
 	context := CmdSimpleToolContext for: testEditor canvasPresenter.
 	commandClasses := OPDiagramCanvasCommand allSubclasses reject: #isAbstract.
-	commandClasses do: [ :eachCommandClass |
+	preparedCommands := commandClasses collect: [ :eachCommandClass |
 		| command |
 		command := eachCommandClass new.
-		context prepareFullExecutionOf: command ]
+		context prepareFullExecutionOf: command.
+		command ].
+	self denyEmpty: preparedCommands
 ]
 
 { #category : 'tests' }
@@ -242,34 +244,35 @@ OPWorkbenchToolbarTest >> testFocusedEditorResetRemovesEditorMenus [
 { #category : 'tests' }
 OPWorkbenchToolbarTest >> testModelCommandsPrepareExecutionInEditorContext [
 	"Verifies that all model commands accept the focused editor in prepareFullExecutionInContext:."
-	| testEditor context commandClasses |
+	| testEditor context commandClasses preparedCommands |
 	testEditor := (OPEditor on: OPTestPlugin new)
 		workbench: mockWorkbench;
 		yourself.
 
 	context := CmdSimpleToolContext for: testEditor.
 	commandClasses := OPModelCommand allSubclasses reject: #isAbstract.
-	commandClasses do: [ :eachCommandClass |
+	preparedCommands := commandClasses collect: [ :eachCommandClass |
 		| command |
 		command := eachCommandClass new.
-		context prepareFullExecutionOf: command ]
+		context prepareFullExecutionOf: command.
+		command ].
+	self denyEmpty: preparedCommands
 ]
 
 { #category : 'tests' }
 OPWorkbenchToolbarTest >> testModelMenuDoesNotContainInactiveMenuGroupsWhenEditorDoesNotSupportThem [
 	"Verifies that non-inlined groups are not rendered when their commands are inactive."
+
 	| testEditor modelMenuItem subMenuLabels |
 	testEditor := (OPEditor on: OPTestPlugin new)
-		workbench: mockWorkbench;
-		yourself.
+		              workbench: mockWorkbench;
+		              yourself.
 
 	toolbarPresenter focusedEditor: testEditor.
-	modelMenuItem := toolbarPresenter menu menuGroups first menuItems
-		detect: [ :eachMenuItem | eachMenuItem name = 'Model' ].
-	subMenuLabels := modelMenuItem subMenu menuGroups
-		flatCollect: [ :eachGroup | eachGroup menuItems collect: [ :eachItem | eachItem name ] ].
-
-	self deny: (subMenuLabels includes: 'Test Inactive Group')
+	modelMenuItem := toolbarPresenter menu menuGroups first menuItems detect: [ :eachMenuItem | eachMenuItem name = 'Model' ].
+	subMenuLabels := modelMenuItem subMenu menuGroups flatCollect: [ :eachGroup |
+		                 eachGroup menuItems collect: [ :eachItem | eachItem name ] ].
+	self denyCollection: subMenuLabels includesAny: { 'Test Inactive Group' }
 ]
 
 { #category : 'tests' }

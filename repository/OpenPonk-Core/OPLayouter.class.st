@@ -127,14 +127,3 @@ OPLayouter >> updateCanvas [
 
 	diagramController updateCanvas
 ]
-
-{ #category : 'userinterface' }
-OPLayouter >> updateView [
-
-	self
-		deprecated: 'Use #updateCanvas instead.'
-		transformWith:
-		'`@receiver updateView'
-		-> '`@receiver updateCanvas'.
-	^ self updateCanvas
-]

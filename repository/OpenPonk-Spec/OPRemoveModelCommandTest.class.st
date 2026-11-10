@@ -55,6 +55,7 @@ OPRemoveModelCommandTest >> testCanBeExecutedOnlyOnNonProjectViewModel [
 
 { #category : 'tests' }
 OPRemoveModelCommandTest >> testExecuteRemovesModelElementAndCanUndo [
+
 	| command contextStub |
 	command := OPRemoveModelCommand new.
 	contextStub := Mock new.
@@ -63,7 +64,6 @@ OPRemoveModelCommandTest >> testExecuteRemovesModelElementAndCanUndo [
 	contextStub stub selectedItem willReturn: viewModel.
 
 	command execute.
-
-	self deny: (project models includes: model).
+	self denyCollection: project models includesAny: { model }.
 	self assert: undoManager canUndo
 ]

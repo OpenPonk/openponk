@@ -112,18 +112,16 @@ OPModelRemovalUndoTest >> testRemoveEdgeOnlyPreservesNodes [
 	edgeShape := (diagramController controllerForModel: edgeModel) diagramElement roassalShape.
 
 	diagramController removeModelOfRoassalShape: edgeShape.
-
-	self deny: (containerModel entities includes: edgeModel).
-	self assert: (containerModel entities includes: node1Model).
-	self assert: (containerModel entities includes: node2Model).
+	self denyCollection: containerModel entities includesAny: { edgeModel }.
+	self assertCollection: containerModel entities includesAll: { node1Model }.
+	self assertCollection: containerModel entities includesAll: { node2Model }.
 	self deny: (diagramController hasControllerForModel: edgeModel).
 	self assert: (diagramController hasControllerForModel: node1Model).
 	self assert: (diagramController hasControllerForModel: node2Model).
 
 	self assert: undoManager canUndo.
 	undoManager undo.
-
-	self assert: (containerModel entities includes: edgeModel).
+	self assertCollection: containerModel entities includesAll: { edgeModel }.
 	self assert: edgeModel source identicalTo: node1Model.
 	self assert: edgeModel target identicalTo: node2Model.
 	self assert: (diagramController hasControllerForModel: edgeModel).
@@ -135,22 +133,19 @@ OPModelRemovalUndoTest >> testRemoveEdgeOnlyPreservesNodes [
 
 { #category : 'tests' }
 OPModelRemovalUndoTest >> testRemoveModelFromProjectTreeRestoresDiagramElementOnUndo [
+
 	| command |
-	command := OPRemoveModelElementCommand
-		model: node1Model
-		projectController: projectController.
+	command := OPRemoveModelElementCommand model: node1Model projectController: projectController.
 
 	undoManager inTransaction: [ undoManager execute: command ].
-
-	self deny: (containerModel entities includes: node1Model).
-	self deny: (containerModel entities includes: edgeModel).
+	self denyCollection: containerModel entities includesAny: { node1Model }.
+	self denyCollection: containerModel entities includesAny: { edgeModel }.
 	self deny: (diagramController hasControllerForModel: node1Model).
 	self deny: (diagramController hasControllerForModel: edgeModel).
 
 	undoManager undo.
-
-	self assert: (containerModel entities includes: node1Model).
-	self assert: (containerModel entities includes: edgeModel).
+	self assertCollection: containerModel entities includesAll: { node1Model }.
+	self assertCollection: containerModel entities includesAll: { edgeModel }.
 	self assert: (diagramController hasControllerForModel: node1Model).
 	self assert: (diagramController hasControllerForModel: edgeModel).
 	self assert: (diagramController controllerForModel: node1Model) diagramElement bounds position equals: 100 @ 100
@@ -188,9 +183,9 @@ OPModelRemovalUndoTest >> testRemoveNodeWithCascadeRemovesAndRestoresConnectedEd
 	diagramController removeModelOfRoassalShape: shapeToClick.
 
 	"Verify domain model removal"
-	self deny: (containerModel entities includes: node1Model).
-	self deny: (containerModel entities includes: edgeModel).
-	self assert: (containerModel entities includes: node2Model).
+	self denyCollection: containerModel entities includesAny: { node1Model }.
+	self denyCollection: containerModel entities includesAny: { edgeModel }.
+	self assertCollection: containerModel entities includesAll: { node2Model }.
 
 	"Verify visual diagram element removal from open canvas"
 	self deny: (diagramController hasControllerForModel: node1Model).
@@ -204,8 +199,8 @@ OPModelRemovalUndoTest >> testRemoveNodeWithCascadeRemovesAndRestoresConnectedEd
 	undoManager undo.
 
 	"Verify domain model restored"
-	self assert: (containerModel entities includes: node1Model).
-	self assert: (containerModel entities includes: edgeModel).
+	self assertCollection: containerModel entities includesAll: { node1Model }.
+	self assertCollection: containerModel entities includesAll: { edgeModel }.
 	self assert: edgeModel source identicalTo: node1Model.
 	self assert: edgeModel target identicalTo: node2Model.
 	self assert: (diagramController hasControllerForModel: node1Model).
@@ -220,8 +215,8 @@ OPModelRemovalUndoTest >> testRemoveNodeWithCascadeRemovesAndRestoresConnectedEd
 
 	"Execute REDO - must cleanly remove again"
 	undoManager redo.
-	self deny: (containerModel entities includes: node1Model).
-	self deny: (containerModel entities includes: edgeModel).
+	self denyCollection: containerModel entities includesAny: { node1Model }.
+	self denyCollection: containerModel entities includesAny: { edgeModel }.
 	self deny: (diagramController hasControllerForModel: node1Model).
 	self deny: (diagramController hasControllerForModel: edgeModel)
 ]
@@ -254,22 +249,20 @@ OPModelRemovalUndoTest >> testRemoveNodeWithMultipleEdgesRestoresAllInLifoOrder 
 	edge2DiagramElement := (diagramController controllerForModel: edge2Model) diagramElement.
 
 	diagramController removeModelOfRoassalShape: node2Shape.
-
-	self deny: (containerModel entities includes: node2Model).
-	self deny: (containerModel entities includes: edgeModel).
-	self deny: (containerModel entities includes: edge2Model).
-	self assert: (containerModel entities includes: node1Model).
-	self assert: (containerModel entities includes: node3Model).
+	self denyCollection: containerModel entities includesAny: { node2Model }.
+	self denyCollection: containerModel entities includesAny: { edgeModel }.
+	self denyCollection: containerModel entities includesAny: { edge2Model }.
+	self assertCollection: containerModel entities includesAll: { node1Model }.
+	self assertCollection: containerModel entities includesAll: { node3Model }.
 
 	self deny: (diagramController hasControllerForModel: node2Model).
 	self deny: (diagramController hasControllerForModel: edgeModel).
 	self deny: (diagramController hasControllerForModel: edge2Model).
 
 	undoManager undo.
-
-	self assert: (containerModel entities includes: node2Model).
-	self assert: (containerModel entities includes: edgeModel).
-	self assert: (containerModel entities includes: edge2Model).
+	self assertCollection: containerModel entities includesAll: { node2Model }.
+	self assertCollection: containerModel entities includesAll: { edgeModel }.
+	self assertCollection: containerModel entities includesAll: { edge2Model }.
 	self assert: edgeModel source identicalTo: node1Model.
 	self assert: edgeModel target identicalTo: node2Model.
 	self assert: edge2Model source identicalTo: node2Model.

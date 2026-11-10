@@ -30,6 +30,7 @@ OPSelectionToolTest >> testDeselectControllerRemovesTargetAndUpdatesWorkbench [
 
 { #category : 'tests' }
 OPSelectionToolTest >> testDeselectLastControllerClearsWorkbenchForm [
+
 	| selectionTool targetController mockWorkbench |
 	selectionTool := OPSelectionTool new.
 	mockWorkbench := Mock new.
@@ -38,18 +39,18 @@ OPSelectionToolTest >> testDeselectLastControllerClearsWorkbenchForm [
 	targetController := Mock new.
 	targetController stub isRendered willReturn: false.
 	selectionTool selectedControllers: { targetController }.
-	
+
 	selectionTool deselectController: targetController.
-	
-	self assert: selectionTool selectedControllers isEmpty.
+	self assertEmpty: selectionTool selectedControllers.
 	mockWorkbench should receive openFormOn: nil
 ]
 
 { #category : 'tests' }
 OPSelectionToolTest >> testSelectedControllersAccessor [
+
 	| selectionTool |
 	selectionTool := OPSelectionTool new.
-	self assert: selectionTool selectedControllers isEmpty
+	self assertEmpty: selectionTool selectedControllers
 ]
 
 { #category : 'tests' }

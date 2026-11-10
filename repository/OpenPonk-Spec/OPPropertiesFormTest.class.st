@@ -66,6 +66,36 @@ OPPropertiesFormTest >> testBindNumberInputUpdatesModelAndUndoReverts [
 ]
 
 { #category : 'tests' }
+OPPropertiesFormTest >> testBindingsAndPriorityMetaLinkAndLayoutHelpers [
+
+	| model viewModel |
+	self assert: OPPropertiesForm initialWidth equals: 260.
+	self assert: OPPropertiesForm minWidth equals: 180.
+	[
+		OPPropertiesForm showPriority: true.
+		self assert: OPPropertiesForm showPriority description: 'showPriority should be true when priority link is enabled'.
+		self assert: OPPropertiesForm isLinkInstalled description: 'Priority MetaLink should be installed on visit: AST node' ] ensure: [
+		OPPropertiesForm showPriority: false ].
+	self deny: OPPropertiesForm isLinkInstalled description: 'Priority MetaLink should be uninstalled after showPriority: false'.
+	model := OPTestEntityModel new.
+	viewModel := OPTestEntityViewModel new
+		             model: model;
+		             yourself.
+	form instVarNamed: #viewModel put: viewModel.
+	form addLabel: 'Header'.
+	form addSeparator.
+	form addList: 'Items'.
+	form bindTextInput: 'Name' property: #name.
+	form bindText: 'ShortText' property: #name.
+	form bindLongText: 'Description' property: #name.
+	form bindCheckbox: 'Active' property: #isNil.
+	form bindEditableDroplist: 'Kind' property: #name items: #( 'A' 'B' ).
+	self deny: form defaultKeyboardFocus equals: nil.
+	form removeLast.
+	form rebuildWidget
+]
+
+{ #category : 'tests' }
 OPPropertiesFormTest >> testEditableDropListAdapterAddToListConvertsTextToString [
 	| presenter adapter |
 	presenter := OPEditableDropListPresenter new.

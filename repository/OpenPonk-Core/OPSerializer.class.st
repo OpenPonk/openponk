@@ -10,7 +10,7 @@ Class {
 	#tag : 'Persistence'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'metadata' }
 OPSerializer class >> exportInfo [
 
 	^ OPExportInfo new
@@ -43,14 +43,14 @@ OPSerializer class >> fileExtensions [
 	^ { self formatName }
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'metadata' }
 OPSerializer class >> forExportInfo: anExportInfo [
 
 	| possibleClasses |
 	possibleClasses := self withAllSubclasses select: [ :each |
 		                   each supportsExportInfo: anExportInfo ].
 	possibleClasses ifEmpty: [
-		self error:
+		OPUnsupportedSerializer signal:
 			'This version of OpenPonk does not support given format/version of project file. Try loading the project in latest build' ].
 	^ (possibleClasses sorted: [ :a :b |
 		   a maxImportVersion = b maxImportVersion
@@ -59,7 +59,7 @@ OPSerializer class >> forExportInfo: anExportInfo [
 		  new
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'metadata' }
 OPSerializer class >> forExportInfoFile: aFile [
 
 	^ self forExportInfo: (aFile asFileReference readStreamDo: [ :s | 
@@ -84,7 +84,7 @@ OPSerializer class >> minImportVersion [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'metadata' }
 OPSerializer class >> saveExportInfoTo: aDirectory [
 
 	| exportInfo exportInfoFile |
@@ -94,7 +94,7 @@ OPSerializer class >> saveExportInfoTo: aDirectory [
 		(OPJsonWriter on: s) nextPut: exportInfo ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
 OPSerializer class >> supportsExportInfo: anExportInfo [
 
 	^ [ 

@@ -147,9 +147,8 @@ OPTestFailureExporter >> isStopContext: aContext [
 	^ sel = testCase selector or: [ sel = #setUp ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'private' }
 OPTestFailureExporter >> printContext: aContext [
-
 	outputStream
 		nextPutAll: '>> ';
 		nextPutAll: aContext printString;
@@ -157,8 +156,7 @@ OPTestFailureExporter >> printContext: aContext [
 		nextPutAll: '   Receiver: ';
 		nextPutAll: aContext receiver class name;
 		cr.
-
-	(aContext temporaryVariables collect: #name) do: [ :tempName |
+	aContext tempNames do: [ :tempName |
 		| val valString |
 		val := aContext tempNamed: tempName.
 		valString := [ val printString ]

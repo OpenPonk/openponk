@@ -52,23 +52,38 @@ OPDiagramOnlyControllerTest >> registerModel [
 	
 ]
 
-{ #category : 'tests - ui interaction' }
+{ #category : 'tests' }
 OPDiagramOnlyControllerTest >> testBeingRemovedAfterModelRemovalWhenNotRendered [
-
-	self skip
+	| diagram diagramElement |
+	self showInDiagram.
+	diagram := diagramController diagramElement.
+	diagramElement := controller diagramElement.
+	self assert: controller isDiagramOnly.
+	self assertCollection: diagram allOwnedElements includesAll: { diagramElement }.
+	controller removeModel.
+	self assert: controller model identicalTo: diagramElement.
+	self assertCollection: diagram allOwnedElements includesAll: { diagramElement }
 ]
 
-{ #category : 'tests - ui interaction' }
+{ #category : 'tests' }
 OPDiagramOnlyControllerTest >> testBeingRemovedAfterModelRemovalWhenRendered [
-
-	self skip
+	self showInDiagram.
+	self assertCollection: diagramController controllers includesAll: { controller }.
+	controller removeModel.
+	diagramController diagramFocused.
+	self assertCollection: diagramController controllers includesAll: { controller }.
+	controller removeControllerAndDiagramElement.
+	self denyCollection: diagramController controllers includesAny: { controller }
 ]
 
 { #category : 'tests - construction' }
 OPDiagramOnlyControllerTest >> testCreateModel [
-	"do nothing - there is no model"
-
-	
+	| createdModel |
+	createdModel := controller createModelIn: creationTargetController model.
+	self assert: createdModel isNotNil.
+	self assert: createdModel identicalTo: controller diagramElement.
+	self assert: controller model identicalTo: controller diagramElement.
+	self assert: createdModel class equals: self diagramElementClass
 ]
 
 { #category : 'tests' }
@@ -124,7 +139,11 @@ OPDiagramOnlyControllerTest >> testHideUndoRedo [
 
 { #category : 'tests - destruction' }
 OPDiagramOnlyControllerTest >> testRemoveModel [
-	"do nothing - there is no model"
+	self showInDiagram.
+	self assert: controller diagramElement isNotNil.
+	controller removeModel.
+	self assert: controller model identicalTo: controller diagramElement.
+	self assertCollection: diagramController controllers includesAll: { controller }
 ]
 
 { #category : 'tests - undo/redo' }

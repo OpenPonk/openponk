@@ -45,16 +45,16 @@ OPShowDiagramElementCommandTest >> setUp [
 
 { #category : 'tests' }
 OPShowDiagramElementCommandTest >> testShowNodeAndUndoRedo [
+
 	| command |
 	"Initially, the node is in the domain but not shown in the diagram"
-	self assert: diagramController controllers isEmpty.
+	self assertEmpty: diagramController controllers.
 	self assert: containerModel entities size equals: 1.
 
-	command := OPShowDiagramElementCommand
-		model: hiddenNodeModel
-		diagramController: diagramController.
+	command := OPShowDiagramElementCommand model: hiddenNodeModel diagramController: diagramController.
 
-	self assert: (command class allInstVarNames includes: #diagramController) not
+	self
+		assert: (command class allInstVarNames includes: #diagramController) not
 		description: 'Command must not define an instVar for diagramController to prevent history memory leaks'.
 
 	undoManager inTransaction: [ undoManager execute: command ].
@@ -65,7 +65,7 @@ OPShowDiagramElementCommandTest >> testShowNodeAndUndoRedo [
 
 	"Undo must hide the element"
 	undoManager undo.
-	self assert: diagramController controllers isEmpty.
+	self assertEmpty: diagramController controllers.
 	self deny: (diagramController hasControllerForModel: hiddenNodeModel).
 	self assert: containerModel entities size equals: 1.
 

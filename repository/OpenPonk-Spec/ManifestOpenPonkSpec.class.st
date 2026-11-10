@@ -18,7 +18,15 @@ ManifestOpenPonkSpec class >> ruleCollectSelectNotUsedRuleV1FalsePositive [
 ]
 
 { #category : 'code-critics' }
+ManifestOpenPonkSpec class >> ruleConsistencyCheckRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGMethodDefinition #(#OPCanvasExporterTest #testSilentPngExportWritesFileAndAppliesCustomScaleCamSetter #false)) #'2026-11-12T01:14:51.774+01:00') )
+]
+
+{ #category : 'code-critics' }
 ManifestOpenPonkSpec class >> ruleRBContainsRuleV1FalsePositive [
+	<ignoreForCoverage>
 	^ #(#(#(#RGMethodDefinition #(#OPModelTypeSelector #addModel #false)) #'2021-03-04T21:09:27.51689+01:00') )
 ]
 

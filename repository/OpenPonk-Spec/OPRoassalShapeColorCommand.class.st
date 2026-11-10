@@ -80,6 +80,14 @@ OPRoassalShapeColorCommand >> colorName [
 	^ colorName splitCamelCase last capitalized
 ]
 
+{ #category : 'execution' }
+OPRoassalShapeColorCommand >> commandFor: aDiagramElement [
+	^ OPChangeDiagramElementStylePropertyCommand
+		element: aDiagramElement
+		property: self class colorAttribute
+		value: (self class colorFor: aDiagramElement)
+]
+
 { #category : 'accessing - defaults' }
 OPRoassalShapeColorCommand >> currentColors [
 
@@ -119,27 +127,15 @@ OPRoassalShapeColorCommand >> defaultMenuItemName [
 
 { #category : 'execution' }
 OPRoassalShapeColorCommand >> execute [
-	| targets commands |
-	targets := diagramElements select: [ :eachTarget115 |
-		           eachTarget115 supportsColorChangeOfType:
-			           self class colorAttribute ].
-	targets ifEmpty: [ ^ self ].
-	commands := targets collect: [ :eachTarget115 |
-		            OPChangeDiagramElementStylePropertyCommand
-			            element: eachTarget115
-			            property: self class colorAttribute
-			            value: (self class colorFor: eachTarget115) ].
+	| targetElements commands |
+	targetElements := diagramElements select: [ :eachElement |
+		eachElement supportsColorChangeOfType: self class colorAttribute ].
+	targetElements ifEmpty: [ ^ self ].
+	commands := targetElements collect: [ :eachElement |
+		self commandFor: eachElement ].
 	self undoManager
-		ifNotNil: [ :mgr115 |
-			mgr115 inTransaction: [
-				commands do: [ :eachCmd115 | mgr115 execute: eachCmd115 ] ] ]
-		ifNil: [ commands do: [ :eachCmd115 | eachCmd115 execute ] ]
-]
-
-{ #category : 'execution' }
-OPRoassalShapeColorCommand >> executeOn: aDiagramElement [
-
-	aDiagramElement
-		stylePropertyNamed: self class colorAttribute
-		put: (self class colorFor: aDiagramElement)
+		ifNotNil: [ :activeUndoManager |
+			activeUndoManager inTransaction: [
+				commands do: [ :eachCommand | activeUndoManager execute: eachCommand ] ] ]
+		ifNil: [ commands do: [ :eachCommand | eachCommand execute ] ]
 ]

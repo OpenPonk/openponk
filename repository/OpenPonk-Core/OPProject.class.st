@@ -34,7 +34,7 @@ OPProject class >> named: aString [
 
 { #category : 'comparing' }
 OPProject >> = anotherProject [
-
+	self species = anotherProject species ifFalse: [ ^ false ].
 	^ self uuid = anotherProject uuid
 ]
 
@@ -242,14 +242,12 @@ OPProject >> storageFile: anObject [
 
 { #category : 'accessing' }
 OPProject >> storageFolder [
-	"A folder where the project data is stored."
-
 	^ storageFolder
 ]
 
 { #category : 'accessing' }
-OPProject >> storageFolder: aFilePath [
-	storageFolder := aFilePath
+OPProject >> storageFolder: aFolder [
+	storageFolder := aFolder
 ]
 
 { #category : 'accessing' }

@@ -150,22 +150,6 @@ OPMutationRecord >> timestamp: aValue [
 	timestamp := aValue
 ]
 
-{ #category : 'initialization' }
-OPMutationRecord >> timestamp: aTime targetClass: aClass targetIdentity: anId slotName: aSlot oldValue: anOld newValue: aNew isTransacted: aTrans isSimulation: aSim isInitialization: anInit isUiTriggered: anUi uiPresenterClass: aPresenter stackTrace: aStack [
-	timestamp := aTime.
-	targetClass := aClass.
-	targetIdentity := anId.
-	slotName := aSlot.
-	oldValue := anOld.
-	newValue := aNew.
-	isTransacted := aTrans.
-	isSimulation := aSim.
-	isInitialization := anInit.
-	isUiTriggered := anUi.
-	uiPresenterClass := aPresenter.
-	stackTrace := aStack
-]
-
 { #category : 'accessing' }
 OPMutationRecord >> uiPresenterClass [
 	^ uiPresenterClass

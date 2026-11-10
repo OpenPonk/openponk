@@ -37,8 +37,9 @@ OPUndoManagerTest >> testAnnouncementOnRecordUndoRedoClear [
 
 { #category : 'tests' }
 OPUndoManagerTest >> testEmptyTransactionNotRecorded [
+
 	undoManager inTransaction: [ "no-op" ].
-	self assert: undoManager undoStack isEmpty.
+	self assertEmpty: undoManager undoStack.
 	self deny: undoManager canUndo
 ]
 
@@ -131,7 +132,7 @@ OPUndoManagerTest >> testRecordSimpleCommand [
 	cmd := OPUndoTestLoggingCommand log: log value: 1.
 	undoManager record: cmd.
 	self assert: undoManager undoStack size equals: 1.
-	self assert: undoManager redoStack isEmpty.
+	self assertEmpty: undoManager redoStack.
 	self assert: undoManager canUndo.
 	self deny: undoManager canRedo
 ]
@@ -147,7 +148,7 @@ OPUndoManagerTest >> testRedo [
 	undoManager redo.
 	self assert: log asArray equals: #( 'undo:1' 'redo:1' ).
 	self assert: undoManager undoStack size equals: 1.
-	self assert: undoManager redoStack isEmpty.
+	self assertEmpty: undoManager redoStack.
 	self assert: undoManager canUndo.
 	self deny: undoManager canRedo
 ]
@@ -165,7 +166,7 @@ OPUndoManagerTest >> testRedoStackClearedOnNewRecord [
 	undoManager undo.
 	self assert: undoManager redoStack size equals: 1.
 	undoManager record: cmd3.
-	self assert: undoManager redoStack isEmpty.
+	self assertEmpty: undoManager redoStack.
 	self assert: undoManager undoStack size equals: 2
 ]
 
@@ -179,9 +180,9 @@ OPUndoManagerTest >> testReentrancyGuard [
 	undoManager record: reentrantCmd.
 	self assert: undoManager undoStack size equals: 1.
 	undoManager undo.
-	self assert: undoManager undoStack isEmpty.
+	self assertEmpty: undoManager undoStack.
 	self assert: undoManager redoStack size equals: 1.
-	self assert: log isEmpty.
+	self assertEmpty: log.
 	self deny: undoManager isExecutingUndoRedo
 ]
 
@@ -228,8 +229,8 @@ OPUndoManagerTest >> testTransactionRollbackOnException [
 		do: [ :ex | caught := true ].
 	self assert: caught.
 	self assert: target name equals: 'Initial'.
-	self assert: undoManager undoStack isEmpty.
-	self assert: undoManager transactionStack isEmpty.
+	self assertEmpty: undoManager undoStack.
+	self assertEmpty: undoManager transactionStack.
 	self deny: undoManager isExecutingUndoRedo.
 	self deny: undoManager canUndo
 ]
@@ -243,7 +244,7 @@ OPUndoManagerTest >> testUndo [
 	undoManager record: cmd.
 	undoManager undo.
 	self assert: log asArray equals: #( 'undo:1' ).
-	self assert: undoManager undoStack isEmpty.
+	self assertEmpty: undoManager undoStack.
 	self assert: undoManager redoStack size equals: 1.
 	self deny: undoManager canUndo.
 	self assert: undoManager canRedo
@@ -251,6 +252,7 @@ OPUndoManagerTest >> testUndo [
 
 { #category : 'tests' }
 OPUndoManagerTest >> testUndoFailureDiscardsCommandAndClearsRedo [
+
 	| failingCommand caughtException |
 	failingCommand := OPUndoTestFailingCommand new.
 	undoManager record: failingCommand.
@@ -260,8 +262,8 @@ OPUndoManagerTest >> testUndoFailureDiscardsCommandAndClearsRedo [
 		on: Error
 		do: [ :anException | caughtException := true ].
 	self assert: caughtException.
-	self assert: undoManager undoStack isEmpty.
-	self assert: undoManager redoStack isEmpty.
+	self assertEmpty: undoManager undoStack.
+	self assertEmpty: undoManager redoStack.
 	self deny: undoManager isExecutingUndoRedo.
 	self deny: undoManager canUndo
 ]

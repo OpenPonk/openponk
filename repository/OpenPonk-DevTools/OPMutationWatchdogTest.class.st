@@ -13,6 +13,18 @@ Class {
 	#tag : 'Watchdog'
 }
 
+{ #category : 'accessing' }
+OPMutationWatchdogTest >> controllerClass [
+	^ OPNoteController
+]
+
+{ #category : 'private - fixtures' }
+OPMutationWatchdogTest >> failingHelperForExporterTest [
+	| sampleLocalValue |
+	sampleLocalValue := 42.
+	self assert: sampleLocalValue equals: 0
+]
+
 { #category : 'running' }
 OPMutationWatchdogTest >> setUp [
 	super setUp.
@@ -77,6 +89,30 @@ OPMutationWatchdogTest >> testExternalTestCaseMutationsAreIgnored [
 ]
 
 { #category : 'tests' }
+OPMutationWatchdogTest >> testFailureExporterGeneratesReportAndDeduplicatesCode [
+	| exporter firstReport secondReport |
+	[
+		OPTestFailureExporter resetCache.
+		exporter := OPTestFailureExporter new.
+		firstReport := exporter
+			runTest: self class
+			selector: #failingHelperForExporterTest.
+		self assert: (firstReport includesSubstring: '=== EXCEPTION ===')
+			description: 'First report should contain exception section'.
+		self assert: (firstReport includesSubstring: 'sampleLocalValue = 42')
+			description: 'First report should capture local variable value from stack context'.
+		self assert: (firstReport includesSubstring: 'OPNoteController')
+			description: 'First report should include MVC triad classes from controllerClass'.
+
+		secondReport := exporter
+			runTest: self class
+			selector: #failingHelperForExporterTest.
+		self assert: secondReport size < firstReport size
+			description: 'Second report without cache reset should omit already exported class definitions and methods'
+	] ensure: [ OPTestFailureExporter resetCache ]
+]
+
+{ #category : 'tests' }
 OPMutationWatchdogTest >> testInvisibleOnMouseShapeSlotsAreTransient [
 	"Verify that temporary edge routing feedback shapes are ignored by the watchdog."
 	| invisibleShapeClass |
@@ -115,12 +151,13 @@ OPMutationWatchdogTest >> testNakedMutationIsCaptured [
 
 { #category : 'tests' }
 OPMutationWatchdogTest >> testStartAndStopWatchingCleansSlots [
+
 	watchdog startWatching.
-	self assert: watchdog instrumentedMethods isNotEmpty.
-	self assert: watchdog records isEmpty.
+	self denyEmpty: watchdog instrumentedMethods.
+	self assertEmpty: watchdog records.
 
 	watchdog stopWatching.
-	self assert: watchdog instrumentedMethods isEmpty
+	self assertEmpty: watchdog instrumentedMethods
 ]
 
 { #category : 'tests' }
@@ -156,4 +193,49 @@ OPMutationWatchdogTest >> testTransientSlotFiltering [
 	self deny: (watchdog isTransientSlot: #name onClass: OPBoundary).
 	self deny: (watchdog isTransientSlot: #bounds onClass: OPBoundNode).
 	self deny: (watchdog isTransientSlot: #isWeak onClass: OPMutationWatchdogTestEntity)
+]
+
+{ #category : 'tests' }
+OPMutationWatchdogTest >> testWatchdogPresenterWorkflow [
+	| presenter entity suspiciousRecord stackText oldClip exportedText |
+	oldClip := Clipboard clipboardText.
+	[
+		OPMutationWatchdog reset.
+		presenter := OPMutationWatchdogPresenter new.
+		self assert: OPMutationWatchdogPresenter title equals: 'OpenPonk Uncommanded Mutation Watchdog'.
+		self assert: OPMutationWatchdogPresenter defaultPreferredExtent equals: 1000 @ 700.
+
+		presenter startWatching.
+		entity := OPMutationWatchdogTestEntity new.
+		entity name: 'UncommandedChange'.
+		entity isWeak: true.
+		self assert: entity name equals: 'UncommandedChange'.
+		self assert: entity isWeak description: 'isWeak should be true after assignment'.
+		presenter stopWatching.
+
+		self denyEmpty: OPMutationWatchdog default suspiciousRecords.
+		suspiciousRecord := OPMutationWatchdog default suspiciousRecords first.
+		self assert: suspiciousRecord isUiTriggered description: 'Captured record should report isUiTriggered'.
+		self assert: suspiciousRecord timestamp isNotNil description: 'Captured record should have a timestamp'.
+		self assert: (suspiciousRecord summaryString includesSubstring: 'OPMutationWatchdogTestEntity')
+			description: 'Record summaryString should include target class name'.
+
+		presenter updateStackFor: suspiciousRecord.
+		stackText := (presenter instVarNamed: #stackPresenter) text asString.
+		self assert: (stackText includesSubstring: 'OPMutationWatchdogTestEntity')
+			description: 'Stack presenter should format target class details'.
+		presenter updateStackFor: nil.
+		self assertEmpty: (presenter instVarNamed: #stackPresenter) text asString.
+
+		exportedText := presenter copyReportToClipboard.
+		self assert: (exportedText includesSubstring: 'OPMutationWatchdogTestEntity')
+			description: 'Exported report should contain the suspicious mutation'.
+		self assert: (OPMutationWatchdog default report includesSubstring: 'Suspicious (naked UI) mutations:')
+			description: 'Text report should contain suspicious header'.
+
+		presenter clearLog.
+		self assertEmpty: OPMutationWatchdog default records
+	] ensure: [
+		OPMutationWatchdog reset.
+		Clipboard clipboardText: oldClip ]
 ]

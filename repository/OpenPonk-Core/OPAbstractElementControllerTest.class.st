@@ -557,9 +557,9 @@ OPAbstractElementControllerTest >> testOpenInForm [
 	self showInDiagram.
 	form := OPPropertiesForm new.
 	diagramController stub form willReturn: form.
-	self assert: form layout children isEmpty.
+	self assertEmpty: form layout children.
 	diagramController openInForm: controller viewModel.
-	self assert: form layout children isNotEmpty
+	self denyEmpty: form layout children
 ]
 
 { #category : 'tests - destruction' }
@@ -642,8 +642,7 @@ OPAbstractElementControllerTest >> testRoassalShapeForModel [
 OPAbstractElementControllerTest >> testRoassalShapeWasRendered [
 
 	self showInDiagram.
-	self assert:
-		(diagramController canvas nodes includes: controller roassalShape)
+	self assertCollection: diagramController canvas nodes includesAll: { controller roassalShape }
 ]
 
 { #category : 'tests - construction' }

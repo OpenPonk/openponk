@@ -61,17 +61,18 @@ OPProjectBrowserTest >> testCreateProjectButtonDisabledWhenProjectNameEmpty [
 
 { #category : 'tests' }
 OPProjectBrowserTest >> testCreateProjectDispatchesToOpenProject [
+
 	| selectedTemplate openedProjects |
 	selectedTemplate := browser templatesList selectedItem.
 	self assert: selectedTemplate isNotNil.
 	openedProjects := OrderedCollection new.
-	(browser stub openProject: Any) will: [ :passedProject | 
-		openedProjects add: passedProject.
-		nil ].
+	(browser stub openProject: Any) will: [ :passedProject |
+			openedProjects add: passedProject.
+			nil ].
 	browser createProject.
 	self assert: openedProjects size equals: 1.
 	self assert: openedProjects first name equals: browser projectName.
-	self assert: openedProjects first models isNotEmpty
+	self denyEmpty: openedProjects first models
 ]
 
 { #category : 'tests' }
@@ -149,8 +150,9 @@ OPProjectBrowserTest >> testRecentListDisplaysProjectsWithAndWithoutStorageFile 
 
 { #category : 'tests' }
 OPProjectBrowserTest >> testTemplateSelectionUpdatesProjectNameInput [
+
 	| template |
-	self assert: browser templatesList items isNotEmpty.
+	self denyEmpty: browser templatesList items.
 	template := browser templatesList items last.
 	browser templatesList selectItem: template.
 	self assert: browser projectNameInput text equals: template name
@@ -158,6 +160,7 @@ OPProjectBrowserTest >> testTemplateSelectionUpdatesProjectNameInput [
 
 { #category : 'tests' }
 OPProjectBrowserTest >> testTemplatesListInitialized [
+
 	self assert: browser templatesList class equals: SpListPresenter.
-	self assert: browser templatesList items isNotEmpty
+	self denyEmpty: browser templatesList items
 ]

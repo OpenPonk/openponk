@@ -14,14 +14,20 @@ Class {
 	#tag : 'Tests'
 }
 
+{ #category : 'running' }
+OPProjectTest >> setUp [
+
+	super setUp.
+	project := OPProject new.
+	model := OPTestContainerModel new
+]
+
 { #category : 'tests' }
 OPProjectTest >> testAddModel [
 
-	| diagram visibleElements |
-	project := OPProject new.
-	self assert: project models isEmpty.
-	self assert: project diagrams isEmpty.
-	model := OPTestContainerModel new.
+	| diagram |
+	self assertEmpty: project models.
+	self assertEmpty: project diagrams.
 	project addModel: model.
 	self assert: project models asArray equals: { model }.
 	project ensureModelsHaveDiagrams.
@@ -32,9 +38,8 @@ OPProjectTest >> testAddModel [
 
 { #category : 'tests' }
 OPProjectTest >> testCopyDiagramNamed [
+
 	| originalDiagram copiedDiagram |
-	project := OPProject new.
-	model := OPTestContainerModel new.
 	project addModel: model.
 	project ensureModelsHaveDiagrams.
 	originalDiagram := project diagrams first.
@@ -43,19 +48,26 @@ OPProjectTest >> testCopyDiagramNamed [
 	copiedDiagram := project copyDiagram: originalDiagram named: 'Copied Diagram'.
 
 	self assert: copiedDiagram name equals: 'Copied Diagram'.
-	self assert: (project diagrams includes: copiedDiagram).
+	self assertCollection: project diagrams includesAll: { copiedDiagram }.
 	self assert: project diagrams size equals: 2.
 	self deny: copiedDiagram identicalTo: originalDiagram
 ]
 
 { #category : 'tests' }
+OPProjectTest >> testEqualityWithNonProjectReturnsFalse [
+
+	self deny: project equals: nil.
+	self deny: project equals: 'not a project'.
+	self deny: project equals: [ 1 ]
+]
+
+{ #category : 'tests' }
 OPProjectTest >> testRemoveModel [
-	project := OPProject new.
-	model := OPTestContainerModel new.
+
 	project addModel: model.
 	project ensureModelsHaveDiagrams.
 	self assert: project diagrams size equals: 1.
 	project removeModel: model.
-	self assert: project models isEmpty.
-	self assert: project diagrams isEmpty
+	self assertEmpty: project models.
+	self assertEmpty: project diagrams
 ]

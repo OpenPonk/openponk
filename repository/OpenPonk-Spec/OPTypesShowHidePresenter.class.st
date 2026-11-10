@@ -36,12 +36,6 @@ OPTypesShowHidePresenter >> findSelectedItems [
 		  controllers anySatisfy: [ :controller | typeNode matchesType: controller viewModel modelType ] ]
 ]
 
-{ #category : 'accessing' }
-OPTypesShowHidePresenter >> getRootNode [
-
-	^ OPModelObjectTypeRootNode withChildrenFromTypes: (self allElements collect: [ :each | viewModelRegistry modelTypeFor: each ])
-]
-
 { #category : 'hooks' }
 OPTypesShowHidePresenter >> initialRoots [
 

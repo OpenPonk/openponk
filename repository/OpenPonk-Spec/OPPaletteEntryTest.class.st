@@ -35,14 +35,18 @@ OPPaletteEntryTest >> testWhenCreatedSetupFocusesForm [
 { #category : 'tests' }
 OPPaletteEntryTest >> testWhenCreatedSetupWithoutDiagramController [
 	"Verify that creation tool safely executes completion for headless controllers without a diagram controller."
-	| paletteEntry creationTool dummyController |
+	| paletteEntry creationTool dummyController callbackExecuted |
+	callbackExecuted := false.
 	paletteEntry := OPPaletteEntry new.
 	creationTool := OPNodeCreationTool new.
 	paletteEntry tool: creationTool.
+	paletteEntry whenCreated: [ :ctrl | callbackExecuted := true ].
 
 	dummyController := Mock new.
 	dummyController stub diagramController willReturn: nil.
 
 	creationTool instVarNamed: #controller put: dummyController.
-	creationTool doOnCompleteActions
+	creationTool doOnCompleteActions.
+
+	self assert: callbackExecuted
 ]

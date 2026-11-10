@@ -85,7 +85,7 @@ OPMementoDirectorySerializer >> loadModelFrom: aFolder [
 				             :anyExtension |
 				             anyFile basename = ('model.' , anyExtension) ] ]
 		             ifNone: [
-			             self error:
+			             OPNoModelFound signal:
 				             'Failed to find model file in .opp'
 				             , aFolder absolutePath pathString ].
 	^ modelFile readStreamDo: [ :stream |

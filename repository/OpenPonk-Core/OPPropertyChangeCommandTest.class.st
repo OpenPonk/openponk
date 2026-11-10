@@ -37,7 +37,7 @@ OPPropertyChangeCommandTest >> testCoalescingClearsRedoStackInManager [
 		        oldValue: 'Original'
 		        newValue: 'Draft'.
 	undoManager record: cmd1.
-	self assert: undoManager redoStack isEmpty.
+	self assertEmpty: undoManager redoStack.
 
 	cmd2 := OPPropertyChangeCommand
 		        viewModel: target
@@ -45,7 +45,7 @@ OPPropertyChangeCommandTest >> testCoalescingClearsRedoStackInManager [
 		        oldValue: 'Draft'
 		        newValue: 'Final'.
 	undoManager record: cmd2.
-	self assert: undoManager redoStack isEmpty.
+	self assertEmpty: undoManager redoStack.
 	self assert: undoManager undoStack size equals: 1.
 	self assert: undoManager undoStack first newValue equals: 'Final'
 ]

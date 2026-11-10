@@ -49,6 +49,49 @@ OPProjectControllerTest >> testAddDiagramControllerIsIdempotent [
 ]
 
 { #category : 'tests' }
+OPProjectControllerTest >> testProjectControllerQueriesAndFileabilityAndDiagramUpdates [
+
+	| container diagram testCanvas diagramController entity memoryFile |
+	container := OPTestContainerModel new.
+	entity := OPTestEntityModel new.
+	container add: entity.
+	project addModel: container.
+	testCanvas := RSCanvas new.
+	diagram := OPOpenPonkDiagram forModelElement: container.
+	diagram canvas: testCanvas.
+	project addDiagram: diagram.
+	controller workbench: OPWorkbench new.
+	diagramController := OPTestDiagramController new.
+	controller addDiagramController: diagramController.
+	diagramController
+		model: container;
+		diagramElement: diagram;
+		canvasPresenter: (OPCanvasPresenter new
+				 canvas: testCanvas;
+				 yourself).
+	diagramController showInDiagramModel: entity.
+	self
+		assert: (controller hasDiagram: diagram)
+		description: 'Project controller should report hasDiagram: true for registered diagram'.
+	self
+		assert: (controller hasModel: container diagram: diagram)
+		description: 'Project controller should report hasModel:diagram: true for registered model and diagram'.
+	self assert: controller enabledPlugins isCollection description: 'enabledPlugins should answer a collection'.
+	self assert: controller recentProjects isDictionary description: 'recentProjects should answer a Dictionary'.
+	self assert: controller modelMementos size equals: 1.
+	controller selectInDiagram: entity.
+	controller updateDiagrams.
+	self assert: diagram isOpen description: 'Diagram with active controller should be marked open after updateDiagrams'.
+	memoryFile := FileSystem memory root / 'test-save.opp'.
+	self
+		deny: (controller canProjectBeSavedToFile: nil)
+		description: 'canProjectBeSavedToFile: should return false for nil file reference'.
+	self
+		assert: (controller canProjectBeSavedToFile: memoryFile)
+		description: 'canProjectBeSavedToFile: should return true for writable in-memory file'
+]
+
+{ #category : 'tests' }
 OPProjectControllerTest >> testRemoveController [
 	| diagramController model |
 	diagramController := OPDiagramController new.

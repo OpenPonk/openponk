@@ -79,9 +79,10 @@ OPRemoveModelOfRoassalShapeCommandTest >> testCanvasShortcutActivationIsDelete [
 
 { #category : 'tests' }
 OPRemoveModelOfRoassalShapeCommandTest >> testExecuteDoesNotOpenDialogAndIsAtomic [
+
 	self assert: container entities size equals: 2.
 	command execute.
-	self assert: container entities isEmpty.
+	self assertEmpty: container entities.
 	self assert: (undoManager instVarNamed: #undoStack) size equals: 1.
 	undoManager undo.
 	self assert: container entities size equals: 2.
@@ -90,9 +91,10 @@ OPRemoveModelOfRoassalShapeCommandTest >> testExecuteDoesNotOpenDialogAndIsAtomi
 
 { #category : 'tests' }
 OPRemoveModelOfRoassalShapeCommandTest >> testExecuteWithoutConfirmationIsAtomic [
+
 	self assert: container entities size equals: 2.
 	command executeWithoutConfirmation.
-	self assert: container entities isEmpty.
+	self assertEmpty: container entities.
 	self assert: (undoManager instVarNamed: #undoStack) size equals: 1.
 	undoManager undo.
 	self assert: container entities size equals: 2.

@@ -74,18 +74,17 @@ OPDiagramsTreeTest >> testContextMenuForModelAndDiagram [
 
 { #category : 'tests' }
 OPDiagramsTreeTest >> testModelWithoutDiagramsIsShownAndCanCreateDiagram [
+
 	| emptyModel emptyModelViewModel createdDiagrams |
 	emptyModel := OPTestContainerModel new
-		name: 'Empty Model';
-		yourself.
+		              name: 'Empty Model';
+		              yourself.
 	project addModel: emptyModel.
 	project announcer announce: (OPModelAdded model: emptyModel).
 
 	emptyModelViewModel := projectController viewModelRegistry viewModelFor: emptyModel.
-	self
-		assertCollection: (treePresenter tree childrenFor: projectController viewModel)
-		includesAll: { emptyModelViewModel }.
-	self assert: (treePresenter tree childrenFor: emptyModelViewModel) isEmpty.
+	self assertCollection: (treePresenter tree childrenFor: projectController viewModel) includesAll: { emptyModelViewModel }.
+	self assertEmpty: (treePresenter tree childrenFor: emptyModelViewModel).
 
 	treePresenter createDiagramForModel: emptyModel named: 'Created Diagram'.
 	createdDiagrams := treePresenter tree childrenFor: emptyModelViewModel.
@@ -95,6 +94,7 @@ OPDiagramsTreeTest >> testModelWithoutDiagramsIsShownAndCanCreateDiagram [
 
 { #category : 'tests' }
 OPDiagramsTreeTest >> testRenameDiagramRedoReappliesNewNameAndUpdatesList [
+
 	| modelViewModel |
 	modelViewModel := projectController viewModelRegistry viewModelFor: model.
 	treePresenter renameDiagram: diagram to: 'Renamed Diagram'.
@@ -102,28 +102,56 @@ OPDiagramsTreeTest >> testRenameDiagramRedoReappliesNewNameAndUpdatesList [
 	undoManager redo.
 
 	self assert: diagram name equals: 'Renamed Diagram'.
-	self assert: (((treePresenter tree childrenFor: modelViewModel) collect: #name) includes: 'Renamed Diagram')
+	self assertCollection: ((treePresenter tree childrenFor: modelViewModel) collect: #name) includesAll: { 'Renamed Diagram' }
 ]
 
 { #category : 'tests' }
 OPDiagramsTreeTest >> testRenameDiagramToExecutesTransaction [
+
 	| modelViewModel |
 	modelViewModel := projectController viewModelRegistry viewModelFor: model.
 	treePresenter renameDiagram: diagram to: 'Renamed Diagram'.
 
 	self assert: diagram name equals: 'Renamed Diagram'.
-	self assert: (((treePresenter tree childrenFor: modelViewModel) collect: #name) includes: 'Renamed Diagram')
+	self assertCollection: ((treePresenter tree childrenFor: modelViewModel) collect: #name) includesAll: { 'Renamed Diagram' }
 ]
 
 { #category : 'tests' }
 OPDiagramsTreeTest >> testRenameDiagramUndoRestoresOriginalNameAndUpdatesList [
+
 	| modelViewModel |
 	modelViewModel := projectController viewModelRegistry viewModelFor: model.
 	treePresenter renameDiagram: diagram to: 'Renamed Diagram'.
 	undoManager undo.
 
 	self assert: diagram name equals: 'Original Diagram'.
-	self assert: (((treePresenter tree childrenFor: modelViewModel) collect: #name) includes: 'Original Diagram')
+	self assertCollection: ((treePresenter tree childrenFor: modelViewModel) collect: #name) includesAll: { 'Original Diagram' }
+]
+
+{ #category : 'tests' }
+OPDiagramsTreeTest >> testSelectionQueriesDeletePermissionAndUndoRedoAnnouncement [
+	| modelViewModel |
+	modelViewModel := projectController viewModelRegistry viewModelFor: model.
+	self assert: treePresenter projectViewModel identicalTo: projectController viewModel.
+	self deny: (treePresenter isDeleteAllowedFor: diagram)
+		description: 'Deleting the only diagram of a model should not be allowed'.
+
+	treePresenter tree selectItem: diagram.
+	self assert: treePresenter selectedModelForNewDiagram identicalTo: model.
+	treePresenter tree selectItem: modelViewModel.
+	self assert: treePresenter selectedModelForNewDiagram identicalTo: model.
+	treePresenter diagramUnfocused.
+	self assert: treePresenter selectedItem isNil
+		description: 'diagramUnfocused should clear selection in treePresenter'.
+	self assert: treePresenter selectedModelForNewDiagram identicalTo: model.
+
+	treePresenter createDiagramForModel: model named: 'Second Diagram'.
+	self assert: (project diagramsOf: model) size equals: 2.
+	self assert: (treePresenter isDeleteAllowedFor: diagram)
+		description: 'Deleting a diagram should be allowed when model has multiple diagrams'.
+
+	treePresenter undoRedoChanged: OPUndoRedoChanged new.
+	self assert: (treePresenter tree childrenFor: modelViewModel) size equals: 2
 ]
 
 { #category : 'tests' }
@@ -131,14 +159,12 @@ OPDiagramsTreeTest >> testTreeHierarchyHasProjectModelAndDiagramLevels [
 	| projectViewModel modelViewModels modelViewModel diagrams |
 	projectViewModel := projectController viewModel.
 	self assertCollection: treePresenter tree roots hasSameElements: { projectViewModel }.
-	self assert: (treePresenter tree isExpanded: #( 1 )).
-
-	modelViewModels := treePresenter tree childrenFor: projectViewModel.
+	self assert: (treePresenter tree isExpanded: #( 1 )) description: 'Root project node should be expanded'.
+	modelViewModels := treePresenter tree childrenFor: projectController viewModel.
 	modelViewModel := projectController viewModelRegistry viewModelFor: model.
 	self assertCollection: modelViewModels hasSameElements: { modelViewModel }.
-	self assert: (treePresenter tree isExpanded: #( 1 1 )).
-
+	self assert: (treePresenter tree isExpanded: #( 1 1 )) description: 'Model node should be expanded'.
 	diagrams := treePresenter tree childrenFor: modelViewModel.
 	self assertCollection: diagrams hasSameElements: { diagram }.
-	self assert: (treePresenter tree childrenFor: diagram) isEmpty
+	self assertEmpty: (treePresenter tree childrenFor: diagram)
 ]

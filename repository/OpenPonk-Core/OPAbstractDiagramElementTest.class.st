@@ -72,6 +72,5 @@ OPAbstractDiagramElementTest >> testRenderSimplifiedForController [
 	controller stub diagramController willReturn: diagramController.
 
 	self shapeClass renderSimplifiedForController: controller.
-
-	self assert: canvas shapes isNotEmpty
+	self denyEmpty: canvas shapes
 ]

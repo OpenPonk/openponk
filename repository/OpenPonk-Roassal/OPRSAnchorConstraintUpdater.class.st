@@ -202,20 +202,6 @@ OPRSAnchorConstraintUpdater >> nearestPointInfo [
 	^ currentNearest
 ]
 
-{ #category : 'as yet unclassified' }
-OPRSAnchorConstraintUpdater >> nearestSegment [
-
-	| segmentsWithDistances |
-	segmentsWithDistances := self segments collect: [ :each | 
-		                         each -> (each distanceTo: shape position) ].
-	^ (segmentsWithDistances copyWithoutFirst
-		   inject: segmentsWithDistances first
-		   into: [ :nearest :current | 
-			   current value < nearest value
-				   ifTrue: [ current ]
-				   ifFalse: [ nearest ] ]) key
-]
-
 { #category : 'accessing' }
 OPRSAnchorConstraintUpdater >> positionReference [
 	^ positionReference

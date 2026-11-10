@@ -69,3 +69,35 @@ OPExportFileDialogTest >> testExportBlockNotExecutedWhenDialogCanceled [
 
 	self deny: executed description: 'Export block must not be executed when dialog is dismissed without confirmation'
 ]
+
+{ #category : 'tests' }
+OPExportFileDialogTest >> testExportImageDialogZoomInputAndConfirmation [
+
+	| dialog capturedFile capturedZoom tempFile |
+	dialog := OPExportImageDialog new.
+	self assert: dialog zoomLabel label equals: 'Zoom: '.
+	self assert: dialog zoomPercentageLabel label equals: ' %'.
+	self assert: dialog zoomText text equals: '100'.
+
+	capturedFile := nil.
+	capturedZoom := nil.
+
+	tempFile := FileSystem memory root / 'diagram.png'.
+	dialog okAction: [ :file :zoom |
+			capturedFile := file.
+			capturedZoom := zoom ].
+
+	dialog stub selectedEntry willReturn: nil.
+	dialog confirmed.
+	self assert: capturedFile isNil description: 'confirmed should do nothing when selectedEntry is nil'.
+
+	dialog stub selectedEntry willReturn: tempFile.
+	dialog zoomText text: '150'.
+	dialog confirmed.
+	self assert: capturedFile equals: tempFile.
+	self assert: capturedZoom equals: 1.5.
+
+	dialog zoomText text: '0'.
+	dialog confirmed.
+	self assert: capturedZoom equals: RSCamera new scale
+]

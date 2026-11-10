@@ -59,16 +59,16 @@ OPHideDiagramElementCommandTest >> setUp [
 
 { #category : 'tests' }
 OPHideDiagramElementCommandTest >> testHideNodeAndUndoRedo [
+
 	| command node1Element initialBounds |
 	node1Element := (diagramController controllerForModel: nodeModel1) diagramElement.
 	initialBounds := OPNodeBounds withPosition: 40 @ 40 extent: 60 @ 60.
 	node1Element bounds: initialBounds.
 
-	command := OPHideDiagramElementCommand
-		model: nodeModel1
-		diagramController: diagramController.
+	command := OPHideDiagramElementCommand model: nodeModel1 diagramController: diagramController.
 
-	self assert: (command class allInstVarNames includes: #diagramController) not
+	self
+		assert: (command class allInstVarNames includes: #diagramController) not
 		description: 'Command must not define an instVar for diagramController to prevent history memory leaks'.
 
 	undoManager inTransaction: [ undoManager execute: command ].
@@ -81,8 +81,8 @@ OPHideDiagramElementCommandTest >> testHideNodeAndUndoRedo [
 
 	"Domain model MUST remain completely untouched"
 	self assert: containerModel entities size equals: 3.
-	self assert: (containerModel entities includes: nodeModel1).
-	self assert: (containerModel entities includes: edgeModel).
+	self assertCollection: containerModel entities includesAll: { nodeModel1 }.
+	self assertCollection: containerModel entities includesAll: { edgeModel }.
 
 	"Undo must restore controllers and geometry dynamically"
 	undoManager undo.
@@ -91,7 +91,9 @@ OPHideDiagramElementCommandTest >> testHideNodeAndUndoRedo [
 	self assert: (diagramController hasControllerForModel: nodeModel1).
 	self assert: (diagramController hasControllerForModel: edgeModel).
 	self assert: (diagramController controllerForModel: nodeModel1) diagramElement bounds position equals: 40 @ 40.
-	self assert: (diagramController controllerForModel: edgeModel) diagramElement source equals: (diagramController controllerForModel: nodeModel1) diagramElement.
+	self
+		assert: (diagramController controllerForModel: edgeModel) diagramElement source
+		equals: (diagramController controllerForModel: nodeModel1) diagramElement.
 
 	"Redo must hide them again"
 	undoManager redo.

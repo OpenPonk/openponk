@@ -47,7 +47,9 @@ OPChangeDiagramElementStylePropertyCommand >> element: anElement property: aSymb
 
 { #category : 'executing' }
 OPChangeDiagramElementStylePropertyCommand >> execute [
-	element stylePropertyNamed: property put: newValue
+	newValue
+		ifNil: [ element removeLocalStylePropertyNamed: property ]
+		ifNotNil: [ element stylePropertyNamed: property put: newValue ]
 ]
 
 { #category : 'accessing' }

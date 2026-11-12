@@ -64,14 +64,27 @@ OPLegacyElementLayoutTest >> setUp [
 OPLegacyElementLayoutTest >> testContentFromJSON [
 	| newLayout |
 	newLayout := NeoJSONReader fromString: elementLayoutJSON.
-	self assert: (newLayout includesKey: #position).
-	self assert: ((newLayout at: #position) includesKey: #x).
+	self
+		assert: (newLayout includesKey: #position)
+		description: 'Parsed layout dictionary must include #position'.
+	self
+		assert: ((newLayout at: #position) includesKey: #x)
+		description: 'Position dictionary must include #x'.
 	self assert: ((newLayout at: #position) at: #x) equals: -10.
-	self assert: ((newLayout at: #position) includesKey: #y).
+	self
+		assert: ((newLayout at: #position) includesKey: #y)
+		description: 'Position dictionary must include #y'.
 	self assert: ((newLayout at: #position) at: #y) equals: 50.
-	self assert: ((newLayout at: #extent) includesKey: #x).
+	self
+		assert: (newLayout includesKey: #extent)
+		description: 'Parsed layout dictionary must include #extent'.
+	self
+		assert: ((newLayout at: #extent) includesKey: #x)
+		description: 'Extent dictionary must include #x'.
 	self assert: ((newLayout at: #extent) at: #x) equals: 100.
-	self assert: ((newLayout at: #extent) includesKey: #y).
+	self
+		assert: ((newLayout at: #extent) includesKey: #y)
+		description: 'Extent dictionary must include #y'.
 	self assert: ((newLayout at: #extent) at: #y) equals: 200
 ]
 
@@ -99,25 +112,47 @@ OPLegacyElementLayoutTest >> testJSONWithoutExtent [
 OPLegacyElementLayoutTest >> testRelationshipContentFromJSON [
 	| newLayout path |
 	newLayout := NeoJSONReader fromString: relationshipLayoutJSON.
-	self assert: (newLayout includesKey: #path).
+	self
+		assert: (newLayout includesKey: #path)
+		description: 'Relationship layout dictionary must include #path'.
 	path := newLayout at: #path.
-	self assert: (path includesKey: #source).
+	self
+		assert: (path includesKey: #source)
+		description: 'Path dictionary must include #source'.
 	self assert: (path at: #source) equals: 'element'.
-	self assert: (path includesKey: #points).
-	self assert: (path at: #points) isCollection.
-	self assert: (path at: #points) isSequenceable.
+	self
+		assert: (path includesKey: #points)
+		description: 'Path dictionary must include #points'.
+	self
+		assert: (path at: #points) isCollection
+		description: 'Path points must be a collection'.
+	self
+		assert: (path at: #points) isSequenceable
+		description: 'Path points must be sequenceable'.
 	self assert: (path at: #points) size equals: 3.
-	self assert: (((path at: #points) at: 1) includesKey: #x).
+	self
+		assert: (((path at: #points) at: 1) includesKey: #x)
+		description: 'First point must include #x'.
 	self assert: (((path at: #points) at: 1) at: #x) equals: 100.
-	self assert: (((path at: #points) at: 1) includesKey: #y).
+	self
+		assert: (((path at: #points) at: 1) includesKey: #y)
+		description: 'First point must include #y'.
 	self assert: (((path at: #points) at: 1) at: #y) equals: 200.
-	self assert: (((path at: #points) at: 2) includesKey: #x).
+	self
+		assert: (((path at: #points) at: 2) includesKey: #x)
+		description: 'Second point must include #x'.
 	self assert: (((path at: #points) at: 2) at: #x) equals: 150.
-	self assert: (((path at: #points) at: 2) includesKey: #y).
+	self
+		assert: (((path at: #points) at: 2) includesKey: #y)
+		description: 'Second point must include #y'.
 	self assert: (((path at: #points) at: 2) at: #y) equals: 200.
-	self assert: (((path at: #points) at: 3) includesKey: #x).
+	self
+		assert: (((path at: #points) at: 3) includesKey: #x)
+		description: 'Third point must include #x'.
 	self assert: (((path at: #points) at: 3) at: #x) equals: 150.
-	self assert: (((path at: #points) at: 3) includesKey: #y).
+	self
+		assert: (((path at: #points) at: 3) includesKey: #y)
+		description: 'Third point must include #y'.
 	self assert: (((path at: #points) at: 3) at: #y) equals: 300
 ]
 
@@ -128,8 +163,12 @@ OPLegacyElementLayoutTest >> testRelationshipFromJSON [
 		fromString: relationshipLayoutJSON
 		as: OPLegacyElementLayout.
 	self assert: newLayout path source equals: 'element'.
-	self assert: newLayout path points isCollection.
-	self assert: newLayout path points isSequenceable.
+	self
+		assert: newLayout path points isCollection
+		description: 'Deserialized path points must be a collection'.
+	self
+		assert: newLayout path points isSequenceable
+		description: 'Deserialized path points must be sequenceable'.
 	self assert: newLayout path points size equals: 3.
 	self assert: (newLayout path points at: 1) equals: 100 @ 200.
 	self assert: (newLayout path points at: 2) equals: 150 @ 200.

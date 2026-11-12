@@ -11,17 +11,26 @@ Class {
 
 { #category : 'tests' }
 OPWorldMenuTest >> testOpenPonkIsDirectActionLeafItem [
-
 	| builder openPonkItem |
-	self assert: (OPProjectBrowser class >> #menuCommandOn: hasPragmaNamed: #worldMenu).
+	self
+		assert: (OPProjectBrowser class >> #menuCommandOn: hasPragmaNamed: #worldMenu)
+		description: 'OPProjectBrowser class>>#menuCommandOn: must be annotated with <worldMenu>'.
 
 	builder := PragmaMenuBuilder new.
 	OPProjectBrowser menuCommandOn: builder.
 
 	openPonkItem := builder itemNamed: #OpenPonk.
-	self assert: openPonkItem isNotNil.
-	self assert: openPonkItem parentName isNil.
-	self assert: openPonkItem spec action isNotNil.
-	self assert: openPonkItem spec subMenu isNil.
+	self
+		assert: openPonkItem isNotNil
+		description: 'World menu builder should contain an item named #OpenPonk'.
+	self
+		assert: openPonkItem parentName isNil
+		description: 'OpenPonk menu item should be a top-level root item'.
+	self
+		assert: openPonkItem spec action isNotNil
+		description: 'OpenPonk menu item must have a direct action block'.
+	self
+		assert: openPonkItem spec subMenu isNil
+		description: 'OpenPonk menu item must not have a submenu'.
 	self assertEmpty: (openPonkItem itemList ifNil: [ #(  ) ])
 ]

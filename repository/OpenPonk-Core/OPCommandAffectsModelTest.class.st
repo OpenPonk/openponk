@@ -11,31 +11,53 @@ Class {
 
 { #category : 'tests' }
 OPCommandAffectsModelTest >> testCommandAffectsModelByDefault [
-	self assert: OPUndoTestLoggingCommand new affectsModel
+	self
+		assert: OPUndoTestLoggingCommand new affectsModel
+		description: 'Commands should report affectsModel = true by default'
 ]
 
 { #category : 'tests' }
 OPCommandAffectsModelTest >> testCompositeCommandAffectsModelOnlyIfAnySubcommandDoes [
 	| compositeCommand |
 	compositeCommand := OPCompositeCommand new.
-	self deny: compositeCommand affectsModel.
+	self
+		deny: compositeCommand affectsModel
+		description: 'Empty composite command must not affect model'.
 
 	compositeCommand add: OPChangeBoundsCommand new.
-	self deny: compositeCommand affectsModel.
+	self
+		deny: compositeCommand affectsModel
+		description: 'Composite command with only diagram geometry commands must not affect model'.
 
 	compositeCommand add: OPUndoTestLoggingCommand new.
-	self assert: compositeCommand affectsModel
+	self
+		assert: compositeCommand affectsModel
+		description: 'Composite command containing a model command must report affectsModel = true'
 ]
 
 { #category : 'tests' }
 OPCommandAffectsModelTest >> testDiagramCommandsDoNotAffectModel [
-	self deny: OPChangeBoundsCommand new affectsModel.
-	self deny: OPChangeAnchoredBoundsCommand new affectsModel.
-	self deny: OPModifyEdgeWaypointsCommand new affectsModel.
-	self deny: OPChangeDiagramElementStylePropertyCommand new affectsModel.
-	self deny: OPHideDiagramElementCommand new affectsModel.
-	self deny: OPShowDiagramElementCommand new affectsModel.
-	self deny: OPRenameDiagramCommand new affectsModel
+	self
+		deny: OPChangeBoundsCommand new affectsModel
+		description: 'OPChangeBoundsCommand must not affect domain model'.
+	self
+		deny: OPChangeAnchoredBoundsCommand new affectsModel
+		description: 'OPChangeAnchoredBoundsCommand must not affect domain model'.
+	self
+		deny: OPModifyEdgeWaypointsCommand new affectsModel
+		description: 'OPModifyEdgeWaypointsCommand must not affect domain model'.
+	self
+		deny: OPChangeDiagramElementStylePropertyCommand new affectsModel
+		description: 'OPChangeDiagramElementStylePropertyCommand must not affect domain model'.
+	self
+		deny: OPHideDiagramElementCommand new affectsModel
+		description: 'OPHideDiagramElementCommand must not affect domain model'.
+	self
+		deny: OPShowDiagramElementCommand new affectsModel
+		description: 'OPShowDiagramElementCommand must not affect domain model'.
+	self
+		deny: OPRenameDiagramCommand new affectsModel
+		description: 'OPRenameDiagramCommand must not affect domain model'
 ]
 
 { #category : 'tests' }

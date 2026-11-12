@@ -55,6 +55,55 @@ OPLayoutLoopDetectorTest >> testCyclicGraphDetectsLoop [
 ]
 
 { #category : 'tests' }
+OPLayoutLoopDetectorTest >> testHierarchicalLayouterInnerEdgesAndContainers [
+	| project container diagram testCanvas projectController diagramController controllerA controllerB layouter edgeAB selfLoop externalBox externalEdge |
+	project := OPProject new.
+	container := OPTestContainerModel new.
+	project addModel: container.
+	testCanvas := RSCanvas new.
+	diagram := OPOpenPonkDiagram forModelElement: container.
+	diagram canvas: testCanvas.
+	project addDiagram: diagram.
+	projectController := OPProjectController forProject: project.
+	diagramController := OPTestDiagramController new.
+	projectController addDiagramController: diagramController.
+	diagramController
+		model: container;
+		diagramElement: diagram;
+		canvasPresenter: (OPCanvasPresenter new canvas: testCanvas; yourself).
+	controllerA := diagramController showInDiagramModel: (container add: OPTestEntityModel new).
+	controllerB := diagramController showInDiagramModel: (container add: OPTestEntityModel new).
+	controllerA roassalShape translateTo: 20 @ 30.
+	controllerB roassalShape translateTo: 120 @ 80.
+	edgeAB := RSLine new from: controllerA roassalShape; to: controllerB roassalShape; yourself.
+	selfLoop := RSLine new from: controllerA roassalShape; to: controllerA roassalShape; yourself.
+	externalBox := RSBox new.
+	externalEdge := RSLine new from: controllerA roassalShape; to: externalBox; yourself.
+	testCanvas
+		add: externalBox;
+		add: edgeAB;
+		add: selfLoop;
+		add: externalEdge.
+	layouter := OPTestLayouter new
+		diagramController: diagramController;
+		yourself.
+	self
+		assertCollection: (layouter innerEdgesFor: { controllerA roassalShape . controllerB roassalShape })
+		hasSameElements: { edgeAB }.
+	self
+		assert: (layouter layoutInnerContentOf: diagram shapes: diagram directNodeRoassalShapes edges: { edgeAB })
+		identicalTo: layouter.
+	layouter layoutContainersHierarchically: { diagram }.
+	self
+		assert: (diagram roassalShape announcer hasSubscriber: layouter)
+		description: 'layoutContainersHierarchically: should subscribe layouter to container position changes'.
+	layouter unsubscribeContainers: { diagram }.
+	self
+		deny: (diagram roassalShape announcer hasSubscriber: layouter)
+		description: 'unsubscribeContainers: should remove layouter subscription from container shape'
+]
+
+{ #category : 'tests' }
 OPLayoutLoopDetectorTest >> testLayouterHierarchyAndPositionPropagation [
 	| project container diagram testCanvas projectController diagramController controllerA controllerB noLayouter testLayouter hierarchicalLayouter linkAB linkBA |
 	project := OPProject new.

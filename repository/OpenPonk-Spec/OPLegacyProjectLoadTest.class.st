@@ -93,6 +93,6 @@ OPLegacyProjectLoadTest >> testLoad [
 	| project |
 	project := OPProjectController fromFile: self projectZip.
 	workbench := project open.
-	self assert: workbench focusedEditor isNotNil.
+	self deny: workbench focusedEditor identicalTo: nil.
 	self denyEmpty: workbench focusedEditor canvasPresenter canvas shapes
 ]

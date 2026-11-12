@@ -37,10 +37,11 @@ OPUndoManagerTest >> testAnnouncementOnRecordUndoRedoClear [
 
 { #category : 'tests' }
 OPUndoManagerTest >> testEmptyTransactionNotRecorded [
-
 	undoManager inTransaction: [ "no-op" ].
 	self assertEmpty: undoManager undoStack.
-	self deny: undoManager canUndo
+	self
+		deny: undoManager canUndo
+		description: 'Empty transaction must not leave an undoable command on stack'
 ]
 
 { #category : 'tests' }
@@ -56,14 +57,15 @@ OPUndoManagerTest >> testInTransactionLabeledSetsDescriptionOnCompositeCommand [
 
 { #category : 'tests' }
 OPUndoManagerTest >> testMaxUndoSteps [
-
 	undoManager maxUndoSteps: 3.
 	1 to: 5 do: [ :i | undoManager record: (OPUndoTestLoggingCommand log: OrderedCollection new value: i) ].
 	self assert: undoManager undoStack size equals: 3.
 	undoManager undo.
 	undoManager undo.
 	undoManager undo.
-	self deny: undoManager canUndo
+	self
+		deny: undoManager canUndo
+		description: 'Undo stack should be exhausted after undoing maxUndoSteps commands'
 ]
 
 { #category : 'tests' }
@@ -126,20 +128,22 @@ OPUndoManagerTest >> testNestedTransactions [
 
 { #category : 'tests' }
 OPUndoManagerTest >> testRecordSimpleCommand [
-
 	| log cmd |
 	log := OrderedCollection new.
 	cmd := OPUndoTestLoggingCommand log: log value: 1.
 	undoManager record: cmd.
 	self assert: undoManager undoStack size equals: 1.
 	self assertEmpty: undoManager redoStack.
-	self assert: undoManager canUndo.
-	self deny: undoManager canRedo
+	self
+		assert: undoManager canUndo
+		description: 'Undo manager should allow undo after recording a command'.
+	self
+		deny: undoManager canRedo
+		description: 'Undo manager must not allow redo right after recording a new command'
 ]
 
 { #category : 'tests' }
 OPUndoManagerTest >> testRedo [
-
 	| log cmd |
 	log := OrderedCollection new.
 	cmd := OPUndoTestLoggingCommand log: log value: 1.
@@ -149,8 +153,12 @@ OPUndoManagerTest >> testRedo [
 	self assert: log asArray equals: #( 'undo:1' 'redo:1' ).
 	self assert: undoManager undoStack size equals: 1.
 	self assertEmpty: undoManager redoStack.
-	self assert: undoManager canUndo.
-	self deny: undoManager canRedo
+	self
+		assert: undoManager canUndo
+		description: 'Undo manager should allow undo after redoing a command'.
+	self
+		deny: undoManager canRedo
+		description: 'Redo stack should be empty after redoing the only command'
 ]
 
 { #category : 'tests' }
@@ -172,7 +180,6 @@ OPUndoManagerTest >> testRedoStackClearedOnNewRecord [
 
 { #category : 'tests' }
 OPUndoManagerTest >> testReentrancyGuard [
-
 	| log nestedCmd reentrantCmd |
 	log := OrderedCollection new.
 	nestedCmd := OPUndoTestLoggingCommand log: log value: #nested.
@@ -183,21 +190,24 @@ OPUndoManagerTest >> testReentrancyGuard [
 	self assertEmpty: undoManager undoStack.
 	self assert: undoManager redoStack size equals: 1.
 	self assertEmpty: log.
-	self deny: undoManager isExecutingUndoRedo
+	self
+		deny: undoManager isExecutingUndoRedo
+		description: 'isExecutingUndoRedo flag must be reset after undo completes'
 ]
 
 { #category : 'tests' }
 OPUndoManagerTest >> testTransaction [
-
 	| log cmd1 cmd2 |
 	log := OrderedCollection new.
 	cmd1 := OPUndoTestLoggingCommand log: log value: 1.
 	cmd2 := OPUndoTestLoggingCommand log: log value: 2.
 	undoManager inTransaction: [
-			undoManager record: cmd1.
-			undoManager record: cmd2 ].
+		undoManager record: cmd1.
+		undoManager record: cmd2 ].
 	self assert: undoManager undoStack size equals: 1.
-	self assert: undoManager undoStack first isComposite.
+	self
+		assert: undoManager undoStack first isComposite
+		description: 'Commands recorded inside a transaction should be grouped into a composite command'.
 	self assert: undoManager undoStack first commands size equals: 2.
 	undoManager undo.
 	self assert: log asArray equals: #( 'undo:2' 'undo:1' )
@@ -205,39 +215,43 @@ OPUndoManagerTest >> testTransaction [
 
 { #category : 'tests' }
 OPUndoManagerTest >> testTransactionRollbackOnException [
-
 	| target caught |
 	target := OPUndoTestViewModel new.
 	target name: 'Initial'.
 	caught := false.
 	[
 		undoManager inTransaction: [
-				target name: 'Step1'.
-				undoManager record: (OPPropertyChangeCommand
-						 viewModel: target
-						 selector: #name
-						 oldValue: 'Initial'
-						 newValue: 'Step1').
-				target name: 'Step2'.
-				undoManager record: (OPPropertyChangeCommand
-						 viewModel: target
-						 selector: #name
-						 oldValue: 'Step1'
-						 newValue: 'Step2').
-				self error: 'Simulation failure' ] ]
+			target name: 'Step1'.
+			undoManager record: (OPPropertyChangeCommand
+				viewModel: target
+				selector: #name
+				oldValue: 'Initial'
+				newValue: 'Step1').
+			target name: 'Step2'.
+			undoManager record: (OPPropertyChangeCommand
+				viewModel: target
+				selector: #name
+				oldValue: 'Step1'
+				newValue: 'Step2').
+			self error: 'Simulation failure' ] ]
 		on: Error
 		do: [ :ex | caught := true ].
-	self assert: caught.
+	self
+		assert: caught
+		description: 'Exception signaled inside transaction should be re-signaled after rollback'.
 	self assert: target name equals: 'Initial'.
 	self assertEmpty: undoManager undoStack.
 	self assertEmpty: undoManager transactionStack.
-	self deny: undoManager isExecutingUndoRedo.
-	self deny: undoManager canUndo
+	self
+		deny: undoManager isExecutingUndoRedo
+		description: 'isExecutingUndoRedo flag must be false after transaction rollback'.
+	self
+		deny: undoManager canUndo
+		description: 'Rolled back transaction must not leave commands on undoStack'
 ]
 
 { #category : 'tests' }
 OPUndoManagerTest >> testUndo [
-
 	| log cmd |
 	log := OrderedCollection new.
 	cmd := OPUndoTestLoggingCommand log: log value: 1.
@@ -246,13 +260,16 @@ OPUndoManagerTest >> testUndo [
 	self assert: log asArray equals: #( 'undo:1' ).
 	self assertEmpty: undoManager undoStack.
 	self assert: undoManager redoStack size equals: 1.
-	self deny: undoManager canUndo.
-	self assert: undoManager canRedo
+	self
+		deny: undoManager canUndo
+		description: 'Undo stack should be empty after undoing the only command'.
+	self
+		assert: undoManager canRedo
+		description: 'Redo should be available after undoing a command'
 ]
 
 { #category : 'tests' }
 OPUndoManagerTest >> testUndoFailureDiscardsCommandAndClearsRedo [
-
 	| failingCommand caughtException |
 	failingCommand := OPUndoTestFailingCommand new.
 	undoManager record: failingCommand.
@@ -261,9 +278,15 @@ OPUndoManagerTest >> testUndoFailureDiscardsCommandAndClearsRedo [
 	[ undoManager undo ]
 		on: Error
 		do: [ :anException | caughtException := true ].
-	self assert: caughtException.
+	self
+		assert: caughtException
+		description: 'Failing undo command should propagate the error'.
 	self assertEmpty: undoManager undoStack.
 	self assertEmpty: undoManager redoStack.
-	self deny: undoManager isExecutingUndoRedo.
-	self deny: undoManager canUndo
+	self
+		deny: undoManager isExecutingUndoRedo
+		description: 'isExecutingUndoRedo must be reset even when undo fails'.
+	self
+		deny: undoManager canUndo
+		description: 'Failed undo command must be discarded from undoStack'
 ]

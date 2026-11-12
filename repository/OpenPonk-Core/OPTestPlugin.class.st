@@ -46,6 +46,21 @@ OPTestPlugin >> layouterClass [
 	^ OPNoLayouter
 ]
 
+{ #category : 'model updates' }
+OPTestPlugin >> mergeModels: aModelsCollection [
+	| models targetModel otherModels |
+	models := aModelsCollection asArray.
+	models ifEmpty: [ ^ OPTestContainerModel new ].
+	models size = 1 ifTrue: [ ^ models first ].
+	targetModel := models first.
+	otherModels := models copyWithoutFirst.
+	otherModels do: [ :eachModel |
+		eachModel entities copy do: [ :eachEntity |
+			(targetModel entities includes: eachEntity) ifFalse: [
+				targetModel add: eachEntity ] ] ].
+	^ targetModel
+]
+
 { #category : 'accessing' }
 OPTestPlugin >> modelClass [
 	"Answers model class used for instantiation."
@@ -68,6 +83,11 @@ OPTestPlugin >> name [
 { #category : 'testing' }
 OPTestPlugin >> supportsHidingElements [
 	"Answers true to enable diagram element visibility commands during tests."
+	^ true
+]
+
+{ #category : 'testing' }
+OPTestPlugin >> supportsMergingModels [
 	^ true
 ]
 

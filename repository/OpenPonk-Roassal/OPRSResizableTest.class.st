@@ -26,25 +26,18 @@ OPRSResizableTest >> testAllCornerHandles32DirectionsPreserveOppositeAnchors [
 	resizable showHandles: (RSSelectionChangedEvent new canvas: canvas; yourself).
 
 	cornerCases := {
-		"BottomRight (anchors topLeft)"
 		{ #bottomRight . (25 @ 25) . [ :b | b topLeft ] }.
 		{ #bottomRight . (-25 @ -25) . [ :b | b topLeft ] }.
 		{ #bottomRight . (25 @ 0) . [ :b | b topLeft ] }.
 		{ #bottomRight . (0 @ 25) . [ :b | b topLeft ] }.
-
-		"TopLeft (anchors bottomRight)"
 		{ #topLeft . (-25 @ -25) . [ :b | b bottomRight ] }.
 		{ #topLeft . (25 @ 25) . [ :b | b bottomRight ] }.
 		{ #topLeft . (-25 @ 0) . [ :b | b bottomRight ] }.
 		{ #topLeft . (0 @ -25) . [ :b | b bottomRight ] }.
-
-		"TopRight (anchors bottomLeft)"
 		{ #topRight . (25 @ -25) . [ :b | b bottomLeft ] }.
 		{ #topRight . (-25 @ 25) . [ :b | b bottomLeft ] }.
 		{ #topRight . (25 @ 0) . [ :b | b bottomLeft ] }.
 		{ #topRight . (0 @ -25) . [ :b | b bottomLeft ] }.
-
-		"BottomLeft (anchors topRight)"
 		{ #bottomLeft . (-25 @ 25) . [ :b | b topRight ] }.
 		{ #bottomLeft . (25 @ -25) . [ :b | b topRight ] }.
 		{ #bottomLeft . (-25 @ 0) . [ :b | b topRight ] }.
@@ -76,8 +69,9 @@ OPRSResizableTest >> testAllCornerHandles32DirectionsPreserveOppositeAnchors [
 		resizable updateCurrentShape: dragEvt442.
 
 		currentAnchor442 := anchorBlock442 value: box encompassingRectangle.
-		self assert: (currentAnchor442 closeTo: initAnchor442 precision: 0.001).
-	]
+		self
+			assert: (currentAnchor442 closeTo: initAnchor442 precision: 0.001)
+			description: 'Corner handle drag must preserve opposite corner anchor' ]
 ]
 
 { #category : 'tests' }
@@ -132,8 +126,9 @@ OPRSResizableTest >> testAllCornerHandlesPreserveOppositeCornerAnchor [
 		resizable updateCurrentShape: draggingEvent.
 
 		currentAnchor := anchorExtractor value: box encompassingRectangle.
-		self assert: (currentAnchor closeTo: initialAnchor precision: 0.001).
-	]
+		self
+			assert: (currentAnchor closeTo: initialAnchor precision: 0.001)
+			description: 'Opposite corner anchor must remain invariant during corner resize' ]
 ]
 
 { #category : 'tests' }
@@ -153,26 +148,18 @@ OPRSResizableTest >> testAllEdgeHandles32DirectionsPreserveAnchorsAndOrthogonalI
 	resizable showHandles: (RSSelectionChangedEvent new canvas: canvas; yourself).
 
 	edgeCases := {
-		"handleKey . stepVector . isTangent . anchorCheckBlock"
-		"Bottom handle"
 		{ #bottomCenter . (0 @ 30) . false . [ :b | box encompassingRectangle top closeTo: b top precision: 0.001 ] }.
 		{ #bottomCenter . (0 @ -30) . false . [ :b | box encompassingRectangle top closeTo: b top precision: 0.001 ] }.
 		{ #bottomCenter . (30 @ 0) . true . [ :b | box encompassingRectangle = b ] }.
 		{ #bottomCenter . (-30 @ 0) . true . [ :b | box encompassingRectangle = b ] }.
-
-		"Top handle"
 		{ #topCenter . (0 @ -30) . false . [ :b | box encompassingRectangle bottom closeTo: b bottom precision: 0.001 ] }.
 		{ #topCenter . (0 @ 30) . false . [ :b | box encompassingRectangle bottom closeTo: b bottom precision: 0.001 ] }.
 		{ #topCenter . (30 @ 0) . true . [ :b | box encompassingRectangle = b ] }.
 		{ #topCenter . (-30 @ 0) . true . [ :b | box encompassingRectangle = b ] }.
-
-		"Right handle"
 		{ #rightCenter . (30 @ 0) . false . [ :b | box encompassingRectangle left closeTo: b left precision: 0.001 ] }.
 		{ #rightCenter . (-30 @ 0) . false . [ :b | box encompassingRectangle left closeTo: b left precision: 0.001 ] }.
 		{ #rightCenter . (0 @ 30) . true . [ :b | box encompassingRectangle = b ] }.
 		{ #rightCenter . (0 @ -30) . true . [ :b | box encompassingRectangle = b ] }.
-
-		"Left handle"
 		{ #leftCenter . (-30 @ 0) . false . [ :b | box encompassingRectangle right closeTo: b right precision: 0.001 ] }.
 		{ #leftCenter . (30 @ 0) . false . [ :b | box encompassingRectangle right closeTo: b right precision: 0.001 ] }.
 		{ #leftCenter . (0 @ 30) . true . [ :b | box encompassingRectangle = b ] }.
@@ -206,7 +193,9 @@ OPRSResizableTest >> testAllEdgeHandles32DirectionsPreserveAnchorsAndOrthogonalI
 			yourself.
 		resizable updateCurrentShape: dragEvt441.
 
-		self assert: (checkBlock441 value: initBounds441).
+		self
+			assert: (checkBlock441 value: initBounds441)
+			description: 'Edge handle drag must preserve opposite edge anchor'.
 		isTangent441
 			ifTrue: [
 				self assert: box width closeTo: initWidth441 precision: 0.001.
@@ -214,8 +203,7 @@ OPRSResizableTest >> testAllEdgeHandles32DirectionsPreserveAnchorsAndOrthogonalI
 			ifFalse: [
 				(step441 x = 0)
 					ifTrue: [ self assert: box width closeTo: initWidth441 precision: 0.001 ]
-					ifFalse: [ self assert: box height closeTo: initHeight441 precision: 0.001 ] ].
-	]
+					ifFalse: [ self assert: box height closeTo: initHeight441 precision: 0.001 ] ] ]
 ]
 
 { #category : 'tests' }
@@ -272,11 +260,18 @@ OPRSResizableTest >> testAllEdgeHandlesPreserveOppositeEdgeAndOrthogonalExtent [
 			yourself.
 		resizable updateCurrentShape: draggingEvent.
 
-		self assert: (anchorCheck value: initialBounds).
+		self
+			assert: (anchorCheck value: initialBounds)
+			description: 'Edge handle drag must keep opposite edge anchored'.
 		(stepVector x = 0)
-			ifTrue: [ self assert: (orthogonalCheck value: initialWidth) ]
-			ifFalse: [ self assert: (orthogonalCheck value: initialHeight) ].
-	]
+			ifTrue: [
+				self
+					assert: (orthogonalCheck value: initialWidth)
+					description: 'Vertical edge drag must preserve box width' ]
+			ifFalse: [
+				self
+					assert: (orthogonalCheck value: initialHeight)
+					description: 'Horizontal edge drag must preserve box height' ] ]
 ]
 
 { #category : 'tests' }
@@ -404,7 +399,6 @@ OPRSResizableTest >> testMultiStepDraggingPreservesMovedEdgeDeltaAndOppositeAnch
 	resizable onShape: box.
 	resizable showHandles: (RSSelectionChangedEvent new canvas: canvas; yourself).
 	scenarios := {
-		"handleKey . stepVector . movedCoordinateExtractor . oppositeCoordinateExtractor . expectedTotalDelta"
 		{ #rightCenter . (1 @ 0) . [ :rectangle | rectangle right ] . [ :rectangle | rectangle left ] . 10 } .
 		{ #leftCenter . (-1 @ 0) . [ :rectangle | rectangle left ] . [ :rectangle | rectangle right ] . -10 } .
 		{ #bottomCenter . (0 @ 1) . [ :rectangle | rectangle bottom ] . [ :rectangle | rectangle top ] . 10 } .
@@ -436,8 +430,12 @@ OPRSResizableTest >> testMultiStepDraggingPreservesMovedEdgeDeltaAndOppositeAnch
 				canvas: canvas;
 				yourself.
 			resizable updateCurrentShape: draggingEvent ].
-		self assert: ((oppositeCoordinateExtractor value: box encompassingRectangle) closeTo: initialOppositeCoordinate precision: 0.001).
-		self assert: ((movedCoordinateExtractor value: box encompassingRectangle) closeTo: (initialMovedCoordinate + expectedTotalDelta) precision: 0.001) ]
+		self
+			assert: ((oppositeCoordinateExtractor value: box encompassingRectangle) closeTo: initialOppositeCoordinate precision: 0.001)
+			description: 'Multi-step resize must preserve opposite anchor coordinate'.
+		self
+			assert: ((movedCoordinateExtractor value: box encompassingRectangle) closeTo: (initialMovedCoordinate + expectedTotalDelta) precision: 0.001)
+			description: 'Multi-step resize must accumulate exact moved edge delta' ]
 ]
 
 { #category : 'tests' }

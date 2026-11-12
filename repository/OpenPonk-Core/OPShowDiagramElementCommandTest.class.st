@@ -45,9 +45,7 @@ OPShowDiagramElementCommandTest >> setUp [
 
 { #category : 'tests' }
 OPShowDiagramElementCommandTest >> testShowNodeAndUndoRedo [
-
 	| command |
-	"Initially, the node is in the domain but not shown in the diagram"
 	self assertEmpty: diagramController controllers.
 	self assert: containerModel entities size equals: 1.
 
@@ -59,18 +57,21 @@ OPShowDiagramElementCommandTest >> testShowNodeAndUndoRedo [
 
 	undoManager inTransaction: [ undoManager execute: command ].
 
-	"Node must now be shown"
 	self assert: diagramController controllers size equals: 1.
-	self assert: (diagramController hasControllerForModel: hiddenNodeModel).
+	self
+		assert: (diagramController hasControllerForModel: hiddenNodeModel)
+		description: 'Diagram controller should have a controller for the shown node'.
 
-	"Undo must hide the element"
 	undoManager undo.
 	self assertEmpty: diagramController controllers.
-	self deny: (diagramController hasControllerForModel: hiddenNodeModel).
+	self
+		deny: (diagramController hasControllerForModel: hiddenNodeModel)
+		description: 'Undoing show command must hide the node controller from diagram'.
 	self assert: containerModel entities size equals: 1.
 
-	"Redo must show it again"
 	undoManager redo.
 	self assert: diagramController controllers size equals: 1.
-	self assert: (diagramController hasControllerForModel: hiddenNodeModel)
+	self
+		assert: (diagramController hasControllerForModel: hiddenNodeModel)
+		description: 'Redoing show command must show the node controller in diagram again'
 ]

@@ -49,14 +49,22 @@ OPWorkbenchToolbarTest >> tearDown [
 OPWorkbenchToolbarTest >> testArrowButtonsDisabledWhenNoProjectController [
 	mockWorkbench stub projectController willReturn: nil.
 	toolbarPresenter updateButtons.
-	self deny: toolbarPresenter undoArrowButton isEnabled.
-	self deny: toolbarPresenter redoArrowButton isEnabled
+	self
+		deny: toolbarPresenter undoArrowButton isEnabled
+		description: 'Undo arrow button must be disabled when projectController is nil'.
+	self
+		deny: toolbarPresenter redoArrowButton isEnabled
+		description: 'Redo arrow button must be disabled when projectController is nil'
 ]
 
 { #category : 'tests' }
 OPWorkbenchToolbarTest >> testArrowButtonsExistAndHaveCorrectIcons [
-	self assert: toolbarPresenter undoArrowButton isNotNil.
-	self assert: toolbarPresenter redoArrowButton isNotNil.
+	self
+		assert: toolbarPresenter undoArrowButton isNotNil
+		description: 'Toolbar presenter must initialize undoArrowButton'.
+	self
+		assert: toolbarPresenter redoArrowButton isNotNil
+		description: 'Toolbar presenter must initialize redoArrowButton'.
 	self assert: toolbarPresenter undoArrowButton icon equals: (toolbarPresenter iconNamed: #arrowDown).
 	self assert: toolbarPresenter redoArrowButton icon equals: (toolbarPresenter iconNamed: #arrowDown)
 ]
@@ -65,16 +73,28 @@ OPWorkbenchToolbarTest >> testArrowButtonsExistAndHaveCorrectIcons [
 OPWorkbenchToolbarTest >> testButtonsDisabledWhenNoProjectController [
 	mockWorkbench stub projectController willReturn: nil.
 	toolbarPresenter updateButtons.
-	self deny: toolbarPresenter saveButton isEnabled.
-	self deny: toolbarPresenter undoButton isEnabled.
-	self deny: toolbarPresenter redoButton isEnabled
+	self
+		deny: toolbarPresenter saveButton isEnabled
+		description: 'Save button must be disabled when projectController is nil'.
+	self
+		deny: toolbarPresenter undoButton isEnabled
+		description: 'Undo button must be disabled when projectController is nil'.
+	self
+		deny: toolbarPresenter redoButton isEnabled
+		description: 'Redo button must be disabled when projectController is nil'
 ]
 
 { #category : 'tests' }
 OPWorkbenchToolbarTest >> testButtonsExistAndHaveCorrectIcons [
-	self assert: toolbarPresenter saveButton isNotNil.
-	self assert: toolbarPresenter undoButton isNotNil.
-	self assert: toolbarPresenter redoButton isNotNil.
+	self
+		assert: toolbarPresenter saveButton isNotNil
+		description: 'Toolbar presenter must initialize saveButton'.
+	self
+		assert: toolbarPresenter undoButton isNotNil
+		description: 'Toolbar presenter must initialize undoButton'.
+	self
+		assert: toolbarPresenter redoButton isNotNil
+		description: 'Toolbar presenter must initialize redoButton'.
 	self assert: toolbarPresenter saveButton icon equals: (toolbarPresenter iconNamed: #smallSave).
 	self assert: toolbarPresenter undoButton icon equals: (toolbarPresenter iconNamed: #smallUndo).
 	self assert: toolbarPresenter redoButton icon equals: (toolbarPresenter iconNamed: #smallRedo)
@@ -86,14 +106,22 @@ OPWorkbenchToolbarTest >> testButtonsReactToUndoRedoChangedAnnouncement [
 	mockUndoManager stub canUndo willReturn: true.
 	mockUndoManager stub canRedo willReturn: false.
 	undoAnnouncer announce: OPUndoRedoChanged new.
-	self assert: toolbarPresenter undoButton isEnabled.
-	self deny: toolbarPresenter redoButton isEnabled.
+	self
+		assert: toolbarPresenter undoButton isEnabled
+		description: 'Undo button should be enabled when undoManager canUndo is true'.
+	self
+		deny: toolbarPresenter redoButton isEnabled
+		description: 'Redo button should be disabled when undoManager canRedo is false'.
 
 	mockUndoManager stub canUndo willReturn: false.
 	mockUndoManager stub canRedo willReturn: true.
 	undoAnnouncer announce: OPUndoRedoChanged new.
-	self deny: toolbarPresenter undoButton isEnabled.
-	self assert: toolbarPresenter redoButton isEnabled
+	self
+		deny: toolbarPresenter undoButton isEnabled
+		description: 'Undo button should be disabled when undoManager canUndo is false'.
+	self
+		assert: toolbarPresenter redoButton isEnabled
+		description: 'Redo button should be enabled when undoManager canRedo is true'
 ]
 
 { #category : 'tests' }
@@ -168,7 +196,9 @@ OPWorkbenchToolbarTest >> testDiagramMenuItemActionExecutesWithoutError [
 	showHideItem := diagramMenuItem subMenu menuGroups first menuItems
 		detect: [ :eachItem | eachItem name = 'Show/Hide Elements' ].
 
-	self assert: showHideItem action isNotNil
+	self
+		assert: showHideItem action isNotNil
+		description: 'Show/Hide Elements menu item must have an executable action block'
 ]
 
 { #category : 'tests' }
@@ -290,7 +320,9 @@ OPWorkbenchToolbarTest >> testModelMenuItemActionExecutesWithoutError [
 		flatCollect: [ :eachTopGroup | eachTopGroup menuItems ].
 	testActionItem := allMenuItems detect: [ :eachActionCandidate | eachActionCandidate name = 'Test Model Action' ].
 
-	self assert: testActionItem action isNotNil
+	self
+		assert: testActionItem action isNotNil
+		description: 'Model menu item must have an executable action block'
 ]
 
 { #category : 'tests' }
@@ -305,7 +337,9 @@ OPWorkbenchToolbarTest >> testModelMenuItemIsDisabledWhenFocusedEditorHasNoModel
 	modelMenuItem := toolbarPresenter menu menuGroups first menuItems
 		detect: [ :eachMenuItem | eachMenuItem name = 'Model' ].
 
-	self deny: modelMenuItem isEnabled
+	self
+		deny: modelMenuItem isEnabled
+		description: 'Model menu item must be disabled when plugin provides no model commands'
 ]
 
 { #category : 'tests' }
@@ -320,7 +354,9 @@ OPWorkbenchToolbarTest >> testModelMenuItemIsEnabledWhenFocusedEditorHasModelCom
 	modelMenuItem := toolbarPresenter menu menuGroups first menuItems
 		detect: [ :eachMenuItem | eachMenuItem name = 'Model' ].
 
-	self assert: modelMenuItem isEnabled
+	self
+		assert: modelMenuItem isEnabled
+		description: 'Model menu item should be enabled when plugin provides model commands'
 ]
 
 { #category : 'tests' }
@@ -422,15 +458,25 @@ OPWorkbenchToolbarTest >> testUndoRedoButtonsReflectUndoManagerCapabilities [
 	mockUndoManager stub canUndo willReturn: true.
 	mockUndoManager stub canRedo willReturn: false.
 	toolbarPresenter updateButtons.
-	self assert: toolbarPresenter saveButton isEnabled.
-	self assert: toolbarPresenter undoButton isEnabled.
-	self deny: toolbarPresenter redoButton isEnabled.
+	self
+		assert: toolbarPresenter saveButton isEnabled
+		description: 'Save button should be enabled when projectController is present'.
+	self
+		assert: toolbarPresenter undoButton isEnabled
+		description: 'Undo button should be enabled when canUndo is true'.
+	self
+		deny: toolbarPresenter redoButton isEnabled
+		description: 'Redo button should be disabled when canRedo is false'.
 
 	mockUndoManager stub canUndo willReturn: false.
 	mockUndoManager stub canRedo willReturn: true.
 	toolbarPresenter updateButtons.
-	self deny: toolbarPresenter undoButton isEnabled.
-	self assert: toolbarPresenter redoButton isEnabled
+	self
+		deny: toolbarPresenter undoButton isEnabled
+		description: 'Undo button should be disabled when canUndo is false'.
+	self
+		assert: toolbarPresenter redoButton isEnabled
+		description: 'Redo button should be enabled when canRedo is true'
 ]
 
 { #category : 'tests' }

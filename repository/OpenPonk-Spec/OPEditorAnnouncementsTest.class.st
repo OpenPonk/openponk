@@ -45,24 +45,20 @@ OPEditorAnnouncementsTest >> tearDown [
 { #category : 'tests' }
 OPEditorAnnouncementsTest >> testEditorClosesAndUnfocuses [
 
-	| unfocusedAnn closedAnn oldModel |
+	| closedAnn unfocusedAnn oldModel |
 	oldModel := project models first.
-	announcer
-		when: OPEditorClosed
-		do: [ :ann | closedAnn := ann ]
-		for: self.
-	announcer
-		when: OPEditorUnfocused
-		do: [ :ann | unfocusedAnn := ann ]
-		for: self.
+	unfocusedAnn := nil.
+	closedAnn := nil.
+	announcer when: OPEditorClosed do: [ :ann | closedAnn := ann ] for: self.
+	announcer when: OPEditorUnfocused do: [ :ann | unfocusedAnn := ann ] for: self.
 	workbench openProject: project.
 	workbench openEditorOn: oldModel.
 	self deny: unfocusedAnn diagramController model equals: oldModel.
-	self assert: closedAnn isNil.
+	self assert: closedAnn isNil description: 'OPEditorClosed must not be announced before closing tab'.
 	workbench notebook pages first removeFromNotebook.
-	self assert: unfocusedAnn isNotNil.
+	self assert: unfocusedAnn isNotNil description: 'Removing active page must announce OPEditorUnfocused'.
 	self assert: unfocusedAnn diagramController model equals: oldModel.
-	self assert: closedAnn isNotNil.
+	self assert: closedAnn isNotNil description: 'Removing active page must announce OPEditorClosed'.
 	self assert: closedAnn diagramController model equals: oldModel.
 	workbench withWindowDo: #close
 ]
@@ -72,19 +68,15 @@ OPEditorAnnouncementsTest >> testEditorCreatedAndFocused [
 
 	| createdAnn focusedAnn model |
 	model := project models second.
-	announcer
-		when: OPEditorCreated
-		do: [ :ann | createdAnn := ann ]
-		for: self.
-	announcer
-		when: OPEditorFocused
-		do: [ :ann | focusedAnn := ann ]
-		for: self.
+	createdAnn := nil.
+	focusedAnn := nil.
+	announcer when: OPEditorCreated do: [ :ann | createdAnn := ann ] for: self.
+	announcer when: OPEditorFocused do: [ :ann | focusedAnn := ann ] for: self.
 	workbench openProject: project.
 	workbench openEditorOn: model.
-	self assert: createdAnn isNotNil.
+	self assert: createdAnn isNotNil description: 'Opening editor on model must announce OPEditorCreated'.
 	self assert: createdAnn editor diagramController model equals: model.
-	self assert: focusedAnn isNotNil.
+	self assert: focusedAnn isNotNil description: 'Opening editor on model must announce OPEditorFocused'.
 	self assert: focusedAnn editor diagramController model equals: model.
 	workbench withWindowDo: #close
 ]
@@ -96,24 +88,16 @@ OPEditorAnnouncementsTest >> testEditorCreationChangesFocus [
 	oldModel := project models first.
 	workbench openProject: project.
 	workbench openEditorOn: oldModel.
-	announcer
-		when: OPEditorFocused
-		do: [ :ann | focusedAnn := ann ]
-		for: self.
-	announcer
-		when: OPEditorUnfocused
-		do: [ :ann | unfocusedAnn := ann ]
-		for: self.
+	focusedAnn := nil.
+	unfocusedAnn := nil.
+	announcer when: OPEditorFocused do: [ :ann | focusedAnn := ann ] for: self.
+	announcer when: OPEditorUnfocused do: [ :ann | unfocusedAnn := ann ] for: self.
 	newModel := project models second.
 	workbench openEditorOn: newModel.
-	self assert: unfocusedAnn isNotNil.
-	self
-		assert: unfocusedAnn editor diagramController model
-		equals: oldModel.
-	self assert: focusedAnn isNotNil.
-	self
-		assert: focusedAnn editor diagramController model
-		equals: newModel.
+	self assert: unfocusedAnn isNotNil description: 'Opening a second editor must unfocus the previously active editor'.
+	self assert: unfocusedAnn editor diagramController model equals: oldModel.
+	self assert: focusedAnn isNotNil description: 'Opening a second editor must focus the newly created editor'.
+	self assert: focusedAnn editor diagramController model equals: newModel.
 	workbench withWindowDo: #close
 ]
 
@@ -127,22 +111,14 @@ OPEditorAnnouncementsTest >> testTabSwitchRefocuses [
 	workbench openEditorOn: newModel.
 	workbench openEditorOn: oldModel.
 	workbench notebook selectPageIndex: 2.
-	announcer
-		when: OPEditorFocused
-		do: [ :ann | focusedAnn := ann ]
-		for: self.
-	announcer
-		when: OPEditorUnfocused
-		do: [ :ann | unfocusedAnn := ann ]
-		for: self.
+	focusedAnn := nil.
+	unfocusedAnn := nil.
+	announcer when: OPEditorFocused do: [ :ann | focusedAnn := ann ] for: self.
+	announcer when: OPEditorUnfocused do: [ :ann | unfocusedAnn := ann ] for: self.
 	workbench notebook selectPageIndex: 1.
-	self assert: unfocusedAnn isNotNil.
-	self
-		assert: unfocusedAnn editor diagramController model
-		equals: oldModel.
-	self assert: focusedAnn isNotNil.
-	self
-		assert: focusedAnn editor diagramController model
-		equals: newModel.
+	self assert: unfocusedAnn isNotNil description: 'Switching notebook tab must announce OPEditorUnfocused for previous tab'.
+	self assert: unfocusedAnn editor diagramController model equals: oldModel.
+	self assert: focusedAnn isNotNil description: 'Switching notebook tab must announce OPEditorFocused for selected tab'.
+	self assert: focusedAnn editor diagramController model equals: newModel.
 	workbench withWindowDo: #close
 ]

@@ -58,7 +58,9 @@ OPDiagramOnlyControllerTest >> testBeingRemovedAfterModelRemovalWhenNotRendered 
 	self showInDiagram.
 	diagram := diagramController diagramElement.
 	diagramElement := controller diagramElement.
-	self assert: controller isDiagramOnly.
+	self
+		assert: controller isDiagramOnly
+		description: 'Controller should be diagram-only'.
 	self assertCollection: diagram allOwnedElements includesAll: { diagramElement }.
 	controller removeModel.
 	self assert: controller model identicalTo: diagramElement.
@@ -76,11 +78,11 @@ OPDiagramOnlyControllerTest >> testBeingRemovedAfterModelRemovalWhenRendered [
 	self denyCollection: diagramController controllers includesAny: { controller }
 ]
 
-{ #category : 'tests - construction' }
+{ #category : 'tests' }
 OPDiagramOnlyControllerTest >> testCreateModel [
 	| createdModel |
 	createdModel := controller createModelIn: creationTargetController model.
-	self assert: createdModel isNotNil.
+	self deny: createdModel identicalTo: nil.
 	self assert: createdModel identicalTo: controller diagramElement.
 	self assert: controller model identicalTo: controller diagramElement.
 	self assert: createdModel class equals: self diagramElementClass
@@ -131,22 +133,24 @@ OPDiagramOnlyControllerTest >> testDescriptionName [
 	diagramElement should receive modelChanged
 ]
 
-{ #category : 'tests - undo/redo' }
+{ #category : 'tests' }
 OPDiagramOnlyControllerTest >> testHideUndoRedo [
 	self testCreateUsingAddAsTarget.
-	self deny: controller isHideable
+	self
+		deny: controller isHideable
+		description: 'Diagram-only controller should not be hideable'
 ]
 
 { #category : 'tests - destruction' }
 OPDiagramOnlyControllerTest >> testRemoveModel [
 	self showInDiagram.
-	self assert: controller diagramElement isNotNil.
+	self deny: controller diagramElement identicalTo: nil.
 	controller removeModel.
 	self assert: controller model identicalTo: controller diagramElement.
 	self assertCollection: diagramController controllers includesAll: { controller }
 ]
 
-{ #category : 'tests - undo/redo' }
+{ #category : 'tests' }
 OPDiagramOnlyControllerTest >> testRemoveUndoRedo [
 	| undoManager createdModel |
 	self testCreateUsingAddAsTarget.
@@ -154,20 +158,30 @@ OPDiagramOnlyControllerTest >> testRemoveUndoRedo [
 	createdModel := controller model.
 
 	diagramController removeModelElement: createdModel.
-	self deny: (diagramController hasControllerForModel: createdModel).
+	self
+		deny: (diagramController hasControllerForModel: createdModel)
+		description: 'Diagram-only element should not have a controller after removal'.
 
 	undoManager undo.
-	self assert: (diagramController hasControllerForModel: createdModel).
+	self
+		assert: (diagramController hasControllerForModel: createdModel)
+		description: 'Diagram-only element should have a controller after undo'.
 
 	undoManager redo.
-	self deny: (diagramController hasControllerForModel: createdModel).
+	self
+		deny: (diagramController hasControllerForModel: createdModel)
+		description: 'Diagram-only element should not have a controller after redo'.
 
 	undoManager undo.
-	self assert: (diagramController hasControllerForModel: createdModel)
+	self
+		assert: (diagramController hasControllerForModel: createdModel)
+		description: 'Diagram-only element should have a controller after second undo'
 ]
 
-{ #category : 'tests - undo/redo' }
+{ #category : 'tests' }
 OPDiagramOnlyControllerTest >> testShowUndoRedo [
 	self testCreateUsingAddAsTarget.
-	self deny: controller isHideable
+	self
+		deny: controller isHideable
+		description: 'Diagram-only controller should not be hideable'
 ]

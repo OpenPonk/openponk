@@ -36,7 +36,6 @@ OPNoteControllerTest >> diagramModelClass [
 
 { #category : 'tests' }
 OPNoteControllerTest >> testBuildEditorFormDelegatesToViewModelAndRegistersTextBinding [
-
 	| project projectController note form |
 	project := OPProject new.
 	projectController := OPProjectController forProject: project.
@@ -50,7 +49,9 @@ OPNoteControllerTest >> testBuildEditorFormDelegatesToViewModelAndRegistersTextB
 	form := OPPropertiesForm new.
 	form viewModel: controller.
 
-	self assert: (form bindings anySatisfy: [ :eachBinding | eachBinding selector = #text ]).
+	self
+		assert: (form bindings anySatisfy: [ :eachBinding | eachBinding selector = #text ])
+		description: 'Properties form for OPNoteController should register a binding for #text'.
 	self assert: form bindings first readModelValue equals: 'Initial Note Text'.
 
 	form bindings first writeModelValue: 'Updated Note Text'.

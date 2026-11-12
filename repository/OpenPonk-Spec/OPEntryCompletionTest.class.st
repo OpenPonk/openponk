@@ -27,7 +27,9 @@ OPEntryCompletionTest >> testChooserPositionUsesWorldCoordinates [
 		self currentWorld doOneCycle.
 
 		chooserMorph := entryCompletion openChooserWith: 'Or' from: fieldMorph.
-		self assert: chooserMorph isNotNil.
+		self
+			assert: chooserMorph isNotNil
+			description: 'openChooserWith:from: should create and return a chooser morph'.
 
 		expectedPosition := fieldMorph boundsInWorld bottomLeft + (fieldMorph borderWidth @ 0).
 
@@ -56,8 +58,12 @@ OPEntryCompletionTest >> testOpenChooserClampsHeightWhenExceedingAllowedArea [
 		self currentWorld doOneCycle.
 
 		chooserMorph := entryCompletion openChooserWith: 'Or' from: fieldMorph.
-		self assert: chooserMorph isNotNil.
-		self assert: chooserMorph boundsInWorld bottomLeft y <= chooserMorph allowedArea bottom
+		self
+			assert: chooserMorph isNotNil
+			description: 'openChooserWith:from: should create and return a chooser morph'.
+		self
+			assert: chooserMorph boundsInWorld bottomLeft y <= chooserMorph allowedArea bottom
+			description: 'Chooser bottom edge must be clamped within the allowed usable world area'
 	] ensure: [
 		entryCompletion closeChooser.
 		containerMorph delete ]

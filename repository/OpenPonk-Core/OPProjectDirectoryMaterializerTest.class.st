@@ -114,9 +114,11 @@ OPProjectDirectoryMaterializerTest >> testReadProject [
 		equals: (UUID fromString: '7f5ee44a-1655-4061-a78e-db9578a2226c')
 ]
 
-{ #category : 'running' }
+{ #category : 'tests' }
 OPProjectDirectoryMaterializerTest >> testSetUp [
-	self assert: (root / 'project.json') exists
+	self
+		assert: (root / 'project.json') exists
+		description: 'Materializer test fixture should create project.json in root folder'
 ]
 
 { #category : 'tests' }

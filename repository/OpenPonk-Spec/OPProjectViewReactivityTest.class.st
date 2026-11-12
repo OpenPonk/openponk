@@ -60,11 +60,15 @@ OPProjectViewReactivityTest >> testProjectTreeReactsToModelAddedAndRemovedWithou
 
 	project addModel: secondPackage.
 	project announcer announce: (OPModelAdded model: secondPackage).
-	self assert: (workbench projectTree tree roots first children anySatisfy: [ :eachChildNode261 |
-		eachChildNode261 model == secondPackage ]).
+	self
+		assert: (workbench projectTree tree roots first children anySatisfy: [ :eachChildNode |
+			eachChildNode model == secondPackage ])
+		description: 'Project tree root children should include the newly added model'.
 
 	project removeModel: secondPackage.
 	project announcer announce: (OPModelRemoved model: secondPackage).
-	self deny: (workbench projectTree tree roots first children anySatisfy: [ :eachChildNode261 |
-		eachChildNode261 model == secondPackage ])
+	self
+		deny: (workbench projectTree tree roots first children anySatisfy: [ :eachChildNode |
+			eachChildNode model == secondPackage ])
+		description: 'Project tree root children should no longer include the removed model'
 ]

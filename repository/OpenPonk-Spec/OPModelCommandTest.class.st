@@ -60,7 +60,9 @@ OPModelCommandTest >> testCommandActivatorExecutesCommandWithToolContext [
 
 	activator executeCommand.
 
-	self assert: testCommand isExecuted.
+	self
+		assert: testCommand isExecuted
+		description: 'CmdCommandActivator should execute the model command'.
 	self assert: testCommand editor equals: testEditor.
 	self assert: testCommand diagramController equals: testEditor diagramController
 ]

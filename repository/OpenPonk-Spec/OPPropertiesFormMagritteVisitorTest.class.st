@@ -40,6 +40,107 @@ OPPropertiesFormMagritteVisitorTest >> testToManyRelation [
 ]
 
 { #category : 'tests' }
+OPPropertiesFormMagritteVisitorTest >> testVisitAllMagritteDescriptionTypes [
+	| project registry model viewModel form visitor actionExecuted container actionDesc boolDesc readonlyStringDesc shortMemoDesc longMemoDesc singleOptionDesc multiOptionDesc invisibleDesc actionButton |
+	project := OPProject new.
+	registry := OPViewModelRegistry forProject: project.
+	model := OPFormTestModel new.
+	viewModel := registry viewModelFor: model.
+	form := OPPropertiesForm new.
+	form undoManager: OPUndoManager new.
+	visitor := OPPropertiesFormMagritteVisitor new.
+	visitor form: form.
+	visitor target: viewModel.
+	self assert: visitor target identicalTo: viewModel.
+	self assert: visitor form identicalTo: form.
+
+	actionExecuted := false.
+	actionDesc := MAActionDescription new
+		label: 'Run Action';
+		action: [ actionExecuted := true ];
+		priority: 1;
+		yourself.
+	boolDesc := MABooleanDescription new
+		label: 'Active';
+		accessor: (MAPluggableAccessor read: [ :vm | true ] write: [ :vm :val | ]);
+		priority: 2;
+		yourself.
+	readonlyStringDesc := MAStringDescription new
+		label: 'ReadOnly Label';
+		beReadOnly;
+		accessor: (MAPluggableAccessor read: [ :vm | 'FixedValue' ] write: [ :vm :val | ]);
+		priority: 3;
+		yourself.
+	shortMemoDesc := MAMemoDescription new
+		label: 'Short Memo';
+		lineCount: 1;
+		accessor: (MAPluggableAccessor read: [ :vm | 'short' ] write: [ :vm :val | ]);
+		priority: 4;
+		yourself.
+	longMemoDesc := MAMemoDescription new
+		label: 'Long Memo';
+		lineCount: 10;
+		accessor: (MAPluggableAccessor read: [ :vm | 'long' ] write: [ :vm :val | ]);
+		priority: 5;
+		yourself.
+	singleOptionDesc := MASingleOptionDescription new
+		label: 'Single Option';
+		options: #( one two );
+		accessor: (MAPluggableAccessor read: [ :vm | #one ] write: [ :vm :val | ]);
+		priority: 6;
+		yourself.
+	multiOptionDesc := MAMultipleOptionDescription new
+		label: 'Multi Option';
+		options: #( red green blue );
+		accessor: (MAPluggableAccessor read: [ :vm | #( red ) ] write: [ :vm :val | ]);
+		priority: 7;
+		yourself.
+	invisibleDesc := MAStringDescription new
+		label: 'Hidden';
+		visible: false;
+		accessor: (MAPluggableAccessor read: [ :vm | 'hidden' ] write: [ :vm :val | ]);
+		priority: 8;
+		yourself.
+
+	container := MAPriorityContainer new
+		label: 'Section';
+		priority: 10;
+		addAll: {
+			boolDesc.
+			readonlyStringDesc.
+			shortMemoDesc.
+			longMemoDesc.
+			singleOptionDesc.
+			multiOptionDesc.
+			invisibleDesc };
+		yourself.
+
+	visitor visit: container.
+	visitor visitActionDescription: actionDesc.
+	self
+		deny: (form components anySatisfy: [ :each | (each respondsTo: #text) and: [ each text = 'hidden' ] ])
+		description: 'Invisible description must not produce a presenter in the form'.
+	self
+		assert: (form components anySatisfy: [ :each | each isKindOf: SpCheckBoxPresenter ])
+		description: 'Boolean description should create a checkbox presenter'.
+	self
+		assert: (form components anySatisfy: [ :each | each isKindOf: SpTextPresenter ])
+		description: 'Multi-line memo description should create a multi-line text presenter'.
+	self
+		assert: (form components anySatisfy: [ :each | each isKindOf: SpDropListPresenter ])
+		description: 'Single option description should create a drop list presenter'.
+	self
+		assert: (form components anySatisfy: [ :each | each isKindOf: SpListPresenter ])
+		description: 'Multiple option description should create a list presenter'.
+	actionButton := form components detect: [ :each |
+		(each isKindOf: SpButtonPresenter) and: [ each label = 'Run Action' ] ].
+	actionButton click.
+	self
+		assert: actionExecuted
+		description: 'Clicking action description button should execute its action block'
+]
+
+{ #category : 'tests' }
 OPPropertiesFormMagritteVisitorTest >> testVisitStringDescriptionWithEntryCompletion [
 	| form desc visitor presenter completion |
 	form := OPPropertiesForm new.
@@ -74,8 +175,9 @@ OPPropertiesFormMagritteVisitorTest >> testVisitToManyRelationDescriptionAddsEdi
 
 	relationDescription := MAToManyRelationDescription new.
 	relationDescription label: 'Items'.
+	relationDescription display: [ :each | each asString ].
 	relationDescription accessor: (MAPluggableAccessor
-		read: [ :modelElement | #( ) ]
+		read: [ :modelElement | #( 'ItemA' 'ItemB' ) ]
 		write: [ :modelElement :newValue | ]).
 
 	visitor visitToManyRelationDescription: relationDescription.
@@ -83,7 +185,9 @@ OPPropertiesFormMagritteVisitorTest >> testVisitToManyRelationDescriptionAddsEdi
 	editButton := form components detect: [ :eachComponent |
 		(eachComponent respondsTo: #label) and: [ eachComponent label = 'Edit Items' ] ].
 
-	self assert: editButton isNotNil.
+	self
+		assert: editButton isNotNil
+		description: 'Form should contain the Edit Items button'.
 
 	editButton click.
 

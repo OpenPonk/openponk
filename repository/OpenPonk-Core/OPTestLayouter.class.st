@@ -3,15 +3,17 @@ A mock layouter implementation utilized in SUnit tests to verify automatic eleme
 "
 Class {
 	#name : 'OPTestLayouter',
-	#superclass : 'OPNodesAndEdgesLayouter',
-	#category : 'OpenPonk-Core-Tests',
+	#superclass : 'OPHierarchicalNodesAndEdgesLayouter',
+	#category : 'OpenPonk-Core-Controllers-Tests',
 	#package : 'OpenPonk-Core',
-	#tag : 'Tests'
+	#tag : 'Controllers-Tests'
 }
 
 { #category : 'accessing' }
 OPTestLayouter >> allEdges [
-	^ #()
+	^ diagramController canvasPresenter
+		ifNotNil: [ :cp | cp canvas lines ]
+		ifNil: [ #(  ) ]
 ]
 
 { #category : 'accessing' }

@@ -119,38 +119,9 @@ OPLegacyDiagram class >> withWholeModel: aModel [
 		yourself
 ]
 
-{ #category : 'comparing' }
-OPLegacyDiagram >> = otherDiagram [
-	^ self asJson = otherDiagram asJson
-]
-
-{ #category : 'converting' }
-OPLegacyDiagram >> asInfo [
-	self deprecated: 'OPDiagramInfo is no longer used'.
-	
-	^ OPDiagramInfo new
-		diagramName: self name;
-		isOpen: self isOpen;
-		isSelected: self isSelected;
-		order: self order;
-		modelName: self modelName;
-		modelType: self modelType;
-		yourself
-]
-
-{ #category : 'serializing' }
-OPLegacyDiagram >> asJson [
-
-	^ String streamContents: [ :stream | self asJsonTo: stream ]
-]
-
-{ #category : 'serializing' }
-OPLegacyDiagram >> asJsonTo: stream [
-	^ (OPJsonWriter on: stream) nextPut: self
-]
-
 { #category : 'converting' }
 OPLegacyDiagram >> asOPDiagram [
+
 	| diagram project projectController viewModelRegistry allModelElements layoutsPerModel diagramController canvas controllersByModels |
 	diagram := OPOpenPonkDiagram forModelElement: self model.
 	[ :job |
@@ -168,41 +139,36 @@ OPLegacyDiagram >> asOPDiagram [
 		projectController := OPProjectController forProject: project.
 		viewModelRegistry := projectController viewModelRegistry.
 		job progress: 0.1.
-		allModelElements := ((Set with: self model)
-			, (viewModelRegistry allChildrenFor: self model)
-			, commonElements collect: [ :each | each uuid -> each ]) asDictionary.
+		allModelElements := ((Set with: self model) , (viewModelRegistry allChildrenFor: self model) , commonElements collect: [ :each |
+			                     each uuid -> each ]) asDictionary.
 		job progress: 0.2.
-		visibleElements := (visibleElements collect: [ :each |
-			each modelObjectFrom: allModelElements ])
-			sorted: [ :a :b | viewModelRegistry dependsRoughlyTypeOf: b on: a ].
+		visibleElements := (visibleElements collect: [ :each | each modelObjectFrom: allModelElements ]) sorted: [ :a :b |
+			                   viewModelRegistry dependsRoughlyTypeOf: b on: a ].
 		job progress: 0.3.
-		layoutsPerModel := (layout associations collect: [ :each |
-			(allModelElements at: each key) -> each value ]) asDictionary.
+		layoutsPerModel := (layout associations collect: [ :each | (allModelElements at: each key) -> each value ]) asDictionary.
 		job progress: 0.4.
-		diagramController := (OPPluginRegistry default pluginFor: model)
-			diagramControllerClass new.
+		diagramController := (OPPluginRegistry default pluginFor: model) diagramControllerClass new.
 		projectController addDiagramController: diagramController.
 		canvas := RSCanvas new.
 		diagramController
 			model: model;
 			diagramElement: diagram;
-			canvasPresenter: (OPCanvasPresenter new canvas: canvas; yourself).
+			canvasPresenter: (OPCanvasPresenter new
+					 canvas: canvas;
+					 yourself).
 		job progress: 0.5.
 
 		"Render the diagram first so that its roassalShape is assigned before adding elements"
 		diagram renderIn: canvas.
-		controllersByModels := (visibleElements copyWithout: model)
-			collect: [ :each |
-				| controller |
-				controller := diagramController showWithoutDependentInDiagramModel: each.
-				each -> controller ].
+		controllersByModels := (visibleElements copyWithout: model) collect: [ :each |
+				                       | controller |
+				                       controller := diagramController showWithoutDependentInDiagramModel: each.
+				                       each -> controller ].
 		job progress: 0.8.
 		controllersByModels do: [ :eachModelAndController |
-			layoutsPerModel
-				at: eachModelAndController key
-				ifPresent: [ :eachLayout |
-					eachLayout applyToDiagramElement:
-						eachModelAndController value diagramElement ] ].
+				layoutsPerModel
+					at: eachModelAndController key
+					ifPresent: [ :eachLayout | eachLayout applyToDiagramElement: eachModelAndController value diagramElement ] ].
 		job progress: 0.9.
 		diagram removeRender.
 		job progress: 1 ] asJob run.
@@ -211,11 +177,13 @@ OPLegacyDiagram >> asOPDiagram [
 
 { #category : 'accessing' }
 OPLegacyDiagram >> camera [
+
 	^ camera
 ]
 
 { #category : 'accessing' }
 OPLegacyDiagram >> camera: aCameraSettings [
+
 	camera := aCameraSettings
 ]
 
@@ -227,12 +195,6 @@ OPLegacyDiagram >> commonElements [
 { #category : 'accessing' }
 OPLegacyDiagram >> commonElements: anObject [
 	commonElements := anObject
-]
-
-{ #category : 'comparing' }
-OPLegacyDiagram >> hash [
-
-	^ self asJson hash
 ]
 
 { #category : 'initialization' }
@@ -249,6 +211,7 @@ OPLegacyDiagram >> isOpen [
 
 { #category : 'accessing' }
 OPLegacyDiagram >> isOpen: aBoolean [
+
 	isOpen := aBoolean
 ]
 
@@ -259,6 +222,7 @@ OPLegacyDiagram >> isSelected [
 
 { #category : 'accessing' }
 OPLegacyDiagram >> isSelected: aBoolean [
+
 	isSelected := aBoolean
 ]
 
@@ -295,13 +259,6 @@ OPLegacyDiagram >> modelName [
 ]
 
 { #category : 'accessing' }
-OPLegacyDiagram >> modelType [
-	^ (model respondsTo: #typeName)
-		ifTrue: [ model typeName ]
-		ifFalse: [ model className ]
-]
-
-{ #category : 'accessing' }
 OPLegacyDiagram >> name [
 	^ name
 ]
@@ -309,14 +266,6 @@ OPLegacyDiagram >> name [
 { #category : 'accessing' }
 OPLegacyDiagram >> name: aName [
 	name := aName
-]
-
-{ #category : 'copying' }
-OPLegacyDiagram >> newCopy [
-	| newView |
-	newView := self class ofModel: model fromJsonString: self asJson.
-	newView name: 'copy of ' , self name.
-	^ newView
 ]
 
 { #category : 'accessing' }
@@ -338,39 +287,6 @@ OPLegacyDiagram >> printOn: aStream [
 	aStream << '@'.
 	self modelName printOn: aStream.
 	aStream << ')'
-]
-
-{ #category : 'actions' }
-OPLegacyDiagram >> setAllElementsVisible [
-
-	visibleElements := nil
-]
-
-{ #category : 'converting' }
-OPLegacyDiagram >> updateFromInfo: anInfo [
-	self deprecated: 'OPDiagramInfo is no longer used'.
-	
-	self isOpen: anInfo isOpen.
-	self isSelected: anInfo isSelected.
-	self order: anInfo order
-]
-
-{ #category : 'accessing' }
-OPLegacyDiagram >> updateFromRoassalCanvas: aView [
-	self
-		camera:
-			(OPLegacyDiagramCamera new
-				offset: aView canvas camera position;
-				zoom: aView canvas camera scale)
-]
-
-{ #category : 'accessing' }
-OPLegacyDiagram >> visibleElements [
-
-	self deprecated:
-		'Use visibleElementsOrIfNotSet: with block as parameter. Variable visibleElements is not set usually when all elements should be visible'.
-
-	^ self visibleElementsOrIfNotSet: [ {  } ]
 ]
 
 { #category : 'accessing' }

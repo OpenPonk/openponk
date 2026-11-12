@@ -43,7 +43,9 @@ OPPropertiesFormTest >> testBindNumberInputRegistersBinding [
 	target value: 42.
 	form viewModel: target.
 	numberInput := form bindNumberInput: 'Value' property: #value.
-	self assert: (form bindings anySatisfy: [ :each | each selector = #value ]).
+	self
+		assert: (form bindings anySatisfy: [ :each | each selector = #value ])
+		description: 'bindNumberInput:property: should register a binding for #value'.
 	self assert: numberInput number equals: 42
 ]
 
@@ -182,7 +184,9 @@ OPPropertiesFormTest >> testExtensibleSingleOptionWritingThroughMorphicAdapterUp
 
 	adapter addToList: '2..4' asText.
 	self assert: dummyTarget value equals: '2..4'.
-	self assert: dummyTarget value isString
+	self
+		assert: dummyTarget value isString
+		description: 'Written extensible option value must be converted to a String'
 ]
 
 { #category : 'tests' }
@@ -206,7 +210,9 @@ OPPropertiesFormTest >> testFocusFirstInputTakesKeyboardFocus [
 
 	spyForm focusFirstInput.
 
-	self assert: spyForm focusTaken
+	self
+		assert: spyForm focusTaken
+		description: 'focusFirstInput should request keyboard focus when an input control is present'
 ]
 
 { #category : 'tests' }
@@ -217,19 +223,24 @@ OPPropertiesFormTest >> testFocusFirstInputWhenEmptyDoesNotTakeKeyboardFocus [
 
 	spyForm focusFirstInput.
 
-	self deny: spyForm focusTaken
+	self
+		deny: spyForm focusTaken
+		description: 'focusFirstInput must not take keyboard focus when the form is empty'
 ]
 
 { #category : 'tests' }
 OPPropertiesFormTest >> testFocusOrderExcludesLabels [
 	"Ensure non-interactive labels are never registered in focusOrder"
-
 	form addHeadingLabel: 'Section Title'.
 	form addTextInput: 'Name'.
 	form addDroplist: 'Type'.
 
-	self deny: (form focusOrder anySatisfy: [ :each | each isKindOf: SpLabelPresenter ]).
-	self assert: (form focusOrder allSatisfy: [ :each | (each isKindOf: SpLabelPresenter) not ])
+	self
+		deny: (form focusOrder anySatisfy: [ :each | each isKindOf: SpLabelPresenter ])
+		description: 'Non-interactive labels must not be included in form focusOrder'.
+	self
+		assert: (form focusOrder allSatisfy: [ :each | (each isKindOf: SpLabelPresenter) not ])
+		description: 'All presenters in focusOrder must be interactive non-label controls'
 ]
 
 { #category : 'tests' }
@@ -241,7 +252,9 @@ OPPropertiesFormTest >> testTargetDoesNotStealKeyboardFocus [
 
 	spyForm viewModel: dummyTarget.
 
-	self deny: spyForm focusTaken
+	self
+		deny: spyForm focusTaken
+		description: 'Setting viewModel: on properties form must not steal keyboard focus'
 ]
 
 { #category : 'tests' }
@@ -263,5 +276,7 @@ OPPropertiesFormTest >> testVisitingExtensibleSingleOptionDescriptionCreatesEdit
 	visitor visit: description.
 	control := form components detect: [ :each | (each respondsTo: #isEditable) and: [ each isEditable ] ] ifNone: [ nil ].
 	self assert: control notNil description: 'Extensible single option must create an editable control'.
-	self assert: control isEditable
+	self
+		assert: control isEditable
+		description: 'Created drop list presenter must be marked editable'
 ]

@@ -35,7 +35,9 @@ OPFormPluggableAccessorUndoTest >> testPluggableAccessorUndoRedo [
 
 	textPresenter text: 'Modified Annotation'.
 	self assert: annotation name equals: 'Modified Annotation'.
-	self assert: undoManager canUndo.
+	self
+		assert: undoManager canUndo
+		description: 'Modifying text via pluggable accessor should record an undo command'.
 
 	undoManager undo.
 	self assert: annotation name equals: 'Original Annotation'.

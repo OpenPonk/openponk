@@ -115,16 +115,26 @@ OPModelRemovalUndoTest >> testRemoveEdgeOnlyPreservesNodes [
 	self denyCollection: containerModel entities includesAny: { edgeModel }.
 	self assertCollection: containerModel entities includesAll: { node1Model }.
 	self assertCollection: containerModel entities includesAll: { node2Model }.
-	self deny: (diagramController hasControllerForModel: edgeModel).
-	self assert: (diagramController hasControllerForModel: node1Model).
-	self assert: (diagramController hasControllerForModel: node2Model).
+	self
+		deny: (diagramController hasControllerForModel: edgeModel)
+		description: 'Removed edge should not have a controller'.
+	self
+		assert: (diagramController hasControllerForModel: node1Model)
+		description: 'Source node controller should be preserved'.
+	self
+		assert: (diagramController hasControllerForModel: node2Model)
+		description: 'Target node controller should be preserved'.
 
-	self assert: undoManager canUndo.
+	self
+		assert: undoManager canUndo
+		description: 'Undo manager should record edge removal'.
 	undoManager undo.
 	self assertCollection: containerModel entities includesAll: { edgeModel }.
 	self assert: edgeModel source identicalTo: node1Model.
 	self assert: edgeModel target identicalTo: node2Model.
-	self assert: (diagramController hasControllerForModel: edgeModel).
+	self
+		assert: (diagramController hasControllerForModel: edgeModel)
+		description: 'Edge controller should be restored after undo'.
 	self assert: (diagramController controllerForModel: edgeModel) diagramElement waypoints equals: {
 			(180 @ 125).
 			(240 @ 200).
@@ -140,14 +150,22 @@ OPModelRemovalUndoTest >> testRemoveModelFromProjectTreeRestoresDiagramElementOn
 	undoManager inTransaction: [ undoManager execute: command ].
 	self denyCollection: containerModel entities includesAny: { node1Model }.
 	self denyCollection: containerModel entities includesAny: { edgeModel }.
-	self deny: (diagramController hasControllerForModel: node1Model).
-	self deny: (diagramController hasControllerForModel: edgeModel).
+	self
+		deny: (diagramController hasControllerForModel: node1Model)
+		description: 'Removed node should not have a controller'.
+	self
+		deny: (diagramController hasControllerForModel: edgeModel)
+		description: 'Cascaded edge should not have a controller'.
 
 	undoManager undo.
 	self assertCollection: containerModel entities includesAll: { node1Model }.
 	self assertCollection: containerModel entities includesAll: { edgeModel }.
-	self assert: (diagramController hasControllerForModel: node1Model).
-	self assert: (diagramController hasControllerForModel: edgeModel).
+	self
+		assert: (diagramController hasControllerForModel: node1Model)
+		description: 'Node controller should be restored after undo'.
+	self
+		assert: (diagramController hasControllerForModel: edgeModel)
+		description: 'Edge controller should be restored after undo'.
 	self assert: (diagramController controllerForModel: node1Model) diagramElement bounds position equals: 100 @ 100
 ]
 
@@ -158,17 +176,23 @@ OPModelRemovalUndoTest >> testRemoveNodeDetachesFromBothOpenAndClosedDiagrams [
 	shapeToClick := (diagramController controllerForModel: node1Model) diagramElement roassalShape.
 
 	"Verify node1 is in closed diagram before removal"
-	self assert: (closedDiagram allOwnedElements anySatisfy: [ :each | each modelElements includes: node1Model ]).
+	self
+		assert: (closedDiagram allOwnedElements anySatisfy: [ :each | each modelElements includes: node1Model ])
+		description: 'Closed diagram should contain diagram element for node1 before removal'.
 
 	diagramController removeModelOfRoassalShape: shapeToClick.
 
 	"Closed diagram must not contain orphaned diagram element"
-	self deny: (closedDiagram allOwnedElements anySatisfy: [ :each | each modelElements includes: node1Model ]).
+	self
+		deny: (closedDiagram allOwnedElements anySatisfy: [ :each | each modelElements includes: node1Model ])
+		description: 'Closed diagram must not contain orphaned diagram element after removal'.
 
 	undoManager undo.
 
 	"Closed diagram must have diagram element restored"
-	self assert: (closedDiagram allOwnedElements anySatisfy: [ :each | each modelElements includes: node1Model ])
+	self
+		assert: (closedDiagram allOwnedElements anySatisfy: [ :each | each modelElements includes: node1Model ])
+		description: 'Closed diagram should have diagram element restored after undo'
 ]
 
 { #category : 'tests' }
@@ -188,12 +212,20 @@ OPModelRemovalUndoTest >> testRemoveNodeWithCascadeRemovesAndRestoresConnectedEd
 	self assertCollection: containerModel entities includesAll: { node2Model }.
 
 	"Verify visual diagram element removal from open canvas"
-	self deny: (diagramController hasControllerForModel: node1Model).
-	self deny: (diagramController hasControllerForModel: edgeModel).
-	self assert: (diagramController hasControllerForModel: node2Model).
+	self
+		deny: (diagramController hasControllerForModel: node1Model)
+		description: 'Removed node1 should not have a controller'.
+	self
+		deny: (diagramController hasControllerForModel: edgeModel)
+		description: 'Cascaded edge should not have a controller'.
+	self
+		assert: (diagramController hasControllerForModel: node2Model)
+		description: 'Unrelated node2 should keep its controller'.
 
 	"Verify undoManager recorded the transaction"
-	self assert: undoManager canUndo.
+	self
+		assert: undoManager canUndo
+		description: 'Undo manager should record cascaded node removal'.
 
 	"Execute UNDO - must restore in LIFO order"
 	undoManager undo.
@@ -203,8 +235,12 @@ OPModelRemovalUndoTest >> testRemoveNodeWithCascadeRemovesAndRestoresConnectedEd
 	self assertCollection: containerModel entities includesAll: { edgeModel }.
 	self assert: edgeModel source identicalTo: node1Model.
 	self assert: edgeModel target identicalTo: node2Model.
-	self assert: (diagramController hasControllerForModel: node1Model).
-	self assert: (diagramController hasControllerForModel: edgeModel).
+	self
+		assert: (diagramController hasControllerForModel: node1Model)
+		description: 'Node1 controller should be restored after undo'.
+	self
+		assert: (diagramController hasControllerForModel: edgeModel)
+		description: 'Edge controller should be restored after undo'.
 
 	"Verify geometry preservation"
 	self assert: (diagramController controllerForModel: node1Model) diagramElement bounds position equals: 100 @ 100.
@@ -217,8 +253,12 @@ OPModelRemovalUndoTest >> testRemoveNodeWithCascadeRemovesAndRestoresConnectedEd
 	undoManager redo.
 	self denyCollection: containerModel entities includesAny: { node1Model }.
 	self denyCollection: containerModel entities includesAny: { edgeModel }.
-	self deny: (diagramController hasControllerForModel: node1Model).
-	self deny: (diagramController hasControllerForModel: edgeModel)
+	self
+		deny: (diagramController hasControllerForModel: node1Model)
+		description: 'Node1 controller should be removed after redo'.
+	self
+		deny: (diagramController hasControllerForModel: edgeModel)
+		description: 'Edge controller should be removed after redo'
 ]
 
 { #category : 'tests' }
@@ -255,9 +295,15 @@ OPModelRemovalUndoTest >> testRemoveNodeWithMultipleEdgesRestoresAllInLifoOrder 
 	self assertCollection: containerModel entities includesAll: { node1Model }.
 	self assertCollection: containerModel entities includesAll: { node3Model }.
 
-	self deny: (diagramController hasControllerForModel: node2Model).
-	self deny: (diagramController hasControllerForModel: edgeModel).
-	self deny: (diagramController hasControllerForModel: edge2Model).
+	self
+		deny: (diagramController hasControllerForModel: node2Model)
+		description: 'Removed node2 should not have a controller'.
+	self
+		deny: (diagramController hasControllerForModel: edgeModel)
+		description: 'First connected edge should not have a controller'.
+	self
+		deny: (diagramController hasControllerForModel: edge2Model)
+		description: 'Second connected edge should not have a controller'.
 
 	undoManager undo.
 	self assertCollection: containerModel entities includesAll: { node2Model }.
@@ -268,9 +314,15 @@ OPModelRemovalUndoTest >> testRemoveNodeWithMultipleEdgesRestoresAllInLifoOrder 
 	self assert: edge2Model source identicalTo: node2Model.
 	self assert: edge2Model target identicalTo: node3Model.
 
-	self assert: (diagramController hasControllerForModel: node2Model).
-	self assert: (diagramController hasControllerForModel: edgeModel).
-	self assert: (diagramController hasControllerForModel: edge2Model).
+	self
+		assert: (diagramController hasControllerForModel: node2Model)
+		description: 'Node2 controller should be restored after undo'.
+	self
+		assert: (diagramController hasControllerForModel: edgeModel)
+		description: 'First connected edge controller should be restored after undo'.
+	self
+		assert: (diagramController hasControllerForModel: edge2Model)
+		description: 'Second connected edge controller should be restored after undo'.
 	self assert: (diagramController controllerForModel: edge2Model) diagramElement waypoints equals: {
 			(380 @ 125).
 			(500 @ 125) }

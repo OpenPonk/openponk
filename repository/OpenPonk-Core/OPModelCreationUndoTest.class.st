@@ -53,15 +53,21 @@ OPModelCreationUndoTest >> testCreateDiagramOnlyElementUndoRedo [
 	undoManager inTransaction: [ undoManager execute: command ].
 	noteElement := command diagramElement.
 	self assertCollection: diagram ownedElements includesAll: { noteElement }.
-	self assert: (canvas shapes anySatisfy: [ :s | s model == noteElement ]).
+	self
+		assert: (canvas shapes anySatisfy: [ :s | s model == noteElement ])
+		description: 'Canvas should contain a shape for the created note element'.
 
 	undoManager undo.
 	self denyCollection: diagram ownedElements includesAny: { noteElement }.
-	self assert: (canvas shapes noneSatisfy: [ :s | s model == noteElement ]).
+	self
+		 assert: (canvas shapes noneSatisfy: [ :s | s model == noteElement ])
+		 description: 'Canvas should not contain any shape for the note element after undo'.
 
 	undoManager redo.
 	self assertCollection: diagram ownedElements includesAll: { noteElement }.
-	self assert: (canvas shapes anySatisfy: [ :s | s model == noteElement ]).
+	self
+		assert: (canvas shapes anySatisfy: [ :s | s model == noteElement ])
+		description: 'Canvas should contain a shape for the note element after redo'.
 	self assert: command diagramElement identicalTo: noteElement
 ]
 
@@ -93,9 +99,11 @@ OPModelCreationUndoTest >> testCreateEdgeSelfLoopUndoRedo [
 
 	undoManager undo.
 	self denyCollection: diagram ownedElements includesAny: { edgeElement }.
-	self deny: (diagramController viewModelRegistry hasViewModelFor: edgeModel).
-	self assert: (nodeCmd diagramElement sourceEdges noneSatisfy: [ :e | e == edgeElement ]).
-	self assert: (nodeCmd diagramElement targetEdges noneSatisfy: [ :e | e == edgeElement ]).
+	self
+		deny: (diagramController viewModelRegistry hasViewModelFor: edgeModel)
+		description: 'Edge view model should be unregistered after undo'.
+	self denyCollection: nodeCmd diagramElement sourceEdges includesAny: { edgeElement }.
+	self denyCollection: nodeCmd diagramElement targetEdges includesAny: { edgeElement }.
 
 	undoManager redo.
 	self assertCollection: diagram ownedElements includesAll: { edgeElement }.
@@ -138,17 +146,23 @@ OPModelCreationUndoTest >> testCreateEdgeUndoRedoInClosedDiagram [
 
 	"Simulate closing the diagram: remove its visual rendering"
 	diagram removeRender.
-	self deny: diagram isRendered.
+	self
+		deny: diagram isRendered
+		description: 'Diagram should not be rendered after removeRender'.
 
 	"Undo edge in closed diagram: detaches from domain and diagram model without GUI errors"
 	undoManager undo.
 	self denyCollection: diagram ownedElements includesAny: { edgeElement }.
-	self deny: (diagramController viewModelRegistry hasViewModelFor: edgeModel).
+	self
+		deny: (diagramController viewModelRegistry hasViewModelFor: edgeModel)
+		description: 'Edge view model should be unregistered after undo in closed diagram'.
 
 	"Redo edge in closed diagram: reconnects domain and diagram model without GUI errors"
 	undoManager redo.
 	self assertCollection: diagram ownedElements includesAll: { edgeElement }.
-	self assert: (diagramController viewModelRegistry hasViewModelFor: edgeModel).
+	self
+		assert: (diagramController viewModelRegistry hasViewModelFor: edgeModel)
+		description: 'Edge view model should be registered after redo in closed diagram'.
 	self assert: edgeElement source identicalTo: sourceCmd diagramElement.
 	self assert: edgeElement target identicalTo: targetCmd diagramElement
 ]
@@ -191,7 +205,9 @@ OPModelCreationUndoTest >> testCreateEdgeUndoRedoPreservesIdentity [
 
 	undoManager undo.
 	self denyCollection: diagram ownedElements includesAny: { edgeElement }.
-	self deny: (diagramController viewModelRegistry hasViewModelFor: edgeModel).
+	self
+		deny: (diagramController viewModelRegistry hasViewModelFor: edgeModel)
+		description: 'Edge view model should be unregistered after undo'.
 
 	undoManager redo.
 	self assertCollection: diagram ownedElements includesAll: { edgeElement }.
@@ -229,21 +245,27 @@ OPModelCreationUndoTest >> testCreateEdgeViaAddAsTargetExecutesThroughUndoManage
 	createdModel := relationController model.
 	createdEdge := relationController diagramElement.
 
-	self assert: createdModel isNotNil.
+	self deny: createdModel identicalTo: nil.
 	self assertCollection: diagram ownedElements includesAll: { createdEdge }.
 	self assert: createdEdge source identicalTo: sourceCmd diagramElement.
 	self assert: createdEdge target identicalTo: targetCmd diagramElement.
-	self assert: undoManager canUndo.
+	self
+		assert: undoManager canUndo
+		description: 'Undo manager should have an undoable transaction after edge creation'.
 
 	"Undo edge creation via palette tool"
 	undoManager undo.
 	self denyCollection: diagram ownedElements includesAny: { createdEdge }.
-	self deny: (diagramController viewModelRegistry hasViewModelFor: createdModel).
+	self
+		deny: (diagramController viewModelRegistry hasViewModelFor: createdModel)
+		description: 'Created edge view model should be unregistered after undo'.
 
 	"Redo edge creation"
 	undoManager redo.
 	self assertCollection: diagram ownedElements includesAll: { createdEdge }.
-	self assert: (diagramController viewModelRegistry hasViewModelFor: createdModel).
+	self
+		assert: (diagramController viewModelRegistry hasViewModelFor: createdModel)
+		description: 'Created edge view model should be registered after redo'.
 	self assert: createdEdge source identicalTo: sourceCmd diagramElement.
 	self assert: createdEdge target identicalTo: targetCmd diagramElement
 ]
@@ -268,8 +290,8 @@ OPModelCreationUndoTest >> testCreateNodeMultipleUndoRedoCycles [
 
 	"Cycle 1"
 	undoManager undo.
-	self assert: (diagramController controllers noneSatisfy: [ :c | c model == nodeModel ]).
-	self assert: (canvas shapes noneSatisfy: [ :s | s model == diagramElement ]).
+	self assert: (diagramController controllers count: [ :c | c model == nodeModel ]) equals: 0.
+	self assert: (canvas shapes count: [ :s | s model == diagramElement ]) equals: 0.
 
 	undoManager redo.
 	self assert: (diagramController controllers count: [ :c | c model == nodeModel ]) equals: 1.
@@ -277,8 +299,8 @@ OPModelCreationUndoTest >> testCreateNodeMultipleUndoRedoCycles [
 
 	"Cycle 2"
 	undoManager undo.
-	self assert: (diagramController controllers noneSatisfy: [ :c | c model == nodeModel ]).
-	self assert: (canvas shapes noneSatisfy: [ :s | s model == diagramElement ]).
+	self assert: (diagramController controllers count: [ :c | c model == nodeModel ]) equals: 0.
+	self assert: (canvas shapes count: [ :s | s model == diagramElement ]) equals: 0.
 
 	undoManager redo.
 	self assert: (diagramController controllers count: [ :c | c model == nodeModel ]) equals: 1.
@@ -307,7 +329,9 @@ OPModelCreationUndoTest >> testCreateNodeUndoRedoInClosedDiagram [
 
 	"Simulate closing the diagram: remove its visual rendering"
 	diagram removeRender.
-	self deny: diagram isRendered.
+	self
+		deny: diagram isRendered
+		description: 'Diagram should not be rendered after removeRender'.
 
 	"Undo while diagram is closed: removes from domain and diagram model without GUI errors"
 	undoManager undo.
@@ -339,14 +363,18 @@ OPModelCreationUndoTest >> testCreateNodeUndoRedoPreservesIdentity [
 	nodeViewModel := command viewModel.
 	diagramElement := command diagramElement.
 	self assertCollection: containerModel entities includesAll: { nodeModel }.
-	self assert: (diagramController viewModelRegistry hasViewModelFor: nodeModel).
+	self
+		assert: (diagramController viewModelRegistry hasViewModelFor: nodeModel)
+		description: 'Node view model should be registered after creation'.
 	self assertCollection: diagram ownedElements includesAll: { diagramElement }.
 	self assert: diagramElement bounds position equals: initialPosition.
 
 	"2. Undo creation - removes from container, registry, and diagram"
 	undoManager undo.
 	self denyCollection: containerModel entities includesAny: { nodeModel }.
-	self deny: (diagramController viewModelRegistry hasViewModelFor: nodeModel).
+	self
+		deny: (diagramController viewModelRegistry hasViewModelFor: nodeModel)
+		description: 'Node view model should be unregistered after undo'.
 	self denyCollection: diagram ownedElements includesAny: { diagramElement }.
 
 	"3. Redo creation - restores exact instances with identical identity"
@@ -369,15 +397,21 @@ OPModelCreationUndoTest >> testCreationViaAddAsTargetExecutesThroughUndoManager 
 	diagramController addAsTargetFor: entityController.
 	createdModel := entityController model.
 
-	self assert: createdModel isNotNil.
+	self deny: createdModel identicalTo: nil.
 	self assertCollection: containerModel entities includesAll: { createdModel }.
-	self assert: undoManager canUndo.
+	self
+		assert: undoManager canUndo
+		description: 'Undo manager should have an undoable transaction after node creation'.
 
 	undoManager undo.
 	self denyCollection: containerModel entities includesAny: { createdModel }.
-	self deny: (diagramController viewModelRegistry hasViewModelFor: createdModel).
+	self
+		deny: (diagramController viewModelRegistry hasViewModelFor: createdModel)
+		description: 'Node view model should be unregistered after undo'.
 
 	undoManager redo.
 	self assertCollection: containerModel entities includesAll: { createdModel }.
-	self assert: (diagramController viewModelRegistry hasViewModelFor: createdModel)
+	self
+		assert: (diagramController viewModelRegistry hasViewModelFor: createdModel)
+		description: 'Node view model should be registered after redo'
 ]

@@ -46,11 +46,21 @@ OPMutationWatchdogTest >> testDiagramWorkspaceSlotsAreTransient [
 	"Verify that workspace navigation and layout state slots on OPDiagram are marked as transient."
 	| diagramClass |
 	diagramClass := OPOpenPonkDiagram.
-	self assert: (watchdog isTransientSlot: #isOpen onClass: diagramClass).
-	self assert: (watchdog isTransientSlot: #isSelected onClass: diagramClass).
-	self assert: (watchdog isTransientSlot: #camera onClass: diagramClass).
-	self assert: (watchdog isTransientSlot: #bounds onClass: diagramClass).
-	self deny: (watchdog isTransientSlot: #bounds onClass: OPBoundNode)
+	self
+		assert: (watchdog isTransientSlot: #isOpen onClass: diagramClass)
+		description: '#isOpen on OPOpenPonkDiagram should be transient'.
+	self
+		assert: (watchdog isTransientSlot: #isSelected onClass: diagramClass)
+		description: '#isSelected on OPOpenPonkDiagram should be transient'.
+	self
+		assert: (watchdog isTransientSlot: #camera onClass: diagramClass)
+		description: '#camera on OPOpenPonkDiagram should be transient'.
+	self
+		assert: (watchdog isTransientSlot: #bounds onClass: diagramClass)
+		description: '#bounds on OPOpenPonkDiagram should be transient'.
+	self
+		deny: (watchdog isTransientSlot: #bounds onClass: OPBoundNode)
+		description: '#bounds on OPBoundNode is persistent geometry and must not be transient'
 ]
 
 { #category : 'tests' }
@@ -73,7 +83,9 @@ OPMutationWatchdogTest >> testExportSuspiciousReportCopiesToClipboard [
 		yourself.
 	watchdog records add: record.
 	report := watchdog exportSuspiciousReport.
-	self assert: (report includesSubstring: 'OPMutationWatchdogTestEntity >> #isWeak').
+	self
+		assert: (report includesSubstring: 'OPMutationWatchdogTestEntity >> #isWeak')
+		description: 'Exported report should mention the mutated class and slot'.
 	self assert: Clipboard clipboardText equals: report
 ]
 
@@ -117,25 +129,43 @@ OPMutationWatchdogTest >> testInvisibleOnMouseShapeSlotsAreTransient [
 	"Verify that temporary edge routing feedback shapes are ignored by the watchdog."
 	| invisibleShapeClass |
 	invisibleShapeClass := OPInvisibleOnMouseShape.
-	self assert: (watchdog isTransientSlot: #bounds onClass: invisibleShapeClass).
-	self assert: (watchdog isTransientSlot: #owningElement onClass: invisibleShapeClass)
+	self
+		assert: (watchdog isTransientSlot: #bounds onClass: invisibleShapeClass)
+		description: '#bounds on OPInvisibleOnMouseShape should be transient'.
+	self
+		assert: (watchdog isTransientSlot: #owningElement onClass: invisibleShapeClass)
+		description: '#owningElement on OPInvisibleOnMouseShape should be transient'
 ]
 
 { #category : 'tests' }
 OPMutationWatchdogTest >> testIsExternalTestContext [
 	"Verify that thisContext inside OPMutationWatchdogTest is recognized as NOT external."
-	self deny: (watchdog isExternalTestContext: thisContext)
+	self
+		deny: (watchdog isExternalTestContext: thisContext)
+		description: 'Context inside OPMutationWatchdogTest should not be treated as an external test context'
 ]
 
 { #category : 'tests' }
 OPMutationWatchdogTest >> testLifecycleSelectorsAreClassifiedAsInitialization [
 	"Verify that visual projection and rendering selectors are classified as initialization, not suspicious."
-	self assert: (watchdog isLifecycleOrProjectionSelector: #createDiagramElement).
-	self assert: (watchdog isLifecycleOrProjectionSelector: #showAllElements).
-	self assert: (watchdog isLifecycleOrProjectionSelector: #renderIn:).
-	self assert: (watchdog isLifecycleOrProjectionSelector: #createOwnedElementsWithoutController).
-	self assert: (watchdog isLifecycleOrProjectionSelector: #updateAfterDiagramFocused).
-	self deny: (watchdog isLifecycleOrProjectionSelector: #isWeak:)
+	self
+		assert: (watchdog isLifecycleOrProjectionSelector: #createDiagramElement)
+		description: '#createDiagramElement should be recognized as lifecycle selector'.
+	self
+		assert: (watchdog isLifecycleOrProjectionSelector: #showAllElements)
+		description: '#showAllElements should be recognized as lifecycle selector'.
+	self
+		assert: (watchdog isLifecycleOrProjectionSelector: #renderIn:)
+		description: '#renderIn: should be recognized as lifecycle selector'.
+	self
+		assert: (watchdog isLifecycleOrProjectionSelector: #createOwnedElementsWithoutController)
+		description: '#createOwnedElementsWithoutController should be recognized as lifecycle selector'.
+	self
+		assert: (watchdog isLifecycleOrProjectionSelector: #updateAfterDiagramFocused)
+		description: '#updateAfterDiagramFocused should be recognized as lifecycle selector'.
+	self
+		deny: (watchdog isLifecycleOrProjectionSelector: #isWeak:)
+		description: 'Domain mutator #isWeak: must not be classified as lifecycle selector'
 ]
 
 { #category : 'tests' }
@@ -143,10 +173,12 @@ OPMutationWatchdogTest >> testNakedMutationIsCaptured [
 	watchdog startWatching.
 	testEntity isWeak: true.
 	watchdog stopWatching.
-
-	self assert:
-		(watchdog records anySatisfy: [ :eachRecord |
-			eachRecord targetClass = 'OPMutationWatchdogTestEntity' and: [ eachRecord slotName = #isWeak and: [ eachRecord newValue ] ] ])
+	self
+		assert:
+			(watchdog records anySatisfy: [ :eachRecord |
+				eachRecord targetClass = 'OPMutationWatchdogTestEntity'
+					and: [ eachRecord slotName = #isWeak and: [ eachRecord newValue ] ] ])
+		description: 'Naked mutation of #isWeak outside transaction should be recorded by watchdog'
 ]
 
 { #category : 'tests' }
@@ -167,32 +199,56 @@ OPMutationWatchdogTest >> testTransactedMutationIsNotSuspicious [
 	watchdog startWatching.
 	projectController undoManager inTransaction: [ testEntity name: 'Customer' ].
 	watchdog stopWatching.
-
-	self assert: (watchdog records anySatisfy: [ :eachRecord |
-		eachRecord slotName = #name and: [ eachRecord isTransacted and: [ eachRecord isSuspicious not ] ] ])
+	self
+		assert:
+			(watchdog records anySatisfy: [ :eachRecord |
+				eachRecord slotName = #name
+					and: [ eachRecord isTransacted and: [ eachRecord isSuspicious not ] ] ])
+		description: 'Mutation inside OPUndoManager transaction must be marked transacted and not suspicious'
 ]
 
 { #category : 'tests' }
 OPMutationWatchdogTest >> testTransientSlotAssignmentNodeIsNotInstrumented [
 	"Verify that assignment nodes to transient slots are not instrumented with metalinks."
 	watchdog startWatching.
-	self deny: (watchdog instrumentedMethods anySatisfy: [ :assoc |
-		assoc key == OPDiagramElement and: [ assoc value = #announcer ] ]).
+	self
+		deny:
+			(watchdog instrumentedMethods anySatisfy: [ :assoc |
+				assoc key == OPDiagramElement and: [ assoc value = #announcer ] ])
+		description: 'Transient slot #announcer on OPDiagramElement must not be instrumented'.
 	watchdog stopWatching
 ]
 
 { #category : 'tests' }
 OPMutationWatchdogTest >> testTransientSlotFiltering [
 	"Verify that transient graphical and runtime slots are recognized as transient and ignored."
-	self assert: (watchdog isTransientSlot: #roassalShape onClass: OPDiagramElement).
-	self assert: (watchdog isTransientSlot: #announcer onClass: OPDiagramElement).
-	self assert: (watchdog isTransientSlot: #canvas onClass: OPDiagramElement).
-	self assert: (watchdog isTransientSlot: #eventHandler onClass: OPDiagramElement).
-	self assert: (watchdog isTransientSlot: #cache onClass: OPDiagramElement).
-	self assert: (watchdog isTransientSlot: #labeled onClass: OPBoundary).
-	self deny: (watchdog isTransientSlot: #name onClass: OPBoundary).
-	self deny: (watchdog isTransientSlot: #bounds onClass: OPBoundNode).
-	self deny: (watchdog isTransientSlot: #isWeak onClass: OPMutationWatchdogTestEntity)
+	self
+		assert: (watchdog isTransientSlot: #roassalShape onClass: OPDiagramElement)
+		description: '#roassalShape should be transient'.
+	self
+		assert: (watchdog isTransientSlot: #announcer onClass: OPDiagramElement)
+		description: '#announcer should be transient'.
+	self
+		assert: (watchdog isTransientSlot: #canvas onClass: OPDiagramElement)
+		description: '#canvas should be transient'.
+	self
+		assert: (watchdog isTransientSlot: #eventHandler onClass: OPDiagramElement)
+		description: '#eventHandler should be transient'.
+	self
+		assert: (watchdog isTransientSlot: #cache onClass: OPDiagramElement)
+		description: '#cache should be transient'.
+	self
+		assert: (watchdog isTransientSlot: #labeled onClass: OPBoundary)
+		description: '#labeled on OPBoundary should be transient'.
+	self
+		deny: (watchdog isTransientSlot: #name onClass: OPBoundary)
+		description: '#name on OPBoundary must not be transient'.
+	self
+		deny: (watchdog isTransientSlot: #bounds onClass: OPBoundNode)
+		description: '#bounds on OPBoundNode must not be transient'.
+	self
+		deny: (watchdog isTransientSlot: #isWeak onClass: OPMutationWatchdogTestEntity)
+		description: '#isWeak on OPMutationWatchdogTestEntity must not be transient'
 ]
 
 { #category : 'tests' }

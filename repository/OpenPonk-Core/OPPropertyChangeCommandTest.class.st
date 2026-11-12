@@ -52,19 +52,20 @@ OPPropertyChangeCommandTest >> testCoalescingClearsRedoStackInManager [
 
 { #category : 'tests' }
 OPPropertyChangeCommandTest >> testCoalescingWithinTimeout [
-
 	| cmd1 cmd2 |
 	cmd1 := OPPropertyChangeCommand
-		        viewModel: target
-		        selector: #name
-		        oldValue: 'Original'
-		        newValue: 'Draft'.
+		viewModel: target
+		selector: #name
+		oldValue: 'Original'
+		newValue: 'Draft'.
 	cmd2 := OPPropertyChangeCommand
-		        viewModel: target
-		        selector: #name
-		        oldValue: 'Draft'
-		        newValue: 'Final'.
-	self assert: (cmd1 canCoalesceWith: cmd2).
+		viewModel: target
+		selector: #name
+		oldValue: 'Draft'
+		newValue: 'Final'.
+	self
+		assert: (cmd1 canCoalesceWith: cmd2)
+		description: 'Consecutive changes to the same target and selector within timeout should coalesce'.
 	cmd1 coalesceWith: cmd2.
 	self assert: cmd1 oldValue equals: 'Original'.
 	self assert: cmd1 newValue equals: 'Final'.
@@ -90,53 +91,56 @@ OPPropertyChangeCommandTest >> testExecuteAndUndo [
 
 { #category : 'tests' }
 OPPropertyChangeCommandTest >> testNoCoalescingAfterTimeout [
-
 	| cmd1 cmd2 |
 	cmd1 := OPPropertyChangeCommand
-		        viewModel: target
-		        selector: #name
-		        oldValue: 'Original'
-		        newValue: 'Draft'.
+		viewModel: target
+		selector: #name
+		oldValue: 'Original'
+		newValue: 'Draft'.
 	cmd1 timestamp: DateAndTime now - 2 seconds.
 	cmd2 := OPPropertyChangeCommand
-		        viewModel: target
-		        selector: #name
-		        oldValue: 'Draft'
-		        newValue: 'Final'.
-	self deny: (cmd1 canCoalesceWith: cmd2)
+		viewModel: target
+		selector: #name
+		oldValue: 'Draft'
+		newValue: 'Final'.
+	self
+		deny: (cmd1 canCoalesceWith: cmd2)
+		description: 'Commands separated by more than the coalescing timeout must not coalesce'
 ]
 
 { #category : 'tests' }
 OPPropertyChangeCommandTest >> testNoCoalescingDifferentSelectors [
-
 	| cmd1 cmd2 |
 	cmd1 := OPPropertyChangeCommand
-		        viewModel: target
-		        selector: #name
-		        oldValue: 'A'
-		        newValue: 'B'.
+		viewModel: target
+		selector: #name
+		oldValue: 'A'
+		newValue: 'B'.
 	cmd2 := OPPropertyChangeCommand
-		        viewModel: target
-		        selector: #description
-		        oldValue: 'B'
-		        newValue: 'C'.
-	self deny: (cmd1 canCoalesceWith: cmd2)
+		viewModel: target
+		selector: #description
+		oldValue: 'B'
+		newValue: 'C'.
+	self
+		deny: (cmd1 canCoalesceWith: cmd2)
+		description: 'Commands modifying different property selectors must not coalesce'
 ]
 
 { #category : 'tests' }
 OPPropertyChangeCommandTest >> testNoCoalescingDifferentTargets [
-
 	| otherTarget cmd1 cmd2 |
 	otherTarget := OPUndoTestViewModel new.
 	cmd1 := OPPropertyChangeCommand
-		        viewModel: target
-		        selector: #name
-		        oldValue: 'A'
-		        newValue: 'B'.
+		viewModel: target
+		selector: #name
+		oldValue: 'A'
+		newValue: 'B'.
 	cmd2 := OPPropertyChangeCommand
-		        viewModel: otherTarget
-		        selector: #name
-		        oldValue: 'B'
-		        newValue: 'C'.
-	self deny: (cmd1 canCoalesceWith: cmd2)
+		viewModel: otherTarget
+		selector: #name
+		oldValue: 'B'
+		newValue: 'C'.
+	self
+		deny: (cmd1 canCoalesceWith: cmd2)
+		description: 'Commands modifying different target view models must not coalesce'
 ]

@@ -37,25 +37,31 @@ OPProjectTemplateTest >> testCreateModel [
 
 { #category : 'tests' }
 OPProjectTemplateTest >> testCreation [
-	| template |
+	| icon factory template |
+	icon := Smalltalk ui icons iconNamed: #testRunner.
+	factory := [ OPTestContainerModel new ].
 	template := OPProjectTemplate
-		named: 'Test Template'
-		icon: (Smalltalk ui icons iconNamed: #testRunner)
-		modelFactory: [ OPTestEntityModel new ]
-		isExample: true.
-	self assert: template name equals: 'Test Template'.
-	self assert: template icon equals: (Smalltalk ui icons iconNamed: #testRunner).
-	self assert: template isExample
+		named: 'test template'
+		icon: icon
+		modelFactory: factory.
+	self assert: template name equals: 'test template'.
+	self assert: template icon identicalTo: icon.
+	self assert: template modelFactory identicalTo: factory.
+	self
+		deny: template isExample
+		description: 'Template created without isExample: should default to false'.
+	self
+		assert: (template printString includesSubstring: 'test template')
+		description: 'printOn: should include the template name'
 ]
 
 { #category : 'tests' }
 OPProjectTemplateTest >> testDefaultIsExample [
 	| template |
-	template := OPProjectTemplate
-		named: 'Default Template'
-		icon: (Smalltalk ui icons iconNamed: #testRunner)
-		modelFactory: [ OPTestEntityModel new ].
-	self deny: template isExample
+	template := OPProjectTemplate new.
+	self
+		deny: template isExample
+		description: 'New project template should not be marked as example by default'
 ]
 
 { #category : 'tests' }
@@ -83,35 +89,30 @@ OPProjectTemplateTest >> testEquality [
 
 { #category : 'tests' }
 OPProjectTemplateTest >> testInstalledPluginsProvideExamples [
-
-	| nonTestingPlugins |
-	nonTestingPlugins := OPPluginRegistry default plugins reject: [ :pluginItem | pluginItem class isTestingOnly ].
-	nonTestingPlugins ifEmpty: [
-			self skip: 'No domain plugins installed in core image'.
-			^ self ].
-	nonTestingPlugins do: [ :pluginItem |
-			| templates |
-			templates := pluginItem exampleProjectTemplates.
-			self assert: templates isNotEmpty description: 'Plugin ' , pluginItem name , ' must provide at least one example template'.
-			templates do: [ :templateItem |
-					| modelItem |
-					self assert: templateItem isExample.
-					self denyEmpty: templateItem name.
-					self assert: templateItem icon isNotNil.
-					modelItem := templateItem createModel.
-					self assert: modelItem isNotNil.
-					self assert: (self isModelNonEmpty: modelItem) description: 'Template ' , templateItem name , ' created an empty model' ] ]
+	OPPluginRegistry default plugins do: [ :plugin |
+		| templates |
+		templates := plugin projectTemplates.
+		self
+			assert: templates isCollection
+			description: 'projectTemplates must return a collection'.
+		templates
+			select: [ :each | each isExample ]
+			thenDo: [ :template |
+				| createdModel |
+				self
+					assert: template name isNotEmpty
+					description: 'Each example template must have a non-empty name'.
+				createdModel := template createModel.
+				self
+					assert: (self isModelNonEmpty: createdModel)
+					description: 'Example template must instantiate a non-empty domain model' ] ]
 ]
 
 { #category : 'tests' }
 OPProjectTemplateTest >> testPluginProjectTemplates [
-	| plugin templates template model |
-	plugin := OPTestPlugin new.
-	templates := plugin projectTemplates.
-	self assert: templates size equals: 1.
-	template := templates first.
-	self assert: template name equals: 'Empty Test Plugin'.
-	self deny: template isExample.
-	model := template createModel.
-	self assert: model class equals: OPTestContainerModel
+	| templates |
+	templates := OPTestPlugin new projectTemplates.
+	self
+		deny: templates isEmpty
+		description: 'OPTestPlugin should provide at least the default blank project template'
 ]

@@ -123,7 +123,7 @@ OPAbstractPluginExampleRoundtripTest >> testExampleTemplatesRoundtripPersistence
 		self verifyTemplateRoundtrip: eachTemplate ]
 ]
 
-{ #category : 'testing' }
+{ #category : 'asserting' }
 OPAbstractPluginExampleRoundtripTest >> verifyTemplateRoundtrip: aProjectTemplate [
 	| originalProject originalControllersCount loadedProject loadedControllersCount initialControllersModelUuids loadedControllersModelUuids initialViewModelHierarchyModelUuids loadedViewModelHierarchyModelUuids initialControllerSignatures loadedControllerSignatures initialAllOwnedElementSignatures loadedAllOwnedElementSignatures initialCameras loadedCameras |
 	originalProject := OPProject named: ('Roundtrip_' , aProjectTemplate name).
@@ -168,7 +168,7 @@ OPAbstractPluginExampleRoundtripTest >> verifyTemplateRoundtrip: aProjectTemplat
 		workbench := nil.
 
 		loadedProject := OPProjectController fromFile: memoryFile.
-		self assert: loadedProject isNotNil.
+		self deny: loadedProject identicalTo: nil.
 		self assert: loadedProject models size equals: originalProject models size.
 		self assert: loadedProject diagrams size equals: originalProject diagrams size.
 

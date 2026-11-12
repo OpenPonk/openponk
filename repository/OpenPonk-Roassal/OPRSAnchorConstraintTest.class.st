@@ -111,6 +111,54 @@ OPRSAnchorConstraintTest >> testRemoveDetachesAnchorAndGuideLine [
 ]
 
 { #category : 'tests' }
+OPRSAnchorConstraintTest >> testStartAndEndAndBalanceReferences [
+	| startRef endRef balanceRef segments startAssoc endAssoc balanceAssoc |
+	constraint
+		balance: 0.5;
+		stick: anchoredShape on: line.
+	segments := constraint createUpdater segments.
+
+	startRef := OPRSAnchorConstraintStartDistanceReference distance: 15.
+	self assert: (startRef guideLineTargetFor: constraint) identicalTo: constraint anchorShape.
+	self assert: (startRef computeAbsoluteBalanceForLength: 100) equals: 15.
+	self assert: (startRef segmentIn: constraint) from equals: segments first from.
+	self assert: (startRef referencePointOfSegment: segments first) equals: segments first from.
+	self assert: (startRef farPointOfSegment: segments first) equals: segments first to.
+	startAssoc := startRef anchorSegmentFrom: segments andPointFrom: 15.
+	self assert: startAssoc key equals: segments first.
+	anchoredShape translateTo: 25 @ 10.
+	startRef saveShapePositionIn: constraint.
+	self
+		assert: (startRef computeAbsoluteBalanceForLength: 100) > 0
+		description: 'Saved start distance should be positive'.
+
+	endRef := OPRSAnchorConstraintEndDistanceReference distance: 20.
+	self assert: (endRef computeAbsoluteBalanceForLength: 100) equals: 80.
+	self assert: (endRef segmentIn: constraint) to equals: segments last to.
+	self assert: (endRef referencePointOfSegment: segments last) equals: segments last to.
+	self assert: (endRef farPointOfSegment: segments last) equals: segments last from.
+	endAssoc := endRef anchorSegmentFrom: segments andPointFrom: 80.
+	self assert: endAssoc key equals: segments last.
+	endRef saveShapePositionIn: constraint.
+	self
+		assert: (endRef computeAbsoluteBalanceForLength: 200) < 200
+		description: 'Saved end distance should be less than total length'.
+
+	balanceRef := OPRSAnchorConstraintBalanceReference balance: 0.5.
+	self assert: balanceRef balance equals: 0.5.
+	self assert: (balanceRef computeAbsoluteBalanceForLength: 100) equals: 50.0.
+	balanceAssoc := balanceRef anchorSegmentFrom: segments andPointFrom: 50.
+	self assert: balanceAssoc value equals: 50 @ 0.
+	self
+		should: [ balanceRef anchorSegmentFrom: segments andPointFrom: 500 ]
+		raise: Error.
+	balanceRef saveShapePositionIn: constraint.
+	self
+		assert: (balanceRef balance between: 0 and: 1)
+		description: 'Saved balance should lie between 0 and 1'
+]
+
+{ #category : 'tests' }
 OPRSAnchorConstraintTest >> testStartAndEndDistanceReferencesAndGuideLineModes [
 	| updater |
 	constraint

@@ -83,20 +83,24 @@ OPLegacyRelationshipPath >> hash [
 
 { #category : 'accessing' }
 OPLegacyRelationshipPath >> points [
+
 	^ points
 ]
 
 { #category : 'accessing' }
 OPLegacyRelationshipPath >> points: anArrayOfPoints [
+
 	points := anArrayOfPoints
 ]
 
 { #category : 'accessing' }
 OPLegacyRelationshipPath >> source [
+
 	^ source
 ]
 
 { #category : 'accessing' }
 OPLegacyRelationshipPath >> source: anId [
+
 	source := anId
 ]

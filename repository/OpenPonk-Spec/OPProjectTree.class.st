@@ -152,14 +152,20 @@ OPProjectTree >> initializeWindow: aWindow [
 	aWindow initialExtent: 600 @ 800
 ]
 
-{ #category : 'accessing' }
+{ #category : 'opening' }
 OPProjectTree >> openOn: aProjectViewModel [
 	projectViewModel := aProjectViewModel.
 	expandedViewModels := IdentitySet new.
-	self projectController undoManager announcer weak
-		when: OPUndoRedoChanged
-		send: #undoRedoChanged:
-		to: self.
+	self projectController ifNotNil: [ :controller |
+		controller project ifNotNil: [ :activeProject |
+			activeProject announcer weak
+				when: OPModelAdded send: #refresh to: self;
+				when: OPModelRemoved send: #refresh to: self;
+				when: OPProjectRenamed send: #refresh to: self ].
+		controller undoManager announcer weak
+			when: OPUndoRedoChanged
+			send: #undoRedoChanged:
+			to: self ].
 	self refresh
 ]
 

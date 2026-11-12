@@ -36,10 +36,18 @@ OPZoomToolbarPresenterTest >> tearDown [
 { #category : 'tests' }
 OPZoomToolbarPresenterTest >> testInitialValues [
 	"Verifies initial presence of all viewport buttons and correct default labels."
-	self assert: toolbarPresenter zoomOutButton isNotNil.
-	self assert: toolbarPresenter zoomValueButton isNotNil.
-	self assert: toolbarPresenter zoomInButton isNotNil.
-	self assert: toolbarPresenter zoomFitButton isNotNil.
+	self
+		assert: toolbarPresenter zoomOutButton isNotNil
+		description: 'Zoom toolbar must initialize zoomOutButton'.
+	self
+		assert: toolbarPresenter zoomValueButton isNotNil
+		description: 'Zoom toolbar must initialize zoomValueButton'.
+	self
+		assert: toolbarPresenter zoomInButton isNotNil
+		description: 'Zoom toolbar must initialize zoomInButton'.
+	self
+		assert: toolbarPresenter zoomFitButton isNotNil
+		description: 'Zoom toolbar must initialize zoomFitButton'.
 	self assert: toolbarPresenter zoomValueButton label equals: '100%'.
 	self assert: toolbarPresenter zoomFitButton label equals: 'Zoom to Fit'
 ]

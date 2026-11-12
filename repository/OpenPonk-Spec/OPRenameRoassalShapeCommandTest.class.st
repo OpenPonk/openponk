@@ -39,14 +39,20 @@ OPRenameRoassalShapeCommandTest >> tearDown [
 
 { #category : 'tests' }
 OPRenameRoassalShapeCommandTest >> testCanBeExecutedOnlyWithSingleSelection [
-	command instVarNamed: #controllers put: { }.
-	self deny: command canBeExecuted.
+	command instVarNamed: #controllers put: {  }.
+	self
+		deny: command canBeExecuted
+		description: 'Rename shape command must not be executable when selection is empty'.
 
 	command instVarNamed: #controllers put: { elementController }.
-	self assert: command canBeExecuted.
+	self
+		assert: command canBeExecuted
+		description: 'Rename shape command should be executable when exactly one controller is selected'.
 
 	command instVarNamed: #controllers put: { elementController . Mock new }.
-	self deny: command canBeExecuted
+	self
+		deny: command canBeExecuted
+		description: 'Rename shape command must not be executable when multiple controllers are selected'
 ]
 
 { #category : 'tests' }
@@ -55,7 +61,9 @@ OPRenameRoassalShapeCommandTest >> testExecuteSelectsControllerAndFocusesFirstIn
 	command execute.
 
 	diagramController should receive selectController: elementController.
-	self assert: formSpy focusTaken
+	self
+		assert: formSpy focusTaken
+		description: 'Executing rename shape command should focus the first input in properties form'
 ]
 
 { #category : 'tests' }

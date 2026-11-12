@@ -100,18 +100,16 @@ OPElementControllerTest >> testAddAsSourceForRelation [
 	self assert: relationController source equals: controller
 ]
 
-{ #category : 'tests - connecting' }
+{ #category : 'tests' }
 OPElementControllerTest >> testCanBeSourceForRelation [
 	self
-		assert:
-			(controller
-				canBeSourceFor: (diagramController newControllerFor: OPTestRelationModel new))
+		assert: (controller canBeSourceFor: (diagramController newControllerFor: OPTestRelationModel new))
+		description: 'Entity controller should be a valid source for relation controller'
 ]
 
-{ #category : 'tests - connecting' }
+{ #category : 'tests' }
 OPElementControllerTest >> testCanBeTargetForRelation [
 	self
-		assert:
-			(controller
-				canBeTargetFor: (diagramController newControllerFor: OPTestRelationModel new))
+		assert: (controller canBeTargetFor: (diagramController newControllerFor: OPTestRelationModel new))
+		description: 'Entity controller should be a valid target for relation controller'
 ]

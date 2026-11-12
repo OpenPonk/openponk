@@ -50,7 +50,11 @@ OPControllerFactoryTest >> testNewControllerForWithPriority [
 
 { #category : 'tests' }
 OPControllerFactoryTest >> testRegister [
-	self deny: (factory hasControllerFor: OPTestEntityModel new).
+	self
+		deny: (factory hasControllerFor: OPTestEntityModel new)
+		description: 'Factory should not have controller before registration'.
 	factory register: OPTestEntityController forModel: OPTestEntityModel.
-	self assert: (factory hasControllerFor: OPTestEntityModel new)
+	self
+		assert: (factory hasControllerFor: OPTestEntityModel new)
+		description: 'Factory should have controller after registering OPTestEntityController'
 ]

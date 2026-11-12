@@ -62,6 +62,43 @@ OPProjectTest >> testEqualityWithNonProjectReturnsFalse [
 ]
 
 { #category : 'tests' }
+OPProjectTest >> testMergeWithAndCopyDiagramAndStorage [
+	| otherProject otherModel otherDiagram copiedDiagram tempFolder |
+	project := OPProject name: 'Primary Project'.
+	self assert: project name equals: 'Primary Project'.
+	self assert: project hash equals: project uuid hash.
+	self assert: project descriptionName label equals: 'Name'.
+	project addModel: model.
+	project ensureModelsHaveDiagrams.
+	copiedDiagram := project copyDiagram: project diagrams first.
+	self assert: project diagrams size equals: 2.
+	self deny: copiedDiagram identicalTo: project diagrams first.
+	otherProject := OPProject name: 'Secondary Project'.
+	otherModel := OPTestContainerModel new name: 'OtherContainer'; yourself.
+	otherDiagram := OPOpenPonkDiagram forModelElement: otherModel.
+	otherProject addDiagram: otherDiagram.
+	project mergeWith: otherProject.
+	self assertEmpty: otherProject models.
+	self assertCollection: project models includesAll: { model . otherModel }.
+	self assertCollection: project diagrams includesAll: { otherDiagram }.
+	project diagrams: { copiedDiagram }.
+	self assert: project diagrams asArray equals: { copiedDiagram }.
+	tempFolder := FileSystem memory root / 'proj-folder'.
+	project storageFolder: tempFolder.
+	self assert: project storageFolder equals: tempFolder.
+	[
+		project saveInImage.
+		self
+			assert: (OPProjectStorage default projects includes: project)
+			description: 'saveInImage should register project in OPProjectStorage default'.
+		project removeFromImage.
+		self
+			deny: (OPProjectStorage default projects includes: project)
+			description: 'removeFromImage should remove project from OPProjectStorage default'
+	] ensure: [ project removeFromImage ]
+]
+
+{ #category : 'tests' }
 OPProjectTest >> testRemoveModel [
 
 	project addModel: model.

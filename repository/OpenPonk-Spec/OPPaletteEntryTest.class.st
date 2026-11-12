@@ -29,7 +29,9 @@ OPPaletteEntryTest >> testWhenCreatedSetupFocusesForm [
 	creationTool instVarNamed: #controller put: dummyController.
 	creationTool doOnCompleteActions.
 
-	self assert: formSpy focusTaken
+	self
+		assert: formSpy focusTaken
+		description: 'Completing creation tool should focus first input on properties form'
 ]
 
 { #category : 'tests' }
@@ -48,5 +50,7 @@ OPPaletteEntryTest >> testWhenCreatedSetupWithoutDiagramController [
 	creationTool instVarNamed: #controller put: dummyController.
 	creationTool doOnCompleteActions.
 
-	self assert: callbackExecuted
+	self
+		assert: callbackExecuted
+		description: 'whenCreated: callback should execute even when diagramController is nil'
 ]

@@ -44,18 +44,23 @@ OPRemoveModelCommandTest >> testCanBeExecutedOnlyOnNonProjectViewModel [
 	command context: contextStub.
 
 	contextStub stub selectedItem willReturn: OPProjectViewModel new.
-	self deny: command canBeExecuted.
+	self
+		deny: command canBeExecuted
+		description: 'OPRemoveModelCommand must not be executable on OPProjectViewModel'.
 
 	contextStub stub selectedItem willReturn: OPViewModel new.
-	self assert: command canBeExecuted.
+	self
+		assert: command canBeExecuted
+		description: 'OPRemoveModelCommand should be executable on removable domain viewModel'.
 
 	contextStub stub selectedItem willReturn: nil.
-	self deny: command canBeExecuted
+	self
+		deny: command canBeExecuted
+		description: 'OPRemoveModelCommand must not be executable when selection is nil'
 ]
 
 { #category : 'tests' }
 OPRemoveModelCommandTest >> testExecuteRemovesModelElementAndCanUndo [
-
 	| command contextStub |
 	command := OPRemoveModelCommand new.
 	contextStub := Mock new.
@@ -65,5 +70,7 @@ OPRemoveModelCommandTest >> testExecuteRemovesModelElementAndCanUndo [
 
 	command execute.
 	self denyCollection: project models includesAny: { model }.
-	self assert: undoManager canUndo
+	self
+		assert: undoManager canUndo
+		description: 'Executing OPRemoveModelCommand should record an undoable command'
 ]

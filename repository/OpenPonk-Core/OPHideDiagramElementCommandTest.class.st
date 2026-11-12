@@ -59,7 +59,6 @@ OPHideDiagramElementCommandTest >> setUp [
 
 { #category : 'tests' }
 OPHideDiagramElementCommandTest >> testHideNodeAndUndoRedo [
-
 	| command node1Element initialBounds |
 	node1Element := (diagramController controllerForModel: nodeModel1) diagramElement.
 	initialBounds := OPNodeBounds withPosition: 40 @ 40 extent: 60 @ 60.
@@ -73,32 +72,42 @@ OPHideDiagramElementCommandTest >> testHideNodeAndUndoRedo [
 
 	undoManager inTransaction: [ undoManager execute: command ].
 
-	"Visual controllers for node1 and edge must be removed from diagram"
 	self assert: diagramController controllers size equals: 1.
-	self assert: (diagramController hasControllerForModel: nodeModel2).
-	self deny: (diagramController hasControllerForModel: nodeModel1).
-	self deny: (diagramController hasControllerForModel: edgeModel).
+	self
+		assert: (diagramController hasControllerForModel: nodeModel2)
+		description: 'Unrelated node2 must remain visible in diagram'.
+	self
+		deny: (diagramController hasControllerForModel: nodeModel1)
+		description: 'Hidden node1 must no longer have a controller in diagram'.
+	self
+		deny: (diagramController hasControllerForModel: edgeModel)
+		description: 'Dependent edge connected to hidden node1 must also be hidden'.
 
-	"Domain model MUST remain completely untouched"
 	self assert: containerModel entities size equals: 3.
 	self assertCollection: containerModel entities includesAll: { nodeModel1 }.
 	self assertCollection: containerModel entities includesAll: { edgeModel }.
 
-	"Undo must restore controllers and geometry dynamically"
 	undoManager undo.
 
 	self assert: diagramController controllers size equals: 3.
-	self assert: (diagramController hasControllerForModel: nodeModel1).
-	self assert: (diagramController hasControllerForModel: edgeModel).
+	self
+		assert: (diagramController hasControllerForModel: nodeModel1)
+		description: 'Undoing hide command must restore controller for node1'.
+	self
+		assert: (diagramController hasControllerForModel: edgeModel)
+		description: 'Undoing hide command must restore controller for dependent edge'.
 	self assert: (diagramController controllerForModel: nodeModel1) diagramElement bounds position equals: 40 @ 40.
 	self
 		assert: (diagramController controllerForModel: edgeModel) diagramElement source
 		equals: (diagramController controllerForModel: nodeModel1) diagramElement.
 
-	"Redo must hide them again"
 	undoManager redo.
 	self assert: diagramController controllers size equals: 1.
-	self deny: (diagramController hasControllerForModel: nodeModel1).
-	self deny: (diagramController hasControllerForModel: edgeModel).
+	self
+		deny: (diagramController hasControllerForModel: nodeModel1)
+		description: 'Redoing hide command must hide node1 again'.
+	self
+		deny: (diagramController hasControllerForModel: edgeModel)
+		description: 'Redoing hide command must hide dependent edge again'.
 	self assert: containerModel entities size equals: 3
 ]

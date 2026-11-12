@@ -75,7 +75,7 @@ OPRemoveModelElementCommandTest >> testCaptureDiagramElementsSynchronizesBoundsF
 	containerModel := OPTestContainerModel new.
 	entityModel := OPTestEntityModel new.
 	containerModel add: entityModel.
-	project := OPProject named: 'TestHeadless'.
+	project := OPProject name: 'TestHeadless'.
 	project addModel: containerModel.
 	projectController := OPProjectController forProject: project.
 	diagram := OPOpenPonkDiagram forModelElement: containerModel.
@@ -95,8 +95,12 @@ OPRemoveModelElementCommandTest >> testCaptureDiagramElementsSynchronizesBoundsF
 	capturedDescriptor := removeCommand diagramElementDescriptors detect: [ :eachDescriptor |
 		eachDescriptor diagramElement == diagramElement ].
 
-	self assert: capturedDescriptor bounds isNotNil.
-	self assert: (capturedDescriptor bounds isKindOf: OPNodeBounds).
+	self
+		assert: capturedDescriptor bounds isNotNil
+		description: 'Captured diagram element descriptor must include bounds'.
+	self
+		assert: (capturedDescriptor bounds isKindOf: OPNodeBounds)
+		description: 'Captured bounds must be an instance of OPNodeBounds'.
 	self assert: capturedDescriptor bounds position equals: 150 @ 250
 ]
 
@@ -227,7 +231,7 @@ OPRemoveModelElementCommandTest >> testCascadeRemovalAndUndoRedoWithoutDiagramIn
 { #category : 'tests' }
 OPRemoveModelElementCommandTest >> testRemoveRootModelWithoutOwnerSucceedsAndRestoresOnUndo [
 	| rootModel project projectController removeCommand |
-	project := OPProject named: 'RootModelTest'.
+	project := OPProject name: 'RootModelTest'.
 	rootModel := OPTestContainerModel new.
 	rootModel name: 'RootContainer'.
 	project addModel: rootModel.
@@ -240,11 +244,11 @@ OPRemoveModelElementCommandTest >> testRemoveRootModelWithoutOwnerSucceedsAndRes
 		projectController: projectController.
 
 	projectController undoManager execute: removeCommand.
-	self assertCollection: project models hasSameElements: #( ).
+	self assertCollection: project models hasSameElements: #(  ).
 
 	projectController undoManager undo.
 	self assertCollection: project models hasSameElements: { rootModel }.
 
 	projectController undoManager redo.
-	self assertCollection: project models hasSameElements: #( )
+	self assertCollection: project models hasSameElements: #(  )
 ]

@@ -48,7 +48,6 @@ OPRSDraggableCPControllerTest >> testCollinearDragRemovesPointWithoutCrashingOnR
 		(eachHandle instVarNamed: #indexOfControlPoint) = 2 ].
 	handle instVarNamed: #initialWaypoints put: polyline controlPoints copy.
 
-	"Move the point to collinear position (50 @ 0)"
 	polyline controlPoints: { 0 @ 0 . 50 @ 0 . 100 @ 0 }.
 
 	dragEndEvent := RSMouseDragEnd new
@@ -59,7 +58,9 @@ OPRSDraggableCPControllerTest >> testCollinearDragRemovesPointWithoutCrashingOnR
 
 	self assert: polyline controlPoints size equals: 2.
 	self assert: polyline controlPoints equals: { 0 @ 0 . 100 @ 0 }.
-	self assert: (handle instVarNamed: #line) isNil
+	self
+		assert: (handle instVarNamed: #line) isNil
+		description: 'Removed collinear handle should have its line reference cleared'
 ]
 
 { #category : 'tests' }

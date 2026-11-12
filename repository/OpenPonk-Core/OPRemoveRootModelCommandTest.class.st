@@ -42,24 +42,24 @@ OPRemoveRootModelCommandTest >> tearDown [
 
 { #category : 'tests' }
 OPRemoveRootModelCommandTest >> testExecuteRemovesModelAndAssociatedDiagramAndAnnounces [
-
 	| removeCommand announcedClasses |
 	removeCommand := OPRemoveModelElementCommand model: packageModel projectController: projectController.
 
 	removeCommand execute.
 
-	self deny: (project hasModel: packageModel).
+	self
+		deny: (project hasModel: packageModel)
+		description: 'Project must not contain the root model after executing removal command'.
 	self denyCollection: project diagrams includesAny: { diagram }.
 
 	announcedClasses := announcedEvents collect: #class.
 	self assertCollection: announcedClasses includesAll: {
-			OPModelRemoved.
-			OPDiagramRemoved }
+		OPModelRemoved.
+		OPDiagramRemoved }
 ]
 
 { #category : 'tests' }
 OPRemoveRootModelCommandTest >> testRedoReappliesRemovalAndAnnounces [
-
 	| removeCommand announcedClasses |
 	removeCommand := OPRemoveModelElementCommand model: packageModel projectController: projectController.
 
@@ -68,18 +68,19 @@ OPRemoveRootModelCommandTest >> testRedoReappliesRemovalAndAnnounces [
 	announcedEvents removeAll.
 	removeCommand redo.
 
-	self deny: (project hasModel: packageModel).
+	self
+		deny: (project hasModel: packageModel)
+		description: 'Redoing root model removal must remove the model from project again'.
 	self denyCollection: project diagrams includesAny: { diagram }.
 
 	announcedClasses := announcedEvents collect: #class.
 	self assertCollection: announcedClasses includesAll: {
-			OPModelRemoved.
-			OPDiagramRemoved }
+		OPModelRemoved.
+		OPDiagramRemoved }
 ]
 
 { #category : 'tests' }
 OPRemoveRootModelCommandTest >> testUndoRestoresModelAndAssociatedDiagramAndAnnounces [
-
 	| removeCommand announcedClasses |
 	removeCommand := OPRemoveModelElementCommand model: packageModel projectController: projectController.
 
@@ -87,11 +88,13 @@ OPRemoveRootModelCommandTest >> testUndoRestoresModelAndAssociatedDiagramAndAnno
 	announcedEvents removeAll.
 	removeCommand undo.
 
-	self assert: (project hasModel: packageModel).
+	self
+		assert: (project hasModel: packageModel)
+		description: 'Undoing root model removal must restore the model into project'.
 	self assertCollection: project diagrams includesAll: { diagram }.
 
 	announcedClasses := announcedEvents collect: #class.
 	self assertCollection: announcedClasses includesAll: {
-			OPModelAdded.
-			OPDiagramAdded }
+		OPModelAdded.
+		OPDiagramAdded }
 ]

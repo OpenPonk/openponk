@@ -17,11 +17,17 @@ OPRenameProjectTreeCommandTest >> testCanBeExecutedOnlyOnProjectViewModel [
 	command context: projectTreeStub.
 
 	projectTreeStub stub selectedItem willReturn: OPProjectViewModel new.
-	self assert: command canBeExecuted.
+	self
+		assert: command canBeExecuted
+		description: 'OPRenameProjectTreeCommand should be executable when OPProjectViewModel is selected'.
 
 	projectTreeStub stub selectedItem willReturn: OPViewModel new.
-	self deny: command canBeExecuted.
+	self
+		deny: command canBeExecuted
+		description: 'OPRenameProjectTreeCommand must not be executable on non-project view models'.
 
 	projectTreeStub stub selectedItem willReturn: nil.
-	self deny: command canBeExecuted
+	self
+		deny: command canBeExecuted
+		description: 'OPRenameProjectTreeCommand must not be executable when selection is nil'
 ]

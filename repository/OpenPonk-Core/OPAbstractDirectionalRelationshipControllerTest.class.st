@@ -168,7 +168,7 @@ OPAbstractDirectionalRelationshipControllerTest >> targetModelClass [
 	^ self sourceModelClass
 ]
 
-{ #category : 'tests - undo/redo' }
+{ #category : 'tests' }
 OPAbstractDirectionalRelationshipControllerTest >> testCascadeDeleteUndoRedo [
 	| undoManager relModel |
 	self testCreateUsingAddAsTarget.
@@ -177,23 +177,39 @@ OPAbstractDirectionalRelationshipControllerTest >> testCascadeDeleteUndoRedo [
 
 	diagramController removeModelElement: sourceModel.
 
-	self deny: (diagramController hasControllerForModel: relModel).
-	self deny: (diagramController hasControllerForModel: sourceModel).
+	self
+		deny: (diagramController hasControllerForModel: relModel)
+		description: 'Relationship controller should be removed after deleting source model'.
+	self
+		deny: (diagramController hasControllerForModel: sourceModel)
+		description: 'Source model controller should be removed'.
 	self denyCollection: self allElements includesAny: { relModel . sourceModel }.
 
 	undoManager undo.
-	self assert: (diagramController hasControllerForModel: relModel).
-	self assert: (diagramController hasControllerForModel: sourceModel).
+	self
+		assert: (diagramController hasControllerForModel: relModel)
+		description: 'Relationship controller should be restored on undo'.
+	self
+		assert: (diagramController hasControllerForModel: sourceModel)
+		description: 'Source model controller should be restored on undo'.
 	self assertCollection: self allElements includesAll: { relModel . sourceModel }.
 
 	undoManager redo.
-	self deny: (diagramController hasControllerForModel: relModel).
-	self deny: (diagramController hasControllerForModel: sourceModel).
+	self
+		deny: (diagramController hasControllerForModel: relModel)
+		description: 'Relationship controller should be removed on redo'.
+	self
+		deny: (diagramController hasControllerForModel: sourceModel)
+		description: 'Source model controller should be removed on redo'.
 	self denyCollection: self allElements includesAny: { relModel . sourceModel }.
 
 	undoManager undo.
-	self assert: (diagramController hasControllerForModel: relModel).
-	self assert: (diagramController hasControllerForModel: sourceModel).
+	self
+		assert: (diagramController hasControllerForModel: relModel)
+		description: 'Relationship controller should be restored on second undo'.
+	self
+		assert: (diagramController hasControllerForModel: sourceModel)
+		description: 'Source model controller should be restored on second undo'.
 	self assertCollection: self allElements includesAll: { relModel . sourceModel }
 ]
 
@@ -223,7 +239,7 @@ OPAbstractDirectionalRelationshipControllerTest >> testCreateAndShow [
 		includesAll: { controller roassalShape }
 ]
 
-{ #category : 'tests - construction' }
+{ #category : 'tests' }
 OPAbstractDirectionalRelationshipControllerTest >> testCreateModel [
 
 	| createdModel |
@@ -231,7 +247,7 @@ OPAbstractDirectionalRelationshipControllerTest >> testCreateModel [
 	controller source: self sourceController.
 	controller target: self targetController.
 	createdModel := controller createModelIn: diagramController model.
-	self assert: controller model isNotNil.
+	self deny: controller model identicalTo: nil.
 	self assert: createdModel equals: controller model.
 	self
 		assert: controller viewModel modelSource

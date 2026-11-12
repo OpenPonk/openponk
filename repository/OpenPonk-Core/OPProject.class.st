@@ -206,12 +206,6 @@ OPProject >> removeDiagram: aDiagram [
 		ifPresent: [ :diagrams | diagrams remove: aDiagram ]
 ]
 
-{ #category : 'removing' }
-OPProject >> removeDiagramsOf: aModel [
-
-	(modelsAndDiagrams at: aModel) removeAll
-]
-
 { #category : 'persistence' }
 OPProject >> removeFromImage [
 	OPProjectStorage default remove: self

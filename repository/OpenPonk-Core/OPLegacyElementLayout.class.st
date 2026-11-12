@@ -91,29 +91,27 @@ OPLegacyElementLayout >> = anOtherLayout [
 OPLegacyElementLayout >> applyToDiagramElement: aDiagramElement [
 
 	position
-		ifNil: [
-			path ifNotNil: [
-				aDiagramElement innerWaypoints:
-					(path points copyFrom: 2 to: path points size - 1) ] ]
+		ifNil: [ path ifNotNil: [ aDiagramElement innerWaypoints: (path points copyFrom: 2 to: path points size - 1) ] ]
 		ifNotNil: [
-			aDiagramElement bounds: (OPNodeBounds
-					 withPosition: position
-					 extent: (extent ifNil: [ aDiagramElement roassalShape extent ])) ].
+		aDiagramElement bounds: (OPNodeBounds withPosition: position extent: (extent ifNil: [ aDiagramElement roassalShape extent ])) ].
 	aDiagramElement updateRenderFromSelf
 ]
 
 { #category : 'accessing' }
 OPLegacyElementLayout >> extent [
+
 	^ extent
 ]
 
 { #category : 'accessing' }
-OPLegacyElementLayout >> extent: aPoint [ 
+OPLegacyElementLayout >> extent: aPoint [
+
 	extent := aPoint
 ]
 
 { #category : 'testing' }
 OPLegacyElementLayout >> hasExtent [
+
 	^ extent isNotNil
 ]
 
@@ -126,26 +124,31 @@ OPLegacyElementLayout >> hash [
 
 { #category : 'testing' }
 OPLegacyElementLayout >> isNone [
+
 	^ position isNil & extent isNil & path isNil
 ]
 
 { #category : 'accessing' }
 OPLegacyElementLayout >> path [
+
 	^ path
 ]
 
 { #category : 'accessing' }
 OPLegacyElementLayout >> path: aRelationshipPath [
+
 	path := aRelationshipPath
 ]
 
 { #category : 'accessing' }
 OPLegacyElementLayout >> position [
+
 	^ position
 ]
 
 { #category : 'accessing' }
-OPLegacyElementLayout >> position: aPoint [ 
+OPLegacyElementLayout >> position: aPoint [
+
 	position := aPoint
 ]
 

@@ -28,7 +28,9 @@ OPZipPersistenceTest >> testNonASCII [
 	zipFile := (FileSystem memory / 'project.zip') ensureCreateFile.
 	persistence save: root to: zipFile.
 	loaded := persistence loadFrom: zipFile.
-	self assert: (loaded / 'file.txt') isFile.
+	self
+		assert: (loaded / 'file.txt') isFile
+		description: 'Loaded archive should contain file.txt'.
 	self assert: (loaded / 'file.txt') contents equals: 'ěščřžýáíéůú'
 ]
 
@@ -41,7 +43,11 @@ OPZipPersistenceTest >> testRoundTrip [
 	zipFile := (FileSystem memory / 'project.zip') ensureCreateFile.
 	persistence save: root to: zipFile.
 	loaded := persistence loadFrom: zipFile.
-	self assert: (loaded / 'dir') isDirectory.
-	self assert: (loaded / 'dir' / 'file.txt') isFile.
+	self
+		assert: (loaded / 'dir') isDirectory
+		description: 'Loaded archive should preserve directory structure'.
+	self
+		assert: (loaded / 'dir' / 'file.txt') isFile
+		description: 'Loaded archive should contain dir/file.txt'.
 	self assert: (loaded / 'dir' / 'file.txt') contents equals: 'hello'
 ]

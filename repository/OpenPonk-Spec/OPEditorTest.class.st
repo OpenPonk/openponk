@@ -56,12 +56,13 @@ OPEditorTest >> testCloseWindowWithoutDiagramControllerDoesNotError [
 
 { #category : 'tests' }
 OPEditorTest >> testEditorLayoutsSwitching [
-	| layoutNames |
+	| layoutNames expectedWidth |
 	[
 		layoutNames := OPEditor availableLayoutNames.
 		self assertCollection: layoutNames hasSameElements: #( 'Palette on left' 'Palette on right' ).
 		self assert: OPEditor defaultLayout name equals: 'Palette on left'.
-		self assert: OPEditor canvasSectionWidth > 0 description: 'canvasSectionWidth should be positive'.
+		expectedWidth := OPWorkbench initialWidth - OPWorkbench initialListsWidth - OPPalette initialWidth - OPPropertiesForm initialWidth.
+		self assert: OPEditor canvasSectionWidth equals: expectedWidth.
 
 		OPEditor layoutName: 'Palette on right'.
 		self assert: OPEditor layoutName equals: 'Palette on right'.

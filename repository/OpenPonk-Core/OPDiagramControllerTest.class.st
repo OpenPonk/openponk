@@ -57,12 +57,13 @@ OPDiagramControllerTest >> testAttachEditor [
 	self assert: controller form equals: form
 ]
 
-{ #category : 'tests - connecting' }
+{ #category : 'tests' }
 OPDiagramControllerTest >> testCanBeTargetForEntity [
 	self
 		assert:
 			(controller
 				canBeTargetFor: (controller newControllerFor: OPTestEntityModel new))
+		description: 'Diagram controller should accept an entity controller as a target'
 ]
 
 { #category : 'tests' }
@@ -306,17 +307,13 @@ OPDiagramControllerTest >> testLayoutIsUndoable [
 	node2 roassalShape translateTo: 10 @ 10.
 	initialPos1 := node1 diagramElement bounds position.
 	initialPos2 := node2 diagramElement bounds position.
-
 	controller layouter defaultLayout.
-
 	self assert: node1 diagramElement bounds position equals: initialPos1 + (50 @ 50).
 	self assert: node2 diagramElement bounds position equals: initialPos2 + (50 @ 50).
-	self assert: um canUndo.
-
+	self assert: um canUndo description: 'Undo manager should record the layout change as undoable'.
 	controller undo.
 	self assert: node1 diagramElement bounds position equals: initialPos1.
 	self assert: node2 diagramElement bounds position equals: initialPos2.
-
 	controller redo.
 	self assert: node1 diagramElement bounds position equals: initialPos1 + (50 @ 50).
 	self assert: node2 diagramElement bounds position equals: initialPos2 + (50 @ 50)
@@ -334,21 +331,25 @@ OPDiagramControllerTest >> testModelClass [
 		ensure: [ OPPluginRegistry setDefault: nil ]
 ]
 
-{ #category : 'tests - undo/redo' }
+{ #category : 'tests' }
 OPDiagramControllerTest >> testProjectControllerNilUnwiresUndoRedoCanvasUpdates [
 	| projectController |
 	projectController := OPProjectController new.
 	controller projectController: projectController.
 	controller projectController: nil.
-	self deny: (projectController undoManager announcer hasSubscriber: controller)
+	self
+		deny: (projectController undoManager announcer hasSubscriber: controller)
+		description: 'Setting projectController to nil should unsubscribe diagram controller from undoManager'
 ]
 
-{ #category : 'tests - undo/redo' }
+{ #category : 'tests' }
 OPDiagramControllerTest >> testProjectControllerWiresUndoRedoCanvasUpdates [
 	| projectController |
 	projectController := OPProjectController new.
 	controller projectController: projectController.
-	self assert: (projectController undoManager announcer hasSubscriber: controller)
+	self
+		assert: (projectController undoManager announcer hasSubscriber: controller)
+		description: 'Setting projectController should subscribe diagram controller to undoManager'
 ]
 
 { #category : 'tests' }
@@ -391,13 +392,15 @@ OPDiagramControllerTest >> testSelectController [
 	mockTool should receive selectedControllers: { targetCtrl }
 ]
 
-{ #category : 'tests - construction' }
+{ #category : 'tests' }
 OPDiagramControllerTest >> testShowModelInDiagram [
 	| entity shownController |
 	controller model: model.
 	entity := OPTestEntityModel new.
 	shownController := controller showWithoutDependentInDiagramModel: entity.
-	self assert: (controller hasControllerForModel: entity).
+	self
+		assert: (controller hasControllerForModel: entity)
+		description: 'Diagram controller should register a controller for the shown entity'.
 	self assertCollection: controller controllers includesAll: { shownController }
 ]
 
@@ -418,8 +421,9 @@ OPDiagramControllerTest >> testUndoRedoUpdatesCanvas [
 	| manager |
 	manager := controller undoManager.
 	controller canvasPresenter: (OPCanvasPresenter new canvas: RSCanvas new; yourself).
-
-	self assert: (manager announcer hasSubscriber: controller)
+	self
+		assert: (manager announcer hasSubscriber: controller)
+		description: 'Diagram controller should be subscribed to undoManager announcer'
 ]
 
 { #category : 'tests' }
@@ -427,15 +431,15 @@ OPDiagramControllerTest >> testUndoRedoUpdatesCanvasViaWeakSubscription [
 	| manager |
 	manager := controller undoManager.
 	controller canvasPresenter: (OPCanvasPresenter new canvas: RSCanvas new; yourself).
-
-	self assert: (manager announcer hasSubscriber: controller)
+	self
+		assert: (manager announcer hasSubscriber: controller)
+		description: 'Diagram controller should be weakly subscribed to undoManager announcer'
 ]
 
 { #category : 'tests' }
 OPDiagramControllerTest >> testWeakSubscriptionAllowsGarbageCollection [
 	| manager weakHolder |
 	manager := OPUndoManager new.
-
 	[
 		| tempController projectController |
 		projectController := OPProjectController new.
@@ -443,11 +447,11 @@ OPDiagramControllerTest >> testWeakSubscriptionAllowsGarbageCollection [
 		tempController := OPDiagramController new.
 		projectController addDiagramController: tempController.
 		weakHolder := WeakArray with: tempController.
-		self assert: (manager announcer hasSubscriber: tempController).
+		self
+			assert: (manager announcer hasSubscriber: tempController)
+			description: 'Diagram controller should be subscribed to undoManager while referenced'
 	] value.
-
 	3 timesRepeat: [ Smalltalk garbageCollect ].
-
 	self
 		assert: weakHolder first isNil
 		description: 'Diagram controller must be collected by GC when not strongly referenced elsewhere'

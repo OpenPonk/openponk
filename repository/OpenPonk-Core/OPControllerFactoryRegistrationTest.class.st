@@ -10,13 +10,15 @@ Class {
 	#tag : 'Controllers-Tests'
 }
 
-{ #category : 'running' }
+{ #category : 'tests' }
 OPControllerFactoryRegistrationTest >> testIsForModelWithCondition [
-
 	| registration |
-	registration := OPModelHandlerFactoryRegistration new condition: [
-		                :aModel | aModel source isNotNil ].
-	self deny: (registration isForModel: OPTestRelationModel new).
-	self assert:
-		(registration isForModel: (OPTestRelationModel new source: 12))
+	registration := OPModelHandlerFactoryRegistration new condition: [ :aModel |
+		aModel source isNotNil ].
+	self
+		deny: (registration isForModel: OPTestRelationModel new)
+		description: 'Registration should reject model when condition evaluates to false'.
+	self
+		assert: (registration isForModel: (OPTestRelationModel new source: 12))
+		description: 'Registration should accept model when condition evaluates to true'
 ]

@@ -33,30 +33,36 @@ OPLegacyDiagramCamera class >> neoJsonMapping: mapper [
 
 { #category : 'accessing' }
 OPLegacyDiagramCamera >> offset [
+
 	^ offset
 ]
 
 { #category : 'accessing' }
 OPLegacyDiagramCamera >> offset: anObject [
+
 	offset := anObject
 ]
 
 { #category : 'accessing' }
 OPLegacyDiagramCamera >> position [
+
 	^ self offset
 ]
 
 { #category : 'accessing' }
 OPLegacyDiagramCamera >> scale [
+
 	^ self zoom
 ]
 
 { #category : 'accessing' }
 OPLegacyDiagramCamera >> zoom [
+
 	^ zoom
 ]
 
 { #category : 'accessing' }
 OPLegacyDiagramCamera >> zoom: anObject [
+
 	zoom := anObject
 ]

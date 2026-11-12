@@ -154,7 +154,9 @@ OPAbstractElementControllerTest >> testBeingCopiedWithDiagram [
 	self showInDiagram.
 	diagram := diagramController diagramElement.
 	diagramElement := controller diagramElement.
-	self assert: (diagramController hasControllerForModel: self model).
+	self
+		assert: (diagramController hasControllerForModel: self model)
+		description: 'Diagram controller should have controller for shown model'.
 	self assertCollection: diagram allOwnedElements includesAll: { diagramElement }.
 	self assertCollection: diagramController controllers includesAll: { controller }.
 
@@ -211,9 +213,8 @@ OPAbstractElementControllerTest >> testBeingRemovedAfterModelRemovalWhenNotRende
 		assertCollection: (diagramController controllers collect: #model)
 		includesAll: { model }.
 	self
-		assertCollection: (diagramController controllers collect: #model)
-		includesAll: { model }.
-	self assert: diagramElement isRendered.
+		assert: diagramElement isRendered
+		description: 'Diagram element should be rendered after showInDiagram'.
 
 	diagramController removeController.
 	self
@@ -225,7 +226,9 @@ OPAbstractElementControllerTest >> testBeingRemovedAfterModelRemovalWhenNotRende
 	self
 		denyCollection: (diagramController controllers collect: #model)
 		includesAll: { model }.
-	self deny: diagramElement isRendered.
+	self
+		deny: diagramElement isRendered
+		description: 'Diagram element should not be rendered after removing diagram controller'.
 
 	newDiagramControllerBlock := [ :copyOfDiagram |
 		| newDiagramController |
@@ -254,7 +257,9 @@ OPAbstractElementControllerTest >> testBeingRemovedAfterModelRemovalWhenNotRende
 	self
 		assertCollection: (diagramControllerOfCopy controllers collect: #model)
 		includesAll: { model }.
-	self assert: diagramElementOfCopy isRendered.
+	self
+		assert: diagramElementOfCopy isRendered
+		description: 'Copied diagram element should be rendered in focused copy'.
 
 	controllerOfCopy viewModel removeModel.
 	recreatedDiagramController := newDiagramControllerBlock value: diagram.
@@ -264,7 +269,9 @@ OPAbstractElementControllerTest >> testBeingRemovedAfterModelRemovalWhenNotRende
 	self
 		denyCollection: (recreatedDiagramController controllers collect: #model)
 		includesAll: { model }.
-	self deny: diagramElement isRendered
+	self
+		deny: diagramElement isRendered
+		description: 'Removed model diagram element should not be rendered in recreated diagram controller'
 ]
 
 { #category : 'tests' }
@@ -326,13 +333,13 @@ OPAbstractElementControllerTest >> testCreateDiagramElement [
 		equals: self diagramElementClass
 ]
 
-{ #category : 'tests - construction' }
+{ #category : 'tests' }
 OPAbstractElementControllerTest >> testCreateModel [
 
 	| createdModel |
 	createdModel := controller createModelIn:
 		                creationTargetController model.
-	self assert: controller model isNotNil.
+	self deny: controller model identicalTo: nil.
 	self assert: createdModel equals: controller model.
 	self assert: controller model class equals: self modelClass.
 	self
@@ -340,7 +347,7 @@ OPAbstractElementControllerTest >> testCreateModel [
 		includesAll: { controller model }
 ]
 
-{ #category : 'tests - transactions' }
+{ #category : 'tests' }
 OPAbstractElementControllerTest >> testCreateUndoRedo [
 	| undoManager createdModel createdDiagramElement |
 	self testCreateUsingAddAsTarget.
@@ -350,19 +357,27 @@ OPAbstractElementControllerTest >> testCreateUndoRedo [
 
 	undoManager undo.
 	self denyCollection: (diagramController controllers collect: #model) includesAny: { createdModel }.
-	self deny: createdDiagramElement isRendered.
+	self
+		deny: createdDiagramElement isRendered
+		description: 'Created diagram element should not be rendered after undo'.
 
 	undoManager redo.
 	self assertCollection: (diagramController controllers collect: #model) includesAll: { createdModel }.
-	self assert: createdDiagramElement isRendered.
+	self
+		assert: createdDiagramElement isRendered
+		description: 'Created diagram element should be rendered after redo'.
 
 	undoManager undo.
 	self denyCollection: (diagramController controllers collect: #model) includesAny: { createdModel }.
-	self deny: createdDiagramElement isRendered.
+	self
+		deny: createdDiagramElement isRendered
+		description: 'Created diagram element should not be rendered after second undo'.
 
 	undoManager redo.
 	self assertCollection: (diagramController controllers collect: #model) includesAll: { createdModel }.
-	self assert: createdDiagramElement isRendered
+	self
+		assert: createdDiagramElement isRendered
+		description: 'Created diagram element should be rendered after second redo'
 ]
 
 { #category : 'tests' }
@@ -411,11 +426,13 @@ OPAbstractElementControllerTest >> testDescriptionName [
 	diagramElement should receive modelChanged
 ]
 
-{ #category : 'tests - undo/redo' }
+{ #category : 'tests' }
 OPAbstractElementControllerTest >> testHideUndoRedo [
 	| undoManager elementModel hideCommand |
 	self testCreateUsingAddAsTarget.
-	self assert: controller isHideable.
+	self
+		assert: controller isHideable
+		description: 'Element controller should be hideable'.
 	undoManager := diagramController undoManager.
 	elementModel := controller model.
 
@@ -424,27 +441,36 @@ OPAbstractElementControllerTest >> testHideUndoRedo [
 		diagramController: diagramController.
 	undoManager inTransaction: [ undoManager execute: hideCommand ].
 
-	self deny: (diagramController hasControllerForModel: elementModel).
+	self
+		deny: (diagramController hasControllerForModel: elementModel)
+		description: 'Hidden model should not have an active controller in diagram'.
 	self assertCollection: self allElements includesAll: { elementModel }.
 
 	undoManager undo.
-	self assert: (diagramController hasControllerForModel: elementModel).
+	self
+		assert: (diagramController hasControllerForModel: elementModel)
+		description: 'Undoing hide should restore controller for model'.
 	self assertCollection: self allElements includesAll: { elementModel }.
 
 	undoManager redo.
-	self deny: (diagramController hasControllerForModel: elementModel).
+	self
+		deny: (diagramController hasControllerForModel: elementModel)
+		description: 'Redoing hide should remove controller for model'.
 	self assertCollection: self allElements includesAll: { elementModel }.
 
 	undoManager undo.
-	self assert: (diagramController hasControllerForModel: elementModel).
+	self
+		assert: (diagramController hasControllerForModel: elementModel)
+		description: 'Second undo of hide should restore controller for model'.
 	self assertCollection: self allElements includesAll: { elementModel }
 ]
 
 { #category : 'tests' }
 OPAbstractElementControllerTest >> testIsSupported [
 
-	self assert:
-		(diagramController hasSupportForModel: self controllersByModelsKey)
+	self
+		assert: (diagramController hasSupportForModel: self controllersByModelsKey)
+		description: 'Diagram controller should support the tested model type'
 ]
 
 { #category : 'tests' }
@@ -562,7 +588,7 @@ OPAbstractElementControllerTest >> testOpenInForm [
 	self denyEmpty: form layout children
 ]
 
-{ #category : 'tests - destruction' }
+{ #category : 'tests' }
 OPAbstractElementControllerTest >> testRemoveController [
 
 	| totalShapesAmount |
@@ -576,10 +602,12 @@ OPAbstractElementControllerTest >> testRemoveController [
 	self
 		should: [ diagramController controllerForModel: model ]
 		raise: NotFound.
-	self assert: diagramController canvas shapes size < totalShapesAmount
+	self
+		assert: diagramController canvas shapes size < totalShapesAmount
+		description: 'Canvas should have fewer shapes after removing controller and diagram element'
 ]
 
-{ #category : 'tests - destruction' }
+{ #category : 'tests' }
 OPAbstractElementControllerTest >> testRemoveFigureAndModel [
 
 	| totalShapesAmount |
@@ -593,7 +621,9 @@ OPAbstractElementControllerTest >> testRemoveFigureAndModel [
 	self
 		should: [ diagramController controllerForModel: model ]
 		raise: NotFound.
-	self assert: diagramController canvas shapes size < totalShapesAmount
+	self
+		assert: diagramController canvas shapes size < totalShapesAmount
+		description: 'Canvas should have fewer shapes after removing model of roassal shape'
 ]
 
 { #category : 'tests - destruction' }
@@ -605,7 +635,7 @@ OPAbstractElementControllerTest >> testRemoveModel [
 	self denyCollection: self allElements includesAll: { model }
 ]
 
-{ #category : 'tests - undo/redo' }
+{ #category : 'tests' }
 OPAbstractElementControllerTest >> testRemoveUndoRedo [
 	| undoManager createdModel |
 	self testCreateUsingAddAsTarget.
@@ -613,19 +643,27 @@ OPAbstractElementControllerTest >> testRemoveUndoRedo [
 	createdModel := controller model.
 
 	diagramController removeModelElement: createdModel.
-	self deny: (diagramController hasControllerForModel: createdModel).
+	self
+		deny: (diagramController hasControllerForModel: createdModel)
+		description: 'Removed model should not have a controller'.
 	self denyCollection: self allElements includesAny: { createdModel }.
 
 	undoManager undo.
-	self assert: (diagramController hasControllerForModel: createdModel).
+	self
+		assert: (diagramController hasControllerForModel: createdModel)
+		description: 'Undoing removal should restore controller for model'.
 	self assertCollection: self allElements includesAll: { createdModel }.
 
 	undoManager redo.
-	self deny: (diagramController hasControllerForModel: createdModel).
+	self
+		deny: (diagramController hasControllerForModel: createdModel)
+		description: 'Redoing removal should remove controller for model'.
 	self denyCollection: self allElements includesAny: { createdModel }.
 
 	undoManager undo.
-	self assert: (diagramController hasControllerForModel: createdModel).
+	self
+		assert: (diagramController hasControllerForModel: createdModel)
+		description: 'Second undo of removal should restore controller for model'.
 	self assertCollection: self allElements includesAll: { createdModel }
 ]
 
@@ -645,7 +683,7 @@ OPAbstractElementControllerTest >> testRoassalShapeWasRendered [
 	self assertCollection: diagramController canvas nodes includesAll: { controller roassalShape }
 ]
 
-{ #category : 'tests - construction' }
+{ #category : 'tests' }
 OPAbstractElementControllerTest >> testShowInDiagram [
 
 	self showInDiagram.
@@ -654,11 +692,13 @@ OPAbstractElementControllerTest >> testShowInDiagram [
 		(diagramController controllerForRoassalShape:
 			 controller roassalShape)
 		equals: controller.
-	self assert: (diagramController canvas shapes anySatisfy: [ :each |
+	self
+		assert: (diagramController canvas shapes anySatisfy: [ :each |
 			 each model isNotNil and: [ each model modelElement = self model ] ])
+		description: 'Canvas should contain a shape representing the shown model'
 ]
 
-{ #category : 'tests - undo/redo' }
+{ #category : 'tests' }
 OPAbstractElementControllerTest >> testShowUndoRedo [
 	| undoManager elementModel showCommand |
 	self testCreateUsingAddAsTarget.
@@ -666,21 +706,31 @@ OPAbstractElementControllerTest >> testShowUndoRedo [
 	elementModel := controller model.
 
 	diagramController hideModelFromDiagram: elementModel.
-	self deny: (diagramController hasControllerForModel: elementModel).
+	self
+		deny: (diagramController hasControllerForModel: elementModel)
+		description: 'Model should not have a controller after hiding'.
 
 	showCommand := OPShowDiagramElementCommand
 		model: elementModel
 		diagramController: diagramController.
 	undoManager inTransaction: [ undoManager execute: showCommand ].
 
-	self assert: (diagramController hasControllerForModel: elementModel).
+	self
+		assert: (diagramController hasControllerForModel: elementModel)
+		description: 'Model should have a controller after executing show command'.
 
 	undoManager undo.
-	self deny: (diagramController hasControllerForModel: elementModel).
+	self
+		deny: (diagramController hasControllerForModel: elementModel)
+		description: 'Model should not have a controller after undoing show command'.
 
 	undoManager redo.
-	self assert: (diagramController hasControllerForModel: elementModel).
+	self
+		assert: (diagramController hasControllerForModel: elementModel)
+		description: 'Model should have a controller after redoing show command'.
 
 	undoManager undo.
-	self deny: (diagramController hasControllerForModel: elementModel)
+	self
+		deny: (diagramController hasControllerForModel: elementModel)
+		description: 'Model should not have a controller after second undo of show command'
 ]

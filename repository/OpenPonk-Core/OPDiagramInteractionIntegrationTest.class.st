@@ -105,7 +105,6 @@ OPDiagramInteractionIntegrationTest >> testDragWaypointToCollinearRemovesPointAn
 	creatorHandle := controlPointsInteraction midpointHandles first.
 	initialMidpointPosition := creatorHandle shape position copy.
 
-	"Step 1: Promote midpoint by click to establish a 3-point line"
 	creatorHandle clickBox announce: (RSMouseLeftClick new
 		shape: creatorHandle clickBox;
 		canvas: canvas;
@@ -115,7 +114,6 @@ OPDiagramInteractionIntegrationTest >> testDragWaypointToCollinearRemovesPointAn
 	waypointHandle := controlPointsInteraction handles first.
 	bentPosition := initialMidpointPosition + (0 @ 60).
 
-	"Step 2: Drag handle to bent position"
 	waypointHandle clickBox announce: (RSMouseDragStart new
 		shape: waypointHandle clickBox;
 		canvas: canvas;
@@ -138,7 +136,6 @@ OPDiagramInteractionIntegrationTest >> testDragWaypointToCollinearRemovesPointAn
 	self assert: edge waypoints size equals: 3.
 	undoManager clear.
 
-	"Step 3: Drag handle back onto the straight line between neighbor endpoints (collinear)"
 	straightPosition := initialMidpointPosition.
 	waypointHandle := controlPointsInteraction handles first.
 	waypointHandle clickBox announce: (RSMouseDragStart new
@@ -154,7 +151,6 @@ OPDiagramInteractionIntegrationTest >> testDragWaypointToCollinearRemovesPointAn
 		newPosition: straightPosition;
 		yourself).
 
-	"Step 4: End drag - triggers collinear removal and waypoints changed announcement"
 	dragEndEvent := RSMouseDragEnd new
 		shape: waypointHandle clickBox;
 		canvas: canvas;
@@ -162,10 +158,11 @@ OPDiagramInteractionIntegrationTest >> testDragWaypointToCollinearRemovesPointAn
 		yourself.
 	waypointHandle onDragEnd: dragEndEvent.
 
-	"Step 5: Verify point removal and atomic undo command"
 	self assert: edge roassalShape controlPoints size equals: 2.
 	self assert: edge waypoints size equals: 2.
-	self assert: undoManager canUndo.
+	self
+		assert: undoManager canUndo
+		description: 'Dragging waypoint to collinear position must record an undo command'.
 
 	undoManager undo.
 	self assert: edge roassalShape controlPoints size equals: 3.
@@ -262,17 +259,18 @@ OPDiagramInteractionIntegrationTest >> testEdgeWaypointMoveRecordsUndoCommand [
 
 { #category : 'tests' }
 OPDiagramInteractionIntegrationTest >> testEdgeWaypointPromoteRecordsUndoCommand [
-
 	| cpInteraction creatorHandle |
 	canvas propertyAt: OPRSSelectableCanvas ifPresent: [ :selCanvas |
-			selCanvas selectShapes: (RSGroup with: edge roassalShape) byEvent: (RSMouseClick new
-					 canvas: canvas;
-					 shape: canvas;
-					 position: 0 @ 0;
-					 yourself) ].
+		selCanvas selectShapes: (RSGroup with: edge roassalShape) byEvent: (RSMouseClick new
+			canvas: canvas;
+			shape: canvas;
+			position: 0 @ 0;
+			yourself) ].
 
 	cpInteraction := edge roassalShape propertyAt: OPRSDraggableControlPoints.
-	self assert: cpInteraction isNotNil.
+	self
+		assert: cpInteraction isNotNil
+		description: 'Edge roassalShape must have OPRSDraggableControlPoints interaction attached'.
 	self assert: edge roassalShape controlPoints size equals: 2.
 
 	creatorHandle := cpInteraction midpointHandles first.
@@ -502,11 +500,10 @@ OPDiagramInteractionIntegrationTest >> testMidpointContinuousDragTransfersFocusA
 
 { #category : 'tests' }
 OPDiagramInteractionIntegrationTest >> testMultiSegmentMidpointContinuousDragRecordsAtomicCommand [
-	| controlPointsInteraction firstCreator firstHandle secondCreator newHandle dragStartEvent dragEndEvent initialPos movedPos originalPoints |
+	| controlPointsInteraction firstCreator secondCreator newHandle dragStartEvent dragEndEvent initialPos movedPos originalPoints |
 	controlPointsInteraction := edge roassalShape propertyAt: OPRSDraggableControlPoints.
 	controlPointsInteraction showHandles.
 
-	"Step 1: Promote first midpoint by click to establish a 3-point line"
 	firstCreator := controlPointsInteraction midpointHandles first.
 	firstCreator clickBox announce: (RSMouseLeftClick new
 		shape: firstCreator clickBox;
@@ -518,7 +515,6 @@ OPDiagramInteractionIntegrationTest >> testMultiSegmentMidpointContinuousDragRec
 	undoManager clear.
 	originalPoints := edge roassalShape controlPoints copy.
 
-	"Step 2: Continuously drag the second midpoint handle of the now 3-point line"
 	secondCreator := controlPointsInteraction midpointHandles second.
 	initialPos := secondCreator shape position copy.
 	secondCreator basicPromote.
@@ -548,67 +544,69 @@ OPDiagramInteractionIntegrationTest >> testMultiSegmentMidpointContinuousDragRec
 		yourself.
 	newHandle onDragEnd: dragEndEvent.
 
-	self assert: undoManager canUndo.
+	self
+		assert: undoManager canUndo
+		description: 'Dragging promoted midpoint handle must record an undo command'.
 	self assert: undoManager undoStack size equals: 1.
 	self assert: edge roassalShape controlPoints size equals: 4.
 
-	"Step 3: Undo must revert back to exactly the 3-point line"
 	undoManager undo.
 	self assert: edge roassalShape controlPoints size equals: 3.
 	self assert: edge waypoints equals: originalPoints.
 
-	"Step 4: Redo must restore the 4-point line"
 	undoManager redo.
 	self assert: edge roassalShape controlPoints size equals: 4
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 OPDiagramInteractionIntegrationTest >> testMultiSelectionDragCreatesAtomicTransaction [
 	| interaction dragStartEvent dragEndEvent initialPos1 initialPos2 delta clickEvent |
 	initialPos1 := 100 @ 100.
 	initialPos2 := 300 @ 100.
 	delta := 50 @ 50.
-	
+
 	clickEvent := RSMouseClick new
 		canvas: canvas;
 		shape: canvas;
 		position: 0 @ 0;
 		yourself.
-		
+
 	canvas propertyAt: OPRSSelectableCanvas ifPresent: [ :selCanvas |
 		selCanvas
 			selectShapes: (RSGroup with: node1 roassalShape with: node2 roassalShape)
 			byEvent: clickEvent ].
-	
+
 	interaction := node1 roassalShape propertyAt: OPRSSelectionDraggable.
-	
+
 	dragStartEvent := RSMouseDragStart new
 		shape: node1 roassalShape;
 		canvas: canvas;
 		position: initialPos1;
 		yourself.
 	interaction startDrag: dragStartEvent.
-	
+
 	node1 roassalShape translateBy: delta.
 	node2 roassalShape translateBy: delta.
-	
+
 	dragEndEvent := RSMouseDragEnd new
 		shape: node1 roassalShape;
 		canvas: canvas;
 		position: initialPos1 + delta;
 		yourself.
 	interaction endDrag: dragEndEvent.
-	
-	self assert: undoManager canUndo.
+
+	self
+		assert: undoManager canUndo
+		description: 'Multi-selection drag must record an atomic undo transaction'.
 	self assert: node1 bounds position equals: initialPos1 + delta.
 	self assert: node2 bounds position equals: initialPos2 + delta.
-	
+
 	undoManager undo.
 	self assert: node1 bounds position equals: initialPos1.
 	self assert: node2 bounds position equals: initialPos2.
 	self assert: node1 roassalShape position equals: initialPos1.
 	self assert: node2 roassalShape position equals: initialPos2.
-	
+
 	undoManager redo.
 	self assert: node1 bounds position equals: initialPos1 + delta.
 	self assert: node2 bounds position equals: initialPos2 + delta.

@@ -153,7 +153,7 @@ OPLegacyDiagram >> asOPDiagram [
 		diagramController
 			model: model;
 			diagramElement: diagram;
-			canvasPresenter: (OPCanvasPresenter new
+			canvasPresenter: (OPHeadlessCanvasPresenter new
 					 canvas: canvas;
 					 yourself).
 		job progress: 0.5.

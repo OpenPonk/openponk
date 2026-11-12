@@ -12,14 +12,6 @@ Class {
 	#tag : 'Layouting'
 }
 
-{ #category : 'accessing' }
-OPLayouter class >> supportedLayoutCommands [
-	^ {OPDominanceTreeLayoutCommand.
-	OPGridLayoutCommand.
-	OPSugiyamaLayoutCommand.
-	OPTreeLayoutCommand}
-]
-
 { #category : 'as yet unclassified' }
 OPLayouter class >> supports: aLayoutCommand [
 	^ self supportedLayoutCommands includes: aLayoutCommand

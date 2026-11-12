@@ -1,0 +1,53 @@
+"
+Unit tests for OPZipPersistence. 
+Tests the accurate archiving and extraction of the project's memory store into and from ZIP format files (including edge-cases like non-ASCII characters).
+"
+Class {
+	#name : 'OPZipPersistenceTest',
+	#superclass : 'TestCase',
+	#instVars : [
+		'persistence'
+	],
+	#category : 'OpenPonk-Core-Tests-Persistence',
+	#package : 'OpenPonk-Core-Tests',
+	#tag : 'Persistence'
+}
+
+{ #category : 'running' }
+OPZipPersistenceTest >> setUp [
+	super setUp.
+	persistence := OPZipPersistence new
+]
+
+{ #category : 'tests' }
+OPZipPersistenceTest >> testNonASCII [
+	| root loaded zipFile |
+	root := FileSystem memory root.
+	root / 'file.txt'
+		writeStreamDo: [ :stream | stream << 'ěščřžýáíéůú' ].
+	zipFile := (FileSystem memory / 'project.zip') ensureCreateFile.
+	persistence save: root to: zipFile.
+	loaded := persistence loadFrom: zipFile.
+	self
+		assert: (loaded / 'file.txt') isFile
+		description: 'Loaded archive should contain file.txt'.
+	self assert: (loaded / 'file.txt') contents equals: 'ěščřžýáíéůú'
+]
+
+{ #category : 'tests' }
+OPZipPersistenceTest >> testRoundTrip [
+	| root loaded zipFile |
+	root := FileSystem memory root.
+	(root / 'dir') ensureCreateDirectory.
+	root / 'dir' / 'file.txt' writeStreamDo: [ :stream | stream << 'hello' ].
+	zipFile := (FileSystem memory / 'project.zip') ensureCreateFile.
+	persistence save: root to: zipFile.
+	loaded := persistence loadFrom: zipFile.
+	self
+		assert: (loaded / 'dir') isDirectory
+		description: 'Loaded archive should preserve directory structure'.
+	self
+		assert: (loaded / 'dir' / 'file.txt') isFile
+		description: 'Loaded archive should contain dir/file.txt'.
+	self assert: (loaded / 'dir' / 'file.txt') contents equals: 'hello'
+]

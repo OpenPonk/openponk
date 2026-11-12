@@ -139,7 +139,7 @@ OPNote >> createOwnedInvisibleBoxes [
 { #category : 'accessing' }
 OPNote >> defaultFillColor [
 
-	^ OPDiagramFigureYellowFillColorCommand new color
+	^ Color paleYellow
 ]
 
 { #category : 'initialization' }

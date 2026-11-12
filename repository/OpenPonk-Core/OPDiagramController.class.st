@@ -612,20 +612,6 @@ OPDiagramController >> roassalShape [
 	^ self canvas
 ]
 
-{ #category : 'accessing' }
-OPDiagramController >> roassalShapeContextClicked: anEvent [
-
-	| shapes menu |
-	shapes := (self selectedElements includes: anEvent shape)
-		          ifTrue: [ self selectedElements ]
-		          ifFalse: [ { anEvent shape } ].
-	menu := CmdContextMenuActivation
-		        buildContextMenuFor: self canvasPresenter
-		        inContext:
-		        (OPRoassalShapeContext for: self canvasPresenter of: shapes).
-	menu popUpInWorld
-]
-
 { #category : 'events' }
 OPDiagramController >> roassalShapeDoubleClicked: anEvent [
 	"Handle double click on shapes: select target controller and focus the first form input."

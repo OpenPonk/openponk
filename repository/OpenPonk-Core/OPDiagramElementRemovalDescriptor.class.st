@@ -15,18 +15,6 @@ Class {
 	#tag : 'UndoRedo'
 }
 
-{ #category : 'accessing' }
-OPDiagramElementRemovalDescriptor >> bounds [
-	^ (geometryMemento isKindOf: OPNodeBounds)
-		ifTrue: [ geometryMemento ]
-		ifFalse: [ nil ]
-]
-
-{ #category : 'accessing - compatibility' }
-OPDiagramElementRemovalDescriptor >> bounds: aNodeBounds [
-	geometryMemento := aNodeBounds
-]
-
 { #category : 'initialization' }
 OPDiagramElementRemovalDescriptor >> captureFrom: aDiagramElement [
 	diagramElement := aDiagramElement.
@@ -79,56 +67,4 @@ OPDiagramElementRemovalDescriptor >> restoreDiagramElement [
 
 	owningElement ifNotNil: [ :savedOwningElement | diagramElement owningElement: savedOwningElement ].
 	diagramElement restoreGeometryFromMemento: geometryMemento
-]
-
-{ #category : 'accessing - compatibility' }
-OPDiagramElementRemovalDescriptor >> sourceDiagramElement [
-
-	geometryMemento isCollection ifFalse: [ ^ nil ].
-	geometryMemento isString ifTrue: [ ^ nil ].
-	geometryMemento ifEmpty: [ ^ nil ].
-	^ geometryMemento first
-]
-
-{ #category : 'accessing - compatibility' }
-OPDiagramElementRemovalDescriptor >> sourceDiagramElement: aDiagramElement [
-	geometryMemento
-		ifNil: [ geometryMemento := { aDiagramElement . nil . nil } ]
-		ifNotNil: [
-			(geometryMemento isArray and: [ geometryMemento size >= 1 ])
-				ifTrue: [ geometryMemento at: 1 put: aDiagramElement ] ]
-]
-
-{ #category : 'accessing - compatibility' }
-OPDiagramElementRemovalDescriptor >> targetDiagramElement [
-
-	geometryMemento isCollection ifFalse: [ ^ nil ].
-	geometryMemento isString ifTrue: [ ^ nil ].
-	geometryMemento size < 2 ifTrue: [ ^ nil ].
-	^ geometryMemento second
-]
-
-{ #category : 'accessing - compatibility' }
-OPDiagramElementRemovalDescriptor >> targetDiagramElement: aDiagramElement [
-	geometryMemento
-		ifNil: [ geometryMemento := { nil . aDiagramElement . nil } ]
-		ifNotNil: [
-			(geometryMemento isArray and: [ geometryMemento size >= 2 ])
-				ifTrue: [ geometryMemento at: 2 put: aDiagramElement ] ]
-]
-
-{ #category : 'accessing - compatibility' }
-OPDiagramElementRemovalDescriptor >> waypoints [
-	^ (geometryMemento isCollection and: [ geometryMemento isString not and: [ geometryMemento size >= 3 ] ])
-		ifTrue: [ geometryMemento third ]
-		ifFalse: [ nil ]
-]
-
-{ #category : 'accessing - compatibility' }
-OPDiagramElementRemovalDescriptor >> waypoints: aCollection [
-	geometryMemento
-		ifNil: [ geometryMemento := { nil . nil . aCollection } ]
-		ifNotNil: [
-			(geometryMemento isArray and: [ geometryMemento size >= 3 ])
-				ifTrue: [ geometryMemento at: 3 put: aCollection ] ]
 ]

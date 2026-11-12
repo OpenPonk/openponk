@@ -38,15 +38,6 @@ OPPluginRegistry class >> setDefault: aDefault [
 	^ Default := aDefault
 ]
 
-{ #category : 'singleton' }
-OPPluginRegistry class >> setDefaultForTesting [
-
-	<script>
-	^ self setDefault: (self new
-			   add: OPTestPlugin new;
-			   yourself)
-]
-
 { #category : 'instance creation' }
 OPPluginRegistry class >> withAll [
 	^ self new

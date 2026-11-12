@@ -1,0 +1,24 @@
+"
+Unit tests for OPModelHandlerFactoryRegistration. 
+Verifies the setup, constraints, and conditions of mapping model classes to their respective handlers.
+"
+Class {
+	#name : 'OPControllerFactoryRegistrationTest',
+	#superclass : 'TestCase',
+	#category : 'OpenPonk-Core-Tests-Controllers',
+	#package : 'OpenPonk-Core-Tests',
+	#tag : 'Controllers'
+}
+
+{ #category : 'tests' }
+OPControllerFactoryRegistrationTest >> testIsForModelWithCondition [
+	| registration |
+	registration := OPModelHandlerFactoryRegistration new condition: [ :aModel |
+		aModel source isNotNil ].
+	self
+		deny: (registration isForModel: OPTestRelationModel new)
+		description: 'Registration should reject model when condition evaluates to false'.
+	self
+		assert: (registration isForModel: (OPTestRelationModel new source: 12))
+		description: 'Registration should accept model when condition evaluates to true'
+]

@@ -432,7 +432,7 @@ OPProjectController >> saveProjectTo: aFile [
 		directory: projectDirectory;
 		saveProject: self project withMementos: self modelMementos.
 	OPZipPersistence new save: store to: aFile.
-	workbench updateTitle
+	workbench ifNotNil: [ :activeWorkbench | activeWorkbench updateTitle ]
 ]
 
 { #category : 'selection' }

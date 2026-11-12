@@ -20,12 +20,6 @@ OPNode class >> isNode [
 	^ true
 ]
 
-{ #category : 'rendering' }
-OPNode >> addedByMouseClickTo: aPoint [
-
-	self translateTo: aPoint
-]
-
 { #category : 'accessing' }
 OPNode >> encompassingRectangle [
 

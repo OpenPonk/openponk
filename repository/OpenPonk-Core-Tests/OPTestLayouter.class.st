@@ -23,8 +23,8 @@ OPTestLayouter >> allNodes [
 		thenCollect: #roassalShape
 ]
 
-{ #category : 'layouting' }
+{ #category : 'layouts' }
 OPTestLayouter >> defaultLayout [
-	self applyLayout: [ :nodes :edges |
-		nodes do: [ :each | each translateBy: 50 @ 50 ] ]
+	self applyLayout: [ :boxes :links |
+		boxes do: [ :each | each translateBy: 50 @ 50 ] ]
 ]

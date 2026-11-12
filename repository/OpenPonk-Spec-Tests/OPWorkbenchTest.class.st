@@ -15,6 +15,7 @@ Class {
 { #category : 'running' }
 OPWorkbenchTest >> setUp [
 	super setUp.
+	OPPluginRegistry setDefaultForTesting.
 	workbench := OPWorkbench new
 ]
 
@@ -23,7 +24,27 @@ OPWorkbenchTest >> tearDown [
 	workbench ifNotNil: [
 		workbench close.
 		workbench := nil ].
+	OPPluginRegistry resetDefault.
 	super tearDown
+]
+
+{ #category : 'tests' }
+OPWorkbenchTest >> testClassQueriesDevelopmentModeAndSettings [
+	| originalDevMode |
+	self assert: OPWorkbench initialSidePaneWidth equals: 250.
+	self assert: OPWorkbench initialListsWidth equals: 250.
+	self assert: OPWorkbench initialFormWidth equals: 250.
+	self assert: OPWorkbench initialWidth equals: OPWorkbench initialExtent x.
+	self assert: (OPWorkbench class includesSelector: #settingsOn:) description: 'settingsOn: must be defined'.
+	self assert: (OPWorkbench class includesSelector: #developerSettingsOn:) description: 'developerSettingsOn: must be defined'.
+
+	originalDevMode := OPWorkbench isDevelopmentMode.
+	[
+		OPWorkbench isDevelopmentMode: true.
+		self assert: OPWorkbench isDevelopmentMode description: 'isDevelopmentMode should be true after setting'.
+		OPWorkbench isDevelopmentMode: false.
+		self deny: OPWorkbench isDevelopmentMode description: 'isDevelopmentMode should be false after resetting'
+	] ensure: [ OPWorkbench isDevelopmentMode: originalDevMode ]
 ]
 
 { #category : 'tests' }
@@ -38,6 +59,68 @@ OPWorkbenchTest >> testInitialKeyboardFocusIsOnMenuBar [
 	menuBarMorph := workbench topToolbar menu adapter widget.
 	self assert: activeFocusMorph equals: menuBarMorph.
 	self deny: activeFocusMorph equals: workbench topToolbar saveButton adapter widget
+]
+
+{ #category : 'tests' }
+OPWorkbenchTest >> testOpenProjectEditorsLifecycleTabUpdatesAndDeletion [
+	| project model diag1 diag2 secondRegistry editor1 editor2 page1 updatedProject updatedDiagram |
+	self assert: workbench title equals: 'OpenPonk'.
+	self assert: workbench projectController identicalTo: nil.
+	self assert: workbench focusedEditor identicalTo: nil.
+
+	secondRegistry := OPPluginRegistry new add: OPTestPlugin new; yourself.
+	workbench pluginRegistry: secondRegistry.
+	self assert: workbench pluginRegistry identicalTo: secondRegistry.
+
+	project := OPProject name: 'Workbench Test Project'.
+	model := OPTestContainerModel new name: 'RootPkg'; yourself.
+	diag1 := (OPOpenPonkDiagram forModelElement: model) name: 'MainDiagram'; isOpen: true; isSelected: true; yourself.
+	diag2 := (OPOpenPonkDiagram forModelElement: model) name: 'SecondDiagram'; isOpen: false; isSelected: false; yourself.
+	project addModel: model.
+	project addDiagram: diag1.
+	project addDiagram: diag2.
+
+	workbench openProject: project.
+	self assert: workbench workbench identicalTo: workbench.
+	self assert: workbench project identicalTo: project.
+	self assert: workbench title equals: 'Workbench Test Project - OpenPonk'.
+
+	project storageFile: FileSystem memory root / 'wb-test.opp'.
+	workbench updateTitle.
+	self assert: (workbench title includesSubstring: 'wb-test.opp') description: 'Title should include storage file path'.
+
+	editor1 := workbench focusedEditor.
+	self assert: editor1 isNotNil description: 'Opening project with open diagram should focus its editor'.
+	page1 := workbench pageFor: diag1.
+	self assert: page1 isNotNil description: 'pageFor: should return notebook page for opened diagram'.
+	self assert: (workbench pageFor: diag2) identicalTo: nil.
+
+	workbench openEditorOn: model.
+	self assert: workbench focusedEditor identicalTo: editor1.
+
+	editor2 := workbench openEditorOnDiagram: diag2.
+	self assert: workbench focusedEditor identicalTo: editor2.
+	workbench focusEditorOf: diag1.
+	self assert: workbench focusedEditor identicalTo: editor1.
+
+	diag1 name: 'RenamedDiagram'.
+	workbench updateTabTitle.
+	self assert: (page1 title includesSubstring: 'RenamedDiagram') description: 'updateTabTitle should refresh notebook tab title'.
+
+	workbench openFormOn: editor1 diagramController.
+	workbench openFormOn: nil.
+
+	workbench closeEditorOfDiagram: diag2.
+	self assert: (workbench pageFor: diag2) identicalTo: nil.
+
+	workbench deleteDiagram: diag2.
+	self deny: (project diagrams includes: diag2) description: 'deleteDiagram: should remove diagram from project'.
+
+	updatedProject := false.
+	updatedDiagram := false.
+	workbench when: OPEditorClosed do: [ updatedDiagram := true ] for: self.
+	workbench closeEditorOfDiagram: diag1.
+	self assert: updatedDiagram description: 'Closing editor tab should announce OPEditorClosed'
 ]
 
 { #category : 'tests' }
@@ -90,6 +173,57 @@ OPWorkbenchTest >> testRedoShortcutDelegatesToUndoManager [
 		redoAction execute.
 		mockUndoManager should receive redo
 	] ensure: [ windowPresenter close ]
+]
+
+{ #category : 'tests' }
+OPWorkbenchTest >> testRenameProjectDialogAndOpenModelAndOpenFromFile [
+	| project model openedWb mockRequest capturedAccept mockOpenPresenter capturedOpenBlock archiveFile sourceProject sourceCtrl openedFromFileWb |
+	capturedAccept := nil.
+	capturedOpenBlock := nil.
+	project := OPProject name: 'Before Rename'.
+	model := OPTestContainerModel new name: 'ModelA'; yourself.
+	project addModel: model.
+	workbench openProject: project.
+
+	mockRequest := Mock new.
+	SpRequestDialog stub new willReturn: mockRequest.
+	mockRequest stub title: Any.
+	mockRequest stub message: Any.
+	mockRequest stub text: Any.
+	mockRequest stub validateAnswer: Any.
+	mockRequest stub onAccept: [ :block | capturedAccept := block ].
+	mockRequest stub openDialog.
+	mockRequest stub text willReturn: '  After Rename  '.
+
+	workbench renameProject.
+	capturedAccept value.
+	self assert: project name equals: 'After Rename'.
+
+	openedWb := OPWorkbench openModel: (OPTestContainerModel new name: 'StandaloneModel'; yourself).
+	[
+		self assert: openedWb project name equals: 'New Project'.
+		self assert: openedWb project models size equals: 1
+	] ensure: [ openedWb ifNotNil: [ openedWb close ] ].
+
+	sourceProject := OPProject name: 'FromFile Project'.
+	sourceProject addModel: (OPTestContainerModel new name: 'FileModel'; yourself).
+	sourceProject ensureModelsHaveDiagrams.
+	sourceCtrl := OPProjectController forProject: sourceProject.
+	archiveFile := FileSystem memory root / 'wb-open-from-file.opp'.
+	sourceCtrl saveProjectTo: archiveFile.
+
+	mockOpenPresenter := Mock new.
+	StOpenFilePresenter stub new willReturn: mockOpenPresenter.
+	mockOpenPresenter stub title: Any.
+	mockOpenPresenter stub extensions: Any named: Any.
+	mockOpenPresenter stub okAction: [ :block | capturedOpenBlock := block ].
+	mockOpenPresenter stub open.
+
+	OPProjectController openFromFile.
+	openedFromFileWb := capturedOpenBlock value: archiveFile.
+	[
+		self assert: openedFromFileWb project name equals: 'FromFile Project'
+	] ensure: [ openedFromFileWb ifNotNil: [ openedFromFileWb close ] ]
 ]
 
 { #category : 'tests' }

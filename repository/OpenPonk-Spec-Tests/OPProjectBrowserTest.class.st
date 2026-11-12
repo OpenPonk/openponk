@@ -17,6 +17,7 @@ Class {
 OPProjectBrowserTest >> setUp [
 	| testRegistry |
 	super setUp.
+	OPPluginRegistry setDefaultForTesting.
 	testRegistry := OPPluginRegistry new.
 	testRegistry add: OPTestPlugin new.
 	testRegistry add: OPTestSecondaryPlugin new.
@@ -28,6 +29,7 @@ OPProjectBrowserTest >> tearDown [
 	window ifNotNil: [ :activeWindow | activeWindow close ].
 	browser ifNotNil: [ :activeBrowser |
 		activeBrowser withWindowDo: [ :activeWindow | activeWindow close ] ].
+	OPPluginRegistry resetDefault.
 	super tearDown
 ]
 
@@ -47,6 +49,20 @@ OPProjectBrowserTest >> testBrowserWindowBuildsCleanlyWithProjects [
 	window build.
 	self assert: window isNotNil description: 'OPProjectBrowser should build a window presenter'.
 	self assert: window presenter equals: browser
+]
+
+{ #category : 'tests' }
+OPProjectBrowserTest >> testClassOpenAndUpdateRecentList [
+	| openedWindow |
+	browser updateRecentList.
+	openedWindow := OPProjectBrowser open.
+	[
+		self assert: openedWindow isNotNil
+	] ensure: [
+		openedWindow ifNotNil: [
+			(openedWindow respondsTo: #close) ifTrue: [ openedWindow close ].
+			(openedWindow respondsTo: #withWindowDo:) ifTrue: [
+				openedWindow withWindowDo: [ :activeWindow | activeWindow close ] ] ] ]
 ]
 
 { #category : 'tests' }
@@ -76,6 +92,73 @@ OPProjectBrowserTest >> testCreateProjectDispatchesToOpenProject [
 	self assert: openedProjects size equals: 1.
 	self assert: openedProjects first name equals: browser projectName.
 	self denyEmpty: openedProjects first models
+]
+
+{ #category : 'tests' }
+OPProjectBrowserTest >> testFileReaderServicesAndMenuRegistration [
+	| oppServices txtServices service builder openPonkItem |
+	oppServices := OPProjectBrowser fileReaderServicesForFile: 'model.opp' suffix: 'opp'.
+	self assert: oppServices size equals: 1.
+	service := oppServices first.
+	self assert: service selector equals: #openProjectFromFile:.
+
+	txtServices := OPProjectBrowser fileReaderServicesForFile: 'notes.txt' suffix: 'txt'.
+	self assertEmpty: txtServices.
+
+	builder := PragmaMenuBuilder new.
+	OPProjectBrowser menuCommandOn: builder.
+	openPonkItem := builder itemNamed: #OpenPonk.
+	self
+		assert: openPonkItem isNotNil
+		description: 'menuCommandOn: should register OpenPonk world menu item'
+]
+
+{ #category : 'tests' }
+OPProjectBrowserTest >> testOpenProjectOpenFromFileAndRecentContextMenu [
+	| projectToOpen mockWorkbench returnedWb sourceProject sourceCtrl archiveFile mockOpenPresenter capturedBlock openedFromDialog openedFromFile nilMenu validMenu |
+	capturedBlock := nil.
+	projectToOpen := OPProject name: 'Browser Opened Project'.
+	[
+		mockWorkbench := Mock new.
+		projectToOpen stub open willReturn: mockWorkbench.
+		returnedWb := browser openProject: projectToOpen.
+		self assert: returnedWb identicalTo: mockWorkbench.
+		self
+			assert: (OPProjectStorage default projects includes: projectToOpen)
+			description: 'openProject: should save project in OPProjectStorage default'.
+
+		nilMenu := browser projectMenu: browser newMenu for: nil.
+		self assertEmpty: nilMenu menuGroups.
+
+		validMenu := browser projectMenu: browser newMenu for: projectToOpen.
+		self denyEmpty: validMenu menuGroups.
+		validMenu menuGroups first menuItems first action value.
+		self
+			deny: (OPProjectStorage default projects includes: projectToOpen)
+			description: 'Remove context menu item should remove project from OPProjectStorage default'
+	] ensure: [ OPProjectStorage default ensureRemove: projectToOpen ].
+
+	sourceProject := OPProject name: 'Archive Project'.
+	sourceProject addModel: (OPTestContainerModel new name: 'Pkg'; yourself).
+	sourceProject ensureModelsHaveDiagrams.
+	sourceCtrl := OPProjectController forProject: sourceProject.
+	archiveFile := FileSystem memory root / 'browser-open.opp'.
+	sourceCtrl saveProjectTo: archiveFile.
+
+	(browser stub openProject: Any) will: [ :proj | proj ].
+	openedFromFile := browser openProjectFromFile: archiveFile.
+	self assert: openedFromFile name equals: 'Archive Project'.
+
+	mockOpenPresenter := Mock new.
+	StOpenFilePresenter stub new willReturn: mockOpenPresenter.
+	mockOpenPresenter stub title: Any.
+	mockOpenPresenter stub extensions: Any named: Any.
+	mockOpenPresenter stub okAction: [ :block | capturedBlock := block ].
+	mockOpenPresenter stub open.
+
+	browser openProjectFromFile.
+	openedFromDialog := capturedBlock value: archiveFile.
+	self assert: openedFromDialog name equals: 'Archive Project'
 ]
 
 { #category : 'tests' }
@@ -138,6 +221,38 @@ OPProjectBrowserTest >> testPluginsListInitialized [
 	self assert: browser pluginsList class equals: SpListPresenter.
 	self assert: browser pluginsList items size equals: 2.
 	self assertCollection: browser pluginsList items hasSameElements: browser pluginRegistry plugins
+]
+
+{ #category : 'tests' }
+OPProjectBrowserTest >> testProjectNameStripsEmptyPrefixAndExampleTemplateCreation [
+	| exampleTemplate stubWorkbench |
+	browser projectNameInput text: 'Empty Class Diagram'.
+	self assert: browser projectName equals: 'Class Diagram'.
+	browser projectNameInput text: 'Custom Project'.
+	self assert: browser projectName equals: 'Custom Project'.
+
+	self assert: browser openFromFileButton class equals: SpButtonPresenter.
+	self assert: browser quickStartLabel class equals: SpLabelPresenter.
+	self assert: browser recentLabel class equals: SpLabelPresenter.
+
+	browser updateTemplatesListFor: nil.
+	self assertEmpty: browser templatesList items.
+	browser createProject.
+
+	exampleTemplate := OPProjectTemplate new
+		name: 'Example Template';
+		isExample: true;
+		modelFactory: [ OPTestContainerModel new name: 'PreservedExampleName'; yourself ];
+		yourself.
+	browser templatesList items: { exampleTemplate }.
+	browser templatesList selectIndex: 1.
+
+	stubWorkbench := OPWorkbench new.
+	stubWorkbench stub showAllElementsInAllDiagrams willReturn: nil.
+	(browser stub openProject: Any) willReturn: stubWorkbench.
+
+	browser createProject.
+	stubWorkbench should receive showAllElementsInAllDiagrams
 ]
 
 { #category : 'tests' }

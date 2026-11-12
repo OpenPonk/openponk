@@ -37,53 +37,6 @@ OPRoassalShapeColorMenuGroup class >> customColorNames [
 		yourself
 ]
 
-{ #category : 'actions' }
-OPRoassalShapeColorMenuGroup class >> generateAllColorCommands [
-
-	<script>
-	self allSubclassesDo: #generateColorCommands
-]
-
-{ #category : 'generation' }
-OPRoassalShapeColorMenuGroup class >> generateColorCommands [
-	| niceAttributeName |
-	niceAttributeName := self styleAttribute capitalized.
-
-	self colors do: [ :each |
-		| niceColorName className commandClass |
-		niceColorName := self colorNameFor: each.
-		className := ('OPDiagramFigure' , niceColorName , niceAttributeName , 'Command') asSymbol.
-
-		commandClass := (self commandSuperclass << className)
-			slots: {};
-			package: 'OpenPonk-Spec';
-			tag: 'Commands-RoassalShape';
-			install.
-
-		commandClass comment: 'A canvas command for applying ' , niceColorName asLowercase , ' ' , self styleAttribute , ' to selected diagram elements.'.
-
-		commandClass class compile: (String streamContents: [ :stream |
-			stream << 'color'; cr; cr.
-			stream << '	^ '.
-			each name = #unnamed
-				ifTrue: [ stream << '(Color fromHexString: ''' << each asHexString asUppercase << ''')' ]
-				ifFalse: [ stream << 'Color ' << each name ] ])
-			classified: 'accessing'.
-
-		each name = #unnamed ifTrue: [
-			commandClass compile: (String streamContents: [ :stream |
-				stream << 'colorName'; cr; cr.
-				stream << '	^ ''' << niceColorName << '''' ])
-				classified: 'accessing' ].
-
-		each = Color transparent ifTrue: [
-			commandClass compile: 'defaultMenuIcon
-	^ Morph new
-		color: Color white;
-		asFormOfSize: 30@20'
-				classified: 'accessing' ] ]
-]
-
 { #category : 'hooks' }
 OPRoassalShapeColorMenuGroup class >> styleAttribute [
 

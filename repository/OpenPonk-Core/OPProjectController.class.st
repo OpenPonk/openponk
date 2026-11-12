@@ -511,8 +511,7 @@ OPProjectController >> workbench: aWorkbench [
 OPProjectController >> writableProjectFile [
 	[ self canProjectBeSavedToFile: self project storageFile ]
 		whileFalse: [ self project storageFile
-				ifNotNil: [ self
-						inform: 'Unable to write to file ' , self project storageFile pathString ].
+				ifNotNil: [ InformativeNotification signal: 'Unable to write to file ' , self project storageFile pathString ].
 			self replaceWritableProjectFile ].
 	^ self project storageFile
 ]

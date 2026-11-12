@@ -166,7 +166,7 @@ OPPackageBoundaryTest >> testNotationRepositoriesDoNotDependOnPeerNotations [
 					stream << '  - ' << eachViolation; cr ] ] ]
 ]
 
-{ #category : 'evaluating' }
+{ #category : 'helpers' }
 OPPackageBoundaryTest >> violationsInPackageNamed: aPackageName forbiddenRepositories: aCollectionOfRepositories [
 	"Answers an OrderedCollection of human-readable violation descriptions."
 	| targetPackage repositoryMap forbiddenRepositories violations |
@@ -186,16 +186,15 @@ OPPackageBoundaryTest >> violationsInPackageNamed: aPackageName forbiddenReposit
 			usedTrait package ifNotNil: [ :traitPackage |
 				(repositoryMap at: traitPackage name asString ifAbsent: [ nil ]) ifNotNil: [ :traitRepository |
 					(forbiddenRepositories includes: traitRepository) ifTrue: [
-						violations add: (eachDefinedClass name asString , ' uses trait ' , usedTrait name asString , ' from [' , traitRepository name asString , ']') ] ] ] ].
+						violations add: (eachDefinedClass name asString , ' uses trait ' , usedTrait name asString , ' from [' , traitRepository name asString , ']') ] ] ] ] ].
 
-		(eachDefinedClass methods , eachDefinedClass classSide methods) do: [ :eachMethod |
-			self checkMethod: eachMethod againstForbiddenRepositories: forbiddenRepositories repositoryMap: repositoryMap into: violations ] ].
-
-	targetPackage extensionMethods do: [ :eachExtensionMethod |
-		eachExtensionMethod methodClass instanceSide package ifNotNil: [ :extendedPackage |
-			(repositoryMap at: extendedPackage name asString ifAbsent: [ nil ]) ifNotNil: [ :extendedRepository |
-				(forbiddenRepositories includes: extendedRepository) ifTrue: [
-					violations add: (eachExtensionMethod printString , ' extends class from [' , extendedRepository name asString , ']') ] ] ] ].
+	targetPackage methods do: [ :eachMethod |
+		eachMethod isExtension ifTrue: [
+			eachMethod methodClass instanceSide package ifNotNil: [ :extendedPackage |
+				(repositoryMap at: extendedPackage name asString ifAbsent: [ nil ]) ifNotNil: [ :extendedRepository |
+					(forbiddenRepositories includes: extendedRepository) ifTrue: [
+						violations add: (eachMethod printString , ' extends class from [' , extendedRepository name asString , ']') ] ] ] ].
+		self checkMethod: eachMethod againstForbiddenRepositories: forbiddenRepositories repositoryMap: repositoryMap into: violations ].
 
 	^ violations
 ]

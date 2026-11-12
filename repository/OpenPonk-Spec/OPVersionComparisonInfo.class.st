@@ -97,7 +97,7 @@ OPVersionComparisonInfo >> initializeWindow: aWindow [
 	aWindow windowIcon: OPCoreIcons openponkIcon
 ]
 
-{ #category : 'actions' }
+{ #category : 'private' }
 OPVersionComparisonInfo >> thisVersionInfoLoaded [
 
 	[
@@ -106,21 +106,26 @@ OPVersionComparisonInfo >> thisVersionInfoLoaded [
 			lastVersion
 				ifNil: [ lastVersionInfo label: 'Unknown.' ]
 				ifNotNil: [
-						lastVersionInfo := OPVersionInfo
-							                   newApplication: self application
-							                   model: lastVersion ].
+					lastVersionInfo := OPVersionInfo
+						newApplication: self application
+						model: lastVersion ].
 			lastNightlyVersion := version getOfLatestNightlyBuild.
 			lastNightlyVersion
 				ifNil: [ lastNightlyVersionInfo label: 'Unknown.' ]
 				ifNotNil: [
-						lastNightlyVersionInfo := OPVersionInfo
-							                          newApplication: self application
-							                          model: lastNightlyVersion ].
+					lastNightlyVersionInfo := OPVersionInfo
+						newApplication: self application
+						model: lastNightlyVersion ].
 			self layout: self defaultLayout ]
 			on: ZnHttpUnsuccessful
 			do: [
-					lastVersionInfo label: 'Failed to download info.'.
-					lastNightlyVersionInfo label: 'Failed to download info.' ] ]
+				(lastVersionInfo respondsTo: #label:) ifFalse: [
+					lastVersionInfo := self newLabel ].
+				(lastNightlyVersionInfo respondsTo: #label:) ifFalse: [
+					lastNightlyVersionInfo := self newLabel ].
+				lastVersionInfo label: 'Failed to download info.'.
+				lastNightlyVersionInfo label: 'Failed to download info.'.
+				self layout: self defaultLayout ] ]
 		forkAt: Processor userBackgroundPriority
 		named: 'Loading OpenPonk version info from GitHub'
 ]

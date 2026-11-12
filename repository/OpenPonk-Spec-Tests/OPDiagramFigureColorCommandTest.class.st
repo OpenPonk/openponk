@@ -50,6 +50,67 @@ OPDiagramFigureColorCommandTest >> tearDown [
 ]
 
 { #category : 'tests' }
+OPDiagramFigureColorCommandTest >> testColorCommandMenuNamesIconsAbstractChecksAndDirectExecution [
+	| element shape toolContext yellowCmd blueCmd greenCmd fontCmd defaultStrokeCmd customColorCmd |
+	element := classController diagramElement.
+	shape := classController roassalShape.
+	toolContext := OPRoassalShapeContext for: diagramController canvasPresenter of: { shape }.
+
+	self
+		assert: OPRoassalShapeColorCommand isAbstract
+		description: 'Root OPRoassalShapeColorCommand must be abstract'.
+	self
+		assert: OPDiagramFigureFillColorCommand isAbstract
+		description: 'Category OPDiagramFigureFillColorCommand must be abstract'.
+	self
+		deny: OPDiagramFigureBlueFillColorCommand isAbstract
+		description: 'Concrete color command must not be abstract'.
+
+	self should: [ OPRoassalShapeColorCommand color ] raise: SubclassResponsibility.
+	self should: [ OPRoassalShapeColorCommand colorAttribute ] raise: SubclassResponsibility.
+	self
+		should: [ OPRoassalShapeColorCommand defaultColorOf: element ]
+		raise: SubclassResponsibility.
+
+	blueCmd := OPDiagramFigureBlueFillColorCommand new.
+	blueCmd readParametersFromContext: toolContext.
+	self assert: blueCmd defaultMenuIconFormSet class identicalTo: FormSet.
+	self assert: blueCmd defaultMenuIcon extent equals: 25 @ 20.
+	self assert: OPDiagramFigureTransparentFillColorCommand new defaultMenuIconFormSet equals: nil.
+	self assert: OPDiagramFigureTransparentFillColorCommand new defaultMenuIcon extent equals: 25 @ 20.
+
+	yellowCmd := OPDiagramFigureYellowFillColorCommand new.
+	yellowCmd readParametersFromContext: toolContext.
+	self assert: yellowCmd defaultMenuItemName equals: 'Yellow (default) [selected]'.
+	self assert: blueCmd defaultMenuItemName equals: 'Blue'.
+
+	blueCmd execute.
+	self assert: blueCmd defaultMenuItemName equals: 'Blue [selected]'.
+	self assert: yellowCmd defaultMenuItemName equals: 'Yellow (default)'.
+
+	defaultStrokeCmd := OPDiagramFigureDefaultStrokeColorCommand new.
+	defaultStrokeCmd readParametersFromContext: toolContext.
+	self assert: defaultStrokeCmd colorName equals: 'Black'.
+
+	customColorCmd := OPDiagramFigureBlueFillColorCommand new.
+	customColorCmd stub color willReturn: (Color fromHexString: '123456').
+	self assert: customColorCmd colorName equals: '#123456'.
+
+	fontCmd := OPDiagramFigureBlueFontColorCommand new.
+	fontCmd readParametersFromContext: toolContext.
+	fontCmd execute.
+	self
+		deny: (element localStyle includesKey: #fontColor)
+		description: 'Font color command on unsupported element should not add #fontColor'.
+
+	greenCmd := OPDiagramFigureGreenFillColorCommand new.
+	greenCmd readParametersFromContext: toolContext.
+	greenCmd stub undoManager willReturn: nil.
+	greenCmd execute.
+	self assert: element fillColor equals: OPDiagramFigureGreenFillColorCommand color
+]
+
+{ #category : 'tests' }
 OPDiagramFigureColorCommandTest >> testDefaultFillColorCommandRemovesLocalStylePropertyAndIsUndoable [
 	| shape element coloredCommand defaultCommand toolContext |
 	element := classController diagramElement.

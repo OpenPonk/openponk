@@ -119,9 +119,7 @@ OPWorkbench class >> openModel: aModel [
 	project := OPProject new.
 	project name: 'New Project'.
 	project addModel: aModel.
-	^ self
-		  openProject: project;
-		  yourself
+	^ self openProject: project
 ]
 
 { #category : 'instance creation' }

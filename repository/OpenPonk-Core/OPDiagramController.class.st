@@ -327,16 +327,6 @@ OPDiagramController >> diagram [
 ]
 
 { #category : 'accessing' }
-OPDiagramController >> diagram: aDiagram [
-
-	self
-		deprecated: 'Use diagram: instead'
-		transformWith: '`@receiver diagram: `@statements1'
-			-> '`@receiver diagramElement: `@statements1'.
-	^ self diagramElement: aDiagram
-]
-
-{ #category : 'accessing' }
 OPDiagramController >> diagramController [
 
 	^ self
@@ -809,15 +799,6 @@ OPDiagramController >> updateCanvas [
 { #category : 'validation' }
 OPDiagramController >> validate [
 	self controllers do: [ :each | each viewModel validate ]
-]
-
-{ #category : 'accessing' }
-OPDiagramController >> view [
-
-	self
-		deprecated: 'Use #canvas instead.'
-		transformWith: '`@receiver view' -> '`@receiver canvas'.
-	^ self canvas
 ]
 
 { #category : 'accessing' }

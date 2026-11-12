@@ -61,6 +61,48 @@ OPLegacyElementLayoutTest >> setUp [
 ]
 
 { #category : 'tests' }
+OPLegacyElementLayoutTest >> testComparisonEqualityHashAndNone [
+	| noneLayout sameElementLayout otherElementLayout |
+	self
+		assert: OPLegacyElementLayout isDeprecated
+		description: 'OPLegacyElementLayout should be marked as deprecated'.
+	noneLayout := OPLegacyElementLayout none.
+	self assert: noneLayout position equals: nil.
+	self assert: noneLayout extent equals: nil.
+	self assert: noneLayout path equals: nil.
+
+	sameElementLayout := OPLegacyElementLayout
+		withPosition: -10 @ 50
+		extent: 100 @ 200.
+	otherElementLayout := OPLegacyElementLayout withPosition: 5 @ 5.
+
+	self assert: elementLayout equals: sameElementLayout.
+	self assert: elementLayout hash equals: sameElementLayout hash.
+	self assert: relationshipLayout hash equals: relationshipLayout path hash.
+	self deny: elementLayout equals: otherElementLayout.
+	self deny: elementLayout equals: relationshipLayout.
+
+	self
+		assert: elementLayout < relationshipLayout
+		description: 'Node layout with position should sort before relationship layout without position'.
+	self
+		assert: relationshipLayout < noneLayout
+		description: 'Relationship layout with path should sort before empty layout'.
+	self
+		assert: elementLayout <= relationshipLayout
+		description: 'elementLayout should be <= relationshipLayout'.
+	self
+		assert: noneLayout > relationshipLayout
+		description: 'noneLayout should be > relationshipLayout'.
+	self
+		assert: noneLayout >= elementLayout
+		description: 'noneLayout should be >= elementLayout'.
+	self
+		assert: (relationshipLayout min: noneLayout max: elementLayout)
+		equals: relationshipLayout
+]
+
+{ #category : 'tests' }
 OPLegacyElementLayoutTest >> testContentFromJSON [
 	| newLayout |
 	newLayout := NeoJSONReader fromString: elementLayoutJSON.
@@ -106,6 +148,51 @@ OPLegacyElementLayoutTest >> testJSONWithoutExtent [
 	newLayout := NeoJSONReader fromString: json as: OPLegacyElementLayout.
 	self assert: newLayout extent equals: nil.
 	self assert: newLayout equals: elementLayout
+]
+
+{ #category : 'tests' }
+OPLegacyElementLayoutTest >> testPrintOnAndApplyToDiagramElement [
+	| canvas node posOnlyLayout sourceNode targetNode edge |
+	self
+		assert: (OPLegacyElementLayout none printString includesSubstring: 'OPLegacyElementLayout')
+		description: 'Empty layout printString should contain class name'.
+	self
+		assert: (relationshipLayout printString includesSubstring: '(relationship)')
+		description: 'Relationship layout printString should include (relationship)'.
+	posOnlyLayout := OPLegacyElementLayout withPosition: 15 @ 25.
+	self
+		assert: (posOnlyLayout printString includesSubstring: '15@25')
+		description: 'Position-only layout printString should include position'.
+	self
+		assert: (elementLayout printString includesSubstring: '(-10@50) (100@200)')
+		description: 'Full node layout printString should include position and extent'.
+
+	canvas := RSCanvas new.
+	node := OPTestBoundNode new.
+	node renderIn: canvas.
+	elementLayout applyToDiagramElement: node.
+	self assert: node position equals: -10 @ 50.
+	self assert: node extent equals: 100 @ 200.
+
+	posOnlyLayout applyToDiagramElement: node.
+	self assert: node position equals: 15 @ 25.
+	self assert: node extent equals: 100 @ 200.
+
+	sourceNode := OPTestBoundNode new
+		bounds: (OPNodeBounds withPosition: 100 @ 200 extent: 20 @ 20);
+		renderIn: canvas;
+		yourself.
+	targetNode := OPTestBoundNode new
+		bounds: (OPNodeBounds withPosition: 150 @ 300 extent: 20 @ 20);
+		renderIn: canvas;
+		yourself.
+	edge := OPTestEdge new
+		source: sourceNode;
+		target: targetNode;
+		renderIn: canvas;
+		yourself.
+	relationshipLayout applyToDiagramElement: edge.
+	self assert: edge innerWaypoints asArray equals: { 150 @ 200 }
 ]
 
 { #category : 'tests' }

@@ -98,47 +98,6 @@ OPRSMarkerBuilder class >> doubleTriangleShape [
 			  (5 @ 8) }
 ]
 
-{ #category : 'examples' }
-OPRSMarkerBuilder class >> example [
-
-	| c b1 b2 m l |
-	
-	c := RSCanvas new.
-
-	b1 := RSBox new.
-	b1 color: Color blue.
-	b1 @ RSDraggable.
-	b2 := RSBox new.
-	b2 color: Color green.
-	b2 @ RSDraggable.
-
-	b2 translateTo: 150 @ 100.
-
-	m := self diamondWithLetter: $M.
-
-	l := RSLine new.
-	l withBorderAttachPoint.
-
-	l markerEnd: m.
-
-	l color: Color red muchDarker.
-	l
-		from: b1;
-		to: b2.
-
-	c
-		add: b1;
-		add: b2;
-		add: l.
-
-	c @ RSDraggableCanvasInteraction.
-	c @ RSZoomableCanvasInteraction.
-
-	c zoomToFit.
-
-	c open
-]
-
 { #category : 'shapes' }
 OPRSMarkerBuilder class >> fromShape: aShape [
 

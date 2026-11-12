@@ -82,9 +82,12 @@ OPLegacyElementLayout >> < anOtherLayout [
 { #category : 'comparing' }
 OPLegacyElementLayout >> = anOtherLayout [
 
-	self position ifNil: [ ^ self path = anOtherLayout path ].
-	^ position = anOtherLayout position and: [ 
-		  extent = anOtherLayout extent ]
+	self class = anOtherLayout class ifFalse: [ ^ false ].
+	self position isNil = anOtherLayout position isNil ifFalse: [ ^ false ].
+	self position ifNil: [
+		self path isNil = anOtherLayout path isNil ifFalse: [ ^ false ].
+		^ self path = anOtherLayout path ].
+	^ position = anOtherLayout position and: [ extent = anOtherLayout extent ]
 ]
 
 { #category : 'converting' }
@@ -109,23 +112,11 @@ OPLegacyElementLayout >> extent: aPoint [
 	extent := aPoint
 ]
 
-{ #category : 'testing' }
-OPLegacyElementLayout >> hasExtent [
-
-	^ extent isNotNil
-]
-
 { #category : 'comparing' }
 OPLegacyElementLayout >> hash [
 
 	self position ifNil: [ ^ self path hash ].
 	^ position hash bitXor: extent hash
-]
-
-{ #category : 'testing' }
-OPLegacyElementLayout >> isNone [
-
-	^ position isNil & extent isNil & path isNil
 ]
 
 { #category : 'accessing' }

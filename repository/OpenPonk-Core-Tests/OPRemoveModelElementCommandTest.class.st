@@ -96,12 +96,14 @@ OPRemoveModelElementCommandTest >> testCaptureDiagramElementsSynchronizesBoundsF
 		eachDescriptor diagramElement == diagramElement ].
 
 	self
-		assert: capturedDescriptor bounds isNotNil
-		description: 'Captured diagram element descriptor must include bounds'.
+		deny: capturedDescriptor geometryMemento
+		identicalTo: nil.
 	self
-		assert: (capturedDescriptor bounds isKindOf: OPNodeBounds)
-		description: 'Captured bounds must be an instance of OPNodeBounds'.
-	self assert: capturedDescriptor bounds position equals: 150 @ 250
+		assert: capturedDescriptor geometryMemento class
+		equals: OPNodeBounds.
+	self
+		assert: capturedDescriptor geometryMemento position
+		equals: 150 @ 250
 ]
 
 { #category : 'tests' }

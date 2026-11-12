@@ -24,7 +24,8 @@ OPProjectControllerTest >> setUp [
 
 { #category : 'running' }
 OPProjectControllerTest >> tearDown [
-
+	(self currentWorld submorphs select: [ :each | each isKindOf: GrowlMorph ])
+		do: [ :each | each delete ].
 	OPPluginRegistry resetDefault.
 	super tearDown
 ]
@@ -46,6 +47,24 @@ OPProjectControllerTest >> testAddDiagramControllerIsIdempotent [
 	controller addDiagramController: diagramController.
 	controller addDiagramController: diagramController.
 	self assert: controller controllers size equals: 1
+]
+
+{ #category : 'tests' }
+OPProjectControllerTest >> testDefaultProjectFileNameFallbackAndFromDirectoryWithoutExportInfo [
+	| folder loadedProject |
+	project name: nil.
+	self assert: controller defaultProjectFileName equals: 'project.opp'.
+	project name: '   '.
+	self assert: controller defaultProjectFileName equals: 'project.opp'.
+
+	folder := FileSystem memory root / 'plain-project-dir'.
+	folder ensureCreateDirectory.
+	project name: 'Directory Project'.
+	controller persistenceManager
+		directory: folder;
+		saveProject: project withMementos: controller modelMementos.
+	loadedProject := OPProjectController fromDirectory: folder.
+	self assert: loadedProject name equals: 'Directory Project'
 ]
 
 { #category : 'tests' }
@@ -94,6 +113,114 @@ OPProjectControllerTest >> testMergeModelsAndDiagramsByPluginPreservesOwnedEleme
 	self assertCollection: mergedDiagram ownedElements hasSameElements: { node1 . node2 . note }.
 	self assertCollection: removedModels hasSameElements: { model1 . model2 }.
 	self assert: addedModels asArray equals: { project models first }
+]
+
+{ #category : 'tests' }
+OPProjectControllerTest >> testMergeModelsAndDiagramsValidationAndSingleModelMultipleDiagrams [
+	| growls model1 diag1 nonMergeablePlugin secondModel nonMergeableModel1 nonMergeableModel2 model2 diag2 mockConfirm capturedAccept mockWorkbench mockEditor realDiagCtrl testLayouter |
+	capturedAccept := nil.
+	growls := [ self currentWorld submorphs select: [ :each | each isKindOf: GrowlMorph ] ].
+
+	"1. Empty project"
+	controller mergeModelsAndDiagramsByPlugin.
+	controller mergeModelsAndDiagramsIntoOne.
+	self assert: growls value size equals: 1.
+	growls value do: #delete.
+
+	"2. Single model with a single diagram"
+	model1 := OPTestContainerModel new.
+	diag1 := OPOpenPonkDiagram forModelElement: model1.
+	project addModel: model1.
+	project addDiagram: diag1.
+	controller mergeModelsAndDiagramsIntoOne.
+	self assert: growls value size equals: 1.
+	growls value do: #delete.
+
+	"3. Two different plugins with one model each"
+	nonMergeablePlugin := OPTestNonMergeablePlugin new.
+	OPPluginRegistry default add: nonMergeablePlugin.
+	secondModel := nonMergeablePlugin modelClass new.
+	project addModel: secondModel.
+	controller mergeModelsAndDiagramsIntoOne.
+	self assert: growls value size equals: 1.
+	growls value do: #delete.
+	project removeModel: secondModel.
+
+	"4. Plugin that does not support merging with two models"
+	nonMergeableModel1 := nonMergeablePlugin modelClass new.
+	nonMergeableModel2 := nonMergeablePlugin modelClass new.
+	project removeModel: model1.
+	project removeDiagram: diag1.
+	project addModel: nonMergeableModel1.
+	project addModel: nonMergeableModel2.
+	controller mergeModelsAndDiagramsIntoOne.
+	self assert: growls value size equals: 1.
+	growls value do: #delete.
+
+	"5. Single model with two diagrams confirmed via SpConfirmDialog"
+	OPPluginRegistry setDefaultForTesting.
+	project removeModel: nonMergeableModel1.
+	project removeModel: nonMergeableModel2.
+	model2 := OPTestContainerModel new.
+	diag1 := OPOpenPonkDiagram forModelElement: model2.
+	diag2 := OPOpenPonkDiagram forModelElement: model2.
+	project addModel: model2.
+	project addDiagram: diag1.
+	project addDiagram: diag2.
+
+	testLayouter := OPTestCountingLayouter new.
+	realDiagCtrl := OPTestDiagramController new.
+	realDiagCtrl layouter: testLayouter.
+	mockEditor := Mock new.
+	mockEditor stub diagramController willReturn: realDiagCtrl.
+	mockWorkbench := Mock new.
+	mockWorkbench stub pluginRegistry willReturn: OPPluginRegistry default.
+	mockWorkbench stub closeEditorOfDiagram: Any.
+	(mockWorkbench stub openEditorOnDiagram: Any) willReturn: mockEditor.
+	controller workbench: mockWorkbench.
+
+	mockConfirm := Mock new.
+	SpConfirmDialog stub new willReturn: mockConfirm.
+	mockConfirm stub title: Any.
+	mockConfirm stub message: Any.
+	mockConfirm stub acceptLabel: Any.
+	mockConfirm stub cancelLabel: Any.
+	mockConfirm stub onAccept: [ :block | capturedAccept := block ].
+	mockConfirm stub openDialog.
+
+	controller mergeModelsAndDiagramsIntoOne.
+	capturedAccept value.
+	self assert: project diagrams size equals: 1.
+	self assert: testLayouter dominanceTreeLayoutCount equals: 1
+]
+
+{ #category : 'tests' }
+OPProjectControllerTest >> testOpenFileDialogHelpersFromFileDoAndMergeFromFile [
+	| sourceProject sourceController archiveFile mockOpenPresenter capturedBlock loadedFromDialog |
+	capturedBlock := nil.
+	loadedFromDialog := nil.
+	sourceProject := OPProject name: 'Source For Dialog'.
+	sourceProject addModel: (OPTestContainerModel new name: 'DialogPkg'; yourself).
+	sourceProject ensureModelsHaveDiagrams.
+	sourceController := OPProjectController forProject: sourceProject.
+	archiveFile := FileSystem memory root / 'dialog-open.opp'.
+	sourceController saveProjectTo: archiveFile.
+
+	mockOpenPresenter := Mock new.
+	StOpenFilePresenter stub new willReturn: mockOpenPresenter.
+	mockOpenPresenter stub title: Any.
+	mockOpenPresenter stub extensions: Any named: Any.
+	mockOpenPresenter stub okAction: [ :block | capturedBlock := block ].
+	mockOpenPresenter stub open.
+
+	OPProjectController fromFileDo: [ :proj | loadedFromDialog := proj ].
+	capturedBlock value: archiveFile.
+	self assert: loadedFromDialog name equals: 'Source For Dialog'.
+
+	controller mergeFromFile.
+	capturedBlock value: archiveFile.
+	self assert: project models size equals: 1.
+	self assert: project diagrams size equals: 1
 ]
 
 { #category : 'tests' }
@@ -218,6 +345,70 @@ OPProjectControllerTest >> testSaveAndLoadFromFileAndMergeFromFile [
 ]
 
 { #category : 'tests' }
+OPProjectControllerTest >> testSaveProjectAndCancelSaveProjectAs [
+	| targetFile cancelPresenter savedNotifications |
+	targetFile := FileSystem memory root / 'direct-save.opp'.
+	project storageFile: targetFile.
+	savedNotifications := OrderedCollection new.
+	[ controller saveProject ]
+		on: ProvideAnswerNotification
+		do: [ :notif |
+			savedNotifications add: notif messageText.
+			notif resume: true ].
+	self assert: targetFile exists description: 'saveProject should write archive to existing storageFile'.
+	self assert: savedNotifications size equals: 1.
+
+	cancelPresenter := Mock new.
+	StSaveFilePresenter stub new willReturn: cancelPresenter.
+	cancelPresenter stub title: Any.
+	cancelPresenter stub extensions: Any named: Any.
+	cancelPresenter stub defaultFolder: Any.
+	cancelPresenter stub nameText: Any.
+	cancelPresenter stub openModal.
+	cancelPresenter stub cancelled willReturn: true.
+	cancelPresenter stub selectedEntry willReturn: nil.
+
+	self
+		should: [ controller saveProjectAs ]
+		raise: InformativeNotification
+]
+
+{ #category : 'tests' }
+OPProjectControllerTest >> testSaveProjectAsAcceptedAndUnwritableFallback [
+	| existingParent acceptPresenter savedNotifications selectedTarget dirAsFile |
+	existingParent := FileLocator temp.
+	project storageFile: existingParent / 'missing-existing-parent.opp'.
+	selectedTarget := FileSystem memory root / 'save-as-target.opp'.
+	acceptPresenter := Mock new.
+	StSaveFilePresenter stub new willReturn: acceptPresenter.
+	acceptPresenter stub title: Any.
+	acceptPresenter stub extensions: Any named: Any.
+	acceptPresenter stub defaultFolder: Any.
+	acceptPresenter stub nameText: Any.
+	acceptPresenter stub openModal.
+	acceptPresenter stub cancelled willReturn: false.
+	acceptPresenter stub selectedEntry willReturn: selectedTarget.
+
+	savedNotifications := OrderedCollection new.
+	[ controller saveProjectAs ]
+		on: ProvideAnswerNotification
+		do: [ :notif |
+			savedNotifications add: notif messageText.
+			notif resume: true ].
+	self assert: selectedTarget exists description: 'saveProjectAs should save project to selected file'.
+
+	dirAsFile := FileSystem memory root / 'unwritable-directory'.
+	dirAsFile ensureCreateDirectory.
+	project storageFile: dirAsFile.
+	self
+		deny: (controller canProjectBeSavedToFile: dirAsFile)
+		description: 'Existing directory cannot be created as file'.
+	self
+		assert: controller writableProjectFile
+		equals: selectedTarget
+]
+
+{ #category : 'tests' }
 OPProjectControllerTest >> testSaveProjectEmpty [
 	| root store |
 	root := FileSystem memory / 'project.opp'.
@@ -276,4 +467,57 @@ OPProjectControllerTest >> testUndoRedoDelegationAndRemoveDiagramAndModel [
 	self assertEmpty: project diagrams.
 	controller removeModel: container.
 	self assertEmpty: project models
+]
+
+{ #category : 'tests' }
+OPProjectControllerTest >> testWorkbenchDelegationOpenDiagramsMergeWithAndUpdateDiagram [
+	| mockWorkbench mockApp mockEditor mockDiagramCtrl baseModel diag1 diag2 otherProject otherModel otherDiag titleUpdated |
+	mockApp := Mock new.
+	mockEditor := Mock new.
+	mockDiagramCtrl := Mock new.
+	mockWorkbench := Mock new.
+	titleUpdated := false.
+
+	mockWorkbench stub application willReturn: mockApp.
+	(mockWorkbench stub openEditorOnDiagram: Any) willReturn: mockEditor.
+	mockWorkbench stub focusEditorOf: Any.
+	mockWorkbench stub focusedEditor willReturn: mockEditor.
+	mockWorkbench stub updateTitle will: [ titleUpdated := true ].
+	mockEditor stub diagramController willReturn: mockDiagramCtrl.
+
+	controller workbench: mockWorkbench.
+	self assert: controller spApplication identicalTo: mockApp.
+	self assert: controller viewModel identicalTo: controller viewModelRegistry projectViewModel.
+	self assert: OPProjectController new undoManager isNotNil description: 'Lazy undoManager initialization should return an instance'.
+
+	baseModel := OPTestContainerModel new.
+	diag1 := (OPOpenPonkDiagram forModelElement: baseModel) isOpen: false; isSelected: false; yourself.
+	diag2 := (OPOpenPonkDiagram forModelElement: baseModel) isOpen: false; isSelected: false; yourself.
+	project addDiagram: diag1.
+	project addDiagram: diag2.
+	controller openDiagrams.
+	mockWorkbench should receive openEditorOnDiagram: diag1.
+	mockWorkbench should receive openEditorOnDiagram: diag2.
+
+	diag1 isOpen: true; isSelected: true.
+	diag2 isOpen: false; isSelected: false.
+	controller openDiagrams.
+	mockWorkbench should receive focusEditorOf: diag1.
+
+	otherModel := OPTestContainerModel new.
+	otherDiag := OPOpenPonkDiagram forModelElement: otherModel.
+	otherProject := OPProject new.
+	otherProject addModel: otherModel.
+	otherProject addDiagram: otherDiag.
+	controller mergeWith: otherProject.
+	mockWorkbench should receive openEditorOnDiagram: otherDiag.
+
+	controller saveProjectTo: FileSystem memory root / 'wb-title.opp'.
+	self assert: titleUpdated description: 'saveProjectTo: should call updateTitle on attached workbench'.
+
+	mockDiagramCtrl stub diagramElement willReturn: diag1.
+	mockDiagramCtrl stub validate.
+	controller addDiagramController: mockDiagramCtrl.
+	controller updateDiagram: diag1.
+	self assert: diag1 isSelected description: 'updateDiagram: should mark diagram as selected when its controller is focused'
 ]

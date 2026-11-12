@@ -7,8 +7,6 @@ Class {
 	#superclass : 'OPBoundNode',
 	#instVars : [
 		'name',
-		'documentation',
-		'resolution',
 		'styleSheet'
 	],
 	#category : 'OpenPonk-Core-DiagramElements',
@@ -21,7 +19,7 @@ OPDiagram class >> stonAllInstVarNames [
 
 	"Override to encode my instances using a custom set of instance variables or to define their order."
 
-	^ super stonAllInstVarNames , #( #name #documentation #resolution )
+	^ super stonAllInstVarNames , #( #name )
 ]
 
 { #category : 'accessing' }
@@ -44,18 +42,6 @@ OPDiagram >> defaultStyleSheet [
 		ifNil: [ OPStyleSheet new ]
 ]
 
-{ #category : 'accessing' }
-OPDiagram >> documentation [
-
-	^ documentation
-]
-
-{ #category : 'accessing' }
-OPDiagram >> documentation: anObject [
-
-	documentation := anObject
-]
-
 { #category : 'private' }
 OPDiagram >> findPlugin [
 	| model matchingPlugins |
@@ -71,14 +57,6 @@ OPDiagram >> findPlugin [
 OPDiagram >> isRendered [
 
 	^ roassalShape isNotNil
-]
-
-{ #category : 'accessing' }
-OPDiagram >> modelElementName [
-
-	^ (self modelElement respondsTo: #name)
-		  ifTrue: [ self modelElement name ]
-		  ifFalse: [ self modelElementType ]
 ]
 
 { #category : 'accessing' }
@@ -136,18 +114,6 @@ OPDiagram >> renderShapeDetails [
 	"diagram cannot be rendered directly now, only its owned elements"
 
 	^ nil
-]
-
-{ #category : 'accessing' }
-OPDiagram >> resolution [
-
-	^ resolution
-]
-
-{ #category : 'accessing' }
-OPDiagram >> resolution: anObject [
-
-	resolution := anObject
 ]
 
 { #category : 'interactions' }

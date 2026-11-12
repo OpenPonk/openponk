@@ -65,6 +65,73 @@ OPCanvasPresenterTest >> testDefaultExportFileNameUsesSanitizer [
 ]
 
 { #category : 'tests' }
+OPCanvasPresenterTest >> testExportAsPdfPngAndSvg [
+	| editor canvasPresenter project container diagram projectController diagramController entity tempPdfFile tempPngFile tempDirectPngFile tempSvgFile mockSavePresenter mockImageDialog storedPdfAction storedPngAction storedSvgAction |
+	storedPdfAction := nil.
+	storedPngAction := nil.
+	storedSvgAction := nil.
+
+	editor := OPEditor new.
+	canvasPresenter := editor canvasPresenter.
+	project := OPProject new.
+	container := OPTestContainerModel new.
+	project addModel: container.
+	diagram := OPOpenPonkDiagram forModelElement: container.
+	project addDiagram: diagram.
+	projectController := OPProjectController forProject: project.
+	diagramController := OPTestDiagramController new.
+	projectController addDiagramController: diagramController.
+	diagramController
+		model: container;
+		diagramElement: diagram.
+	canvasPresenter attachController: diagramController.
+	entity := OPTestEntityModel new.
+	container add: entity.
+	diagramController showInDiagramModel: entity.
+
+	tempPdfFile := FileLocator temp / ('openponk-test-' , UUID new asString , '.pdf').
+	tempPngFile := FileLocator temp / ('openponk-test-' , UUID new asString , '.png').
+	tempDirectPngFile := FileLocator temp / ('openponk-test-direct-' , UUID new asString , '.png').
+	tempSvgFile := FileLocator temp / ('openponk-test-' , UUID new asString , '.svg').
+
+	[
+		canvasPresenter exportAsPng: tempDirectPngFile.
+		self assert: tempDirectPngFile exists description: 'exportAsPng: must write a PNG file'.
+
+		mockSavePresenter := Mock new.
+		StSaveFilePresenter stub new willReturn: mockSavePresenter.
+		mockSavePresenter stub title: Any.
+		mockSavePresenter stub nameText: Any.
+		mockSavePresenter stub defaultFolder: Any.
+		mockSavePresenter stub extensions: Any named: Any.
+		(mockSavePresenter stub okAction: Any) will: [ :action | storedPdfAction := action ].
+		mockSavePresenter stub openModal will: [ storedPdfAction value: tempPdfFile ].
+		canvasPresenter exportAsPdf.
+		self assert: tempPdfFile exists description: 'exportAsPdf must export a PDF file on dialog confirmation'.
+
+		(mockSavePresenter stub okAction: Any) will: [ :action | storedSvgAction := action ].
+		mockSavePresenter stub openModal will: [ storedSvgAction value: tempSvgFile ].
+		canvasPresenter exportAsSvg.
+		self assert: tempSvgFile exists description: 'exportAsSvg must export an SVG file on dialog confirmation'.
+
+		mockImageDialog := Mock new.
+		OPExportImageDialog stub new willReturn: mockImageDialog.
+		mockImageDialog stub title: Any.
+		mockImageDialog stub nameText: Any.
+		mockImageDialog stub defaultFolder: Any.
+		mockImageDialog stub extensions: Any named: Any.
+		(mockImageDialog stub okAction: Any) will: [ :action | storedPngAction := action ].
+		mockImageDialog stub openModal will: [ storedPngAction value: tempPngFile value: 1.5 ].
+		canvasPresenter exportAsPng.
+		self assert: tempPngFile exists description: 'exportAsPng must export a PNG file on dialog confirmation'
+	] ensure: [
+		tempPdfFile ensureDelete.
+		tempPngFile ensureDelete.
+		tempDirectPngFile ensureDelete.
+		tempSvgFile ensureDelete ]
+]
+
+{ #category : 'tests' }
 OPCanvasPresenterTest >> testExportWithCleanCanvasUnhighlightsAndRestoresSelectionAndHandles [
 	| canvasPresenter canvas shape resizable selectable mockController originalBorder highlightedBorder initialHandles wasExported |
 	canvasPresenter := OPCanvasPresenter new.
@@ -157,4 +224,52 @@ OPCanvasPresenterTest >> testExportWithCleanCanvasUnhighlightsAndRestoresSelecti
 		assert: (canvas shapes includesAll: resizable handles)
 		description: 'After export: canvas shapes must contain all restored resizable handles'.
 	mockController should receive withoutSelectionDo: Any
+]
+
+{ #category : 'tests' }
+OPCanvasPresenterTest >> testStandaloneCanvasFallbacksAndCallbacks [
+	| editor canvasPresenter window extentChanged project container diagram projectController diagramController entity standaloneExecuted |
+	editor := OPEditor new.
+	canvasPresenter := editor canvasPresenter.
+	window := editor open.
+	[
+		self assert: canvasPresenter workbench isNil description: 'Editor without assigned workbench should answer nil workbench'.
+		self assert: canvasPresenter defaultExportFolder equals: FileSystem workingDirectory.
+		self assert: (canvasPresenter defaultExportFileNameWithExtension: 'pdf') equals: 'diagram.pdf'.
+
+		extentChanged := false.
+		canvasPresenter whenExtentChangedDo: [ :event | extentChanged := true ].
+		canvasPresenter canvas announce: (RSExtentChangedEvent new canvas: canvasPresenter canvas; yourself).
+		self assert: extentChanged description: 'Canvas extent change should invoke whenExtentChangedDo: callback'.
+
+		canvasPresenter zoom: 2.0.
+		self assert: canvasPresenter zoom closeTo: 2.0.
+		canvasPresenter zoomToFit.
+		self assert: canvasPresenter zoom closeTo: 1.0.
+
+		standaloneExecuted := false.
+		canvasPresenter exportWithCleanCanvasDo: [ standaloneExecuted := true ].
+		self assert: standaloneExecuted description: 'exportWithCleanCanvasDo: must execute block directly when diagramController is nil'.
+
+		project := OPProject new.
+		container := OPTestContainerModel new.
+		project addModel: container.
+		diagram := OPOpenPonkDiagram forModelElement: container.
+		project addDiagram: diagram.
+		projectController := OPProjectController forProject: project.
+		diagramController := OPTestDiagramController new.
+		projectController addDiagramController: diagramController.
+		diagramController
+			model: container;
+			diagramElement: diagram.
+		canvasPresenter attachController: diagramController.
+		entity := OPTestEntityModel new.
+		container add: entity.
+		diagramController showInDiagramModel: entity.
+
+		self assert: canvasPresenter model identicalTo: container.
+		self assert: (canvasPresenter defaultExportFileNameWithExtension: 'pdf') equals: 'container.pdf'.
+		container name: '   '.
+		self assert: (canvasPresenter defaultExportFileNameWithExtension: 'pdf') equals: 'diagram.pdf'
+	] ensure: [ window ifNotNil: [ window close ] ]
 ]

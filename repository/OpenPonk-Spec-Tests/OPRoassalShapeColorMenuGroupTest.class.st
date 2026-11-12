@@ -10,6 +10,25 @@ Class {
 }
 
 { #category : 'tests' }
+OPRoassalShapeColorMenuGroupTest >> testAbstractHooksAndMenuGroupNames [
+	self
+		should: [ OPRoassalShapeColorMenuGroup colors ]
+		raise: SubclassResponsibility.
+	self
+		should: [ OPRoassalShapeColorMenuGroup commandSuperclass ]
+		raise: SubclassResponsibility.
+	self
+		should: [ OPRoassalShapeColorMenuGroup styleAttribute ]
+		raise: SubclassResponsibility.
+	self assert: OPRoassalShapeFillColorMenuGroup new name equals: 'Fill color'.
+	self assert: OPRoassalShapeStrokeColorMenuGroup new name equals: 'Stroke color'.
+	self assert: OPRoassalShapeFontColorMenuGroup new name equals: 'Font color'.
+	self
+		assertCollection: OPRoassalShapeFontColorMenuGroup colors
+		hasSameElements: OPRoassalShapeStrokeColorMenuGroup colors
+]
+
+{ #category : 'tests' }
 OPRoassalShapeColorMenuGroupTest >> testCustomColorNamesMapping [
 	| mapping |
 	mapping := OPRoassalShapeColorMenuGroup customColorNames.

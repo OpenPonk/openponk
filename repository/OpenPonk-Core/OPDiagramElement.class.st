@@ -62,15 +62,6 @@ OPDiagramElement class >> isNode [
 ]
 
 { #category : 'rendering' }
-OPDiagramElement class >> renderForController: aController [
-
-	^ self new
-		  modelElement: aController model;
-		  renderIn: aController diagramController canvas;
-		  yourself
-]
-
-{ #category : 'rendering' }
 OPDiagramElement class >> renderSimplifiedForController: aController [
 
 	^ self new
@@ -157,14 +148,6 @@ OPDiagramElement >> addSelectableInteraction [
 OPDiagramElement >> addSelectionDraggableInteraction [
 
 	roassalShape @ OPRSSelectionDraggable
-]
-
-{ #category : 'rendering' }
-OPDiagramElement >> addedByMouseClickTo: aPoint [
-
-	"Do nothing by default. The given point is position where user clicked by mouse in order to create the element. If the shape was not added by a mouse click, this method is not called. May be overriden to translate to that position or react in any other way."
-
-	
 ]
 
 { #category : 'enumerating' }
@@ -825,13 +808,6 @@ OPDiagramElement >> sourceEdges [
 	^ sourceEdges
 ]
 
-{ #category : 'accessing' }
-OPDiagramElement >> sourceEdges: aCollection [
-	sourceEdges
-		removeAll;
-		addAll: aCollection
-]
-
 { #category : 'ston-core' }
 OPDiagramElement >> stonInstVarNameFor: anInstVarName [
 	^ anInstVarName
@@ -972,13 +948,6 @@ OPDiagramElement >> supportsColorChangeOfType: aSymbol [
 { #category : 'accessing' }
 OPDiagramElement >> targetEdges [
 	^ targetEdges
-]
-
-{ #category : 'accessing' }
-OPDiagramElement >> targetEdges: aCollection [
-	targetEdges
-		removeAll;
-		addAll: aCollection
 ]
 
 { #category : 'initialization' }

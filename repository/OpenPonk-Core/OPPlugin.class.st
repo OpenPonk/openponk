@@ -77,14 +77,6 @@ OPPlugin >> defaultStyleSheet [
 ]
 
 { #category : 'accessing' }
-OPPlugin >> diagramClass [
-	self
-		deprecated: 'Use #modelClass'
-		transformWith: '`@receiver diagramClass' -> '`@receiver modelClass'.
-	^ self modelClass
-]
-
-{ #category : 'accessing' }
 OPPlugin >> diagramControllerClass [
 	^ self subclassResponsibility
 ]

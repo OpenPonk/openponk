@@ -17,6 +17,8 @@ Class {
 { #category : 'running' }
 OPProjectControllerTest >> setUp [
 	super setUp.
+	(self currentWorld submorphs select: [ :each | each isKindOf: GrowlMorph ])
+		do: [ :each | each delete ].
 	project := OPProject new.
 	controller := OPProjectController forProject: project.
 	OPPluginRegistry setDefaultForTesting
@@ -192,6 +194,16 @@ OPProjectControllerTest >> testMergeModelsAndDiagramsValidationAndSingleModelMul
 	capturedAccept value.
 	self assert: project diagrams size equals: 1.
 	self assert: testLayouter dominanceTreeLayoutCount equals: 1
+]
+
+{ #category : 'tests' }
+OPProjectControllerTest >> testMergeModelsAndDiagramsValidationIsolatesFromLeakedGrowlMorphs [
+	| leakedGrowl |
+	leakedGrowl := (GrowlMorph label: 'Leaked' contents: 'From previous test') openInWorld.
+	[
+		self setUp.
+		self testMergeModelsAndDiagramsValidationAndSingleModelMultipleDiagrams ]
+		ensure: [ leakedGrowl delete ]
 ]
 
 { #category : 'tests' }

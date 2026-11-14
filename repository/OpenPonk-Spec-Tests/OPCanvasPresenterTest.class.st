@@ -6,6 +6,13 @@ Class {
 	#tag : 'Windows'
 }
 
+{ #category : 'running' }
+OPCanvasPresenterTest >> tearDown [
+	(self currentWorld submorphs select: [ :each | each isKindOf: GrowlMorph ])
+		do: [ :each | each delete ].
+	super tearDown
+]
+
 { #category : 'tests' }
 OPCanvasPresenterTest >> testCommandContextAndDefaultExportFolderAndZoom [
 	| project container testCanvas diagram projectController diagramController workbench presenter diagramFile zoomed extentChanged |
@@ -129,6 +136,14 @@ OPCanvasPresenterTest >> testExportAsPdfPngAndSvg [
 		tempPngFile ensureDelete.
 		tempDirectPngFile ensureDelete.
 		tempSvgFile ensureDelete ]
+]
+
+{ #category : 'tests' }
+OPCanvasPresenterTest >> testExportAsPdfPngAndSvgCleansUpGrowlMorphs [
+	| isolatedTest |
+	isolatedTest := self class selector: #testExportAsPdfPngAndSvg.
+	isolatedTest runCase.
+	self assertEmpty: (self currentWorld submorphs select: [ :each | each isKindOf: GrowlMorph ])
 ]
 
 { #category : 'tests' }

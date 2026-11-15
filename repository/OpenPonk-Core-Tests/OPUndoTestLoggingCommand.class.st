@@ -13,12 +13,13 @@ Class {
 	#tag : 'UndoRedo'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 OPUndoTestLoggingCommand class >> log: anOrderedCollection value: anObject [
+
 	^ self new
-		log: anOrderedCollection;
-		value: anObject;
-		yourself
+		  log: anOrderedCollection;
+		  value: anObject;
+		  yourself
 ]
 
 { #category : 'executing' }

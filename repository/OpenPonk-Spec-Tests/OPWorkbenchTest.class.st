@@ -296,32 +296,28 @@ OPWorkbenchTest >> testSaveProjectShortcutIsRegistered [
 
 { #category : 'tests' }
 OPWorkbenchTest >> testShowAllElementsClearsUndoManager [
-	| testProject testProjectController activeUndoManager testCommand |
-	workbench := OPWorkbench new.
-	testProject := OPProject new.
-	testProjectController := OPProjectController new.
-	testProjectController project: testProject.
+
+	| testProject testProjectController activeUndoManager log testCommand |
+	testProject := OPProject named: 'Workbench Clear Undo Test'.
+	testProjectController := OPProjectController forProject: testProject.
+	testProjectController workbench: workbench.
 	workbench instVarNamed: 'projectController' put: testProjectController.
 
 	activeUndoManager := testProjectController undoManager.
-	testCommand := OPUndoTestLoggingCommand new.
-	(testCommand respondsTo: #log:)
-		ifTrue: [ testCommand log: OrderedCollection new ]
-		ifFalse: [
-			(testCommand class respondsTo: #log:)
-				ifTrue: [ testCommand := OPUndoTestLoggingCommand log: OrderedCollection new ]
-				ifFalse: [ testCommand instVarNamed: 'log' put: OrderedCollection new ] ].
+	log := OrderedCollection new.
+	testCommand := OPUndoTestLoggingCommand log: log value: 1.
 
-	activeUndoManager inTransaction: [
-		activeUndoManager execute: testCommand ].
+	activeUndoManager inTransaction: [ activeUndoManager execute: testCommand ].
 
-	self assert: activeUndoManager canUndo
-		description: 'UndoManager should contain commands before showAll'.
+	self assert: log asArray equals: #( 'execute:1' ).
+	self assert: activeUndoManager undoStack size equals: 1.
+	self assert: activeUndoManager canUndo description: 'UndoManager should contain commands before showAll'.
 
 	workbench showAllElementsInAllDiagrams.
 
-	self deny: activeUndoManager canUndo
-		description: 'UndoManager must be cleared after showAllElementsInAllDiagrams'
+	self assertEmpty: activeUndoManager undoStack.
+	self assertEmpty: activeUndoManager redoStack.
+	self deny: activeUndoManager canUndo description: 'UndoManager must be cleared after showAllElementsInAllDiagrams'
 ]
 
 { #category : 'tests' }

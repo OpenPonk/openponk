@@ -57,19 +57,8 @@ OPVersion class >> fromReleaseJson: aRelease repositoryName: aRepositoryName [
 
 { #category : 'instance creation' }
 OPVersion class >> fromRunJson: aRun [
-	| version dateString repo |
-	dateString := aRun at: #created_at ifAbsent: [
-		(aRun at: #head_commit ifAbsent: [ aRun ]) at: #timestamp ].
-	repo := aRun at: #repository ifAbsent: [ nil ].
-	repo isDictionary ifTrue: [ repo := repo at: #name ifAbsent: [ nil ] ].
-	version := self new
-		releaseName: (aRun at: #head_branch);
-		repositoryName: repo;
-		githubWorkflowRunId: (aRun at: #id);
-		buildDate: (DateAndTime fromString: dateString) asLocal;
-		yourself.
-	version releaseName = 'master' ifTrue: [ version releaseName: 'nightly' ].
-	^ version
+
+	^ self new populateFromRunJson: aRun
 ]
 
 { #category : 'fetching' }
@@ -225,13 +214,15 @@ OPVersion >> buildDate: aDateAndTime [
 
 { #category : 'downloading' }
 OPVersion >> canDownloadInfo [
-	^ githubWorkflowRunId isNotNil and: [ self repositoryName isNotNil ]
+
+	^ githubWorkflowRunId isNotNil and: [ self isRepositoryNameKnown ]
 ]
 
 { #category : 'downloading' }
 OPVersion >> downloadInfo [
-	self githubWorkflowRunId ifNil: [ ^ self ].
-	^ self fromRunJson: self getRun
+
+	self canDownloadInfo ifFalse: [ ^ self ].
+	self populateFromRunJson: self getRun
 ]
 
 { #category : 'accessing' }
@@ -331,12 +322,29 @@ OPVersion >> isRelease [
 
 { #category : 'accessing' }
 OPVersion >> isRepositoryNameKnown [
-	^ self repositoryName ~= self class unknownRepositoryName
+
+	^ self repositoryName isNotNil and: [ self repositoryName ~= self class unknownRepositoryName ]
 ]
 
 { #category : 'downloading' }
 OPVersion >> needsDownloadInfo [
 	^ buildDate isNil
+]
+
+{ #category : 'downloading' }
+OPVersion >> populateFromRunJson: aRun [
+
+	| dateString repo branchName |
+	dateString := aRun at: #created_at ifAbsent: [ (aRun at: #head_commit ifAbsent: [ aRun ]) at: #timestamp ].
+	repo := aRun at: #repository ifAbsent: [ nil ].
+	repo isDictionary ifTrue: [ repo := repo at: #name ifAbsent: [ nil ] ].
+	repo ifNotNil: [ self repositoryName: repo ].
+	aRun at: #id ifPresent: [ :runId | self githubWorkflowRunId: runId ].
+	branchName := aRun at: #head_branch.
+	self releaseName: (branchName = 'master'
+			 ifTrue: [ 'nightly' ]
+			 ifFalse: [ branchName ]).
+	self buildDate: (DateAndTime fromString: dateString) asLocal
 ]
 
 { #category : 'printing' }

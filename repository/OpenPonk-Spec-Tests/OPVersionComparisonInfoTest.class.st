@@ -6,7 +6,8 @@ Class {
 	#superclass : 'TestCase',
 	#instVars : [
 		'savedCurrent',
-		'savedLatest'
+		'savedLatest',
+		'savedWindows'
 	],
 	#category : 'OpenPonk-Spec-Tests-Dialogs',
 	#package : 'OpenPonk-Spec-Tests',
@@ -41,15 +42,150 @@ OPVersionComparisonInfoTest >> setUp [
 
 	super setUp.
 	savedCurrent := OPVersion instVarNamed: #current.
-	savedLatest := OPVersion instVarNamed: #latest
+	savedLatest := OPVersion instVarNamed: #latest.
+	savedWindows := (self currentWorld submorphs select: [ :each | each isSystemWindow ]) asIdentitySet
 ]
 
 { #category : 'running' }
 OPVersionComparisonInfoTest >> tearDown [
 
-	OPVersion instVarNamed: #current put: savedCurrent.
-	OPVersion instVarNamed: #latest put: savedLatest.
+	[
+		savedWindows ifNotNil: [
+			self currentWorld submorphs do: [ :each |
+				(each isSystemWindow and: [ (savedWindows includes: each) not ]) ifTrue: [ each close ] ] ] ] ensure: [
+			OPVersion instVarNamed: #current put: savedCurrent.
+			OPVersion instVarNamed: #latest put: savedLatest ].
 	super tearDown
+]
+
+{ #category : 'tests' }
+OPVersionComparisonInfoTest >> testApplyLoadedReleaseAndFailureUpdateContainersWithoutRebuildingRootLayout [
+
+	| unknownVersion presenter window rootAdapter rootWidget versionInfoWidget lastVersionContainer lastNightlyContainer lastVersionContainerWidget lastNightlyContainerWidget releaseVer nightlyVer releaseInfoWidget nightlyInfoWidget failedReleaseLabel failedNightlyLabel |
+	unknownVersion := OPVersion new
+		                  repositoryName: OPVersion unknownRepositoryName;
+		                  yourself.
+	OPVersion instVarNamed: #current put: unknownVersion.
+
+	presenter := OPVersionComparisonInfo newApplication: SpApplication defaultApplication.
+	window := presenter asWindow.
+	[
+		window buildWithSpecLayout: presenter layout.
+		rootAdapter := presenter adapter.
+		rootWidget := rootAdapter widget.
+		versionInfoWidget := (presenter instVarNamed: #versionInfo) adapter widget.
+		lastVersionContainer := presenter instVarNamed: #lastVersionContainer.
+		lastNightlyContainer := presenter instVarNamed: #lastNightlyVersionContainer.
+		lastVersionContainerWidget := lastVersionContainer adapter widget.
+		lastNightlyContainerWidget := lastNightlyContainer adapter widget.
+
+		releaseVer := OPVersion new
+			              repositoryName: 'openponk';
+			              releaseName: 'v2.0.0';
+			              buildDate: DateAndTime now;
+			              yourself.
+		nightlyVer := OPVersion new
+			              repositoryName: 'openponk';
+			              releaseName: 'nightly-12345';
+			              githubWorkflowRunId: 12345;
+			              buildDate: DateAndTime now;
+			              yourself.
+
+		presenter applyLoadedRelease: releaseVer nightly: nightlyVer generation: (presenter instVarNamed: #loadingGeneration).
+
+		self assert: presenter adapter identicalTo: rootAdapter.
+		self assert: presenter adapter widget identicalTo: rootWidget.
+		self assert: (presenter instVarNamed: #versionInfo) adapter widget identicalTo: versionInfoWidget.
+		self assert: lastVersionContainer adapter widget identicalTo: lastVersionContainerWidget.
+		self assert: lastNightlyContainer adapter widget identicalTo: lastNightlyContainerWidget.
+
+		self assert: (presenter instVarNamed: #lastVersionInfo) class identicalTo: OPVersionInfo.
+		self assert: (presenter instVarNamed: #lastNightlyVersionInfo) class identicalTo: OPVersionInfo.
+		self assert: (presenter instVarNamed: #lastVersionInfo) owner identicalTo: lastVersionContainer.
+		self assert: (presenter instVarNamed: #lastNightlyVersionInfo) owner identicalTo: lastNightlyContainer.
+		releaseInfoWidget := (presenter instVarNamed: #lastVersionInfo) adapter widget.
+		nightlyInfoWidget := (presenter instVarNamed: #lastNightlyVersionInfo) adapter widget.
+		self assertCollection: lastVersionContainerWidget allMorphs includesAll: { releaseInfoWidget }.
+		self assertCollection: lastNightlyContainerWidget allMorphs includesAll: { nightlyInfoWidget }.
+
+		presenter applyFailedDownloadInfoForGeneration: (presenter instVarNamed: #loadingGeneration).
+
+		self assert: presenter adapter identicalTo: rootAdapter.
+		self assert: presenter adapter widget identicalTo: rootWidget.
+		self assert: lastVersionContainer adapter widget identicalTo: lastVersionContainerWidget.
+		self assert: lastNightlyContainer adapter widget identicalTo: lastNightlyContainerWidget.
+		failedReleaseLabel := presenter instVarNamed: #lastVersionInfo.
+		failedNightlyLabel := presenter instVarNamed: #lastNightlyVersionInfo.
+		self assert: failedReleaseLabel class identicalTo: SpLabelPresenter.
+		self assert: failedNightlyLabel class identicalTo: SpLabelPresenter.
+		self assert: failedReleaseLabel label equals: 'Failed to download info.'.
+		self assert: failedNightlyLabel label equals: 'Failed to download info.'.
+		self assert: failedReleaseLabel owner identicalTo: lastVersionContainer.
+		self assert: failedNightlyLabel owner identicalTo: lastNightlyContainer.
+		self assertCollection: lastVersionContainerWidget allMorphs includesAll: { failedReleaseLabel adapter widget }.
+		self assertCollection: lastNightlyContainerWidget allMorphs includesAll: { failedNightlyLabel adapter widget }.
+		self denyCollection: lastVersionContainerWidget allMorphs includesAny: { releaseInfoWidget }.
+		self denyCollection: lastNightlyContainerWidget allMorphs includesAny: { nightlyInfoWidget }.
+
+		presenter applyLoadedRelease: releaseVer nightly: nightlyVer generation: 999.
+		self assert: (presenter instVarNamed: #lastVersionInfo) identicalTo: failedReleaseLabel.
+
+		presenter cancelLoading.
+		presenter applyLoadedRelease: releaseVer nightly: nightlyVer generation: (presenter instVarNamed: #loadingGeneration).
+		self assert: (presenter instVarNamed: #lastVersionInfo) identicalTo: failedReleaseLabel ] ensure: [
+			presenter cancelLoading.
+			window close ]
+]
+
+{ #category : 'tests' }
+OPVersionComparisonInfoTest >> testFetchVersionInfoAbortsWhenClosedOrSupersededWithoutSecondFetch [
+
+	| unknownVersion mockVersion presenter window nightlyCalled successCount failureCount |
+	unknownVersion := OPVersion new
+		                  repositoryName: OPVersion unknownRepositoryName;
+		                  yourself.
+	OPVersion instVarNamed: #current put: unknownVersion.
+
+	presenter := OPVersionComparisonInfo newApplication: SpApplication defaultApplication.
+	window := nil.
+	[
+		window := presenter open.
+		nightlyCalled := false.
+		successCount := 0.
+		failureCount := 0.
+
+		mockVersion := Mock new.
+		mockVersion stub getOfLatestRelease willRaise: (NameLookupFailure hostName: 'api.github.com').
+		mockVersion stub getOfLatestNightlyBuild will: [
+				nightlyCalled := true.
+				nil ].
+		presenter instVarNamed: #version put: mockVersion.
+		presenter
+			fetchVersionInfoForGeneration: (presenter instVarNamed: #loadingGeneration)
+			onSuccess: [ :rel :nig | successCount := successCount + 1 ]
+			onFailure: [ failureCount := failureCount + 1 ].
+		self assert: failureCount equals: 1.
+		self assert: successCount equals: 0.
+		self deny: nightlyCalled description: 'NetworkError during release fetch should trigger failure without nightly fetch'.
+
+		mockVersion := Mock new.
+		mockVersion stub getOfLatestRelease will: [
+				window close.
+				OPVersion new ].
+		mockVersion stub getOfLatestNightlyBuild will: [
+				nightlyCalled := true.
+				nil ].
+		presenter instVarNamed: #version put: mockVersion.
+		presenter
+			fetchVersionInfoForGeneration: (presenter instVarNamed: #loadingGeneration)
+			onSuccess: [ :rel :nig | successCount := successCount + 1 ]
+			onFailure: [ failureCount := failureCount + 1 ].
+		self assert: (presenter instVarNamed: #isClosed) description: 'Closing the window must mark presenter closed'.
+		self deny: nightlyCalled description: 'Closing the window during release fetch must abort before nightly fetch'.
+		self assert: successCount equals: 0.
+		self assert: failureCount equals: 1 ] ensure: [
+			presenter cancelLoading.
+			window ifNotNil: [ window close ] ]
 ]
 
 { #category : 'tests' }
@@ -98,9 +234,64 @@ OPVersionComparisonInfoTest >> testInitializeWindow [
 ]
 
 { #category : 'tests' }
+OPVersionComparisonInfoTest >> testInitializeWindowRegistersCancelLoadingBeforeBuild [
+
+	| unknownVersion presenter window |
+	unknownVersion := OPVersion new
+		                  repositoryName: OPVersion unknownRepositoryName;
+		                  yourself.
+	OPVersion instVarNamed: #current put: unknownVersion.
+
+	presenter := OPVersionComparisonInfo newApplication: SpApplication defaultApplication.
+	window := presenter asWindow.
+	window windowIsOpened.
+	window windowClosed.
+
+	self
+		assert: (presenter instVarNamed: #isClosed)
+		description: 'Closing window initialized via asWindow must invoke cancelLoading even before widget build'.
+	self
+		assert: ((presenter instVarNamed: #versionInfo) instVarNamed: #isClosed)
+		description: 'Closing OPVersionComparisonInfo window must also cancel child versionInfo loading'
+]
+
+{ #category : 'tests' }
+OPVersionComparisonInfoTest >> testReplacePresenterCancelsPreviousVersionInfoLoading [
+
+	| unknownVersion presenter window firstRelease secondRelease previousVersionInfo |
+	unknownVersion := OPVersion new
+		                  repositoryName: OPVersion unknownRepositoryName;
+		                  yourself.
+	OPVersion instVarNamed: #current put: unknownVersion.
+
+	presenter := OPVersionComparisonInfo newApplication: SpApplication defaultApplication.
+	window := presenter asWindow.
+	[
+		window buildWithSpecLayout: presenter layout.
+		firstRelease := OPVersion new
+			                repositoryName: 'openponk';
+			                releaseName: 'v1.0.0';
+			                buildDate: DateAndTime now;
+			                yourself.
+		secondRelease := OPVersion new
+			                 repositoryName: 'openponk';
+			                 releaseName: 'v2.0.0';
+			                 buildDate: DateAndTime now;
+			                 yourself.
+		presenter applyLoadedRelease: firstRelease nightly: nil generation: (presenter instVarNamed: #loadingGeneration).
+		previousVersionInfo := presenter instVarNamed: #lastVersionInfo.
+		presenter applyLoadedRelease: secondRelease nightly: nil generation: (presenter instVarNamed: #loadingGeneration).
+		self
+			assert: (previousVersionInfo instVarNamed: #isClosed)
+			description: 'Replacing an OPVersionInfo child presenter must cancel its loading state' ] ensure: [
+			presenter cancelLoading.
+			window close ]
+]
+
+{ #category : 'tests' }
 OPVersionComparisonInfoTest >> testThisVersionInfoLoadedWithReleaseNightlyUnknownAndHttpError [
 
-	| mockVersion presenter releaseVer nightlyVer attempts |
+	| mockVersion presenter window releaseVer nightlyVer attempts rootAdapter rootWidget versionInfoWidget |
 	self assert: OPVersionComparisonInfo defaultLayout class identicalTo: SpBoxLayout.
 
 	mockVersion := Mock new.
@@ -115,51 +306,64 @@ OPVersionComparisonInfoTest >> testThisVersionInfoLoadedWithReleaseNightlyUnknow
 	OPVersion instVarNamed: #current put: mockVersion.
 
 	presenter := OPVersionComparisonInfo newApplication: SpApplication defaultApplication.
-	presenter build.
-	presenter thisVersionInfoLoaded.
-	attempts := 0.
-	[ (presenter instVarNamed: #lastNightlyVersionInfo) label = 'Loading...' and: [ attempts < 50 ] ] whileTrue: [
-			(Delay forMilliseconds: 10) wait.
-			attempts := attempts + 1 ].
-	self assert: (presenter instVarNamed: #lastVersionInfo) label equals: 'Unknown.'.
-	self assert: (presenter instVarNamed: #lastNightlyVersionInfo) label equals: 'Unknown.'.
-
-	releaseVer := OPVersion new
-		              repositoryName: 'openponk';
-		              releaseName: 'v2.0.0';
-		              buildDate: DateAndTime now;
-		              yourself.
-	nightlyVer := OPVersion new
-		              repositoryName: 'openponk';
-		              releaseName: 'nightly-12345';
-		              githubWorkflowRunId: 12345;
-		              buildDate: DateAndTime now;
-		              yourself.
-	mockVersion stub getOfLatestRelease willReturn: releaseVer.
-	mockVersion stub getOfLatestNightlyBuild willReturn: nightlyVer.
-
-	presenter thisVersionInfoLoaded.
-	attempts := 0.
-	[ ((presenter instVarNamed: #lastNightlyVersionInfo) isKindOf: OPVersionInfo) not and: [ attempts < 50 ] ] whileTrue: [
-			(Delay forMilliseconds: 10) wait.
-			attempts := attempts + 1 ].
-	self assert: (presenter instVarNamed: #lastVersionInfo) class identicalTo: OPVersionInfo.
-	self assert: (presenter instVarNamed: #lastNightlyVersionInfo) class identicalTo: OPVersionInfo.
-
-	mockVersion stub getOfLatestRelease willRaise: ZnHttpUnsuccessful new.
-	presenter thisVersionInfoLoaded.
-	attempts := 0.
+	window := presenter asWindow.
 	[
-		(((presenter instVarNamed: #lastVersionInfo) respondsTo: #label) not or: [
-			 (presenter instVarNamed: #lastVersionInfo) label ~= 'Failed to download info.' ]) and: [ attempts < 50 ] ] whileTrue: [
-			(Delay forMilliseconds: 10) wait.
-			attempts := attempts + 1 ].
-	self
-		assert: ((presenter instVarNamed: #lastVersionInfo) respondsTo: #label)
-		description: 'lastVersionInfo should fall back to a presenter responding to #label'.
-	self assert: (presenter instVarNamed: #lastVersionInfo) label equals: 'Failed to download info.'.
-	self
-		assert: ((presenter instVarNamed: #lastNightlyVersionInfo) respondsTo: #label)
-		description: 'lastNightlyVersionInfo should fall back to a presenter responding to #label'.
-	self assert: (presenter instVarNamed: #lastNightlyVersionInfo) label equals: 'Failed to download info.'
+		window buildWithSpecLayout: presenter layout.
+		rootAdapter := presenter adapter.
+		rootWidget := rootAdapter widget.
+		versionInfoWidget := (presenter instVarNamed: #versionInfo) adapter widget.
+		presenter thisVersionInfoLoaded.
+		attempts := 0.
+		[ (presenter instVarNamed: #lastNightlyVersionInfo) label = 'Loading...' and: [ attempts < 50 ] ] whileTrue: [
+				(Delay forMilliseconds: 10) wait.
+				attempts := attempts + 1 ].
+		self assert: (presenter instVarNamed: #lastVersionInfo) label equals: 'Unknown.'.
+		self assert: (presenter instVarNamed: #lastNightlyVersionInfo) label equals: 'Unknown.'.
+
+		releaseVer := OPVersion new
+			              repositoryName: 'openponk';
+			              releaseName: 'v2.0.0';
+			              buildDate: DateAndTime now;
+			              yourself.
+		nightlyVer := OPVersion new
+			              repositoryName: 'openponk';
+			              releaseName: 'nightly-12345';
+			              githubWorkflowRunId: 12345;
+			              buildDate: DateAndTime now;
+			              yourself.
+		mockVersion stub getOfLatestRelease willReturn: releaseVer.
+		mockVersion stub getOfLatestNightlyBuild willReturn: nightlyVer.
+
+		presenter thisVersionInfoLoaded.
+		attempts := 0.
+		[ ((presenter instVarNamed: #lastNightlyVersionInfo) isKindOf: OPVersionInfo) not and: [ attempts < 50 ] ] whileTrue: [
+				(Delay forMilliseconds: 10) wait.
+				attempts := attempts + 1 ].
+		self assert: (presenter instVarNamed: #lastVersionInfo) class identicalTo: OPVersionInfo.
+		self assert: (presenter instVarNamed: #lastNightlyVersionInfo) class identicalTo: OPVersionInfo.
+		self assert: presenter adapter identicalTo: rootAdapter.
+		self assert: presenter adapter widget identicalTo: rootWidget.
+		self assert: (presenter instVarNamed: #versionInfo) adapter widget identicalTo: versionInfoWidget.
+
+		mockVersion stub getOfLatestRelease willRaise: ZnHttpUnsuccessful new.
+		presenter thisVersionInfoLoaded.
+		attempts := 0.
+		[
+			(((presenter instVarNamed: #lastVersionInfo) respondsTo: #label) not or: [
+				 (presenter instVarNamed: #lastVersionInfo) label ~= 'Failed to download info.' ]) and: [ attempts < 50 ] ] whileTrue: [
+				(Delay forMilliseconds: 10) wait.
+				attempts := attempts + 1 ].
+		self
+			assert: ((presenter instVarNamed: #lastVersionInfo) respondsTo: #label)
+			description: 'lastVersionInfo should fall back to a presenter responding to #label'.
+		self assert: (presenter instVarNamed: #lastVersionInfo) label equals: 'Failed to download info.'.
+		self
+			assert: ((presenter instVarNamed: #lastNightlyVersionInfo) respondsTo: #label)
+			description: 'lastNightlyVersionInfo should fall back to a presenter responding to #label'.
+		self assert: (presenter instVarNamed: #lastNightlyVersionInfo) label equals: 'Failed to download info.'.
+		self assert: presenter adapter identicalTo: rootAdapter.
+		self assert: presenter adapter widget identicalTo: rootWidget.
+		self assert: (presenter instVarNamed: #versionInfo) adapter widget identicalTo: versionInfoWidget ] ensure: [
+			presenter cancelLoading.
+			window close ]
 ]

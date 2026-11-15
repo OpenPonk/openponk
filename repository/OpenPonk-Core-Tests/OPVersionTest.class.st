@@ -169,6 +169,54 @@ OPVersionTest >> testCurrentLatestAndRunsCacheOfflineQueries [
 ]
 
 { #category : 'tests' }
+OPVersionTest >> testDownloadInfoPopulatesReceiverInPlaceAndReturnsSelf [
+
+	| version returnedVersion nightlyJson lazyVersion expectedDate unknownRepoVersion getRunCalled |
+	expectedDate := (DateAndTime fromString: '2026-09-01T10:05:00Z') asLocal.
+	version := OPVersion new
+		           repositoryName: 'borm-editor';
+		           githubWorkflowRunId: 987654;
+		           yourself.
+	version stub getRun willReturn: self sampleRunJson.
+
+	returnedVersion := version downloadInfo.
+
+	self assert: returnedVersion identicalTo: version.
+	self deny: version needsDownloadInfo description: 'downloadInfo must populate buildDate so needsDownloadInfo becomes false'.
+	self assert: version releaseName equals: 'v2.1.0'.
+	self assert: version repositoryName equals: 'borm-editor'.
+	self assert: version buildDate equals: expectedDate.
+	self assert: version fullVersionString equals: 'borm-editor-v2.1.0'.
+
+	nightlyJson := self sampleRunJson.
+	nightlyJson at: #head_branch put: 'master'.
+	version stub getRun willReturn: nightlyJson.
+	version downloadInfo.
+	self assert: version releaseName equals: 'nightly'.
+	self deny: version isRelease description: 'master branch run must map to nightly non-release'.
+
+	lazyVersion := OPVersion new
+		               repositoryName: 'borm-editor';
+		               githubWorkflowRunId: 987654;
+		               yourself.
+	lazyVersion stub getRun willReturn: self sampleRunJson.
+	self assert: lazyVersion releaseName equals: 'v2.1.0'.
+	self assert: lazyVersion buildDate equals: expectedDate.
+
+	unknownRepoVersion := OPVersion new
+		                      repositoryName: OPVersion unknownRepositoryName;
+		                      githubWorkflowRunId: 987654;
+		                      yourself.
+	getRunCalled := false.
+	unknownRepoVersion stub getRun will: [
+			getRunCalled := true.
+			self sampleRunJson ].
+	self deny: unknownRepoVersion canDownloadInfo description: 'Version with unknown repository name must not allow downloading info'.
+	self assert: unknownRepoVersion downloadInfo identicalTo: unknownRepoVersion.
+	self deny: getRunCalled description: 'downloadInfo must not call getRun when repository name is unknown'
+]
+
+{ #category : 'tests' }
 OPVersionTest >> testEqualityAndHash [
 
 	| v1 v2 |
@@ -267,6 +315,26 @@ OPVersionTest >> testNeedsAndCanDownloadInfo [
 	self assert: version canDownloadInfo description: 'Version with workflow run ID and repository name can download info'.
 	version buildDate: DateAndTime now.
 	self deny: version needsDownloadInfo description: 'Version with buildDate no longer needs download info'
+]
+
+{ #category : 'tests' }
+OPVersionTest >> testPopulateFromRunJsonPreservesExistingRepositoryNameWhenMissing [
+
+	| version partialRun |
+	partialRun := self sampleRunJson.
+	partialRun removeKey: #repository.
+	partialRun removeKey: #id.
+
+	version := OPVersion new
+		           repositoryName: 'fsm-editor';
+		           githubWorkflowRunId: 42;
+		           yourself.
+
+	self assert: (version populateFromRunJson: partialRun) identicalTo: version.
+	self assert: version repositoryName equals: 'fsm-editor'.
+	self assert: version githubWorkflowRunId equals: 42.
+	self assert: version releaseName equals: 'v2.1.0'.
+	self deny: version needsDownloadInfo description: 'populateFromRunJson: must populate buildDate'
 ]
 
 { #category : 'tests' }

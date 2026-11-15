@@ -9,7 +9,10 @@ Class {
 		'releaseNameLabel',
 		'releaseName',
 		'buildDateLabel',
-		'buildDate'
+		'buildDate',
+		'loadingProcess',
+		'loadingGeneration',
+		'isClosed'
 	],
 	#category : 'OpenPonk-Spec-Dialogs',
 	#package : 'OpenPonk-Spec',
@@ -28,26 +31,63 @@ OPVersionInfo class >> defaultLayout [
 		  yourself
 ]
 
+{ #category : 'updating' }
+OPVersionInfo >> applyDownloadedInfoForGeneration: aGeneration [
+
+	(self shouldAbortLoadingForGeneration: aGeneration) ifTrue: [ ^ self ].
+	self refreshInfo
+]
+
+{ #category : 'updating' }
+OPVersionInfo >> applyFailedDownloadInfoForGeneration: aGeneration [
+
+	(self shouldAbortLoadingForGeneration: aGeneration) ifTrue: [ ^ self ].
+	self setFailedInfo
+]
+
+{ #category : 'private' }
+OPVersionInfo >> cancelActiveLoadingProcess [
+
+	loadingProcess ifNotNil: [ :activeProcess |
+			loadingProcess := nil.
+			(activeProcess ~~ Processor activeProcess and: [ activeProcess isTerminated not ]) ifTrue: [ activeProcess terminate ] ]
+]
+
+{ #category : 'private' }
+OPVersionInfo >> cancelLoading [
+
+	isClosed := true.
+	loadingGeneration := loadingGeneration + 1.
+	self cancelActiveLoadingProcess
+]
+
 { #category : 'initialization' }
 OPVersionInfo >> connectPresenters [
 
-	(version needsDownloadInfo and: [ version canDownloadInfo ])
-		ifFalse: [ ^ self ].
-
+	(version needsDownloadInfo and: [ version canDownloadInfo ]) ifFalse: [ ^ self ].
 	self whenBuiltDo: [
-		[
+			self withWindowDo: [ :window | window whenClosedDo: [ self cancelLoading ] ].
+			self startLoadingInfo ]
+]
+
+{ #category : 'private' }
+OPVersionInfo >> downloadInfoForGeneration: aGeneration onSuccess: aSuccessBlock onFailure: aFailureBlock [
+
+	[
+		(self shouldAbortLoadingForGeneration: aGeneration) ifTrue: [ ^ self ].
 		version downloadInfo.
-		[ self refreshInfo ]
-			on: ZnHttpUnsuccessful
-			do: [ self setFailedInfo ] ]
-			forkAt: Processor userBackgroundPriority
-			named: 'Loading OpenPonk version info from GitHub' ]
+		(self shouldAbortLoadingForGeneration: aGeneration) ifTrue: [ ^ self ].
+		aSuccessBlock value ]
+		on: ZnHttpUnsuccessful , NetworkError
+		do: [ (self shouldAbortLoadingForGeneration: aGeneration) ifFalse: [ aFailureBlock value ] ]
 ]
 
 { #category : 'initialization' }
 OPVersionInfo >> initializePresenters [
 
 	| unknownLabel |
+	isClosed := false.
+	loadingGeneration := 0.
 	releaseNameLabel := self newLabel.
 	releaseNameLabel label: 'Version: '.
 	releaseName := self newLink.
@@ -62,6 +102,26 @@ OPVersionInfo >> initializePresenters [
 		label: unknownLabel;
 		url: 'https://openponk.org'.
 	buildDate label: unknownLabel
+]
+
+{ #category : 'private' }
+OPVersionInfo >> loadAndDeferInfoForGeneration: aGeneration [
+
+	self
+		downloadInfoForGeneration: aGeneration
+		onSuccess: [ self defer: [ self applyDownloadedInfoForGeneration: aGeneration ] ]
+		onFailure: [ self defer: [ self applyFailedDownloadInfoForGeneration: aGeneration ] ]
+]
+
+{ #category : 'private' }
+OPVersionInfo >> newLoadingProcessForGeneration: aGeneration [
+
+	^ [
+		  [ self loadAndDeferInfoForGeneration: aGeneration ] ensure: [
+				  loadingProcess == Processor activeProcess ifTrue: [ loadingProcess := nil ] ] ] newProcess
+		  priority: Processor userBackgroundPriority;
+		  name: 'Loading OpenPonk version info from GitHub';
+		  yourself
 ]
 
 { #category : 'updating' }
@@ -88,4 +148,23 @@ OPVersionInfo >> setFailedInfo [
 OPVersionInfo >> setModelBeforeInitialization: aVersion [
 
 	version := aVersion
+]
+
+{ #category : 'private' }
+OPVersionInfo >> shouldAbortLoadingForGeneration: aGeneration [
+
+	^ isClosed or: [ aGeneration ~= loadingGeneration ]
+]
+
+{ #category : 'private' }
+OPVersionInfo >> startLoadingInfo [
+
+	| currentGeneration process |
+	isClosed ifTrue: [ ^ self ].
+	self cancelActiveLoadingProcess.
+	loadingGeneration := loadingGeneration + 1.
+	currentGeneration := loadingGeneration.
+	process := self newLoadingProcessForGeneration: currentGeneration.
+	loadingProcess := process.
+	process resume
 ]

@@ -167,6 +167,12 @@ OPController >> formEventsAnnouncer [
 	^ self viewModel announcer
 ]
 
+{ #category : 'announcements' }
+OPController >> handleModelRemoved: anAnnouncement [
+
+	anAnnouncement model ifNotNil: [ :removedModel | removedModel == self model ifTrue: [ self modelRemoved ] ]
+]
+
 { #category : 'testing' }
 OPController >> isDiagramOnly [
 	^ false
@@ -403,14 +409,12 @@ OPController >> showWithoutDependentInDiagram: aDiagramController [
 { #category : 'announcements' }
 OPController >> subscribeToViewModel [
 	"Subscribe to view model announcements to keep the diagram element synchronized."
+
 	self viewModel announcer weak
 		when: OPElementRenamed send: #modelChanged to: self;
 		when: OPModelChanged send: #modelChanged to: self;
 		when: OPElementFormNeedsRebuild send: #modelChanged to: self;
-		when: OPModelRemoved do: [ :ann |
-				ann model ifNotNil: [ :removedModel |
-						removedModel == self model ifTrue: [ self modelRemoved ] ] ]
-		for: self
+		when: OPModelRemoved send: #handleModelRemoved: to: self
 ]
 
 { #category : 'accessing' }

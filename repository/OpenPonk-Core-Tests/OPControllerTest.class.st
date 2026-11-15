@@ -26,6 +26,37 @@ OPControllerTest >> testAbstractHooksAndDefaultFlags [
 ]
 
 { #category : 'tests' }
+OPControllerTest >> testHandleModelRemovedRemovesMatchingControllerAndIgnoresOtherModels [
+
+	| project projectController diagramController model otherModel controller viewModel element |
+	project := OPProject new.
+	projectController := OPProjectController forProject: project.
+	diagramController := OPDiagramController new.
+	model := OPTestEntityModel new.
+	otherModel := OPTestEntityModel new.
+	controller := OPTestPlainController new.
+	element := OPTestPlainDiagramElement new.
+	controller
+		projectController: projectController;
+		model: model;
+		diagramElement: element.
+	viewModel := controller viewModel.
+	diagramController addController: controller.
+
+	viewModel announcer announce: (OPModelRemoved model: otherModel).
+	viewModel announcer announce: (OPModelRemoved model: nil).
+	self assert: controller viewModel identicalTo: viewModel.
+	self assert: controller diagramElement identicalTo: element.
+	self assertCollection: diagramController controllers includesAll: { controller }.
+
+	viewModel announcer announce: (OPModelRemoved model: model).
+	self assert: controller viewModel identicalTo: nil.
+	self deny: controller diagramElement exists description: 'Removed diagramElement should be replaced by OPNoShape'.
+	self denyCollection: diagramController controllers includesAny: { controller }.
+	self assertEmpty: viewModel announcer subscriptions subscriptions
+]
+
+{ #category : 'tests' }
 OPControllerTest >> testModelUuidValidationAndDiagramElementManagement [
 	| project projectController modelWithoutUuid validModel controller element |
 	project := OPProject new.
@@ -92,4 +123,28 @@ OPControllerTest >> testSourceTargetGuardsAndCreationCommandExecution [
 
 	sourceCtrl removeFromDiagramController.
 	self assert: sourceCtrl deselectedCount equals: 0
+]
+
+{ #category : 'tests' }
+OPControllerTest >> testSubscribeToViewModelUsesWeakMessageSends [
+
+	| viewModel controller subscriptions removedSubscription |
+	viewModel := OPTestEntityViewModel forModel: OPTestEntityModel new.
+	controller := OPTestPlainController new.
+	[
+		controller viewModel: viewModel.
+		subscriptions := viewModel announcer subscriptions subscriptions.
+		self assert: subscriptions size equals: 4.
+		self assertCollection: (subscriptions collect: #announcementClass) hasSameElements: {
+				OPElementRenamed.
+				OPModelChanged.
+				OPElementFormNeedsRebuild.
+				OPModelRemoved }.
+		subscriptions do: [ :each |
+				self assert: each class identicalTo: WeakAnnouncementSubscription.
+				self assert: each subscriber identicalTo: controller.
+				self assert: each action class identicalTo: WeakMessageSend.
+				self assert: each action receiver identicalTo: controller ].
+		removedSubscription := subscriptions detect: [ :each | each announcementClass == OPModelRemoved ].
+		self assert: removedSubscription action selector equals: #handleModelRemoved: ] ensure: [ controller viewModel: nil ]
 ]

@@ -51,32 +51,25 @@ OPDiagramFigureColorCommandTest >> tearDown [
 
 { #category : 'tests' }
 OPDiagramFigureColorCommandTest >> testColorCommandMenuNamesIconsAbstractChecksAndDirectExecution [
+
 	| element shape toolContext yellowCmd blueCmd greenCmd fontCmd defaultStrokeCmd customColorCmd |
 	element := classController diagramElement.
 	shape := classController roassalShape.
 	toolContext := OPRoassalShapeContext for: diagramController canvasPresenter of: { shape }.
 
-	self
-		assert: OPRoassalShapeColorCommand isAbstract
-		description: 'Root OPRoassalShapeColorCommand must be abstract'.
-	self
-		assert: OPDiagramFigureFillColorCommand isAbstract
-		description: 'Category OPDiagramFigureFillColorCommand must be abstract'.
-	self
-		deny: OPDiagramFigureBlueFillColorCommand isAbstract
-		description: 'Concrete color command must not be abstract'.
+	self assert: OPRoassalShapeColorCommand isAbstract description: 'Root OPRoassalShapeColorCommand must be abstract'.
+	self assert: OPDiagramFigureFillColorCommand isAbstract description: 'Category OPDiagramFigureFillColorCommand must be abstract'.
+	self deny: OPDiagramFigureBlueFillColorCommand isAbstract description: 'Concrete color command must not be abstract'.
 
 	self should: [ OPRoassalShapeColorCommand color ] raise: SubclassResponsibility.
 	self should: [ OPRoassalShapeColorCommand colorAttribute ] raise: SubclassResponsibility.
-	self
-		should: [ OPRoassalShapeColorCommand defaultColorOf: element ]
-		raise: SubclassResponsibility.
+	self should: [ OPRoassalShapeColorCommand defaultColorOf: element ] raise: SubclassResponsibility.
 
 	blueCmd := OPDiagramFigureBlueFillColorCommand new.
 	blueCmd readParametersFromContext: toolContext.
 	self assert: blueCmd defaultMenuIconFormSet class identicalTo: FormSet.
 	self assert: blueCmd defaultMenuIcon extent equals: 25 @ 20.
-	self assert: OPDiagramFigureTransparentFillColorCommand new defaultMenuIconFormSet equals: nil.
+	self assert: OPDiagramFigureTransparentFillColorCommand new defaultMenuIconFormSet identicalTo: nil.
 	self assert: OPDiagramFigureTransparentFillColorCommand new defaultMenuIcon extent equals: 25 @ 20.
 
 	yellowCmd := OPDiagramFigureYellowFillColorCommand new.
@@ -99,9 +92,7 @@ OPDiagramFigureColorCommandTest >> testColorCommandMenuNamesIconsAbstractChecksA
 	fontCmd := OPDiagramFigureBlueFontColorCommand new.
 	fontCmd readParametersFromContext: toolContext.
 	fontCmd execute.
-	self
-		deny: (element localStyle includesKey: #fontColor)
-		description: 'Font color command on unsupported element should not add #fontColor'.
+	self assert: (element localStyle at: #fontColor ifAbsent: [ nil ]) identicalTo: nil.
 
 	greenCmd := OPDiagramFigureGreenFillColorCommand new.
 	greenCmd readParametersFromContext: toolContext.
@@ -112,6 +103,7 @@ OPDiagramFigureColorCommandTest >> testColorCommandMenuNamesIconsAbstractChecksA
 
 { #category : 'tests' }
 OPDiagramFigureColorCommandTest >> testDefaultFillColorCommandRemovesLocalStylePropertyAndIsUndoable [
+
 	| shape element coloredCommand defaultCommand toolContext |
 	element := classController diagramElement.
 	shape := classController roassalShape.
@@ -119,29 +111,22 @@ OPDiagramFigureColorCommandTest >> testDefaultFillColorCommandRemovesLocalStyleP
 	coloredCommand := OPDiagramFigureMagentaFillColorCommand new.
 	coloredCommand readParametersFromContext: toolContext.
 	coloredCommand execute.
-	self
-		assert: (element localStyle includesKey: #fillColor)
-		description: 'Magenta fill color command should store #fillColor in localStyle'.
+	self assert: (element localStyle at: #fillColor) equals: OPDiagramFigureMagentaFillColorCommand color.
 	self assert: element fillColor equals: OPDiagramFigureMagentaFillColorCommand color.
 	defaultCommand := OPDiagramFigureDefaultFillColorCommand new.
 	defaultCommand readParametersFromContext: toolContext.
 	defaultCommand execute.
-	self
-		deny: (element localStyle includesKey: #fillColor)
-		description: 'Default fill color command should remove #fillColor from localStyle'.
+	self assert: (element localStyle at: #fillColor ifAbsent: [ nil ]) identicalTo: nil.
 	undoManager undo.
-	self
-		assert: (element localStyle includesKey: #fillColor)
-		description: 'Undoing default fill color command should restore #fillColor in localStyle'.
+	self assert: (element localStyle at: #fillColor) equals: OPDiagramFigureMagentaFillColorCommand color.
 	self assert: element fillColor equals: OPDiagramFigureMagentaFillColorCommand color.
 	undoManager redo.
-	self
-		deny: (element localStyle includesKey: #fillColor)
-		description: 'Redoing default fill color command should remove #fillColor from localStyle again'
+	self assert: (element localStyle at: #fillColor ifAbsent: [ nil ]) identicalTo: nil
 ]
 
 { #category : 'tests' }
 OPDiagramFigureColorCommandTest >> testDefaultStrokeAndFontColorCommandsAndColorMenuGroup [
+
 	| shape element toolContext strokeCmd defaultStrokeCmd defaultFontCmd styleCommand |
 	element := classController diagramElement.
 	shape := classController roassalShape.
@@ -153,24 +138,18 @@ OPDiagramFigureColorCommandTest >> testDefaultStrokeAndFontColorCommandsAndColor
 	strokeCmd := OPDiagramFigureBlueStrokeColorCommand new.
 	strokeCmd readParametersFromContext: toolContext.
 	strokeCmd execute.
-	self
-		assert: (element localStyle includesKey: #strokeColor)
-		description: 'Blue stroke color command should set #strokeColor in localStyle'.
+	self assert: (element localStyle at: #strokeColor) equals: OPDiagramFigureBlueStrokeColorCommand color.
 	self assert: element strokeColor equals: OPDiagramFigureBlueStrokeColorCommand color.
 
 	defaultStrokeCmd := OPDiagramFigureDefaultStrokeColorCommand new.
 	defaultStrokeCmd readParametersFromContext: toolContext.
-	self assert: defaultStrokeCmd color isColor description: 'defaultStrokeCmd color should return a Color'.
+	self assert: defaultStrokeCmd color equals: Color black.
 	defaultStrokeCmd execute.
-	self
-		deny: (element localStyle includesKey: #strokeColor)
-		description: 'Default stroke color command should remove #strokeColor from localStyle'.
+	self assert: (element localStyle at: #strokeColor ifAbsent: [ nil ]) identicalTo: nil.
 	undoManager undo.
 	self assert: element strokeColor equals: OPDiagramFigureBlueStrokeColorCommand color.
 	undoManager redo.
-	self
-		deny: (element localStyle includesKey: #strokeColor)
-		description: 'Redoing default stroke color command should remove #strokeColor again'.
+	self assert: (element localStyle at: #strokeColor ifAbsent: [ nil ]) identicalTo: nil.
 
 	self assert: OPDiagramFigureFontColorCommand colorAttribute equals: #fontColor.
 	self
@@ -181,16 +160,12 @@ OPDiagramFigureColorCommandTest >> testDefaultStrokeAndFontColorCommandsAndColor
 	self assert: defaultFontCmd color equals: Color transparent.
 	styleCommand := defaultFontCmd commandFor: element.
 	self assert: styleCommand property equals: #fontColor.
-	self
-		assert: styleCommand newValue isNil
-		description: 'Default font color command should reset #fontColor newValue to nil'.
+	self assert: styleCommand newValue identicalTo: nil.
 
 	self assert: (OPRoassalShapeColorMenuGroup colorNameFor: Color blue) equals: 'Blue'.
 	self assert: (OPRoassalShapeColorMenuGroup colorNameFor: (Color fromHexString: 'DCE5EC')) equals: 'Slate'.
 	self assert: (OPRoassalShapeColorMenuGroup colorNameFor: (Color fromHexString: 'D6FCEB')) equals: 'Mint'.
-	self
-		should: [ OPRoassalShapeColorMenuGroup colorNameFor: (Color fromHexString: '123456') ]
-		raise: Error
+	self should: [ OPRoassalShapeColorMenuGroup colorNameFor: (Color fromHexString: '123456') ] raise: Error
 ]
 
 { #category : 'tests' }

@@ -83,41 +83,51 @@ OPDiagramExplorerTest >> testExplorerFailsFastWithoutUndoManager [
 
 { #category : 'tests - undo/redo' }
 OPDiagramExplorerTest >> testHideAllElementsExecutesInUndoTransaction [
+
 	| initialCommandsCount |
 	initialCommandsCount := diagramController undoManager undoStack size.
 	explorer hideAllElements.
-	self assert: diagramController undoManager undoStack size > initialCommandsCount
-		description: 'hideAllElements must record command into undoManager'
+	self assert: diagramController undoManager undoStack size equals: initialCommandsCount + 1
 ]
 
 { #category : 'tests' }
 OPDiagramExplorerTest >> testHideElementAndUndo [
+
+	| restoredNodeController restoredEdgeController |
 	self assert: diagramController controllers size equals: 3.
 	explorer hideElement: nodeModel1.
 	self assert: diagramController controllers size equals: 1.
-	self assert: (diagramController controllerForModel: nodeModel1 ifNone: [ nil ]) isNil
-		description: 'Hidden node1 should not have a controller'.
+	self assert: (diagramController controllerForModel: nodeModel1 ifNone: [ nil ]) identicalTo: nil.
 	undoManager undo.
 	self assert: diagramController controllers size equals: 3.
-	self assert: (diagramController controllerForModel: nodeModel1 ifNone: [ nil ]) isNotNil
-		description: 'Undoing hide should restore node1 controller'.
-	self assert: (diagramController controllerForModel: edgeModel ifNone: [ nil ]) isNotNil
-		description: 'Undoing hide should restore connected edge controller'
+	restoredNodeController := diagramController controllerForModel: nodeModel1 ifNone: [ nil ].
+	restoredEdgeController := diagramController controllerForModel: edgeModel ifNone: [ nil ].
+	self assert: restoredNodeController class identicalTo: OPTestEntityController.
+	self assert: restoredNodeController model identicalTo: nodeModel1.
+	self assert: restoredEdgeController class identicalTo: OPTestRelationController.
+	self assert: restoredEdgeController model identicalTo: edgeModel
 ]
 
 { #category : 'tests' }
 OPDiagramExplorerTest >> testHideMultipleElementsInSingleTransaction [
+
+	| restoredNode1 restoredNode2 restoredEdge |
 	self assert: diagramController controllers size equals: 3.
-	explorer hideElements: { nodeModel1 . nodeModel2 }.
+	explorer hideElements: {
+			nodeModel1.
+			nodeModel2 }.
 	self assertEmpty: diagramController controllers.
 	undoManager undo.
 	self assert: diagramController controllers size equals: 3.
-	self assert: (diagramController controllerForModel: nodeModel1 ifNone: [ nil ]) isNotNil
-		description: 'Node 1 controller should be restored after undo'.
-	self assert: (diagramController controllerForModel: nodeModel2 ifNone: [ nil ]) isNotNil
-		description: 'Node 2 controller should be restored after undo'.
-	self assert: (diagramController controllerForModel: edgeModel ifNone: [ nil ]) isNotNil
-		description: 'Edge controller should be restored after undo'.
+	restoredNode1 := diagramController controllerForModel: nodeModel1 ifNone: [ nil ].
+	restoredNode2 := diagramController controllerForModel: nodeModel2 ifNone: [ nil ].
+	restoredEdge := diagramController controllerForModel: edgeModel ifNone: [ nil ].
+	self assert: restoredNode1 class identicalTo: OPTestEntityController.
+	self assert: restoredNode1 model identicalTo: nodeModel1.
+	self assert: restoredNode2 class identicalTo: OPTestEntityController.
+	self assert: restoredNode2 model identicalTo: nodeModel2.
+	self assert: restoredEdge class identicalTo: OPTestRelationController.
+	self assert: restoredEdge model identicalTo: edgeModel.
 	undoManager redo.
 	self assertEmpty: diagramController controllers
 ]
@@ -145,18 +155,18 @@ OPDiagramExplorerTest >> testShowAndHideRootModelAndDependentsAndIdempotentShow 
 
 { #category : 'tests' }
 OPDiagramExplorerTest >> testShowElementAndUndo [
-	| hiddenNode |
+
+	| hiddenNode shownController |
 	hiddenNode := OPTestEntityModel new.
 	hiddenNode instVarNamed: #uuid put: UUID new.
 	containerModel add: hiddenNode.
-	self assert: (diagramController controllerForModel: hiddenNode ifNone: [ nil ]) isNil
-		description: 'Newly added model element should not have a controller before showElement:'.
+	self assert: (diagramController controllerForModel: hiddenNode ifNone: [ nil ]) identicalTo: nil.
 	explorer showElement: hiddenNode.
-	self assert: (diagramController controllerForModel: hiddenNode ifNone: [ nil ]) isNotNil
-		description: 'showElement: should create and attach a controller for hiddenNode'.
+	shownController := diagramController controllerForModel: hiddenNode ifNone: [ nil ].
+	self assert: shownController class identicalTo: OPTestEntityController.
+	self assert: shownController model identicalTo: hiddenNode.
 	undoManager undo.
-	self assert: (diagramController controllerForModel: hiddenNode ifNone: [ nil ]) isNil
-		description: 'Undoing showElement: should remove the controller'
+	self assert: (diagramController controllerForModel: hiddenNode ifNone: [ nil ]) identicalTo: nil
 ]
 
 { #category : 'accessing' }

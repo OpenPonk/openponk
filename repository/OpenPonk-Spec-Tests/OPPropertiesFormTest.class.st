@@ -38,14 +38,14 @@ OPPropertiesFormTest >> testBindDroplistPropertyItemsAppliesInitialValueWithoutE
 
 { #category : 'tests' }
 OPPropertiesFormTest >> testBindNumberInputRegistersBinding [
+
 	| target numberInput |
 	target := OPPropertiesFormDummyViewModel new.
 	target value: 42.
 	form viewModel: target.
 	numberInput := form bindNumberInput: 'Value' property: #value.
-	self
-		assert: (form bindings anySatisfy: [ :each | each selector = #value ])
-		description: 'bindNumberInput:property: should register a binding for #value'.
+	self assert: form bindings size equals: 1.
+	self assert: form bindings first selector equals: #value.
 	self assert: numberInput number equals: 42
 ]
 
@@ -70,7 +70,7 @@ OPPropertiesFormTest >> testBindNumberInputUpdatesModelAndUndoReverts [
 { #category : 'tests' }
 OPPropertiesFormTest >> testBindingsAndPriorityMetaLinkAndLayoutHelpers [
 
-	| model viewModel |
+	| model viewModel itemsList |
 	self assert: OPPropertiesForm initialWidth equals: 260.
 	self assert: OPPropertiesForm minWidth equals: 180.
 	[
@@ -86,31 +86,33 @@ OPPropertiesFormTest >> testBindingsAndPriorityMetaLinkAndLayoutHelpers [
 	form instVarNamed: #viewModel put: viewModel.
 	form addLabel: 'Header'.
 	form addSeparator.
-	form addList: 'Items'.
+	itemsList := form addList: 'Items'.
 	form bindTextInput: 'Name' property: #name.
 	form bindText: 'ShortText' property: #name.
 	form bindLongText: 'Description' property: #name.
 	form bindCheckbox: 'Active' property: #isNil.
 	form bindEditableDroplist: 'Kind' property: #name items: #( 'A' 'B' ).
-	self deny: form defaultKeyboardFocus equals: nil.
+	self assert: form defaultKeyboardFocus identicalTo: itemsList.
 	form removeLast.
 	form rebuildWidget
 ]
 
 { #category : 'tests' }
 OPPropertiesFormTest >> testEditableDropListAdapterAddToListConvertsTextToString [
+
 	| presenter adapter |
 	presenter := OPEditableDropListPresenter new.
 	adapter := OPMorphicEditableDropListAdapter new.
 	adapter adapt: presenter.
 	adapter addToList: '2..4' asText.
 
-	self assert: presenter selectedItem isString description: 'Presenter selectedItem must be a String'.
+	self assert: presenter selectedItem class identicalTo: ByteString.
 	self assert: presenter selectedItem equals: '2..4'
 ]
 
 { #category : 'tests' }
 OPPropertiesFormTest >> testExtensibleSingleOptionAppliesCustomValueToPresenter [
+
 	| dummyTarget visitor description control |
 	dummyTarget := OPPropertiesFormDummyViewModel new.
 	dummyTarget value: '0..5'.
@@ -119,15 +121,15 @@ OPPropertiesFormTest >> testExtensibleSingleOptionAppliesCustomValueToPresenter 
 	visitor form: form.
 	visitor viewModel: dummyTarget.
 	description := MASingleOptionDescription new
-		beExtensible;
-		options: #( '0..1' '1..1' '0..*' '1..*' );
-		reference: MAStringDescription new;
-		accessor: #value;
-		label: 'Multiplicity';
-		yourself.
+		               beExtensible;
+		               options: #( '0..1' '1..1' '0..*' '1..*' );
+		               reference: MAStringDescription new;
+		               accessor: #value;
+		               label: 'Multiplicity';
+		               yourself.
 	visitor visit: description.
 	control := form components detect: [ :each | (each respondsTo: #isEditable) and: [ each isEditable ] ] ifNone: [ nil ].
-	self assert: control notNil description: 'Control should be created'.
+	self assert: control class identicalTo: OPEditableDropListPresenter.
 	self assert: control selectedItem equals: '0..5'
 ]
 
@@ -163,6 +165,7 @@ OPPropertiesFormTest >> testExtensibleSingleOptionWritingCustomValueUpdatesModel
 
 { #category : 'tests' }
 OPPropertiesFormTest >> testExtensibleSingleOptionWritingThroughMorphicAdapterUpdatesModel [
+
 	| dummyTarget visitor description control adapter |
 	dummyTarget := OPPropertiesFormDummyViewModel new.
 	dummyTarget value: '0..1'.
@@ -171,12 +174,12 @@ OPPropertiesFormTest >> testExtensibleSingleOptionWritingThroughMorphicAdapterUp
 	visitor form: form.
 	visitor viewModel: dummyTarget.
 	description := MASingleOptionDescription new
-		beExtensible;
-		options: #( '0..1' '1..1' '0..*' '1..*' );
-		reference: MAStringDescription new;
-		accessor: #value;
-		label: 'Multiplicity';
-		yourself.
+		               beExtensible;
+		               options: #( '0..1' '1..1' '0..*' '1..*' );
+		               reference: MAStringDescription new;
+		               accessor: #value;
+		               label: 'Multiplicity';
+		               yourself.
 	visitor visit: description.
 	control := form components detect: [ :each | (each respondsTo: #isEditable) and: [ each isEditable ] ].
 	adapter := OPMorphicEditableDropListAdapter new.
@@ -184,9 +187,7 @@ OPPropertiesFormTest >> testExtensibleSingleOptionWritingThroughMorphicAdapterUp
 
 	adapter addToList: '2..4' asText.
 	self assert: dummyTarget value equals: '2..4'.
-	self
-		assert: dummyTarget value isString
-		description: 'Written extensible option value must be converted to a String'
+	self assert: dummyTarget value class identicalTo: ByteString
 ]
 
 { #category : 'tests' }
@@ -231,16 +232,14 @@ OPPropertiesFormTest >> testFocusFirstInputWhenEmptyDoesNotTakeKeyboardFocus [
 { #category : 'tests' }
 OPPropertiesFormTest >> testFocusOrderExcludesLabels [
 	"Ensure non-interactive labels are never registered in focusOrder"
+
 	form addHeadingLabel: 'Section Title'.
 	form addTextInput: 'Name'.
 	form addDroplist: 'Type'.
 
-	self
-		deny: (form focusOrder anySatisfy: [ :each | each isKindOf: SpLabelPresenter ])
-		description: 'Non-interactive labels must not be included in form focusOrder'.
-	self
-		assert: (form focusOrder allSatisfy: [ :each | (each isKindOf: SpLabelPresenter) not ])
-		description: 'All presenters in focusOrder must be interactive non-label controls'
+	self assert: (form focusOrder collect: #class as: Array) equals: {
+			SpTextInputFieldPresenter.
+			SpDropListPresenter }
 ]
 
 { #category : 'tests' }
@@ -259,6 +258,7 @@ OPPropertiesFormTest >> testTargetDoesNotStealKeyboardFocus [
 
 { #category : 'tests' }
 OPPropertiesFormTest >> testVisitingExtensibleSingleOptionDescriptionCreatesEditableControl [
+
 	| dummyTarget visitor description control |
 	dummyTarget := OPPropertiesFormDummyViewModel new.
 	dummyTarget value: '0..1'.
@@ -267,16 +267,14 @@ OPPropertiesFormTest >> testVisitingExtensibleSingleOptionDescriptionCreatesEdit
 	visitor form: form.
 	visitor viewModel: dummyTarget.
 	description := MASingleOptionDescription new
-		beExtensible;
-		options: #( '0..1' '1..1' '0..*' '1..*' );
-		reference: MAStringDescription new;
-		accessor: #value;
-		label: 'Multiplicity';
-		yourself.
+		               beExtensible;
+		               options: #( '0..1' '1..1' '0..*' '1..*' );
+		               reference: MAStringDescription new;
+		               accessor: #value;
+		               label: 'Multiplicity';
+		               yourself.
 	visitor visit: description.
 	control := form components detect: [ :each | (each respondsTo: #isEditable) and: [ each isEditable ] ] ifNone: [ nil ].
-	self assert: control notNil description: 'Extensible single option must create an editable control'.
-	self
-		assert: control isEditable
-		description: 'Created drop list presenter must be marked editable'
+	self assert: control class identicalTo: OPEditableDropListPresenter.
+	self assert: control isEditable description: 'Created drop list presenter must be marked editable'
 ]

@@ -148,6 +148,7 @@ OPCanvasPresenterTest >> testExportAsPdfPngAndSvgCleansUpGrowlMorphs [
 
 { #category : 'tests' }
 OPCanvasPresenterTest >> testExportWithCleanCanvasUnhighlightsAndRestoresSelectionAndHandles [
+
 	| canvasPresenter canvas shape resizable selectable mockController originalBorder highlightedBorder initialHandles wasExported |
 	canvasPresenter := OPCanvasPresenter new.
 	canvas := canvasPresenter canvas.
@@ -159,10 +160,10 @@ OPCanvasPresenterTest >> testExportWithCleanCanvasUnhighlightsAndRestoresSelecti
 	mockController stub selectedShapes: Any onPosition: Any.
 
 	shape := RSBox new
-		size: 80;
-		color: Color white;
-		borderColor: Color black;
-		yourself.
+		         size: 80;
+		         color: Color white;
+		         borderColor: Color black;
+		         yourself.
 	canvas add: shape.
 	shape @ OPRSSelectable.
 	shape @ OPRSResizable.
@@ -172,89 +173,74 @@ OPCanvasPresenterTest >> testExportWithCleanCanvasUnhighlightsAndRestoresSelecti
 	resizable := shape propertyAt: OPRSResizable.
 	originalBorder := shape border copy.
 
-	(canvas propertyAt: OPRSSelectableCanvas)
-		selectShapes: (RSGroup with: shape)
-		byEvent: (RSMouseClick new canvas: canvas; position: shape position; yourself).
+	(canvas propertyAt: OPRSSelectableCanvas) selectShapes: (RSGroup with: shape) byEvent: (RSMouseClick new
+			 canvas: canvas;
+			 position: shape position;
+			 yourself).
 	resizable showHandles: (OPRSSelectionEndEvent new
-		canvas: canvas;
-		selectedShapes: (RSGroup with: shape);
-		originalEvent: (RSMouseClick new canvas: canvas; position: shape position; yourself);
-		yourself).
+			 canvas: canvas;
+			 selectedShapes: (RSGroup with: shape);
+			 originalEvent: (RSMouseClick new
+					  canvas: canvas;
+					  position: shape position;
+					  yourself);
+			 yourself).
 	selectable doHighlightShapes: { shape }.
 
 	highlightedBorder := shape border copy.
-	self
-		assert: highlightedBorder color ~= originalBorder color
-		description: 'Initial setup: shape must be highlighted before export'.
-	self
-		assert: resizable handles isNotEmpty
-		description: 'Initial setup: resizable handles must be present before export'.
+	self deny: highlightedBorder color equals: originalBorder color.
+	self denyEmpty: resizable handles.
 
 	initialHandles := resizable handles copy.
-	self
-		assert: (canvas shapes includesAll: initialHandles)
-		description: 'Initial setup: canvas shapes must contain resizable handles'.
+	self assertCollection: canvas shapes includesAll: initialHandles.
 
 	mockController stub selectedElements willReturn: (RSGroup with: shape).
 	(mockController stub withoutSelectionDo: Any) will: [ :exportBlock |
-		| previousElements |
-		previousElements := RSGroup with: shape.
-		(shape propertyAt: OPRSSelectable) unhighlightRecordedShapes: canvas.
-		(canvas propertyAt: OPRSSelectableCanvas)
-			selectShapes: RSGroup new
-			byEvent: (RSMouseClick new canvas: canvas; position: 0 @ 0; yourself).
-		[ exportBlock value ] ensure: [
-			(shape propertyAt: OPRSSelectable) doHighlightShapes: previousElements.
-			(canvas propertyAt: OPRSSelectableCanvas)
-				selectShapes: previousElements
-				byEvent: (RSMouseClick new canvas: canvas; position: shape position; yourself) ] ].
+			| previousElements |
+			previousElements := RSGroup with: shape.
+			(shape propertyAt: OPRSSelectable) unhighlightRecordedShapes: canvas.
+			(canvas propertyAt: OPRSSelectableCanvas) selectShapes: RSGroup new byEvent: (RSMouseClick new
+					 canvas: canvas;
+					 position: 0 @ 0;
+					 yourself).
+			[ exportBlock value ] ensure: [
+					(shape propertyAt: OPRSSelectable) doHighlightShapes: previousElements.
+					(canvas propertyAt: OPRSSelectableCanvas) selectShapes: previousElements byEvent: (RSMouseClick new
+							 canvas: canvas;
+							 position: shape position;
+							 yourself) ] ].
 
 	wasExported := false.
 	canvasPresenter exportWithCleanCanvasDo: [
-		wasExported := true.
-		self
-			assert: shape border color = originalBorder color
-			description: ('During export: border color must be {1}, but was {2}'
-				format: { originalBorder color asString . shape border color asString }).
-		self
-			assert: (resizable handles isNil or: [ resizable handles isEmpty ])
-			description: ('During export: resizable handles must be nil/empty, but size was {1}'
-				format: { resizable handles ifNil: [ 0 ] ifNotNil: [ :h | h size ] }).
-		self
-			deny: (canvas shapes includesAny: initialHandles)
-			description: 'During export: canvas must not contain any initial handle shapes' ].
+			wasExported := true.
+			self assert: shape border color equals: originalBorder color.
+			self assert: resizable handles identicalTo: nil.
+			self denyCollection: canvas shapes includesAny: initialHandles ].
 
-	self
-		assert: wasExported
-		description: 'Export block was not executed'.
-	self
-		assert: shape border color = highlightedBorder color
-		description: ('After export: border color must be restored to {1}, but was {2}'
-				format: { highlightedBorder color asString . shape border color asString }).
-	self
-		assert: (resizable handles isNotNil and: [ resizable handles isNotEmpty ])
-		description: ('After export: resizable handles must be restored, but size was {1}'
-				format: { resizable handles ifNil: [ 0 ] ifNotNil: [ :h | h size ] }).
-	self
-		assert: (canvas shapes includesAll: resizable handles)
-		description: 'After export: canvas shapes must contain all restored resizable handles'.
+	self assert: wasExported description: 'Export block was not executed'.
+	self assert: shape border color equals: highlightedBorder color.
+	self assert: resizable handles size equals: initialHandles size.
+	self assertCollection: canvas shapes includesAll: resizable handles.
 	mockController should receive withoutSelectionDo: Any
 ]
 
 { #category : 'tests' }
 OPCanvasPresenterTest >> testStandaloneCanvasFallbacksAndCallbacks [
+
 	| editor canvasPresenter window extentChanged project container diagram projectController diagramController entity standaloneExecuted |
 	editor := OPEditor new.
 	canvasPresenter := editor canvasPresenter.
 	window := editor open.
 	[
-		self assert: canvasPresenter workbench isNil description: 'Editor without assigned workbench should answer nil workbench'.
+		self assert: canvasPresenter workbench identicalTo: nil.
 		self assert: canvasPresenter defaultExportFolder equals: FileSystem workingDirectory.
 		self assert: (canvasPresenter defaultExportFileNameWithExtension: 'pdf') equals: 'diagram.pdf'.
 
 		extentChanged := false.
 		canvasPresenter whenExtentChangedDo: [ :event | extentChanged := true ].
-		canvasPresenter canvas announce: (RSExtentChangedEvent new canvas: canvasPresenter canvas; yourself).
+		canvasPresenter canvas announce: (RSExtentChangedEvent new
+				 canvas: canvasPresenter canvas;
+				 yourself).
 		self assert: extentChanged description: 'Canvas extent change should invoke whenExtentChangedDo: callback'.
 
 		canvasPresenter zoom: 2.0.
@@ -264,7 +250,9 @@ OPCanvasPresenterTest >> testStandaloneCanvasFallbacksAndCallbacks [
 
 		standaloneExecuted := false.
 		canvasPresenter exportWithCleanCanvasDo: [ standaloneExecuted := true ].
-		self assert: standaloneExecuted description: 'exportWithCleanCanvasDo: must execute block directly when diagramController is nil'.
+		self
+			assert: standaloneExecuted
+			description: 'exportWithCleanCanvasDo: must execute block directly when diagramController is nil'.
 
 		project := OPProject new.
 		container := OPTestContainerModel new.
@@ -285,6 +273,6 @@ OPCanvasPresenterTest >> testStandaloneCanvasFallbacksAndCallbacks [
 		self assert: canvasPresenter model identicalTo: container.
 		self assert: (canvasPresenter defaultExportFileNameWithExtension: 'pdf') equals: 'container.pdf'.
 		container name: '   '.
-		self assert: (canvasPresenter defaultExportFileNameWithExtension: 'pdf') equals: 'diagram.pdf'
-	] ensure: [ window ifNotNil: [ window close ] ]
+		self assert: (canvasPresenter defaultExportFileNameWithExtension: 'pdf') equals: 'diagram.pdf' ] ensure: [
+		window ifNotNil: [ window close ] ]
 ]

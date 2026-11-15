@@ -52,35 +52,40 @@ OPPaletteToolsTest >> setUp [
 
 { #category : 'tests' }
 OPPaletteToolsTest >> testNodeCreationToolAndConnectionCreationToolLifecycle [
-	| nodeTool completedNode completedEdge sourceCtrl targetCtrl connTool |
+
+	| nodeTool completedNode completedEdge sourceCtrl targetCtrl connTool targetPlaceholder |
 	completedNode := nil.
 	nodeTool := OPNodeCreationTool new
-		palette: palette;
-		factory: [ OPTestEntityController new ];
-		whenCreated: [ :ctrl | completedNode := ctrl ];
-		yourself.
+		            palette: palette;
+		            factory: [ OPTestEntityController new ];
+		            whenCreated: [ :ctrl | completedNode := ctrl ];
+		            yourself.
 	nodeTool select.
 	nodeTool hoveredController: diagramController.
 	nodeTool selectedControllers: { diagramController } onPosition: 50 @ 60.
-	self deny: completedNode equals: nil.
+	self assert: completedNode class identicalTo: OPTestEntityController.
+	self assert: completedNode diagramController identicalTo: diagramController.
 	self assertCollection: diagramController controllers includesAll: { completedNode }.
 	nodeTool deselect.
 	sourceCtrl := completedNode.
 	targetCtrl := diagramController showInDiagramModel: (container add: OPTestEntityModel new).
 	completedEdge := nil.
 	connTool := OPConnectionCreationTool new
-		palette: palette;
-		factory: [ OPTestRelationController new ];
-		whenCreated: [ :ctrl | completedEdge := ctrl ];
-		yourself.
+		            palette: palette;
+		            factory: [ OPTestRelationController new ];
+		            whenCreated: [ :ctrl | completedEdge := ctrl ];
+		            yourself.
 	connTool select.
 	connTool hoveredController: sourceCtrl.
 	connTool selectedControllers: { sourceCtrl }.
-	self deny: (connTool instVarNamed: #edgeCreationTargetController) equals: nil.
+	targetPlaceholder := connTool instVarNamed: #edgeCreationTargetController.
+	self assert: targetPlaceholder class identicalTo: OPEdgeCreationTargetController.
+	self assert: (targetPlaceholder instVarNamed: #edgeController) source identicalTo: sourceCtrl.
 	connTool hoveredController: targetCtrl.
 	connTool selectedControllers: { targetCtrl }.
-	self deny: completedEdge equals: nil.
-	self assert: (connTool instVarNamed: #edgeCreationTargetController) equals: nil
+	self assert: completedEdge class identicalTo: OPTestRelationController.
+	self assertCollection: diagramController controllers includesAll: { completedEdge }.
+	self assert: (connTool instVarNamed: #edgeCreationTargetController) identicalTo: nil
 ]
 
 { #category : 'tests' }

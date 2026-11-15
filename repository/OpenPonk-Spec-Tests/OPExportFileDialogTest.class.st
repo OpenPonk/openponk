@@ -89,7 +89,7 @@ OPExportFileDialogTest >> testExportImageDialogZoomInputAndConfirmation [
 
 	dialog stub selectedEntry willReturn: nil.
 	dialog confirmed.
-	self assert: capturedFile isNil description: 'confirmed should do nothing when selectedEntry is nil'.
+	self assert: capturedFile identicalTo: nil.
 
 	dialog stub selectedEntry willReturn: tempFile.
 	dialog zoomText text: '150'.

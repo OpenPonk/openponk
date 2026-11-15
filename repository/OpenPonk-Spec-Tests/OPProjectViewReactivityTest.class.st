@@ -55,20 +55,15 @@ OPProjectViewReactivityTest >> testDiagramsTreeReactsToDiagramAddedAndRemovedWit
 
 { #category : 'tests' }
 OPProjectViewReactivityTest >> testProjectTreeReactsToModelAddedAndRemovedWithoutUndoRedoChanged [
+
 	| secondPackage |
 	secondPackage := OPTestContainerModel new.
 
 	project addModel: secondPackage.
 	project announcer announce: (OPModelAdded model: secondPackage).
-	self
-		assert: (workbench projectTree tree roots first children anySatisfy: [ :eachChildNode |
-			eachChildNode model == secondPackage ])
-		description: 'Project tree root children should include the newly added model'.
+	self assertCollection: (workbench projectTree tree roots first children collect: #model) includesAll: { secondPackage }.
 
 	project removeModel: secondPackage.
 	project announcer announce: (OPModelRemoved model: secondPackage).
-	self
-		deny: (workbench projectTree tree roots first children anySatisfy: [ :eachChildNode |
-			eachChildNode model == secondPackage ])
-		description: 'Project tree root children should no longer include the removed model'
+	self denyCollection: (workbench projectTree tree roots first children collect: #model) includesAny: { secondPackage }
 ]

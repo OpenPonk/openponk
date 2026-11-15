@@ -89,13 +89,14 @@ OPProjectTreeTest >> testInitialExpansionToDepth3 [
 
 { #category : 'tests' }
 OPProjectTreeTest >> testRefreshPreservesScrollPosition [
+
 	| treeWidget initialShowIndex |
 	1 to: 40 do: [ :index |
-		| extraContainer |
-		extraContainer := OPTestContainerModel new.
-		extraContainer name: 'ExtraContainer ' , index asString.
-		project addModel: extraContainer.
-		project announcer announce: (OPModelAdded model: extraContainer) ].
+			| extraContainer |
+			extraContainer := OPTestContainerModel new.
+			extraContainer name: 'ExtraContainer ' , index asString.
+			project addModel: extraContainer.
+			project announcer announce: (OPModelAdded model: extraContainer) ].
 
 	projectTree refresh.
 	treeWidget := projectTree tree adapter widget.
@@ -103,9 +104,7 @@ OPProjectTreeTest >> testRefreshPreservesScrollPosition [
 	treeWidget recalculateVerticalScrollBar.
 	treeWidget moveShowIndexTo: 25.
 	initialShowIndex := treeWidget showIndex.
-	self
-		assert: initialShowIndex > 1
-		description: 'Scrolled tree widget should have showIndex greater than 1'.
+	self deny: initialShowIndex equals: 1.
 
 	projectTree refresh.
 

@@ -59,12 +59,9 @@ OPWorkbenchToolbarTest >> testArrowButtonsDisabledWhenNoProjectController [
 
 { #category : 'tests' }
 OPWorkbenchToolbarTest >> testArrowButtonsExistAndHaveCorrectIcons [
-	self
-		assert: toolbarPresenter undoArrowButton isNotNil
-		description: 'Toolbar presenter must initialize undoArrowButton'.
-	self
-		assert: toolbarPresenter redoArrowButton isNotNil
-		description: 'Toolbar presenter must initialize redoArrowButton'.
+
+	self assert: toolbarPresenter undoArrowButton class identicalTo: SpButtonPresenter.
+	self assert: toolbarPresenter redoArrowButton class identicalTo: SpButtonPresenter.
 	self assert: toolbarPresenter undoArrowButton icon equals: (toolbarPresenter iconNamed: #arrowDown).
 	self assert: toolbarPresenter redoArrowButton icon equals: (toolbarPresenter iconNamed: #arrowDown)
 ]
@@ -86,15 +83,10 @@ OPWorkbenchToolbarTest >> testButtonsDisabledWhenNoProjectController [
 
 { #category : 'tests' }
 OPWorkbenchToolbarTest >> testButtonsExistAndHaveCorrectIcons [
-	self
-		assert: toolbarPresenter saveButton isNotNil
-		description: 'Toolbar presenter must initialize saveButton'.
-	self
-		assert: toolbarPresenter undoButton isNotNil
-		description: 'Toolbar presenter must initialize undoButton'.
-	self
-		assert: toolbarPresenter redoButton isNotNil
-		description: 'Toolbar presenter must initialize redoButton'.
+
+	self assert: toolbarPresenter saveButton class identicalTo: SpButtonPresenter.
+	self assert: toolbarPresenter undoButton class identicalTo: SpButtonPresenter.
+	self assert: toolbarPresenter redoButton class identicalTo: SpButtonPresenter.
 	self assert: toolbarPresenter saveButton icon equals: (toolbarPresenter iconNamed: #smallSave).
 	self assert: toolbarPresenter undoButton icon equals: (toolbarPresenter iconNamed: #smallUndo).
 	self assert: toolbarPresenter redoButton icon equals: (toolbarPresenter iconNamed: #smallRedo)
@@ -182,23 +174,22 @@ OPWorkbenchToolbarTest >> testDiagramMenuContainsExportAndInspectCommanderComman
 { #category : 'tests' }
 OPWorkbenchToolbarTest >> testDiagramMenuItemActionExecutesWithoutError [
 	"Verifies that clicking a diagram menu item executes its Commander activator without MessageNotUnderstood."
+
 	| testEditor mockDiagramController diagramMenuItem showHideItem |
 	testEditor := (OPEditor on: OPTestPlugin new)
-		workbench: mockWorkbench;
-		yourself.
+		              workbench: mockWorkbench;
+		              yourself.
 	mockDiagramController := Mock new.
 	mockDiagramController stub layouter willReturn: Mock new.
 	testEditor canvasPresenter instVarNamed: 'diagramController' put: mockDiagramController.
 
 	toolbarPresenter focusedEditor: testEditor.
-	diagramMenuItem := toolbarPresenter menu menuGroups first menuItems
-		detect: [ :eachMenuItem | eachMenuItem name = 'Diagram' ].
-	showHideItem := diagramMenuItem subMenu menuGroups first menuItems
-		detect: [ :eachItem | eachItem name = 'Show/Hide Elements' ].
+	diagramMenuItem := toolbarPresenter menu menuGroups first menuItems detect: [ :eachMenuItem | eachMenuItem name = 'Diagram' ].
+	showHideItem := diagramMenuItem subMenu menuGroups first menuItems detect: [ :eachItem | eachItem name = 'Show/Hide Elements' ].
 
-	self
-		assert: showHideItem action isNotNil
-		description: 'Show/Hide Elements menu item must have an executable action block'
+	self assert: showHideItem class identicalTo: SpMenuItemPresenter.
+	self assert: showHideItem name equals: 'Show/Hide Elements'.
+	self assert: showHideItem action class identicalTo: FullBlockClosure
 ]
 
 { #category : 'tests' }
@@ -308,21 +299,24 @@ OPWorkbenchToolbarTest >> testModelMenuDoesNotContainInactiveMenuGroupsWhenEdito
 { #category : 'tests' }
 OPWorkbenchToolbarTest >> testModelMenuItemActionExecutesWithoutError [
 	"Verifies that an active model menu item action is wired to its Commander activator."
-	| testEditor modelMenuItem allMenuItems testActionItem |
+
+	| testEditor modelMenuItem allMenuItems testActionItem activator |
 	testEditor := (OPEditor on: OPTestPlugin new)
-		workbench: mockWorkbench;
-		yourself.
+		              workbench: mockWorkbench;
+		              yourself.
 
 	toolbarPresenter focusedEditor: testEditor.
-	modelMenuItem := toolbarPresenter menu menuGroups first menuItems
-		detect: [ :eachTopMenuItem | eachTopMenuItem name = 'Model' ].
-	allMenuItems := modelMenuItem subMenu menuGroups
-		flatCollect: [ :eachTopGroup | eachTopGroup menuItems ].
+	modelMenuItem := toolbarPresenter menu menuGroups first menuItems detect: [ :eachTopMenuItem | eachTopMenuItem name = 'Model' ].
+	allMenuItems := modelMenuItem subMenu menuGroups flatCollect: [ :eachTopGroup | eachTopGroup menuItems ].
 	testActionItem := allMenuItems detect: [ :eachActionCandidate | eachActionCandidate name = 'Test Model Action' ].
 
-	self
-		assert: testActionItem action isNotNil
-		description: 'Model menu item must have an executable action block'
+	self assert: testActionItem class identicalTo: SpMenuItemPresenter.
+	self assert: testActionItem name equals: 'Test Model Action'.
+	self assert: testActionItem action class identicalTo: FullBlockClosure.
+	activator := testActionItem action value.
+	self assert: activator class identicalTo: CmdCommandActivator.
+	self assert: activator command class identicalTo: OPModelTestCommand.
+	self assert: activator command isExecuted description: 'Invoking model menu item action must execute OPModelTestCommand'
 ]
 
 { #category : 'tests' }

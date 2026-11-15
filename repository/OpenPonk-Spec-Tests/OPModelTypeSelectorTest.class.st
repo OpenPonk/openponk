@@ -28,27 +28,20 @@ OPModelTypeSelectorTest >> setUp [
 
 { #category : 'tests' }
 OPModelTypeSelectorTest >> testSelectingPluginUpdatesDefaultModelNameAndEnablesButton [
+
 	| nameInput addButton pluginsList |
 	nameInput := selectorPresenter instVarNamed: #projectNameInput.
 	addButton := selectorPresenter instVarNamed: #addModelButton.
 	pluginsList := selectorPresenter instVarNamed: #plugins.
-	self
-		deny: pluginsList selectedItem
-		equals: nil.
+	self assert: pluginsList selectedItem class identicalTo: OPTestPlugin.
 	self
 		assert: addButton isEnabled
 		description: 'Create button should be enabled when plugin is selected and model name is non-empty'.
-	self
-		assert: (nameInput text includesSubstring: pluginsList selectedItem name)
-		description: 'Default model name should include selected plugin name'.
+	self assert: nameInput text equals: ('New {1} Model' format: { pluginsList selectedItem name }).
 	nameInput text: ''.
-	self
-		deny: addButton isEnabled
-		description: 'Create button should be disabled when model name input is empty'.
+	self deny: addButton isEnabled description: 'Create button should be disabled when model name input is empty'.
 	nameInput text: 'Custom Model Name'.
-	self
-		assert: addButton isEnabled
-		description: 'Create button should be re-enabled when non-empty model name is entered'
+	self assert: addButton isEnabled description: 'Create button should be re-enabled when non-empty model name is entered'
 ]
 
 { #category : 'tests' }

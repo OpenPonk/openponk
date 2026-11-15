@@ -100,12 +100,14 @@ OPWorkbenchTest >> testOpenProjectEditorsLifecycleTabUpdatesAndDeletion [
 
 	project storageFile: FileSystem memory root / 'wb-test.opp'.
 	workbench updateTitle.
-	self assert: (workbench title includesSubstring: 'wb-test.opp') description: 'Title should include storage file path'.
+	self assert: workbench title equals: ('{1} - Workbench Test Project - OpenPonk' format: { project storageFile path pathString }).
 
 	editor1 := workbench focusedEditor.
-	self assert: editor1 isNotNil description: 'Opening project with open diagram should focus its editor'.
+	self assert: editor1 class identicalTo: OPEditor.
+	self assert: editor1 diagramController diagram identicalTo: diag1.
 	page1 := workbench pageFor: diag1.
-	self assert: page1 isNotNil description: 'pageFor: should return notebook page for opened diagram'.
+	self assert: page1 class identicalTo: SpNotebookPage.
+	self assert: page1 presenterProvider value identicalTo: editor1.
 	self assert: (workbench pageFor: diag2) identicalTo: nil.
 
 	workbench openEditorOn: model.
@@ -118,7 +120,7 @@ OPWorkbenchTest >> testOpenProjectEditorsLifecycleTabUpdatesAndDeletion [
 
 	diag1 name: 'RenamedDiagram'.
 	workbench updateTabTitle.
-	self assert: (page1 title includesSubstring: 'RenamedDiagram') description: 'updateTabTitle should refresh notebook tab title'.
+	self assert: page1 title equals: '[RenamedDiagram] RootPkg'.
 
 	workbench openFormOn: editor1 diagramController.
 	workbench openFormOn: nil.
@@ -127,7 +129,7 @@ OPWorkbenchTest >> testOpenProjectEditorsLifecycleTabUpdatesAndDeletion [
 	self assert: (workbench pageFor: diag2) identicalTo: nil.
 
 	workbench deleteDiagram: diag2.
-	self deny: (project diagrams includes: diag2) description: 'deleteDiagram: should remove diagram from project'.
+	self denyCollection: project diagrams includesAny: { diag2 }.
 
 	updatedProject := false.
 	updatedDiagram := false.
@@ -164,6 +166,7 @@ OPWorkbenchTest >> testPanesRetainWidthOnWorkbenchResize [
 
 { #category : 'tests' }
 OPWorkbenchTest >> testRedoShortcutDelegatesToUndoManager [
+
 	| mockProjectController mockUndoManager windowPresenter redoAction |
 	workbench := OPWorkbench new.
 	mockProjectController := Mock new.
@@ -176,16 +179,19 @@ OPWorkbenchTest >> testRedoShortcutDelegatesToUndoManager [
 	windowPresenter := workbench asWindow.
 	[
 		redoAction := windowPresenter actions allCommands
-			detect: [ :eachAction |
-				eachAction shortcutKey = $y actionModifier
-					or: [ eachAction shortcutKey = $z shift actionModifier ] ]
-			ifNone: [ nil ].
+			              detect: [ :eachAction |
+			              eachAction shortcutKey = $y actionModifier or: [ eachAction shortcutKey = $z shift actionModifier ] ]
+			              ifNone: [ nil ].
 
-		self assert: redoAction isNotNil description: 'Redo action must be registered on window'.
+		self assert: redoAction class identicalTo: SpAction.
+		self
+			assertCollection: {
+					$y actionModifier.
+					$z shift actionModifier }
+			includesAll: { redoAction shortcutKey }.
 		self assert: redoAction canBeExecuted description: 'Redo action must be enabled when canRedo is true'.
 		redoAction execute.
-		mockUndoManager should receive redo
-	] ensure: [ windowPresenter close ]
+		mockUndoManager should receive redo ] ensure: [ windowPresenter close ]
 ]
 
 { #category : 'tests' }
@@ -246,6 +252,7 @@ OPWorkbenchTest >> testRenameProjectDialogAndOpenModelAndOpenFromFile [
 
 { #category : 'tests' }
 OPWorkbenchTest >> testSaveProjectDelegatesToProjectController [
+
 	| mockProjectController windowPresenter saveAction |
 	workbench := OPWorkbench new.
 
@@ -258,30 +265,33 @@ OPWorkbenchTest >> testSaveProjectDelegatesToProjectController [
 	windowPresenter := workbench asWindow.
 	[
 		saveAction := windowPresenter actions allCommands
-			detect: [ :eachAction | eachAction shortcutKey = $s actionModifier ]
-			ifNone: [ nil ].
+			              detect: [ :eachAction | eachAction shortcutKey = $s actionModifier ]
+			              ifNone: [ nil ].
 
-		self assert: saveAction isNotNil description: 'Save shortcut action should be registered on window'.
+		self assert: saveAction class identicalTo: SpAction.
+		self assert: saveAction shortcutKey equals: $s actionModifier.
 		self assert: saveAction canBeExecuted description: 'Save action should be enabled when projectController is present'.
 
 		saveAction execute.
-		self assert: mockProjectController isSaved description: 'Executing save action must delegate to projectController saveProject'
-	] ensure: [ windowPresenter close ]
+		self assert: mockProjectController isSaved description: 'Executing save action must delegate to projectController saveProject' ]
+		ensure: [ windowPresenter close ]
 ]
 
 { #category : 'tests' }
 OPWorkbenchTest >> testSaveProjectShortcutIsRegistered [
+
 	| windowPresenter saveAction |
 	workbench := OPWorkbench new.
 	windowPresenter := workbench asWindow.
 	[
 		saveAction := windowPresenter actions allCommands
-			detect: [ :eachAction | eachAction shortcutKey = $s actionModifier ]
-			ifNone: [ nil ].
+			              detect: [ :eachAction | eachAction shortcutKey = $s actionModifier ]
+			              ifNone: [ nil ].
 
-		self assert: saveAction isNotNil description: 'Save shortcut action should be registered on window'.
-		self deny: saveAction canBeExecuted description: 'Save action must be disabled when projectController is nil'
-	] ensure: [ windowPresenter close ]
+		self assert: saveAction class identicalTo: SpAction.
+		self assert: saveAction shortcutKey equals: $s actionModifier.
+		self deny: saveAction canBeExecuted description: 'Save action must be disabled when projectController is nil' ] ensure: [
+		windowPresenter close ]
 ]
 
 { #category : 'tests' }
@@ -368,6 +378,7 @@ OPWorkbenchTest >> testUndoRedoShortcutsAreRegisteredOnWindow [
 
 { #category : 'tests' }
 OPWorkbenchTest >> testUndoShortcutDelegatesToUndoManager [
+
 	| mockProjectController mockUndoManager windowPresenter undoAction |
 	workbench := OPWorkbench new.
 	mockProjectController := Mock new.
@@ -380,14 +391,14 @@ OPWorkbenchTest >> testUndoShortcutDelegatesToUndoManager [
 	windowPresenter := workbench asWindow.
 	[
 		undoAction := windowPresenter actions allCommands
-			detect: [ :eachAction | eachAction shortcutKey = $z actionModifier ]
-			ifNone: [ nil ].
+			              detect: [ :eachAction | eachAction shortcutKey = $z actionModifier ]
+			              ifNone: [ nil ].
 
-		self assert: undoAction isNotNil description: 'Undo action must be registered on window'.
+		self assert: undoAction class identicalTo: SpAction.
+		self assert: undoAction shortcutKey equals: $z actionModifier.
 		self assert: undoAction canBeExecuted description: 'Undo action must be enabled when canUndo is true'.
 		undoAction execute.
-		mockUndoManager should receive undo
-	] ensure: [ windowPresenter close ]
+		mockUndoManager should receive undo ] ensure: [ windowPresenter close ]
 ]
 
 { #category : 'tests' }
@@ -435,15 +446,19 @@ OPWorkbenchTest >> testWorkbenchWindowIsMaximizedWhenOpened [
 
 { #category : 'tests' }
 OPWorkbenchTest >> testZoomerSettingsRegisteredUnderOpenPonk [
-	| method pragma |
-	self assert: (OPWorkbench class includesSelector: #zoomerSettingsOn:)
+
+	| method pragma builder settingNode |
+	self
+		assert: (OPWorkbench class includesSelector: #zoomerSettingsOn:)
 		description: 'OPWorkbench class must define #zoomerSettingsOn:'.
 	method := OPWorkbench class >> #zoomerSettingsOn:.
 	pragma := method pragmaAt: #systemsettings.
-	self assert: pragma isNotNil
-		description: 'OPWorkbench class must declare #zoomerSettingsOn: with <systemsettings>'.
-	self assert: (method sourceCode includesSubstring: 'parent: #openponk')
-		description: 'Zoomer setting in OPWorkbench must be registered under #openponk'.
-	self assert: (method sourceCode includesSubstring: 'target: OPZoomer')
-		description: 'Zoomer setting in OPWorkbench must target OPZoomer'
+	self assert: pragma selector equals: #systemsettings.
+	builder := SettingTreeBuilder new.
+	OPWorkbench zoomerSettingsOn: builder.
+	self assert: builder nodeList size equals: 1.
+	settingNode := builder nodeList first.
+	self assert: settingNode parentName equals: #openponk.
+	self assert: settingNode item name equals: #open.
+	self assert: settingNode item target identicalTo: OPZoomer
 ]

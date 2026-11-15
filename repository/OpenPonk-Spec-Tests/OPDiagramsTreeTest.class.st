@@ -130,24 +130,24 @@ OPDiagramsTreeTest >> testRenameDiagramUndoRestoresOriginalNameAndUpdatesList [
 
 { #category : 'tests' }
 OPDiagramsTreeTest >> testSelectionQueriesDeletePermissionAndUndoRedoAnnouncement [
+
 	| modelViewModel |
 	modelViewModel := projectController viewModelRegistry viewModelFor: model.
 	self assert: treePresenter projectViewModel identicalTo: projectController viewModel.
-	self deny: (treePresenter isDeleteAllowedFor: diagram)
-		description: 'Deleting the only diagram of a model should not be allowed'.
+	self deny: (treePresenter isDeleteAllowedFor: diagram) description: 'Deleting the only diagram of a model should not be allowed'.
 
 	treePresenter tree selectItem: diagram.
 	self assert: treePresenter selectedModelForNewDiagram identicalTo: model.
 	treePresenter tree selectItem: modelViewModel.
 	self assert: treePresenter selectedModelForNewDiagram identicalTo: model.
 	treePresenter diagramUnfocused.
-	self assert: treePresenter selectedItem isNil
-		description: 'diagramUnfocused should clear selection in treePresenter'.
+	self assert: treePresenter selectedItem identicalTo: nil.
 	self assert: treePresenter selectedModelForNewDiagram identicalTo: model.
 
 	treePresenter createDiagramForModel: model named: 'Second Diagram'.
 	self assert: (project diagramsOf: model) size equals: 2.
-	self assert: (treePresenter isDeleteAllowedFor: diagram)
+	self
+		assert: (treePresenter isDeleteAllowedFor: diagram)
 		description: 'Deleting a diagram should be allowed when model has multiple diagrams'.
 
 	treePresenter undoRedoChanged: OPUndoRedoChanged new.

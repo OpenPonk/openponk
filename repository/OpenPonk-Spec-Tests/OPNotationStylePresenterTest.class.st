@@ -47,19 +47,19 @@ OPNotationStylePresenterTest >> testChangeColorUpdatesItemAndRegistry [
 
 { #category : 'tests' }
 OPNotationStylePresenterTest >> testColorIconForReturnsValidForm [
+
 	| icon |
 	icon := presenter colorIconFor: Color paleGreen.
-	self assert: (icon isKindOf: Form) description: 'colorIconFor: should return a Form instance'.
+	self assert: icon class identicalTo: Form.
 	self assert: icon extent equals: 14 @ 14
 ]
 
 { #category : 'tests' }
 OPNotationStylePresenterTest >> testItemsLoadedFromPlugin [
+
 	presenter plugin: plugin.
 	self denyEmpty: presenter items.
-	self
-		assert: (presenter items anySatisfy: [ :each | each typeName = 'Kind' ])
-		description: 'Loaded items for OPTestPlugin should contain Kind type'
+	self assertCollection: (presenter items collect: #typeName) includesAll: #( 'Kind' )
 ]
 
 { #category : 'tests' }
@@ -84,7 +84,8 @@ OPNotationStylePresenterTest >> testWindowOpeningSelectionResetAndResetAll [
 	presenter := window presenter.
 	self assert: window title equals: plugin name , ' - Notation Style Settings'.
 	kindItem := presenter itemForType: 'Kind'.
-	self assert: kindItem isNotNil description: 'Kind style item should exist'.
+	self assert: kindItem class identicalTo: OPNotationStyleItem.
+	self assert: kindItem typeName equals: 'Kind'.
 	self assert: kindItem property equals: #fillColor.
 	self assert: kindItem defaultColor equals: Color paleGreen.
 	self deny: kindItem isOverridden description: 'Kind should not be marked overridden initially'.

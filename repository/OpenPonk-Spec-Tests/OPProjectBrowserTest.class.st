@@ -47,22 +47,21 @@ OPProjectBrowserTest >> testBrowserWindowBuildsCleanlyWithProjects [
 
 	window := browser asWindow.
 	window build.
-	self assert: window isNotNil description: 'OPProjectBrowser should build a window presenter'.
-	self assert: window presenter equals: browser
+	self assert: window class identicalTo: SpWindowPresenter.
+	self assert: window presenter identicalTo: browser
 ]
 
 { #category : 'tests' }
 OPProjectBrowserTest >> testClassOpenAndUpdateRecentList [
+
 	| openedWindow |
 	browser updateRecentList.
 	openedWindow := OPProjectBrowser open.
 	[
-		self assert: openedWindow isNotNil
-	] ensure: [
-		openedWindow ifNotNil: [
-			(openedWindow respondsTo: #close) ifTrue: [ openedWindow close ].
-			(openedWindow respondsTo: #withWindowDo:) ifTrue: [
-				openedWindow withWindowDo: [ :activeWindow | activeWindow close ] ] ] ]
+		self assert: openedWindow class identicalTo: SpWindowPresenter.
+		self assert: openedWindow presenter class identicalTo: OPProjectBrowser.
+		self assert: openedWindow isOpen description: 'OPProjectBrowser open should open the window' ] ensure: [
+		openedWindow ifNotNil: [ openedWindow close ] ]
 ]
 
 { #category : 'tests' }
@@ -79,15 +78,15 @@ OPProjectBrowserTest >> testCreateProjectButtonDisabledWhenProjectNameEmpty [
 
 { #category : 'tests' }
 OPProjectBrowserTest >> testCreateProjectDispatchesToOpenProject [
+
 	| selectedTemplate openedProjects |
 	selectedTemplate := browser templatesList selectedItem.
-	self
-		assert: selectedTemplate isNotNil
-		description: 'Project browser should have a default template selected'.
+	self assert: selectedTemplate class identicalTo: OPProjectTemplate.
+	self assert: selectedTemplate identicalTo: browser templatesList items first.
 	openedProjects := OrderedCollection new.
 	(browser stub openProject: Any) will: [ :passedProject |
-		openedProjects add: passedProject.
-		nil ].
+			openedProjects add: passedProject.
+			nil ].
 	browser createProject.
 	self assert: openedProjects size equals: 1.
 	self assert: openedProjects first name equals: browser projectName.
@@ -96,6 +95,7 @@ OPProjectBrowserTest >> testCreateProjectDispatchesToOpenProject [
 
 { #category : 'tests' }
 OPProjectBrowserTest >> testFileReaderServicesAndMenuRegistration [
+
 	| oppServices txtServices service builder openPonkItem |
 	oppServices := OPProjectBrowser fileReaderServicesForFile: 'model.opp' suffix: 'opp'.
 	self assert: oppServices size equals: 1.
@@ -108,9 +108,9 @@ OPProjectBrowserTest >> testFileReaderServicesAndMenuRegistration [
 	builder := PragmaMenuBuilder new.
 	OPProjectBrowser menuCommandOn: builder.
 	openPonkItem := builder itemNamed: #OpenPonk.
-	self
-		assert: openPonkItem isNotNil
-		description: 'menuCommandOn: should register OpenPonk world menu item'
+	self assert: openPonkItem class identicalTo: MenuRegistration.
+	self assert: openPonkItem name equals: #OpenPonk.
+	self assert: openPonkItem spec label equals: 'OpenPonk'
 ]
 
 { #category : 'tests' }
@@ -124,9 +124,7 @@ OPProjectBrowserTest >> testOpenProjectOpenFromFileAndRecentContextMenu [
 		projectToOpen stub open willReturn: mockWorkbench.
 		returnedWb := browser openProject: projectToOpen.
 		self assert: returnedWb identicalTo: mockWorkbench.
-		self
-			assert: (OPProjectStorage default projects includes: projectToOpen)
-			description: 'openProject: should save project in OPProjectStorage default'.
+		self assertCollection: OPProjectStorage default projects includesAll: { projectToOpen }.
 
 		nilMenu := browser projectMenu: browser newMenu for: nil.
 		self assertEmpty: nilMenu menuGroups.
@@ -134,9 +132,7 @@ OPProjectBrowserTest >> testOpenProjectOpenFromFileAndRecentContextMenu [
 		validMenu := browser projectMenu: browser newMenu for: projectToOpen.
 		self denyEmpty: validMenu menuGroups.
 		validMenu menuGroups first menuItems first action value.
-		self
-			deny: (OPProjectStorage default projects includes: projectToOpen)
-			description: 'Remove context menu item should remove project from OPProjectStorage default' ] ensure: [
+		self denyCollection: OPProjectStorage default projects includesAny: { projectToOpen } ] ensure: [
 		OPProjectStorage default ensureRemove: projectToOpen ].
 
 	sourceProject := OPProject named: 'Archive Project'.
@@ -205,11 +201,13 @@ OPProjectBrowserTest >> testOpenRecentButtonStateFollowsSelection [
 
 { #category : 'tests' }
 OPProjectBrowserTest >> testPluginSelectionUpdatesTemplates [
+
 	| plugins firstPlugin secondPlugin |
 	plugins := browser pluginsList items.
-	self
-		assert: plugins size >= 2
-		description: 'Test environment should have at least 2 plugins registered'.
+	self assert: plugins size equals: 2.
+	self assertCollection: (plugins collect: #class) hasSameElements: {
+			OPTestPlugin.
+			OPTestSecondaryPlugin }.
 	firstPlugin := plugins first.
 	secondPlugin := plugins second.
 	browser pluginsList selectItem: firstPlugin.
@@ -272,12 +270,7 @@ OPProjectBrowserTest >> testRecentListDisplaysProjectsWithAndWithoutStorageFile 
 	itemStrings := browser recentList items collect: [ :each | browser recentList displayValueFor: each ].
 
 	self assert: itemStrings size equals: 2.
-	self
-		assert: (itemStrings anySatisfy: [ :each | each includesSubstring: 'SavedPrj [saved.opp]' ])
-		description: 'Recent list should display the storage file basename for saved projects'.
-	self
-		assert: (itemStrings anySatisfy: [ :each | each includesSubstring: 'UnsavedPrj [in image - unsaved]' ])
-		description: 'Recent list should mark projects without storageFile as in image - unsaved'
+	self assertCollection: itemStrings hasSameElements: #( 'SavedPrj [saved.opp]' 'UnsavedPrj [in image - unsaved]' )
 ]
 
 { #category : 'tests' }

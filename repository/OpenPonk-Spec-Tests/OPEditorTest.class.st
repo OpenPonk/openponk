@@ -73,8 +73,8 @@ OPEditorTest >> testEditorLayoutsSwitching [
 
 { #category : 'tests' }
 OPEditorTest >> testInitializePresentersInstantiatesZoomToolbar [
-	self assert: editor zoomToolbar isNotNil description: 'Editor zoomToolbar should be initialized'.
-	self assert: (editor zoomToolbar isKindOf: OPZoomToolbarPresenter) description: 'zoomToolbar should be an OPZoomToolbarPresenter'.
+
+	self assert: editor zoomToolbar class identicalTo: OPZoomToolbarPresenter.
 	self assert: editor zoomToolbar canvasPresenter equals: editor canvasPresenter
 ]
 
@@ -97,8 +97,8 @@ OPEditorTest >> testTabClosedWhileClosingWorkbenchUpdatesDiagram [
 	canvas camera scale: 2.75.
 	activeEditor tabClosedWhileClosingWorkbench: true.
 	initialCamera := testDiagram camera.
-	self assert: initialCamera isNotNil description: 'Diagram camera should be saved when tab closes'.
-	self assert: (initialCamera scale - 2.75) abs < 0.001 description: 'Saved diagram camera scale should match canvas camera scale'
+	self assert: initialCamera class identicalTo: OPDiagramCamera.
+	self assert: initialCamera scale closeTo: 2.75 precision: 0.001
 ]
 
 { #category : 'tests' }
@@ -118,9 +118,10 @@ OPEditorTest >> testZoomToolbarButtonsFitWithinToolbarBounds [
 
 { #category : 'tests' }
 OPEditorTest >> testZoomToolbarControlsEditorCanvasZoom [
+
 	editor canvasPresenter zoom: 1.0.
 	editor zoomToolbar zoomIn.
-	self assert: (editor canvasPresenter zoom - 1.25) abs < 0.001 description: 'Zooming in should increase canvas zoom to 1.25'.
+	self assert: editor canvasPresenter zoom closeTo: 1.25 precision: 0.001.
 	editor zoomToolbar zoomReset.
-	self assert: (editor canvasPresenter zoom - 1.0) abs < 0.001 description: 'Resetting zoom should restore canvas zoom to 1.0'
+	self assert: editor canvasPresenter zoom closeTo: 1.0 precision: 0.001
 ]

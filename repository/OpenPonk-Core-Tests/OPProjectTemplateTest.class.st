@@ -89,30 +89,23 @@ OPProjectTemplateTest >> testEquality [
 
 { #category : 'tests' }
 OPProjectTemplateTest >> testInstalledPluginsProvideExamples [
+
 	OPPluginRegistry default plugins do: [ :plugin |
-		| templates |
-		templates := plugin projectTemplates.
-		self
-			assert: templates isCollection
-			description: 'projectTemplates must return a collection'.
-		templates
-			select: [ :each | each isExample ]
-			thenDo: [ :template |
-				| createdModel |
-				self
-					assert: template name isNotEmpty
-					description: 'Each example template must have a non-empty name'.
-				createdModel := template createModel.
-				self
-					assert: (self isModelNonEmpty: createdModel)
-					description: 'Example template must instantiate a non-empty domain model' ] ]
+			| templates |
+			templates := plugin projectTemplates.
+			self assert: templates isCollection description: 'projectTemplates must return a collection'.
+			templates select: [ :each | each isExample ] thenDo: [ :template |
+					| createdModel |
+					self denyEmpty: template name.
+					createdModel := template createModel.
+					self assert: (self isModelNonEmpty: createdModel) description: 'Example template must instantiate a non-empty domain model' ] ]
 ]
 
 { #category : 'tests' }
 OPProjectTemplateTest >> testPluginProjectTemplates [
+
 	| templates |
 	templates := OPTestPlugin new projectTemplates.
-	self
-		deny: templates isEmpty
-		description: 'OPTestPlugin should provide at least the default blank project template'
+	self denyEmpty: templates.
+	self assert: templates first name equals: 'Empty Test Plugin'
 ]

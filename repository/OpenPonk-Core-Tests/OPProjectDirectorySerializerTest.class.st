@@ -83,10 +83,11 @@ OPProjectDirectorySerializerTest >> testModelReferences [
 
 { #category : 'tests' }
 OPProjectDirectorySerializerTest >> testNoModelReferences [
+
 	| result |
-	result := String
-		streamContents: [ :stream | stream << (persistence modelReferencesToJson: #()) ].
-	self assert: (STON fromString: result) equals: #()
+	result := String streamContents: [ :stream | stream << (persistence modelReferencesToJson: #(  )) ].
+	self assert: result equals: '[ ]'.
+	self assertEmpty: (STON fromString: result)
 ]
 
 { #category : 'tests' }

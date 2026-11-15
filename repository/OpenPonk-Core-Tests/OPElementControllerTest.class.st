@@ -92,11 +92,11 @@ OPElementControllerTest >> testAddAsSourceAndTargetForRelationToSelf [
 
 { #category : 'tests - connecting' }
 OPElementControllerTest >> testAddAsSourceForRelation [
+
 	| relationController |
-	relationController := diagramController
-		newControllerFor: OPTestRelationModel new.
+	relationController := diagramController newControllerFor: OPTestRelationModel new.
 	controller addAsSourceFor: relationController.
-	self assert: diagramController controllers asArray equals: {}.
+	self assertEmpty: diagramController controllers.
 	self assert: relationController source equals: controller
 ]
 

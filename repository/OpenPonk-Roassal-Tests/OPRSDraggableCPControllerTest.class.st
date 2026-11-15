@@ -30,50 +30,73 @@ OPRSDraggableCPControllerTest >> setUp [
 
 { #category : 'tests' }
 OPRSDraggableCPControllerTest >> testCollinearDragRemovesPointWithoutCrashingOnRemovedHandle [
+
 	| testCanvas boxA boxB polyline interaction handle dragEndEvent |
 	testCanvas := RSCanvas new.
-	boxA := RSBox new size: 20; position: 0 @ 0.
-	boxB := RSBox new size: 20; position: 100 @ 0.
+	boxA := RSBox new
+		        size: 20;
+		        position: 0 @ 0.
+	boxB := RSBox new
+		        size: 20;
+		        position: 100 @ 0.
 	polyline := RSPolyline new
-		from: boxA;
-		to: boxB;
-		controlPoints: { 0 @ 0 . 50 @ 50 . 100 @ 0 }.
-	testCanvas add: boxA; add: boxB; add: polyline.
+		            from: boxA;
+		            to: boxB;
+		            controlPoints: {
+				            (0 @ 0).
+				            (50 @ 50).
+				            (100 @ 0) }.
+	testCanvas
+		add: boxA;
+		add: boxB;
+		add: polyline.
 
 	interaction := OPRSDraggableControlPoints new.
 	polyline addInteraction: interaction.
 	interaction showHandles.
 
-	handle := (interaction instVarNamed: #handles) detect: [ :eachHandle |
-		(eachHandle instVarNamed: #indexOfControlPoint) = 2 ].
+	handle := (interaction instVarNamed: #handles) detect: [ :eachHandle | (eachHandle instVarNamed: #indexOfControlPoint) = 2 ].
 	handle instVarNamed: #initialWaypoints put: polyline controlPoints copy.
 
-	polyline controlPoints: { 0 @ 0 . 50 @ 0 . 100 @ 0 }.
+	polyline controlPoints: {
+			(0 @ 0).
+			(50 @ 0).
+			(100 @ 0) }.
 
 	dragEndEvent := RSMouseDragEnd new
-		shape: handle;
-		yourself.
+		                shape: handle;
+		                yourself.
 
 	handle onDragEnd: dragEndEvent.
 
 	self assert: polyline controlPoints size equals: 2.
-	self assert: polyline controlPoints equals: { 0 @ 0 . 100 @ 0 }.
-	self
-		assert: (handle instVarNamed: #line) isNil
-		description: 'Removed collinear handle should have its line reference cleared'
+	self assert: polyline controlPoints equals: {
+			(0 @ 0).
+			(100 @ 0) }.
+	self assert: (handle instVarNamed: #line) identicalTo: nil
 ]
 
 { #category : 'tests' }
 OPRSDraggableCPControllerTest >> testPromoteMidpointDoesNotAnnounceWaypointsChangedEvent [
+
 	| canvas boxA boxB polyline interaction midpointHandle announcedEvents |
 	canvas := RSCanvas new.
-	boxA := RSBox new size: 20; position: 0 @ 0.
-	boxB := RSBox new size: 20; position: 100 @ 0.
+	boxA := RSBox new
+		        size: 20;
+		        position: 0 @ 0.
+	boxB := RSBox new
+		        size: 20;
+		        position: 100 @ 0.
 	polyline := RSPolyline new
-		from: boxA;
-		to: boxB;
-		controlPoints: { 0 @ 0 . 100 @ 0 }.
-	canvas add: boxA; add: boxB; add: polyline.
+		            from: boxA;
+		            to: boxB;
+		            controlPoints: {
+				            (0 @ 0).
+				            (100 @ 0) }.
+	canvas
+		add: boxA;
+		add: boxB;
+		add: polyline.
 	interaction := OPRSDraggableControlPoints new.
 	polyline addInteraction: interaction.
 	interaction showHandles.
@@ -85,7 +108,7 @@ OPRSDraggableCPControllerTest >> testPromoteMidpointDoesNotAnnounceWaypointsChan
 
 	interaction promoteFor: polyline handle: midpointHandle.
 
-	self assertCollection: announcedEvents hasSameElements: #()
+	self assertEmpty: announcedEvents
 ]
 
 { #category : 'tests' }

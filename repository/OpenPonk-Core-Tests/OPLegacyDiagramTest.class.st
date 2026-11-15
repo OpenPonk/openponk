@@ -103,10 +103,11 @@ OPLegacyDiagramTest >> testFromJsonComplex [
 
 { #category : 'tests' }
 OPLegacyDiagramTest >> testModel [
+
 	| model |
 	model := OPTestContainerModel new.
 	diagram := OPLegacyDiagram new.
-	self assert: diagram model isNil description: 'New OPLegacyDiagram should have nil model initially'.
+	self assert: diagram model identicalTo: nil.
 	self assert: diagram modelName equals: 'UndefinedObject'.
 	diagram model: model.
 	self assert: diagram model class equals: OPTestContainerModel.

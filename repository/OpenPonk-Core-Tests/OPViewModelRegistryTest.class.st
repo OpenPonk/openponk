@@ -113,6 +113,7 @@ OPViewModelRegistryTest >> testRegistryDelegationQueries [
 
 { #category : 'tests' }
 OPViewModelRegistryTest >> testViewModelHierarchyAndPropertiesAndDisplayString [
+
 	| projectVM containerVM entityVM relationVM unnamedEntity unnamedVM announcedChanged |
 	projectVM := registry projectViewModel.
 	containerVM := registry viewModelFor: container.
@@ -132,18 +133,26 @@ OPViewModelRegistryTest >> testViewModelHierarchyAndPropertiesAndDisplayString [
 	self assert: entityVM parentContainerModel identicalTo: container.
 	self assertCollection: entityVM dependingOnElements hasSameElements: { container }.
 	self assertEmpty: containerVM dependingOnElements.
-	self assertCollection: (registry allChildrenFor: project) includesAll: { container . entityA . entityB . relation }.
+	self assertCollection: (registry allChildrenFor: project) includesAll: {
+			container.
+			entityA.
+			entityB.
+			relation }.
 	self assert: relationVM modelSource identicalTo: entityA.
 	self assert: relationVM modelTarget identicalTo: entityB.
-	self assert: entityVM modelSource isNil description: 'Entity without source should answer nil modelSource'.
-	self assert: entityVM modelTarget isNil description: 'Entity without target should answer nil modelTarget'.
+	self assert: entityVM modelSource identicalTo: nil.
+	self assert: entityVM modelTarget identicalTo: nil.
 	announcedChanged := false.
 	entityVM announcer when: OPModelChanged do: [ :ann | announcedChanged := true ] for: self.
 	entityVM propertyNamed: #name put: 'VIP Customer'.
 	self assert: (entityVM propertyNamed: #name) equals: 'VIP Customer'.
-	self assert: announcedChanged description: 'Mutating a non-structural property via propertyNamed:put: must announce OPModelChanged'.
+	self
+		assert: announcedChanged
+		description: 'Mutating a non-structural property via propertyNamed:put: must announce OPModelChanged'.
 	entityVM unsubscribe: self.
-	unnamedEntity := OPTestEntityModel new name: '   '; yourself.
+	unnamedEntity := OPTestEntityModel new
+		                 name: '   ';
+		                 yourself.
 	unnamedVM := registry viewModelFor: unnamedEntity.
 	self assert: unnamedVM modelDisplayString equals: 'Test Entity Model'.
 	self

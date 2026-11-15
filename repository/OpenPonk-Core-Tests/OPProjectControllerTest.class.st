@@ -489,6 +489,7 @@ OPProjectControllerTest >> testUndoRedoDelegationAndRemoveDiagramAndModel [
 
 { #category : 'tests' }
 OPProjectControllerTest >> testWorkbenchDelegationOpenDiagramsMergeWithAndUpdateDiagram [
+
 	| mockWorkbench mockApp mockEditor mockDiagramCtrl baseModel diag1 diag2 otherProject otherModel otherDiag titleUpdated |
 	mockApp := Mock new.
 	mockEditor := Mock new.
@@ -506,19 +507,29 @@ OPProjectControllerTest >> testWorkbenchDelegationOpenDiagramsMergeWithAndUpdate
 	controller workbench: mockWorkbench.
 	self assert: controller spApplication identicalTo: mockApp.
 	self assert: controller viewModel identicalTo: controller viewModelRegistry projectViewModel.
-	self assert: OPProjectController new undoManager isNotNil description: 'Lazy undoManager initialization should return an instance'.
+	self assert: OPProjectController new undoManager class identicalTo: OPUndoManager.
 
 	baseModel := OPTestContainerModel new.
-	diag1 := (OPOpenPonkDiagram forModelElement: baseModel) isOpen: false; isSelected: false; yourself.
-	diag2 := (OPOpenPonkDiagram forModelElement: baseModel) isOpen: false; isSelected: false; yourself.
+	diag1 := (OPOpenPonkDiagram forModelElement: baseModel)
+		         isOpen: false;
+		         isSelected: false;
+		         yourself.
+	diag2 := (OPOpenPonkDiagram forModelElement: baseModel)
+		         isOpen: false;
+		         isSelected: false;
+		         yourself.
 	project addDiagram: diag1.
 	project addDiagram: diag2.
 	controller openDiagrams.
 	mockWorkbench should receive openEditorOnDiagram: diag1.
 	mockWorkbench should receive openEditorOnDiagram: diag2.
 
-	diag1 isOpen: true; isSelected: true.
-	diag2 isOpen: false; isSelected: false.
+	diag1
+		isOpen: true;
+		isSelected: true.
+	diag2
+		isOpen: false;
+		isSelected: false.
 	controller openDiagrams.
 	mockWorkbench should receive focusEditorOf: diag1.
 

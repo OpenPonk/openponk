@@ -27,28 +27,26 @@ OPPluginRegistryTest >> testPluginFor [
 
 { #category : 'tests' }
 OPPluginRegistryTest >> testPluginRegistryQueriesAndTestingHelpers [
+
 	| visited controller plugin |
 	plugin := registry plugins anyOne.
-	self assert: (registry hasPluginFor: OPTestContainerModel new)
+	self
+		assert: (registry hasPluginFor: OPTestContainerModel new)
 		description: 'Registry should have plugin for OPTestContainerModel'.
-	self deny: (registry hasPluginFor: Object new)
-		description: 'Registry should not have plugin for arbitrary Object'.
+	self deny: (registry hasPluginFor: Object new) description: 'Registry should not have plugin for arbitrary Object'.
 	controller := OPTestDiagramController new.
 	self assert: (registry pluginForController: controller) identicalTo: plugin.
 	visited := OrderedCollection new.
 	registry pluginsDo: [ :each | visited add: each ].
 	self assert: visited asArray equals: { plugin }.
-	self assert: (plugin isForController: controller)
-		description: 'OPTestPlugin should recognize OPTestDiagramController'.
-	self assert: plugin supportsHidingElements
-		description: 'OPPlugin supportsHidingElements should default to true'.
+	self assert: (plugin isForController: controller) description: 'OPTestPlugin should recognize OPTestDiagramController'.
+	self assert: plugin supportsHidingElements description: 'OPPlugin supportsHidingElements should default to true'.
 	self assert: plugin layouterClass identicalTo: OPNoLayouter.
-	self assert: plugin modelSerializerClass isNotNil
-		description: 'OPTestPlugin should provide a modelSerializerClass'.
+	self assert: plugin modelSerializerClass identicalTo: OPStonModelSerializer.
 	[
 		OPPluginRegistry setDefaultForTesting.
-		self assert: (OPPluginRegistry default hasPluginFor: OPTestContainerModel new)
+		self
+			assert: (OPPluginRegistry default hasPluginFor: OPTestContainerModel new)
 			description: 'Default registry for testing should support OPTestContainerModel'.
-		self denyEmpty: OPPluginRegistry withAllForTesting plugins
-	] ensure: [ OPPluginRegistry resetDefault ]
+		self denyEmpty: OPPluginRegistry withAllForTesting plugins ] ensure: [ OPPluginRegistry resetDefault ]
 ]

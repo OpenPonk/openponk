@@ -61,6 +61,7 @@ OPRSAnchorConstraintTest >> tearDown [
 
 { #category : 'tests' }
 OPRSAnchorConstraintTest >> testBalanceReferenceMovesShapeAndSavesPosition [
+
 	constraint
 		balance: 0.5;
 		minDistanceToLine: 20;
@@ -71,7 +72,7 @@ OPRSAnchorConstraintTest >> testBalanceReferenceMovesShapeAndSavesPosition [
 	self assert: constraint balance equals: 0.5.
 	self assert: constraint minDistanceToLine equals: 20.
 	self assert: constraint distanceToLine equals: 20.
-	self assert: constraint anchorState equals: #(0.5 20).
+	self assert: constraint anchorState equals: #( 0.5 20 ).
 	self
 		assert: constraint anchorShape isInACanvas
 		description: 'Anchor shape should be added to canvas when alwaysShowGuideLine is enabled'.
@@ -81,12 +82,8 @@ OPRSAnchorConstraintTest >> testBalanceReferenceMovesShapeAndSavesPosition [
 	self assert: anchoredShape position x closeTo: 100.
 	anchoredShape translateTo: 50 @ 30.
 	constraint saveShapePosition.
-	self
-		assert: (constraint balance between: 0.2 and: 0.3)
-		description: 'Saved balance should reflect new relative position along line'.
-	self
-		assert: constraint distanceToLine > 0
-		description: 'Saved distanceToLine should be positive when shape is below horizontal line'
+	self assert: constraint balance closeTo: 0.25.
+	self assert: constraint distanceToLine closeTo: 25.0
 ]
 
 { #category : 'tests' }
@@ -112,6 +109,7 @@ OPRSAnchorConstraintTest >> testRemoveDetachesAnchorAndGuideLine [
 
 { #category : 'tests' }
 OPRSAnchorConstraintTest >> testStartAndEndAndBalanceReferences [
+
 	| startRef endRef balanceRef segments startAssoc endAssoc balanceAssoc |
 	constraint
 		balance: 0.5;
@@ -128,9 +126,7 @@ OPRSAnchorConstraintTest >> testStartAndEndAndBalanceReferences [
 	self assert: startAssoc key equals: segments first.
 	anchoredShape translateTo: 25 @ 10.
 	startRef saveShapePositionIn: constraint.
-	self
-		assert: (startRef computeAbsoluteBalanceForLength: 100) > 0
-		description: 'Saved start distance should be positive'.
+	self assert: (startRef computeAbsoluteBalanceForLength: 100) closeTo: 25.0.
 
 	endRef := OPRSAnchorConstraintEndDistanceReference distance: 20.
 	self assert: (endRef computeAbsoluteBalanceForLength: 100) equals: 80.
@@ -140,26 +136,21 @@ OPRSAnchorConstraintTest >> testStartAndEndAndBalanceReferences [
 	endAssoc := endRef anchorSegmentFrom: segments andPointFrom: 80.
 	self assert: endAssoc key equals: segments last.
 	endRef saveShapePositionIn: constraint.
-	self
-		assert: (endRef computeAbsoluteBalanceForLength: 200) < 200
-		description: 'Saved end distance should be less than total length'.
+	self assert: (endRef computeAbsoluteBalanceForLength: 200) closeTo: 25.0.
 
 	balanceRef := OPRSAnchorConstraintBalanceReference balance: 0.5.
 	self assert: balanceRef balance equals: 0.5.
 	self assert: (balanceRef computeAbsoluteBalanceForLength: 100) equals: 50.0.
 	balanceAssoc := balanceRef anchorSegmentFrom: segments andPointFrom: 50.
 	self assert: balanceAssoc value equals: 50 @ 0.
-	self
-		should: [ balanceRef anchorSegmentFrom: segments andPointFrom: 500 ]
-		raise: Error.
+	self should: [ balanceRef anchorSegmentFrom: segments andPointFrom: 500 ] raise: Error.
 	balanceRef saveShapePositionIn: constraint.
-	self
-		assert: (balanceRef balance between: 0 and: 1)
-		description: 'Saved balance should lie between 0 and 1'
+	self assert: balanceRef balance closeTo: 0.125
 ]
 
 { #category : 'tests' }
 OPRSAnchorConstraintTest >> testStartAndEndDistanceReferencesAndGuideLineModes [
+
 	| updater |
 	constraint
 		positionFromStart: 40;
@@ -167,7 +158,7 @@ OPRSAnchorConstraintTest >> testStartAndEndDistanceReferencesAndGuideLineModes [
 		noGuideLine;
 		stick: anchoredShape on: line.
 	self assert: constraint guideLine color equals: Color transparent.
-	self assert: constraint balance equals: nil.
+	self assert: constraint balance identicalTo: nil.
 	constraint moveShape.
 	self assert: anchoredShape position x closeTo: 40.
 	anchoredShape translateTo: 60 @ 25.

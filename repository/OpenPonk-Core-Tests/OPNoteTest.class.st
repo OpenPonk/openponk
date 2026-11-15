@@ -13,7 +13,7 @@ Class {
 { #category : 'instance creation' }
 OPNoteTest >> newModelInstance [
 
-	^ nil
+	^ shape
 ]
 
 { #category : 'hooks' }
@@ -49,28 +49,23 @@ OPNoteTest >> testBoundaryAndControllerRenderingAndStyles [
 
 { #category : 'tests' }
 OPNoteTest >> testDiagramOnlyShapeBehaviorAndJsonMapping [
+
 	| shape1 shape2 json decoded |
 	shape1 := OPDiagramOnlyShape new.
 	shape2 := OPDiagramOnlyShape new.
 	self assert: shape1 isDiagramOnly description: 'OPDiagramOnlyShape should answer true to isDiagramOnly'.
-	self assert: shape1 uuid isNotNil description: 'OPDiagramOnlyShape should initialize a UUID'.
+	self assert: shape1 uuid class identicalTo: UUID.
 	self assert: shape1 modelElements equals: { shape1 }.
 	shape1 modelElements: { shape1 }.
 	self should: [ shape1 modelElements: { shape2 } ] raise: ShouldNotImplement.
 	self assert: shape1 equals: shape1.
 	self assert: shape1 hash equals: shape1 uuid hash.
-	self deny: (shape1 = shape2) description: 'Two distinct diagram-only shapes should not be equal'.
-	self assert: ((shape1 < shape2) or: [ shape2 < shape1 ]) description: 'Distinct UUIDs should have strict ordering'.
+	self deny: shape1 = shape2 description: 'Two distinct diagram-only shapes should not be equal'.
+	self assert: (shape1 < shape2 or: [ shape2 < shape1 ]) description: 'Distinct UUIDs should have strict ordering'.
 	self assertCollection: OPDiagramOnlyShape stonAllInstVarNames includesAll: #( #uuid ).
 	json := NeoJSONWriter toString: shape1.
 	decoded := NeoJSONReader fromString: json as: OPDiagramOnlyShape.
 	self assert: decoded uuid equals: shape1 uuid
-]
-
-{ #category : 'running' }
-OPNoteTest >> testEmpty [
-
-	self skip
 ]
 
 { #category : 'tests' }

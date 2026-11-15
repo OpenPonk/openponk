@@ -11,13 +11,18 @@ Class {
 
 { #category : 'tests' }
 OPRSMarkerBuilderTest >> testEmptyMarkersAndBorderColoringComposite [
+
 	| emptyArrow composite box label |
 	emptyArrow := OPRSEmptyMarkerBuilder arrow.
 	self assert: emptyArrow class equals: OPRSEmptyMarker.
 	self assert: emptyArrow asEmptyMarker identicalTo: emptyArrow.
 	self assert: emptyArrow shape class equals: OPRSEmptyShapeProxy.
-	box := RSBox new size: 10; yourself.
-	label := RSLabel new text: 'X'; yourself.
+	box := RSBox new
+		       size: 10;
+		       yourself.
+	label := RSLabel new
+		         text: 'X';
+		         yourself.
 	composite := OPRSBorderColoringComposite new.
 	composite add: box.
 	composite useBorderColorAsPaintFor: label.
@@ -32,7 +37,7 @@ OPRSMarkerBuilderTest >> testEmptyMarkersAndBorderColoringComposite [
 	composite borderColor: Color transparent.
 	self assert: label color equals: Color transparent.
 	composite noPaint.
-	self assert: box paint equals: nil.
+	self assert: box paint identicalTo: nil.
 	composite removeShape: label.
 	self assertEmpty: composite shapesToUseBorderColor
 ]

@@ -24,9 +24,12 @@ OPRSAdornmentTest >> setUp [
 
 { #category : 'tests' }
 OPRSAdornmentTest >> testAdornmentBuilderShowsUpdatesAndHidesAdornments [
-	| builder clicked iconShape adornment |
+
+	| builder clicked iconShape adornment initialAdornmentPosition |
 	clicked := false.
-	iconShape := RSBox new size: 8; yourself.
+	iconShape := RSBox new
+		             size: 8;
+		             yourself.
 	builder := OPRSAdornmentBuilder new.
 	builder
 		directionLeft;
@@ -37,27 +40,16 @@ OPRSAdornmentTest >> testAdornmentBuilderShowsUpdatesAndHidesAdornments [
 		addIconForm: (Form extent: 8 @ 8 depth: 32) action: [ clicked := true ].
 	builder showOn: targetShape.
 	adornment := (builder instVarNamed: #adornments) first.
-	self
-		assert: adornment shape isInACanvas
-		description: 'Adornment shape should be added to canvas when shown'.
-	self
-		assert: adornment icon isInACanvas
-		description: 'Adornment icon should be added to canvas when shown'.
+	self assert: adornment shape isInACanvas description: 'Adornment shape should be added to canvas when shown'.
+	self assert: adornment icon isInACanvas description: 'Adornment icon should be added to canvas when shown'.
 	adornment shape announce: RSMouseLeftClick new.
-	self
-		assert: clicked
-		description: 'Clicking adornment shape should trigger its configured action block'.
+	self assert: clicked description: 'Clicking adornment shape should trigger its configured action block'.
+	initialAdornmentPosition := adornment shape position.
 	targetShape translateTo: 150 @ 120.
-	self
-		assert: adornment shape position x > 150
-		description: 'Adornment shape should follow translated target shape'.
+	self assert: adornment shape position equals: initialAdornmentPosition + (50 @ 20).
 	builder hide.
-	self
-		deny: adornment shape isInACanvas
-		description: 'Adornment shape should be removed from canvas when hidden'.
-	self
-		deny: adornment icon isInACanvas
-		description: 'Adornment icon should be removed from canvas when hidden'
+	self deny: adornment shape isInACanvas description: 'Adornment shape should be removed from canvas when hidden'.
+	self deny: adornment icon isInACanvas description: 'Adornment icon should be removed from canvas when hidden'
 ]
 
 { #category : 'tests' }

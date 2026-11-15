@@ -50,6 +50,7 @@ OPDiagramInteractionIntegrationTest >> setUp [
 
 { #category : 'tests' }
 OPDiagramInteractionIntegrationTest >> testCreateNodeCommandClearsControllerReferenceAfterExecution [
+
 	| testDiagramController project containerModel diagram entityController command initialPosition createdModel restoredController projectController |
 	project := OPProject new.
 	containerModel := OPTestContainerModel new.
@@ -64,28 +65,27 @@ OPDiagramInteractionIntegrationTest >> testCreateNodeCommandClearsControllerRefe
 
 	testDiagramController := OPTestDiagramController new.
 	projectController addDiagramController: testDiagramController.
-	testDiagramController canvasPresenter: (OPHeadlessCanvasPresenter new canvas: canvas; yourself).
+	testDiagramController canvasPresenter: (OPHeadlessCanvasPresenter new
+			 canvas: canvas;
+			 yourself).
 	testDiagramController diagramElement: diagram.
 	testDiagramController model: containerModel.
 
 	initialPosition := 180 @ 140.
 	entityController := OPTestEntityController new.
 	command := OPCreateNodeCommand
-		controller: entityController
-		parentModel: containerModel
-		diagramController: testDiagramController
-		position: initialPosition.
+		           controller: entityController
+		           parentModel: containerModel
+		           diagramController: testDiagramController
+		           position: initialPosition.
 
-	self assert: command controller isNotNil description: 'Controller must be provided prior to execution'.
-	self assert: command diagramController isNotNil description: 'DiagramController must be provided prior to execution'.
+	self assert: command controller identicalTo: entityController.
+	self assert: command diagramController identicalTo: testDiagramController.
 
-	undoManager inTransaction: [
-		undoManager execute: command ].
+	undoManager inTransaction: [ undoManager execute: command ].
 
-	self assert: command controller isNil
-		description: 'Command must nullify transient controller reference immediately after initial execution'.
-	self assert: command diagramController isNil
-		description: 'Command must nullify transient diagram controller reference immediately after initial execution'.
+	self assert: command controller identicalTo: nil.
+	self assert: command diagramController identicalTo: nil.
 
 	createdModel := command model.
 	undoManager undo.
@@ -259,18 +259,17 @@ OPDiagramInteractionIntegrationTest >> testEdgeWaypointMoveRecordsUndoCommand [
 
 { #category : 'tests' }
 OPDiagramInteractionIntegrationTest >> testEdgeWaypointPromoteRecordsUndoCommand [
+
 	| cpInteraction creatorHandle |
 	canvas propertyAt: OPRSSelectableCanvas ifPresent: [ :selCanvas |
-		selCanvas selectShapes: (RSGroup with: edge roassalShape) byEvent: (RSMouseClick new
-			canvas: canvas;
-			shape: canvas;
-			position: 0 @ 0;
-			yourself) ].
+			selCanvas selectShapes: (RSGroup with: edge roassalShape) byEvent: (RSMouseClick new
+					 canvas: canvas;
+					 shape: canvas;
+					 position: 0 @ 0;
+					 yourself) ].
 
 	cpInteraction := edge roassalShape propertyAt: OPRSDraggableControlPoints.
-	self
-		assert: cpInteraction isNotNil
-		description: 'Edge roassalShape must have OPRSDraggableControlPoints interaction attached'.
+	self assert: cpInteraction class identicalTo: OPRSDraggableControlPoints.
 	self assert: edge roassalShape controlPoints size equals: 2.
 
 	creatorHandle := cpInteraction midpointHandles first.
@@ -441,6 +440,7 @@ OPDiagramInteractionIntegrationTest >> testMidpointClickFollowedBySubsequentHand
 
 { #category : 'tests' }
 OPDiagramInteractionIntegrationTest >> testMidpointContinuousDragTransfersFocusAndRecordsSingleAtomicCommand [
+
 	| controlPointsInteraction creatorHandle morphicDragEvent newHandle eventProcessor |
 	controlPointsInteraction := edge roassalShape propertyAt: OPRSDraggableControlPoints.
 	controlPointsInteraction showHandles.
@@ -450,40 +450,39 @@ OPDiagramInteractionIntegrationTest >> testMidpointContinuousDragTransfersFocusA
 	canvas createMorph.
 	eventProcessor := canvas morph instVarNamed: #eventProcessor.
 	morphicDragEvent := MouseButtonEvent new
-		setType: #mouseDown
-		position: canvas morph bounds origin + (canvas camera fromSpaceToPixel: creatorHandle shape position)
-		which: 4
-		buttons: 4
-		hand: HandMorph new
-		stamp: 0.
+		                    setType: #mouseDown
+		                    position: canvas morph bounds origin + (canvas camera fromSpaceToPixel: creatorHandle shape position)
+		                    which: 4
+		                    buttons: 4
+		                    hand: HandMorph new
+		                    stamp: 0.
 
 	eventProcessor instVarNamed: #eventBeginingDragging put: morphicDragEvent.
 	eventProcessor instVarNamed: #shapeBeingPointed put: creatorHandle clickBox.
 
 	creatorHandle clickBox announce: (RSMouseDragStart new
-		shape: creatorHandle clickBox;
-		canvas: canvas;
-		position: creatorHandle shape position;
-		yourself).
+			 shape: creatorHandle clickBox;
+			 canvas: canvas;
+			 position: creatorHandle shape position;
+			 yourself).
 
 	newHandle := controlPointsInteraction handles first.
 	self assert: eventProcessor isDragging description: 'Drag must remain active in event processor after midpoint promotion'.
-	self assert: (eventProcessor instVarNamed: #shapeBeingPointed) == newHandle clickBox
-		description: 'Shape being dragged must seamlessly transfer to newly created handle clickBox'.
+	self assert: (eventProcessor instVarNamed: #shapeBeingPointed) identicalTo: newHandle clickBox.
 
 	newHandle clickBox translateBy: 0 @ 30.
 	newHandle shape translateBy: 0 @ 30.
 	newHandle changedPositionBy: (RSPositionChangedEvent new
-		shape: newHandle shape;
-		oldPosition: 200 @ 100;
-		newPosition: 200 @ 130;
-		yourself).
+			 shape: newHandle shape;
+			 oldPosition: 200 @ 100;
+			 newPosition: 200 @ 130;
+			 yourself).
 
 	newHandle onDragEnd: (RSMouseDragEnd new
-		shape: newHandle clickBox;
-		canvas: canvas;
-		position: 200 @ 130;
-		yourself).
+			 shape: newHandle clickBox;
+			 canvas: canvas;
+			 position: 200 @ 130;
+			 yourself).
 
 	self assert: undoManager canUndo description: 'Finishing continuous drag must record an undo command'.
 	self assert: edge roassalShape controlPoints size equals: 3.
@@ -647,54 +646,57 @@ OPDiagramInteractionIntegrationTest >> testNoEventRecursionDuringInteractiveResi
 	self assert: undoManager canUndo description: 'Drag completed without recursion or deadlocks'
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 OPDiagramInteractionIntegrationTest >> testNodeResizeRecordsUndoCommand [
+
 	| resizableInteraction handle dragStartEvent dragEndEvent initialPos initialExtent newExtent newPos |
 	initialPos := node1 position copy.
 	initialExtent := node1 extent copy.
-	
+
 	canvas propertyAt: OPRSSelectableCanvas ifPresent: [ :selCanvas |
-		selCanvas
-			selectShapes: (RSGroup with: node1 roassalShape)
-			byEvent: (RSMouseClick new canvas: canvas; shape: canvas; position: 0 @ 0; yourself) ].
-			
+			selCanvas selectShapes: (RSGroup with: node1 roassalShape) byEvent: (RSMouseClick new
+					 canvas: canvas;
+					 shape: canvas;
+					 position: 0 @ 0;
+					 yourself) ].
+
 	resizableInteraction := node1 roassalShape propertyAt: OPRSResizable.
-	self assert: (resizableInteraction instVarNamed: #handles) isNotNil description: 'Resize handles must be rendered upon selection'.
-	
-	handle := (resizableInteraction instVarNamed: #handles)
-		detect: [ :each | (each model isKindOf: Association) and: [ each model key = #bottomRight ] ].
-		
+	self assert: (resizableInteraction instVarNamed: #handles) size equals: 9.
+
+	handle := (resizableInteraction instVarNamed: #handles) detect: [ :each |
+		          (each model isKindOf: Association) and: [ each model key = #bottomRight ] ].
+
 	dragStartEvent := RSMouseDragStart new
-		shape: handle;
-		canvas: canvas;
-		position: handle position;
-		yourself.
+		                  shape: handle;
+		                  canvas: canvas;
+		                  position: handle position;
+		                  yourself.
 	handle announce: dragStartEvent.
-	
+
 	newExtent := initialExtent + (40 @ 30).
 	newPos := initialPos + (20 @ 15).
 	node1 roassalShape extent: newExtent.
 	node1 roassalShape translateTo: newPos.
-	
+
 	dragEndEvent := RSMouseDragEnd new
-		shape: handle;
-		canvas: canvas;
-		position: handle position + (40 @ 30);
-		yourself.
+		                shape: handle;
+		                canvas: canvas;
+		                position: handle position + (40 @ 30);
+		                yourself.
 	handle announce: dragEndEvent.
-	
+
 	self assert: undoManager canUndo description: 'Resize must record an undo command'.
 	self assert: node1 bounds extent equals: newExtent.
 	self assert: node1 bounds position equals: newPos.
 	self assert: node1 roassalShape extent equals: newExtent.
 	self assert: node1 roassalShape position equals: newPos.
-	
+
 	undoManager undo.
 	self assert: node1 bounds extent equals: initialExtent.
 	self assert: node1 bounds position equals: initialPos.
 	self assert: node1 roassalShape extent equals: initialExtent.
 	self assert: node1 roassalShape position equals: initialPos.
-	
+
 	undoManager redo.
 	self assert: node1 bounds extent equals: newExtent.
 	self assert: node1 bounds position equals: newPos.

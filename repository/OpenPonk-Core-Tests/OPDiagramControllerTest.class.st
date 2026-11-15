@@ -329,7 +329,8 @@ OPDiagramControllerTest >> testDragResizeAndWaypointsWithoutUndoManager [
 
 { #category : 'tests' }
 OPDiagramControllerTest >> testElementControllerAndDiagramElementInteractionsAndQueries [
-	| project container entityA entityB testCanvas diagram projectController diagramController controllerA controllerB elementA nonContainerEdge acceptFeedback denyFeedback stonString restoredElement |
+
+	| project container entityA entityB testCanvas diagram projectController diagramController controllerA controllerB elementA nonContainerEdge acceptFeedback denyFeedback stonString restoredElement creationCommand |
 	project := OPProject new.
 	container := OPTestContainerModel new.
 	entityA := container add: OPTestEntityModel new.
@@ -346,40 +347,30 @@ OPDiagramControllerTest >> testElementControllerAndDiagramElementInteractionsAnd
 	diagramController
 		model: container;
 		diagramElement: diagram;
-		canvasPresenter: (OPHeadlessCanvasPresenter new canvas: testCanvas; yourself).
+		canvasPresenter: (OPHeadlessCanvasPresenter new
+				 canvas: testCanvas;
+				 yourself).
 	controllerA := diagramController showInDiagramModel: entityA.
 	controllerB := diagramController showInDiagramModel: entityB.
 	elementA := controllerA diagramElement.
 	self assert: controllerA asViewModel identicalTo: controllerA viewModel.
 	self assert: controllerA formEventsAnnouncer identicalTo: controllerA viewModel announcer.
-	self
-		assert: controllerA isTargetUsedAsContainer
-		description: 'Default element controller should use target as container'.
+	self assert: controllerA isTargetUsedAsContainer description: 'Default element controller should use target as container'.
 	self assert: (controllerA parentModelInTarget: diagramController) identicalTo: container.
-	self
-		deny: controllerA isCommon
-		description: 'Standard element controller should not be marked as common'.
-	self
-		assert: controllerA elementsToShowInside isCollection
-		description: 'elementsToShowInside should answer a collection'.
-	self
-		assert: controllerA dependentControllers isCollection
-		description: 'dependentControllers should answer a collection'.
-	self
-		deny: (controllerA creationCommandIn: container andShowInDiagram: diagramController)
-		equals: nil.
+	self deny: controllerA isCommon description: 'Standard element controller should not be marked as common'.
+	self assert: controllerA elementsToShowInside isCollection description: 'elementsToShowInside should answer a collection'.
+	self assert: controllerA dependentControllers isCollection description: 'dependentControllers should answer a collection'.
+	creationCommand := controllerA creationCommandIn: container andShowInDiagram: diagramController.
+	self assert: creationCommand class identicalTo: OPCreateNodeCommand.
+	self assert: creationCommand parentModel identicalTo: container.
 	self assert: controllerA intendedOwningDiagramElement identicalTo: diagram.
 	self assert: controllerA diagramElementOwnerWithPossibleController identicalTo: diagram.
 	acceptFeedback := controllerA showAcceptFeedbackFor: controllerB.
 	acceptFeedback ifNotNil: [ acceptFeedback remove ].
 	denyFeedback := controllerA showDenyFeedbackFor: controllerB.
 	denyFeedback ifNotNil: [ denyFeedback remove ].
-	self
-		assert: elementA isDiagramElement
-		description: 'Diagram element should answer true to isDiagramElement'.
-	self
-		deny: elementA isTransient
-		description: 'Standard diagram element should not be transient'.
+	self assert: elementA isDiagramElement description: 'Diagram element should answer true to isDiagramElement'.
+	self deny: elementA isTransient description: 'Standard diagram element should not be transient'.
 	self
 		assert: elementA isRenderedWithOwnedElements
 		description: 'Rendered element without unrendered children should report isRenderedWithOwnedElements = true'.
@@ -394,15 +385,9 @@ OPDiagramControllerTest >> testElementControllerAndDiagramElementInteractionsAnd
 	elementA pushBack.
 	elementA roundPositionsAndExtents.
 	nonContainerEdge := OPTestEdge new.
-	self
-		deny: nonContainerEdge isContainer
-		description: 'Edge diagram element should not be a container'.
-	self
-		deny: nonContainerEdge movesWithOtherShape
-		description: 'Edge diagram element should not move with other shape by default'.
-	self
-		deny: nonContainerEdge supportsColorChange
-		description: 'OPTestEdge without color accessors should not support color change'.
+	self deny: nonContainerEdge isContainer description: 'Edge diagram element should not be a container'.
+	self deny: nonContainerEdge movesWithOtherShape description: 'Edge diagram element should not move with other shape by default'.
+	self deny: nonContainerEdge supportsColorChange description: 'OPTestEdge without color accessors should not support color change'.
 	self should: [ nonContainerEdge adaptBoundsToInnerBounds: (0 @ 0 corner: 10 @ 10) ] raise: Error.
 	stonString := STON toString: elementA.
 	restoredElement := STON fromString: stonString.
@@ -549,22 +534,28 @@ OPDiagramControllerTest >> testProjectControllerWiresUndoRedoCanvasUpdates [
 
 { #category : 'tests' }
 OPDiagramControllerTest >> testReentrancyGuardsAndUpdateAfterDiagramFocusedAndIncompatibleItems [
-	| entityA entityB controllerA orphanElement undoManager guardFired restrictedController |
+
+	| entityA entityB controllerA elementA orphanElement undoManager guardFired restrictedController |
 	entityA := OPTestEntityModel new.
 	entityB := OPTestEntityModel new.
 	model add: entityA.
 	model add: entityB.
 	controllerA := controller showInDiagramModel: entityA.
+	elementA := controllerA diagramElement.
 	controller showInDiagramModel: entityB.
 
-	orphanElement := controllerA diagramElement class forModelElement: OPTestEntityModel new.
+	orphanElement := elementA class forModelElement: OPTestEntityModel new.
 	orphanElement owningElement: controller diagramElement.
 	controller diagramElement ownedElements add: orphanElement.
 	model entities remove: entityB.
 	controller updateAfterDiagramFocused.
-	self deny: (controller hasControllerForModel: entityB) description: 'Controller for removed model should be cleaned up on diagram focus'.
-	self assert: (controller hasControllerForModel: entityA) description: 'Controller for remaining model should be preserved on diagram focus'.
-	self assert: orphanElement owningElement isNil description: 'Orphan diagram element should be detached on diagram focus'.
+	self
+		deny: (controller hasControllerForModel: entityB)
+		description: 'Controller for removed model should be cleaned up on diagram focus'.
+	self
+		assert: (controller hasControllerForModel: entityA)
+		description: 'Controller for remaining model should be preserved on diagram focus'.
+	self assert: orphanElement owningElement identicalTo: OPNoShape instance.
 
 	undoManager := controller undoManager.
 	guardFired := false.
@@ -572,21 +563,19 @@ OPDiagramControllerTest >> testReentrancyGuardsAndUpdateAfterDiagramFocusedAndIn
 	controller project announcer
 		when: OPProjectRenamed
 		do: [ :announcement |
-			undoManager isExecutingUndoRedo ifTrue: [
-				guardFired := true.
-				controller elementsDragged: OPRSElementsDraggedEvent new.
-				controller shapeResized: OPRSShapeResizedEvent new.
-				controller edgeWaypointsChanged: OPRSEdgeWaypointsChangedEvent new ] ]
+				undoManager isExecutingUndoRedo ifTrue: [
+						guardFired := true.
+						controller elementsDragged: OPRSElementsDraggedEvent new.
+						controller shapeResized: OPRSShapeResizedEvent new.
+						controller edgeWaypointsChanged: OPRSEdgeWaypointsChangedEvent new ] ]
 		for: self.
 	[ undoManager undo ] ensure: [ controller project announcer unsubscribe: self ].
 	self assert: guardFired description: 'Reentrancy guards should be exercised during undo execution'.
-	self assert: controllerA diagramElement isNotNil description: 'Reentrancy guards should ignore events during undo'.
+	self assert: controllerA diagramElement identicalTo: elementA.
 
 	restrictedController := OPTestDiagramController new.
 	(restrictedController stub canBeTargetFor: Any) willReturn: false.
-	self
-		assertCollection: restrictedController incompatiblePaletteItemNames
-		includesAll: { OPBoundaryController paletteItemName }
+	self assertCollection: restrictedController incompatiblePaletteItemNames includesAll: { OPBoundaryController paletteItemName }
 ]
 
 { #category : 'tests' }
@@ -843,23 +832,25 @@ OPDiagramControllerTest >> testUndoRedoUpdatesCanvasViaWeakSubscription [
 
 { #category : 'tests' }
 OPDiagramControllerTest >> testWeakSubscriptionAllowsGarbageCollection [
-	| manager weakHolder |
+
+	| manager projectController tempController subscriptions subscription |
 	manager := OPUndoManager new.
-	[
-		| tempController projectController |
-		projectController := OPProjectController new.
-		projectController instVarNamed: #undoManager put: manager.
-		tempController := OPDiagramController new.
-		projectController addDiagramController: tempController.
-		weakHolder := WeakArray with: tempController.
-		self
-			assert: (manager announcer hasSubscriber: tempController)
-			description: 'Diagram controller should be subscribed to undoManager while referenced'
-	] value.
-	3 timesRepeat: [ Smalltalk garbageCollect ].
+	projectController := OPProjectController new.
+	projectController instVarNamed: #undoManager put: manager.
+	tempController := OPDiagramController new.
+	projectController addDiagramController: tempController.
 	self
-		assert: weakHolder first isNil
-		description: 'Diagram controller must be collected by GC when not strongly referenced elsewhere'
+		assert: (manager announcer hasSubscriber: tempController)
+		description: 'Diagram controller should be subscribed to undoManager while referenced'.
+	subscriptions := manager announcer subscriptions subscriptions.
+	self assert: subscriptions size equals: 1.
+	subscription := subscriptions anyOne.
+	self assert: subscription class identicalTo: WeakAnnouncementSubscription.
+	self assert: subscription announcementClass identicalTo: OPUndoRedoChanged.
+	self assert: subscription subscriber identicalTo: tempController.
+	self assert: subscription action class identicalTo: WeakMessageSend.
+	self assert: subscription action receiver identicalTo: tempController.
+	self assert: subscription action selector equals: #updateCanvas
 ]
 
 { #category : 'tests' }

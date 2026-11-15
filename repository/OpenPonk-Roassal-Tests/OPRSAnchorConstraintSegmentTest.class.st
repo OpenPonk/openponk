@@ -37,9 +37,10 @@ OPRSAnchorConstraintSegmentTest >> testExtremaAndVectorAndLength [
 
 { #category : 'tests' }
 OPRSAnchorConstraintSegmentTest >> testHorizontalCotanAndPointAtLength [
+
 	| horizontal zeroSegment |
 	horizontal := OPRSAnchorConstraintSegment from: 0 @ 10 to: 100 @ 10.
-	self assert: horizontal cotan equals: nil.
+	self assert: horizontal cotan identicalTo: nil.
 	self assert: (horizontal pointAtLength: 25) equals: 25 @ 10.
 	self assert: (horizontal pointAtLength: -10) equals: 0 @ 10.
 	self assert: (horizontal pointAtLength: 250) equals: 100 @ 10.

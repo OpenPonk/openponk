@@ -49,100 +49,107 @@ OPVersionTest >> testComparison [
 
 { #category : 'tests' }
 OPVersionTest >> testComparisonsEqualityPrintingAndRepositoryInference [
+
 	| relA relB relSameTagLater nonRelA nonRelB emptyVer |
 	relA := OPVersion new
-		repositoryName: 'fsm-editor';
-		githubWorkflowRunId: 10;
-		releaseName: 'v1.2.0';
-		buildDate: (DateAndTime fromString: '2026-01-01T10:00:00Z').
+		        repositoryName: 'fsm-editor';
+		        githubWorkflowRunId: 10;
+		        releaseName: 'v1.2.0';
+		        buildDate: (DateAndTime fromString: '2026-01-01T10:00:00Z').
 	relSameTagLater := OPVersion new
-		repositoryName: 'fsm-editor';
-		githubWorkflowRunId: 11;
-		releaseName: 'v1.2.0';
-		buildDate: (DateAndTime fromString: '2026-01-02T10:00:00Z').
+		                   repositoryName: 'fsm-editor';
+		                   githubWorkflowRunId: 11;
+		                   releaseName: 'v1.2.0';
+		                   buildDate: (DateAndTime fromString: '2026-01-02T10:00:00Z').
 	relB := OPVersion new
-		repositoryName: 'fsm-editor';
-		githubWorkflowRunId: 12;
-		releaseName: 'v1.3.0';
-		buildDate: (DateAndTime fromString: '2026-01-03T10:00:00Z').
+		        repositoryName: 'fsm-editor';
+		        githubWorkflowRunId: 12;
+		        releaseName: 'v1.3.0';
+		        buildDate: (DateAndTime fromString: '2026-01-03T10:00:00Z').
 	nonRelA := OPVersion new
-		releaseName: 'alpha';
-		buildDate: (DateAndTime fromString: '2026-01-01T10:00:00Z').
+		           releaseName: 'alpha';
+		           buildDate: (DateAndTime fromString: '2026-01-01T10:00:00Z').
 	nonRelB := OPVersion new
-		releaseName: 'beta';
-		buildDate: (DateAndTime fromString: '2026-01-02T10:00:00Z').
+		           releaseName: 'beta';
+		           buildDate: (DateAndTime fromString: '2026-01-02T10:00:00Z').
 
-	self deny: (relA = 'not-a-version') description: 'Version should not equal an object of different species'.
+	self deny: relA = 'not-a-version' description: 'Version should not equal an object of different species'.
 	self assert: relA equals: relSameTagLater.
 	self assert: relA hash equals: relSameTagLater hash.
-	self deny: (nonRelA = nonRelB) description: 'Non-release versions with different names should not be equal'.
-	self assert: (relA < relSameTagLater) description: 'Same release tag should compare by buildDate'.
-	self deny: (relA < nonRelA) description: 'Comparing release with non-release via < should return false'.
-	self assert: (nonRelA < nonRelB) description: 'Two non-releases with different names should compare lexicographically'.
+	self deny: nonRelA = nonRelB description: 'Non-release versions with different names should not be equal'.
+	self assert: relA < relSameTagLater description: 'Same release tag should compare by buildDate'.
+	self deny: relA < nonRelA description: 'Comparing release with non-release via < should return false'.
+	self assert: nonRelA < nonRelB description: 'Two non-releases with different names should compare lexicographically'.
 	self assert: (relB min: relA max: relSameTagLater) equals: relSameTagLater.
 	self assert: (OPVersion isVersionTag: 'v1.2.0' greaterThanOrEqualTo: '1.2') description: 'v1.2.0 should be >= 1.2'.
 	self deny: (OPVersion isVersionTag: 'v1.2' greaterThanOrEqualTo: 'v1.2.1') description: 'v1.2 should not be >= v1.2.1'.
-	self assert: (relA printString includesSubstring: '(fsm-editor-v1.2.0)') description: 'printString should include fullVersionString in parentheses'.
+	self
+		assert: (relA printString includesSubstring: '(fsm-editor-v1.2.0)')
+		description: 'printString should include fullVersionString in parentheses'.
 
 	emptyVer := OPVersion new.
 	self assert: emptyVer downloadInfo identicalTo: emptyVer.
-	self assert: emptyVer buildDate isNil description: 'buildDate should remain nil when downloadInfo cannot run'.
+	self assert: emptyVer buildDate identicalTo: nil.
 	self assert: emptyVer releaseName equals: 'unknown'.
-	self assert: emptyVer repositoryName isNotEmpty description: 'repositoryName should infer a non-empty name from loaded plugins'
+	self denyEmpty: emptyVer repositoryName
 ]
 
 { #category : 'tests' }
 OPVersionTest >> testCurrentLatestAndRunsCacheOfflineQueries [
+
 	| release1 release2 nightly prereleaseFallback currentRelease currentNightly latestRelease latestNightly fallbackVersion |
 	[
 		OPVersion reset.
-		self assert: OPVersion latest isNil description: 'Latest should be nil when current is not initialized'.
-		self assert: OPVersion current isNotNil description: 'OPVersion current should lazily create an instance'.
+		self assert: OPVersion latest identicalTo: nil.
+		self assert: OPVersion current class identicalTo: OPVersion.
 		release1 := Dictionary newFrom: {
-			#id -> 10.
-			#tag_name -> 'v1.2.0'.
-			#name -> 'Release 1.2.0'.
-			#prerelease -> false.
-			#draft -> false.
-			#published_at -> '2026-08-01T10:00:00Z' }.
+				            (#id -> 10).
+				            (#tag_name -> 'v1.2.0').
+				            (#name -> 'Release 1.2.0').
+				            (#prerelease -> false).
+				            (#draft -> false).
+				            (#published_at -> '2026-08-01T10:00:00Z') }.
 		release2 := Dictionary newFrom: {
-			#id -> 20.
-			#tag_name -> 'v1.10.0'.
-			#name -> 'Release 1.10.0'.
-			#prerelease -> false.
-			#draft -> false.
-			#published_at -> '2026-09-01T10:00:00Z' }.
+				            (#id -> 20).
+				            (#tag_name -> 'v1.10.0').
+				            (#name -> 'Release 1.10.0').
+				            (#prerelease -> false).
+				            (#draft -> false).
+				            (#published_at -> '2026-09-01T10:00:00Z') }.
 		nightly := Dictionary newFrom: {
-			#id -> 30.
-			#tag_name -> 'nightly'.
-			#name -> 'nightly-2026-09-05T12:30:00Z'.
-			#prerelease -> true.
-			#draft -> false.
-			#published_at -> '2026-09-04T00:00:00Z' }.
+				           (#id -> 30).
+				           (#tag_name -> 'nightly').
+				           (#name -> 'nightly-2026-09-05T12:30:00Z').
+				           (#prerelease -> true).
+				           (#draft -> false).
+				           (#published_at -> '2026-09-04T00:00:00Z') }.
 		prereleaseFallback := Dictionary newFrom: {
-			#id -> 40.
-			#tag_name -> 'rc1'.
-			#name -> 'nightly-not-a-date'.
-			#prerelease -> true.
-			#draft -> false.
-			#published_at -> '2026-09-06T08:00:00Z' }.
-		OPVersion runsCache at: 'mock-repo-releases' put: { release1 . release2 . nightly }.
-		OPVersion runsCache at: 'empty-repo-releases' put: #().
+				                      (#id -> 40).
+				                      (#tag_name -> 'rc1').
+				                      (#name -> 'nightly-not-a-date').
+				                      (#prerelease -> true).
+				                      (#draft -> false).
+				                      (#published_at -> '2026-09-06T08:00:00Z') }.
+		OPVersion runsCache at: 'mock-repo-releases' put: {
+				release1.
+				release2.
+				nightly }.
+		OPVersion runsCache at: 'empty-repo-releases' put: #(  ).
 		OPVersion runsCache at: 'fallback-repo-releases' put: { prereleaseFallback }.
 
-		self assert: (OPVersion ofLastestReleaseOf: 'empty-repo') isNil description: 'Empty releases should return nil for latest release'.
-		self assert: (OPVersion ofLastestNightlyOf: 'empty-repo') isNil description: 'Empty releases should return nil for latest nightly'.
+		self assert: (OPVersion ofLastestReleaseOf: 'empty-repo') identicalTo: nil.
+		self assert: (OPVersion ofLastestNightlyOf: 'empty-repo') identicalTo: nil.
 
 		fallbackVersion := OPVersion ofLastestNightlyOf: 'fallback-repo'.
 		self assert: fallbackVersion releaseName equals: 'rc1'.
 		self assert: fallbackVersion buildDate equals: (DateAndTime fromString: '2026-09-06T08:00:00Z') asLocal.
 
 		currentRelease := OPVersion new
-			repositoryName: 'mock-repo';
-			releaseName: 'v1.0.0';
-			githubWorkflowRunId: 1;
-			buildDate: (DateAndTime fromString: '2026-01-01T00:00:00Z');
-			yourself.
+			                  repositoryName: 'mock-repo';
+			                  releaseName: 'v1.0.0';
+			                  githubWorkflowRunId: 1;
+			                  buildDate: (DateAndTime fromString: '2026-01-01T00:00:00Z');
+			                  yourself.
 		OPVersion current: currentRelease.
 		self assert: OPVersion current identicalTo: currentRelease.
 		latestRelease := OPVersion latest.
@@ -150,16 +157,15 @@ OPVersionTest >> testCurrentLatestAndRunsCacheOfflineQueries [
 		self assert: latestRelease repositoryName equals: 'mock-repo'.
 
 		currentNightly := OPVersion new
-			repositoryName: 'mock-repo';
-			releaseName: 'nightly';
-			githubWorkflowRunId: 2;
-			buildDate: (DateAndTime fromString: '2026-01-01T00:00:00Z');
-			yourself.
+			                  repositoryName: 'mock-repo';
+			                  releaseName: 'nightly';
+			                  githubWorkflowRunId: 2;
+			                  buildDate: (DateAndTime fromString: '2026-01-01T00:00:00Z');
+			                  yourself.
 		OPVersion current: currentNightly.
 		latestNightly := OPVersion latest.
 		self assert: latestNightly releaseName equals: 'nightly'.
-		self assert: latestNightly buildDate equals: (DateAndTime fromString: '2026-09-05T12:30:00Z')
-	] ensure: [ OPVersion reset ]
+		self assert: latestNightly buildDate equals: (DateAndTime fromString: '2026-09-05T12:30:00Z') ] ensure: [ OPVersion reset ]
 ]
 
 { #category : 'tests' }

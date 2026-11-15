@@ -56,7 +56,7 @@ OPProjectTest >> testCopyDiagramNamed [
 { #category : 'tests' }
 OPProjectTest >> testEqualityWithNonProjectReturnsFalse [
 
-	self deny: project equals: nil.
+	self deny: project = nil description: 'OPProject>>#= must return false when compared with nil'.
 	self deny: project equals: 'not a project'.
 	self deny: project equals: [ 1 ]
 ]

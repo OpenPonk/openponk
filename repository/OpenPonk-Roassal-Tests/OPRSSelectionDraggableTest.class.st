@@ -79,44 +79,42 @@ OPRSSelectionDraggableTest >> testDraggingSelectedContainerDragsInnerShapesOfAll
 
 { #category : 'tests' }
 OPRSSelectionDraggableTest >> testInnerShapesProvidersAndDragTranslation [
+
 	| customInteraction line |
 	self
 		deny: OPRSSelectionDraggable wantsUniqueInstance
 		description: 'OPRSSelectionDraggable should not use a unique shared instance'.
 	line := RSPolyline new
-		from: containerShape1;
-		to: innerShape1;
-		controlPoints: { 100 @ 100 . 110 @ 110 . 100 @ 100 };
-		yourself.
+		        from: containerShape1;
+		        to: innerShape1;
+		        controlPoints: {
+				        (100 @ 100).
+				        (110 @ 110).
+				        (100 @ 100) };
+		        yourself.
 	canvas add: line.
 	canvas propertyAt: #selectedShapes put: { containerShape1 }.
 	containerShape1 announce: (RSMouseDragStart new
-		shape: containerShape1;
-		canvas: canvas;
-		position: containerShape1 position;
-		yourself).
+			 shape: containerShape1;
+			 canvas: canvas;
+			 position: containerShape1 position;
+			 yourself).
 	containerShape1 announce: (RSMouseDragging new
-		shape: containerShape1;
-		canvas: canvas;
-		step: 15 @ 10;
-		yourself).
-	self
-		assert: containerShape1 position x > 100
-		description: 'Dragged container shape should move along X axis'.
-	self
-		assert: innerShape1 position x > 100
-		description: 'Inner shape inside dragged container should move with container'.
+			 shape: containerShape1;
+			 canvas: canvas;
+			 step: 15 @ 10;
+			 yourself).
+	self assert: containerShape1 position equals: 115 @ 110.
+	self assert: innerShape1 position equals: 115 @ 110.
 	containerShape1 announce: (RSMouseDragEnd new
-		shape: containerShape1;
-		canvas: canvas;
-		position: containerShape1 position;
-		yourself).
+			 shape: containerShape1;
+			 canvas: canvas;
+			 position: containerShape1 position;
+			 yourself).
 	customInteraction := OPRSSelectionDraggable new
-		dragAlsoShapesProvidedByBlock: [ :shape | { innerShape2 } ];
-		yourself.
-	self
-		assertCollection: (customInteraction shapesToDragInside: containerShape2)
-		hasSameElements: { innerShape2 }
+		                     dragAlsoShapesProvidedByBlock: [ :shape | { innerShape2 } ];
+		                     yourself.
+	self assertCollection: (customInteraction shapesToDragInside: containerShape2) hasSameElements: { innerShape2 }
 ]
 
 { #category : 'tests' }

@@ -8,15 +8,12 @@ Class {
 
 { #category : 'tests' }
 OPPluginTest >> testAbstractHooksAndDefaultsOnBasePlugin [
+
 	| basePlugin expectedIcon |
-	self
-		deny: OPPlugin isTestingOnly
-		description: 'Base OPPlugin class must not be marked as testing only'.
-	self
-		assert: OPTestPlugin isTestingOnly
-		description: 'OPTestPlugin class must be marked as testing only'.
-	self assert: OPPlugin repositoryName equals: nil.
-	self assert: OPPlugin requiredPluginClasses equals: #().
+	self deny: OPPlugin isTestingOnly description: 'Base OPPlugin class must not be marked as testing only'.
+	self assert: OPTestPlugin isTestingOnly description: 'OPTestPlugin class must be marked as testing only'.
+	self assert: OPPlugin repositoryName identicalTo: nil.
+	self assertEmpty: OPPlugin requiredPluginClasses.
 
 	basePlugin := OPPlugin new.
 	self should: [ basePlugin name ] raise: SubclassResponsibility.
@@ -24,19 +21,15 @@ OPPluginTest >> testAbstractHooksAndDefaultsOnBasePlugin [
 	self should: [ basePlugin diagramControllerClass ] raise: SubclassResponsibility.
 	self should: [ basePlugin layouterClass ] raise: SubclassResponsibility.
 	self should: [ basePlugin modelSerializerClass ] raise: SubclassResponsibility.
-	self should: [ basePlugin mergeModels: #() ] raise: NotYetImplemented.
+	self should: [ basePlugin mergeModels: #(  ) ] raise: NotYetImplemented.
 
 	self assert: basePlugin version equals: '0.0.0+unknown'.
 	expectedIcon := OPCoreIcons openponkIcon.
 	self assert: basePlugin icon class identicalTo: Form.
 	self assert: basePlugin icon bits equals: expectedIcon bits.
-	self
-		deny: basePlugin supportsHidingElements
-		description: 'Base OPPlugin should not support hiding elements by default'.
-	self
-		deny: basePlugin supportsMergingModels
-		description: 'Base OPPlugin should not support merging models by default'.
-	self assert: basePlugin exampleProjectTemplates equals: #().
+	self deny: basePlugin supportsHidingElements description: 'Base OPPlugin should not support hiding elements by default'.
+	self deny: basePlugin supportsMergingModels description: 'Base OPPlugin should not support merging models by default'.
+	self assertEmpty: basePlugin exampleProjectTemplates.
 	self assert: basePlugin defaultStyleSheet class identicalTo: OPStyleSheet
 ]
 

@@ -40,19 +40,16 @@ OPIconsTest >> testAllCoreAndIdeaIconsDecodeToValidForms [
 
 { #category : 'tests' }
 OPIconsTest >> testOPIconsLookupAndResetAndInspection [
+
 	| found missing presenter |
 	OPIcons resetIcons.
 	found := OPCoreIcons at: #openponkIcon ifPresent: [ :entry | entry ].
-	self
-		assert: found isNotNil
-		description: 'at:ifPresent: should evaluate block with cached entry'.
+	self assert: found class identicalTo: MessageSend.
+	self assert: found receiver identicalTo: OPCoreIcons.
+	self assert: found selector equals: #openponkIcon.
 	missing := OPCoreIcons at: #openponkIcon ifAbsent: [ nil ].
 	self assert: missing identicalTo: found.
-	self
-		assert: OPIcons resetIcons isNil
-		description: 'resetIcons should clear the Icons dictionary and return nil'.
+	self assert: OPIcons resetIcons identicalTo: nil.
 	presenter := OPCoreIcons inspectionIcons: SpPresenter new.
-	self
-		assert: presenter items size
-		equals: OPCoreIcons iconSelectors size
+	self assert: presenter items size equals: OPCoreIcons iconSelectors size
 ]

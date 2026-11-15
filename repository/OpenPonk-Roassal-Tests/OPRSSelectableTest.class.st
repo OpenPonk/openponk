@@ -32,6 +32,7 @@ OPRSSelectableTest >> testClickWithoutSelectableCanvasSignalsError [
 
 { #category : 'tests' }
 OPRSSelectableTest >> testKeyNavigationCanvasInteraction [
+
 	| interaction initialScale zoomedInScale |
 	canvas createMorph.
 	(canvas morph instVarNamed: #eventProcessor) lastMousePosition: 0 @ 0.
@@ -39,23 +40,32 @@ OPRSSelectableTest >> testKeyNavigationCanvasInteraction [
 	interaction configuration shouldAnimateZoom: false.
 	canvas @ interaction.
 	initialScale := canvas camera scale.
-	interaction processKeyDown: (RSKeyDown new canvas: canvas; keyName: #I; yourself).
+	interaction processKeyDown: (RSKeyDown new
+			 canvas: canvas;
+			 keyName: #I;
+			 yourself).
 	self assert: canvas camera scale closeTo: initialScale.
-	interaction processKeyDown: (RSKeyDown new canvas: canvas; keyName: #O; yourself).
+	interaction processKeyDown: (RSKeyDown new
+			 canvas: canvas;
+			 keyName: #O;
+			 yourself).
 	self assert: canvas camera scale closeTo: initialScale.
-	interaction processKeyDown: (RSKeyDown new canvas: canvas; keyName: #PLUS; yourself).
+	interaction processKeyDown: (RSKeyDown new
+			 canvas: canvas;
+			 keyName: #PLUS;
+			 yourself).
 	zoomedInScale := canvas camera scale.
-	self
-		assert: zoomedInScale > initialScale
-		description: 'PLUS key should zoom in and increase camera scale'.
-	interaction processKeyDown: (RSKeyDown new canvas: canvas; keyName: #MINUS; yourself).
-	self
-		assert: canvas camera scale < zoomedInScale
-		description: 'MINUS key should zoom out and decrease camera scale'
+	self assert: zoomedInScale closeTo: initialScale * 1.5.
+	interaction processKeyDown: (RSKeyDown new
+			 canvas: canvas;
+			 keyName: #MINUS;
+			 yourself).
+	self assert: canvas camera scale closeTo: zoomedInScale * 0.5
 ]
 
 { #category : 'tests' }
 OPRSSelectableTest >> testSelectableAndSelectableCanvasInteraction [
+
 	| selectableCanvas selectable1 selectable2 selectable3 box3 adornmentIcon baseShapeCount |
 	selectableCanvas := OPRSSelectableCanvas new.
 	canvas @ selectableCanvas.
@@ -65,11 +75,15 @@ OPRSSelectableTest >> testSelectableAndSelectableCanvasInteraction [
 	self assert: selectableCanvas dragStartEvent equals: RSMouseRightDragStart.
 
 	selectable1 := OPRSSelectable highlightBorderColorBlue.
-	adornmentIcon := RSBox new size: 10; yourself.
-	selectable2 := OPRSSelectable highlightAdornments: [ :builder |
-		builder addIconShape: adornmentIcon action: [ ] ].
+	adornmentIcon := RSBox new
+		                 size: 10;
+		                 yourself.
+	selectable2 := OPRSSelectable highlightAdornments: [ :builder | builder addIconShape: adornmentIcon action: [ ] ].
 	selectable3 := OPRSSelectable highlightColorBlue.
-	box3 := RSBox new size: 30; color: Color white; yourself.
+	box3 := RSBox new
+		        size: 30;
+		        color: Color white;
+		        yourself.
 	canvas add: box3.
 	self assert: selectable1 propertyKey equals: #selectedShapes.
 
@@ -86,9 +100,7 @@ OPRSSelectableTest >> testSelectableAndSelectableCanvasInteraction [
 
 	baseShapeCount := canvas shapes size.
 	selectable2 announceHighlight: box2 source: canvas.
-	self
-		assert: canvas shapes size > baseShapeCount
-		description: 'Highlighting with highlightAdornments: should add adornment shape to canvas'.
+	self assert: canvas shapes size equals: baseShapeCount + 2.
 	selectable2 announceUnHightlight: box2 source: canvas.
 	self assert: canvas shapes size equals: baseShapeCount.
 
@@ -101,14 +113,18 @@ OPRSSelectableTest >> testSelectableAndSelectableCanvasInteraction [
 	self assertEmpty: selectableCanvas selectedShapes.
 
 	selectableCanvas disableMultiselect.
-	selectableCanvas
-		selectShapes: (RSGroup with: box1 with: box2)
-		byEvent: (RSMouseLeftClick new canvas: canvas; shape: box1; yourself).
+	selectableCanvas selectShapes: (RSGroup with: box1 with: box2) byEvent: (RSMouseLeftClick new
+			 canvas: canvas;
+			 shape: box1;
+			 yourself).
 	self assertEmpty: selectableCanvas selectedShapes.
 
 	selectableCanvas enableMultiselect.
-	selectableCanvas
-		selectShapes: (RSGroup with: box1 with: box2)
-		byEvent: (RSMouseLeftClick new canvas: canvas; shape: box1; yourself).
-	self assertCollection: selectableCanvas selectedShapes asArray equals: { box1 . box2 }
+	selectableCanvas selectShapes: (RSGroup with: box1 with: box2) byEvent: (RSMouseLeftClick new
+			 canvas: canvas;
+			 shape: box1;
+			 yourself).
+	self assertCollection: selectableCanvas selectedShapes asArray equals: {
+			box1.
+			box2 }
 ]

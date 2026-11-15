@@ -238,11 +238,11 @@ OPRemoveModelElementCommandTest >> testRemoveRootModelWithoutOwnerSucceedsAndRes
 	removeCommand := OPRemoveModelElementCommand model: rootModel projectController: projectController.
 
 	projectController undoManager execute: removeCommand.
-	self assertCollection: project models hasSameElements: #(  ).
+	self assertEmpty: project models.
 
 	projectController undoManager undo.
 	self assertCollection: project models hasSameElements: { rootModel }.
 
 	projectController undoManager redo.
-	self assertCollection: project models hasSameElements: #(  )
+	self assertEmpty: project models
 ]

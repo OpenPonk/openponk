@@ -68,14 +68,15 @@ OPOpenPonkShapeStyleTest >> testAllStylePropertyAccessors [
 
 { #category : 'tests' }
 OPOpenPonkShapeStyleTest >> testLocalStyleNotInherited [
+
 	| a b |
 	a := OPDiagramElement new.
 	(b := OPDiagramElement new) owningElement: a.
-	self assert: a localStyle equals: nil.
-	self assert: b localStyle equals: nil.
+	self assert: a localStyle identicalTo: nil.
+	self assert: b localStyle identicalTo: nil.
 	a localStyle: style.
 	self assert: a localStyle equals: style.
-	self assert: b localStyle equals: nil
+	self assert: b localStyle identicalTo: nil
 ]
 
 { #category : 'tests' }

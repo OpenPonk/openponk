@@ -62,18 +62,15 @@ OPLegacyElementLayoutTest >> setUp [
 
 { #category : 'tests' }
 OPLegacyElementLayoutTest >> testComparisonEqualityHashAndNone [
-	| noneLayout sameElementLayout otherElementLayout |
-	self
-		assert: OPLegacyElementLayout isDeprecated
-		description: 'OPLegacyElementLayout should be marked as deprecated'.
-	noneLayout := OPLegacyElementLayout none.
-	self assert: noneLayout position equals: nil.
-	self assert: noneLayout extent equals: nil.
-	self assert: noneLayout path equals: nil.
 
-	sameElementLayout := OPLegacyElementLayout
-		withPosition: -10 @ 50
-		extent: 100 @ 200.
+	| noneLayout sameElementLayout otherElementLayout |
+	self assert: OPLegacyElementLayout isDeprecated description: 'OPLegacyElementLayout should be marked as deprecated'.
+	noneLayout := OPLegacyElementLayout none.
+	self assert: noneLayout position identicalTo: nil.
+	self assert: noneLayout extent identicalTo: nil.
+	self assert: noneLayout path identicalTo: nil.
+
+	sameElementLayout := OPLegacyElementLayout withPosition: -10 @ 50 extent: 100 @ 200.
 	otherElementLayout := OPLegacyElementLayout withPosition: 5 @ 5.
 
 	self assert: elementLayout equals: sameElementLayout.
@@ -85,21 +82,11 @@ OPLegacyElementLayoutTest >> testComparisonEqualityHashAndNone [
 	self
 		assert: elementLayout < relationshipLayout
 		description: 'Node layout with position should sort before relationship layout without position'.
-	self
-		assert: relationshipLayout < noneLayout
-		description: 'Relationship layout with path should sort before empty layout'.
-	self
-		assert: elementLayout <= relationshipLayout
-		description: 'elementLayout should be <= relationshipLayout'.
-	self
-		assert: noneLayout > relationshipLayout
-		description: 'noneLayout should be > relationshipLayout'.
-	self
-		assert: noneLayout >= elementLayout
-		description: 'noneLayout should be >= elementLayout'.
-	self
-		assert: (relationshipLayout min: noneLayout max: elementLayout)
-		equals: relationshipLayout
+	self assert: relationshipLayout < noneLayout description: 'Relationship layout with path should sort before empty layout'.
+	self assert: elementLayout <= relationshipLayout description: 'elementLayout should be <= relationshipLayout'.
+	self assert: noneLayout > relationshipLayout description: 'noneLayout should be > relationshipLayout'.
+	self assert: noneLayout >= elementLayout description: 'noneLayout should be >= elementLayout'.
+	self assert: (relationshipLayout min: noneLayout max: elementLayout) equals: relationshipLayout
 ]
 
 { #category : 'tests' }
@@ -142,11 +129,12 @@ OPLegacyElementLayoutTest >> testFromJSON [
 
 { #category : 'tests' }
 OPLegacyElementLayoutTest >> testJSONWithoutExtent [
+
 	| json newLayout |
 	elementLayout extent: nil.
 	json := OPJsonWriter toString: elementLayout.
 	newLayout := NeoJSONReader fromString: json as: OPLegacyElementLayout.
-	self assert: newLayout extent equals: nil.
+	self assert: newLayout extent identicalTo: nil.
 	self assert: newLayout equals: elementLayout
 ]
 

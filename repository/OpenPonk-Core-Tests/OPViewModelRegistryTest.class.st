@@ -16,21 +16,22 @@ Class {
 
 { #category : 'running' }
 OPViewModelRegistryTest >> setUp [
+
 	super setUp.
-	project := OPProject name: 'Registry Test Project'.
+	project := OPProject named: 'Registry Test Project'.
 	container := OPTestContainerModel new
-		name: 'MainPackage';
-		yourself.
+		             name: 'MainPackage';
+		             yourself.
 	entityA := OPTestEntityModel new
-		name: 'Customer';
-		yourself.
+		           name: 'Customer';
+		           yourself.
 	entityB := OPTestEntityModel new
-		name: 'Order';
-		yourself.
+		           name: 'Order';
+		           yourself.
 	relation := OPTestRelationModel new
-		source: entityA;
-		target: entityB;
-		yourself.
+		            source: entityA;
+		            target: entityB;
+		            yourself.
 	container
 		add: entityA;
 		add: entityB;

@@ -70,12 +70,13 @@ OPRemoveModelElementCommandTest >> tearDown [
 
 { #category : 'tests' }
 OPRemoveModelElementCommandTest >> testCaptureDiagramElementsSynchronizesBoundsFromRender [
+
 	| canvas entityModel diagram diagramElement removeCommand capturedDescriptor project projectController |
 	canvas := RSCanvas new.
 	containerModel := OPTestContainerModel new.
 	entityModel := OPTestEntityModel new.
 	containerModel add: entityModel.
-	project := OPProject name: 'TestHeadless'.
+	project := OPProject named: 'TestHeadless'.
 	project addModel: containerModel.
 	projectController := OPProjectController forProject: project.
 	diagram := OPOpenPonkDiagram forModelElement: containerModel.
@@ -88,22 +89,14 @@ OPRemoveModelElementCommandTest >> testCaptureDiagramElementsSynchronizesBoundsF
 	diagramElement renderIn: canvas.
 	diagramElement roassalShape translateTo: 150 @ 250.
 
-	removeCommand := OPRemoveModelElementCommand
-		model: entityModel
-		projectController: projectController.
+	removeCommand := OPRemoveModelElementCommand model: entityModel projectController: projectController.
 
 	capturedDescriptor := removeCommand diagramElementDescriptors detect: [ :eachDescriptor |
-		eachDescriptor diagramElement == diagramElement ].
+		                      eachDescriptor diagramElement == diagramElement ].
 
-	self
-		deny: capturedDescriptor geometryMemento
-		identicalTo: nil.
-	self
-		assert: capturedDescriptor geometryMemento class
-		equals: OPNodeBounds.
-	self
-		assert: capturedDescriptor geometryMemento position
-		equals: 150 @ 250
+	self deny: capturedDescriptor geometryMemento identicalTo: nil.
+	self assert: capturedDescriptor geometryMemento class equals: OPNodeBounds.
+	self assert: capturedDescriptor geometryMemento position equals: 150 @ 250
 ]
 
 { #category : 'tests' }
@@ -232,8 +225,9 @@ OPRemoveModelElementCommandTest >> testCascadeRemovalAndUndoRedoWithoutDiagramIn
 
 { #category : 'tests' }
 OPRemoveModelElementCommandTest >> testRemoveRootModelWithoutOwnerSucceedsAndRestoresOnUndo [
+
 	| rootModel project projectController removeCommand |
-	project := OPProject name: 'RootModelTest'.
+	project := OPProject named: 'RootModelTest'.
 	rootModel := OPTestContainerModel new.
 	rootModel name: 'RootContainer'.
 	project addModel: rootModel.
@@ -241,9 +235,7 @@ OPRemoveModelElementCommandTest >> testRemoveRootModelWithoutOwnerSucceedsAndRes
 
 	self assertCollection: project models hasSameElements: { rootModel }.
 
-	removeCommand := OPRemoveModelElementCommand
-		model: rootModel
-		projectController: projectController.
+	removeCommand := OPRemoveModelElementCommand model: rootModel projectController: projectController.
 
 	projectController undoManager execute: removeCommand.
 	self assertCollection: project models hasSameElements: #(  ).

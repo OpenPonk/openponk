@@ -208,11 +208,14 @@ OPProjectControllerTest >> testMergeModelsAndDiagramsValidationIsolatesFromLeake
 
 { #category : 'tests' }
 OPProjectControllerTest >> testOpenFileDialogHelpersFromFileDoAndMergeFromFile [
+
 	| sourceProject sourceController archiveFile mockOpenPresenter capturedBlock loadedFromDialog |
 	capturedBlock := nil.
 	loadedFromDialog := nil.
-	sourceProject := OPProject name: 'Source For Dialog'.
-	sourceProject addModel: (OPTestContainerModel new name: 'DialogPkg'; yourself).
+	sourceProject := OPProject named: 'Source For Dialog'.
+	sourceProject addModel: (OPTestContainerModel new
+			 name: 'DialogPkg';
+			 yourself).
 	sourceProject ensureModelsHaveDiagrams.
 	sourceController := OPProjectController forProject: sourceProject.
 	archiveFile := FileSystem memory root / 'dialog-open.opp'.
@@ -334,9 +337,12 @@ OPProjectControllerTest >> testRenameProjectTransactively [
 
 { #category : 'tests' }
 OPProjectControllerTest >> testSaveAndLoadFromFileAndMergeFromFile [
+
 	| archiveFile loadedProject targetProject targetController mergedModelsCount |
 	project name: 'Saved Project'.
-	project addModel: (OPTestContainerModel new name: 'Pkg1'; yourself).
+	project addModel: (OPTestContainerModel new
+			 name: 'Pkg1';
+			 yourself).
 	project ensureModelsHaveDiagrams.
 	archiveFile := FileSystem memory root / 'roundtrip.opp'.
 	controller saveProjectTo: archiveFile.
@@ -345,7 +351,7 @@ OPProjectControllerTest >> testSaveAndLoadFromFileAndMergeFromFile [
 	self assert: loadedProject storageFile equals: archiveFile.
 	self assert: loadedProject models size equals: 1.
 	self assert: loadedProject diagrams size equals: 1.
-	targetProject := OPProject name: 'Target Project'.
+	targetProject := OPProject named: 'Target Project'.
 	targetController := OPProjectController forProject: targetProject.
 	mergedModelsCount := 0.
 	targetProject announcer when: OPModelAdded do: [ :ann | mergedModelsCount := mergedModelsCount + 1 ] for: self.

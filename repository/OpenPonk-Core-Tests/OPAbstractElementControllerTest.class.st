@@ -141,10 +141,8 @@ OPAbstractElementControllerTest >> testAddController [
 
 	self prepareToShow.
 	diagramController addController: controller.
-	self
-		assert: (diagramController controllerForModel: self model)
-		equals: controller.
-	self assert: controller diagramController equals: diagramController
+	self assert: (diagramController controllerForModel: self model) identicalTo: controller.
+	self assert: controller diagramController identicalTo: diagramController
 ]
 
 { #category : 'tests' }
@@ -180,17 +178,11 @@ OPAbstractElementControllerTest >> testBeingCopiedWithDiagram [
 { #category : 'tests - ui interaction' }
 OPAbstractElementControllerTest >> testBeingKeptWhenEditorFocusChanges [
 
-	self
-		assertCollection: diagramController controllers
-		hasSameElements: {  }.
+	self assertEmpty: diagramController controllers.
 	self showInDiagram.
-	self
-		assertCollection: diagramController controllers
-		includesAll: { controller }.
+	self assertCollection: diagramController controllers includesAll: { controller }.
 	diagramController diagramFocused.
-	self
-		assertCollection: diagramController controllers
-		includesAll: { controller }
+	self assertCollection: diagramController controllers includesAll: { controller }
 ]
 
 { #category : 'tests' }
@@ -300,20 +292,12 @@ OPAbstractElementControllerTest >> testClassSideModelClass [
 { #category : 'tests - construction' }
 OPAbstractElementControllerTest >> testCreateAndShow [
 
-	controller
-		createModelIn: creationTargetController model
-		andShowInDiagram: diagramController.
-	self denyCollection: self allElements hasSameElements: {  }.
-	self
-		assertCollection: diagramController controllers asArray
-		includesAll: { controller }.
-	self
-		assertCollection: diagramController canvas shapes
-		includesAll: { controller roassalShape }.
-	self
-		assert: diagramController isRendered
-		description:
-		'Diagram controller not showing as rendered when element is'
+	controller createModelIn: creationTargetController model andShowInDiagram: diagramController.
+	self denyEmpty: self allElements.
+	self assertCollection: self allElements includesAll: { controller model }.
+	self assertCollection: diagramController controllers asArray includesAll: { controller }.
+	self assertCollection: diagramController canvas shapes includesAll: { controller roassalShape }.
+	self assert: diagramController isRendered description: 'Diagram controller not showing as rendered when element is'
 ]
 
 { #category : 'tests' }
@@ -337,14 +321,10 @@ OPAbstractElementControllerTest >> testCreateDiagramElement [
 OPAbstractElementControllerTest >> testCreateModel [
 
 	| createdModel |
-	createdModel := controller createModelIn:
-		                creationTargetController model.
-	self deny: controller model identicalTo: nil.
-	self assert: createdModel equals: controller model.
+	createdModel := controller createModelIn: creationTargetController model.
+	self assert: createdModel identicalTo: controller model.
 	self assert: controller model class equals: self modelClass.
-	self
-		assertCollection: self allElements
-		includesAll: { controller model }
+	self assertCollection: self allElements includesAll: { controller model }
 ]
 
 { #category : 'tests' }
@@ -385,25 +365,16 @@ OPAbstractElementControllerTest >> testCreateUsingAddAsTarget [
 
 	self showDependenciesInDiagram.
 	self denyCollection: self allElements includesAll: { model }.
-	self
-		denyCollection: diagramController controllers
-		includesAll: { controller }.
-	self
-		denyCollection: diagramController canvas shapes
-		includesAll: { controller roassalShape }.
+	self denyCollection: diagramController controllers includesAll: { controller }.
+	self denyCollection: diagramController canvas shapes includesAll: { controller roassalShape }.
 	creationTargetController addAsTargetFor: controller.
-	self deny: controller model equals: model.
+	self deny: controller model identicalTo: model.
+	self assert: controller model class equals: self modelClass.
 	model := controller model.
 	self assertCollection: self allElements includesAll: { model }.
-	self
-		assertCollection: diagramController controllers
-		includesAll: { controller }.
-	self
-		assertCollection: diagramController canvas shapes
-		includesAll: { controller roassalShape }.
-	self
-		assert: controller diagramElement class
-		equals: self diagramElementClass
+	self assertCollection: diagramController controllers includesAll: { controller }.
+	self assertCollection: diagramController canvas shapes includesAll: { controller roassalShape }.
+	self assert: controller diagramElement class equals: self diagramElementClass
 ]
 
 { #category : 'tests' }
@@ -482,10 +453,7 @@ OPAbstractElementControllerTest >> testModelClass [
 OPAbstractElementControllerTest >> testModelForFigure [
 
 	self showInDiagram.
-	self
-		assert:
-		(diagramController modelForRoassalShape: controller roassalShape)
-		equals: self model
+	self assert: (diagramController modelForRoassalShape: controller roassalShape) identicalTo: self model
 ]
 
 { #category : 'tests' }
@@ -534,39 +502,33 @@ OPAbstractElementControllerTest >> testNewControllerFor [
 { #category : 'tests' }
 OPAbstractElementControllerTest >> testRemoveController [
 
-	| totalShapesAmount |
-	self assert: diagramController canvas shapes size equals: 0.
+	| removedShape removedDiagramElement |
+	self assertEmpty: diagramController canvas shapes.
 	self showInDiagram.
-	totalShapesAmount := diagramController canvas shapes size.
-	self
-		assertCollection: diagramController canvas shapes
-		includesAll: { controller roassalShape }.
+	removedShape := controller roassalShape.
+	removedDiagramElement := controller diagramElement.
+	self assertCollection: diagramController canvas shapes includesAll: { removedShape }.
 	controller removeControllerAndDiagramElement.
-	self
-		should: [ diagramController controllerForModel: model ]
-		raise: NotFound.
-	self
-		assert: diagramController canvas shapes size < totalShapesAmount
-		description: 'Canvas should have fewer shapes after removing controller and diagram element'
+	self should: [ diagramController controllerForModel: model ] raise: NotFound.
+	self denyCollection: diagramController controllers includesAny: { controller }.
+	self denyCollection: diagramController canvas shapes includesAny: { removedShape }.
+	self denyCollection: diagramController diagramElement allOwnedElements includesAny: { removedDiagramElement }
 ]
 
 { #category : 'tests' }
 OPAbstractElementControllerTest >> testRemoveFigureAndModel [
 
-	| totalShapesAmount |
-	self assert: diagramController canvas shapes size equals: 0.
+	| removedShape removedDiagramElement |
+	self assertEmpty: diagramController canvas shapes.
 	self showInDiagram.
-	totalShapesAmount := diagramController canvas shapes size.
-	self
-		assertCollection: diagramController canvas shapes
-		includesAll: { controller roassalShape }.
-	diagramController removeModelOfRoassalShape: controller roassalShape.
-	self
-		should: [ diagramController controllerForModel: model ]
-		raise: NotFound.
-	self
-		assert: diagramController canvas shapes size < totalShapesAmount
-		description: 'Canvas should have fewer shapes after removing model of roassal shape'
+	removedShape := controller roassalShape.
+	removedDiagramElement := controller diagramElement.
+	self assertCollection: diagramController canvas shapes includesAll: { removedShape }.
+	diagramController removeModelOfRoassalShape: removedShape.
+	self should: [ diagramController controllerForModel: model ] raise: NotFound.
+	self denyCollection: diagramController controllers includesAny: { controller }.
+	self denyCollection: diagramController canvas shapes includesAny: { removedShape }.
+	self denyCollection: diagramController diagramElement allOwnedElements includesAny: { removedDiagramElement }
 ]
 
 { #category : 'tests - destruction' }
@@ -614,9 +576,7 @@ OPAbstractElementControllerTest >> testRemoveUndoRedo [
 OPAbstractElementControllerTest >> testRoassalShapeForModel [
 
 	self showInDiagram.
-	self
-		assert: (diagramController roassalShapeForModel: self model)
-		equals: controller roassalShape
+	self assert: (diagramController roassalShapeForModel: self model) identicalTo: controller roassalShape
 ]
 
 { #category : 'tests - construction' }
@@ -630,15 +590,10 @@ OPAbstractElementControllerTest >> testRoassalShapeWasRendered [
 OPAbstractElementControllerTest >> testShowInDiagram [
 
 	self showInDiagram.
-	self
-		assert:
-		(diagramController controllerForRoassalShape:
-			 controller roassalShape)
-		equals: controller.
-	self
-		assert: (diagramController canvas shapes anySatisfy: [ :each |
-			 each model isNotNil and: [ each model modelElement = self model ] ])
-		description: 'Canvas should contain a shape representing the shown model'
+	self assert: (diagramController controllerForRoassalShape: controller roassalShape) identicalTo: controller.
+	self assertCollection: diagramController canvas shapes includesAll: { controller roassalShape }.
+	self assert: controller roassalShape model identicalTo: controller diagramElement.
+	self assert: controller diagramElement modelElement identicalTo: self model
 ]
 
 { #category : 'tests' }

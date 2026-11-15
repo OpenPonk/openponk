@@ -94,8 +94,9 @@ OPProjectTest >> testMementoAndRemovalDescriptor [
 
 { #category : 'tests' }
 OPProjectTest >> testMergeWithAndCopyDiagramAndStorage [
+
 	| otherProject otherModel otherDiagram copiedDiagram tempFolder |
-	project := OPProject name: 'Primary Project'.
+	project := OPProject named: 'Primary Project'.
 	self assert: project name equals: 'Primary Project'.
 	self assert: project hash equals: project uuid hash.
 	self assert: project descriptionName label equals: 'Name'.
@@ -104,13 +105,17 @@ OPProjectTest >> testMergeWithAndCopyDiagramAndStorage [
 	copiedDiagram := project copyDiagram: project diagrams first.
 	self assert: project diagrams size equals: 2.
 	self deny: copiedDiagram identicalTo: project diagrams first.
-	otherProject := OPProject name: 'Secondary Project'.
-	otherModel := OPTestContainerModel new name: 'OtherContainer'; yourself.
+	otherProject := OPProject named: 'Secondary Project'.
+	otherModel := OPTestContainerModel new
+		              name: 'OtherContainer';
+		              yourself.
 	otherDiagram := OPOpenPonkDiagram forModelElement: otherModel.
 	otherProject addDiagram: otherDiagram.
 	project mergeWith: otherProject.
 	self assertEmpty: otherProject models.
-	self assertCollection: project models includesAll: { model . otherModel }.
+	self assertCollection: project models includesAll: {
+			model.
+			otherModel }.
 	self assertCollection: project diagrams includesAll: { otherDiagram }.
 	project diagrams: { copiedDiagram }.
 	self assert: project diagrams asArray equals: { copiedDiagram }.
@@ -125,8 +130,7 @@ OPProjectTest >> testMergeWithAndCopyDiagramAndStorage [
 		project removeFromImage.
 		self
 			deny: (OPProjectStorage default projects includes: project)
-			description: 'removeFromImage should remove project from OPProjectStorage default'
-	] ensure: [ project removeFromImage ]
+			description: 'removeFromImage should remove project from OPProjectStorage default' ] ensure: [ project removeFromImage ]
 ]
 
 { #category : 'tests' }

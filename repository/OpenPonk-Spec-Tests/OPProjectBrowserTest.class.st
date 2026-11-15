@@ -38,9 +38,9 @@ OPProjectBrowserTest >> testBrowserWindowBuildsCleanlyWithProjects [
 
 	| testStorage projectSaved projectUnsaved |
 	testStorage := OPProjectStorage new.
-	projectSaved := OPProject name: 'SavedPrj'.
+	projectSaved := OPProject named: 'SavedPrj'.
 	projectSaved storageFile: FileSystem memory root / 'saved.opp'.
-	projectUnsaved := OPProject name: 'UnsavedPrj'.
+	projectUnsaved := OPProject named: 'UnsavedPrj'.
 	testStorage add: projectSaved.
 	testStorage add: projectUnsaved.
 	browser recentList items: testStorage projects.
@@ -115,9 +115,10 @@ OPProjectBrowserTest >> testFileReaderServicesAndMenuRegistration [
 
 { #category : 'tests' }
 OPProjectBrowserTest >> testOpenProjectOpenFromFileAndRecentContextMenu [
+
 	| projectToOpen mockWorkbench returnedWb sourceProject sourceCtrl archiveFile mockOpenPresenter capturedBlock openedFromDialog openedFromFile nilMenu validMenu |
 	capturedBlock := nil.
-	projectToOpen := OPProject name: 'Browser Opened Project'.
+	projectToOpen := OPProject named: 'Browser Opened Project'.
 	[
 		mockWorkbench := Mock new.
 		projectToOpen stub open willReturn: mockWorkbench.
@@ -135,11 +136,13 @@ OPProjectBrowserTest >> testOpenProjectOpenFromFileAndRecentContextMenu [
 		validMenu menuGroups first menuItems first action value.
 		self
 			deny: (OPProjectStorage default projects includes: projectToOpen)
-			description: 'Remove context menu item should remove project from OPProjectStorage default'
-	] ensure: [ OPProjectStorage default ensureRemove: projectToOpen ].
+			description: 'Remove context menu item should remove project from OPProjectStorage default' ] ensure: [
+		OPProjectStorage default ensureRemove: projectToOpen ].
 
-	sourceProject := OPProject name: 'Archive Project'.
-	sourceProject addModel: (OPTestContainerModel new name: 'Pkg'; yourself).
+	sourceProject := OPProject named: 'Archive Project'.
+	sourceProject addModel: (OPTestContainerModel new
+			 name: 'Pkg';
+			 yourself).
 	sourceProject ensureModelsHaveDiagrams.
 	sourceCtrl := OPProjectController forProject: sourceProject.
 	archiveFile := FileSystem memory root / 'browser-open.opp'.
@@ -182,9 +185,10 @@ OPProjectBrowserTest >> testOpenRecentButtonActionOpensSelectedProject [
 
 { #category : 'tests' }
 OPProjectBrowserTest >> testOpenRecentButtonStateFollowsSelection [
+
 	| testStorage projectA |
 	testStorage := OPProjectStorage new.
-	projectA := OPProject name: 'ProjectA'.
+	projectA := OPProject named: 'ProjectA'.
 	testStorage add: projectA.
 	browser recentList items: testStorage projects.
 
@@ -196,9 +200,7 @@ OPProjectBrowserTest >> testOpenRecentButtonStateFollowsSelection [
 		assert: browser openRecentButton isEnabled
 		description: 'Open recent button should be enabled when a recent project is selected'.
 	browser recentList selectIndex: 0.
-	self
-		deny: browser openRecentButton isEnabled
-		description: 'Open recent button must be disabled again when selection is cleared'
+	self deny: browser openRecentButton isEnabled description: 'Open recent button must be disabled again when selection is cleared'
 ]
 
 { #category : 'tests' }
@@ -257,17 +259,17 @@ OPProjectBrowserTest >> testProjectNameStripsEmptyPrefixAndExampleTemplateCreati
 
 { #category : 'tests' }
 OPProjectBrowserTest >> testRecentListDisplaysProjectsWithAndWithoutStorageFile [
+
 	| savedProject unsavedProject testStorage itemStrings |
 	testStorage := OPProjectStorage new.
-	savedProject := OPProject name: 'SavedPrj'.
-	savedProject storageFile: (FileSystem memory root / 'saved.opp').
-	unsavedProject := OPProject name: 'UnsavedPrj'.
+	savedProject := OPProject named: 'SavedPrj'.
+	savedProject storageFile: FileSystem memory root / 'saved.opp'.
+	unsavedProject := OPProject named: 'UnsavedPrj'.
 	testStorage add: savedProject.
 	testStorage add: unsavedProject.
 
 	browser recentList items: testStorage projects.
-	itemStrings := browser recentList items collect: [ :each |
-		browser recentList displayValueFor: each ].
+	itemStrings := browser recentList items collect: [ :each | browser recentList displayValueFor: each ].
 
 	self assert: itemStrings size equals: 2.
 	self

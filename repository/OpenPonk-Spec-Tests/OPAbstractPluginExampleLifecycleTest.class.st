@@ -52,33 +52,51 @@ OPAbstractPluginExampleLifecycleTest >> tearDown [
 
 { #category : 'tests' }
 OPAbstractPluginExampleLifecycleTest >> testExampleTemplatesOpenInWorkbenchAndHaveCleanHistory [
+
 	| templates |
 	templates := self plugin exampleProjectTemplates.
+	self denyEmpty: templates.
+	templates do: [ :eachTemplate | self verifyTemplate: eachTemplate ]
+]
+
+{ #category : 'verifying' }
+OPAbstractPluginExampleLifecycleTest >> verifyDiagramControllerConsistency: aDiagramController [
+
+	self denyEmpty: aDiagramController controllers.
+	self assert: aDiagramController isRendered description: 'Diagram controller should be rendered after showing all elements'.
+	self assert: aDiagramController diagram isRendered description: 'Diagram element should be rendered after showing all elements'.
 	self
-		assert: templates isNotEmpty
-		description: ('Plugin ' , self plugin name , ' must provide at least one example template').
-	templates do: [ :eachTemplate |
-		self verifyTemplate: eachTemplate ]
+		assertCollection: aDiagramController diagram allOwnedElements
+		includesAll: (aDiagramController controllers collect: #diagramElement).
+	aDiagramController controllers do: [ :eachController |
+			self assert: eachController diagramController identicalTo: aDiagramController.
+			self assert: eachController isRendered description: 'Element controller should be rendered'.
+			self assert: eachController diagramElement isRendered description: 'Element diagramElement should be rendered'.
+			self assertCollection: aDiagramController canvas shapes includesAll: { eachController roassalShape }.
+			eachController isDiagramOnly ifFalse: [
+					self deny: eachController model identicalTo: nil.
+					self assert: (aDiagramController controllerForModel: eachController model) identicalTo: eachController ] ]
 ]
 
 { #category : 'verifying' }
 OPAbstractPluginExampleLifecycleTest >> verifyTemplate: aProjectTemplate [
-	| project controllersCount |
-	project := OPProject named: ('LifecycleTest_' , aProjectTemplate name).
+
+	| project diagramControllers |
+	project := OPProject named: 'LifecycleTest_' , aProjectTemplate name.
 	project addModel: aProjectTemplate createModel.
+	workbench := OPWorkbench openProject: project.
 	[
-		workbench := OPWorkbench openProject: project.
 		workbench showAllElementsInAllDiagrams.
-		controllersCount := (workbench projectController controllers flatCollect: [ :diagramController |
-			diagramController controllers ]) size.
-		self
-			assert: controllersCount > 0
-			description: ('Template ' , aProjectTemplate name , ' in plugin ' , self plugin name , ' rendered 0 controllers').
-		self
-			deny: workbench projectController undoManager canUndo
-			description: ('Template ' , aProjectTemplate name , ' in plugin ' , self plugin name , ' left dirty undo history')
-	] ensure: [
-		workbench ifNotNil: [ :activeWorkbench |
-			activeWorkbench close.
-			workbench := nil ] ]
+		diagramControllers := workbench projectController controllers.
+		self denyEmpty: diagramControllers.
+		diagramControllers do: [ :eachDiagramController | self verifyDiagramControllerConsistency: eachDiagramController ].
+		self deny: workbench projectController undoManager canUndo description: (String streamContents: [ :stream |
+					 stream nextPutAll: 'Template '.
+					 stream nextPutAll: aProjectTemplate name.
+					 stream nextPutAll: ' in plugin '.
+					 stream nextPutAll: self plugin name.
+					 stream nextPutAll: ' left dirty undo history' ]) ] ensure: [
+			workbench ifNotNil: [ :activeWorkbench |
+					activeWorkbench close.
+					workbench := nil ] ]
 ]

@@ -20,6 +20,22 @@ OPExamplePersistenceTest class >> isAbstract [
 	^ self = OPExamplePersistenceTest
 ]
 
+{ #category : 'accessing' }
+OPExamplePersistenceTest >> allOwnedElementSignaturesIn: aProject [
+
+	^ aProject diagrams flatCollect: [ :eachDiagram |
+			  eachDiagram allOwnedElements asArray collect: [ :eachDiagramElement |
+				  eachDiagramElement className -> (eachDiagramElement modelElement ifNotNil: [ :eachModel | eachModel uuid asString ]) ] ]
+]
+
+{ #category : 'accessing' }
+OPExamplePersistenceTest >> controllerSignaturesIn: aProjectController [
+
+	^ aProjectController controllers flatCollect: [ :eachDiagramController |
+			  eachDiagramController controllers collect: [ :eachController |
+				  eachController diagramElement className -> (eachController model ifNotNil: [ :eachModel | eachModel uuid asString ]) ] ]
+]
+
 { #category : 'hooks' }
 OPExamplePersistenceTest >> createExampleModel [
 
@@ -53,7 +69,7 @@ OPExamplePersistenceTest >> tearDown [
 { #category : 'tests' }
 OPExamplePersistenceTest >> testSaveAndLoad [
 
-	| sourceModel sourceProject sourceEditor sourceCanvas sourceProjectController sourceShapes targetProject targetEditor targetCanvas targetShapes |
+	| sourceModel sourceProject sourceEditor sourceCanvas sourceProjectController sourceShapes sourceModelUuids sourceControllerSignatures sourceElementSignatures targetProject targetEditor targetCanvas targetProjectController targetShapes targetModelUuids targetControllerSignatures targetElementSignatures |
 	sourceModel := self createExampleModel.
 	sourceProject := OPProject new
 		                 name: 'TestProject';
@@ -63,20 +79,43 @@ OPExamplePersistenceTest >> testSaveAndLoad [
 	sourceWorkbench showAllElementsInAllDiagrams.
 	sourceEditor := sourceWorkbench focusedEditor.
 	sourceCanvas := sourceEditor canvasPresenter canvas.
-	sourceShapes := sourceCanvas shapes
-		                collect: [ :each | each class ]
-		                as: Bag.
-	self denyCollection: sourceShapes equals: Bag empty.
+	sourceShapes := sourceCanvas shapes collect: [ :each | each class ] as: Bag.
+	self denyEmpty: sourceShapes.
 	sourceProjectController := sourceWorkbench projectController.
+	sourceModelUuids := self viewModelHierarchyModelUuidsIn: sourceProjectController.
+	sourceControllerSignatures := self controllerSignaturesIn: sourceProjectController.
+	sourceElementSignatures := self allOwnedElementSignaturesIn: sourceProject.
+	self denyEmpty: sourceModelUuids.
+	self denyEmpty: sourceControllerSignatures.
+	self denyEmpty: sourceElementSignatures.
 	sourceProjectController saveProjectTo: file.
 
 	targetProject := OPProjectController fromFile: file.
+	self assert: targetProject class equals: OPProject.
+	self assert: targetProject name equals: sourceProject name.
+	self assert: targetProject models size equals: sourceProject models size.
+	self assert: targetProject diagrams size equals: sourceProject diagrams size.
 	targetWorkbench := targetProject open.
 	targetWorkbench showAllElementsInAllDiagrams.
+	targetProjectController := targetWorkbench projectController.
 	targetEditor := targetWorkbench focusedEditor.
 	targetCanvas := targetEditor canvasPresenter canvas.
-	targetShapes := targetCanvas shapes
-		                collect: [ :each | each class ]
-		                as: Bag.
-	self assertCollection: targetShapes equals: sourceShapes
+	targetShapes := targetCanvas shapes collect: [ :each | each class ] as: Bag.
+	targetModelUuids := self viewModelHierarchyModelUuidsIn: targetProjectController.
+	targetControllerSignatures := self controllerSignaturesIn: targetProjectController.
+	targetElementSignatures := self allOwnedElementSignaturesIn: targetProject.
+	self assertCollection: targetShapes equals: sourceShapes.
+	self assertCollection: targetModelUuids hasSameElements: sourceModelUuids.
+	self assertCollection: targetControllerSignatures hasSameElements: sourceControllerSignatures.
+	self assertCollection: targetElementSignatures hasSameElements: sourceElementSignatures
+]
+
+{ #category : 'accessing' }
+OPExamplePersistenceTest >> viewModelHierarchyModelUuidsIn: aProjectController [
+
+	^ aProjectController project models flatCollect: [ :eachRootModel |
+			  { eachRootModel uuid asString }
+			  ,
+			  ((aProjectController viewModelRegistry allChildrenFor: eachRootModel) collect: [ :eachChildModel |
+				   eachChildModel uuid asString ]) ]
 ]

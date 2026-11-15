@@ -39,7 +39,7 @@ OPAbstractNodeTest >> testDoesNotMoveOnShapeCreation [
 OPAbstractNodeTest >> testUpdateFromRender [
 
 	| originalBounds movedBounds |
-	self assert: shape bounds equals: nil.
+	self assert: shape bounds identicalTo: nil.
 	shape modelElement: model.
 	shape renderIn: canvas.
 	shape updateFromRender.
@@ -50,6 +50,5 @@ OPAbstractNodeTest >> testUpdateFromRender [
 	shape updateFromRender.
 	movedBounds := shape bounds veryDeepCopy.
 	self deny: movedBounds position equals: originalBounds position.
-	self assert: movedBounds position equals: originalBounds position + (100 @ 50).
-	
+	self assert: movedBounds position equals: originalBounds position + (100 @ 50)
 ]

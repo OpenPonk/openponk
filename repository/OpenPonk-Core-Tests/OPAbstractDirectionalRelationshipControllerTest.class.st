@@ -216,27 +216,21 @@ OPAbstractDirectionalRelationshipControllerTest >> testCascadeDeleteUndoRedo [
 { #category : 'tests - construction' }
 OPAbstractDirectionalRelationshipControllerTest >> testCreateAndShow [
 
-	| sourceController targetController |
-	sourceController := diagramController newControllerFor:
-		                    sourceModel.
-	sourceController showWithoutDependentInDiagram: diagramController.
-	targetController := diagramController newControllerFor:
-		                    targetModel.
-	targetController showWithoutDependentInDiagram: diagramController.
-	controller source: sourceController.
-	controller target: targetController.
-	controller
-		createModelIn: diagramController model
-		andShowInDiagram: diagramController.
-	self
-		denyCollection: diagramController modelsWithController
-		hasSameElements: {  }.
-	self
-		assertCollection: diagramController controllers
-		includesAll: { controller }.
-	self
-		assertCollection: diagramController canvas lines
-		includesAll: { controller roassalShape }
+	| createdSourceController createdTargetController |
+	createdSourceController := diagramController newControllerFor: sourceModel.
+	createdSourceController showWithoutDependentInDiagram: diagramController.
+	createdTargetController := diagramController newControllerFor: targetModel.
+	createdTargetController showWithoutDependentInDiagram: diagramController.
+	controller source: createdSourceController.
+	controller target: createdTargetController.
+	controller createModelIn: diagramController model andShowInDiagram: diagramController.
+	self denyEmpty: diagramController modelsWithController.
+	self assertCollection: diagramController modelsWithController includesAll: {
+			sourceModel.
+			targetModel.
+			controller model }.
+	self assertCollection: diagramController controllers includesAll: { controller }.
+	self assertCollection: diagramController canvas lines includesAll: { controller roassalShape }
 ]
 
 { #category : 'tests' }
@@ -247,14 +241,10 @@ OPAbstractDirectionalRelationshipControllerTest >> testCreateModel [
 	controller source: self sourceController.
 	controller target: self targetController.
 	createdModel := controller createModelIn: diagramController model.
-	self deny: controller model identicalTo: nil.
-	self assert: createdModel equals: controller model.
-	self
-		assert: controller viewModel modelSource
-		equals: self sourceController model.
-	self
-		assert: controller viewModel modelTarget
-		equals: self targetController model
+	self assert: createdModel identicalTo: controller model.
+	self assert: controller model class equals: self modelClass.
+	self assert: controller viewModel modelSource identicalTo: self sourceController model.
+	self assert: controller viewModel modelTarget identicalTo: self targetController model
 ]
 
 { #category : 'tests' }
@@ -262,26 +252,17 @@ OPAbstractDirectionalRelationshipControllerTest >> testCreateUsingAddAsTarget [
 
 	self showDependenciesInDiagram.
 	self denyCollection: self allElements includesAll: { model }.
-	self
-		denyCollection: diagramController controllers
-		includesAll: { controller }.
-	self
-		denyCollection: diagramController canvas shapes
-		includesAll: { controller roassalShape }.
+	self denyCollection: diagramController controllers includesAll: { controller }.
+	self denyCollection: diagramController canvas shapes includesAll: { controller roassalShape }.
 	self sourceController addAsSourceFor: controller.
 	self targetController addAsTargetFor: controller.
-	self deny: controller model equals: model.
+	self deny: controller model identicalTo: model.
+	self assert: controller model class equals: self modelClass.
 	model := controller model.
 	self assertCollection: self allElements includesAll: { model }.
-	self
-		assertCollection: diagramController controllers
-		includesAll: { controller }.
-	self
-		assertCollection: diagramController canvas shapes
-		includesAll: { controller roassalShape }.
-	self
-		assert: controller diagramElement class
-		equals: self diagramElementClass
+	self assertCollection: diagramController controllers includesAll: { controller }.
+	self assertCollection: diagramController canvas shapes includesAll: { controller roassalShape }.
+	self assert: controller diagramElement class equals: self diagramElementClass
 ]
 
 { #category : 'tests' }
@@ -311,13 +292,13 @@ OPAbstractDirectionalRelationshipControllerTest >> testRemovalOfSourceRemovesRel
 		includesAll: { model }
 ]
 
-{ #category : 'tests - destruction' }
+{ #category : 'tests' }
 OPAbstractDirectionalRelationshipControllerTest >> testRemoveController [
 
 	super testRemoveController.
-	self
-		denyCollection: diagramController canvas shapes
-		hasSameElements: {  }
+	self assertCollection: diagramController canvas shapes includesAll: {
+			self sourceController roassalShape.
+			self targetController roassalShape }
 ]
 
 { #category : 'tests - construction' }

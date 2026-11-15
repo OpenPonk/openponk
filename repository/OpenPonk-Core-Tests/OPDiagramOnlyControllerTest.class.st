@@ -92,25 +92,16 @@ OPDiagramOnlyControllerTest >> testCreateModel [
 OPDiagramOnlyControllerTest >> testCreateUsingAddAsTarget [
 
 	self showDependenciesInDiagram.
-	self
-		denyCollection: diagramController controllers
-		includesAll: { controller }.
-	self
-		denyCollection: diagramController canvas shapes
-		includesAll: { controller roassalShape }.
+	self denyCollection: diagramController controllers includesAll: { controller }.
+	self denyCollection: diagramController canvas shapes includesAll: { controller roassalShape }.
 	creationTargetController addAsTargetFor: controller.
-	self deny: controller model equals: model.
+	self deny: controller model identicalTo: model.
+	self assert: controller model class equals: self diagramElementClass.
 	model := controller model.
 	self assertCollection: self allElements includesAll: { model }.
-	self
-		assertCollection: diagramController controllers
-		includesAll: { controller }.
-	self
-		assertCollection: diagramController canvas shapes
-		includesAll: { controller roassalShape }.
-	self
-		assert: controller diagramElement class
-		equals: self diagramElementClass
+	self assertCollection: diagramController controllers includesAll: { controller }.
+	self assertCollection: diagramController canvas shapes includesAll: { controller roassalShape }.
+	self assert: controller diagramElement class equals: self diagramElementClass
 ]
 
 { #category : 'tests' }

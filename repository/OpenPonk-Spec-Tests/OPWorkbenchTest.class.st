@@ -63,19 +63,32 @@ OPWorkbenchTest >> testInitialKeyboardFocusIsOnMenuBar [
 
 { #category : 'tests' }
 OPWorkbenchTest >> testOpenProjectEditorsLifecycleTabUpdatesAndDeletion [
+
 	| project model diag1 diag2 secondRegistry editor1 editor2 page1 updatedProject updatedDiagram |
 	self assert: workbench title equals: 'OpenPonk'.
 	self assert: workbench projectController identicalTo: nil.
 	self assert: workbench focusedEditor identicalTo: nil.
 
-	secondRegistry := OPPluginRegistry new add: OPTestPlugin new; yourself.
+	secondRegistry := OPPluginRegistry new
+		                  add: OPTestPlugin new;
+		                  yourself.
 	workbench pluginRegistry: secondRegistry.
 	self assert: workbench pluginRegistry identicalTo: secondRegistry.
 
-	project := OPProject name: 'Workbench Test Project'.
-	model := OPTestContainerModel new name: 'RootPkg'; yourself.
-	diag1 := (OPOpenPonkDiagram forModelElement: model) name: 'MainDiagram'; isOpen: true; isSelected: true; yourself.
-	diag2 := (OPOpenPonkDiagram forModelElement: model) name: 'SecondDiagram'; isOpen: false; isSelected: false; yourself.
+	project := OPProject named: 'Workbench Test Project'.
+	model := OPTestContainerModel new
+		         name: 'RootPkg';
+		         yourself.
+	diag1 := (OPOpenPonkDiagram forModelElement: model)
+		         name: 'MainDiagram';
+		         isOpen: true;
+		         isSelected: true;
+		         yourself.
+	diag2 := (OPOpenPonkDiagram forModelElement: model)
+		         name: 'SecondDiagram';
+		         isOpen: false;
+		         isSelected: false;
+		         yourself.
 	project addModel: model.
 	project addDiagram: diag1.
 	project addDiagram: diag2.
@@ -177,11 +190,14 @@ OPWorkbenchTest >> testRedoShortcutDelegatesToUndoManager [
 
 { #category : 'tests' }
 OPWorkbenchTest >> testRenameProjectDialogAndOpenModelAndOpenFromFile [
+
 	| project model openedWb mockRequest capturedAccept mockOpenPresenter capturedOpenBlock archiveFile sourceProject sourceCtrl openedFromFileWb |
 	capturedAccept := nil.
 	capturedOpenBlock := nil.
-	project := OPProject name: 'Before Rename'.
-	model := OPTestContainerModel new name: 'ModelA'; yourself.
+	project := OPProject named: 'Before Rename'.
+	model := OPTestContainerModel new
+		         name: 'ModelA';
+		         yourself.
 	project addModel: model.
 	workbench openProject: project.
 
@@ -199,14 +215,17 @@ OPWorkbenchTest >> testRenameProjectDialogAndOpenModelAndOpenFromFile [
 	capturedAccept value.
 	self assert: project name equals: 'After Rename'.
 
-	openedWb := OPWorkbench openModel: (OPTestContainerModel new name: 'StandaloneModel'; yourself).
+	openedWb := OPWorkbench openModel: (OPTestContainerModel new
+			             name: 'StandaloneModel';
+			             yourself).
 	[
 		self assert: openedWb project name equals: 'New Project'.
-		self assert: openedWb project models size equals: 1
-	] ensure: [ openedWb ifNotNil: [ openedWb close ] ].
+		self assert: openedWb project models size equals: 1 ] ensure: [ openedWb ifNotNil: [ openedWb close ] ].
 
-	sourceProject := OPProject name: 'FromFile Project'.
-	sourceProject addModel: (OPTestContainerModel new name: 'FileModel'; yourself).
+	sourceProject := OPProject named: 'FromFile Project'.
+	sourceProject addModel: (OPTestContainerModel new
+			 name: 'FileModel';
+			 yourself).
 	sourceProject ensureModelsHaveDiagrams.
 	sourceCtrl := OPProjectController forProject: sourceProject.
 	archiveFile := FileSystem memory root / 'wb-open-from-file.opp'.
@@ -221,9 +240,8 @@ OPWorkbenchTest >> testRenameProjectDialogAndOpenModelAndOpenFromFile [
 
 	OPProjectController openFromFile.
 	openedFromFileWb := capturedOpenBlock value: archiveFile.
-	[
-		self assert: openedFromFileWb project name equals: 'FromFile Project'
-	] ensure: [ openedFromFileWb ifNotNil: [ openedFromFileWb close ] ]
+	[ self assert: openedFromFileWb project name equals: 'FromFile Project' ] ensure: [
+		openedFromFileWb ifNotNil: [ openedFromFileWb close ] ]
 ]
 
 { #category : 'tests' }

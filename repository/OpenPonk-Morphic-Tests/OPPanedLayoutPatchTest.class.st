@@ -3,7 +3,7 @@ Verifies application and layout behavior of OPPanedLayoutPatch on SpMorphicPaned
 "
 Class {
 	#name : 'OPPanedLayoutPatchTest',
-	#superclass : 'TestCase',
+	#superclass : 'OPAbstractUITest',
 	#instVars : [
 		'window'
 	],

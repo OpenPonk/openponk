@@ -3,7 +3,7 @@ Verifies the lifecycle and editing behavior of the notation style presenter, ens
 "
 Class {
 	#name : 'OPNotationStylePresenterTest',
-	#superclass : 'TestCase',
+	#superclass : 'OPAbstractUITest',
 	#instVars : [
 		'plugin',
 		'presenter',

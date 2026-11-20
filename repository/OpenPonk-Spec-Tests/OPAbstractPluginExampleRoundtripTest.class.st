@@ -3,7 +3,7 @@ Abstract base test suite verifying export, save, and reload cycles for bundled p
 "
 Class {
 	#name : 'OPAbstractPluginExampleRoundtripTest',
-	#superclass : 'TestCase',
+	#superclass : 'OPAbstractUITest',
 	#instVars : [
 		'workbench',
 		'memoryFile'

@@ -3,7 +3,7 @@ Tests project tree presentation, item selection, and context menu population in 
 "
 Class {
 	#name : 'OPProjectBrowserTest',
-	#superclass : 'TestCase',
+	#superclass : 'OPAbstractUITest',
 	#instVars : [
 		'browser',
 		'window'

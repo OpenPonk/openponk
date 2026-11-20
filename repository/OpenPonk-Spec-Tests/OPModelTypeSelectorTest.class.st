@@ -3,7 +3,7 @@ Verifies model type selection presenter initialization, automatic naming, button
 "
 Class {
 	#name : 'OPModelTypeSelectorTest',
-	#superclass : 'TestCase',
+	#superclass : 'OPAbstractUITest',
 	#instVars : [
 		'selectorPresenter'
 	],

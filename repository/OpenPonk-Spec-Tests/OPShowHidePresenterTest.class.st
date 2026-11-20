@@ -3,7 +3,7 @@ Verifies OPShowHidePresenter, OPCherryPickShowHidePresenter, and OPTypesShowHide
 "
 Class {
 	#name : 'OPShowHidePresenterTest',
-	#superclass : 'TestCase',
+	#superclass : 'OPAbstractUITest',
 	#instVars : [
 		'entityA',
 		'entityB',

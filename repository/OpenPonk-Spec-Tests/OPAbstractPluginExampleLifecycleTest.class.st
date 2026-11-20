@@ -3,7 +3,7 @@ Abstract base test suite verifying clean initialization, opening, and tear-down 
 "
 Class {
 	#name : 'OPAbstractPluginExampleLifecycleTest',
-	#superclass : 'TestCase',
+	#superclass : 'OPAbstractUITest',
 	#instVars : [
 		'workbench'
 	],

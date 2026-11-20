@@ -26,11 +26,14 @@ BaselineOfOpenPonk >> baseline: spec [
 				package: 'OpenPonk-Morphic-Tests' with: [ spec requires: #( 'OpenPonk-Morphic' ) ];
 				package: 'OpenPonk-Spec'
 				with: [ spec requires: #( 'Magritte' 'OpenPonkSynchronizedLinks' 'OpenPonkZoomer' 'OpenPonk-Morphic' 'OpenPonk-Core' ) ];
-				package: 'OpenPonk-Spec-Tests' with: [ spec requires: #( 'OpenPonk-Spec' 'OpenPonk-Core-Tests' ) ];
+				package: 'OpenPonk-Spec-Tests' with: [ spec requires: #( 'OpenPonk-Spec' 'OpenPonk-Core-Tests' 'OpenPonk-Morphic-Tests' ) ];
 				package: 'OpenPonk-DevTools' with: [ spec requires: #( 'OpenPonk-Core' 'OpenPonk-Spec' ) ];
 				package: 'OpenPonk-DevTools-Tests' with: [ spec requires: #( 'OpenPonk-DevTools' 'OpenPonk-Core-Tests' ) ].
 			spec
-				group: 'default' with: #( 'OpenPonk-Roassal' 'OpenPonk-Roassal-Tests' 'OpenPonk-Core' 'OpenPonk-Core-Tests' 'OpenPonk-Morphic' 'OpenPonk-Morphic-Tests' 'OpenPonk-Spec' 'OpenPonk-Spec-Tests' );
+				group: 'default'
+				with:
+					#( 'OpenPonk-Roassal' 'OpenPonk-Roassal-Tests' 'OpenPonk-Core' 'OpenPonk-Core-Tests' 'OpenPonk-Morphic' 'OpenPonk-Morphic-Tests'
+					   'OpenPonk-Spec' 'OpenPonk-Spec-Tests' );
 				group: 'dev-plugin' with: #( 'OpenPonk-DevTools' 'OpenPonk-DevTools-Tests' );
 				group: 'dev' with: #( 'default' 'dev-plugin' ) ]
 ]

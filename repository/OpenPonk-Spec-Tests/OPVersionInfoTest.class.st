@@ -3,7 +3,7 @@ Tests project version parsing, metadata extraction, and semantic version compari
 "
 Class {
 	#name : 'OPVersionInfoTest',
-	#superclass : 'TestCase',
+	#superclass : 'OPAbstractUITest',
 	#instVars : [
 		'savedWindows'
 	],

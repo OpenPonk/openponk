@@ -3,7 +3,7 @@ Tests semantic version comparison, upgrade detection, and release notification f
 "
 Class {
 	#name : 'OPVersionComparisonInfoTest',
-	#superclass : 'TestCase',
+	#superclass : 'OPAbstractUITest',
 	#instVars : [
 		'savedCurrent',
 		'savedLatest',
@@ -316,6 +316,7 @@ OPVersionComparisonInfoTest >> testThisVersionInfoLoadedWithReleaseNightlyUnknow
 		attempts := 0.
 		[ (presenter instVarNamed: #lastNightlyVersionInfo) label = 'Loading...' and: [ attempts < 50 ] ] whileTrue: [
 				(Delay forMilliseconds: 10) wait.
+				self currentWorld doOneCycleNow.
 				attempts := attempts + 1 ].
 		self assert: (presenter instVarNamed: #lastVersionInfo) label equals: 'Unknown.'.
 		self assert: (presenter instVarNamed: #lastNightlyVersionInfo) label equals: 'Unknown.'.
@@ -338,6 +339,7 @@ OPVersionComparisonInfoTest >> testThisVersionInfoLoadedWithReleaseNightlyUnknow
 		attempts := 0.
 		[ ((presenter instVarNamed: #lastNightlyVersionInfo) isKindOf: OPVersionInfo) not and: [ attempts < 50 ] ] whileTrue: [
 				(Delay forMilliseconds: 10) wait.
+				self currentWorld doOneCycleNow.
 				attempts := attempts + 1 ].
 		self assert: (presenter instVarNamed: #lastVersionInfo) class identicalTo: OPVersionInfo.
 		self assert: (presenter instVarNamed: #lastNightlyVersionInfo) class identicalTo: OPVersionInfo.
@@ -352,6 +354,7 @@ OPVersionComparisonInfoTest >> testThisVersionInfoLoadedWithReleaseNightlyUnknow
 			(((presenter instVarNamed: #lastVersionInfo) respondsTo: #label) not or: [
 				 (presenter instVarNamed: #lastVersionInfo) label ~= 'Failed to download info.' ]) and: [ attempts < 50 ] ] whileTrue: [
 				(Delay forMilliseconds: 10) wait.
+				self currentWorld doOneCycleNow.
 				attempts := attempts + 1 ].
 		self
 			assert: ((presenter instVarNamed: #lastVersionInfo) respondsTo: #label)

@@ -3,7 +3,7 @@ Verifies reactive view model updates and UI synchronization across editors when 
 "
 Class {
 	#name : 'OPProjectViewReactivityTest',
-	#superclass : 'TestCase',
+	#superclass : 'OPAbstractUITest',
 	#instVars : [
 		'workbench',
 		'project',

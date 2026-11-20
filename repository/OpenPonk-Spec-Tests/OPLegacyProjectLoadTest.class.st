@@ -3,7 +3,7 @@ Abstract base class for unit tests ensuring backward compatibility. Verifies tha
 "
 Class {
 	#name : 'OPLegacyProjectLoadTest',
-	#superclass : 'TestCase',
+	#superclass : 'OPAbstractUITest',
 	#instVars : [
 		'workbench'
 	],

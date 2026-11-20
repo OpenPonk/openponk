@@ -3,7 +3,7 @@ Tests editor lifecycle, canvas presentation, palette initialization, and tab man
 "
 Class {
 	#name : 'OPEditorTest',
-	#superclass : 'TestCase',
+	#superclass : 'OPAbstractUITest',
 	#instVars : [
 		'editor',
 		'workbench'

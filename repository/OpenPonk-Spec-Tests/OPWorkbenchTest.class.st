@@ -3,7 +3,7 @@ Tests top-level workbench initialization, window layout, and active editor coord
 "
 Class {
 	#name : 'OPWorkbenchTest',
-	#superclass : 'TestCase',
+	#superclass : 'OPAbstractUITest',
 	#instVars : [
 		'workbench'
 	],

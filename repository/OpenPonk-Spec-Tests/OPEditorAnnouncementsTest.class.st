@@ -3,7 +3,7 @@ Unit tests verifying the correct dispatching of lifecycle announcements (such as
 "
 Class {
 	#name : 'OPEditorAnnouncementsTest',
-	#superclass : 'TestCase',
+	#superclass : 'OPAbstractUITest',
 	#instVars : [
 		'workbench',
 		'announcer',

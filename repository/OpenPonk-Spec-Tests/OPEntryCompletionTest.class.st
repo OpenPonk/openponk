@@ -3,7 +3,7 @@ Verifies that entry completion chooser popups calculate their screen position fr
 "
 Class {
 	#name : 'OPEntryCompletionTest',
-	#superclass : 'TestCase',
+	#superclass : 'OPAbstractUITest',
 	#category : 'OpenPonk-Spec-Tests-Form',
 	#package : 'OpenPonk-Spec-Tests',
 	#tag : 'Form'

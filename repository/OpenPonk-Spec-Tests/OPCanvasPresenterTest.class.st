@@ -1,6 +1,6 @@
 Class {
 	#name : 'OPCanvasPresenterTest',
-	#superclass : 'TestCase',
+	#superclass : 'OPAbstractUITest',
 	#category : 'OpenPonk-Spec-Tests-Windows',
 	#package : 'OpenPonk-Spec-Tests',
 	#tag : 'Windows'

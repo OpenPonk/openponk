@@ -3,7 +3,7 @@ Integration test verifying synchronization between the diagrams list presenter a
 "
 Class {
 	#name : 'OPDiagramsTreeIntegrationTest',
-	#superclass : 'TestCase',
+	#superclass : 'OPAbstractUITest',
 	#instVars : [
 		'diagram',
 		'project',

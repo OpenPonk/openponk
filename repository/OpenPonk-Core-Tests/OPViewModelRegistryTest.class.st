@@ -66,6 +66,25 @@ OPViewModelRegistryTest >> testDiagramOnlyNoteAndBoundaryViewModels [
 ]
 
 { #category : 'tests' }
+OPViewModelRegistryTest >> testModelObjectTypeSubtypeComparisonEdgeCases [
+
+	| subA subB typeWithOne typeWithTwo typeWithB |
+	subA := OPModelObjectType named: 'Alpha'.
+	subB := OPModelObjectType named: 'Beta'.
+	typeWithOne := OPModelObjectType named: 'Class' withSubtype: subA.
+	typeWithTwo := OPModelObjectType named: 'Class' withSubtypes: {
+			               subA.
+			               subB }.
+	typeWithB := OPModelObjectType named: 'Class' withSubtype: subB.
+	self
+		assert: typeWithOne < typeWithTwo
+		description: 'Type with fewer matching subtypes should sort before type with additional subtypes'.
+	self deny: typeWithTwo < typeWithOne description: 'Type with more subtypes must not sort before its prefix'.
+	self assert: typeWithOne < typeWithB description: 'Type with lexicographically smaller subtype should sort first'.
+	self deny: typeWithB < typeWithOne description: 'Type with lexicographically larger subtype must not sort first'
+]
+
+{ #category : 'tests' }
 OPViewModelRegistryTest >> testNewSignalsErrorAndResetCacheRebuildsMapping [
 	self
 		should: [ OPViewModelRegistry new ]
@@ -80,6 +99,32 @@ OPViewModelRegistryTest >> testNewSignalsErrorAndResetCacheRebuildsMapping [
 	self
 		assert: (OPViewModelRegistry viewModelClassFor: OPBoundary)
 		equals: OPBoundaryViewModel
+]
+
+{ #category : 'tests' }
+OPViewModelRegistryTest >> testProjectViewModelRegistryInspectionAndCoreExtensions [
+
+	| projectViewModel builder tree plainObject containerDescription contextObject |
+	projectViewModel := registry projectViewModel.
+	projectViewModel basicRemoveModel.
+	self assert: projectViewModel findParentViewModel identicalTo: nil.
+	registry removeViewModelFor: Object new.
+
+	builder := SpPresenter newApplication: SpApplication defaultApplication.
+	tree := registry inspectTreeIn: builder.
+	self assertCollection: tree roots hasSameElements: { projectViewModel }.
+	self assert: (tree display value: projectViewModel) equals: projectViewModel modelDisplayString.
+	self assert: (tree displayIcon value: projectViewModel) extent equals: projectViewModel icon extent.
+	self assertCollection: (tree children value: projectViewModel) hasSameElements: { (registry viewModelFor: container) }.
+
+	plainObject := Object new.
+	self assert: plainObject asViewModel identicalTo: plainObject.
+
+	containerDescription := MAContainer new.
+	self assert: containerDescription definingContext identicalTo: nil.
+	contextObject := Object new.
+	containerDescription definingContext: contextObject.
+	self assert: containerDescription definingContext identicalTo: contextObject
 ]
 
 { #category : 'tests' }
@@ -109,6 +154,80 @@ OPViewModelRegistryTest >> testRegistryDelegationQueries [
 	self
 		deny: (registry dependsRoughlyTypeOf: boundary on: note)
 		description: 'Boundary view model (priority 5) must not depend on note view model (priority 10)'
+]
+
+{ #category : 'tests' }
+OPViewModelRegistryTest >> testViewModelEdgeCasesAndFallbackBehavior [
+
+	| plainViewModel relationModel plainRelationViewModel namelessViewModel nilNameModel nilNameViewModel formViewModel rebuildCount changedCount systemViewModel rootClassMock rootViewModelMock prefixModel prefixViewModel opOnlyModel opOnlyViewModel |
+	plainViewModel := OPViewModel forModel: (OPTestEntityModel new
+			                   name: 'Initial';
+			                   yourself).
+	changedCount := 0.
+	plainViewModel announcer when: OPModelChanged do: [ changedCount := changedCount + 1 ] for: self.
+	plainViewModel propertyNamed: nil put: 'Ignored'.
+	self assert: plainViewModel model name equals: 'Initial'.
+	self assert: changedCount equals: 0.
+	plainViewModel propertyNamed: #name: put: 'UpdatedWithColon'.
+	self assert: plainViewModel model name equals: 'UpdatedWithColon'.
+	self assert: changedCount equals: 1.
+	plainViewModel unsubscribe: self.
+
+	formViewModel := OPFormTestViewModel forModel: (OPFormTestModel new
+			                  name: 'Alpha';
+			                  yourself).
+	formViewModel stub structuralPropertySelectors willReturn: #( #name ).
+	rebuildCount := 0.
+	changedCount := 0.
+	formViewModel announcer when: OPElementFormNeedsRebuild do: [ rebuildCount := rebuildCount + 1 ] for: self.
+	formViewModel announcer when: OPModelChanged do: [ changedCount := changedCount + 1 ] for: self.
+	formViewModel propertyNamed: #name put: 'Beta'.
+	self assert: formViewModel model name equals: 'Beta'.
+	self assert: rebuildCount equals: 1.
+	self assert: changedCount equals: 0.
+	formViewModel unsubscribe: self.
+
+	relationModel := OPTestRelationModel new
+		                 source: entityA;
+		                 target: entityB;
+		                 yourself.
+	plainRelationViewModel := OPViewModel forModel: relationModel.
+	self assert: plainRelationViewModel modelSource identicalTo: entityA.
+	self assert: plainRelationViewModel modelTarget identicalTo: entityB.
+	plainRelationViewModel attachModelFrom: nil to: nil.
+	self assert: (plainRelationViewModel openEditorWithApplication: nil undoManager: nil) identicalTo: plainRelationViewModel.
+
+	plainRelationViewModel restoreEndpointsWithSource: entityB target: entityA.
+	self assert: relationModel source identicalTo: entityB.
+	self assert: relationModel target identicalTo: entityA.
+
+	namelessViewModel := OPViewModel forModel: Object new.
+	self assert: namelessViewModel nameOfModel equals: ''.
+	nilNameModel := OPFormTestModel new
+		                name: nil;
+		                yourself.
+	nilNameViewModel := OPViewModel forModel: nilNameModel.
+	self assert: nilNameViewModel nameOfModel equals: ''.
+
+	self assertEmpty: formViewModel dependingOnElements.
+
+	systemViewModel := OPFormTestViewModel forModel: OPFormTestModel new.
+	systemViewModel stub isSystemElement willReturn: true.
+	self deny: systemViewModel isRemovable description: 'System element view model must not be removable'.
+
+	rootClassMock := Mock new.
+	rootClassMock stub commonModelClassPrefix willReturn: 'OPTestEntityModel'.
+	rootViewModelMock := Mock new.
+	rootViewModelMock stub class willReturn: rootClassMock.
+	prefixModel := OPTestEntityModel new.
+	prefixViewModel := OPFormTestViewModel forModel: prefixModel.
+	prefixViewModel stub modelRootViewModel willReturn: rootViewModelMock.
+	self assert: prefixViewModel modelType name equals: 'Test Entity Model'.
+
+	opOnlyModel := Mock new.
+	opOnlyModel stub className willReturn: 'OP'.
+	opOnlyViewModel := OPFormTestViewModel forModel: opOnlyModel.
+	self assert: opOnlyViewModel modelType name equals: 'OP'
 ]
 
 { #category : 'tests' }

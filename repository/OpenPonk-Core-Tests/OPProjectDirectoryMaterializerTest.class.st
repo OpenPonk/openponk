@@ -45,6 +45,74 @@ OPProjectDirectoryMaterializerTest >> tearDown [
 ]
 
 { #category : 'tests' }
+OPProjectDirectoryMaterializerTest >> testExportVersionAndModelIdFrom [
+
+	self assert: OPProjectDirectoryMaterializer exportVersion equals: 0.
+	self assert: (reader modelIdFrom: '42') equals: 42.
+	self assert: (reader modelIdFrom: 'custom-model-id') equals: 'custom-model-id'
+]
+
+{ #category : 'tests' }
+OPProjectDirectoryMaterializerTest >> testForExportInfoSelectsHighestMaxThenHighestMinVersion [
+
+	| v1Info v2Info selectedForV1 selectedForV2 |
+	v1Info := OPExportInfo new
+		          subject: #testSubject;
+		          format: #testFormat;
+		          version: 1;
+		          yourself.
+	v2Info := OPExportInfo new
+		          subject: #testSubject;
+		          format: #testFormat;
+		          version: 2;
+		          yourself.
+	self
+		assert: (OPTestSerializerV1 supportsExportInfo: v1Info)
+		description: 'Version 1 test serializer should support version 1 export info'.
+	selectedForV1 := OPSerializer forExportInfo: v1Info.
+	selectedForV2 := OPSerializer forExportInfo: v2Info.
+	self assert: selectedForV1 class identicalTo: OPTestSerializerV2Wide.
+	self assert: selectedForV2 class identicalTo: OPTestSerializerV2Narrow
+]
+
+{ #category : 'tests' }
+OPProjectDirectoryMaterializerTest >> testMementoDirectorySerializerLegacyModelLayoutJsonDiagramsAndEmptyName [
+
+	| folder diagramsFolder container entity mementoSerializer memento unnamedDiagram |
+	container := OPTestContainerModel new.
+	container instVarNamed: #uuid put: UUID new.
+	entity := OPTestEntityModel new.
+	entity instVarNamed: #uuid put: UUID new.
+	container add: entity.
+
+	folder := FileSystem memory / 'legacy-memento-folder'.
+	folder ensureCreateDirectory.
+	folder / 'model.ston' writeStreamDo: [ :stream | OPStonModelSerializer new serializeModel: container to: stream ].
+	diagramsFolder := folder / 'diagrams'.
+	diagramsFolder ensureCreateDirectory.
+	diagramsFolder / '1-main.json' writeStreamDo: [ :stream |
+			stream
+				nextPutAll: '{"name":"LegacyJson","isOpen":false,"isSelected":false,"camera":{"offset":{"x":0,"y":0},"zoom":1.0},"layout":{"';
+				nextPutAll: entity uuid asString;
+				nextPutAll: '":{"position":{"x":10,"y":20},"extent":{"x":30,"y":40}}},"visibleElements":["';
+				nextPutAll: entity uuid asString;
+				nextPutAll: '"]}' ].
+
+	mementoSerializer := OPMementoDirectorySerializer forPlugin: OPTestPlugin new.
+	memento := mementoSerializer loadMementoFrom: folder.
+	self assert: memento model uuid equals: container uuid.
+	self assert: memento diagrams size equals: 1.
+	self assert: memento diagrams first name equals: 'LegacyJson'.
+
+	unnamedDiagram := OPOpenPonkDiagram forModelElement: container.
+	unnamedDiagram name: ''.
+	mementoSerializer saveDiagram: unnamedDiagram to: diagramsFolder index: 2.
+	self
+		assert: (diagramsFolder / '2-diagram.ston') isFile
+		description: 'Diagram with empty name should default to index-diagram.ston'
+]
+
+{ #category : 'tests' }
 OPProjectDirectoryMaterializerTest >> testMissingProject [
 	self should: [ reader loadProjectFrom: FileSystem memory root ] raise: FileDoesNotExistException
 ]
@@ -91,6 +159,25 @@ OPProjectDirectoryMaterializerTest >> testReadMemento [
 ]
 
 { #category : 'tests' }
+OPProjectDirectoryMaterializerTest >> testReadMementoWithoutExportInfoAndEmptyResult [
+
+	| folderNoExportInfo modelFile memento pluginReturningNil emptySerializer |
+	folderNoExportInfo := FileSystem memory / 'memento-no-export-info'.
+	folderNoExportInfo ensureCreateDirectory.
+	modelFile := folderNoExportInfo / 'model.ston'.
+	modelFile writeStreamDo: [ :stream | OPStonModelSerializer new serializeModel: OPTestContainerModel new to: stream ].
+	memento := reader readMementoFrom: folderNoExportInfo asPlugin: OPTestPlugin new.
+	self assert: memento model class identicalTo: OPTestContainerModel.
+	self assertEmpty: memento diagrams.
+
+	emptySerializer := Mock new.
+	(emptySerializer stub loadMementoFrom: folderNoExportInfo) willReturn: nil.
+	pluginReturningNil := Mock new.
+	pluginReturningNil stub serializer willReturn: emptySerializer.
+	self should: [ reader readMementoFrom: folderNoExportInfo asPlugin: pluginReturningNil ] raise: OPSerializationWithEmptyResult
+]
+
+{ #category : 'tests' }
 OPProjectDirectoryMaterializerTest >> testReadMementos [
 	self assert: (reader readAllMementosFrom: root) size equals: 1
 ]
@@ -111,6 +198,19 @@ OPProjectDirectoryMaterializerTest >> testReadProject [
 	self
 		assert: project uuid
 		equals: (UUID fromString: '7f5ee44a-1655-4061-a78e-db9578a2226c')
+]
+
+{ #category : 'tests' }
+OPProjectDirectoryMaterializerTest >> testReadProjectInfoLegacyExporterKey [
+
+	| legacyProjectFile loadedProject |
+	legacyProjectFile := FileSystem memory / 'legacy-project.json'.
+	legacyProjectFile writeStreamDo: [ :stream |
+			stream nextPutAll:
+				'{"exporter":{"exporter":"OpenPonk"},"project":{"name":"Legacy Name","uuid":"7f5ee44a-1655-4061-a78e-db9578a2226c"}}' ].
+	loadedProject := reader readProjectInfoFrom: legacyProjectFile.
+	self assert: loadedProject name equals: 'Legacy Name'.
+	self assert: loadedProject uuid equals: (UUID fromString: '7f5ee44a-1655-4061-a78e-db9578a2226c')
 ]
 
 { #category : 'tests' }

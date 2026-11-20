@@ -47,6 +47,19 @@ OPModelPropertyAccessorTest >> testCanReadAndWrite [
 ]
 
 { #category : 'tests' }
+OPModelPropertyAccessorTest >> testCanReadAndWriteWithCustomBlocks [
+
+	| readAccessor writeAccessor plainObject |
+	plainObject := Object new.
+	readAccessor := OPModelPropertyAccessor on: #nonExistentSelector.
+	readAccessor readBlock: [ :target | 'custom' ].
+	self assert: (readAccessor canRead: plainObject) description: 'Accessor with custom readBlock should report canRead: true'.
+	writeAccessor := OPModelPropertyAccessor on: #nonExistentSelector.
+	writeAccessor writeBlock: [ :target :value |  ].
+	self assert: (writeAccessor canWrite: plainObject) description: 'Accessor with custom writeBlock should report canWrite: true'
+]
+
+{ #category : 'tests' }
 OPModelPropertyAccessorTest >> testCustomWriteBlockCompatibility [
 	"Verify that pluggable writeBlock customization works seamlessly."
 
@@ -90,6 +103,27 @@ OPModelPropertyAccessorTest >> testIsConcreteClass [
 	self
 		deny: (OPModelPropertyAccessor on: #name) isAbstract
 		description: 'OPModelPropertyAccessor instance must not be abstract'
+]
+
+{ #category : 'tests' }
+OPModelPropertyAccessorTest >> testNamePrintOnAndMutatorSelector [
+
+	| accessor colonAccessor unnamedAccessor |
+	accessor := OPModelPropertyAccessor on: #name.
+	colonAccessor := OPModelPropertyAccessor on: #name:.
+	unnamedAccessor := OPModelPropertyAccessor new.
+	self assert: accessor name equals: 'name'.
+	self assert: unnamedAccessor name equals: nil.
+	self assert: (accessor mutatorSelectorFor: #name) equals: #name:.
+	self assert: (accessor mutatorSelectorFor: #name:) equals: #name:.
+	self
+		assert: (accessor printString includesSubstring: '(name)')
+		description: 'printOn: should include selector name in parentheses'.
+	self
+		deny: (unnamedAccessor printString includesSubstring: '(')
+		description: 'printOn: should omit parentheses when selector is nil'.
+	colonAccessor write: 'ColonWritten' to: model.
+	self assert: model name equals: 'ColonWritten'
 ]
 
 { #category : 'tests' }

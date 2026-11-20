@@ -19,6 +19,19 @@ OPProjectStorageTest >> setUp [
 ]
 
 { #category : 'tests' }
+OPProjectStorageTest >> testDefaultAndReset [
+
+	| savedDefault freshDefault |
+	savedDefault := OPProjectStorage default.
+	[
+		OPProjectStorage reset.
+		freshDefault := OPProjectStorage default.
+		self deny: freshDefault identicalTo: savedDefault.
+		self assert: freshDefault class identicalTo: OPProjectStorage ] ensure: [
+		OPProjectStorage classPool at: #Default put: savedDefault ]
+]
+
+{ #category : 'tests' }
 OPProjectStorageTest >> testEnsureRemoveDoesNotPurgeOtherUnsavedProjects [
 	| projectOne projectTwo |
 	projectOne := OPProject named: 'Unsaved Project One'.

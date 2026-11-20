@@ -30,22 +30,16 @@ OPProjectDirectorySerializerTest >> tearDown [
 
 { #category : 'tests' }
 OPProjectDirectorySerializerTest >> testCreateFolderStructure [
+
 	| root |
 	root := FileSystem memory root / 'project'.
 	persistence directory: root.
+	self assert: persistence directory equals: root.
 	persistence saveProject: OPProject new.
-	self
-		assert: root isDirectory
-		description: 'Serializer should create root project directory'.
-	self
-		assert: (root / 'project.json') isFile
-		description: 'Serializer should write project.json file'.
-	self
-		assert: (root / 'models.json') isFile
-		description: 'Serializer should write models.json file'.
-	self
-		assert: (root / 'models') isDirectory
-		description: 'Serializer should create models subdirectory'
+	self assert: root isDirectory description: 'Serializer should create root project directory'.
+	self assert: (root / 'project.json') isFile description: 'Serializer should write project.json file'.
+	self assert: (root / 'models.json') isFile description: 'Serializer should write models.json file'.
+	self assert: (root / 'models') isDirectory description: 'Serializer should create models subdirectory'
 ]
 
 { #category : 'tests' }

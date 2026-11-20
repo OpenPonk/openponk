@@ -1,11 +1,10 @@
 "
-Represents a single registration entry within OPModelHandlerFactory, mapping a model class and an optional condition to a specific handler class.
+Represents a single registration entry within a model handler factory, pairing an optional condition block with a handler class.
 "
 Class {
 	#name : 'OPModelHandlerFactoryRegistration',
 	#superclass : 'Object',
 	#instVars : [
-		'modelClass',
 		'condition',
 		'handlerClass'
 	],
@@ -62,16 +61,6 @@ OPModelHandlerFactoryRegistration >> initialize [
 OPModelHandlerFactoryRegistration >> isForModel: aModel [
 
 	^ self condition value: aModel
-]
-
-{ #category : 'accessing' }
-OPModelHandlerFactoryRegistration >> modelClass [
-	^ modelClass
-]
-
-{ #category : 'accessing' }
-OPModelHandlerFactoryRegistration >> modelClass: anObject [
-	modelClass := anObject
 ]
 
 { #category : 'printing' }

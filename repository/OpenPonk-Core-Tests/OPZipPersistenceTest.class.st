@@ -51,3 +51,16 @@ OPZipPersistenceTest >> testRoundTrip [
 		description: 'Loaded archive should contain dir/file.txt'.
 	self assert: (loaded / 'dir' / 'file.txt') contents equals: 'hello'
 ]
+
+{ #category : 'tests' }
+OPZipPersistenceTest >> testSaveToUnwritableExistingFileRaisesFileWriteError [
+
+	| root unwritableFile |
+	root := FileSystem memory root.
+	root / 'file.txt' writeStreamDo: [ :stream | stream << 'content' ].
+	unwritableFile := Mock new.
+	unwritableFile stub exists willReturn: true.
+	unwritableFile stub isWritable willReturn: false.
+	unwritableFile stub name willReturn: 'locked.opp'.
+	self should: [ persistence save: root to: unwritableFile ] raise: FileWriteError
+]

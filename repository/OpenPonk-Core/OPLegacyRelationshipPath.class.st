@@ -53,12 +53,18 @@ OPLegacyRelationshipPath class >> neoJsonMapping: mapper [
 
 { #category : 'comparing' }
 OPLegacyRelationshipPath >> < aComparable [
-
 	"Answer whether the receiver is less than the argument."
 
-	^ self source < aComparable source or: [ 
-		  self source = aComparable source and: [ 
-			  self points < aComparable points ] ]
+	self source = aComparable source ifFalse: [ ^ self source < aComparable source ].
+	self points withIndexDo: [ :eachPoint :index |
+			| otherPoint |
+			aComparable points size < index ifTrue: [ ^ false ].
+			otherPoint := aComparable points at: index.
+			eachPoint = otherPoint ifFalse: [
+					^ eachPoint x = otherPoint x
+						  ifTrue: [ eachPoint y < otherPoint y ]
+						  ifFalse: [ eachPoint x < otherPoint x ] ] ].
+	^ self points size < aComparable points size
 ]
 
 { #category : 'comparing' }

@@ -83,12 +83,6 @@ OPModelObjectType >> includesNames: aCollectionOfNames [
 	^ self subtypes anySatisfy: [ :any | any includesNames: aCollectionOfSubtypeNames ]
 ]
 
-{ #category : 'testing' }
-OPModelObjectType >> includesTypeNode: aTypeNode [
-
-	^ self subtypes anySatisfy: [ :any | any includesTypeNode: aTypeNode ]
-]
-
 { #category : 'initialization' }
 OPModelObjectType >> initialize [
 

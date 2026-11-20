@@ -88,6 +88,17 @@ OPProjectTemplateTest >> testEquality [
 ]
 
 { #category : 'tests' }
+OPProjectTemplateTest >> testEqualityWithDifferentClassAndUnnamedPrintOn [
+
+	| unnamedTemplate |
+	unnamedTemplate := OPProjectTemplate new.
+	self deny: unnamedTemplate equals: 'not a template'.
+	self
+		assert: (unnamedTemplate printString includesSubstring: 'unnamed')
+		description: 'Unnamed template printOn: should include unnamed fallback'
+]
+
+{ #category : 'tests' }
 OPProjectTemplateTest >> testInstalledPluginsProvideExamples [
 
 	OPPluginRegistry default plugins do: [ :plugin |

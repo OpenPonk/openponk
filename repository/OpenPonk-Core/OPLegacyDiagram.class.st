@@ -112,13 +112,6 @@ OPLegacyDiagram class >> ofModel: aModel fromJsonString: aString [
 	^ self ofModel: aModel fromJson: aString readStream
 ]
 
-{ #category : 'instance creation' }
-OPLegacyDiagram class >> withWholeModel: aModel [
-	^ (self emptyOfModel: aModel)
-		setAllElementsVisible;
-		yourself
-]
-
 { #category : 'converting' }
 OPLegacyDiagram >> asOPDiagram [
 

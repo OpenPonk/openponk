@@ -134,6 +134,31 @@ OPProjectTest >> testMergeWithAndCopyDiagramAndStorage [
 ]
 
 { #category : 'tests' }
+OPProjectTest >> testModelsAndDiagramsHasDiagramsModelProjectCallbackAndInspectionItems [
+
+	| projectAwareModel builder tree absentModel |
+	self deny: (project hasDiagramsModel: model) description: 'Project without model must report hasDiagramsModel: false'.
+	projectAwareModel := OPRenameProjectCommand new.
+	project addModel: projectAwareModel.
+	self assert: projectAwareModel project identicalTo: project.
+	self
+		assert: (project modelsAndDiagrams includesKey: projectAwareModel)
+		description: 'modelsAndDiagrams should include added model'.
+	project removeModel: projectAwareModel.
+	self assert: projectAwareModel project identicalTo: nil.
+
+	project addModel: model.
+	project ensureModelsHaveDiagrams.
+	builder := SpPresenter newApplication: SpApplication defaultApplication.
+	tree := project inspectionItems: builder.
+	self assertCollection: tree roots hasSameElements: { model }.
+	self assert: (tree children value: model) size equals: 1.
+	absentModel := OPTestContainerModel new.
+	absentModel instVarNamed: #uuid put: UUID new.
+	self assertEmpty: (tree children value: absentModel)
+]
+
+{ #category : 'tests' }
 OPProjectTest >> testRemoveModel [
 
 	project addModel: model.

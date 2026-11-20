@@ -18,13 +18,6 @@ Class {
 	#tag : 'Models'
 }
 
-{ #category : 'deprecation' }
-OPProject class >> name: aString [
-
-	self deprecated: 'Use named: instead.' transformWith: '`@receiver name: `@arg' -> '`@receiver named: `@arg'.
-	^ self named: aString
-]
-
 { #category : 'instance creation' }
 OPProject class >> named: aString [
 	^ self new

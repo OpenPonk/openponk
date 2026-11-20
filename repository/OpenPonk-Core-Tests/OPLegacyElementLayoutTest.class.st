@@ -118,6 +118,14 @@ OPLegacyElementLayoutTest >> testContentFromJSON [
 ]
 
 { #category : 'tests' }
+OPLegacyElementLayoutTest >> testEqualityEdgeCases [
+
+	self deny: elementLayout equals: 'not a layout'.
+	self deny: OPLegacyElementLayout none equals: relationshipLayout.
+	self deny: relationshipLayout equals: OPLegacyElementLayout none
+]
+
+{ #category : 'tests' }
 OPLegacyElementLayoutTest >> testFromJSON [
 	| newLayout |
 	newLayout := NeoJSONReader
@@ -248,6 +256,43 @@ OPLegacyElementLayoutTest >> testRelationshipFromJSON [
 	self assert: (newLayout path points at: 1) equals: 100 @ 200.
 	self assert: (newLayout path points at: 2) equals: 150 @ 200.
 	self assert: (newLayout path points at: 3) equals: 150 @ 300
+]
+
+{ #category : 'tests' }
+OPLegacyElementLayoutTest >> testRelationshipPathComparisonAndHash [
+
+	| pathAlpha pathBeta pathSameSourceSmallerX pathSameSourceSmallerY pathSameSourceShorter pathShortHash pathNilHash |
+	self assert: OPLegacyRelationshipPath isDeprecated description: 'OPLegacyRelationshipPath should be marked as deprecated'.
+	pathAlpha := OPLegacyRelationshipPath fromSource: 'a' throughPoints: {
+			             (10 @ 20).
+			             (30 @ 40) }.
+	pathBeta := OPLegacyRelationshipPath fromSource: 'b' throughPoints: {
+			            (10 @ 20).
+			            (30 @ 40) }.
+	pathSameSourceSmallerX := OPLegacyRelationshipPath fromSource: 'a' throughPoints: {
+			                          (5 @ 99).
+			                          (30 @ 40) }.
+	pathSameSourceSmallerY := OPLegacyRelationshipPath fromSource: 'a' throughPoints: {
+			                          (10 @ 15).
+			                          (30 @ 40) }.
+	pathSameSourceShorter := OPLegacyRelationshipPath fromSource: 'a' throughPoints: { (10 @ 20) }.
+	self assert: pathAlpha < pathBeta description: 'Path with smaller source should sort first'.
+	self deny: pathBeta < pathAlpha description: 'Path with larger source must not sort before smaller source'.
+	self
+		assert: pathSameSourceSmallerX < pathAlpha
+		description: 'Path with smaller first point x should sort first when sources match'.
+	self
+		assert: pathSameSourceSmallerY < pathAlpha
+		description: 'Path with smaller first point y should sort first when source and x match'.
+	self
+		assert: pathSameSourceShorter < pathAlpha
+		description: 'Shorter point prefix should sort before longer path when sources match'.
+	self deny: pathAlpha < pathSameSourceShorter description: 'Longer path must not sort before its prefix'.
+	self deny: pathAlpha < pathAlpha description: 'Equal paths must not compare strictly less than each other'.
+	pathShortHash := OPLegacyRelationshipPath fromSource: 'a' throughPoints: { (10 @ 20) }.
+	pathNilHash := OPLegacyRelationshipPath fromSource: 'a' throughPoints: nil.
+	self assert: pathShortHash hash equals: 'a' hash.
+	self assert: pathNilHash hash equals: 'a' hash
 ]
 
 { #category : 'tests' }

@@ -99,9 +99,13 @@ OPModelPropertyAccessor >> name [
 
 { #category : 'printing' }
 OPModelPropertyAccessor >> printOn: aStream [
-	super printOn: aStream.
+
+	aStream nextPutAll: self class name.
 	selector ifNotNil: [
-		aStream nextPut: $(; nextPutAll: selector asString; nextPut: $) ]
+			aStream
+				nextPut: $(;
+				nextPutAll: selector asString;
+				nextPut: $) ]
 ]
 
 { #category : 'accessing' }

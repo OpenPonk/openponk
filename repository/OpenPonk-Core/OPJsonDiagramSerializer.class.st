@@ -37,7 +37,7 @@ OPJsonDiagramSerializer >> materializeDiagramOf: aModel from: aStream [
 
 { #category : 'serialize/materialize' }
 OPJsonDiagramSerializer >> serializeDiagram: aDiagram to: aStream [
-	"Serialize a diagram returned by your controller to a string"
+	"Legacy JSON diagram export is no longer supported; diagrams are serialized with OPStonDiagramSerializer."
 
-	^ aDiagram asJsonTo: aStream
+	self shouldNotImplement
 ]

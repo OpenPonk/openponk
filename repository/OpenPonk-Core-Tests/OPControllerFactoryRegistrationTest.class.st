@@ -22,3 +22,13 @@ OPControllerFactoryRegistrationTest >> testIsForModelWithCondition [
 		assert: (registration isForModel: (OPTestRelationModel new source: 12))
 		description: 'Registration should accept model when condition evaluates to true'
 ]
+
+{ #category : 'tests' }
+OPControllerFactoryRegistrationTest >> testPrintOnIncludesHandlerClassName [
+
+	| registration |
+	registration := OPModelHandlerFactoryRegistration forHandlerClass: OPTestEntityController.
+	self
+		assert: (registration printString includesSubstring: 'OPTestEntityController')
+		description: 'printOn: should include the registered handler class name'
+]

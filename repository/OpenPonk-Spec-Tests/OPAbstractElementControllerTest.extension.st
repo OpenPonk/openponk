@@ -47,18 +47,6 @@ OPAbstractElementControllerTest >> testMultiLineFormFieldsProperlyWrapInDiagramS
 ]
 
 { #category : '*OpenPonk-Spec-Tests' }
-OPAbstractElementControllerTest >> testOpenInForm [
-
-	| form |
-	self showInDiagram.
-	form := OPPropertiesForm new.
-	diagramController stub form willReturn: form.
-	self assertEmpty: form layout children.
-	diagramController openInForm: controller viewModel.
-	self denyEmpty: form layout children
-]
-
-{ #category : '*OpenPonk-Spec-Tests' }
 OPAbstractElementControllerTest >> verifyMultiLineWrapForFormPresenter: aPresenter [
 
 	| originalText sentinel labelsWithNewline |

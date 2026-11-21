@@ -98,6 +98,36 @@ OPPropertiesFormTest >> testBindingsAndPriorityMetaLinkAndLayoutHelpers [
 ]
 
 { #category : 'tests' }
+OPPropertiesFormTest >> testDiagramOnlyViewModelsBuildEditorForms [
+
+	| project container diagram registry note boundary noteViewModel boundaryViewModel |
+	project := OPProject named: 'DiagramOnlyFormTest'.
+	container := OPTestContainerModel new
+		             name: 'Root';
+		             yourself.
+	project addModel: container.
+	diagram := OPOpenPonkDiagram forModelElement: container.
+	project addDiagram: diagram.
+	registry := OPViewModelRegistry forProject: project.
+	note := OPNote new
+		        text: 'Sample note';
+		        owningElement: diagram;
+		        yourself.
+	boundary := OPBoundary new
+		            name: 'Sample boundary';
+		            owningElement: diagram;
+		            yourself.
+	noteViewModel := registry viewModelFor: note.
+	boundaryViewModel := registry viewModelFor: boundary.
+
+	[
+		form viewModel: noteViewModel.
+		self denyEmpty: form layout children.
+		form viewModel: boundaryViewModel.
+		self denyEmpty: form layout children ] ensure: [ form viewModel: nil ]
+]
+
+{ #category : 'tests' }
 OPPropertiesFormTest >> testEditableDropListAdapterAddToListConvertsTextToString [
 
 	| presenter adapter |

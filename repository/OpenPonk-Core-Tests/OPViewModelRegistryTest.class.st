@@ -110,6 +110,18 @@ OPViewModelRegistryTest >> testNewSignalsErrorAndResetCacheRebuildsMapping [
 ]
 
 { #category : 'tests' }
+OPViewModelRegistryTest >> testProductionViewModelsHaveUniqueModelClasses [
+
+	| byModelClass collisions |
+	byModelClass := Dictionary new.
+	OPViewModel allSubclassesDo: [ :eachClass |
+			(eachClass isAbstract not and: [ (eachClass package name endsWith: '-Tests') not ]) ifTrue: [
+				(byModelClass at: eachClass modelClass ifAbsentPut: [ OrderedCollection new ]) add: eachClass ] ].
+	collisions := byModelClass associations select: [ :eachAssociation | eachAssociation value size > 1 ].
+	self assertEmpty: collisions
+]
+
+{ #category : 'tests' }
 OPViewModelRegistryTest >> testProjectViewModelRegistryInspectionAndCoreExtensions [
 
 	| projectViewModel builder tree plainObject containerDescription contextObject |

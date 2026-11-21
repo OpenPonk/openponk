@@ -358,7 +358,6 @@ OPDiagramControllerTest >> testElementControllerAndDiagramElementInteractionsAnd
 	self assert: controllerA isTargetUsedAsContainer description: 'Default element controller should use target as container'.
 	self assert: (controllerA parentModelInTarget: diagramController) identicalTo: container.
 	self deny: controllerA isCommon description: 'Standard element controller should not be marked as common'.
-	self assert: controllerA elementsToShowInside isCollection description: 'elementsToShowInside should answer a collection'.
 	self assert: controllerA dependentControllers isCollection description: 'dependentControllers should answer a collection'.
 	creationCommand := controllerA creationCommandIn: container andShowInDiagram: diagramController.
 	self assert: creationCommand class identicalTo: OPCreateNodeCommand.

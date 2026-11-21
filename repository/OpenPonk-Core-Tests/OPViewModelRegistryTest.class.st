@@ -41,6 +41,14 @@ OPViewModelRegistryTest >> setUp [
 ]
 
 { #category : 'tests' }
+OPViewModelRegistryTest >> testDefaultViewModelChildrenModelsIsEmpty [
+
+	| noteViewModel |
+	noteViewModel := OPNoteViewModel new.
+	self assertEmpty: noteViewModel childrenModels
+]
+
+{ #category : 'tests' }
 OPViewModelRegistryTest >> testDiagramOnlyNoteAndBoundaryViewModels [
 	| diagram note boundary noteVM boundaryVM |
 	diagram := OPOpenPonkDiagram forModelElement: container.

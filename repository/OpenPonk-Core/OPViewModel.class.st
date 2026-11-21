@@ -126,20 +126,17 @@ OPViewModel >> buildEditorForm: aForm [
 { #category : 'accessing' }
 OPViewModel >> children [
 	"Returns viewmodels of model elements that are children of own model element hierarchically / by ownership.
-	 Answers viewmodels of essentialChildrenModels as default. While essentialChildrenModels is often a subset of childrenModels, there might be essentialChildrenModels that may be important even if they are not owned by it.
 	 Used for example for GUI tree representations of a model."
-	
-	^ self childrenModels
-		collect: [ :eachModel | self registry viewModelFor: eachModel ]
+
+	^ self childrenModels collect: [ :eachModel | self registry viewModelFor: eachModel ]
 ]
 
 { #category : 'accessing' }
 OPViewModel >> childrenModels [
 	"Returns model elements that are children of own model element hierarchically / by ownership.
-	 Answers essentialChildrenModels as default. While essentialChildrenModels is often a subset of childrenModels, there might be essentialChildrenModels that may be important even if they are not owned by it.
 	 Used for example for GUI tree representations of a model."
 
-	^ self essentialChildrenModels
+	^ #(  )
 ]
 
 { #category : 'undo/redo' }
@@ -204,14 +201,6 @@ OPViewModel >> descriptionName [
 		label: 'Name';
 		priority: 1;
 		yourself
-]
-
-{ #category : 'accessing' }
-OPViewModel >> essentialChildrenModels [
-	"Returns child or otherwise dependent model elements that are essential for own model (when talking about the parent, we should usually mention these model elements).
-	 Used for example for automatically showing children in a digram when the own model element is added / shown."
-
-	^ #(  )
 ]
 
 { #category : 'accessing' }

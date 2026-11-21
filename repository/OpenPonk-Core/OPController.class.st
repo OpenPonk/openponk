@@ -140,13 +140,6 @@ OPController >> diagramElement: aDiagramElement [
 	^ diagramElement := aDiagramElement
 ]
 
-{ #category : 'accessing' }
-OPController >> elementsToShowInside [
-	"Returns model elements that should be shown (made visible in diagram) when own model is shown"
-
-	^ self viewModel essentialChildrenModels
-]
-
 { #category : 'ui interaction' }
 OPController >> ensureDeselected [
 

@@ -47,13 +47,13 @@ OPNodesAndEdgesLayouter >> executeLayout: aTwoArgBlock onNodes: aCollectionOfNod
 { #category : 'private' }
 OPNodesAndEdgesLayouter >> executeLayoutCommands: aCollectionOfCommands [
 	"Execute layout delta commands within a labeled undo transaction."
+
+	| activeUndoManager |
 	aCollectionOfCommands ifEmpty: [ ^ self ].
-	diagramController undoManager
-		ifNotNil: [ :activeUndoManager |
-			activeUndoManager inTransactionLabeled: 'Apply Layout' do: [
-				aCollectionOfCommands do: [ :eachCommand | activeUndoManager execute: eachCommand ] ] ]
-		ifNil: [
-			aCollectionOfCommands do: [ :eachCommand | eachCommand execute ] ]
+	activeUndoManager := diagramController undoManager.
+	activeUndoManager
+		inTransactionLabeled: 'Apply Layout'
+		do: [ aCollectionOfCommands do: [ :eachCommand | activeUndoManager execute: eachCommand ] ]
 ]
 
 { #category : 'testing' }

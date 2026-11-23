@@ -16,11 +16,9 @@ Class {
 OPIcons class >> at: aName ifAbsent: aBlock [
 
 	Icons ifNil: [ Icons := Dictionary new ].
-
-	^ Icons at: aName ifAbsentPut: [ 
-		  [ MessageSend receiver: self selector: aName ]
-			  on: MessageNotUnderstood
-			  do: [ ^ aBlock value ] ]
+	^ Icons at: aName ifAbsentPut: [
+			  (self iconSelectors includes: aName) ifFalse: [ ^ aBlock value ].
+			  self perform: aName ]
 ]
 
 { #category : 'accessing' }
@@ -70,6 +68,9 @@ OPIcons class >> inspectionIcons: aBuilder [
 
 { #category : 'accessing' }
 OPIcons class >> resetIcons [
+
 	<script>
-	^ Icons := nil
+	Icons := nil.
+	self subclassesDo: #resetIcons.
+	^ nil
 ]

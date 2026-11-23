@@ -86,6 +86,22 @@ OPVersion class >> getReleasesOf: aRepositoryName [
 						  STONJSON fromString: response entity string ] ]
 ]
 
+{ #category : 'accessing' }
+OPVersion class >> inferRepositoryNameFromPlugins: aCollectionOfPluginClasses [
+
+	| activePlugins leafPlugins leafRepositories |
+	activePlugins := aCollectionOfPluginClasses reject: [ :eachPluginClass |
+		                 eachPluginClass isAbstract or: [ eachPluginClass isTestingOnly or: [ eachPluginClass repositoryName isNil ] ] ].
+	activePlugins ifEmpty: [ ^ self unknownRepositoryName ].
+	leafPlugins := activePlugins reject: [ :eachPluginClass |
+		               activePlugins anySatisfy: [ :eachOtherPluginClass |
+			               eachOtherPluginClass requiredPluginClasses includes: eachPluginClass ] ].
+	leafRepositories := leafPlugins collect: #repositoryName as: Set.
+	leafRepositories size = 1 ifTrue: [ ^ leafRepositories anyOne ].
+	leafRepositories size > 1 ifTrue: [ ^ #plugins ].
+	^ self unknownRepositoryName
+]
+
 { #category : 'private' }
 OPVersion class >> isVersionTag: tagA greaterThanOrEqualTo: tagB [
 	| numsA numsB |
@@ -106,21 +122,13 @@ OPVersion class >> latest [
 { #category : 'accessing' }
 OPVersion class >> ofLastestNightlyOf: aRepositoryName [
 
-	| releases nightlyJson title date version |
+	| releases nightlyJson |
 	releases := self getReleasesOf: aRepositoryName.
 	nightlyJson := releases
 		               detect: [ :each | (each at: #tag_name ifAbsent: [ '' ]) = 'nightly' ]
 		               ifNone: [ releases detect: [ :each | each at: #prerelease ifAbsent: [ false ] ] ifNone: [ nil ] ].
 	nightlyJson ifNil: [ ^ nil ].
-	version := self fromReleaseJson: nightlyJson repositoryName: aRepositoryName.
-	title := nightlyJson at: #name ifAbsent: [ '' ].
-	(title beginsWith: 'nightly-') ifTrue: [
-			[
-				date := DateAndTime fromString: (title allButFirst: 8).
-				version buildDate: date ]
-				on: Error
-				do: [ :e | "fallback on published_at" ] ].
-	^ version
+	^ self fromReleaseJson: nightlyJson repositoryName: aRepositoryName
 ]
 
 { #category : 'accessing' }
@@ -378,26 +386,8 @@ OPVersion >> repositoryLink [
 
 { #category : 'accessing' }
 OPVersion >> repositoryName [
-	| activePlugins activeRepositories leafPlugins |
-	repositoryName ifNotNil: [ ^ repositoryName ].
-	activePlugins := (OPPlugin allSubclasses reject: #isAbstract)
-		select: [ :eachPluginClass | eachPluginClass repositoryName isNotNil ].
-	activeRepositories := (activePlugins collect: [ :eachPluginClass | eachPluginClass repositoryName ]) asSet.
 
-	"If all registered non-abstract plugins are loaded, this is the full bundle distribution."
-	(activePlugins size = (OPPlugin allSubclasses reject: #isAbstract) size and: [ activePlugins isNotEmpty ])
-		ifTrue: [ ^ repositoryName := #plugins ].
-
-	"Identify leaf plugins that are not prerequisites for any other loaded plugin."
-	leafPlugins := activePlugins reject: [ :eachPluginClass |
-		activePlugins anySatisfy: [ :eachOtherPluginClass |
-			eachOtherPluginClass requiredPluginClasses includes: eachPluginClass ] ].
-
-	"If exactly one leaf plugin is present, the image corresponds to that distribution."
-	leafPlugins size = 1 ifTrue: [
-		^ repositoryName := leafPlugins anyOne repositoryName ].
-
-	^ repositoryName := self class unknownRepositoryName
+	^ repositoryName ifNil: [ repositoryName := self class inferRepositoryNameFromPlugins: OPPlugin allSubclasses ]
 ]
 
 { #category : 'accessing' }

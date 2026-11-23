@@ -22,10 +22,8 @@ OPShapeStyle class >> isAbstract [
 { #category : 'accessing' }
 OPShapeStyle >> addedAsLocalToStyledElement: aDiagramElement [
 
-	aDiagramElement localStyle = self ifFalse: [ 
-		'This style was not added as local style to the element' ].
-	styledElements ifNotEmpty: [ 
-		self error: 'Cannot use style as local if already used elsewhere' ].
+	aDiagramElement localStyle = self ifFalse: [ self error: 'This style was not added as local style to the element' ].
+	styledElements ifNotEmpty: [ self error: 'Cannot use style as local if already used elsewhere' ].
 	styledElements add: aDiagramElement
 ]
 

@@ -20,6 +20,24 @@ OPZipPersistenceTest >> setUp [
 ]
 
 { #category : 'tests' }
+OPZipPersistenceTest >> testLoadFromClosesReadStreamSoDiskFileCanBeDeletedImmediately [
+
+	| root tempDirectory diskZipFile loaded |
+	root := FileSystem memory root.
+	root / 'file.txt' writeStreamDo: [ :stream | stream << 'hello' ].
+	tempDirectory := FileLocator temp / ('openponk-zip-test-' , UUID new asString).
+	tempDirectory ensureCreateDirectory.
+	[
+		diskZipFile := tempDirectory / 'project.opp'.
+		persistence save: root to: diskZipFile.
+		loaded := persistence loadFrom: diskZipFile.
+		self assert: (loaded / 'file.txt') contents equals: 'hello'.
+		diskZipFile delete.
+		self deny: diskZipFile exists description: 'Loaded zip file handle must be closed so the file can be deleted immediately' ]
+		ensure: [ tempDirectory ensureDeleteAll ]
+]
+
+{ #category : 'tests' }
 OPZipPersistenceTest >> testNonASCII [
 	| root loaded zipFile |
 	root := FileSystem memory root.

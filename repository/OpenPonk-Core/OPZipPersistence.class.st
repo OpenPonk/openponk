@@ -11,9 +11,13 @@ Class {
 
 { #category : 'load and saving' }
 OPZipPersistence >> loadFrom: aZipFile [
+
 	| root |
 	root := FileSystem memory root.
-	(ZipArchive new readFrom: aZipFile binaryReadStream) extractAllTo: root.
+	aZipFile binaryReadStreamDo: [ :stream |
+			| archive |
+			archive := ZipArchive new.
+			[ (archive readFrom: stream) extractAllTo: root ] ensure: [ archive close ] ].
 	^ root
 ]
 

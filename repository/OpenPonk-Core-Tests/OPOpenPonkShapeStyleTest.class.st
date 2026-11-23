@@ -26,6 +26,15 @@ OPOpenPonkShapeStyleTest >> shapeClass [
 ]
 
 { #category : 'tests' }
+OPOpenPonkShapeStyleTest >> testAddedAsLocalToStyledElementSignalsErrorWhenNotAssignedAsLocalStyle [
+
+	| diagramElement orphanStyle |
+	diagramElement := OPDiagramOnlyShape new.
+	orphanStyle := OPOpenPonkShapeStyle new.
+	self should: [ orphanStyle addedAsLocalToStyledElement: diagramElement ] raise: Error
+]
+
+{ #category : 'tests' }
 OPOpenPonkShapeStyleTest >> testAddedAsSharedToStyledElementSignalsErrorWhenNotAssignedAsSharedStyle [
 	| diagramElement orphanStyle |
 	diagramElement := OPDiagramOnlyShape new.
@@ -119,6 +128,43 @@ OPOpenPonkShapeStyleTest >> testPropertyInheritance [
 	self
 		assert: (b stylePropertyNamed: #fontSize ifAbsent: [ 1 ])
 		equals: 15
+]
+
+{ #category : 'tests' }
+OPOpenPonkShapeStyleTest >> testShapeStyleAbstractnessConflictGuardsAndKeyOperations [
+
+	| firstElement secondElement localStyle sharedStyle lookupResult removedValue |
+	self assert: OPShapeStyle isAbstract description: 'OPShapeStyle must be abstract'.
+	self deny: OPOpenPonkShapeStyle isAbstract description: 'OPOpenPonkShapeStyle must not be abstract'.
+
+	firstElement := OPDiagramElement new.
+	secondElement := OPDiagramElement new.
+	localStyle := OPOpenPonkShapeStyle new.
+	firstElement localStyle: localStyle.
+
+	self
+		should: [
+				secondElement instVarNamed: #localStyle put: localStyle.
+				localStyle addedAsLocalToStyledElement: secondElement ]
+		raise: Error.
+
+	self
+		should: [
+				secondElement instVarNamed: #sharedStyle put: localStyle.
+				localStyle addedAsSharedToStyledElement: secondElement ]
+		raise: Error.
+
+	sharedStyle := OPOpenPonkShapeStyle new.
+	sharedStyle at: #fillColor put: Color red.
+	lookupResult := sharedStyle at: #fillColor ifPresent: [ :value | value ] ifAbsent: [ #missing ].
+	self assert: lookupResult equals: Color red.
+	lookupResult := sharedStyle at: #strokeColor ifPresent: [ :value | value ] ifAbsent: [ #missing ].
+	self assert: lookupResult equals: #missing.
+
+	removedValue := sharedStyle removeKey: #fillColor ifAbsent: [ #missing ].
+	self assert: removedValue equals: Color red.
+	self assert: (sharedStyle removeKey: #fillColor ifAbsent: [ #missing ]) equals: #missing.
+	self assert: (sharedStyle removeKeyIfPresent: #fillColor) identicalTo: nil
 ]
 
 { #category : 'tests' }

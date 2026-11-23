@@ -429,15 +429,6 @@ OPDiagramElement >> localStyle: aStyle [
 	self styleChanged.
 ]
 
-{ #category : 'accessing' }
-OPDiagramElement >> model [
-
-	self
-		deprecated: 'Use #modelElement instead'
-		transformWith: '`@receiver model' -> '`@receiver modelElement'.
-	^ self modelElement
-]
-
 { #category : 'initialization' }
 OPDiagramElement >> modelChanged [
 

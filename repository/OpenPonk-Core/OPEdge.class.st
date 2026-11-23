@@ -26,17 +26,6 @@ OPEdge class >> isNode [
 ]
 
 { #category : 'rendering' }
-OPEdge class >> renderForController: aController [
-
-	^ self new
-		  modelElement: aController model;
-		  source: aController source diagramElement;
-		  target: aController target diagramElement;
-		  renderIn: aController diagramController canvas;
-		  yourself
-]
-
-{ #category : 'rendering' }
 OPEdge class >> renderSimplifiedForController: aController [
 
 	^ self new

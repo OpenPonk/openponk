@@ -40,6 +40,20 @@ OPNodeBoundsTest >> testHash [
 ]
 
 { #category : 'tests' }
+OPNodeBoundsTest >> testIdentityAndDifferentClassEqualityForBoundsAndCamera [
+
+	| bounds camera |
+	bounds := OPNodeBounds withPosition: 10 @ 20 extent: 100 @ 50.
+	self assert: bounds equals: bounds.
+	self deny: bounds = 'not-bounds' description: 'OPNodeBounds must not equal an instance of another class'.
+	camera := OPDiagramCamera new
+		          position: 5 @ 15;
+		          scale: 1.5;
+		          yourself.
+	self assert: camera equals: camera
+]
+
+{ #category : 'tests' }
 OPNodeBoundsTest >> testInequality [
 	| b1 b2 b3 |
 	b1 := OPNodeBounds withPosition: 10 @ 20 extent: 100 @ 50.

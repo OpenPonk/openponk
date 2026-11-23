@@ -153,3 +153,77 @@ OPLayoutLoopDetectorTest >> testLayouterHierarchyAndPositionPropagation [
 	controllerA roassalShape translateBy: 10 @ 15.
 	hierarchicalLayouter unsubscribeContainers: { controllerA diagramElement }
 ]
+
+{ #category : 'tests' }
+OPLayoutLoopDetectorTest >> testPartialLayoutNestedContainersNoLayouterAndResizableOnlyNode [
+
+	| project container diagram testCanvas projectController diagramController controllerA controllerB controllerC noLayouter blockExecuted layouter originalCenterBefore originalPositionC outerContainer innerContainer snapshot |
+	project := OPProject new.
+	container := OPTestContainerModel new.
+	project addModel: container.
+	testCanvas := RSCanvas new.
+	diagram := OPOpenPonkDiagram forModelElement: container.
+	diagram canvas: testCanvas.
+	project addDiagram: diagram.
+	projectController := OPProjectController forProject: project.
+	diagramController := OPTestDiagramController new.
+	projectController addDiagramController: diagramController.
+	diagramController
+		model: container;
+		diagramElement: diagram;
+		canvasPresenter: (OPHeadlessCanvasPresenter new
+				 canvas: testCanvas;
+				 yourself).
+	controllerA := diagramController showInDiagramModel: (container add: OPTestEntityModel new).
+	controllerB := diagramController showInDiagramModel: (container add: OPTestEntityModel new).
+	controllerC := diagramController showInDiagramModel: (container add: OPTestEntityModel new).
+	controllerA roassalShape translateTo: 20 @ 30.
+	controllerB roassalShape translateTo: 120 @ 30.
+	controllerC roassalShape translateTo: 300 @ 300.
+	controllerA diagramElement updateFromRender.
+	controllerB diagramElement updateFromRender.
+	controllerC diagramElement updateFromRender.
+
+	noLayouter := OPNoLayouter new
+		              diagramController: diagramController;
+		              yourself.
+	blockExecuted := false.
+	noLayouter applyLayout: [ :nodes :edges | blockExecuted := true ].
+	self deny: blockExecuted description: 'OPNoLayouter>>#applyLayout: must not execute layout block'.
+	self assertEmpty: (noLayouter roassalShapesFor: { OPTestEntityModel new }).
+
+	(testCanvas propertyAt: OPRSSelectableCanvas) instVarNamed: #selectedShapes put: {
+			controllerA roassalShape.
+			controllerB roassalShape }.
+	originalCenterBefore := (RSGroup withAll: {
+			                         controllerA roassalShape.
+			                         controllerB roassalShape }) encompassingRectangle center.
+	originalPositionC := controllerC roassalShape position.
+	layouter := OPTestLayouter new
+		            diagramController: diagramController;
+		            yourself.
+	self assert: layouter targetNodes size equals: 2.
+	layouter defaultLayout.
+	self
+		assert: (RSGroup withAll: {
+					 controllerA roassalShape.
+					 controllerB roassalShape }) encompassingRectangle center
+		equals: originalCenterBefore.
+	self assert: controllerC roassalShape position equals: originalPositionC.
+
+	outerContainer := OPTestBoundNode in: diagram.
+	outerContainer stub isContainer willReturn: true.
+	innerContainer := OPTestBoundNode in: outerContainer.
+	innerContainer stub isContainer willReturn: true.
+	self assert: layouter containerElementsBottomUp equals: {
+			innerContainer.
+			outerContainer }.
+	self assert: (layouter depthFor: outerContainer) equals: 0.
+	self assert: (layouter depthFor: innerContainer) equals: 1.
+
+	controllerC diagramElement stub isPositionableByUser willReturn: false.
+	controllerC diagramElement stub isResizableByUser willReturn: true.
+	self assertCollection: layouter allRenderedNodeShapes includesAll: { controllerC roassalShape }.
+	snapshot := OPDiagramGeometrySnapshot onNodes: { controllerC roassalShape }.
+	self assertEmpty: snapshot deltaCommands
+]

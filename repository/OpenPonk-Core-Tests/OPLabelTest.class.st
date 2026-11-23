@@ -67,3 +67,12 @@ OPLabelTest >> testEdgeLabelRenderingAndAnchorSynchronization [
 	edgeLabel resetText.
 	self assert: edgeLabel text equals: 'edge-label'
 ]
+
+{ #category : 'tests' }
+OPLabelTest >> testLabelStonInstVarNamesCanHaveControllerAndUnrenderedStyleUpdate [
+
+	self assertCollection: OPLabel stonAllInstVarNames includesAll: #( #text ).
+	self deny: shape canHaveController description: 'Labels must not have their own controller'.
+	shape updateRenderFromStyles.
+	self deny: shape isRendered description: 'Updating styles on an unrendered label must leave it unrendered'
+]

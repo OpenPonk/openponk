@@ -289,6 +289,72 @@ OPVersionTest >> testFullVersionStringUnknownWhenIncomplete [
 ]
 
 { #category : 'tests' }
+OPVersionTest >> testInferRepositoryNameFromPlugins [
+
+	| singlePlugin parentPlugin childPlugin otherPlugin cyclicPluginA cyclicPluginB |
+	self assert: (OPVersion inferRepositoryNameFromPlugins: #(  )) equals: OPVersion unknownRepositoryName.
+	self
+		assert: (OPVersion inferRepositoryNameFromPlugins: {
+					 OPTestPlugin.
+					 OPTestSecondaryPlugin })
+		equals: OPVersion unknownRepositoryName.
+
+	singlePlugin := Mock new.
+	singlePlugin stub isAbstract willReturn: false.
+	singlePlugin stub isTestingOnly willReturn: false.
+	singlePlugin stub repositoryName willReturn: #'fsm-editor'.
+	singlePlugin stub requiredPluginClasses willReturn: #(  ).
+	self
+		assert: (OPVersion inferRepositoryNameFromPlugins: {
+					 singlePlugin.
+					 OPTestPlugin })
+		equals: #'fsm-editor'.
+
+	parentPlugin := Mock new.
+	parentPlugin stub isAbstract willReturn: false.
+	parentPlugin stub isTestingOnly willReturn: false.
+	parentPlugin stub repositoryName willReturn: #'class-editor'.
+	parentPlugin stub requiredPluginClasses willReturn: #(  ).
+	childPlugin := Mock new.
+	childPlugin stub isAbstract willReturn: false.
+	childPlugin stub isTestingOnly willReturn: false.
+	childPlugin stub repositoryName willReturn: #'ontouml-profile'.
+	childPlugin stub requiredPluginClasses willReturn: { parentPlugin }.
+	self
+		assert: (OPVersion inferRepositoryNameFromPlugins: {
+					 parentPlugin.
+					 childPlugin })
+		equals: #'ontouml-profile'.
+
+	otherPlugin := Mock new.
+	otherPlugin stub isAbstract willReturn: false.
+	otherPlugin stub isTestingOnly willReturn: false.
+	otherPlugin stub repositoryName willReturn: #BPMN.
+	otherPlugin stub requiredPluginClasses willReturn: #(  ).
+	self
+		assert: (OPVersion inferRepositoryNameFromPlugins: {
+					 singlePlugin.
+					 otherPlugin })
+		equals: #plugins.
+
+	cyclicPluginA := Mock new.
+	cyclicPluginB := Mock new.
+	cyclicPluginA stub isAbstract willReturn: false.
+	cyclicPluginA stub isTestingOnly willReturn: false.
+	cyclicPluginA stub repositoryName willReturn: #repoA.
+	cyclicPluginA stub requiredPluginClasses willReturn: { cyclicPluginB }.
+	cyclicPluginB stub isAbstract willReturn: false.
+	cyclicPluginB stub isTestingOnly willReturn: false.
+	cyclicPluginB stub repositoryName willReturn: #repoB.
+	cyclicPluginB stub requiredPluginClasses willReturn: { cyclicPluginA }.
+	self
+		assert: (OPVersion inferRepositoryNameFromPlugins: {
+					 cyclicPluginA.
+					 cyclicPluginB })
+		equals: OPVersion unknownRepositoryName
+]
+
+{ #category : 'tests' }
 OPVersionTest >> testIsRelease [
 	| version |
 	version := OPVersion new.
@@ -315,6 +381,49 @@ OPVersionTest >> testNeedsAndCanDownloadInfo [
 	self assert: version canDownloadInfo description: 'Version with workflow run ID and repository name can download info'.
 	version buildDate: DateAndTime now.
 	self deny: version needsDownloadInfo description: 'Version with buildDate no longer needs download info'
+]
+
+{ #category : 'tests' }
+OPVersionTest >> testOfflineJsonEdgeCasesAndVersionNumbersFromTag [
+
+	| releaseWithoutId version runFromCommitTimestamp runFromRootTimestamp runWithEmptyRepoDict |
+	releaseWithoutId := Dictionary newFrom: {
+			                    (#tag_name -> 'v1.0.0').
+			                    (#published_at -> '2026-09-01T10:05:00Z') }.
+	version := OPVersion fromReleaseJson: releaseWithoutId repositoryName: 'openponk'.
+	self assert: version githubWorkflowRunId identicalTo: nil.
+	self assert: (OPVersion versionNumbersFromTag: 'v1.x.2') asArray equals: #( 1 0 2 ).
+
+	[
+		OPVersion reset.
+		OPVersion runsCache at: 'sparse-repo-releases' put: { Dictionary new }.
+		self assert: (OPVersion ofLastestNightlyOf: 'sparse-repo') identicalTo: nil.
+		self assert: (OPVersion ofLastestReleaseOf: 'sparse-repo') identicalTo: nil ] ensure: [ OPVersion reset ].
+
+	runFromCommitTimestamp := Dictionary newFrom: {
+			                          (#head_branch -> 'v1.5.0').
+			                          (#repository -> 'openponk').
+			                          (#head_commit -> (Dictionary newFrom: { (#timestamp -> '2026-09-02T12:00:00Z') })) }.
+	version := OPVersion fromRunJson: runFromCommitTimestamp.
+	self assert: version repositoryName equals: 'openponk'.
+	self assert: version buildDate equals: (DateAndTime fromString: '2026-09-02T12:00:00Z') asLocal.
+
+	runFromRootTimestamp := Dictionary newFrom: {
+			                        (#head_branch -> 'master').
+			                        (#timestamp -> '2026-09-03T12:00:00Z') }.
+	version := OPVersion fromRunJson: runFromRootTimestamp.
+	self assert: version releaseName equals: 'nightly'.
+	self assert: version buildDate equals: (DateAndTime fromString: '2026-09-03T12:00:00Z') asLocal.
+
+	runWithEmptyRepoDict := Dictionary newFrom: {
+			                        (#head_branch -> 'v1.6.0').
+			                        (#created_at -> '2026-09-04T12:00:00Z').
+			                        (#repository -> Dictionary new) }.
+	version := OPVersion new
+		           repositoryName: 'preserved-repo';
+		           yourself.
+	version populateFromRunJson: runWithEmptyRepoDict.
+	self assert: version repositoryName equals: 'preserved-repo'
 ]
 
 { #category : 'tests' }
@@ -347,6 +456,12 @@ OPVersionTest >> testRepositoryLinkAndKnownStatus [
 	version repositoryName: OPVersion unknownRepositoryName.
 	self deny: version isRepositoryNameKnown description: 'Unknown repository constant should not be reported as known'.
 	self assert: version repositoryLink equals: 'https://openponk.org'
+]
+
+{ #category : 'tests' }
+OPVersionTest >> testRepositoryNameInFullImageReturnsPlugins [
+
+	self assert: OPVersion new repositoryName equals: #plugins
 ]
 
 { #category : 'tests' }

@@ -41,15 +41,27 @@ OPIconsTest >> testAllCoreAndIdeaIconsDecodeToValidForms [
 { #category : 'tests' }
 OPIconsTest >> testOPIconsLookupAndResetAndInspection [
 
-	| found missing presenter |
+	| found cached missing reloaded presenter firstItem scaledForm selectorName |
 	OPIcons resetIcons.
 	found := OPCoreIcons at: #openponkIcon ifPresent: [ :entry | entry ].
-	self assert: found class identicalTo: MessageSend.
-	self assert: found receiver identicalTo: OPCoreIcons.
-	self assert: found selector equals: #openponkIcon.
-	missing := OPCoreIcons at: #openponkIcon ifAbsent: [ nil ].
-	self assert: missing identicalTo: found.
+	self assert: found isForm description: 'OPIcons lookup must return a Form'.
+	cached := OPCoreIcons at: #openponkIcon ifAbsent: [ nil ].
+	self assert: cached identicalTo: found.
+	missing := OPCoreIcons at: #nonExistentIconSelector ifAbsent: [ #missing ].
+	self assert: missing equals: #missing.
+	self assert: (OPCoreIcons at: #nonExistentIconSelector ifPresent: [ :entry | entry ]) identicalTo: nil.
 	self assert: OPIcons resetIcons identicalTo: nil.
+	reloaded := OPCoreIcons at: #openponkIcon ifAbsent: [ nil ].
+	self assert: reloaded isForm description: 'Reloaded icon after resetIcons must be a Form'.
+	self deny: reloaded identicalTo: found.
+	self
+		assertCollection: OPCoreIcons iconSelectors
+		includesAll: #( #opDiagramIcon #opHideLabelsIcon #opHideSomeLabelsIcon #opShowLabelsIcon ).
 	presenter := OPCoreIcons inspectionIcons: SpPresenter new.
-	self assert: presenter items size equals: OPCoreIcons iconSelectors size
+	self assert: presenter items size equals: OPCoreIcons iconSelectors size.
+	firstItem := presenter items first.
+	scaledForm := presenter columns first evaluation value: firstItem.
+	selectorName := presenter columns second evaluation value: firstItem.
+	self assert: scaledForm isForm description: 'Inspector icon column must evaluate to a Form'.
+	self assert: selectorName isSymbol description: 'Inspector name column must evaluate to a selector symbol'
 ]

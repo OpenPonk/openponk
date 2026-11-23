@@ -826,7 +826,7 @@ OPCoreIcons class >> opConnectionIcon [
 	^ Form fromBinaryStream: self opConnectionIconContents base64Decoded asByteArray readStream
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'private - contents' }
 OPCoreIcons class >> opConnectionIconContents [
 	"Private - Method generated with the content of the file File @ D:\OpenPonk\icons\uml\directedAssociation.png"
 	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlw
@@ -838,12 +838,12 @@ a89/n/8MDMd2ejC+g4ntcWX8+P8/w1HPPf8D8BrgsP8/z38GBpvtLowb0OV2ujJuZWBgsHDY
 /4/hAtku+P+P4QIHC3YDKAYABoVHXkJDbNUAAAAASUVORK5CYII='
 ]
 
-{ #category : 'icons' }
+{ #category : 'accessing - icons' }
 OPCoreIcons class >> opDiagramIcon [
 	^ Form fromBinaryStream: self opDiagramIconContents base64Decoded asByteArray readStream
 ]
 
-{ #category : 'icons' }
+{ #category : 'private - contents' }
 OPCoreIcons class >> opDiagramIconContents [
 	"Answers base64 encoded PNG data for the generic diagram icon."
 
@@ -854,25 +854,25 @@ iBCRgpeuMfrHxsBOikA1Yuc8Ac1IvYAKyKgds4BiqBfyDJCjmfFWsRrBFTNwGhk4HMuaGmEm
 ZPiIb9LKLVqZU7MtNmeUX9VI4c+vvMeqPusCWs8vzPVQRpYAAAAASUVORK5CYII='
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing - icons' }
 OPCoreIcons class >> opHideLabelsIcon [
 
 	^ Form fromBinaryStream: self opHideLabelsIconContents base64Decoded asByteArray readStream
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'private - contents' }
 OPCoreIcons class >> opHideLabelsIconContents [
 
 	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAiUlEQVQoz33RMQrCQBAF0GeiNxAC5gIK2niA2OSQHsbSRhCxECwtBCUoCForFqIB2d1fDcxjdpnJtZm7OfpL9qt6pi7EwcTTOQVqO484yFQWEilsFaHGd0KpCX2xBSNrrxSoLMNvf0Bu7JACQ12nFKjt3eOgY5beQd9GGWtmKF1DV2jBwCq8A3gD71EYmTfN21wAAAAASUVORK5CYII='
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing - icons' }
 OPCoreIcons class >> opHideSomeLabelsIcon [
 
 	^ Form fromBinaryStream: self opHideSomeLabelsIconContents base64Decoded asByteArray readStream
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'private - contents' }
 OPCoreIcons class >> opHideSomeLabelsIconContents [
 
 	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAmklEQVQoz33QPQrCQBCG4XfzA/YWAdOkNKCNB0iatLmfB7EUbGyEFCkESwXBIAkIpkhlsBBdkJ35qmX2YWYYH5s1D678xfu9Qla0IIMlLxoNFBzpZeCRsUVJRE3k+vh2iLm7VrQgpWLUQMbePfsDfBacNTAn4KaBghNPGRhy+QYBMCVhl0z6wZZN2W0siOloLiNGGjHj4L4BwBuZxB5zJOJJxAAAAABJRU5ErkJggg=='
@@ -898,13 +898,13 @@ PAEf7Xb7qtFooEAggBiGOQbv36xNa8wQkUgkXhVQOp0WwWABYroDY42LxSLv9XofarXaMxhr
 v/dmQSaCxb50u11+8hs/gG99/Qf21bg5RlgkZQAAAABJRU5ErkJggg=='
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing - icons' }
 OPCoreIcons class >> opShowLabelsIcon [
 
 	^ Form fromBinaryStream: self opShowLabelsIconContents base64Decoded asByteArray readStream
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'private - contents' }
 OPCoreIcons class >> opShowLabelsIconContents [
 
 	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAn0lEQVQoz32QsQqCYBSFv1//oL1ByMWxoBYfwBbX3q8HaQxaWoKGhqBRIVAiIcihKWmIvKDX/0wHzsc9l+Mj2vDkRkde60bEPOjJtm7JhzIa128JzbraCpByoc7B6BUeCTscCjgTaMH/Qshde1GAOScaF5Bw0Lt/gM+CzAXMsBQuIOXKaxgwrIY3sMCEiH1/ZAFCKsq86Y4sFVOO+gYAX+T1I1hMBdlaAAAAAElFTkSuQmCC'

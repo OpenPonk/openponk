@@ -16,6 +16,54 @@ OPDiagramElementTest >> setUp [
 ]
 
 { #category : 'tests' }
+OPDiagramElementTest >> testAnnouncementsAndWhenSendToAndInvisibleOnMouseShape [
+
+	| element announcements shapeBeforeRemoval mouseShape moveEvent |
+	element := OPTestPlainDiagramElement new.
+	announcements := OrderedCollection new.
+	element when: OPDiagramElementRenderRemovedAnnouncement send: #add: to: announcements.
+	element renderIn: canvas.
+	shapeBeforeRemoval := element roassalShape.
+	element removeRender.
+	self assert: announcements size equals: 1.
+	self assert: announcements first diagramElement identicalTo: element.
+	self assert: announcements first roassalShape identicalTo: shapeBeforeRemoval.
+
+	mouseShape := OPInvisibleOnMouseShape new.
+	mouseShape removeRender.
+	self deny: mouseShape isRendered description: 'Removing render on unrendered OPInvisibleOnMouseShape must be idempotent'.
+
+	mouseShape := OPInvisibleOnMouseShape renderToPosition: 15 @ 25 onCanvas: canvas.
+	self assert: mouseShape isRendered description: 'OPInvisibleOnMouseShape must be rendered on canvas'.
+	self assert: mouseShape roassalShape position equals: 15 @ 25.
+
+	moveEvent := RSMouseMove new
+		             position: 45 @ 65;
+		             yourself.
+	canvas announce: moveEvent.
+	self assert: mouseShape roassalShape position equals: 45 @ 65.
+
+	mouseShape removeRender.
+	self deny: mouseShape isRendered description: 'OPInvisibleOnMouseShape must no longer be rendered after removeRender'.
+	self
+		deny: (canvas announcer hasSubscriber: mouseShape)
+		description: 'OPInvisibleOnMouseShape must unsubscribe from canvas on removeRender'
+]
+
+{ #category : 'tests' }
+OPDiagramElementTest >> testBoundNodeUnrenderedExtentPositionAndRounding [
+
+	| node |
+	node := OPTestBoundNode new.
+	node bounds: (OPNodeBounds withPosition: 10.4 @ 20.6 extent: 50.2 @ 30.8).
+	self assert: node position equals: 10.4 @ 20.6.
+	self assert: node extent equals: 50.2 @ 30.8.
+	node roundPositionsAndExtents.
+	self assert: node bounds origin equals: (10.4 - 25.1) rounded @ (20.6 - 15.4) rounded.
+	self assert: node bounds extent equals: 50 @ 31
+]
+
+{ #category : 'tests' }
 OPDiagramElementTest >> testClassAndDefaultQueries [
 	| element |
 	self assert: OPDiagramElement isAbstract description: 'OPDiagramElement must be abstract'.
@@ -64,6 +112,57 @@ OPDiagramElementTest >> testDeferredAndImmediateRoassalShapeEventsAndUnsubscribe
 	element roassalShapeWhen: RSMouseDoubleClick send: #add: to: receivedEvents.
 	element roassalShape announce: RSMouseDoubleClick new.
 	self assert: receivedEvents size equals: 2
+]
+
+{ #category : 'tests' }
+OPDiagramElementTest >> testDirectNodeGeometryAndTranslation [
+
+	| node |
+	node := OPTestNode new.
+	node translateBy: 10 @ 20.
+	node translateTo: 30 @ 40.
+	self deny: node isRendered description: 'Translating an unrendered OPNode must be a no-op'.
+
+	node renderIn: canvas.
+	self assert: node extent equals: 40 @ 25.
+	self assert: node height equals: 25.
+	node translateTo: 50 @ 60.
+	self assert: node position equals: 50 @ 60.
+	node translateBy: 15 @ -10.
+	self assert: node position equals: 65 @ 50
+]
+
+{ #category : 'tests' }
+OPDiagramElementTest >> testEdgeDefaultsMementoRoundingAndUpdateFromRender [
+
+	| edge renderedEdge sourceNode targetNode |
+	edge := OPTestEdge new.
+	self assert: edge source identicalTo: OPNoShape instance.
+	self assert: edge target identicalTo: OPNoShape instance.
+	edge restoreGeometryFromMemento: nil.
+	edge waypoints: {
+			(10.4 @ 20.6).
+			(30.2 @ 40.8) }.
+	edge roundPositionsAndExtents.
+	self assert: edge waypoints equals: {
+			(10 @ 21).
+			(30 @ 41) }.
+
+	sourceNode := OPTestBoundNode new
+		              bounds: (OPNodeBounds withPosition: 0 @ 0 extent: 40 @ 40);
+		              renderIn: canvas;
+		              yourself.
+	targetNode := OPTestBoundNode new
+		              bounds: (OPNodeBounds withPosition: 200 @ 0 extent: 40 @ 40);
+		              renderIn: canvas;
+		              yourself.
+	renderedEdge := OPTestEdge new
+		                source: sourceNode;
+		                target: targetNode;
+		                renderIn: canvas;
+		                yourself.
+	renderedEdge updateFromRender.
+	self denyEmpty: renderedEdge waypoints
 ]
 
 { #category : 'tests' }

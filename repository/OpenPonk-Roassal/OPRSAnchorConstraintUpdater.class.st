@@ -107,11 +107,6 @@ OPRSAnchorConstraintUpdater >> lineLength [
 ]
 
 { #category : 'accessing' }
-OPRSAnchorConstraintUpdater >> minDistanceToLine [
-	^ minDistanceToLine
-]
-
-{ #category : 'accessing' }
 OPRSAnchorConstraintUpdater >> minDistanceToLine: aNumber [
 	minDistanceToLine := aNumber
 ]
@@ -200,11 +195,6 @@ OPRSAnchorConstraintUpdater >> nearestPointInfo [
 		totalLengthFromStart := totalLengthFromStart + each length ].
 	currentNearest lineLength: totalLengthFromStart.
 	^ currentNearest
-]
-
-{ #category : 'accessing' }
-OPRSAnchorConstraintUpdater >> positionReference [
-	^ positionReference
 ]
 
 { #category : 'accessing' }

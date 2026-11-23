@@ -199,9 +199,11 @@ OPRSAnchorConstraint >> positionReference: anAnchorConstraintReference [
 { #category : 'building' }
 OPRSAnchorConstraint >> remove [
 
-	shape announcer unsubscribe: self.
-	line from announcer unsubscribe: self.
-	line to announcer unsubscribe: self.
+	shape ifNotNil: [ shape announcer unsubscribe: self ].
+	line ifNotNil: [
+			line announcer unsubscribe: self.
+			line from ifNotNil: [ :fromShape | fromShape announcer unsubscribe: self ].
+			line to ifNotNil: [ :toShape | toShape announcer unsubscribe: self ] ].
 	self removeAnchorAndGuideLine
 ]
 
@@ -210,7 +212,7 @@ OPRSAnchorConstraint >> removeAnchorAndGuideLine [
 
 	anchorShape ifNotNil: [ anchorShape remove ].
 	guideLine ifNotNil: [ guideLine remove ].
-	shape signalUpdate
+	shape ifNotNil: [ shape signalUpdate ]
 ]
 
 { #category : 'updating' }

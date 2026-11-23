@@ -77,11 +77,6 @@ OPRSDraggableControlPointHandle >> on: aLine atControlPoint: anIndex [
 ]
 
 { #category : 'events' }
-OPRSDraggableControlPointHandle >> onDragEnd [
-	self onDragEnd: nil
-]
-
-{ #category : 'events' }
 OPRSDraggableControlPointHandle >> onDragEnd: anEvent [
 	| targetLine previousControlPoint nextControlPoint oldWaypoints newWaypoints isRemoved |
 	line ifNil: [ ^ self ].

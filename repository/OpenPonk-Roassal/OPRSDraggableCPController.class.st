@@ -5,21 +5,10 @@ Calculates default offsets to ensure self-loops are visibly offset from their so
 Class {
 	#name : 'OPRSDraggableCPController',
 	#superclass : 'RSAbstractCPController',
-	#instVars : [
-		'selfLineDistance'
-	],
 	#category : 'OpenPonk-Roassal-Polyline',
 	#package : 'OpenPonk-Roassal',
 	#tag : 'Polyline'
 }
-
-{ #category : 'instance creation' }
-OPRSDraggableCPController class >> withSelfLineDistance: aNumber [
-
-	^ self new
-		  selfLineDistance: aNumber;
-		  yourself
-]
 
 { #category : 'hooks' }
 OPRSDraggableCPController >> controlPointsFor: aLine [
@@ -78,13 +67,6 @@ OPRSDraggableCPController >> defaultInnerSelfControlPointsFor: aLine [
 		  with: encompassingRectangle rightCenter + (delta @ 0)
 ]
 
-{ #category : 'initialization' }
-OPRSDraggableCPController >> initialize [
-
-	super initialize.
-	selfLineDistance := 35
-]
-
 { #category : 'hooks' }
 OPRSDraggableCPController >> innerControlPointsFor: aLine [
 
@@ -133,10 +115,4 @@ OPRSDraggableCPController >> innerControlPointsFor: aLine [
 						    ifFalse: [
 							    newShapeEncompassingRectangle top
 							    - oldShapeEncompassingRectangle top ])) ]
-]
-
-{ #category : 'accessing' }
-OPRSDraggableCPController >> selfLineDistance: aNumber [
-
-	selfLineDistance := aNumber
 ]

@@ -126,11 +126,6 @@ OPRSControlPointCreatorHandle >> size [
 ]
 
 { #category : 'accessing' }
-OPRSControlPointCreatorHandle >> to [
-	^ to
-]
-
-{ #category : 'accessing' }
 OPRSControlPointCreatorHandle >> toPoint [
 
 	^ nearEnd

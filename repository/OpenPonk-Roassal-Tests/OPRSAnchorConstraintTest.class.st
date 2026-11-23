@@ -60,6 +60,23 @@ OPRSAnchorConstraintTest >> tearDown [
 ]
 
 { #category : 'tests' }
+OPRSAnchorConstraintTest >> testAddAnchorAndGuideLineIsIdempotentAndMinDistancePreservesLargerDistance [
+
+	| canvasShapeCountBefore |
+	constraint
+		balance: 0.5;
+		distanceToLine: 30;
+		minDistanceToLine: 10;
+		alwaysShowGuideLine;
+		stick: anchoredShape on: line.
+	self assert: constraint minDistanceToLine equals: 10.
+	self assert: constraint distanceToLine equals: 30.
+	canvasShapeCountBefore := canvas shapes size.
+	constraint addAnchorAndGuideLine.
+	self assert: canvas shapes size equals: canvasShapeCountBefore
+]
+
+{ #category : 'tests' }
 OPRSAnchorConstraintTest >> testBalanceReferenceMovesShapeAndSavesPosition [
 
 	constraint
@@ -87,6 +104,89 @@ OPRSAnchorConstraintTest >> testBalanceReferenceMovesShapeAndSavesPosition [
 ]
 
 { #category : 'tests' }
+OPRSAnchorConstraintTest >> testBuildEventsMoveAndSaveShapeAndRemoveOnShapeOrLineRemoval [
+
+	| secondConstraint secondShape |
+	constraint
+		balance: 0.5;
+		distanceToLine: 20;
+		alwaysShowGuideLine;
+		stick: anchoredShape on: line.
+	sourceBox translateTo: 20 @ 0.
+	line controlPoints: {
+			(20 @ 0).
+			(200 @ 0) }.
+	sourceBox extent: 30 @ 30.
+	targetBox translateTo: 220 @ 0.
+	line controlPoints: {
+			(20 @ 0).
+			(220 @ 0) }.
+	targetBox extent: 30 @ 30.
+	line announce: OPRSDraggedControlPointsEvent new.
+	line announce: RSPositionChangedEvent new.
+	self assert: anchoredShape position x closeTo: 120.
+
+	anchoredShape translateTo: 70 @ 25.
+	anchoredShape announce: RSMouseDragging new.
+	self assert: constraint balance closeTo: 0.25.
+
+	anchoredShape remove.
+	self deny: constraint anchorShape isInACanvas description: 'Removing anchored shape should remove anchor constraint'.
+
+	secondShape := RSBox new
+		               size: 10;
+		               yourself.
+	canvas add: secondShape.
+	secondConstraint := OPRSAnchorConstraint new
+		                    balance: 0.5;
+		                    alwaysShowGuideLine;
+		                    stick: secondShape on: line;
+		                    yourself.
+	line remove.
+	self deny: secondConstraint anchorShape isInACanvas description: 'Removing line should remove anchor constraint'
+]
+
+{ #category : 'tests' }
+OPRSAnchorConstraintTest >> testBuildGuardsNilLineAndDeferredAlwaysShowGuideLine [
+
+	| partialConstraint deferredShape |
+	partialConstraint := OPRSAnchorConstraint new.
+	partialConstraint stick: anchoredShape on: nil.
+	self assert: (anchoredShape propertyAt: OPRSAnchorConstraint) identicalTo: partialConstraint.
+	self deny: partialConstraint anchorShape isInACanvas description: 'Build with nil line should not add anchor shape to canvas'.
+
+	deferredShape := RSBox new
+		                 size: 10;
+		                 yourself.
+	constraint
+		balance: 0.5;
+		alwaysShowGuideLine;
+		stick: deferredShape on: line.
+	self deny: constraint anchorShape isInACanvas description: 'Anchor shape should wait until anchored shape is added to canvas'.
+	canvas add: deferredShape.
+	self
+		assert: constraint anchorShape isInACanvas
+		description: 'Adding anchored shape to canvas should trigger deferred anchor and guide line addition'
+]
+
+{ #category : 'tests' }
+OPRSAnchorConstraintTest >> testDragStartAndEndToggleGuideLineWhenNotAlwaysShown [
+
+	constraint
+		balance: 0.5;
+		stick: anchoredShape on: line.
+	self
+		deny: constraint anchorShape isInACanvas
+		description: 'Anchor shape should be hidden before drag when alwaysShowGuideLine is false'.
+	anchoredShape announce: RSMouseLeftDragStart new.
+	self assert: constraint anchorShape isInACanvas description: 'Drag start should add anchor shape to canvas'.
+	self assert: constraint guideLine isInACanvas description: 'Drag start should add guide line to canvas'.
+	anchoredShape announce: RSMouseDragEnd new.
+	self deny: constraint anchorShape isInACanvas description: 'Drag end should remove anchor shape from canvas'.
+	self deny: constraint guideLine isInACanvas description: 'Drag end should remove guide line from canvas'
+]
+
+{ #category : 'tests' }
 OPRSAnchorConstraintTest >> testRemoveDetachesAnchorAndGuideLine [
 	constraint
 		balance: 0.5;
@@ -105,6 +205,47 @@ OPRSAnchorConstraintTest >> testRemoveDetachesAnchorAndGuideLine [
 	self
 		deny: constraint guideLine isInACanvas
 		description: 'Guide line should be removed from canvas after constraint removal'
+]
+
+{ #category : 'tests' }
+OPRSAnchorConstraintTest >> testRemoveHandlesMissingEndpointsAndUnattachedConstraint [
+
+	| endpointlessLine unattachedConstraint |
+	unattachedConstraint := OPRSAnchorConstraint new.
+	unattachedConstraint remove.
+	self assert: unattachedConstraint shape identicalTo: nil.
+	endpointlessLine := RSPolyline new
+		                    controlPoints: {
+				                    (0 @ 0).
+				                    (100 @ 0) };
+		                    yourself.
+	canvas add: endpointlessLine.
+	constraint
+		balance: 0.5;
+		stick: anchoredShape on: endpointlessLine.
+	constraint remove.
+	self
+		deny: (endpointlessLine announcer subscriptions subscriptions anySatisfy: [ :each | each subscriber == constraint ])
+		description: 'Endpointless line announcer should unsubscribe removed anchor constraint'
+]
+
+{ #category : 'tests' }
+OPRSAnchorConstraintTest >> testRemoveUnsubscribesFromLineEvents [
+
+	| positionAfterRemove |
+	constraint
+		balance: 0.5;
+		distanceToLine: 20;
+		stick: anchoredShape on: line.
+	constraint remove.
+	self
+		deny: (line announcer subscriptions subscriptions anySatisfy: [ :each | each subscriber == constraint ])
+		description: 'Line announcer should unsubscribe removed anchor constraint'.
+	anchoredShape translateTo: 500 @ 500.
+	positionAfterRemove := anchoredShape position.
+	line announce: RSPositionChangedEvent new.
+	line announce: OPRSDraggedControlPointsEvent new.
+	self assert: anchoredShape position equals: positionAfterRemove
 ]
 
 { #category : 'tests' }
@@ -173,4 +314,30 @@ OPRSAnchorConstraintTest >> testStartAndEndDistanceReferencesAndGuideLineModes [
 	anchoredShape translateTo: 150 @ -25.
 	constraint saveShapePosition.
 	self assert: constraint createUpdater lengthFromStartOfBalance closeTo: 150
+]
+
+{ #category : 'tests' }
+OPRSAnchorConstraintTest >> testUpdaterAnchorSegmentLazyComputationAndComputeExtraDistanceForZeroExtent [
+
+	| updater zeroShape zeroUpdater |
+	constraint
+		balance: 0.5;
+		distanceToLine: 20;
+		stick: anchoredShape on: line.
+	updater := constraint createUpdater.
+	self assert: updater anchorSegment equals: (OPRSAnchorConstraintSegment from: 0 @ 0 to: 200 @ 0).
+
+	zeroShape := RSBox new
+		             extent: 0 @ 0;
+		             translateTo: 100 @ 0;
+		             yourself.
+	canvas add: zeroShape.
+	zeroUpdater := OPRSAnchorConstraintUpdater new
+		               line: line;
+		               shape: zeroShape;
+		               positionReference: (OPRSAnchorConstraintBalanceReference balance: 0.5);
+		               distanceToLine: 20;
+		               minDistanceToLine: 0;
+		               yourself.
+	self assert: zeroUpdater computeExtraDistance equals: 0
 ]

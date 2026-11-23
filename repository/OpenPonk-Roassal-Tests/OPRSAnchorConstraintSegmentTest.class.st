@@ -36,6 +36,17 @@ OPRSAnchorConstraintSegmentTest >> testExtremaAndVectorAndLength [
 ]
 
 { #category : 'tests' }
+OPRSAnchorConstraintSegmentTest >> testExtremaReversedHorizontalSegment [
+
+	| reversedSegment |
+	reversedSegment := OPRSAnchorConstraintSegment from: 40 @ 10 to: 10 @ 50.
+	self assert: reversedSegment left equals: 10 @ 50.
+	self assert: reversedSegment right equals: 40 @ 10.
+	self assert: reversedSegment bottom equals: 40 @ 10.
+	self assert: reversedSegment top equals: 10 @ 50
+]
+
+{ #category : 'tests' }
 OPRSAnchorConstraintSegmentTest >> testHorizontalCotanAndPointAtLength [
 
 	| horizontal zeroSegment |
@@ -59,6 +70,32 @@ OPRSAnchorConstraintSegmentTest >> testIntersectRectangle [
 	self
 		assertCollection: (horizontal intersectRectangle: rect)
 		hasSameElements: { 50 @ 20 . 50 @ 60 }
+]
+
+{ #category : 'tests' }
+OPRSAnchorConstraintSegmentTest >> testIntersectRectangleDiagonalThroughCornersHasNoNil [
+
+	| diagonal rect intersections |
+	rect := 20 @ 20 corner: 80 @ 80.
+	diagonal := OPRSAnchorConstraintSegment from: 0 @ 0 to: 100 @ 100.
+	intersections := diagonal intersectRectangle: rect.
+	self assertCollection: intersections hasSameElements: {
+			(20 @ 20).
+			(80 @ 80) }
+]
+
+{ #category : 'tests' }
+OPRSAnchorConstraintSegmentTest >> testNearestPointBalanceForZeroLineLength [
+
+	| segment nearestPoint |
+	segment := OPRSAnchorConstraintSegment from: 0 @ 0 to: 0 @ 0.
+	nearestPoint := OPRSAnchorConstraintNearestPoint new
+		                segment: segment;
+		                point: 0 @ 0;
+		                previousSegmentsLength: 0;
+		                lineLength: 0;
+		                yourself.
+	self assert: nearestPoint balance equals: 0.5
 ]
 
 { #category : 'tests' }

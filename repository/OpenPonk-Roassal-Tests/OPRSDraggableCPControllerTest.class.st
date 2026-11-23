@@ -55,8 +55,8 @@ OPRSDraggableCPControllerTest >> testCollinearDragRemovesPointWithoutCrashingOnR
 	polyline addInteraction: interaction.
 	interaction showHandles.
 
-	handle := (interaction instVarNamed: #handles) detect: [ :eachHandle | (eachHandle instVarNamed: #indexOfControlPoint) = 2 ].
-	handle instVarNamed: #initialWaypoints put: polyline controlPoints copy.
+	handle := interaction handles detect: [ :eachHandle | eachHandle indexOfControlPoint = 2 ].
+	handle initialWaypoints: polyline controlPoints copy.
 
 	polyline controlPoints: {
 			(0 @ 0).
@@ -73,7 +73,7 @@ OPRSDraggableCPControllerTest >> testCollinearDragRemovesPointWithoutCrashingOnR
 	self assert: polyline controlPoints equals: {
 			(0 @ 0).
 			(100 @ 0) }.
-	self assert: (handle instVarNamed: #line) identicalTo: nil
+	self assert: handle shape identicalTo: nil
 ]
 
 { #category : 'tests' }
@@ -101,7 +101,7 @@ OPRSDraggableCPControllerTest >> testPromoteMidpointDoesNotAnnounceWaypointsChan
 	polyline addInteraction: interaction.
 	interaction showHandles.
 
-	midpointHandle := (interaction instVarNamed: #midpointHandles) first.
+	midpointHandle := interaction midpointHandles first.
 
 	announcedEvents := OrderedCollection new.
 	canvas announcer when: OPRSEdgeWaypointsChangedEvent do: [ :event | announcedEvents add: event ] for: self.
@@ -109,6 +109,25 @@ OPRSDraggableCPControllerTest >> testPromoteMidpointDoesNotAnnounceWaypointsChan
 	interaction promoteFor: polyline handle: midpointHandle.
 
 	self assertEmpty: announcedEvents
+]
+
+{ #category : 'tests' }
+OPRSDraggableCPControllerTest >> testSelfLoopBezierDefaultInnerControlPoints [
+
+	| bezierSelfLine rect |
+	boxFrom
+		extent: 40 @ 20;
+		translateTo: 100 @ 100.
+	bezierSelfLine := OPRSBezier new
+		                  controlPointsController: controller;
+		                  from: boxFrom;
+		                  to: boxFrom;
+		                  yourself.
+	bezierSelfLine update.
+	rect := boxFrom encompassingRectangle.
+	self assert: bezierSelfLine innerControlPoints equals: {
+			(rect topRight + (0 @ -60)).
+			(rect topRight + (60 @ 0)) }
 ]
 
 { #category : 'tests' }
@@ -128,4 +147,31 @@ OPRSDraggableCPControllerTest >> testSelfLoopPreset [
 			boxFrom encompassingRectangle rightCenter }.
 	selfLine update.
 	self assert: selfLine controlPoints size equals: 4
+]
+
+{ #category : 'tests' }
+OPRSDraggableCPControllerTest >> testSelfLoopResizeAdjustsAllFourQuadrants [
+
+	| innerPoints |
+	boxFrom
+		extent: 40 @ 40;
+		translateTo: 100 @ 100.
+	selfLine controlPoints: {
+			(100 @ 80).
+			(70 @ 60).
+			(130 @ 60).
+			(130 @ 140).
+			(70 @ 140).
+			(100 @ 120) }.
+	selfLine update.
+	boxFrom
+		extent: 60 @ 60;
+		translateTo: 110 @ 105.
+	selfLine update.
+	innerPoints := selfLine innerControlPoints.
+	self assert: innerPoints equals: {
+			(70 @ 55).
+			(150 @ 55).
+			(150 @ 155).
+			(70 @ 155) }
 ]

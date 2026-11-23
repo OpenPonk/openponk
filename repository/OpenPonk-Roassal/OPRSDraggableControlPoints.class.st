@@ -93,32 +93,26 @@ OPRSDraggableControlPoints >> onShape: aLine [
 { #category : 'actions' }
 OPRSDraggableControlPoints >> promoteFor: aLine handle: aMidpointHandle [
 	"Insert a new control point at midpoint position, supply initial waypoints to the new handle, rebuild handles, and transfer active drag focus to the newly created handle."
-	| originalWaypoints insertedIndex newControlPointHandle |
+
+	| originalWaypoints insertedIndex |
 	originalWaypoints := aLine controlPoints copy.
 	aLine from = aMidpointHandle from
 		ifTrue: [
-			insertedIndex := 2.
-			aLine controlPoints: {
-					aLine controlPoints first.
-					aMidpointHandle shape position } , aLine controlPoints allButFirst ]
+				insertedIndex := 2.
+				aLine controlPoints: {
+						aLine controlPoints first.
+						aMidpointHandle shape position } , aLine controlPoints allButFirst ]
 		ifFalse: [
-			| indexOfMidpointHandle |
-			indexOfMidpointHandle := handles detectIndex: [ :eachHandle |
-				                         eachHandle shape = aMidpointHandle from ].
-			insertedIndex := indexOfMidpointHandle + 2.
-			aLine controlPoints:
-				(aLine controlPoints first: indexOfMidpointHandle + 1)
-				, { aMidpointHandle shape position }
-				, (aLine controlPoints allButFirst: indexOfMidpointHandle + 1) ].
+				| indexOfMidpointHandle |
+				indexOfMidpointHandle := handles detectIndex: [ :eachHandle | eachHandle shape = aMidpointHandle from ].
+				insertedIndex := indexOfMidpointHandle + 2.
+				aLine controlPoints: (aLine controlPoints first: indexOfMidpointHandle + 1) , { aMidpointHandle shape position }
+					, (aLine controlPoints allButFirst: indexOfMidpointHandle + 1) ].
 	self rebuild.
-	newControlPointHandle := handles
+	handles
 		detect: [ :eachHandle | eachHandle indexOfControlPoint = insertedIndex ]
-		ifNone: [ nil ].
-	newControlPointHandle ifNotNil: [ :targetHandle |
-		targetHandle initialWaypoints: originalWaypoints ].
-	aLine canvas ifNotNil: [ :targetCanvas |
-		targetCanvas morph ifNotNil: [ :canvasMorph |
-			canvasMorph resetShapeBeingDragged ] ]
+		ifFound: [ :targetHandle | targetHandle initialWaypoints: originalWaypoints ].
+	aLine canvas ifNotNil: [ :targetCanvas | targetCanvas morph ifNotNil: [ :canvasMorph | canvasMorph resetShapeBeingDragged ] ]
 ]
 
 { #category : 'actions' }

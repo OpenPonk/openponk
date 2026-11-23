@@ -52,11 +52,6 @@ OPRSAnchorConstraintSegment >> from [
 ]
 
 { #category : 'accessing' }
-OPRSAnchorConstraintSegment >> from: fromPoint [
-	from := fromPoint
-]
-
-{ #category : 'accessing' }
 OPRSAnchorConstraintSegment >> from: fromPoint to: toPoint [
 	from := fromPoint.
 	to := toPoint
@@ -179,11 +174,6 @@ OPRSAnchorConstraintSegment >> sideOfPoint: aPoint [
 { #category : 'accessing' }
 OPRSAnchorConstraintSegment >> to [
 	^ to
-]
-
-{ #category : 'accessing' }
-OPRSAnchorConstraintSegment >> to: toPoint [
-	to := toPoint
 ]
 
 { #category : 'accessing' }

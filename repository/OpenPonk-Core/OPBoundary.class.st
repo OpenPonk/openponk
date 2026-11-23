@@ -56,11 +56,7 @@ OPBoundary >> defaultWidth [
 OPBoundary >> initialize [
 
 	super initialize.
-	name := ''.
-	self
-		when: OPElementTextAttributeChanged
-		send: #updateRenderFromSelf
-		to: self
+	name := ''
 ]
 
 { #category : 'accessing' }

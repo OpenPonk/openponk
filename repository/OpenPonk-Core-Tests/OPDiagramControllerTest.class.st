@@ -151,17 +151,32 @@ OPDiagramControllerTest >> testCanvasInteractionEventsAndCachesAndQueries [
 
 { #category : 'tests' }
 OPDiagramControllerTest >> testCommonElementsAndBoundaryControllerDelegation [
-	| noteCtrl boundaryCtrl |
+
+	| noteController boundaryController createdViaDefault createdViaPosition |
 	self assertEmpty: controller commonElementControllers.
 	self assertEmpty: controller commonElements.
-	noteCtrl := OPNoteController new.
-	controller addController: noteCtrl.
-	self assert: (controller commonElementControllers includes: noteCtrl) description: 'Diagram-only note controller should be included in commonElementControllers'.
-	self assert: (controller commonElements includes: noteCtrl model) description: 'Note model should be included in commonElements'.
+	noteController := OPNoteController new.
+	controller addController: noteController.
+	self
+		assert: (controller commonElementControllers includes: noteController)
+		description: 'Diagram-only note controller should be included in commonElementControllers'.
+	self
+		assert: (controller commonElements includes: noteController model)
+		description: 'Note model should be included in commonElements'.
 
-	boundaryCtrl := OPBoundaryController new.
-	boundaryCtrl diagramController: controller.
-	self assert: (boundaryCtrl canBeTargetFor: OPNoteController new) description: 'Boundary controller should delegate canBeTargetFor: to diagramController'
+	boundaryController := OPBoundaryController new.
+	boundaryController diagramController: controller.
+	self
+		assert: (boundaryController canBeTargetFor: OPNoteController new)
+		description: 'Boundary controller should delegate canBeTargetFor: to diagramController'.
+
+	createdViaDefault := OPNoteController new.
+	boundaryController addAsTargetFor: createdViaDefault.
+	self assertCollection: controller controllers includesAll: { createdViaDefault }.
+
+	createdViaPosition := OPNoteController new.
+	boundaryController addAsTargetFor: createdViaPosition onPosition: 40 @ 50.
+	self assertCollection: controller controllers includesAll: { createdViaPosition }
 ]
 
 { #category : 'tests' }
@@ -200,7 +215,8 @@ OPDiagramControllerTest >> testDeselectControllerDelegatesToSelectionTool [
 ]
 
 { #category : 'tests' }
-OPDiagramControllerTest >> testDragResizeAndWaypointsWithoutUndoManager [
+OPDiagramControllerTest >> testDragResizeAndWaypointsEdgeCases [
+
 	| standaloneProject standaloneProjectController standaloneController container entityA entityB entityC controllerA controllerB controllerC edgeShape anchorConstraint anchoredDragEvent unchangedDragEvent lineDragEvent resizeEvent waypointsEvent multiDragEvent |
 	standaloneProject := OPProject new.
 	container := OPTestContainerModel new.
@@ -212,117 +228,138 @@ OPDiagramControllerTest >> testDragResizeAndWaypointsWithoutUndoManager [
 	container add: entityC.
 	standaloneProject addModel: container.
 	standaloneProjectController := OPProjectController forProject: standaloneProject.
-	standaloneProjectController instVarNamed: #undoManager put: nil.
 	standaloneController := OPTestDiagramController new.
 	standaloneProjectController addDiagramController: standaloneController.
 	standaloneController
 		model: container;
 		diagramElement: (OPOpenPonkDiagram forModelElement: container);
-		canvasPresenter: (OPHeadlessCanvasPresenter new canvas: RSCanvas new; yourself).
+		canvasPresenter: (OPHeadlessCanvasPresenter new
+				 canvas: RSCanvas new;
+				 yourself).
 	controllerA := standaloneController showInDiagramModel: entityA.
 	controllerB := standaloneController showInDiagramModel: entityB.
 	controllerC := standaloneController showInDiagramModel: entityC.
 
 	edgeShape := OPTestEdge new
-		source: controllerA diagramElement;
-		target: controllerB diagramElement;
-		renderIn: standaloneController canvas;
-		yourself.
+		             source: controllerA diagramElement;
+		             target: controllerB diagramElement;
+		             renderIn: standaloneController canvas;
+		             yourself.
 
 	anchorConstraint := OPRSAnchorConstraint new
-		balance: 0.75;
-		distanceToLine: 20;
-		yourself.
+		                    balance: 0.75;
+		                    distanceToLine: 20;
+		                    yourself.
 	anchorConstraint stick: controllerC roassalShape on: edgeShape roassalShape.
 	controllerC roassalShape translateTo: 30 @ 40.
 	anchoredDragEvent := OPRSElementsDraggedEvent new
-		shapes: { RSBox new . controllerC roassalShape };
-		lines: #();
-		initialPositions: (IdentityDictionary with: controllerC roassalShape -> (0 @ 0));
-		initialLineControlPoints: IdentityDictionary new;
-		initialAnchors: (IdentityDictionary with: controllerC roassalShape -> #(0.25 10));
-		yourself.
+		                     shapes: {
+				                     RSBox new.
+				                     controllerC roassalShape };
+		                     lines: #(  );
+		                     initialPositions: (IdentityDictionary with: controllerC roassalShape -> (0 @ 0));
+		                     initialLineControlPoints: IdentityDictionary new;
+		                     initialAnchors: (IdentityDictionary with: controllerC roassalShape -> #( 0.25 10 ));
+		                     yourself.
 	standaloneController elementsDragged: anchoredDragEvent.
 	self assert: controllerC diagramElement bounds position equals: 30 @ 40.
 
 	unchangedDragEvent := OPRSElementsDraggedEvent new
-		shapes: { controllerA roassalShape };
-		lines: #();
-		initialPositions: IdentityDictionary new;
-		initialLineControlPoints: IdentityDictionary new;
-		initialAnchors: IdentityDictionary new;
-		yourself.
+		                      shapes: { controllerA roassalShape };
+		                      lines: #(  );
+		                      initialPositions: IdentityDictionary new;
+		                      initialLineControlPoints: IdentityDictionary new;
+		                      initialAnchors: IdentityDictionary new;
+		                      yourself.
 	standaloneController elementsDragged: unchangedDragEvent.
 
 	controllerA roassalShape translateTo: 60 @ 70.
 	controllerB roassalShape translateTo: 80 @ 90.
 	multiDragEvent := OPRSElementsDraggedEvent new
-		shapes: { controllerA roassalShape . controllerB roassalShape };
-		lines: #();
-		initialPositions: (IdentityDictionary
-			with: controllerA roassalShape -> (30 @ 40)
-			with: controllerB roassalShape -> (0 @ 0));
-		initialLineControlPoints: IdentityDictionary new;
-		initialAnchors: IdentityDictionary new;
-		yourself.
-	controller executeDragCommands: (standaloneController commandsForDraggedShapes: multiDragEvent).
+		                  shapes: {
+				                  controllerA roassalShape.
+				                  controllerB roassalShape };
+		                  lines: #(  );
+		                  initialPositions:
+			                  (IdentityDictionary with: controllerA roassalShape -> (30 @ 40) with: controllerB roassalShape -> (0 @ 0));
+		                  initialLineControlPoints: IdentityDictionary new;
+		                  initialAnchors: IdentityDictionary new;
+		                  yourself.
+	standaloneController executeDragCommands: (standaloneController commandsForDraggedShapes: multiDragEvent).
 	self assert: controllerA diagramElement bounds position equals: 60 @ 70.
 
-	standaloneController edgeWaypointsChanged: (OPRSEdgeWaypointsChangedEvent new line: nil; yourself).
-	standaloneController edgeWaypointsChanged: (OPRSEdgeWaypointsChangedEvent new line: RSLine new; yourself).
-	standaloneController edgeWaypointsChanged: (OPRSEdgeWaypointsChangedEvent new line: controllerA roassalShape; yourself).
+	standaloneController edgeWaypointsChanged: (OPRSEdgeWaypointsChangedEvent new
+			 line: nil;
+			 yourself).
+	standaloneController edgeWaypointsChanged: (OPRSEdgeWaypointsChangedEvent new
+			 line: RSLine new;
+			 yourself).
+	standaloneController edgeWaypointsChanged: (OPRSEdgeWaypointsChangedEvent new
+			 line: controllerA roassalShape;
+			 yourself).
 	waypointsEvent := OPRSEdgeWaypointsChangedEvent new
-		line: edgeShape roassalShape;
-		oldWaypoints: { 0 @ 0 . 100 @ 100 };
-		newWaypoints: { 0 @ 0 . 100 @ 100 };
-		yourself.
+		                  line: edgeShape roassalShape;
+		                  oldWaypoints: {
+				                  (0 @ 0).
+				                  (100 @ 100) };
+		                  newWaypoints: {
+				                  (0 @ 0).
+				                  (100 @ 100) };
+		                  yourself.
 	standaloneController edgeWaypointsChanged: waypointsEvent.
 	waypointsEvent := OPRSEdgeWaypointsChangedEvent new
-		line: edgeShape roassalShape;
-		oldWaypoints: { 0 @ 0 . 100 @ 100 };
-		newWaypoints: { 0 @ 0 . 40 @ 60 . 100 @ 100 };
-		yourself.
+		                  line: edgeShape roassalShape;
+		                  oldWaypoints: {
+				                  (0 @ 0).
+				                  (100 @ 100) };
+		                  newWaypoints: {
+				                  (0 @ 0).
+				                  (40 @ 60).
+				                  (100 @ 100) };
+		                  yourself.
 	standaloneController edgeWaypointsChanged: waypointsEvent.
 	self assert: edgeShape waypoints size equals: 3.
 
 	lineDragEvent := OPRSElementsDraggedEvent new
-		shapes: #();
-		lines: { RSLine new . edgeShape roassalShape };
-		initialPositions: IdentityDictionary new;
-		initialLineControlPoints: IdentityDictionary new;
-		initialAnchors: IdentityDictionary new;
-		yourself.
+		                 shapes: #(  );
+		                 lines: {
+				                 RSLine new.
+				                 edgeShape roassalShape };
+		                 initialPositions: IdentityDictionary new;
+		                 initialLineControlPoints: IdentityDictionary new;
+		                 initialAnchors: IdentityDictionary new;
+		                 yourself.
 	standaloneController elementsDragged: lineDragEvent.
 
 	lineDragEvent := OPRSElementsDraggedEvent new
-		shapes: #();
-		lines: { edgeShape roassalShape };
-		initialPositions: IdentityDictionary new;
-		initialLineControlPoints: (IdentityDictionary with: edgeShape roassalShape -> { 10 @ 10 });
-		initialAnchors: IdentityDictionary new;
-		yourself.
+		                 shapes: #(  );
+		                 lines: { edgeShape roassalShape };
+		                 initialPositions: IdentityDictionary new;
+		                 initialLineControlPoints: (IdentityDictionary with: edgeShape roassalShape -> { (10 @ 10) });
+		                 initialAnchors: IdentityDictionary new;
+		                 yourself.
 	standaloneController elementsDragged: lineDragEvent.
 	self assert: edgeShape waypoints size equals: 3.
 
 	resizeEvent := OPRSShapeResizedEvent new
-		shape: nil;
-		yourself.
+		               shape: nil;
+		               yourself.
 	standaloneController shapeResized: resizeEvent.
 	resizeEvent := OPRSShapeResizedEvent new
-		shape: controllerA roassalShape;
-		oldPosition: 60 @ 70;
-		newPosition: 60 @ 70;
-		oldExtent: 50 @ 50;
-		newExtent: 50 @ 50;
-		yourself.
+		               shape: controllerA roassalShape;
+		               oldPosition: 60 @ 70;
+		               newPosition: 60 @ 70;
+		               oldExtent: 50 @ 50;
+		               newExtent: 50 @ 50;
+		               yourself.
 	standaloneController shapeResized: resizeEvent.
 	resizeEvent := OPRSShapeResizedEvent new
-		shape: controllerA roassalShape;
-		oldPosition: 60 @ 70;
-		newPosition: 65 @ 75;
-		oldExtent: 50 @ 50;
-		newExtent: 90 @ 70;
-		yourself.
+		               shape: controllerA roassalShape;
+		               oldPosition: 60 @ 70;
+		               newPosition: 65 @ 75;
+		               oldExtent: 50 @ 50;
+		               newExtent: 90 @ 70;
+		               yourself.
 	standaloneController shapeResized: resizeEvent.
 	self assert: controllerA diagramElement bounds extent equals: 90 @ 70
 ]
@@ -651,6 +688,17 @@ OPDiagramControllerTest >> testRemoveShapeShowDiagramElementAndDiagramFocusedEdg
 ]
 
 { #category : 'tests' }
+OPDiagramControllerTest >> testRoassalShapeDoubleClickedIgnoresUnregisteredShape [
+
+	| event |
+	event := RSMouseDoubleLeftClick new
+		         shape: RSBox new;
+		         yourself.
+	controller roassalShapeDoubleClicked: event.
+	self assertEmpty: controller controllers
+]
+
+{ #category : 'tests' }
 OPDiagramControllerTest >> testSelectController [
 	| mockEditor mockPalette mockTool targetCtrl |
 	mockEditor := Mock new.
@@ -753,33 +801,22 @@ OPDiagramControllerTest >> testShowModelInDiagram [
 	self assertCollection: controller controllers includesAll: { shownController }
 ]
 
-{ #category : 'tests - construction' }
+{ #category : 'tests' }
 OPDiagramControllerTest >> testShowModelInDiagramAttachesController [
 
 	| entity |
 	controller model: model.
 	entity := OPTestEntityModel new.
 	controller showWithoutDependentInDiagramModel: entity.
-	self
-		shouldnt: (controller controllerForModel: entity)
-		raise: NotFound
+	self assert: (controller controllerForModel: entity) model identicalTo: entity
 ]
 
 { #category : 'tests' }
 OPDiagramControllerTest >> testUndoRedoCapabilitiesAndProjectAndShapeQueries [
-	| emptyProjectController standaloneController project container projectController diagram diagramController entity entityController |
-	emptyProjectController := OPProjectController new.
-	emptyProjectController instVarNamed: #undoManager put: nil.
-	standaloneController := OPTestDiagramController new.
-	standaloneController
-		projectController: emptyProjectController;
-		canvasPresenter: OPHeadlessCanvasPresenter new.
-	self deny: standaloneController canUndo description: 'Controller with nil undoManager cannot undo'.
-	self deny: standaloneController canRedo description: 'Controller with nil undoManager cannot redo'.
-	self assert: standaloneController roassalShape identicalTo: standaloneController canvas.
-	self
-		should: [ OPDiagramController new initializePalette: nil ]
-		raise: SubclassResponsibility.
+
+	| project container projectController diagram diagramController entity entityController |
+	self assert: controller roassalShape identicalTo: controller canvas.
+	self should: [ OPDiagramController new initializePalette: nil ] raise: SubclassResponsibility.
 
 	project := OPProject new.
 	container := OPTestContainerModel new.
@@ -794,14 +831,16 @@ OPDiagramControllerTest >> testUndoRedoCapabilitiesAndProjectAndShapeQueries [
 		diagramElement: diagram;
 		canvasPresenter: OPHeadlessCanvasPresenter new.
 	self assert: diagramController project identicalTo: project.
+	self deny: diagramController canUndo description: 'Fresh diagram controller should report canUndo = false'.
+	self deny: diagramController canRedo description: 'Fresh diagram controller should report canRedo = false'.
 
 	entity := OPTestEntityModel new.
 	container add: entity.
 	entityController := diagramController showInDiagramModel: entity.
 	projectController undoManager execute: (OPChangeBoundsCommand
-		element: entityController diagramElement
-		oldBounds: (OPNodeBounds withPosition: 0 @ 0 extent: 50 @ 50)
-		newBounds: (OPNodeBounds withPosition: 20 @ 30 extent: 50 @ 50)).
+			 element: entityController diagramElement
+			 oldBounds: (OPNodeBounds withPosition: 0 @ 0 extent: 50 @ 50)
+			 newBounds: (OPNodeBounds withPosition: 20 @ 30 extent: 50 @ 50)).
 	self assert: diagramController canUndo description: 'Controller should report canUndo after command execution'.
 	self deny: diagramController canRedo description: 'Controller should report canRedo = false before undo'.
 	diagramController undo.

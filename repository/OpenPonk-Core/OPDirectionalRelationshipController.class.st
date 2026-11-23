@@ -5,8 +5,6 @@ Manages the visual connection (edge) between a source and a target, coordinating
 Class {
 	#name : 'OPDirectionalRelationshipController',
 	#superclass : 'OPElementController',
-	#traits : 'OPTRelationshipWithPathPointsController',
-	#classTraits : 'OPTRelationshipWithPathPointsController classTrait',
 	#instVars : [
 		'source',
 		'target'
@@ -86,22 +84,6 @@ OPDirectionalRelationshipController >> ensureTargetIn: aDiagramController [
 OPDirectionalRelationshipController >> isTargetUsedAsContainer [
 
 	^ false
-]
-
-{ #category : 'accessing' }
-OPDirectionalRelationshipController >> modelSource [
-	self
-		deprecated: 'Use viewModel instead'
-		transformWith: '`@receiver modelSource' -> '`@receiver viewModel modelSource'.
-	^ self viewModel modelSource
-]
-
-{ #category : 'accessing' }
-OPDirectionalRelationshipController >> modelTarget [
-	self
-		deprecated: 'Use viewModel instead'
-		transformWith: '`@receiver modelTarget' -> '`@receiver viewModel modelTarget'.
-	^ self viewModel modelTarget
 ]
 
 { #category : 'rendering' }

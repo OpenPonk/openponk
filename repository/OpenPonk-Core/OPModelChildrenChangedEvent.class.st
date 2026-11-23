@@ -31,12 +31,3 @@ OPModelChildrenChangedEvent >> child: aChildElement [
 
 	child := aChildElement
 ]
-
-{ #category : 'accessing' }
-OPModelChildrenChangedEvent >> element [
-	"Backward compatibility for tests expecting #element"
-	self 
-		deprecated: 'Use #child instead' 
-		transformWith: '`@receiver element' -> '`@receiver child'.
-	^ self child
-]

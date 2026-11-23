@@ -100,14 +100,6 @@ OPDiagramOnlyController >> paletteItemName [
 	^ self class paletteItemName
 ]
 
-{ #category : 'removing' }
-OPDiagramOnlyController >> removeModel [
-
-	"do nothing - common model elements are not part of any model"
-
-	
-]
-
 { #category : 'validation' }
 OPDiagramOnlyController >> validate [
 	"nothing to validate"

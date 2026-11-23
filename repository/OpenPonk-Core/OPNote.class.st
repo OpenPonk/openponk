@@ -146,11 +146,7 @@ OPNote >> defaultFillColor [
 OPNote >> initialize [
 
 	super initialize.
-	text := ''.
-	self
-		when: OPElementTextAttributeChanged
-		send: #updateRenderFromSelf
-		to: self
+	text := ''
 ]
 
 { #category : 'accessing' }

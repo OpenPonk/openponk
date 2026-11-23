@@ -104,11 +104,9 @@ OPProjectController >> controllers [
 
 { #category : 'saving' }
 OPProjectController >> defaultProjectFileName [
+
 	| baseName |
-	baseName := self project
-		ifNotNil: [ :currentProject |
-			currentProject name ifNotNil: [ :projectName | projectName trimBoth ] ]
-		ifNil: [ nil ].
+	baseName := self project ifNotNil: [ :currentProject | currentProject name ifNotNil: [ :projectName | projectName trimBoth ] ].
 	(baseName isNil or: [ baseName isEmpty ]) ifTrue: [ baseName := 'project' ].
 	^ (FileNameSanitizer sanitize: baseName) , '.opp'
 ]
@@ -337,9 +335,9 @@ OPProjectController >> removeDiagram: aDiagram [
 
 { #category : 'managing' }
 OPProjectController >> removeDiagramController: aDiagramController [
+
 	controllers remove: aDiagramController ifAbsent: [ ].
-	(aDiagramController respondsTo: #projectController:) ifTrue: [
-		aDiagramController projectController: nil ]
+	aDiagramController projectController: nil
 ]
 
 { #category : 'adding / removing' }

@@ -13,11 +13,6 @@ Class {
 	#tag : 'Controllers'
 }
 
-{ #category : 'accessing - defaults' }
-OPModelHandlerFactory >> acceptAllCondition [
-	^ [ :aModel | true ]
-]
-
 { #category : 'hooks' }
 OPModelHandlerFactory >> handlerKindName [
 

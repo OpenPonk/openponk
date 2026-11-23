@@ -140,13 +140,13 @@ OPDiagramController >> canBeTargetFor: aController [
 { #category : 'testing' }
 OPDiagramController >> canRedo [
 
-	^ self undoManager ifNil: [ false ] ifNotNil: [ :manager | manager canRedo ]
+	^ self undoManager canRedo
 ]
 
 { #category : 'testing' }
 OPDiagramController >> canUndo [
 
-	^ self undoManager ifNil: [ false ] ifNotNil: [ :manager | manager canUndo ]
+	^ self undoManager canUndo
 ]
 
 { #category : 'accessing' }
@@ -346,28 +346,20 @@ OPDiagramController >> diagramFocused [
 
 { #category : 'event handling' }
 OPDiagramController >> edgeWaypointsChanged: anEvent [
+
 	| targetLine targetEdge command |
-	(self undoManager isNotNil and: [ self undoManager isExecutingUndoRedo ])
-		ifTrue: [ ^ self ].
+	self undoManager isExecutingUndoRedo ifTrue: [ ^ self ].
 	targetLine := anEvent line.
 	targetLine ifNil: [ ^ self ].
 	targetEdge := (targetLine model isKindOf: OPEdge)
-		ifTrue: [ targetLine model ]
-		ifFalse: [
-			(self controllerForRoassalShape: targetLine ifNone: [ nil ])
-				ifNotNil: [ :edgeController |
-					(edgeController diagramElement isKindOf: OPEdge)
-						ifTrue: [ edgeController diagramElement ]
-						ifFalse: [ nil ] ] ].
+		              ifTrue: [ targetLine model ]
+		              ifFalse: [
+				              (self controllerForRoassalShape: targetLine ifNone: [ nil ]) ifNotNil: [ :edgeController |
+					              (edgeController diagramElement isKindOf: OPEdge) ifTrue: [ edgeController diagramElement ] ] ].
 	targetEdge ifNil: [ ^ self ].
 	anEvent oldWaypoints = anEvent newWaypoints ifTrue: [ ^ self ].
-	command := OPModifyEdgeWaypointsCommand
-		edge: targetEdge
-		oldWaypoints: anEvent oldWaypoints
-		newWaypoints: anEvent newWaypoints.
-	self undoManager
-		ifNotNil: [ :activeUndoManager | activeUndoManager execute: command ]
-		ifNil: [ command execute ]
+	command := OPModifyEdgeWaypointsCommand edge: targetEdge oldWaypoints: anEvent oldWaypoints newWaypoints: anEvent newWaypoints.
+	self undoManager execute: command
 ]
 
 { #category : 'ui interaction' }
@@ -384,9 +376,9 @@ OPDiagramController >> editor: anEditor [
 { #category : 'ui interactions' }
 OPDiagramController >> elementsDragged: anEvent [
 	"Handle canvas drag event by recording moved nodes and line waypoints into an undoable transaction."
+
 	| commands |
-	(self undoManager isNotNil and: [ self undoManager isExecutingUndoRedo ])
-		ifTrue: [ ^ self ].
+	self undoManager isExecutingUndoRedo ifTrue: [ ^ self ].
 	commands := (self commandsForDraggedShapes: anEvent) , (self commandsForDraggedLines: anEvent).
 	commands ifEmpty: [ ^ self ].
 	self executeDragCommands: commands
@@ -401,14 +393,15 @@ OPDiagramController >> ensureDeselected [
 { #category : 'private' }
 OPDiagramController >> executeDragCommands: aCollectionOfCommands [
 	"Execute drag change commands within a labeled undo transaction."
-	| transactionLabel |
-	transactionLabel := aCollectionOfCommands size > 1 ifTrue: [ 'Move Elements' ] ifFalse: [ 'Move Element' ].
-	self undoManager
-		ifNotNil: [ :activeUndoManager |
-			activeUndoManager inTransactionLabeled: transactionLabel do: [
-				aCollectionOfCommands do: [ :eachCommand | activeUndoManager execute: eachCommand ] ] ]
-		ifNil: [
-			aCollectionOfCommands do: [ :eachCommand | eachCommand execute ] ]
+
+	| transactionLabel activeUndoManager |
+	transactionLabel := aCollectionOfCommands size > 1
+		                    ifTrue: [ 'Move Elements' ]
+		                    ifFalse: [ 'Move Element' ].
+	activeUndoManager := self undoManager.
+	activeUndoManager
+		inTransactionLabeled: transactionLabel
+		do: [ aCollectionOfCommands do: [ :eachCommand | activeUndoManager execute: eachCommand ] ]
 ]
 
 { #category : 'ui interaction' }
@@ -555,7 +548,7 @@ OPDiagramController >> projectController: aProjectController [
 OPDiagramController >> redo [
 	"Redo the latest undone action in the active project."
 
-	self undoManager ifNotNil: [ :manager | manager redo ]
+	self undoManager redo
 ]
 
 { #category : 'destruction' }
@@ -571,15 +564,13 @@ OPDiagramController >> removeController: aController [
 	self controllers remove: aController ifAbsent: [ ]
 ]
 
-{ #category : 'deprecated' }
+{ #category : 'destruction' }
 OPDiagramController >> removeModelElement: aModel [
-	| command |
-	command := OPRemoveModelElementCommand
-		model: aModel
-		diagramController: self.
-	self undoManager
-		ifNotNil: [ :undoManager | undoManager inTransaction: [ undoManager execute: command ] ]
-		ifNil: [ command execute ]
+
+	| command activeUndoManager |
+	command := OPRemoveModelElementCommand model: aModel diagramController: self.
+	activeUndoManager := self undoManager.
+	activeUndoManager inTransaction: [ activeUndoManager execute: command ]
 ]
 
 { #category : 'destruction' }
@@ -670,28 +661,17 @@ OPDiagramController >> selectedShapes: shapes onPosition: aPoint [
 
 { #category : 'events' }
 OPDiagramController >> shapeResized: anEvent [
+
 	| shape node oldBounds newBounds command |
-	(self undoManager isNotNil and: [ self undoManager isExecutingUndoRedo ])
-		ifTrue: [ ^ self ].
+	self undoManager isExecutingUndoRedo ifTrue: [ ^ self ].
 	shape := anEvent shape.
-	(shape isNotNil and: [ shape model isKindOf: OPBoundNode ])
-		ifFalse: [ ^ self ].
+	(shape isNotNil and: [ shape model isKindOf: OPBoundNode ]) ifFalse: [ ^ self ].
 	node := shape model.
-	((anEvent oldExtent = anEvent newExtent) and: [ anEvent oldPosition = anEvent newPosition ])
-		ifTrue: [ ^ self ].
-	oldBounds := OPNodeBounds
-		withPosition: anEvent oldPosition
-		extent: anEvent oldExtent.
-	newBounds := OPNodeBounds
-		withPosition: anEvent newPosition
-		extent: anEvent newExtent.
-	command := OPChangeBoundsCommand
-		element: node
-		oldBounds: oldBounds
-		newBounds: newBounds.
-	self undoManager
-		ifNotNil: [ :mgr | mgr execute: command ]
-		ifNil: [ command execute ]
+	(anEvent oldExtent = anEvent newExtent and: [ anEvent oldPosition = anEvent newPosition ]) ifTrue: [ ^ self ].
+	oldBounds := OPNodeBounds withPosition: anEvent oldPosition extent: anEvent oldExtent.
+	newBounds := OPNodeBounds withPosition: anEvent newPosition extent: anEvent newExtent.
+	command := OPChangeBoundsCommand element: node oldBounds: oldBounds newBounds: newBounds.
+	self undoManager execute: command
 ]
 
 { #category : 'ui interaction' }
@@ -759,7 +739,7 @@ OPDiagramController >> subscribeToUndoManager [
 OPDiagramController >> undo [
 	"Undo the latest action in the active project."
 
-	self undoManager ifNotNil: [ :manager | manager undo ]
+	self undoManager undo
 ]
 
 { #category : 'undo/redo' }

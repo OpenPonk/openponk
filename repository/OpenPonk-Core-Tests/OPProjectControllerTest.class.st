@@ -53,7 +53,9 @@ OPProjectControllerTest >> testAddDiagramControllerIsIdempotent [
 
 { #category : 'tests' }
 OPProjectControllerTest >> testDefaultProjectFileNameFallbackAndFromDirectoryWithoutExportInfo [
-	| folder loadedProject |
+
+	| folder exportInfoFile loadedProject |
+	self assert: OPProjectController new defaultProjectFileName equals: 'project.opp'.
 	project name: nil.
 	self assert: controller defaultProjectFileName equals: 'project.opp'.
 	project name: '   '.
@@ -65,6 +67,9 @@ OPProjectControllerTest >> testDefaultProjectFileNameFallbackAndFromDirectoryWit
 	controller persistenceManager
 		directory: folder;
 		saveProject: project withMementos: controller modelMementos.
+	exportInfoFile := folder / OPExportInfo fileName.
+	self assert: exportInfoFile exists description: 'Serializer should write exportInfo file before fallback test deletes it'.
+	exportInfoFile ensureDelete.
 	loadedProject := OPProjectController fromDirectory: folder.
 	self assert: loadedProject name equals: 'Directory Project'
 ]
@@ -115,6 +120,33 @@ OPProjectControllerTest >> testMergeModelsAndDiagramsByPluginPreservesOwnedEleme
 	self assertCollection: mergedDiagram ownedElements hasSameElements: { node1 . node2 . note }.
 	self assertCollection: removedModels hasSameElements: { model1 . model2 }.
 	self assert: addedModels asArray equals: { project models first }
+]
+
+{ #category : 'tests' }
+OPProjectControllerTest >> testMergeModelsAndDiagramsIntoOneWithMultiplePluginTypesUsesPerTypeTitle [
+
+	| nonMergeablePlugin modelA modelB otherModel mockConfirm capturedTitle |
+	capturedTitle := nil.
+	nonMergeablePlugin := OPTestNonMergeablePlugin new.
+	OPPluginRegistry default add: nonMergeablePlugin.
+	modelA := OPTestContainerModel new.
+	modelB := OPTestContainerModel new.
+	otherModel := nonMergeablePlugin modelClass new.
+	project addModel: modelA.
+	project addModel: modelB.
+	project addModel: otherModel.
+
+	mockConfirm := Mock new.
+	SpConfirmDialog stub new willReturn: mockConfirm.
+	mockConfirm stub title: [ :titleString | capturedTitle := titleString ].
+	mockConfirm stub message: Any.
+	mockConfirm stub acceptLabel: Any.
+	mockConfirm stub cancelLabel: Any.
+	mockConfirm stub onAccept: Any.
+	mockConfirm stub openDialog.
+
+	controller mergeModelsAndDiagramsIntoOne.
+	self assert: capturedTitle equals: 'Merge models and diagrams of each type?'
 ]
 
 { #category : 'tests' }
@@ -281,6 +313,19 @@ OPProjectControllerTest >> testProjectControllerQueriesAndFileabilityAndDiagramU
 ]
 
 { #category : 'tests' }
+OPProjectControllerTest >> testRecentProjectsLazilyInitializesWhenReset [
+
+	| previousRecentProjects initializedRecentProjects |
+	previousRecentProjects := OPProjectController classPool at: #RecentProjects.
+	[
+		OPProjectController classPool at: #RecentProjects put: nil.
+		initializedRecentProjects := controller recentProjects.
+		self assert: initializedRecentProjects class identicalTo: OrderedDictionary.
+		self assertEmpty: initializedRecentProjects ] ensure: [
+		OPProjectController classPool at: #RecentProjects put: previousRecentProjects ]
+]
+
+{ #category : 'tests' }
 OPProjectControllerTest >> testRemoveController [
 	| diagramController model |
 	diagramController := OPDiagramController new.
@@ -294,6 +339,16 @@ OPProjectControllerTest >> testRemoveController [
 	self
 		deny: (model announcer hasSubscriber: diagramController)
 		description: 'Removed diagram controller must be unsubscribed from model announcer'
+]
+
+{ #category : 'tests' }
+OPProjectControllerTest >> testRemoveUnregisteredDiagramControllerDetachesProjectController [
+
+	| unregisteredController |
+	unregisteredController := OPDiagramController new.
+	unregisteredController projectController: controller.
+	controller removeDiagramController: unregisteredController.
+	self assert: unregisteredController projectController identicalTo: nil
 ]
 
 { #category : 'tests' }
@@ -424,6 +479,32 @@ OPProjectControllerTest >> testSaveProjectAsAcceptedAndUnwritableFallback [
 	self
 		assert: controller writableProjectFile
 		equals: selectedTarget
+]
+
+{ #category : 'tests' }
+OPProjectControllerTest >> testSaveProjectCancellationAndGrowlNotification [
+
+	| cancelPresenter targetFile growls |
+	project storageFile: nil.
+	cancelPresenter := Mock new.
+	StSaveFilePresenter stub new willReturn: cancelPresenter.
+	cancelPresenter stub title: Any.
+	cancelPresenter stub extensions: Any named: Any.
+	cancelPresenter stub defaultFolder: Any.
+	cancelPresenter stub nameText: Any.
+	cancelPresenter stub openModal.
+	cancelPresenter stub cancelled willReturn: true.
+	cancelPresenter stub selectedEntry willReturn: nil.
+
+	self should: [ controller saveProject ] raise: InformativeNotification.
+
+	targetFile := FileSystem memory root / 'growl-save.opp'.
+	project storageFile: targetFile.
+	controller saveProject.
+	self assert: targetFile exists description: 'saveProject should write archive to storageFile'.
+	growls := self currentWorld submorphs select: [ :each | each isKindOf: GrowlMorph ].
+	self assert: growls size equals: 1.
+	growls do: #delete
 ]
 
 { #category : 'tests' }

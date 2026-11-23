@@ -34,6 +34,14 @@ OPControllerFactoryTest >> testNewControllerFor [
 ]
 
 { #category : 'tests' }
+OPControllerFactoryTest >> testNewControllerForUnregisteredOrRejectedModelSignalsError [
+
+	self should: [ factory newControllerFor: OPTestContainerModel new ] raise: Error.
+	factory register: OPTestEntityController forModel: OPTestEntityModel condition: [ :aModel | false ].
+	self should: [ factory newControllerFor: OPTestEntityModel new ] raise: Error
+]
+
+{ #category : 'tests' }
 OPControllerFactoryTest >> testNewControllerForWithPriority [
 	factory
 		register: OPTestEntityController
@@ -57,4 +65,16 @@ OPControllerFactoryTest >> testRegister [
 	self
 		assert: (factory hasControllerFor: OPTestEntityModel new)
 		description: 'Factory should have controller after registering OPTestEntityController'
+]
+
+{ #category : 'tests' }
+OPControllerFactoryTest >> testRegisteredModelClassesAndHandlerKindName [
+
+	self assertEmpty: factory registeredModelClasses.
+	factory register: OPTestEntityController forModel: OPTestEntityModel.
+	factory register: OPTestRelationController forModel: OPTestRelationModel.
+	self assertCollection: factory registeredModelClasses hasSameElements: {
+			OPTestEntityModel.
+			OPTestRelationModel }.
+	self assert: factory handlerKindName equals: 'controller'
 ]

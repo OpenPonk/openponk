@@ -50,7 +50,7 @@ OPNoteTest >> testBoundaryAndControllerRenderingAndStyles [
 { #category : 'tests' }
 OPNoteTest >> testDiagramOnlyShapeBehaviorAndJsonMapping [
 
-	| shape1 shape2 json decoded |
+	| shape1 shape2 json decoded legacyDecoded |
 	shape1 := OPDiagramOnlyShape new.
 	shape2 := OPDiagramOnlyShape new.
 	self assert: shape1 isDiagramOnly description: 'OPDiagramOnlyShape should answer true to isDiagramOnly'.
@@ -65,20 +65,31 @@ OPNoteTest >> testDiagramOnlyShapeBehaviorAndJsonMapping [
 	self assertCollection: OPDiagramOnlyShape stonAllInstVarNames includesAll: #( #uuid ).
 	json := NeoJSONWriter toString: shape1.
 	decoded := NeoJSONReader fromString: json as: OPDiagramOnlyShape.
-	self assert: decoded uuid equals: shape1 uuid
+	self assert: decoded uuid equals: shape1 uuid.
+	legacyDecoded := NeoJSONReader fromString: '{"className":"OPDiagramOnlyShape","uuid":"legacy-non-uuid"}' as: OPDiagramOnlyShape.
+	self assert: legacyDecoded uuid equals: 'legacy-non-uuid'
 ]
 
 { #category : 'tests' }
 OPNoteTest >> testNoteAndControllerRenderingStylesAndPrinting [
 
-	| note nonTriangleShapes triangleShape |
+	| note nonTriangleShapes triangleShape leftFillBox noteViewModel initialTrianglePosition initialLeftFillExtent |
 	self assert: OPNoteController diagramElementClass identicalTo: OPNote.
 	self assert: OPNoteController modelClass identicalTo: OPNote.
 	self assert: OPNoteController paletteItemName equals: #note.
 	self assert: OPNoteController viewModelClass identicalTo: OPNoteViewModel.
+	self assert: OPDiagramOnlyController viewModelClass identicalTo: OPDiagramOnlyViewModel.
+	self assert: OPNoteController new paletteItemName equals: #note.
+	self assert: OPBoundaryController new paletteItemName equals: #boundary.
 	self assertCollection: OPNote stonAllInstVarNames includesAll: #( #text ).
 
 	note := OPNote new.
+	note text: nil.
+	noteViewModel := OPNoteViewModel forModel: note.
+	self assert: noteViewModel nameOfModel equals: ''.
+	noteViewModel createModelIn: OPTestContainerModel new.
+	self assert: noteViewModel model identicalTo: note.
+
 	note text: 'Short note'.
 	self
 		assert: (note printString includesSubstring: '(''Short note'')')
@@ -95,6 +106,7 @@ OPNoteTest >> testNoteAndControllerRenderingStylesAndPrinting [
 	note updateRenderFromStyles.
 	nonTriangleShapes := note attachedElementShapes allButLast.
 	triangleShape := note attachedElementShapes last.
+	leftFillBox := nonTriangleShapes at: 8.
 	self
 		assert: (nonTriangleShapes allSatisfy: [ :each | each color = Color green ])
 		description: 'Note body boxes should have exact fillColor'.
@@ -102,6 +114,14 @@ OPNoteTest >> testNoteAndControllerRenderingStylesAndPrinting [
 	self
 		assert: (note lines allSatisfy: [ :each | each color = Color red ])
 		description: 'Note border lines should have exact strokeColor'.
+
+	initialTrianglePosition := triangleShape position.
+	initialLeftFillExtent := leftFillBox extent.
+	note roassalShape translateTo: 120 @ 80.
+	self deny: triangleShape position equals: initialTrianglePosition.
+	note roassalShape extent: 160 @ 90.
+	self deny: leftFillBox extent equals: initialLeftFillExtent.
+
 	note removeRender.
 	self assertEmpty: note lines
 ]

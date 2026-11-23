@@ -8,6 +8,7 @@ Class {
 
 { #category : 'tests' }
 OPControllerTest >> testAbstractHooksAndDefaultFlags [
+
 	| baseController plainController |
 	self should: [ OPController viewModelClass ] raise: SubclassResponsibility.
 	baseController := OPController new.
@@ -18,6 +19,7 @@ OPControllerTest >> testAbstractHooksAndDefaultFlags [
 	self should: [ baseController updateAfterDiagramFocused ] raise: SubclassResponsibility.
 
 	plainController := OPTestPlainController new.
+	self deny: (baseController canBeTargetFor: plainController) description: 'Base controller should not be target by default'.
 	self deny: (plainController canBeSourceFor: plainController) description: 'Controller should not be source by default'.
 	self deny: (plainController canBeTargetFor: plainController) description: 'Controller should not be target by default'.
 	self deny: plainController isDiagramOnly description: 'Controller should not be diagram-only by default'.
@@ -134,9 +136,8 @@ OPControllerTest >> testSubscribeToViewModelUsesWeakMessageSends [
 	[
 		controller viewModel: viewModel.
 		subscriptions := viewModel announcer subscriptions subscriptions.
-		self assert: subscriptions size equals: 4.
+		self assert: subscriptions size equals: 3.
 		self assertCollection: (subscriptions collect: #announcementClass) hasSameElements: {
-				OPElementRenamed.
 				OPModelChanged.
 				OPElementFormNeedsRebuild.
 				OPModelRemoved }.

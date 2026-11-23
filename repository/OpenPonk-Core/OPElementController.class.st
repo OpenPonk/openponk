@@ -60,12 +60,6 @@ OPElementController >> creationCommandIn: aParentModel andShowInDiagram: aDiagra
 		position: aPoint
 ]
 
-{ #category : 'deprecation' }
-OPElementController >> dependingOnElements [
-	self deprecated: 'Use viewModel instead' transformWith: '`@receiver dependingOnElements' -> '`@receiver viewModel dependingOnElements'.
-	^ self viewModel ifNotNil: [ :vm | vm dependingOnElements ] ifNil: [ Set empty ]
-]
-
 { #category : 'accessing' }
 OPElementController >> diagramController [
 
@@ -177,37 +171,15 @@ OPElementController >> owner [
 	parentViewModel := self viewModel parentViewModel.
 	[
 		parentViewModel isNotNil and: [
-				parentViewModel model isNotNil and: [
-						(self diagramController hasControllerForModel:
-							 parentViewModel model) not ] ] ] whileTrue: [
-		parentViewModel := parentViewModel parentViewModel ].
+			parentViewModel model isNotNil and: [ (self diagramController hasControllerForModel: parentViewModel model) not ] ] ]
+		whileTrue: [ parentViewModel := parentViewModel parentViewModel ].
 
-	^ self diagramController
-		  controllerForModel: parentViewModel model
-		  ifNone: [ nil ]
+	^ parentViewModel ifNotNil: [ :parentVM | self diagramController controllerForModel: parentVM model ifNone: [ nil ] ]
 ]
 
 { #category : 'accessing' }
 OPElementController >> projectController [
 	^ self diagramController projectController
-]
-
-{ #category : 'construction' }
-OPElementController >> registerModelIn: aParentModel [
-	self 
-		deprecated: 'Use viewModel registerModelIn: instead' 
-		transformWith: '`@receiver registerModelIn: `@arg' -> '`@receiver viewModel registerModelIn: `@arg'.
-	^ self viewModel ifNotNil: [ :vm | vm registerModelIn: aParentModel ]
-]
-
-{ #category : 'deprecated' }
-OPElementController >> remove [
-
-	self
-		deprecated: 'Use #removeController instead.'
-		transformWith: '`@receiver remove' -> '`@receiver removeController'.
-
-	^ self removeControllerAndDiagramElement
 ]
 
 { #category : 'destruction' }

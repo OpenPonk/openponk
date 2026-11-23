@@ -54,27 +54,25 @@ OPDiagramOnlyControllerTest >> registerModel [
 
 { #category : 'tests' }
 OPDiagramOnlyControllerTest >> testBeingRemovedAfterModelRemovalWhenNotRendered [
+
 	| diagram diagramElement |
 	self showInDiagram.
 	diagram := diagramController diagramElement.
 	diagramElement := controller diagramElement.
-	self
-		assert: controller isDiagramOnly
-		description: 'Controller should be diagram-only'.
+	self assert: controller isDiagramOnly description: 'Controller should be diagram-only'.
 	self assertCollection: diagram allOwnedElements includesAll: { diagramElement }.
-	controller removeModel.
-	self assert: controller model identicalTo: diagramElement.
-	self assertCollection: diagram allOwnedElements includesAll: { diagramElement }
+	controller viewModel removeModel.
+	self deny: controller diagramElement exists description: 'Diagram-only element should be detached after ViewModel removal'.
+	self denyCollection: diagram allOwnedElements includesAny: { diagramElement }
 ]
 
 { #category : 'tests' }
 OPDiagramOnlyControllerTest >> testBeingRemovedAfterModelRemovalWhenRendered [
+
 	self showInDiagram.
 	self assertCollection: diagramController controllers includesAll: { controller }.
-	controller removeModel.
+	controller viewModel removeModel.
 	diagramController diagramFocused.
-	self assertCollection: diagramController controllers includesAll: { controller }.
-	controller removeControllerAndDiagramElement.
 	self denyCollection: diagramController controllers includesAny: { controller }
 ]
 
@@ -134,11 +132,12 @@ OPDiagramOnlyControllerTest >> testHideUndoRedo [
 
 { #category : 'tests - destruction' }
 OPDiagramOnlyControllerTest >> testRemoveModel [
+
 	self showInDiagram.
-	self deny: controller diagramElement identicalTo: nil.
-	controller removeModel.
-	self assert: controller model identicalTo: controller diagramElement.
-	self assertCollection: diagramController controllers includesAll: { controller }
+	self assert: controller diagramElement exists description: 'Diagram-only element should exist before ViewModel removal'.
+	controller viewModel removeModel.
+	self deny: controller diagramElement exists description: 'Diagram-only element should be detached after ViewModel removal'.
+	self denyCollection: diagramController controllers includesAny: { controller }
 ]
 
 { #category : 'tests' }

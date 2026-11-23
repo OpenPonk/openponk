@@ -113,3 +113,45 @@ OPElementControllerTest >> testCanBeTargetForRelation [
 		assert: (controller canBeTargetFor: (diagramController newControllerFor: OPTestRelationModel new))
 		description: 'Entity controller should be a valid target for relation controller'
 ]
+
+{ #category : 'tests' }
+OPElementControllerTest >> testOwnerAndIntendedOwningModelSkipHiddenIntermediateParent [
+
+	| intermediateContainer nestedEntity nestedController |
+	intermediateContainer := OPTestContainerModel new.
+	nestedEntity := OPTestEntityModel new.
+	diagramController model add: intermediateContainer.
+	intermediateContainer add: nestedEntity.
+	nestedController := diagramController newControllerFor: nestedEntity.
+	self assert: nestedController intendedModelOfOwningDiagramElement identicalTo: diagramController model.
+	self assert: nestedController owner identicalTo: diagramController
+]
+
+{ #category : 'tests' }
+OPElementControllerTest >> testOwnerReturnsDirectParentController [
+
+	diagramController model add: model.
+	controller model: model.
+	self assert: controller owner identicalTo: diagramController
+]
+
+{ #category : 'tests' }
+OPElementControllerTest >> testOwnerReturnsNilWhenNoAncestorHasController [
+
+	| foreignContainer foreignEntity foreignController |
+	foreignContainer := OPTestContainerModel new.
+	foreignEntity := OPTestEntityModel new.
+	foreignContainer add: foreignEntity.
+	diagramController project addModel: foreignContainer.
+	foreignController := diagramController newControllerFor: foreignEntity.
+	self assert: foreignController owner identicalTo: nil
+]
+
+{ #category : 'tests' }
+OPElementControllerTest >> testUpdateAfterDiagramFocusedSkipsUnrenderedController [
+
+	controller model: model.
+	self deny: controller isRendered description: 'Controller should not be rendered before showing in diagram'.
+	controller updateAfterDiagramFocused.
+	self deny: controller isRendered description: 'updateAfterDiagramFocused must leave an unrendered controller unrendered'
+]

@@ -14,11 +14,6 @@ Class {
 }
 
 { #category : 'instance creation' }
-OPControllerFactory class >> withCommonElements [
-	^ self new registerCommonElements
-]
-
-{ #category : 'instance creation' }
 OPControllerFactory class >> withCommonElementsFor: aDiagramController [
 
 	^ self new

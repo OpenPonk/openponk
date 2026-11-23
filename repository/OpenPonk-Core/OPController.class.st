@@ -84,17 +84,6 @@ OPController >> commandForProperty: aSymbol accessor: anAccessor oldValue: anOld
 ]
 
 { #category : 'accessing' }
-OPController >> commonModelClassPrefix [
-
-	self
-		deprecated: 'Use class viewModelClass commonModelClassPrefix instead'
-		transformWith:
-		'`@receiver commonModelClassPrefix' -> '`@receiver class viewModelClass commonModelClassPrefix'.
-
-	^ self class viewModelClass commonModelClassPrefix
-]
-
-{ #category : 'accessing' }
 OPController >> dependentControllers [
 
 	^ self viewModel ifNil: [ #(  ) ] ifNotNil: [ :vm |
@@ -102,18 +91,6 @@ OPController >> dependentControllers [
 				  collect: [ :each |
 					  self diagramController controllerForModel: each ifNone: [ nil ] ]
 				  thenSelect: #isNotNil ]
-]
-
-{ #category : 'deprecation' }
-OPController >> dependentElements [
-	self deprecated: 'Use viewModel instead' transformWith: '`@receiver dependentElements' -> '`@receiver viewModel dependentElements'.
-	^ self viewModel ifNotNil: [ :vm | vm dependentElements ] ifNil: [ #() ]
-]
-
-{ #category : 'forms' }
-OPController >> descriptionName [
-	self deprecated: 'Use viewModel instead' transformWith: '`@receiver descriptionName' -> '`@receiver viewModel descriptionName'.
-	^ self viewModel descriptionName
 ]
 
 { #category : 'accessing' }
@@ -231,28 +208,6 @@ OPController >> modelRemoved [
 	self viewModel: nil
 ]
 
-{ #category : 'accessing' }
-OPController >> nameOfType [
-
-	self
-		deprecated: 'Use viewModel nameOfType instead'
-		transformWith:
-		'`@receiver nameOfType' -> '`@receiver viewModel nameOfType'.
-
-	^ self viewModel nameOfType
-]
-
-{ #category : 'connecting' }
-OPController >> parentContainerModel [
-
-	self
-		deprecated: 'Use viewModel parentContainerModel instead'
-		transformWith: '`@receiver parentContainerModel'
-			-> '`@receiver viewModel parentContainerModel'.
-
-	^ self viewModel parentContainerModel
-]
-
 { #category : 'connecting' }
 OPController >> parentModelInTarget: aTargetController [
 	"Default container resolution for general elements."
@@ -285,13 +240,6 @@ OPController >> propertyNamed: aSymbol [
 OPController >> propertyNamed: aSymbol put: aValue [
 	"Delegate property mutation to the underlying view model if present."
 	self viewModel ifNotNil: [ :vm | vm propertyNamed: aSymbol put: aValue ]
-]
-
-{ #category : 'deprecated' }
-OPController >> remove [
-
-	self deprecated: 'Use removeControllerAndDiagramElement instead.'.
-	self removeControllerAndDiagramElement
 ]
 
 { #category : 'destruction' }
@@ -351,14 +299,6 @@ OPController >> removeFromDiagramController [
 	self diagramController removeController: self
 ]
 
-{ #category : 'removing' }
-OPController >> removeModel [
-	self
-		deprecated: 'Use #removeModel on ViewModel instead'
-		transformWith: '`@receiver removeModel' -> '`@receiver viewModel removeModel'.
-	^ self viewModel removeModel
-]
-
 { #category : 'destruction' }
 OPController >> removeRender [
 	self ensureDeselected.
@@ -404,7 +344,6 @@ OPController >> subscribeToViewModel [
 	"Subscribe to view model announcements to keep the diagram element synchronized."
 
 	self viewModel announcer weak
-		when: OPElementRenamed send: #modelChanged to: self;
 		when: OPModelChanged send: #modelChanged to: self;
 		when: OPElementFormNeedsRebuild send: #modelChanged to: self;
 		when: OPModelRemoved send: #handleModelRemoved: to: self

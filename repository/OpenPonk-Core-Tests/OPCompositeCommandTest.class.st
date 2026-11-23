@@ -104,6 +104,21 @@ OPCompositeCommandTest >> testFirstLeafCommandRecursivelyFindsFirstAction [
 ]
 
 { #category : 'tests' }
+OPCompositeCommandTest >> testFirstLeafCommandSkipsLeadingEmptyNestedComposite [
+
+	| root emptyInner leafCommand |
+	root := OPCompositeCommand new.
+	emptyInner := OPCompositeCommand new.
+	leafCommand := OPCommand new description: 'Move Element'.
+	root
+		add: emptyInner;
+		add: leafCommand.
+
+	self assert: root firstLeafCommand identicalTo: leafCommand.
+	self assert: root description equals: 'Move Element'
+]
+
+{ #category : 'tests' }
 OPCompositeCommandTest >> testLeafCountRecursivelySumsAllAtomicCommands [
 	| root inner1 inner2 cmd1 cmd2 cmd3 |
 	root := OPCompositeCommand new.
@@ -142,4 +157,22 @@ OPCompositeCommandTest >> testUndoLIFO [
 			             (OPUndoTestLoggingCommand log: log value: 3) }.
 	composite undo.
 	self assert: log asArray equals: #( 'undo:3' 'undo:2' 'undo:1' )
+]
+
+{ #category : 'tests' }
+OPCompositeCommandTest >> testWithSingleCommandAndEmptyQueries [
+
+	| emptyComposite singleCommand singleComposite |
+	emptyComposite := OPCompositeCommand new.
+	self assert: emptyComposite isEmpty description: 'New composite command should be empty'.
+	self assert: emptyComposite size equals: 0.
+	self assert: emptyComposite leafCount equals: 0.
+	self assert: emptyComposite firstLeafCommand identicalTo: nil.
+	self assert: emptyComposite isComposite description: 'Composite command must report isComposite = true'.
+
+	singleCommand := OPUndoTestLoggingCommand log: OrderedCollection new value: 1.
+	singleComposite := OPCompositeCommand with: singleCommand.
+	self deny: singleComposite isEmpty description: 'Composite created with a command must not be empty'.
+	self assert: singleComposite size equals: 1.
+	self assert: singleComposite firstLeafCommand identicalTo: singleCommand
 ]

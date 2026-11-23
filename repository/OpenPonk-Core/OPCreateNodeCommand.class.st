@@ -14,15 +14,6 @@ Class {
 }
 
 { #category : 'instance creation' }
-OPCreateNodeCommand class >> controller: aController parentModel: aParentModel diagramController: aDiagramController [
-	^ self
-		controller: aController
-		parentModel: aParentModel
-		diagramController: aDiagramController
-		position: nil
-]
-
-{ #category : 'instance creation' }
 OPCreateNodeCommand class >> controller: aController parentModel: aParentModel diagramController: aDiagramController position: aPoint [
 	^ self new
 		controller: aController;
@@ -60,13 +51,4 @@ OPCreateNodeCommand >> position [
 { #category : 'accessing' }
 OPCreateNodeCommand >> position: aPoint [
 	position := aPoint
-]
-
-{ #category : 'executing' }
-OPCreateNodeCommand >> restoreDiagramElementGeometry [
-
-	| extent |
-	position ifNil: [ ^ self ].
-	extent := (diagramElement bounds ifNil: [ diagramElement roassalShape ] ifNotNil: [ :bounds | bounds ]) extent.
-	diagramElement bounds: (OPNodeBounds withPosition: position extent: extent)
 ]

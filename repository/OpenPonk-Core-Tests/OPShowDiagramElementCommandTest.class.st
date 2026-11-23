@@ -44,16 +44,30 @@ OPShowDiagramElementCommandTest >> setUp [
 ]
 
 { #category : 'tests' }
+OPShowDiagramElementCommandTest >> testExecuteIgnoresNoShapeDiagramElement [
+
+	| noShapeController command |
+	noShapeController := OPTestEntityController new.
+	(diagramController stub showWithoutDependentInDiagramModel: hiddenNodeModel) willReturn: noShapeController.
+
+	command := OPShowDiagramElementCommand model: hiddenNodeModel diagramController: diagramController.
+
+	undoManager execute: command.
+
+	self assert: command model identicalTo: hiddenNodeModel.
+	self assert: command diagramController identicalTo: diagramController
+]
+
+{ #category : 'tests' }
 OPShowDiagramElementCommandTest >> testShowNodeAndUndoRedo [
+
 	| command |
 	self assertEmpty: diagramController controllers.
 	self assert: containerModel entities size equals: 1.
 
 	command := OPShowDiagramElementCommand model: hiddenNodeModel diagramController: diagramController.
 
-	self
-		assert: (command class allInstVarNames includes: #diagramController) not
-		description: 'Command must not define an instVar for diagramController to prevent history memory leaks'.
+	self denyCollection: command class allInstVarNames includesAny: { #diagramController }.
 
 	undoManager inTransaction: [ undoManager execute: command ].
 

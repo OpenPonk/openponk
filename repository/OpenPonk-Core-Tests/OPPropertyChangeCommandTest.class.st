@@ -23,6 +23,38 @@ OPPropertyChangeCommandTest >> setUp [
 ]
 
 { #category : 'tests' }
+OPPropertyChangeCommandTest >> testAccessorCoalescingSameAndDifferentAccessors [
+
+	| firstAccessor secondAccessor cmd1 cmd2 cmd3 |
+	firstAccessor := MAPluggableAccessor read: [ :vm | vm name ] write: [ :vm :val | vm name: val ].
+	secondAccessor := MAPluggableAccessor read: [ :vm | vm value ] write: [ :vm :val | vm value: val ].
+
+	cmd1 := OPPropertyChangeCommand
+		        viewModel: target
+		        selector: nil
+		        accessor: firstAccessor
+		        oldValue: 'A'
+		        newValue: 'B'.
+	cmd2 := OPPropertyChangeCommand
+		        viewModel: target
+		        selector: nil
+		        accessor: firstAccessor
+		        oldValue: 'B'
+		        newValue: 'C'.
+	cmd3 := OPPropertyChangeCommand
+		        viewModel: target
+		        selector: nil
+		        accessor: secondAccessor
+		        oldValue: 1
+		        newValue: 2.
+
+	self
+		assert: (cmd1 canCoalesceWith: cmd2)
+		description: 'Commands with identical view model and accessor within timeout should coalesce'.
+	self deny: (cmd1 canCoalesceWith: cmd3) description: 'Commands with different accessors must not coalesce'
+]
+
+{ #category : 'tests' }
 OPPropertyChangeCommandTest >> testCoalescingClearsRedoStackInManager [
 
 	| cmd1 cmd2 cmdToUndo |
@@ -87,6 +119,45 @@ OPPropertyChangeCommandTest >> testExecuteAndUndo [
 	self assert: target name equals: 'Original'.
 	cmd redo.
 	self assert: target name equals: 'Changed'
+]
+
+{ #category : 'tests' }
+OPPropertyChangeCommandTest >> testMutatorSelectorAndNilTimestampAndNilViewModelEdgeCases [
+
+	| colonCommand nilSelectorCommand nilViewModelCommand |
+	colonCommand := OPPropertyChangeCommand
+		                viewModel: target
+		                selector: #name:
+		                oldValue: 'Original'
+		                newValue: 'Updated'.
+	self assert: colonCommand selector equals: #name:.
+	self assert: colonCommand mutatorSelector equals: #name:.
+
+	colonCommand timestamp: nil.
+	colonCommand execute.
+	self
+		assert: colonCommand timestamp isNotNil
+		description: 'Executing a property change command with nil timestamp should initialize timestamp'.
+	self assert: target name equals: 'Updated'.
+
+	nilSelectorCommand := OPPropertyChangeCommand
+		                      viewModel: target
+		                      selector: nil
+		                      accessor: nil
+		                      oldValue: 'A'
+		                      newValue: 'B'.
+	self assert: nilSelectorCommand mutatorSelector identicalTo: nil.
+	self
+		deny: (colonCommand canCoalesceWith: nilSelectorCommand)
+		description: 'Command with selector must not coalesce with command having nil selector'.
+
+	nilViewModelCommand := OPPropertyChangeCommand
+		                       viewModel: nil
+		                       selector: #name
+		                       oldValue: 'A'
+		                       newValue: 'B'.
+	nilViewModelCommand execute.
+	self assert: target name equals: 'Updated'
 ]
 
 { #category : 'tests' }

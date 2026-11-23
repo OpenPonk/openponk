@@ -35,27 +35,15 @@ OPRemoveModelElementCommand class >> model: aModel projectController: aProjectCo
 		yourself
 ]
 
-{ #category : 'instance creation' }
-OPRemoveModelElementCommand class >> model: aModel projectController: aProjectController activeControllers: aCollection [
-
-	| resolvedProjectController |
-	resolvedProjectController := aCollection
-		                             detect: [ :eachController | eachController projectController isNotNil ]
-		                             ifFound: [ :foundController | foundController projectController ]
-		                             ifNone: [ nil ].
-	^ self model: aModel projectController: resolvedProjectController
-]
-
 { #category : 'executing' }
 OPRemoveModelElementCommand >> availableDiagrams [
+
 	| diagrams |
 	diagrams := Set new.
-	self project ifNotNil: [ :currentProject |
-		diagrams addAll: currentProject diagrams ].
+	self project ifNotNil: [ :currentProject | diagrams addAll: currentProject diagrams ].
 	projectController ifNotNil: [ :currentProjectController |
-		currentProjectController controllers do: [ :eachDiagramController |
-			eachDiagramController diagramElement ifNotNil: [ :diagramElement |
-				diagrams add: diagramElement ] ] ].
+			currentProjectController controllers do: [ :eachDiagramController |
+				eachDiagramController diagramElement ifExists: [ :diagramElement | diagrams add: diagramElement ] ] ].
 	^ diagrams
 ]
 
@@ -156,12 +144,6 @@ OPRemoveModelElementCommand >> project [
 OPRemoveModelElementCommand >> projectController [
 
 	^ projectController
-]
-
-{ #category : 'accessing' }
-OPRemoveModelElementCommand >> projectController: aProjectController [
-
-	projectController := aProjectController
 ]
 
 { #category : 'executing' }

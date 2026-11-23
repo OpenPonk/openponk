@@ -15,7 +15,7 @@ Class {
 	#tag : 'DiagramElements'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'running' }
 OPDiagramGeometryCommandTest >> setUp [
 	super setUp.
 	undoManager := OPUndoManager new.
@@ -26,7 +26,75 @@ OPDiagramGeometryCommandTest >> setUp [
 	node renderIn: canvas
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
+OPDiagramGeometryCommandTest >> testChangeAnchoredBoundsCommandExecuteUndoRedoWithAnchorConstraint [
+
+	| fromShape toShape line anchorConstraint oldBounds newBounds command |
+	fromShape := RSBox new
+		             size: 20 @ 20;
+		             position: 0 @ 0;
+		             yourself.
+	toShape := RSBox new
+		           size: 20 @ 20;
+		           position: 200 @ 0;
+		           yourself.
+	line := RSLine new
+		        from: fromShape;
+		        to: toShape;
+		        yourself.
+	canvas
+		add: fromShape;
+		add: toShape;
+		add: line.
+	anchorConstraint := OPRSAnchorConstraint new
+		                    positionReference: (OPRSAnchorConstraintBalanceReference balance: 0.25);
+		                    distanceToLine: 10;
+		                    yourself.
+	anchorConstraint stick: node roassalShape on: line.
+
+	oldBounds := node bounds copy.
+	newBounds := OPNodeBounds withPosition: 150 @ 30 extent: node bounds extent.
+	command := OPChangeAnchoredBoundsCommand element: node oldBounds: oldBounds newBounds: newBounds.
+	command
+		oldBalance: 0.25
+		newBalance: 0.75
+		oldDistanceToLine: 10
+		newDistanceToLine: 25.
+
+	undoManager execute: command.
+	self assert: anchorConstraint balance equals: 0.75.
+	self assert: anchorConstraint distanceToLine equals: 25.
+
+	undoManager undo.
+	self assert: anchorConstraint balance equals: 0.25.
+	self assert: anchorConstraint distanceToLine equals: 10.
+
+	undoManager redo.
+	self assert: anchorConstraint balance equals: 0.75.
+	self assert: anchorConstraint distanceToLine equals: 25
+]
+
+{ #category : 'tests' }
+OPDiagramGeometryCommandTest >> testChangeAnchoredBoundsCommandWithoutAnchorConstraint [
+
+	| oldBounds newBounds command |
+	oldBounds := node bounds copy.
+	newBounds := OPNodeBounds withPosition: 140 @ 160 extent: node bounds extent.
+	command := OPChangeAnchoredBoundsCommand element: node oldBounds: oldBounds newBounds: newBounds.
+	command
+		oldBalance: 0.2
+		newBalance: 0.8
+		oldDistanceToLine: 5
+		newDistanceToLine: 15.
+
+	undoManager execute: command.
+	self assert: node position equals: 140 @ 160.
+
+	undoManager undo.
+	self assert: node position equals: 100 @ 100
+]
+
+{ #category : 'tests' }
 OPDiagramGeometryCommandTest >> testChangeBoundsCommandMoveExecuteAndUndo [
 	| oldBounds newBounds command initialPos newPos |
 	initialPos := 100 @ 100.
@@ -52,7 +120,7 @@ OPDiagramGeometryCommandTest >> testChangeBoundsCommandMoveExecuteAndUndo [
 	self assert: node roassalShape position equals: newPos
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 OPDiagramGeometryCommandTest >> testChangeBoundsCommandResizeExecuteAndUndo [
 	| oldBounds newBounds command initialExtent newExtent initialPos newPos |
 	initialPos := 100 @ 100.
@@ -87,7 +155,7 @@ OPDiagramGeometryCommandTest >> testChangeBoundsCommandResizeExecuteAndUndo [
 	self assert: node roassalShape position equals: newPos
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 OPDiagramGeometryCommandTest >> testModifyEdgeWaypointsCommandExecuteAndUndo [
 	| edge oldPoints newPoints command |
 	edge := OPEdge new.
@@ -111,7 +179,41 @@ OPDiagramGeometryCommandTest >> testModifyEdgeWaypointsCommandExecuteAndUndo [
 	self assert: edge waypoints equals: newPoints
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
+OPDiagramGeometryCommandTest >> testModifyEdgeWaypointsCommandOnRenderedEdgeWithoutControlPoints [
+
+	| targetNode edge oldPoints newPoints command |
+	targetNode := OPTestBoundNode new.
+	targetNode bounds: (OPNodeBounds withPosition: 300 @ 100 extent: 80 @ 50).
+	targetNode renderIn: canvas.
+	edge := OPTestEdge new.
+	edge source: node.
+	edge target: targetNode.
+	oldPoints := {
+		             (100 @ 100).
+		             (150 @ 100).
+		             (300 @ 100) }.
+	newPoints := {
+		             (100 @ 100).
+		             (150 @ 180).
+		             (250 @ 180).
+		             (300 @ 100) }.
+	edge waypoints: oldPoints copy.
+	edge renderIn: canvas.
+
+	command := OPModifyEdgeWaypointsCommand edge: edge oldWaypoints: oldPoints newWaypoints: newPoints.
+
+	undoManager execute: command.
+	self assert: edge waypoints equals: newPoints.
+
+	undoManager undo.
+	self assert: edge waypoints equals: oldPoints.
+
+	undoManager redo.
+	self assert: edge waypoints equals: newPoints
+]
+
+{ #category : 'tests' }
 OPDiagramGeometryCommandTest >> testMultiNodeMoveInTransaction [
 	| node2 bounds2 oldBounds1 newBounds1 oldBounds2 newBounds2 |
 	bounds2 := OPNodeBounds withPosition: 200 @ 200 extent: 60 @ 40.

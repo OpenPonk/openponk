@@ -58,7 +58,38 @@ OPHideDiagramElementCommandTest >> setUp [
 ]
 
 { #category : 'tests' }
+OPHideDiagramElementCommandTest >> testCaptureStateIgnoresNoShapeDiagramElement [
+
+	| targetController command |
+	targetController := diagramController controllerForModel: nodeModel1.
+	targetController diagramElement: OPNoShape instance.
+
+	command := OPHideDiagramElementCommand model: nodeModel1 diagramController: diagramController.
+
+	self assert: command model identicalTo: nodeModel1.
+	self assert: command diagram identicalTo: diagramController diagramElement.
+	self assert: command projectController identicalTo: diagramController projectController.
+	self assert: command diagramController identicalTo: diagramController
+]
+
+{ #category : 'tests' }
+OPHideDiagramElementCommandTest >> testHideModelNotInDiagramIsNoOp [
+
+	| missingModel command |
+	missingModel := OPTestEntityModel new.
+	missingModel instVarNamed: #uuid put: UUID new.
+	command := OPHideDiagramElementCommand model: missingModel diagramController: diagramController.
+
+	undoManager execute: command.
+	self assert: diagramController controllers size equals: 3.
+
+	undoManager undo.
+	self assert: diagramController controllers size equals: 3
+]
+
+{ #category : 'tests' }
 OPHideDiagramElementCommandTest >> testHideNodeAndUndoRedo [
+
 	| command node1Element initialBounds |
 	node1Element := (diagramController controllerForModel: nodeModel1) diagramElement.
 	initialBounds := OPNodeBounds withPosition: 40 @ 40 extent: 60 @ 60.
@@ -66,16 +97,12 @@ OPHideDiagramElementCommandTest >> testHideNodeAndUndoRedo [
 
 	command := OPHideDiagramElementCommand model: nodeModel1 diagramController: diagramController.
 
-	self
-		assert: (command class allInstVarNames includes: #diagramController) not
-		description: 'Command must not define an instVar for diagramController to prevent history memory leaks'.
+	self denyCollection: command class allInstVarNames includesAny: { #diagramController }.
 
 	undoManager inTransaction: [ undoManager execute: command ].
 
 	self assert: diagramController controllers size equals: 1.
-	self
-		assert: (diagramController hasControllerForModel: nodeModel2)
-		description: 'Unrelated node2 must remain visible in diagram'.
+	self assert: (diagramController hasControllerForModel: nodeModel2) description: 'Unrelated node2 must remain visible in diagram'.
 	self
 		deny: (diagramController hasControllerForModel: nodeModel1)
 		description: 'Hidden node1 must no longer have a controller in diagram'.
@@ -103,11 +130,43 @@ OPHideDiagramElementCommandTest >> testHideNodeAndUndoRedo [
 
 	undoManager redo.
 	self assert: diagramController controllers size equals: 1.
-	self
-		deny: (diagramController hasControllerForModel: nodeModel1)
-		description: 'Redoing hide command must hide node1 again'.
+	self deny: (diagramController hasControllerForModel: nodeModel1) description: 'Redoing hide command must hide node1 again'.
 	self
 		deny: (diagramController hasControllerForModel: edgeModel)
 		description: 'Redoing hide command must hide dependent edge again'.
 	self assert: containerModel entities size equals: 3
+]
+
+{ #category : 'tests' }
+OPHideDiagramElementCommandTest >> testHideNodeCapturesConnectedEdgeOutsideDependentControllers [
+
+	| node1ViewModel command |
+	node1ViewModel := diagramController viewModelRegistry viewModelFor: nodeModel1.
+	node1ViewModel stub dependentElements willReturn: #(  ).
+
+	command := OPHideDiagramElementCommand model: nodeModel1 diagramController: diagramController.
+	undoManager inTransaction: [ undoManager execute: command ].
+	undoManager undo.
+
+	self assert: (diagramController hasControllerForModel: nodeModel1) description: 'Undoing hide must restore node1'.
+	self
+		assert: (diagramController hasControllerForModel: edgeModel)
+		description: 'Undoing hide must restore connected visual edge discovered outside dependentControllers'
+]
+
+{ #category : 'tests' }
+OPHideDiagramElementCommandTest >> testOpenDiagramControllerReturnsNilWhenClosedOrDetached [
+
+	| projectController command |
+	projectController := diagramController projectController.
+	command := OPHideDiagramElementCommand model: nodeModel1 diagramController: diagramController.
+	self assert: command openDiagramController identicalTo: diagramController.
+
+	projectController removeDiagramController: diagramController.
+	self assert: command openDiagramController identicalTo: nil.
+	self assert: command diagramController identicalTo: nil.
+
+	projectController addDiagramController: diagramController.
+	diagramController diagramElement removeRender.
+	self assert: command openDiagramController identicalTo: nil
 ]

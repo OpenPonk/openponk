@@ -50,11 +50,6 @@ OPRenameProjectCommand >> oldName [
 ]
 
 { #category : 'accessing' }
-OPRenameProjectCommand >> oldName: aString [
-	oldName := aString
-]
-
-{ #category : 'accessing' }
 OPRenameProjectCommand >> project [
 	^ project
 ]

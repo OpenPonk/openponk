@@ -12,7 +12,7 @@ Class {
 	#tag : 'UndoRedo'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 OPCompositeCommand class >> with: aCommand [
 	"Instantiate a composite command containing a single initial command."
 	^ self new
@@ -20,7 +20,7 @@ OPCompositeCommand class >> with: aCommand [
 		yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 OPCompositeCommand class >> withAll: aCollection [
 	"Instantiate a composite command containing all commands in aCollection."
 	^ self new
@@ -86,8 +86,9 @@ OPCompositeCommand >> execute [
 
 { #category : 'accessing' }
 OPCompositeCommand >> firstLeafCommand [
-	commands ifEmpty: [ ^ nil ].
-	^ commands first firstLeafCommand
+
+	commands do: [ :eachCommand | eachCommand firstLeafCommand ifNotNil: [ :leafCommand | ^ leafCommand ] ].
+	^ nil
 ]
 
 { #category : 'initialization' }

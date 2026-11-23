@@ -37,7 +37,8 @@ OPUndoManager >> announceChangedFor: aCommand [
 
 { #category : 'accessing' }
 OPUndoManager >> announcer [
-	^ announcer ifNil: [ announcer := Announcer new ]
+
+	^ announcer
 ]
 
 { #category : 'testing' }
@@ -62,7 +63,7 @@ OPUndoManager >> clear [
 	self announceChanged
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'private' }
 OPUndoManager >> enforceMaxUndoSteps [
 	"Discard the oldest steps exceeding maxUndoSteps."
 	[ undoStack size > maxUndoSteps ] whileTrue: [
@@ -171,7 +172,7 @@ OPUndoManager >> recordDirectly: aCommand [
 			self pushToUndo: aCommand ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'private' }
 OPUndoManager >> recordInTransaction: aCommand [
 	| currentTransaction |
 	currentTransaction := transactionStack last.

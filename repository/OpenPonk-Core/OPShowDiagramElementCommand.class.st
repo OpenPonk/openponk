@@ -9,19 +9,21 @@ Class {
 	#tag : 'UndoRedo'
 }
 
-{ #category : 'execution' }
+{ #category : 'executing' }
 OPShowDiagramElementCommand >> execute [
-	descriptors ifEmpty: [
-		self openDiagramController ifNotNil: [ :openDiagramController |
-			| createdController |
-			createdController := openDiagramController showWithoutDependentInDiagramModel: model.
-			createdController ifNotNil: [
-				createdController diagramElement ifNotNil: [ :createdDiagramElement |
-					descriptors add: (self createDescriptorFor: createdDiagramElement) ] ].
-			openDiagramController updateCanvas ] ]
-	ifNotEmpty: [
-		self restoreDiagramElements.
-		self reRenderInDiagram ]
+
+	descriptors
+		ifEmpty: [
+				self openDiagramController ifNotNil: [ :openDiagramController |
+						| createdController |
+						createdController := openDiagramController showWithoutDependentInDiagramModel: model.
+						createdController ifNotNil: [
+								createdController diagramElement ifExists: [ :createdDiagramElement |
+									descriptors add: (self createDescriptorFor: createdDiagramElement) ] ].
+						openDiagramController updateCanvas ] ]
+		ifNotEmpty: [
+				self restoreDiagramElements.
+				self reRenderInDiagram ]
 ]
 
 { #category : 'executing' }

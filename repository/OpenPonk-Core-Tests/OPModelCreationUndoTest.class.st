@@ -271,6 +271,21 @@ OPModelCreationUndoTest >> testCreateEdgeViaAddAsTargetExecutesThroughUndoManage
 ]
 
 { #category : 'tests' }
+OPModelCreationUndoTest >> testCreateNodeCommandExposesPosition [
+
+	| command |
+	command := OPCreateNodeCommand
+		           controllerClass: OPTestEntityController
+		           parentModel: containerModel
+		           diagramController: diagramController
+		           position: 120 @ 80.
+
+	self assert: command position equals: 120 @ 80.
+	self assert: command diagram identicalTo: diagram.
+	self assert: command projectController identicalTo: diagramController projectController
+]
+
+{ #category : 'tests' }
 OPModelCreationUndoTest >> testCreateNodeMultipleUndoRedoCycles [
 
 	| command nodeModel diagramElement canvas |

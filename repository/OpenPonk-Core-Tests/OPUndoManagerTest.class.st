@@ -162,6 +162,27 @@ OPUndoManagerTest >> testRedo [
 ]
 
 { #category : 'tests' }
+OPUndoManagerTest >> testRedoFailureClearsUndoStackAndPropagatesException [
+
+	| survivingCommand failingRedoCommand |
+	survivingCommand := OPUndoTestLoggingCommand log: OrderedCollection new value: 1.
+	failingRedoCommand := Mock new.
+	failingRedoCommand stub undo willReturn: nil.
+	failingRedoCommand stub redo willRaise: (Error new messageText: 'Intended redo crash').
+
+	undoManager record: survivingCommand.
+	undoManager record: failingRedoCommand.
+	undoManager undo.
+	self assert: undoManager undoStack size equals: 1.
+	self assert: undoManager redoStack size equals: 1.
+
+	self should: [ undoManager redo ] raise: Error.
+	self assertEmpty: undoManager undoStack.
+	self assertEmpty: undoManager redoStack.
+	self deny: undoManager isExecutingUndoRedo description: 'isExecutingUndoRedo must be reset even when redo fails'
+]
+
+{ #category : 'tests' }
 OPUndoManagerTest >> testRedoStackClearedOnNewRecord [
 
 	| log cmd1 cmd2 cmd3 |
@@ -266,6 +287,19 @@ OPUndoManagerTest >> testUndo [
 	self
 		assert: undoManager canRedo
 		description: 'Redo should be available after undoing a command'
+]
+
+{ #category : 'tests' }
+OPUndoManagerTest >> testUndoAndRedoOnEmptyStacksAreNoOpsAndMaxUndoStepsAccessor [
+
+	self assert: undoManager maxUndoSteps equals: OPUndoManager defaultMaxUndoSteps.
+	undoManager maxUndoSteps: 12.
+	self assert: undoManager maxUndoSteps equals: 12.
+
+	undoManager undo.
+	undoManager redo.
+	self assertEmpty: undoManager undoStack.
+	self assertEmpty: undoManager redoStack
 ]
 
 { #category : 'tests' }

@@ -16,7 +16,7 @@ Class {
 	#tag : 'UndoRedo'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 OPChangeDiagramElementStylePropertyCommand class >> element: anElement property: aSymbol value: aValue [
 	^ self new
 		element: anElement

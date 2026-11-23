@@ -23,9 +23,24 @@ OPRenameProjectCommandTest >> setUp [
 
 { #category : 'running' }
 OPRenameProjectCommandTest >> tearDown [
+
+	project ifNotNil: [ project announcer unsubscribe: self ].
 	project := nil.
 	undoManager := nil.
 	super tearDown
+]
+
+{ #category : 'tests' }
+OPRenameProjectCommandTest >> testAccessorsOldNameAndNewName [
+
+	| command |
+	command := OPRenameProjectCommand project: project newName: 'Renamed Project'.
+	self assert: command newName equals: 'Renamed Project'.
+	self assert: command oldName identicalTo: nil.
+
+	command execute.
+	self assert: command oldName equals: 'Original Project'.
+	self assert: command newName equals: 'Renamed Project'
 ]
 
 { #category : 'tests' }

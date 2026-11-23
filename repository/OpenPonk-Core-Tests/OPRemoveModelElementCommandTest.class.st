@@ -69,6 +69,20 @@ OPRemoveModelElementCommandTest >> tearDown [
 ]
 
 { #category : 'tests' }
+OPRemoveModelElementCommandTest >> testAvailableDiagramsIgnoresNoShapeDiagramController [
+
+	| projectController unrenderedDiagramController removeCommand |
+	projectController := diagramController projectController.
+	unrenderedDiagramController := OPTestDiagramController new.
+	projectController addDiagramController: unrenderedDiagramController.
+
+	removeCommand := OPRemoveModelElementCommand model: nodeModel1 projectController: projectController.
+
+	self denyCollection: removeCommand availableDiagrams includesAny: { OPNoShape instance }.
+	self assertCollection: removeCommand availableDiagrams includesAll: { diagramController diagramElement }
+]
+
+{ #category : 'tests' }
 OPRemoveModelElementCommandTest >> testCaptureDiagramElementsSynchronizesBoundsFromRender [
 
 	| canvas entityModel diagram diagramElement removeCommand capturedDescriptor project projectController |
@@ -221,6 +235,33 @@ OPRemoveModelElementCommandTest >> testCascadeRemovalAndUndoRedoWithoutDiagramIn
 	self assert: containerModel entities size equals: 1.
 	self denyCollection: containerModel entities includesAny: { nodeModel1 }.
 	self denyCollection: containerModel entities includesAny: { edgeModel }
+]
+
+{ #category : 'tests' }
+OPRemoveModelElementCommandTest >> testExecuteRunsAuxiliaryRemovalCommandsInTransactionAndUndoesThem [
+
+	| projectController viewModel auxiliaryTarget auxiliaryCommand removeCommand |
+	projectController := diagramController projectController.
+	viewModel := projectController viewModelRegistry viewModelFor: nodeModel1.
+	auxiliaryTarget := OPUndoTestViewModel new.
+	auxiliaryTarget name: 'BeforeRemoval'.
+	auxiliaryCommand := OPPropertyChangeCommand
+		                    viewModel: auxiliaryTarget
+		                    selector: #name
+		                    oldValue: 'BeforeRemoval'
+		                    newValue: 'ClearedByRemoval'.
+	(viewModel stub auxiliaryRemovalCommandsIn: projectController) willReturn: { auxiliaryCommand }.
+
+	removeCommand := OPRemoveModelElementCommand model: nodeModel1 projectController: projectController.
+	undoManager inTransaction: [ undoManager execute: removeCommand ].
+
+	self assert: auxiliaryTarget name equals: 'ClearedByRemoval'.
+
+	undoManager undo.
+	self assert: auxiliaryTarget name equals: 'BeforeRemoval'.
+
+	undoManager redo.
+	self assert: auxiliaryTarget name equals: 'ClearedByRemoval'
 ]
 
 { #category : 'tests' }

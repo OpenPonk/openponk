@@ -38,28 +38,13 @@ OPDiagramElementRemovalDescriptor >> diagramElement [
 ]
 
 { #category : 'accessing' }
-OPDiagramElementRemovalDescriptor >> diagramElement: anObject [
-	diagramElement := anObject
-]
-
-{ #category : 'accessing' }
 OPDiagramElementRemovalDescriptor >> geometryMemento [
 	^ geometryMemento
 ]
 
 { #category : 'accessing' }
-OPDiagramElementRemovalDescriptor >> geometryMemento: anObject [
-	geometryMemento := anObject
-]
-
-{ #category : 'accessing' }
 OPDiagramElementRemovalDescriptor >> owningElement [
 	^ owningElement
-]
-
-{ #category : 'accessing' }
-OPDiagramElementRemovalDescriptor >> owningElement: anObject [
-	owningElement := anObject
 ]
 
 { #category : 'executing' }

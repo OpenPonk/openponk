@@ -8,9 +8,9 @@ Class {
 		'viewModel',
 		'model'
 	],
-	#category : 'OpenPonk-Core-Tests-UndoRedo',
+	#category : 'OpenPonk-Core-Tests-ViewModels',
 	#package : 'OpenPonk-Core-Tests',
-	#tag : 'UndoRedo'
+	#tag : 'ViewModels'
 }
 
 { #category : 'running' }

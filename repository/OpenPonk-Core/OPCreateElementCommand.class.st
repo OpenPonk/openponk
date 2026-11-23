@@ -77,28 +77,9 @@ OPCreateElementCommand >> diagramElement [
 	^ diagramElement
 ]
 
-{ #category : 'accessing' }
-OPCreateElementCommand >> diagramElement: aDiagramElement [
-	diagramElement := aDiagramElement
-]
-
 { #category : 'executing' }
 OPCreateElementCommand >> execute [
 	model ifNil: [ self basicFirstExecution ] ifNotNil: [ self basicRedo ]
-]
-
-{ #category : 'testing' }
-OPCreateElementCommand >> isDiagramOnly [
-	"Answer whether this command targets a purely visual diagram-only element without a persistent domain model."
-	(model isNotNil and: [ model isDiagramElement ]) ifTrue: [ ^ model isDiagramOnly ].
-	diagramElement ifNotNil: [ :element | element isDiagramOnly ifTrue: [ ^ true ] ].
-	controller ifNotNil: [ ^ controller isDiagramOnly ].
-	^ false
-]
-
-{ #category : 'accessing' }
-OPCreateElementCommand >> model: aModel [
-	model := aModel
 ]
 
 { #category : 'accessing' }
@@ -118,18 +99,16 @@ OPCreateElementCommand >> prepareControllerBeforeCreation [
 
 { #category : 'executing' }
 OPCreateElementCommand >> redoDiagramElement [
+
 	diagram ifNotNil: [
-		diagramElement ifNotNil: [
-			geometryMemento ifNotNil: [ :savedMemento |
-				diagramElement restoreGeometryFromMemento: savedMemento ]
-			ifNil: [
-				self restoreDiagramElementGeometry ].
-			(owningDiagramElement isNotNil and: [ owningDiagramElement isNoShape not ])
-				ifTrue: [ diagramElement owningElement: owningDiagramElement ]
-				ifFalse: [ diagramElement owningElement: diagram ].
-			self openDiagramController ifNotNil: [ :openController |
-				openController showDiagramElement: diagramElement.
-				openController updateCanvas ] ] ]
+			diagramElement ifNotNil: [
+					geometryMemento ifNotNil: [ :savedMemento | diagramElement restoreGeometryFromMemento: savedMemento ].
+					diagramElement owningElement: ((owningDiagramElement isNotNil and: [ owningDiagramElement isNoShape not ])
+							 ifTrue: [ owningDiagramElement ]
+							 ifFalse: [ diagram ]).
+					self openDiagramController ifNotNil: [ :openController |
+							openController showDiagramElement: diagramElement.
+							openController updateCanvas ] ] ]
 ]
 
 { #category : 'executing' }
@@ -140,11 +119,6 @@ OPCreateElementCommand >> redoDomainModel [
 			viewModel subscribeToModel ] ].
 	parentModel ifNotNil: [
 		viewModel registerModelIn: parentModel ]
-]
-
-{ #category : 'executing' }
-OPCreateElementCommand >> restoreDiagramElementGeometry [
-	"Hook for subclasses to restore spatial bounds or edge waypoints/endpoints."
 ]
 
 { #category : 'executing' }
@@ -177,18 +151,8 @@ OPCreateElementCommand >> viewModel [
 ]
 
 { #category : 'accessing' }
-OPCreateElementCommand >> viewModel: aViewModel [
-	viewModel := aViewModel
-]
-
-{ #category : 'accessing' }
 OPCreateElementCommand >> viewModelRegistry [
 	^ viewModelRegistry ifNil: [
 		projectController ifNotNil: [ :activeProjectController |
 			activeProjectController viewModelRegistry ] ]
-]
-
-{ #category : 'accessing' }
-OPCreateElementCommand >> viewModelRegistry: aRegistry [
-	viewModelRegistry := aRegistry
 ]

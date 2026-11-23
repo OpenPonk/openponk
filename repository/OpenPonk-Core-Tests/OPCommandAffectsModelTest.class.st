@@ -10,6 +10,26 @@ Class {
 }
 
 { #category : 'tests' }
+OPCommandAffectsModelTest >> testBaseCommandDefaultsAndCoalescingRejection [
+
+	| loggingCommand propertyCommand targetViewModel |
+	loggingCommand := OPUndoTestLoggingCommand log: OrderedCollection new value: 1.
+	self deny: loggingCommand isComposite description: 'Atomic command must report isComposite = false'.
+
+	targetViewModel := OPUndoTestViewModel new.
+	propertyCommand := OPPropertyChangeCommand
+		                   viewModel: targetViewModel
+		                   selector: #name
+		                   oldValue: 'A'
+		                   newValue: 'B'.
+	self
+		deny: (propertyCommand canCoalesceWith: loggingCommand)
+		description: 'Non-property command must reject coalescing with property change command'.
+
+	self should: [ loggingCommand coalesceWith: propertyCommand ] raise: ShouldNotImplement
+]
+
+{ #category : 'tests' }
 OPCommandAffectsModelTest >> testCommandAffectsModelByDefault [
 	self
 		assert: OPUndoTestLoggingCommand new affectsModel

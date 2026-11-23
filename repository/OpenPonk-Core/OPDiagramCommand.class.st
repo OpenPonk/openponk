@@ -45,8 +45,3 @@ OPDiagramCommand >> openDiagramController [
 OPDiagramCommand >> projectController [
 	^ projectController
 ]
-
-{ #category : 'accessing' }
-OPDiagramCommand >> projectController: anOPProjectController [
-	projectController := anOPProjectController
-]

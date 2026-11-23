@@ -67,12 +67,6 @@ OPCreateEdgeCommand >> redoDomainModel [
 	viewModel attachModelFrom: sourceViewModel to: targetViewModel
 ]
 
-{ #category : 'executing' }
-OPCreateEdgeCommand >> restoreDiagramElementGeometry [
-	diagramElement source: sourceDiagramElement.
-	diagramElement target: targetDiagramElement
-]
-
 { #category : 'accessing' }
 OPCreateEdgeCommand >> sourceDiagramElement: aDiagramElement [
 	sourceDiagramElement := aDiagramElement

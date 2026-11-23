@@ -1,3 +1,6 @@
+"
+Verifies shape selection, canvas elastic-box selection, and keyboard navigation interactions.
+"
 Class {
 	#name : 'OPRSSelectableTest',
 	#superclass : 'TestCase',
@@ -21,6 +24,65 @@ OPRSSelectableTest >> setUp [
 ]
 
 { #category : 'tests' }
+OPRSSelectableTest >> testClickMetaClickDeselectAndHighlightGuards [
+
+	| selectableCanvas selectable1 selectable2 unattachedBox |
+	selectableCanvas := OPRSSelectableCanvas new.
+	canvas @ selectableCanvas.
+	selectable1 := OPRSSelectable highlightBorderColorBlue.
+	selectable2 := OPRSSelectable highlightBorderColorBlue.
+	box1 @ selectable1.
+	box2 @ selectable2.
+
+	"Direct RSMouseLeftClick on shape triggers onShape: handler"
+	box1 announce: (RSMouseLeftClick new
+			 canvas: canvas;
+			 shape: box1;
+			 position: box1 position;
+			 yourself).
+	self assertCollection: selectableCanvas selectedShapes asArray equals: { box1 }.
+
+	"Meta-click adds box2 to selection"
+	box2 announce: (RSMouseLeftClick new
+			 canvas: canvas;
+			 shape: box2;
+			 position: box2 position;
+			 controlKeyPressed: true;
+			 commandKeyPressed: true;
+			 yourself).
+	self assertCollection: selectableCanvas selectedShapes asArray hasSameElements: {
+			box1.
+			box2 }.
+
+	"Second meta-click removes box2 from selection"
+	box2 announce: (RSMouseLeftClick new
+			 canvas: canvas;
+			 shape: box2;
+			 position: box2 position;
+			 controlKeyPressed: true;
+			 commandKeyPressed: true;
+			 yourself).
+	self assertCollection: selectableCanvas selectedShapes asArray equals: { box1 }.
+
+	"Click on canvas selects canvas"
+	canvas announce: (RSMouseLeftClick new
+			 canvas: canvas;
+			 shape: canvas;
+			 position: 200 @ 200;
+			 yourself).
+	self assertCollection: selectableCanvas selectedShapes asArray equals: { canvas }.
+
+	"Guards for unattached shape and shape without OPRSSelectable property"
+	unattachedBox := RSBox new
+		                 size: 20;
+		                 yourself.
+	selectable1 deselect: unattachedBox.
+	selectable1 announceHighlight: unattachedBox source: canvas.
+	selectable1 announceUnHightlight: unattachedBox source: canvas.
+	self assertCollection: selectableCanvas selectedShapes asArray equals: { canvas }
+]
+
+{ #category : 'tests' }
 OPRSSelectableTest >> testClickWithoutSelectableCanvasSignalsError [
 	| selectable |
 	selectable := OPRSSelectable highlightBorderColorBlue.
@@ -28,6 +90,54 @@ OPRSSelectableTest >> testClickWithoutSelectableCanvasSignalsError [
 	self
 		should: [ selectable fakeClicked: box1 ]
 		raise: Error
+]
+
+{ #category : 'tests' }
+OPRSSelectableTest >> testElasticBoxSelectionWhenMultiselectEnabledAndDisabled [
+
+	| selectableCanvas |
+	selectableCanvas := OPRSSelectableCanvas new.
+	canvas @ selectableCanvas.
+	box1 @ OPRSSelectable highlightBorderColorBlue.
+	box2 @ OPRSSelectable highlightBorderColorBlue.
+
+	"Elastic box drag with multiselect enabled"
+	canvas announce: (RSMouseLeftDragStart new
+			 canvas: canvas;
+			 shape: canvas;
+			 position: -50 @ -50;
+			 yourself).
+	canvas announce: (RSMouseDragging new
+			 canvas: canvas;
+			 shape: canvas;
+			 position: 150 @ 150;
+			 step: 200 @ 200;
+			 yourself).
+	canvas announce: (RSMouseDragEnd new
+			 canvas: canvas;
+			 shape: canvas;
+			 position: 150 @ 150;
+			 yourself).
+	self assertCollection: selectableCanvas selectedShapes asArray hasSameElements: {
+			box1.
+			box2 }.
+
+	"Elastic box drag with multiselect disabled ignores box start/update"
+	selectableCanvas disableMultiselect.
+	canvas announce: (RSMouseLeftDragStart new
+			 canvas: canvas;
+			 shape: canvas;
+			 position: -50 @ -50;
+			 yourself).
+	canvas announce: (RSMouseDragging new
+			 canvas: canvas;
+			 shape: canvas;
+			 position: 10 @ 10;
+			 step: 60 @ 60;
+			 yourself).
+	self assertCollection: selectableCanvas selectedShapes asArray hasSameElements: {
+			box1.
+			box2 }
 ]
 
 { #category : 'tests' }

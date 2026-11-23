@@ -53,6 +53,25 @@ OPRSAdornmentTest >> testAdornmentBuilderShowsUpdatesAndHidesAdornments [
 ]
 
 { #category : 'tests' }
+OPRSAdornmentTest >> testDefaultActionDoesNothingOnClick [
+
+	| adornment |
+	adornment := OPRSAdornment new.
+	adornment
+		showOnShape: targetShape
+		horizontal: RSLocation new outer right
+		vertical: RSLocation new inner top
+		offset: 0 @ 0.
+	adornment shape announce: (RSMouseLeftClick new
+			 shape: adornment shape;
+			 canvas: targetShape canvas;
+			 yourself).
+	self
+		assert: adornment shape isInACanvas
+		description: 'Clicking adornment with default no-op action should keep adornment in canvas'
+]
+
+{ #category : 'tests' }
 OPRSAdornmentTest >> testRemovingTargetShapeRemovesAdornment [
 	| adornment |
 	adornment := OPRSAdornment new.

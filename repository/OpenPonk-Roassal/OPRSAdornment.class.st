@@ -94,7 +94,6 @@ OPRSAdornment >> remove [
 { #category : 'accessing' }
 OPRSAdornment >> shape [
 
-	| innerBox |
 	shape ifNotNil: [ ^ shape ].
 
 	shape := RSBox new.
@@ -102,25 +101,16 @@ OPRSAdornment >> shape [
 	shape color: Color white.
 	shape borderColor: Color lightGray.
 
-	shape
-		when: RSMouseLeftClick
-		do: self action
-		for: self action receiver.
+	shape when: RSMouseLeftClick do: self action for: self action receiver.
 
 	RSLocation new stick: self icon on: shape.
-	shape
-		when: RSShapeAddedEvent
-		do: [ :event | event canvas add: self icon ]
-		for: self.
-	shape
-		when: RSShapeRemovedEvent
-		do: [ :event | self icon remove ]
-		for: self.
+	shape when: RSShapeAddedEvent do: [ :event | event canvas add: self icon ] for: self.
+	shape when: RSShapeRemovedEvent do: [ :event | self icon remove ] for: self.
 
 	^ shape
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'displaying' }
 OPRSAdornment >> showOnShape: anOriginalShape horizontal: aHorizontalLocation vertical: aVerticalLocation offset: offset [
 
 	| updateBlock |

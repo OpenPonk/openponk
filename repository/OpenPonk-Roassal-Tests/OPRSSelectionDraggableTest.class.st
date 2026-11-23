@@ -59,6 +59,72 @@ OPRSSelectionDraggableTest >> tearDown [
 ]
 
 { #category : 'tests' }
+OPRSSelectionDraggableTest >> testDragSnappingAlignmentLinesAndComparisonsLimit [
+
+	| controller config targetHorizontal1 targetHorizontal2 targetVertical distantShape draggedBox |
+	config := OPRSControlConfiguration new
+		          dragSnapComparisonsAmount: 3;
+		          dragSnapMargin: 5;
+		          yourself.
+	controller := RSCanvasController new
+		              configuration: config;
+		              yourself.
+	canvas propertyAt: RSCanvasController put: controller.
+
+	draggedBox := RSBox new
+		              extent: 40 @ 40;
+		              translateTo: 500 @ 500;
+		              yourself.
+	targetHorizontal1 := RSBox new
+		                     extent: 40 @ 40;
+		                     translateTo: 600 @ 502;
+		                     yourself.
+	targetHorizontal2 := RSBox new
+		                     extent: 40 @ 40;
+		                     translateTo: 660 @ 502;
+		                     yourself.
+	targetVertical := RSBox new
+		                  extent: 40 @ 40;
+		                  translateTo: 503 @ 600;
+		                  yourself.
+	distantShape := RSBox new
+		                extent: 40 @ 40;
+		                translateTo: 2000 @ 2000;
+		                yourself.
+	canvas
+		add: draggedBox;
+		add: targetHorizontal1;
+		add: targetHorizontal2;
+		add: targetVertical;
+		add: distantShape.
+	{
+		draggedBox.
+		targetHorizontal1.
+		targetHorizontal2.
+		targetVertical.
+		distantShape } do: [ :each | each @ OPRSSelectionDraggable thatDoesNotDragAnyInnerShapes ].
+
+	canvas propertyAt: #selectedShapes put: { draggedBox }.
+	draggedBox announce: (RSMouseDragStart new
+			 shape: draggedBox;
+			 canvas: canvas;
+			 position: draggedBox position;
+			 yourself).
+	draggedBox announce: (RSMouseDragging new
+			 shape: draggedBox;
+			 canvas: canvas;
+			 step: 0 @ 0;
+			 yourself).
+	"Snapped horizontally (+2 on Y) and vertically (+3 on X) to aligned neighbors"
+	self assert: draggedBox position equals: 503 @ 502.
+	draggedBox announce: (RSMouseDragEnd new
+			 shape: draggedBox;
+			 canvas: canvas;
+			 position: draggedBox position;
+			 yourself)
+]
+
+{ #category : 'tests' }
 OPRSSelectionDraggableTest >> testDraggingSelectedContainerDragsInnerShapesOfAllSelectedContainers [
 	| dragInteraction draggedNodes |
 	canvas propertyAt: #selectedShapes put: { containerShape1 . containerShape2 }.
@@ -75,6 +141,69 @@ OPRSSelectionDraggableTest >> testDraggingSelectedContainerDragsInnerShapesOfAll
 	self
 		assertCollection: draggedNodes
 		includesAll: { containerShape1 . containerShape2 . innerShape1 . innerShape2 }
+]
+
+{ #category : 'tests' }
+OPRSSelectionDraggableTest >> testEndDragDetectsLineOnlyControlPointChangeAndSkipsUnchangedDrag [
+
+	| line announcedEvents |
+	line := RSPolyline new
+		        from: containerShape1;
+		        to: innerShape1;
+		        controlPoints: {
+				        (100 @ 100).
+				        (110 @ 110).
+				        (100 @ 100) };
+		        yourself.
+	canvas add: line.
+	announcedEvents := OrderedCollection new.
+	canvas when: OPRSElementsDraggedEvent do: [ :each | announcedEvents add: each ] for: self.
+
+	canvas propertyAt: #selectedShapes put: { containerShape1 }.
+	containerShape1 announce: (RSMouseDragStart new
+			 shape: containerShape1;
+			 canvas: canvas;
+			 position: containerShape1 position;
+			 yourself).
+	containerShape1 announce: (RSMouseDragEnd new
+			 shape: containerShape1;
+			 canvas: canvas;
+			 position: containerShape1 position;
+			 yourself).
+	self assertEmpty: announcedEvents.
+
+	containerShape1 announce: (RSMouseDragStart new
+			 shape: containerShape1;
+			 canvas: canvas;
+			 position: containerShape1 position;
+			 yourself).
+	line innerControlPoints: { (125 @ 125) }.
+	containerShape1 announce: (RSMouseDragEnd new
+			 shape: containerShape1;
+			 canvas: canvas;
+			 position: containerShape1 position;
+			 yourself).
+	self assert: announcedEvents size equals: 1.
+	self assertCollection: announcedEvents first lines asArray equals: { line }
+]
+
+{ #category : 'tests' }
+OPRSSelectionDraggableTest >> testFactoryMethodAndCustomShapesProviderDefaults [
+
+	| defaultProvider factoryInteraction nonDraggableChild |
+	defaultProvider := OPRSSelectionDraggableCustomShapesProvider new.
+	self assertEmpty: (defaultProvider innerShapesFor: containerShape1).
+
+	nonDraggableChild := RSBox new
+		                     size: 10;
+		                     translateTo: 100 @ 100;
+		                     yourself.
+	canvas add: nonDraggableChild.
+	factoryInteraction := OPRSSelectionDraggable thatAlsoDragsShapesProvidedByBlock: [ :allNodes :container |
+			                      {
+				                      innerShape2.
+				                      nonDraggableChild } ].
+	self assertCollection: (factoryInteraction shapesToDragInside: containerShape2) hasSameElements: { innerShape2 }
 ]
 
 { #category : 'tests' }
@@ -115,6 +244,29 @@ OPRSSelectionDraggableTest >> testInnerShapesProvidersAndDragTranslation [
 		                     dragAlsoShapesProvidedByBlock: [ :shape | { innerShape2 } ];
 		                     yourself.
 	self assertCollection: (customInteraction shapesToDragInside: containerShape2) hasSameElements: { innerShape2 }
+]
+
+{ #category : 'tests' }
+OPRSSelectionDraggableTest >> testProcessDragAfterEndDragDoesNotRaiseError [
+
+	| initialPosition |
+	initialPosition := containerShape1 position copy.
+	containerShape1 announce: (RSMouseDragStart new
+			 shape: containerShape1;
+			 canvas: canvas;
+			 position: containerShape1 position;
+			 yourself).
+	containerShape1 announce: (RSMouseDragEnd new
+			 shape: containerShape1;
+			 canvas: canvas;
+			 position: containerShape1 position;
+			 yourself).
+	containerShape1 announce: (RSMouseDragging new
+			 shape: containerShape1;
+			 canvas: canvas;
+			 step: 10 @ 5;
+			 yourself).
+	self assert: containerShape1 position equals: initialPosition
 ]
 
 { #category : 'tests' }
@@ -159,4 +311,56 @@ OPRSSelectionDraggableTest >> testRectangleDragAlignmentLinesAndRectangleExtensi
 	vCandidates := r1 possibleVerticalAlignmentLinesTo: r2.
 	self denyEmpty: hCandidates.
 	self denyEmpty: vCandidates
+]
+
+{ #category : 'tests' }
+OPRSSelectionDraggableTest >> testStartDragWithEmptySelectionAndAnchoredShapeCapturesInitialAnchors [
+
+	| line anchoredBox constraint announcedEvents event |
+	line := RSPolyline new
+		        from: containerShape1;
+		        to: containerShape2;
+		        controlPoints: {
+				        (100 @ 100).
+				        (300 @ 100) };
+		        yourself.
+	anchoredBox := RSBox new
+		               size: 12;
+		               yourself.
+	canvas
+		add: line;
+		add: anchoredBox.
+	constraint := OPRSAnchorConstraint new
+		              positionReference: (OPRSAnchorConstraintBalanceReference balance: 0.5);
+		              distanceToLine: 8;
+		              yourself.
+	constraint stick: anchoredBox on: line.
+	anchoredBox @ OPRSSelectionDraggable thatDoesNotDragAnyInnerShapes.
+
+	announcedEvents := OrderedCollection new.
+	canvas when: OPRSElementsDraggedEvent do: [ :each | announcedEvents add: each ] for: self.
+
+	"Empty selection falls back to dragged shape"
+	canvas propertyAt: #selectedShapes put: #(  ).
+	anchoredBox announce: (RSMouseDragStart new
+			 shape: anchoredBox;
+			 canvas: canvas;
+			 position: anchoredBox position;
+			 yourself).
+	anchoredBox announce: (RSMouseDragging new
+			 shape: anchoredBox;
+			 canvas: canvas;
+			 step: 10 @ 5;
+			 optionKeyPressed: true;
+			 yourself).
+	anchoredBox announce: (RSMouseDragEnd new
+			 shape: anchoredBox;
+			 canvas: canvas;
+			 position: anchoredBox position;
+			 yourself).
+
+	self assert: announcedEvents size equals: 1.
+	event := announcedEvents first.
+	self assert: (event hasInitialAnchorFor: anchoredBox) description: 'Dragged anchored shape should record initial anchor state'.
+	self assert: (event initialAnchorFor: anchoredBox) equals: { 0.5. 8 }
 ]

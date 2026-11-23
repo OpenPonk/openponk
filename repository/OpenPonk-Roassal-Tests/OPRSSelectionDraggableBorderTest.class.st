@@ -1,3 +1,6 @@
+"
+Verifies border drag-box creation, geometry synchronization, event forwarding, and removal in OPRSSelectionDraggableBorder.
+"
 Class {
 	#name : 'OPRSSelectionDraggableBorderTest',
 	#superclass : 'TestCase',

@@ -54,3 +54,19 @@ OPRSControlConfigurationTest >> testClassAndInstanceConfigurationAndValidation [
 	self should: [ OPRSControlConfiguration dragSnapComparisonsAmount: -1 ] raise: AssertionFailure.
 	self should: [ OPRSControlConfiguration dragSnapMargin: -5 ] raise: AssertionFailure
 ]
+
+{ #category : 'tests' }
+OPRSControlConfigurationTest >> testDefaultsWhenClassVariablesAreNilAndSettingsRegistration [
+
+	| builder settingNames |
+	OPRSControlConfiguration instVarNamed: #keepCameraOnContent put: nil.
+	OPRSControlConfiguration instVarNamed: #dragSnapComparisonsAmount put: nil.
+	OPRSControlConfiguration instVarNamed: #dragAttachmentMargin put: nil.
+	self deny: OPRSControlConfiguration keepCameraOnContent description: 'Default keepCameraOnContent should be false when unset'.
+	self assert: OPRSControlConfiguration dragSnapComparisonsAmount equals: 10.
+	self assert: OPRSControlConfiguration dragSnapMargin equals: 5.
+	builder := SettingTreeBuilder new.
+	OPRSControlConfiguration settingsOn: builder.
+	settingNames := builder nodeList collect: [ :each | each item name ].
+	self assertCollection: settingNames includesAll: #( #keepCameraOnContent #dragSnapComparisonsAmount #dragSnapMargin )
+]

@@ -31,15 +31,3 @@ OPRSResize >> sameSize [
 	self ifNoFixedShapeThen: [ self useBiggestShape ].
 	shapes do: [ :e | e extent: self fixedShape extent + self oversize ]
 ]
-
-{ #category : 'as yet unclassified' }
-OPRSResize >> stickSameSize [
-
-	| block |
-	block := [ self sameSize ].
-	block value.
-	self fixedShape
-		when: RSExtentChangedEvent
-		do: [ :event | block value ]
-		for: self
-]

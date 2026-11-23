@@ -47,10 +47,10 @@ OPRSDraggable >> onShape: aShape [
 
 { #category : 'events' }
 OPRSDraggable >> startDrag: anEvent [
+
 	| draggedShape |
 	draggedShape := anEvent shape.
 	initialPosition := draggedShape position copy.
-	initialAnchor := (draggedShape propertyAt: OPRSAnchorConstraint ifAbsent: [ nil ])
-		ifNotNil: [ :anchorConstraint | anchorConstraint anchorState ]
-		ifNil: [ nil ]
+	initialAnchor := (draggedShape propertyAt: OPRSAnchorConstraint ifAbsent: [ nil ]) ifNotNil: [ :anchorConstraint |
+		                 anchorConstraint anchorState ]
 ]

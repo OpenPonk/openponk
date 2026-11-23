@@ -1,3 +1,6 @@
+"
+Verifies horizontal and vertical alignment-line geometry calculations for drag snapping.
+"
 Class {
 	#name : 'OPRectangleDragAlignmentLineTest',
 	#superclass : 'TestCase',

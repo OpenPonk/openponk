@@ -227,7 +227,7 @@ OPRSSelectionDraggable >> onShape: aShape [
 OPRSSelectionDraggable >> processDrag: evt [
 
 	| dragStep |
-	draggedNodes ifNil: [ ^ self ].
+	(draggedNodes isNil or: [ draggedNodes isEmpty ]) ifTrue: [ ^ self ].
 	dragStep := self dragStepForEvent: evt.
 	self translateLinesBy: dragStep.
 	self translateShapesBy: dragStep.
@@ -246,12 +246,13 @@ OPRSSelectionDraggable >> replaceAlignmentLinesWith: alignmentLines [
 	alignmentLineShapes do: #remove.
 
 	alignmentLineShapes := alignmentLines collect: [ :each |
-		                       RSLine new
-			                       from: each draggedAdapted;
-			                       to: each compared;
-			                       color: (Color lightOrange alpha: 0.8);
-			                       yourself ].
-	draggedNodes anyOne canvas addAll: alignmentLineShapes
+			                       RSLine new
+				                       from: each draggedAdapted;
+				                       to: each compared;
+				                       color: (Color lightOrange alpha: 0.8);
+				                       yourself ].
+	(alignmentLineShapes isNotEmpty and: [ draggedNodes isNotEmpty ]) ifTrue: [
+		draggedNodes anyOne canvas addAll: alignmentLineShapes ]
 ]
 
 { #category : 'events' }

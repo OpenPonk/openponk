@@ -41,17 +41,17 @@ OPRSElementsDraggedEvent >> initialLineControlPoints [
 	^ initialLineControlPoints ifNil: [ initialLineControlPoints := Dictionary new ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPRSElementsDraggedEvent >> initialLineControlPoints: aDictionary [
 	initialLineControlPoints := aDictionary
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPRSElementsDraggedEvent >> initialPositions [
 	^ initialPositions
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPRSElementsDraggedEvent >> initialPositions: aDictionary [
 	initialPositions := aDictionary
 ]
@@ -61,17 +61,17 @@ OPRSElementsDraggedEvent >> lines [
 	^ lines ifNil: [ lines := #(  ) ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPRSElementsDraggedEvent >> lines: aCollection [
 	lines := aCollection
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPRSElementsDraggedEvent >> shapes [
 	^ shapes
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPRSElementsDraggedEvent >> shapes: aCollection [
 	shapes := aCollection
 ]

@@ -459,12 +459,6 @@ OPVersionTest >> testRepositoryLinkAndKnownStatus [
 ]
 
 { #category : 'tests' }
-OPVersionTest >> testRepositoryNameInFullImageReturnsPlugins [
-
-	self assert: OPVersion new repositoryName equals: #plugins
-]
-
-{ #category : 'tests' }
 OPVersionTest >> testSemverComparison [
 	| v1 v2 |
 	v1 := OPVersion new

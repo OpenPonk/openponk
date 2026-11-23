@@ -9,12 +9,6 @@ Class {
 	#tag : 'Markers'
 }
 
-{ #category : 'examples' }
-OPRSEmptyMarkerBuilder class >> example [
-
-	^ super example
-]
-
 { #category : 'shapes' }
 OPRSEmptyMarkerBuilder class >> fromShape: aShape [
 

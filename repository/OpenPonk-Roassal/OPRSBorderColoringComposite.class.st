@@ -66,7 +66,8 @@ OPRSBorderColoringComposite >> paintWhiteForTransparentBorder [
 { #category : 'removing' }
 OPRSBorderColoringComposite >> removeShape: aShape [
 
-	shapesToUseBorderColor remove: aShape ifAbsent: [  ]
+	shapesToUseBorderColor remove: aShape ifAbsent: [ ].
+	super removeShape: aShape
 ]
 
 { #category : 'accessing' }

@@ -11,15 +11,6 @@ RSCanvas >> deepShapes [
 ]
 
 { #category : '*OpenPonk-Roassal' }
-RSCanvas >> elements [
-
-	self
-		deprecated: 'Use #nodes instead.'
-		transformWith: '`@receiver elements' -> '`@receiver nodes'.
-	^ self nodes
-]
-
-{ #category : '*OpenPonk-Roassal' }
 RSCanvas >> isSelectable [
 
 	^ false

@@ -9,18 +9,6 @@ Class {
 	#tag : 'Meta'
 }
 
-{ #category : 'as yet unclassified' }
-OPRSBaselineDominanceTreeLayout >> nestingLevelFor: aNodeFigure [
-
-	| parents parentsNesting |
-	parents := self parentsFor: aNodeFigure.
-	parentsNesting := parents collect: [ :eachParent |
-		                  self nestingLevelFor: eachParent ].
-	^ parentsNesting isEmpty
-		  ifTrue: [ 0 ]
-		  ifFalse: [ parentsNesting max + 1 ]
-]
-
 { #category : 'private' }
 OPRSBaselineDominanceTreeLayout >> parentsFor: aNode [
 

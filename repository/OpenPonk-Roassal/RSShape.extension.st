@@ -13,15 +13,6 @@ RSShape >> extentWithoutBorder [
 ]
 
 { #category : '*OpenPonk-Roassal' }
-RSShape >> isElement [
-
-	self
-		deprecated: 'Use isNode instead.'
-		transformWith: '`@receiver isElement' -> '`@receiver isNode'.
-	^ self isNode
-]
-
-{ #category : '*OpenPonk-Roassal' }
 RSShape >> isSelectable [
 
 	^ self hasProperty: OPRSSelectable
@@ -46,13 +37,4 @@ RSShape >> shapeWithActionForPosition: position [
 	^ (self hasEventCallback and: [ self includesPoint: position ])
 		  ifTrue: [ self ]
 		  ifFalse: [ nil ]
-]
-
-{ #category : '*OpenPonk-Roassal' }
-RSShape >> view [
-
-	self
-		deprecated: 'Use canvas instead.'
-		transformWith: '`@receiver view' -> '`@receiver canvas'.
-	^ self canvas
 ]

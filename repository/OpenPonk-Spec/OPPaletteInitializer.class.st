@@ -50,16 +50,16 @@ OPPaletteInitializer >> diagramController: aDiagramController [
 
 { #category : 'actions' }
 OPPaletteInitializer >> filteredCommonItems [
+
 	| filteredItemsByName |
 	filteredItemsByName := self allCommonItemsByName.
-	diagramController incompatiblePaletteItemNames
-		do: [ :each | 
-			filteredItemsByName
-				removeKey: each
-				ifAbsent: [ self
-						inform:
-							diagramController asString , ' attempts to disable palette item "'
-								, each , '" that does not exist' ] ].
+	diagramController incompatiblePaletteItemNames do: [ :each |
+			filteredItemsByName removeKey: each ifAbsent: [
+					InformativeNotification signal: (String streamContents: [ :stream |
+								 stream << diagramController asString.
+								 stream << ' attempts to disable palette item "'.
+								 stream << each.
+								 stream << '" that does not exist' ]) ] ].
 	^ filteredItemsByName values
 ]
 

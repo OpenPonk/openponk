@@ -68,17 +68,11 @@ OPPropertiesFormTest >> testBindNumberInputUpdatesModelAndUndoReverts [
 ]
 
 { #category : 'tests' }
-OPPropertiesFormTest >> testBindingsAndPriorityMetaLinkAndLayoutHelpers [
+OPPropertiesFormTest >> testBindingsAndLayoutHelpers [
 
 	| model viewModel itemsList |
 	self assert: OPPropertiesForm initialWidth equals: 260.
 	self assert: OPPropertiesForm minWidth equals: 180.
-	[
-		OPPropertiesForm showPriority: true.
-		self assert: OPPropertiesForm showPriority description: 'showPriority should be true when priority link is enabled'.
-		self assert: OPPropertiesForm isLinkInstalled description: 'Priority MetaLink should be installed on visit: AST node' ] ensure: [
-		OPPropertiesForm showPriority: false ].
-	self deny: OPPropertiesForm isLinkInstalled description: 'Priority MetaLink should be uninstalled after showPriority: false'.
 	model := OPTestEntityModel new.
 	viewModel := OPTestEntityViewModel new
 		             model: model;
@@ -93,8 +87,13 @@ OPPropertiesFormTest >> testBindingsAndPriorityMetaLinkAndLayoutHelpers [
 	form bindCheckbox: 'Active' property: #isNil.
 	form bindEditableDroplist: 'Kind' property: #name items: #( 'A' 'B' ).
 	self assert: form defaultKeyboardFocus identicalTo: itemsList.
-	form removeLast.
 	form rebuildWidget
+]
+
+{ #category : 'tests' }
+OPPropertiesFormTest >> testDefaultKeyboardFocusWhenEmptyDelegatesToSuper [
+
+	self assert: form defaultKeyboardFocus identicalTo: form
 ]
 
 { #category : 'tests' }
@@ -147,6 +146,33 @@ OPPropertiesFormTest >> testEditableDropListAdapterAddToListConvertsTextToString
 
 	self assert: presenter selectedItem class identicalTo: ByteString.
 	self assert: presenter selectedItem equals: '2..4'
+]
+
+{ #category : 'tests' }
+OPPropertiesFormTest >> testEditableDropListPresenterAdapterAndMorph [
+
+	| presenter adapter morph displayModel itemPresenter |
+	self assert: OPEditableDropListPresenter adapterName identicalTo: #OPMorphicEditableDropListAdapter.
+	presenter := OPEditableDropListPresenter new.
+	presenter items: #( 'One' 'Two' ).
+	adapter := OPMorphicEditableDropListAdapter new.
+	adapter adapt: presenter.
+	morph := adapter widget.
+
+	self assert: morph class identicalTo: OPEditableDropListMorph.
+	self deny: morph hasKeyboardFocus description: 'Unfocused editable drop list morph should not report keyboard focus'.
+	self assert: morph listHeight > 12 description: 'Editable drop list height should include extra padding above superclass height'.
+
+	displayModel := Mock new.
+	itemPresenter := Mock new.
+	displayModel stub configureDropList: morph item: itemPresenter.
+	morph configureWith: displayModel item: itemPresenter.
+	(displayModel should receive configureDropList: morph item: itemPresenter) once.
+
+	morph instVarNamed: #contentMorph put: nil.
+	self
+		deny: morph hasKeyboardFocus
+		description: 'Editable drop list morph without contentMorph must return false for keyboard focus'
 ]
 
 { #category : 'tests' }
@@ -282,6 +308,24 @@ OPPropertiesFormTest >> testFocusOrderExcludesLabels [
 ]
 
 { #category : 'tests' }
+OPPropertiesFormTest >> testRebuildFormRebuildsOnAnnouncementAndIgnoresNilViewModel [
+
+	| model viewModel originalInput |
+	model := OPFormTestModel new.
+	viewModel := OPFormTestViewModel forModel: model.
+	form viewModel: viewModel.
+	originalInput := form bindings first presenter.
+
+	viewModel formEventsAnnouncer announce: OPElementFormNeedsRebuild new.
+	self deny: form bindings first presenter identicalTo: originalInput.
+	self assert: form bindings first presenter text equals: 'Initial'.
+
+	form viewModel: nil.
+	form rebuildForm.
+	self assertEmpty: form components
+]
+
+{ #category : 'tests' }
 OPPropertiesFormTest >> testTargetDoesNotStealKeyboardFocus [
 	"Form must not request keyboard focus when switching targets"
 	| spyForm dummyTarget |
@@ -293,6 +337,29 @@ OPPropertiesFormTest >> testTargetDoesNotStealKeyboardFocus [
 	self
 		deny: spyForm focusTaken
 		description: 'Setting viewModel: on properties form must not steal keyboard focus'
+]
+
+{ #category : 'tests' }
+OPPropertiesFormTest >> testUndoManagerReassignmentUnsubscribesPreviousUndoManager [
+
+	| firstUndoManager secondUndoManager model viewModel |
+	firstUndoManager := OPUndoManager new.
+	secondUndoManager := OPUndoManager new.
+	model := OPFormTestModel new.
+	viewModel := OPFormTestViewModel forModel: model.
+	form undoManager: firstUndoManager.
+	form viewModel: viewModel.
+
+	form undoManager: secondUndoManager.
+
+	self assert: form undoManager identicalTo: secondUndoManager.
+	self
+		deny: (firstUndoManager announcer subscriptions subscriptions anySatisfy: [ :subscription | subscription subscriber == form ])
+		description: 'Previous undoManager announcer should no longer retain subscription to form'.
+	self
+		assert:
+		(secondUndoManager announcer subscriptions subscriptions anySatisfy: [ :subscription | subscription subscriber == form ])
+		description: 'New undoManager announcer should be subscribed to form'
 ]
 
 { #category : 'tests' }

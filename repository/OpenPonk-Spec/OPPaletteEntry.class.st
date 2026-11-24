@@ -12,12 +12,6 @@ Class {
 	#tag : 'Palettes'
 }
 
-{ #category : 'protocol' }
-OPPaletteEntry >> deselect [
-	tool deselect.
-	self state: false
-]
-
 { #category : 'tool api' }
 OPPaletteEntry >> factory: aFactoryBlock [
 	tool factory: aFactoryBlock
@@ -61,17 +55,15 @@ OPPaletteEntry >> select [
 { #category : 'asserting' }
 OPPaletteEntry >> shouldIgnoreEvent: aWindow [
 
-	| writeablePresenters |
-	writeablePresenters := { 
+	| writeablePresenters focusedEditor |
+	focusedEditor := aWindow presenter focusedEditor.
+	(focusedEditor isNil or: [ focusedEditor ~= self palette editor ]) ifTrue: [ ^ true ].
+	writeablePresenters := {
 		                       SpAbstractTextPresenter.
 		                       SpDropListPresenter }.
-
-	aWindow presenter focusedEditor form focusOrder do: [ :each | 
-		(writeablePresenters anySatisfy: [ :presenterType | 
-			 each isKindOf: presenterType ]) and: [ 
-			each withAdapterDo: [ :itemAdapter | 
-				itemAdapter widgetDo: [ :itemWidget | 
-					itemWidget hasKeyboardFocus ifTrue: [ ^ true ] ] ] ] ].
+	focusedEditor form focusOrder do: [ :each |
+			(writeablePresenters anySatisfy: [ :presenterType | each isKindOf: presenterType ]) ifTrue: [
+				each withAdapterDo: [ :itemAdapter | itemAdapter widgetDo: [ :itemWidget | itemWidget hasKeyboardFocus ifTrue: [ ^ true ] ] ] ] ].
 	^ false
 ]
 

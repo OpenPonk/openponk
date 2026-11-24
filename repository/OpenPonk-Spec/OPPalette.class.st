@@ -62,16 +62,6 @@ OPPalette >> createPaletteFor: aDiagramController [
 	diagramController whenAllDeselectedDo: [ self selectSelectionTool ] for: self
 ]
 
-{ #category : 'private' }
-OPPalette >> deselectTool [
-
-	self
-		deprecated: 'Use #selectSelectionTool instead.'
-		transformWith:
-		'`@receiver deselectTool' -> '`@receiver selectSelectionTool'.
-	^ self selectSelectionTool
-]
-
 { #category : 'accessing' }
 OPPalette >> diagramController [
 	^ diagramController
@@ -140,11 +130,6 @@ OPPalette >> newConnectionCreationTool: aFactoryBlock [
 ]
 
 { #category : 'protocol' }
-OPPalette >> newConnectionCreationTool: aLabel factory: aBlock [
-	self newConnectionCreationTool: aLabel factory: aBlock icon: nil
-]
-
-{ #category : 'protocol' }
 OPPalette >> newConnectionCreationTool: aLabel factory: aBlock icon: anIcon [
 	| item tool |
 	item := self addEntry.
@@ -178,11 +163,6 @@ OPPalette >> newCreationTool: aFactoryBlock [
 ]
 
 { #category : 'protocol' }
-OPPalette >> newCreationTool: aLabel factory: aBlock [
-	self newCreationTool: aLabel factory: aBlock icon: nil
-]
-
-{ #category : 'protocol' }
 OPPalette >> newCreationTool: aLabel factory: aBlock icon: anIcon [
 	| item tool |
 	item := self addEntry.
@@ -193,18 +173,6 @@ OPPalette >> newCreationTool: aLabel factory: aBlock icon: anIcon [
 		label: aLabel;
 		icon: anIcon;
 		action: [ self selectItem: item tool: tool ]
-]
-
-{ #category : 'protocol' }
-OPPalette >> newCreationTool: aFactoryBlock with: aToolConfigBlock [
-	| item tool |
-	item := self addEntry.
-	(tool := OPNodeCreationTool new)
-		palette: self;
-		factory: aFactoryBlock.
-	item action: [ self selectItem: item tool: tool ].
-	aToolConfigBlock value: tool.
-	^ item
 ]
 
 { #category : 'private' }
@@ -241,9 +209,9 @@ OPPalette >> removeAll [
 
 { #category : 'private' }
 OPPalette >> selectEntry: anEntry [
-	selectedTool
-		ifNotNil: [ selectedTool deselect.
-			selectedItem state: false ].
+
+	selectedTool ifNotNil: [ selectedTool deselect ].
+	selectedItem ifNotNil: [ selectedItem state: false ].
 	selectedTool := anEntry tool.
 	selectedItem := anEntry.
 	anEntry select
@@ -251,10 +219,9 @@ OPPalette >> selectEntry: anEntry [
 
 { #category : 'private' }
 OPPalette >> selectItem: anItem tool: aTool [
-	selectedTool
-		ifNotNil: [ 
-			selectedTool deselect.
-			selectedItem state: false ].
+
+	selectedTool ifNotNil: [ selectedTool deselect ].
+	selectedItem ifNotNil: [ selectedItem state: false ].
 	(selectedTool := aTool) select.
 	(selectedItem := anItem) state: true
 ]
@@ -266,9 +233,12 @@ OPPalette >> selectSelectionTool [
 
 { #category : 'private' }
 OPPalette >> selectTool: aTool [
-	selectedTool
-		ifNotNil: [ selectedTool deselect.
-			selectedItem state: false ].
+
+	selectedTool ifNotNil: [
+			selectedTool deselect.
+			selectedItem ifNotNil: [
+					selectedItem state: false.
+					selectedItem := nil ] ].
 	(selectedTool := aTool) select
 ]
 

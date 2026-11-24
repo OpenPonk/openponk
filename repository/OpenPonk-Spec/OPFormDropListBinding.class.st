@@ -11,22 +11,18 @@ Class {
 
 { #category : 'updating' }
 OPFormDropListBinding >> applyModelValueToPresenter: aValue [
+
 	presenter selectedItem = aValue ifTrue: [ ^ self ].
 	aValue
 		ifNotNil: [
-			((presenter respondsTo: #selectItem:) and: [
-				(presenter respondsTo: #items) and: [ presenter items includes: aValue ] ])
+				(presenter items includes: aValue)
 					ifTrue: [ presenter selectItem: aValue ]
 					ifFalse: [
-						self isExtensible ifTrue: [
-							presenter disableSelectionDuring: [
-								presenter items: (presenter items copyWith: aValue).
-								presenter selectItem: aValue ] ] ] ]
-		ifNil: [
-			(presenter respondsTo: #resetSelection)
-				ifTrue: [ presenter resetSelection ]
-				ifFalse: [
-					(presenter respondsTo: #selectIndex:) ifTrue: [ presenter selectIndex: 0 ] ] ]
+							self isExtensible ifTrue: [
+									presenter disableSelectionDuring: [
+											presenter items: (presenter items copyWith: aValue).
+											presenter selectItem: aValue ] ] ] ]
+		ifNil: [ presenter resetSelection ]
 ]
 
 { #category : 'connecting' }

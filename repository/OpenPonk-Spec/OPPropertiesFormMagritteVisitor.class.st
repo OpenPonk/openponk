@@ -13,18 +13,6 @@ Class {
 	#tag : 'Form'
 }
 
-{ #category : 'accessing - compatibility' }
-OPPropertiesFormMagritteVisitor >> controller [
-	self deprecated: 'Use viewModel instead'.
-	^ self viewModel
-]
-
-{ #category : 'accessing - compatibility' }
-OPPropertiesFormMagritteVisitor >> controller: anObject [
-	self deprecated: 'Use viewModel: instead'.
-	self viewModel: anObject asViewModel
-]
-
 { #category : 'accessing' }
 OPPropertiesFormMagritteVisitor >> form [
 	^ form

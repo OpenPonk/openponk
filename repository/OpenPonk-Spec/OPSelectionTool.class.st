@@ -52,7 +52,8 @@ OPSelectionTool >> select [
 { #category : 'accessing' }
 OPSelectionTool >> selectedControllers [
 	"Answer the collection of currently selected controllers."
-	^ selectedControllers ifNil: [ selectedControllers := #( ) ]
+
+	^ selectedControllers
 ]
 
 { #category : 'hooks' }

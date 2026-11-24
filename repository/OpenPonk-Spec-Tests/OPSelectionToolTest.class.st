@@ -46,6 +46,28 @@ OPSelectionToolTest >> testDeselectLastControllerClearsWorkbenchForm [
 ]
 
 { #category : 'tests' }
+OPSelectionToolTest >> testPaletteReassignmentUnsubscribesFromPreviousDiagramController [
+
+	| firstDiagramController secondDiagramController firstPalette secondPalette selectionTool |
+	firstDiagramController := OPTestDiagramController new.
+	secondDiagramController := OPTestDiagramController new.
+	firstPalette := OPPalette new.
+	firstPalette instVarNamed: #diagramController put: firstDiagramController.
+	secondPalette := OPPalette new.
+	secondPalette instVarNamed: #diagramController put: secondDiagramController.
+	selectionTool := OPSelectionTool new
+		                 palette: firstPalette;
+		                 yourself.
+	firstDiagramController announcer when: Announcement do: [ ] for: selectionTool.
+
+	selectionTool palette: secondPalette.
+
+	self
+		assert: (firstDiagramController announcer subscriptions subscriptions noneSatisfy: [ :each | each subscriber == selectionTool ])
+		description: 'Reassigning palette should unsubscribe selection tool from previous diagramController announcer'
+]
+
+{ #category : 'tests' }
 OPSelectionToolTest >> testSelectedControllersAccessor [
 
 	| selectionTool |
@@ -71,4 +93,30 @@ OPSelectionToolTest >> testSelectedControllersHighlightsRenderedShapes [
 	selectionTool selectedControllers: { renderedController }.
 
 	mockSelectable should receive doHighlightShapes: { mockShape } onCanvas: mockShape canvas
+]
+
+{ #category : 'tests' }
+OPSelectionToolTest >> testSelectedControllersUpdatesHighlightsFromPreviousRenderedShape [
+
+	| selectionTool firstController secondController firstShape secondShape mockSelectable mockWorkbench |
+	selectionTool := OPSelectionTool new.
+	mockWorkbench := Mock new.
+	mockWorkbench stub openFormOn: Any.
+	selectionTool stub workbench willReturn: mockWorkbench.
+	mockSelectable := Mock new.
+	mockSelectable stub doHighlightShapes: Any onCanvas: Any.
+	firstShape := RSBox new.
+	firstShape propertyAt: OPRSSelectable put: mockSelectable.
+	secondShape := RSBox new.
+	firstController := Mock new.
+	firstController stub isRendered willReturn: true.
+	firstController stub roassalShape willReturn: firstShape.
+	secondController := Mock new.
+	secondController stub isRendered willReturn: true.
+	secondController stub roassalShape willReturn: secondShape.
+
+	selectionTool selectedControllers: { firstController }.
+	selectionTool selectedControllers: { secondController }.
+
+	(mockSelectable should receive doHighlightShapes: { secondShape } onCanvas: firstShape canvas) once
 ]

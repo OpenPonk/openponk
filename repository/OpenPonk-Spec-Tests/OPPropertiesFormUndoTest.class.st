@@ -129,6 +129,100 @@ OPPropertiesFormUndoTest >> testDiagramOnlyElementNoteUndoRedo [
 ]
 
 { #category : 'tests' }
+OPPropertiesFormUndoTest >> testDropListBindingResetsSelectionOnNilValue [
+
+	| targetForm targetViewModel dropList |
+	targetForm := OPPropertiesForm new.
+	targetViewModel := OPPropertiesFormDummyViewModel new.
+	targetViewModel value: #OptionA.
+	targetForm viewModel: targetViewModel.
+	dropList := targetForm bindDroplist: 'Choice' property: #value items: #( #OptionA #OptionB ).
+	self assert: dropList selectedItem equals: #OptionA.
+
+	targetViewModel value: nil.
+	targetForm updateBoundValues.
+	self assert: dropList selectedItem identicalTo: nil
+]
+
+{ #category : 'tests' }
+OPPropertiesFormUndoTest >> testFieldBindingAccessorsAndNoOpWhenValueUnchanged [
+
+	| textBinding |
+	textBinding := form bindings first.
+	self assert: textBinding form identicalTo: form.
+	self assert: textBinding accessor class identicalTo: OPModelPropertyAccessor.
+	self assert: textBinding description class identicalTo: MAStringDescription.
+	self assert: textBinding description label equals: 'Name'.
+
+	textBinding presenterValueChanged: 'Initial'.
+	self deny: undoManager canUndo description: 'Writing an identical value must not record a redundant undo command'
+]
+
+{ #category : 'tests' }
+OPPropertiesFormUndoTest >> testFieldBindingUsesCustomCommandFromViewModel [
+
+	| textBinding customCommand |
+	textBinding := form bindings first.
+	customCommand := OPPropertyChangeCommand
+		                 viewModel: viewModel
+		                 selector: #name
+		                 accessor: textBinding accessor
+		                 oldValue: 'Initial'
+		                 newValue: 'CustomName'.
+	(viewModel stub
+		 commandForProperty: #name
+		 accessor: textBinding accessor
+		 oldValue: 'Initial'
+		 newValue: 'CustomName') willReturn: customCommand.
+
+	[
+		textBinding presenterValueChanged: 'CustomName'.
+		self assert: model name equals: 'CustomName'.
+		self assert: undoManager undoStack first identicalTo: customCommand ] ensure: [ viewModel recoverFromGHMutation ]
+]
+
+{ #category : 'tests' }
+OPPropertiesFormUndoTest >> testFieldBindingValidationErrorInDevelopmentAndProductionMode [
+
+	| originalDevMode requiredDescription textControl binding existingGrowls newGrowls |
+	originalDevMode := OPWorkbench isDevelopmentMode.
+	requiredDescription := MAStringDescription new
+		                       label: 'Required Name';
+		                       accessor: (OPModelPropertyAccessor on: #name);
+		                       beRequired;
+		                       yourself.
+	textControl := form bindTextInput: 'Required Name' accessor: requiredDescription accessor description: requiredDescription.
+	binding := form bindings detect: [ :each | each presenter == textControl ].
+	existingGrowls := (self currentWorld submorphs select: [ :each | each isKindOf: GrowlMorph ]) asIdentitySet.
+	[
+		OPWorkbench isDevelopmentMode: true.
+		self should: [ binding presenterValueChanged: nil ] raise: MAValidationError.
+
+		OPWorkbench isDevelopmentMode: false.
+		binding presenterValueChanged: nil.
+		newGrowls := self currentWorld submorphs select: [ :each |
+			             (each isKindOf: GrowlMorph) and: [ (existingGrowls includes: each) not ] ].
+		self assert: newGrowls size equals: 1 ] ensure: [
+			OPWorkbench isDevelopmentMode: originalDevMode.
+			self currentWorld submorphs
+				select: [ :each | (each isKindOf: GrowlMorph) and: [ (existingGrowls includes: each) not ] ]
+				thenDo: #delete ]
+]
+
+{ #category : 'tests' }
+OPPropertiesFormUndoTest >> testNumberBindingAppliesNilAsZero [
+
+	| targetForm targetViewModel numberInput |
+	targetForm := OPPropertiesForm new.
+	targetViewModel := OPPropertiesFormDummyViewModel new.
+	targetViewModel value: nil.
+	targetForm viewModel: targetViewModel.
+	numberInput := targetForm bindNumberInput: 'Count' property: #value.
+
+	self assert: numberInput number equals: 0
+]
+
+{ #category : 'tests' }
 OPPropertiesFormUndoTest >> testUpdateBoundValuesDoesNotResetPresenterWhenValueUnchanged [
 	| textPresenter |
 	textPresenter := form bindings first presenter.

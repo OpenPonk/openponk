@@ -6,7 +6,6 @@ Class {
 	#superclass : 'SpPresenter',
 	#instVars : [
 		'components',
-		'whenAccepted',
 		'viewModel',
 		'undoManager',
 		'bindings'
@@ -29,66 +28,9 @@ OPPropertiesForm class >> initialWidth [
 ]
 
 { #category : 'specs' }
-OPPropertiesForm class >> installLink [
-	| link |
-	self isLinkInstalled
-		ifTrue: [ ^ self ].
-	link := MetaLink new
-		metaObject: [ :args | 
-			| desc |
-			desc := args first.
-			desc label: desc priority asString , ' ' , desc label ];
-		selector: #value:;
-		arguments: #(arguments);
-		control: #before.
-	self visitAst link: link
-]
-
-{ #category : 'specs' }
-OPPropertiesForm class >> isLinkInstalled [
-
-	^ self visitAst links ifNil: [ false ] ifNotNil: [ :links | links isNotEmpty ]
-]
-
-{ #category : 'specs' }
 OPPropertiesForm class >> minWidth [
 
 	^ 180
-]
-
-{ #category : 'specs' }
-OPPropertiesForm class >> settingsOn: aBuilder [
-
-	<systemsettings>
-	(aBuilder setting: #showPriority)
-		parent: #'op-dev';
-		target: self;
-		label: 'Show Properties Form Priorities';
-		description:
-			'Show magritte fields priority for the properties form.';
-		order: 60
-]
-
-{ #category : 'specs' }
-OPPropertiesForm class >> showPriority [
-	^ self isLinkInstalled
-]
-
-{ #category : 'specs' }
-OPPropertiesForm class >> showPriority: aBoolean [
-	aBoolean
-		ifTrue: [ self installLink ]
-		ifFalse: [ self uninstallLink ]
-]
-
-{ #category : 'specs' }
-OPPropertiesForm class >> uninstallLink [
-	self visitAst links ifNotNil: [ :links | links asSet do: #uninstall ]
-]
-
-{ #category : 'specs' }
-OPPropertiesForm class >> visitAst [
-	^ (OPPropertiesFormMagritteVisitor >> #visit:) ast
 ]
 
 { #category : 'public - adding' }
@@ -135,15 +77,6 @@ OPPropertiesForm >> addEditableDroplist: aName [
 	| control |
 	self addHeadingLabel: aName.
 	control := self instantiate: OPEditableDropListPresenter.
-	self addControl: control.
-	^ control
-]
-
-{ #category : 'public - adding' }
-OPPropertiesForm >> addEntity: aName [
-	| control |
-	self addHeadingLabel: aName.
-	control := self instantiate: SpSelectEntity.
 	self addControl: control.
 	^ control
 ]
@@ -259,15 +192,6 @@ OPPropertiesForm >> bindCheckbox: aLabel property: aSymbol [
 ]
 
 { #category : 'binding' }
-OPPropertiesForm >> bindDroplist: aLabel accessor: anAccessor description: aDescription [
-	^ self
-		bindDroplist: aLabel
-		accessor: anAccessor
-		description: aDescription
-		configuration: nil
-]
-
-{ #category : 'binding' }
 OPPropertiesForm >> bindDroplist: aLabel accessor: anAccessor description: aDescription configuration: aConfigBlock [
 	| control binding |
 	control := self addDroplist: aLabel.
@@ -289,15 +213,6 @@ OPPropertiesForm >> bindDroplist: aLabel property: aSymbol items: aCollection [
 		description: nil
 		configuration: [ :dropListControl |
 			dropListControl items: aCollection asOrderedCollection ]
-]
-
-{ #category : 'binding' }
-OPPropertiesForm >> bindEditableDroplist: aLabel accessor: anAccessor description: aDescription [
-	^ self
-		bindEditableDroplist: aLabel
-		accessor: anAccessor
-		description: aDescription
-		configuration: nil
 ]
 
 { #category : 'binding' }
@@ -411,27 +326,20 @@ OPPropertiesForm >> bindTextInput: aLabel property: aSymbol [
 
 { #category : 'accessing' }
 OPPropertiesForm >> bindings [
-	^ bindings ifNil: [ bindings := OrderedCollection new ]
+
+	^ bindings
 ]
 
 { #category : 'accessing' }
 OPPropertiesForm >> components [
-	^ components ifNil: [ components := OrderedCollection new ]
+
+	^ components
 ]
 
 { #category : 'api - focus' }
 OPPropertiesForm >> defaultKeyboardFocus [
 	"Answer the first focusable control in the form layout, or self if empty."
 	^ self focusOrder ifNotEmpty: #first ifEmpty: [ super defaultKeyboardFocus ]
-]
-
-{ #category : 'public' }
-OPPropertiesForm >> editController: aController [
-
-	self
-		deprecated: 'Use viewModel: instead'
-		transformWith: '`@receiver editController: `@arg1' -> '`@receiver viewModel `@arg1 viewModel'.
-	self viewModel: aController viewModel
 ]
 
 { #category : 'focus' }
@@ -465,8 +373,7 @@ OPPropertiesForm >> fromMagritteDescriptions: aContainer [
 OPPropertiesForm >> initialize [
 
 	self reset.
-	super initialize.
-	whenAccepted := [ ]
+	super initialize
 ]
 
 { #category : 'private - building widgets' }
@@ -501,13 +408,6 @@ OPPropertiesForm >> rebuildForm [
 OPPropertiesForm >> rebuildWidget [
 
 	self initializeLayout
-]
-
-{ #category : 'private' }
-OPPropertiesForm >> removeLast [
-
-	components removeLast.
-	self focusOrder removeLast.
 ]
 
 { #category : 'private' }

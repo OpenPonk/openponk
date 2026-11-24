@@ -24,11 +24,6 @@ OPConnectionCreationTool >> deselect [
 			edgeCreationTargetController := nil ]
 ]
 
-{ #category : 'accessing' }
-OPConnectionCreationTool >> factory: aBlock [
-	factory := aBlock
-]
-
 { #category : 'hooks' }
 OPConnectionCreationTool >> hoveredController: aSourceOrTargetController [
 
@@ -55,8 +50,7 @@ OPConnectionCreationTool >> hoveredTargetController: aTargetController [
 OPConnectionCreationTool >> initialize [
 
 	super initialize.
-	self selectSource.
-	onComplete := [ :ctrl |  ]
+	self selectSource
 ]
 
 { #category : 'protocol' }
@@ -115,9 +109,4 @@ OPConnectionCreationTool >> selectedTargetControllers: aCollectionOfControllers 
 	controller roassalShape propertyAt: OPRSSelectable ifPresent: [ :selectable | selectable fakeClicked: controller roassalShape ].
 	self doOnCompleteActions.
 	self deselect
-]
-
-{ #category : 'tool api' }
-OPConnectionCreationTool >> whenCreated: aOneArgBlock [
-	onComplete := aOneArgBlock
 ]

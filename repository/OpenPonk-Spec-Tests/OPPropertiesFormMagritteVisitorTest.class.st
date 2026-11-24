@@ -10,6 +10,32 @@ Class {
 }
 
 { #category : 'tests' }
+OPPropertiesFormMagritteVisitorTest >> testOPMAActionDescriptionPropertiesAndVisiting [
+
+	| form visitor actionDescription executed button |
+	self deny: OPMAActionDescription isAbstract description: 'OPMAActionDescription must be concrete'.
+	self assert: OPMAActionDescription label equals: 'Action'.
+	self assert: OPMAActionDescription defaultAction value identicalTo: nil.
+	self assert: OPMAActionDescription new action value identicalTo: nil.
+
+	executed := false.
+	actionDescription := OPMAActionDescription new
+		                     label: 'Switch';
+		                     action: [ executed := true ];
+		                     yourself.
+	form := OPPropertiesForm new.
+	visitor := OPPropertiesFormMagritteVisitor new
+		           form: form;
+		           yourself.
+	visitor visit: actionDescription.
+
+	button := form components detect: [ :each | each isKindOf: SpButtonPresenter ].
+	self assert: button label equals: 'Switch'.
+	button click.
+	self assert: executed description: 'Clicking button created from OPMAActionDescription should execute its action'
+]
+
+{ #category : 'tests' }
 OPPropertiesFormMagritteVisitorTest >> testOptionDescriptionIconsPropertyAndLookup [
 
 	| description icon |
@@ -142,6 +168,82 @@ OPPropertiesFormMagritteVisitorTest >> testVisitAllMagritteDescriptionTypes [
 ]
 
 { #category : 'tests' }
+OPPropertiesFormMagritteVisitorTest >> testVisitMultipleOptionDescriptionDisplayIconsSelectionAndExtensibleWarning [
+
+	| form visitor icon writtenSelection multiOptionDesc listPresenter extensibleDesc |
+	form := OPPropertiesForm new.
+	visitor := OPPropertiesFormMagritteVisitor new
+		           form: form;
+		           viewModel: OPPropertiesFormDummyViewModel new;
+		           yourself.
+	icon := OPCoreIcons openponkIcon.
+	writtenSelection := nil.
+	multiOptionDesc := MAMultipleOptionDescription new
+		                   label: 'Tags';
+		                   options: #( red green );
+		                   icons: (Dictionary with: #red -> icon);
+		                   accessor: (MAPluggableAccessor read: [ :vm | #( red ) ] write: [ :vm :val | writtenSelection := val ]);
+		                   yourself.
+
+	visitor visitMultipleOptionDescription: multiOptionDesc.
+	listPresenter := form components detect: [ :each | each isKindOf: SpListPresenter ].
+	self assert: (listPresenter display value: #red) equals: 'red'.
+	self assert: (listPresenter displayIcon value: #red value: nil) identicalTo: icon.
+	listPresenter selectItem: #green.
+	self assertCollection: writtenSelection hasSameElements: #( red green ).
+
+	extensibleDesc := MAMultipleOptionDescription new
+		                  label: 'Extensible Tags';
+		                  beExtensible;
+		                  yourself.
+	self should: [ visitor visitMultipleOptionDescription: extensibleDesc ] raise: Warning
+]
+
+{ #category : 'tests' }
+OPPropertiesFormMagritteVisitorTest >> testVisitSingleOptionDescriptionDisplayIcon [
+
+	| form visitor icon singleOptionDesc dropList |
+	form := OPPropertiesForm new.
+	visitor := OPPropertiesFormMagritteVisitor new
+		           form: form;
+		           viewModel: OPPropertiesFormDummyViewModel new;
+		           yourself.
+	icon := OPCoreIcons openponkIcon.
+	singleOptionDesc := MASingleOptionDescription new
+		                    label: 'Kind';
+		                    options: #( one two );
+		                    icons: (Dictionary with: #one -> icon);
+		                    accessor: (MAPluggableAccessor read: [ :vm | #one ] write: [ :vm :val |  ]);
+		                    yourself.
+
+	visitor visitSingleOptionDescription: singleOptionDesc.
+	dropList := form components detect: [ :each | each isKindOf: SpDropListPresenter ].
+	self assert: (dropList displayIcon value: #one value: nil) identicalTo: icon
+]
+
+{ #category : 'tests' }
+OPPropertiesFormMagritteVisitorTest >> testVisitStringDescriptionEntryCompletionDefaultChooseBlockUpdatesControl [
+
+	| form desc visitor presenter completion |
+	form := OPPropertiesForm new.
+	desc := MAStringDescription new
+		        label: 'Type';
+		        accessor: (MAPluggableAccessor read: [ :m | 'foo' ] write: [ :m :v |  ]);
+		        yourself.
+	completion := EntryCompletion new.
+	desc propertyAt: #entryCompletion put: completion.
+
+	visitor := OPPropertiesFormMagritteVisitor new
+		           form: form;
+		           yourself.
+	visitor visitStringDescription: desc.
+
+	presenter := form components detect: [ :each | each isKindOf: SpTextInputFieldPresenter ].
+	completion chooseBlock value: 'Bar'.
+	self assert: presenter text equals: 'Bar'
+]
+
+{ #category : 'tests' }
 OPPropertiesFormMagritteVisitorTest >> testVisitStringDescriptionWithEntryCompletion [
 	| form desc visitor presenter completion |
 	form := OPPropertiesForm new.
@@ -192,4 +294,23 @@ OPPropertiesFormMagritteVisitorTest >> testVisitToManyRelationDescriptionAddsEdi
 	editButton click.
 
 	(mockViewModel should receive openEditorWithApplication: form application undoManager: undoManager) once
+]
+
+{ #category : 'tests' }
+OPPropertiesFormMagritteVisitorTest >> testVisitToManyRelationDescriptionWithNilLabel [
+
+	| form visitor relationDescription editButton |
+	form := OPPropertiesForm new.
+	visitor := OPPropertiesFormMagritteVisitor new
+		           form: form;
+		           viewModel: OPPropertiesFormDummyViewModel new;
+		           yourself.
+	relationDescription := MAToManyRelationDescription new
+		                       label: nil;
+		                       accessor: (MAPluggableAccessor read: [ :m | #(  ) ] write: [ :m :v |  ]);
+		                       yourself.
+
+	visitor visitToManyRelationDescription: relationDescription.
+	editButton := form components detect: [ :each | each isKindOf: SpButtonPresenter ].
+	self assert: editButton label equals: 'Edit '
 ]

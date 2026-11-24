@@ -99,10 +99,8 @@ OPFormFieldBinding >> readModelValue [
 
 { #category : 'accessing' }
 OPFormFieldBinding >> selector [
-	(accessor respondsTo: #selector) ifTrue: [
-		accessor selector ifNotNil: [ :s | ^ s asSymbol ] ].
-	(accessor respondsTo: #readSelector) ifTrue: [
-		accessor readSelector ifNotNil: [ :s | ^ s asSymbol ] ].
+
+	(accessor respondsTo: #selector) ifTrue: [ accessor selector ifNotNil: [ :s | ^ s asSymbol ] ].
 	^ nil
 ]
 

@@ -107,12 +107,6 @@ OPWorkbench class >> isDevelopmentMode: aBoolean [
 ]
 
 { #category : 'instance creation' }
-OPWorkbench class >> open [
-
-	^ (self newApplication: OPApplication new) open
-]
-
-{ #category : 'instance creation' }
 OPWorkbench class >> openModel: aModel [
 
 	| project |

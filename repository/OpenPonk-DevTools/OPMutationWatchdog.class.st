@@ -118,22 +118,14 @@ OPMutationWatchdog >> isInitializationMethod: aCompiledMethod [
 { #category : 'testing' }
 OPMutationWatchdog >> isLifecycleOrProjectionSelector: aSelector [
 	"Answer whether aSelector represents visual diagram projection, shape initialization, tool deselect, or project lifecycle."
-	^ #(
-		#initialize #setUp #basicNew
-		#createDiagramElement #renderDiagramElement #renderIn:
-		#createOwnedElementsWithoutController #createEndLabels
-		#ensureDiagramElement #ensureShownDependenciesInDiagram:
-		#showWithoutDependentInDiagram: #showWithoutDependentInDiagramModel:
-		#showAllElements #showDiagramElement: #updateAfterDiagramFocused
-		#renderSimplified #openProject: #openDiagrams #openExample: #openExampleEmptyModel #emptyModel
-		#ensureModelsHaveDiagrams #loadItems #buildDiagram
-		#addModel: #addDiagram: #addDiagrams: #moveParticipantsFrom:to: #createDiagram #copyDiagram:named:
-		#in:forModelElement: #forModelElement: #renderToPosition:onCanvas:
-		#addAttribute: #addOperation: #addLiteral: #updateStereotype
-		#updateFromRender #stonPostReferenceResolution #materializeDiagramOf:from:
-		#materializeModelFrom: #stonProcessSubObjects:
-		#deselect
-	) includes: aSelector
+
+	^ #( #initialize #setUp #basicNew #createDiagramElement #renderDiagramElement #renderIn: #createOwnedElementsWithoutController
+	     #createEndLabels #ensureDiagramElement #ensureShownDependenciesInDiagram: #showWithoutDependentInDiagram:
+	     #showWithoutDependentInDiagramModel: #showAllElements #showDiagramElement: #updateAfterDiagramFocused
+	     #renderSimplified #openProject: #openDiagrams #openExample: #openExampleEmptyModel #emptyModel #ensureModelsHaveDiagrams
+	     #loadItems #buildDiagram #addModel: #addDiagram: #addDiagrams: #copyDiagram:named: #in:forModelElement: #forModelElement:
+	     #renderToPosition:onCanvas: #addAttribute: #addOperation: #addLiteral: #updateStereotype #updateFromRender #stonPostReferenceResolution
+	     #materializeDiagramOf:from: #materializeModelFrom: #stonProcessSubObjects: #deselect ) includes: aSelector
 ]
 
 { #category : 'testing' }

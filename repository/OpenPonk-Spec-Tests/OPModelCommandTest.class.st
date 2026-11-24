@@ -79,6 +79,21 @@ OPModelCommandTest >> testDiagramControllerAccessesActiveEditorDiagramController
 ]
 
 { #category : 'tests' }
+OPModelCommandTest >> testModelBasicMenuGroupNameAndCommandExecutionGuards [
+
+	self assert: OPModelBasicMenuGroup new name equals: 'Model'.
+	self
+		deny: (OPModelCommand canBeExecutedInContext: testEditor)
+		description: 'Abstract OPModelCommand must not be executable in context'.
+	self
+		deny: (OPModelTestCommand canBeExecutedInContext: nil)
+		description: 'Model command must not be executable when editor is nil'.
+	self
+		deny: (OPModelCommand canBeExecutedInEditor: testEditor)
+		description: 'Abstract OPModelCommand must not be executable in editor'
+]
+
+{ #category : 'tests' }
 OPModelCommandTest >> testPrepareFullExecutionInContextAcceptsDirectEditor [
 	"Verifies backward compatibility when an editor instance is passed directly instead of a tool context."
 	testCommand prepareFullExecutionInContext: testEditor.

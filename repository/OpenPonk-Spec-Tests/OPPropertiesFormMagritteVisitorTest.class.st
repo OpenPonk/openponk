@@ -10,6 +10,18 @@ Class {
 }
 
 { #category : 'tests' }
+OPPropertiesFormMagritteVisitorTest >> testOptionDescriptionIconsPropertyAndLookup [
+
+	| description icon |
+	description := MASingleOptionDescription new.
+	self assert: (description iconForOption: #alpha) identicalTo: nil.
+	icon := OPCoreIcons openponkIcon.
+	description icons: (Dictionary with: #alpha -> icon).
+	self assert: (description iconForOption: #alpha) identicalTo: icon.
+	self assert: (description iconForOption: #beta) identicalTo: nil
+]
+
+{ #category : 'tests' }
 OPPropertiesFormMagritteVisitorTest >> testToManyRelation [
 	| visitor form button target relation |
 	visitor := OPPropertiesFormMagritteVisitor new.

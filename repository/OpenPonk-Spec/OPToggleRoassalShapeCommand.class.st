@@ -45,19 +45,8 @@ OPToggleRoassalShapeCommand >> defaultMenuItemName [
 
 { #category : 'execution' }
 OPToggleRoassalShapeCommand >> execute [
-	"| oldView newView |
-	oldView := diagramController viewState."
-	self basicExecute.
-	"newView := diagramController viewState.
-	diagramController undoManager
-		redoArray:
-			{diagramController.
-			#viewState:.
-			{newView}}
-		undoArray:
-			{diagramController.
-			#viewState:.
-			{oldView}}"
+
+	self basicExecute
 ]
 
 { #category : 'execution' }

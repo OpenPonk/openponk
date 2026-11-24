@@ -56,6 +56,15 @@ OPRenameRoassalShapeCommandTest >> testCanBeExecutedOnlyWithSingleSelection [
 ]
 
 { #category : 'tests' }
+OPRenameRoassalShapeCommandTest >> testContextMenuActivationAndNonExecutableExecuteDoesNothing [
+
+	self assert: OPRenameRoassalShapeCommand contextMenuActivation class identicalTo: CmdContextMenuActivation.
+	command instVarNamed: #controllers put: #(  ).
+	command execute.
+	self deny: formSpy focusTaken description: 'Executing rename command when not executable must not focus form'
+]
+
+{ #category : 'tests' }
 OPRenameRoassalShapeCommandTest >> testExecuteSelectsControllerAndFocusesFirstInput [
 	command instVarNamed: #controllers put: { elementController }.
 	command execute.

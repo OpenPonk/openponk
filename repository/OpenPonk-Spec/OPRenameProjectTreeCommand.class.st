@@ -30,8 +30,3 @@ OPRenameProjectTreeCommand >> initialize [
 	super initialize.
 	self name: 'Rename'
 ]
-
-{ #category : 'accessing' }
-OPRenameProjectTreeCommand >> workbench [
-	^ self context workbench
-]

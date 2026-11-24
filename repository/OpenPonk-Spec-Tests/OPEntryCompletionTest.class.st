@@ -55,6 +55,24 @@ OPEntryCompletionTest >> testChooserPositionUsesWorldCoordinates [
 ]
 
 { #category : 'tests' }
+OPEntryCompletionTest >> testMinimumChooserContentHeightReturnsZeroForEmptyOrNilMenus [
+
+	| entryCompletion chooserStub |
+	entryCompletion := EntryCompletion new.
+	chooserStub := Mock new.
+	entryCompletion instVarNamed: #chooser put: chooserStub.
+
+	chooserStub stub choiceMenus willReturn: nil.
+	self assert: entryCompletion minimumChooserContentHeight equals: 0.
+
+	chooserStub stub choiceMenus willReturn: #(  ).
+	self assert: entryCompletion minimumChooserContentHeight equals: 0.
+
+	chooserStub stub choiceMenus willReturn: { Morph new }.
+	self assert: entryCompletion minimumChooserContentHeight equals: 0
+]
+
+{ #category : 'tests' }
 OPEntryCompletionTest >> testOpenChooserClampsHeightWhenExceedingAllowedArea [
 
 	| containerMorph fieldMorph entryCompletion chooserMorph allowedAreaBottom |
@@ -154,6 +172,35 @@ OPEntryCompletionTest >> testOpenChooserFlipsAboveWhenBottomSpaceIsSmallerThanOn
 				self assertChooser: chooserMorph flippedAboveField: fieldMorph.
 				self currentWorld doOneCycle.
 				self assertChooser: chooserMorph flippedAboveField: fieldMorph ]
+]
+
+{ #category : 'tests' }
+OPEntryCompletionTest >> testOpenChooserInsideSystemWindowUsesWindowPaneColor [
+
+	| window fieldMorph entryCompletion chooserMorph |
+	window := SystemWindow new.
+	window
+		position: 40 @ 40;
+		extent: 240 @ 160.
+	fieldMorph := RubTextFieldMorph new.
+	fieldMorph
+		position: 10 @ 10;
+		extent: 150 @ 25.
+	window addMorph: fieldMorph frame: (0 @ 0 corner: 1 @ 0.3).
+
+	entryCompletion := EntryCompletion new.
+	entryCompletion dataSourceBlock: [ :token | #( 'Order' 'OrderItem' ) ].
+	fieldMorph entryCompletion: entryCompletion.
+
+	[
+		window openInWorld.
+		self currentWorld doOneCycle.
+
+		chooserMorph := entryCompletion openChooserWith: 'Or' from: fieldMorph.
+		self assert: chooserMorph class identicalTo: IdentifierChooserMorph.
+		self assert: chooserMorph baseColor equals: window paneColor veryMuchLighter ] ensure: [
+			entryCompletion closeChooser.
+			window delete ]
 ]
 
 { #category : 'private' }

@@ -50,6 +50,17 @@ OPDiagramFigureColorCommandTest >> tearDown [
 ]
 
 { #category : 'tests' }
+OPDiagramFigureColorCommandTest >> testColorCommandContextMenuActivationsAndDefaultFontColor [
+
+	| label |
+	self assert: OPDiagramFigureFillColorCommand contextMenuActivation class identicalTo: CmdContextMenuActivation.
+	self assert: OPDiagramFigureStrokeColorCommand contextMenuActivation class identicalTo: CmdContextMenuActivation.
+	self assert: OPDiagramFigureFontColorCommand contextMenuActivation class identicalTo: CmdContextMenuActivation.
+	label := OPLabel new.
+	self assert: (OPDiagramFigureFontColorCommand defaultColorOf: label) equals: label defaultFontColor
+]
+
+{ #category : 'tests' }
 OPDiagramFigureColorCommandTest >> testColorCommandMenuNamesIconsAbstractChecksAndDirectExecution [
 
 	| element shape toolContext yellowCmd blueCmd greenCmd fontCmd defaultStrokeCmd customColorCmd |

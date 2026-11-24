@@ -128,6 +128,15 @@ OPPropertiesFormTest >> testDiagramOnlyViewModelsBuildEditorForms [
 ]
 
 { #category : 'tests' }
+OPPropertiesFormTest >> testDropListIsNotEditableAndRubTextFieldWithDropListButtonReturnsSelf [
+
+	| textField |
+	self deny: SpDropListPresenter new isEditable description: 'Standard SpDropListPresenter must not be editable'.
+	textField := SpRubTextFieldMorph new.
+	self assert: textField withDropListButton identicalTo: textField
+]
+
+{ #category : 'tests' }
 OPPropertiesFormTest >> testEditableDropListAdapterAddToListConvertsTextToString [
 
 	| presenter adapter |

@@ -9,7 +9,7 @@ Class {
 	#tag : 'Commands-ProjectTree'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'testing' }
 OPProjectTreeCommand class >> isAbstract [
 	^ self = OPProjectTreeCommand
 ]

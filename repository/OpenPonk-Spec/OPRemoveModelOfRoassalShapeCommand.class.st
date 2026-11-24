@@ -46,9 +46,8 @@ OPRemoveModelOfRoassalShapeCommand >> defaultMenuItemName [
 
 { #category : 'execution' }
 OPRemoveModelOfRoassalShapeCommand >> execute [
-	diagramController undoManager
-		ifNotNil: [ :manager | manager inTransaction: [ self basicExecute ] ]
-		ifNil: [ self basicExecute ].
+
+	diagramController undoManager inTransaction: [ self basicExecute ].
 	canvas signalUpdate
 ]
 

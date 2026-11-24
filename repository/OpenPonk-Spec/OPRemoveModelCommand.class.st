@@ -17,15 +17,14 @@ OPRemoveModelCommand >> canBeExecuted [
 
 { #category : 'executing' }
 OPRemoveModelCommand >> execute [
+
 	| viewModel controller model command undoManager |
 	viewModel := self selectedViewModel.
 	model := viewModel model.
 	controller := self projectController.
-	undoManager := controller ifNotNil: [ :theController | theController undoManager ].
+	undoManager := controller undoManager.
 	command := OPRemoveModelElementCommand model: model projectController: controller.
-	undoManager
-		ifNotNil: [ :manager | manager inTransaction: [ manager execute: command ] ]
-		ifNil: [ command execute ]
+	undoManager inTransaction: [ undoManager execute: command ]
 ]
 
 { #category : 'accessing' }

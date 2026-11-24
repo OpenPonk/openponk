@@ -36,6 +36,12 @@ OPCanvasExporterTest >> setUp [
 ]
 
 { #category : 'tests' }
+OPCanvasExporterTest >> testBaseCanvasExporterRoassalExporterIsSubclassResponsibility [
+
+	self should: [ OPCanvasExporter new roassalExporter ] raise: SubclassResponsibility
+]
+
+{ #category : 'tests' }
 OPCanvasExporterTest >> testExporterSetupAndCustomScaleCamSetter [
 
 	| pngFile svgFile pdfFile pngExporter svgExporter pdfExporter roassalPngExporter camSetter |

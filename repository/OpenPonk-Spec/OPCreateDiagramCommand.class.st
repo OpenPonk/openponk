@@ -1,5 +1,5 @@
 "
-A project tree command that removes the selected domain model element from the project using transactional undo.
+A project tree command that prompts for a name and creates a new empty diagram for the selected root domain model.
 "
 Class {
 	#name : 'OPCreateDiagramCommand',
@@ -12,7 +12,7 @@ Class {
 { #category : 'testing' }
 OPCreateDiagramCommand >> canBeExecuted [
 
-	^ self selectedViewModel isForRootModel
+	^ self selectedViewModel isNotNil and: [ self selectedViewModel isForRootModel ]
 ]
 
 { #category : 'executing' }

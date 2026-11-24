@@ -38,6 +38,9 @@ OPEditorAnnouncementsTest >> setUp [
 { #category : 'running' }
 OPEditorAnnouncementsTest >> tearDown [
 
+	workbench ifNotNil: [ :activeWorkbench |
+			activeWorkbench close.
+			workbench := nil ].
 	OPPluginRegistry resetDefault.
 	super tearDown
 ]

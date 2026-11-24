@@ -41,6 +41,21 @@ OPDiagramsTreeIntegrationTest >> tearDown [
 ]
 
 { #category : 'tests' }
+OPDiagramsTreeIntegrationTest >> testActivateDiagramNodeOpensEditor [
+
+	| secondDiagram listPresenter |
+	secondDiagram := (OPOpenPonkDiagram forModelElement: diagram modelElement)
+		                 name: 'Second Diagram';
+		                 yourself.
+	project addDiagram: secondDiagram.
+	project announcer announce: (OPDiagramAdded diagram: secondDiagram).
+
+	listPresenter := workbench diagramsTree.
+	listPresenter tree doubleClickAtPath: #( 1 1 2 ).
+	self assert: workbench focusedEditor diagramController diagram identicalTo: secondDiagram
+]
+
+{ #category : 'tests' }
 OPDiagramsTreeIntegrationTest >> testActivateModelNodeDoesNotOpenSecondEditor [
 	| listPresenter modelViewModel secondModel |
 	listPresenter := workbench diagramsTree.

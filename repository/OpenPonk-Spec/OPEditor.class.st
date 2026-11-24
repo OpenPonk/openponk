@@ -34,12 +34,6 @@ OPEditor class >> availableLayouts [
 ]
 
 { #category : 'settings' }
-OPEditor class >> canvasSectionWidth [
-
-	^ OPWorkbench initialWidth - OPWorkbench initialListsWidth - OPPalette initialWidth - OPPropertiesForm initialWidth
-]
-
-{ #category : 'settings' }
 OPEditor class >> currentLayout [
 
 	currentLayout ifNil: [ self setDefaultLayout ].
@@ -126,6 +120,7 @@ OPEditor >> form [
 { #category : 'initialization' }
 OPEditor >> initializePresenters [
 	"Initializes the child presenters and configures the editor window lifecycle."
+
 	canvasPresenter := self instantiate: OPCanvasPresenter.
 	zoomToolbar := self instantiate: OPZoomToolbarPresenter on: canvasPresenter.
 	palette := self instantiate: OPPalette.
@@ -135,27 +130,10 @@ OPEditor >> initializePresenters [
 		add: palette.
 	self class currentLayout applyOn: self.
 
-	self whenBuiltDo: [ :builtEvent | 
-		self withWindowDo: [ :window | 
-			| minimized |
-			minimized := false.
-			window window announcer
-				when: WindowCollapsed
-				do: [ minimized := true ]
-				for: self.
-			window window announcer
-				when: WindowExpanded
-				do: [ minimized := false ]
-				for: self.
-			window whenResizingDo: [ :resizeEvent | 
-				minimized ifFalse: [ 
-					self class currentLayout
-						resizePanelsOf: builtEvent widget
-						afterWindowResized: resizeEvent ] ].
-			window whenClosedDo: [ 
-				window window announcer unsubscribe: self.
-				diagramController ifNotNil: [ :activeDiagramController | 
-					activeDiagramController removeAllControllers ] ] ] ]
+	self whenBuiltDo: [ :builtEvent |
+			self withWindowDo: [ :window |
+				window whenClosedDo: [
+					diagramController ifNotNil: [ :activeDiagramController | activeDiagramController removeAllControllers ] ] ] ]
 ]
 
 { #category : 'initialization' }

@@ -30,21 +30,31 @@ OPWorkbenchTest >> tearDown [
 
 { #category : 'tests' }
 OPWorkbenchTest >> testClassQueriesDevelopmentModeAndSettings [
-	| originalDevMode |
+
+	| originalDevMode settingsBuilder devSettingsBuilder |
 	self assert: OPWorkbench initialSidePaneWidth equals: 250.
 	self assert: OPWorkbench initialListsWidth equals: 250.
 	self assert: OPWorkbench initialFormWidth equals: 250.
 	self assert: OPWorkbench initialWidth equals: OPWorkbench initialExtent x.
-	self assert: (OPWorkbench class includesSelector: #settingsOn:) description: 'settingsOn: must be defined'.
-	self assert: (OPWorkbench class includesSelector: #developerSettingsOn:) description: 'developerSettingsOn: must be defined'.
+
+	settingsBuilder := SettingTreeBuilder new.
+	OPWorkbench settingsOn: settingsBuilder.
+	self assert: settingsBuilder nodeList size equals: 1.
+	self assert: settingsBuilder nodeList first item name equals: #openponk.
+
+	devSettingsBuilder := SettingTreeBuilder new.
+	OPWorkbench developerSettingsOn: devSettingsBuilder.
+	self assert: devSettingsBuilder nodeList size equals: 2.
 
 	originalDevMode := OPWorkbench isDevelopmentMode.
 	[
+		OPWorkbench instVarNamed: #isDevelopmentMode put: nil.
+		self deny: OPWorkbench isDevelopmentMode description: 'isDevelopmentMode should default to false when nil'.
 		OPWorkbench isDevelopmentMode: true.
 		self assert: OPWorkbench isDevelopmentMode description: 'isDevelopmentMode should be true after setting'.
 		OPWorkbench isDevelopmentMode: false.
-		self deny: OPWorkbench isDevelopmentMode description: 'isDevelopmentMode should be false after resetting'
-	] ensure: [ OPWorkbench isDevelopmentMode: originalDevMode ]
+		self deny: OPWorkbench isDevelopmentMode description: 'isDevelopmentMode should be false after resetting' ] ensure: [
+		OPWorkbench isDevelopmentMode: originalDevMode ]
 ]
 
 { #category : 'tests' }
@@ -292,6 +302,82 @@ OPWorkbenchTest >> testSaveProjectShortcutIsRegistered [
 		self assert: saveAction shortcutKey equals: $s actionModifier.
 		self deny: saveAction canBeExecuted description: 'Save action must be disabled when projectController is nil' ] ensure: [
 		windowPresenter close ]
+]
+
+{ #category : 'tests' }
+OPWorkbenchTest >> testShiftZRedoShortcutShowAllWithSmallCanvasAndTabTitleEdgeCases [
+
+	| project model diagram editor mockProjectController mockUndoManager windowPresenter shiftZRedoAction mockRequest capturedValidator editorsDict orphanDiagram missingPageDiagram dummyPage |
+	mockProjectController := Mock new.
+	mockUndoManager := Mock new.
+	mockProjectController stub undoManager willReturn: mockUndoManager.
+	mockUndoManager stub canRedo willReturn: true.
+	mockUndoManager stub redo willReturn: nil.
+	workbench instVarNamed: #projectController put: mockProjectController.
+
+	windowPresenter := workbench asWindow.
+	[
+		shiftZRedoAction := windowPresenter actions allCommands detect: [ :eachAction |
+			                    eachAction shortcutKey = $z shift actionModifier ].
+		self assert: shiftZRedoAction canBeExecuted description: 'Shift+Cmd/Ctrl+Z redo shortcut must be enabled when canRedo is true'.
+		shiftZRedoAction execute.
+		mockUndoManager should receive redo ] ensure: [ windowPresenter close ].
+
+	workbench := OPWorkbench new.
+	project := OPProject named: 'EdgeCases'.
+	model := OPTestContainerModel new
+		         name: 'Root';
+		         yourself.
+	model add: OPTestEntityModel new.
+	diagram := (OPOpenPonkDiagram forModelElement: model)
+		           name: 'Main';
+		           yourself.
+	project addModel: model.
+	project addDiagram: diagram.
+	workbench openProject: project.
+	editor := workbench focusedEditor.
+	editor diagramController canvas extent: 300 @ 300.
+	workbench showAllElementsInAllDiagrams.
+	editor diagramController canvas announce: (RSExtentChangedEvent new
+			 canvas: editor diagramController canvas;
+			 yourself).
+	editor diagramController canvas announce: (RSExtentChangedEvent new
+			 canvas: editor diagramController canvas;
+			 yourself).
+	self assertEmpty: workbench projectController undoManager undoStack.
+
+	capturedValidator := nil.
+	mockRequest := Mock new.
+	SpRequestDialog stub new willReturn: mockRequest.
+	mockRequest stub title: Any.
+	mockRequest stub message: Any.
+	mockRequest stub text: Any.
+	(mockRequest stub validateAnswer: Any) will: [ :validatorBlock | capturedValidator := validatorBlock ].
+	mockRequest stub onAccept: Any.
+	mockRequest stub openDialog.
+	[
+		workbench renameProject.
+		self deny: (capturedValidator value: nil) description: 'Nil project name must be rejected'.
+		self deny: (capturedValidator value: '   ') description: 'Blank project name must be rejected'.
+		self assert: (capturedValidator value: 'Valid') description: 'Non-blank project name must be accepted' ] ensure: [
+		SpRequestDialog recoverFromGHMutation ].
+
+	editorsDict := workbench instVarNamed: #editors.
+	orphanDiagram := (OPOpenPonkDiagram forModelElement: nil)
+		                 name: 'Orphan';
+		                 yourself.
+	missingPageDiagram := OPOpenPonkDiagram forModelElement: nil.
+	dummyPage := workbench newNotebookPage.
+	editorsDict at: orphanDiagram put: (Dictionary with: #page -> dummyPage).
+	editorsDict at: missingPageDiagram put: Dictionary new.
+	[
+		workbench updateTabTitles.
+		self assert: dummyPage title equals: '[Orphan] ' ] ensure: [
+			editorsDict removeKey: orphanDiagram ifAbsent: [ ].
+			editorsDict removeKey: missingPageDiagram ifAbsent: [ ] ].
+
+	workbench closedTabOfEditor: editor whileClosingWorkbench: false.
+	workbench closedTabOfEditor: editor whileClosingWorkbench: false
 ]
 
 { #category : 'tests' }

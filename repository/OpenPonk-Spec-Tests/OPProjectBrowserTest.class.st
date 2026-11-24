@@ -256,6 +256,47 @@ OPProjectBrowserTest >> testProjectNameStripsEmptyPrefixAndExampleTemplateCreati
 ]
 
 { #category : 'tests' }
+OPProjectBrowserTest >> testQuickStartRecentActivationContextMenuAndWindowClose [
+
+	| testProject openedProjects openFromFileCalled menu |
+	testProject := OPProject named: 'ActivatedProject'.
+	openedProjects := OrderedCollection new.
+	openFromFileCalled := false.
+	(browser stub openProject: Any) will: [ :passedProject |
+			openedProjects add: passedProject.
+			nil ].
+	browser stub openProjectFromFile will: [ openFromFileCalled := true ].
+
+	browser recentList items: { testProject }.
+	browser recentList selectIndex: 1.
+	menu := browser recentList contextMenu value.
+	self denyEmpty: menu menuGroups.
+	browser recentList doubleClickAtIndex: 1.
+	self assert: openedProjects size equals: 1.
+	self assert: openedProjects first identicalTo: testProject.
+
+	browser openFromFileButton click.
+	self assert: openFromFileCalled description: 'Clicking openFromFileButton must invoke openProjectFromFile'.
+
+	browser createProjectButton click.
+	self assert: openedProjects size equals: 2.
+
+	browser templatesList doubleClickAtIndex: 1.
+	self assert: openedProjects size equals: 3.
+
+	browser recoverFromGHMutation.
+	window := browser open.
+	[
+		| openedWorkbench |
+		testProject stub open willReturn: Mock new.
+		openedWorkbench := browser openProject: testProject.
+		self deny: openedWorkbench identicalTo: nil.
+		self deny: window isOpen description: 'Opening a project from browser should close the browser window' ] ensure: [
+			testProject recoverFromGHMutation.
+			OPProjectStorage default ensureRemove: testProject ]
+]
+
+{ #category : 'tests' }
 OPProjectBrowserTest >> testRecentListDisplaysProjectsWithAndWithoutStorageFile [
 
 	| savedProject unsavedProject testStorage itemStrings |

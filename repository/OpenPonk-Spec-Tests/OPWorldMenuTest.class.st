@@ -29,3 +29,21 @@ OPWorldMenuTest >> testOpenPonkIsDirectActionLeafItem [
 	self assert: openPonkItem spec subMenu identicalTo: nil.
 	self assertEmpty: (openPonkItem itemList ifNil: [ #(  ) ])
 ]
+
+{ #category : 'tests' }
+OPWorldMenuTest >> testOpenPonkWorldMenuActionOpensProjectBrowser [
+
+	| existingWindows builder openPonkItem newWindows |
+	existingWindows := (self currentWorld submorphs select: [ :eachMorph | eachMorph isSystemWindow ]) asIdentitySet.
+	builder := PragmaMenuBuilder new.
+	OPProjectBrowser menuCommandOn: builder.
+	openPonkItem := builder itemNamed: #OpenPonk.
+	[
+		openPonkItem spec action value.
+		newWindows := self currentWorld submorphs select: [ :eachMorph |
+			              eachMorph isSystemWindow and: [ (existingWindows includes: eachMorph) not ] ].
+		self assert: newWindows size equals: 1 ] ensure: [
+			self currentWorld submorphs copy
+				select: [ :eachMorph | eachMorph isSystemWindow and: [ (existingWindows includes: eachMorph) not ] ]
+				thenDo: #delete ]
+]

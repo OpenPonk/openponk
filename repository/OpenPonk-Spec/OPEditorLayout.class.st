@@ -55,12 +55,6 @@ OPEditorLayout >> paletteSectionLayout [
 	^ self scrollableTabWith: #palette label: 'Palette'
 ]
 
-{ #category : 'applying' }
-OPEditorLayout >> resizePanelsOf: aMorph afterWindowResized: aResizeEvent [
-
-	^ self subclassResponsibility
-]
-
 { #category : 'specs' }
 OPEditorLayout >> scrollableTabWith: aContent label: aTabLabel [
 

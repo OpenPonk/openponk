@@ -138,38 +138,6 @@ OPDiagramsTree >> copyDiagram: aDiagram [
 	self workbench ifNotNil: [ :activeWorkbench | activeWorkbench openEditorOnDiagram: newDiagram ]
 ]
 
-{ #category : 'actions' }
-OPDiagramsTree >> createDiagram [
-	| targetModel |
-	targetModel := self selectedModelForNewDiagram.
-	targetModel ifNil: [ ^ self ].
-	self createDiagramForModel: targetModel
-]
-
-{ #category : 'actions' }
-OPDiagramsTree >> createDiagramForModel: aModel [
-
-	| diagramName |
-	diagramName := nil.
-	[ diagramName := UIManager default request: 'Diagram name: ' initialAnswer: aModel name title: 'Create new' ] doWhileTrue: [
-		diagramName isNotNil and: [ diagramName isEmpty ] ].
-	diagramName ifNil: [ ^ self ].
-	self createDiagramForModel: aModel named: diagramName
-]
-
-{ #category : 'actions' }
-OPDiagramsTree >> createDiagramForModel: aModel named: aName [
-	| diagram modelViewModel |
-	diagram := OPOpenPonkDiagram forModelElement: aModel.
-	diagram name: aName.
-	modelViewModel := self viewModelRegistry viewModelFor: aModel.
-	self expandedViewModels add: modelViewModel.
-	self project addDiagram: diagram.
-	self project announcer announce: (OPDiagramAdded diagram: diagram).
-	self workbench ifNotNil: [ :activeWorkbench |
-		activeWorkbench openEditorOnDiagram: diagram ]
-]
-
 { #category : 'private' }
 OPDiagramsTree >> currentShowIndex [
 	^ tree adapter ifNotNil: [ :treeAdapter |
@@ -390,19 +358,6 @@ OPDiagramsTree >> selectActiveDiagram [
 { #category : 'accessing' }
 OPDiagramsTree >> selectedItem [
 	^ tree selectedItem
-]
-
-{ #category : 'private' }
-OPDiagramsTree >> selectedModelForNewDiagram [
-	| selectedNode |
-	selectedNode := self selectedItem.
-	selectedNode ifNotNil: [
-		selectedNode isDiagramElement ifTrue: [ ^ selectedNode modelElement ].
-		(self project hasModel: selectedNode model) ifTrue: [ ^ selectedNode model ] ].
-	self workbench ifNotNil: [ :activeWorkbench |
-		activeWorkbench focusedEditor ifNotNil: [ :editor |
-			^ editor diagramController model ] ].
-	^ self project models ifNotEmpty: [ :models | models first ] ifEmpty: [ nil ]
 ]
 
 { #category : 'accessing - spec' }

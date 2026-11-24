@@ -70,6 +70,50 @@ OPProjectTreeTest >> testBoundsCommandDoesNotTriggerTreeRefresh [
 ]
 
 { #category : 'tests' }
+OPProjectTreeTest >> testContextMenuAccessorsWindowAndCollapseFallbacks [
+
+	| standaloneTree mockOwner rootViewModel menu menuNames collapseAnnouncement window |
+	standaloneTree := OPProjectTree newApplication: SpApplication defaultApplication.
+	self assertEmpty: standaloneTree expandedViewModels.
+	standaloneTree
+		expandViewModel: nil
+		atPath: #( 1 )
+		currentDepth: 4
+		maxDepth: 3.
+
+	mockOwner := Mock new.
+	mockOwner stub projectController willReturn: projectController.
+	mockOwner stub workbench willReturn: mockOwner.
+	standaloneTree owner: mockOwner.
+	self assert: standaloneTree projectController identicalTo: projectController.
+	self assert: standaloneTree workbench identicalTo: mockOwner.
+	self assert: standaloneTree viewModelRegistry identicalTo: projectController viewModelRegistry.
+
+	self assert: projectTree projectViewModel identicalTo: projectController viewModel.
+	projectTree tree unselectAll.
+	self assert: projectTree selectedItem identicalTo: nil.
+	self assert: projectTree buildContextMenu identicalTo: nil.
+	self assert: projectTree tree contextMenu value identicalTo: nil.
+
+	rootViewModel := projectController viewModelRegistry viewModelFor: rootContainer.
+	projectTree tree selectItem: rootViewModel.
+	self assert: projectTree selectedItem identicalTo: rootViewModel.
+	menu := projectTree tree contextMenu value.
+	menuNames := menu menuGroups flatCollect: [ :eachGroup | eachGroup menuItems collect: #name ].
+	self assertCollection: menuNames includesAll: #( 'Create empty diagram' 'Remove' 'Inspect Model' ).
+
+	collapseAnnouncement := Mock new.
+	collapseAnnouncement stub expanded willReturn: false.
+	collapseAnnouncement stub item willReturn: rootViewModel.
+	projectTree handleExpandChanged: collapseAnnouncement.
+	self denyCollection: projectTree expandedViewModels includesAny: { rootViewModel }.
+	projectTree handleExpandChanged: collapseAnnouncement.
+
+	window := projectTree asWindow.
+	[ self assert: window initialExtent equals: 600 @ 800 ] ensure: [ window close ]
+]
+
+{ #category : 'tests' }
 OPProjectTreeTest >> testInitialExpansionToDepth3 [
 	| treePresenter |
 	treePresenter := projectTree tree.

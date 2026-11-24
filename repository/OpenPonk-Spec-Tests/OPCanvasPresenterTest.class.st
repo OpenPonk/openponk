@@ -57,6 +57,18 @@ OPCanvasPresenterTest >> testCommandContextAndDefaultExportFolderAndZoom [
 ]
 
 { #category : 'tests' }
+OPCanvasPresenterTest >> testDefaultCallbacksDoNotErrorBeforeRegistration [
+
+	| presenter |
+	presenter := OPCanvasPresenter new.
+	presenter zoom: 1.25.
+	presenter canvas announce: (RSExtentChangedEvent new
+			 canvas: presenter canvas;
+			 yourself).
+	self assert: presenter zoom closeTo: 1.25 precision: 0.001
+]
+
+{ #category : 'tests' }
 OPCanvasPresenterTest >> testDefaultExportFileNameUsesSanitizer [
 	| canvasPresenter diagramController viewModel |
 	canvasPresenter := OPCanvasPresenter new.

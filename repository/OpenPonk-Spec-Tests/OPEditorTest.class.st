@@ -55,20 +55,54 @@ OPEditorTest >> testCloseWindowWithoutDiagramControllerDoesNotError [
 ]
 
 { #category : 'tests' }
+OPEditorTest >> testCreateCommandContextAndTabHeaderPresenter [
+
+	| mockDiagramController commandContext headerPresenter headerMorph exampleWindow |
+	mockDiagramController := Mock new.
+	mockDiagramController stub selectedElements willReturn: #(  ).
+	editor canvasPresenter diagramController: mockDiagramController.
+	commandContext := editor createCommandContext.
+	self assert: commandContext class identicalTo: OPRoassalShapeContext.
+
+	self assert: OPTabHeaderPresenter title equals: 'Tab header'.
+	headerPresenter := OPTabHeaderPresenter newApplication: SpApplication defaultApplication.
+	headerMorph := headerPresenter build.
+	self assert: headerMorph class identicalTo: OPTabLabelMorph.
+
+	exampleWindow := OPTabHeaderPresenter example.
+	[
+		self assert: exampleWindow class identicalTo: SpWindowPresenter.
+		self assert: exampleWindow isOpen description: 'OPTabHeaderPresenter example should open a window' ] ensure: [
+		exampleWindow ifNotNil: [ :activeWindow | activeWindow close ] ]
+]
+
+{ #category : 'tests' }
 OPEditorTest >> testEditorLayoutsSwitching [
-	| layoutNames expectedWidth |
+
+	| layoutNames openWindow builder settingNode |
 	[
 		layoutNames := OPEditor availableLayoutNames.
 		self assertCollection: layoutNames hasSameElements: #( 'Palette on left' 'Palette on right' ).
 		self assert: OPEditor defaultLayout name equals: 'Palette on left'.
-		expectedWidth := OPWorkbench initialWidth - OPWorkbench initialListsWidth - OPPalette initialWidth - OPPropertiesForm initialWidth.
-		self assert: OPEditor canvasSectionWidth equals: expectedWidth.
 
+		OPEditor instVarNamed: #currentLayout put: nil.
+		self assert: OPEditor currentLayout class identicalTo: OPEditorPaletteLeftLayout.
+
+		openWindow := editor open.
 		OPEditor layoutName: 'Palette on right'.
 		self assert: OPEditor layoutName equals: 'Palette on right'.
+		self assert: editor layout class identicalTo: SpPanedLayout.
 		OPEditor setDefaultLayout.
-		self assert: OPEditor layoutName equals: 'Palette on left'
-	] ensure: [ OPEditor setDefaultLayout ]
+		self assert: OPEditor layoutName equals: 'Palette on left'.
+
+		builder := SettingTreeBuilder new.
+		OPEditor settingsOn: builder.
+		self assert: builder nodeList size equals: 1.
+		settingNode := builder nodeList first.
+		self assert: settingNode parentName equals: #openponk.
+		self assert: settingNode item name equals: #layoutName ] ensure: [
+			openWindow ifNotNil: [ :activeWindow | activeWindow close ].
+			OPEditor setDefaultLayout ]
 ]
 
 { #category : 'tests' }
@@ -76,6 +110,50 @@ OPEditorTest >> testInitializePresentersInstantiatesZoomToolbar [
 
 	self assert: editor zoomToolbar class identicalTo: OPZoomToolbarPresenter.
 	self assert: editor zoomToolbar canvasPresenter equals: editor canvasPresenter
+]
+
+{ #category : 'tests - layout' }
+OPEditorTest >> testResizingWindowWithPaletteOnLeftPreservesPaletteWidth [
+
+	| window leftPaletteWidthBefore leftPaletteWidthAfter |
+	[
+		OPEditor layoutName: 'Palette on left'.
+		editor := (OPEditor on: OPTestPlugin new)
+			          application: SpApplication defaultApplication;
+			          yourself.
+		window := editor open.
+		window adapter widget extent: 1000 @ 700.
+		window adapter widget fullBounds.
+		leftPaletteWidthBefore := editor adapter widget submorphs first width.
+		window adapter widget extent: 1400 @ 700.
+		window adapter widget fullBounds.
+		leftPaletteWidthAfter := editor adapter widget submorphs first width.
+		self assert: leftPaletteWidthBefore equals: OPPalette initialWidth.
+		self assert: leftPaletteWidthAfter equals: OPPalette initialWidth ] ensure: [
+			window ifNotNil: [ :activeWindow | activeWindow close ].
+			OPEditor setDefaultLayout ]
+]
+
+{ #category : 'tests - layout' }
+OPEditorTest >> testResizingWindowWithPaletteOnRightPreservesPaletteWidth [
+
+	| window rightPaletteWidthBefore rightPaletteWidthAfter |
+	[
+		OPEditor layoutName: 'Palette on right'.
+		editor := (OPEditor on: OPTestPlugin new)
+			          application: SpApplication defaultApplication;
+			          yourself.
+		window := editor open.
+		window adapter widget extent: 1000 @ 700.
+		window adapter widget fullBounds.
+		rightPaletteWidthBefore := editor adapter widget submorphs last width.
+		window adapter widget extent: 1400 @ 700.
+		window adapter widget fullBounds.
+		rightPaletteWidthAfter := editor adapter widget submorphs last width.
+		self assert: rightPaletteWidthBefore equals: OPPalette initialWidth.
+		self assert: rightPaletteWidthAfter equals: OPPalette initialWidth ] ensure: [
+			window ifNotNil: [ :activeWindow | activeWindow close ].
+			OPEditor setDefaultLayout ]
 ]
 
 { #category : 'tests' }

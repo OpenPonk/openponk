@@ -263,6 +263,13 @@ OPWorkbenchToolbarTest >> testFocusedEditorResetRemovesEditorMenus [
 ]
 
 { #category : 'tests' }
+OPWorkbenchToolbarTest >> testHistoryMenusEmptyWhenUndoRedoUnavailable [
+
+	self assertEmpty: toolbarPresenter undoHistoryMenu menuGroups.
+	self assertEmpty: toolbarPresenter redoHistoryMenu menuGroups
+]
+
+{ #category : 'tests' }
 OPWorkbenchToolbarTest >> testModelCommandsPrepareExecutionInEditorContext [
 	"Verifies that all model commands accept the focused editor in prepareFullExecutionInContext:."
 	| testEditor context commandClasses preparedCommands |
@@ -354,6 +361,40 @@ OPWorkbenchToolbarTest >> testModelMenuItemIsEnabledWhenFocusedEditorHasModelCom
 ]
 
 { #category : 'tests' }
+OPWorkbenchToolbarTest >> testOpenPonkMenuActionsOpenBrowserSettingsAndVersionComparison [
+
+	| existingWindows openponkMenu allItems itemByName mockSettingsBrowser mockVersionInfo |
+	existingWindows := (self currentWorld submorphs select: [ :eachMorph | eachMorph isSystemWindow ]) asIdentitySet.
+	openponkMenu := toolbarPresenter openponkMenu.
+	allItems := openponkMenu menuGroups flatCollect: #menuItems.
+	itemByName := [ :itemName | allItems detect: [ :eachItem | eachItem name = itemName ] ].
+
+	mockSettingsBrowser := Mock new.
+	mockSettingsBrowser stub open willReturn: mockSettingsBrowser.
+	mockSettingsBrowser stub select: Any.
+	(StSettingsBrowser stub newApplication: Any) willReturn: mockSettingsBrowser.
+
+	mockVersionInfo := Mock new.
+	mockVersionInfo stub open willReturn: nil.
+	(OPVersionComparisonInfo stub newApplication: Any) willReturn: mockVersionInfo.
+	[
+		(itemByName value: 'New project') action value.
+		(itemByName value: 'Settings') action value.
+		(itemByName value: 'Check for new version') action value.
+		mockSettingsBrowser should receive open.
+		mockSettingsBrowser should receive select: 'openponk'.
+		mockVersionInfo should receive open.
+		self denyEmpty:
+			(self currentWorld submorphs select: [ :eachMorph |
+				 eachMorph isSystemWindow and: [ (existingWindows includes: eachMorph) not ] ]) ] ensure: [
+			StSettingsBrowser recoverFromGHMutation.
+			OPVersionComparisonInfo recoverFromGHMutation.
+			self currentWorld submorphs copy
+				select: [ :eachMorph | eachMorph isSystemWindow and: [ (existingWindows includes: eachMorph) not ] ]
+				thenDo: #delete ]
+]
+
+{ #category : 'tests' }
 OPWorkbenchToolbarTest >> testOpenPonkMenuItemIsFirstWithSeparator [
 	| toolbarPresenter openponkMenu firstGroup firstItem |
 	toolbarPresenter := OPWorkbenchToolbar new.
@@ -408,6 +449,61 @@ OPWorkbenchToolbarTest >> testSaveButtonDelegatesToWorkbench [
 	mockWorkbench stub saveProject willReturn: nil.
 	toolbarPresenter saveButton performAction.
 	mockWorkbench should receive saveProject
+]
+
+{ #category : 'tests' }
+OPWorkbenchToolbarTest >> testToggleUndoAndRedoPopoversAndDebounce [
+
+	| testProject testModel testDiagram workbench liveToolbar undoVisibleAfterOpen undoVisibleAfterClose redoVisibleAfterOpen redoVisibleAfterClose |
+	OPPluginRegistry setDefaultForTesting.
+	testProject := OPProject named: 'PopoverTestProject'.
+	testModel := OPTestContainerModel new.
+	testDiagram := OPOpenPonkDiagram forModelElement: testModel.
+	testProject addModel: testModel.
+	testProject addDiagram: testDiagram.
+	workbench := OPWorkbench new.
+	[
+		workbench openProject: testProject.
+		liveToolbar := workbench topToolbar.
+		self assert: liveToolbar undoPopover class identicalTo: SpPopoverPresenter.
+		self assert: liveToolbar redoPopover class identicalTo: SpPopoverPresenter.
+
+		liveToolbar undoArrowButton performAction.
+		undoVisibleAfterOpen := false.
+		liveToolbar undoPopover withAdapterDo: [ :adapter |
+			adapter widget ifNotNil: [ :widget | undoVisibleAfterOpen := widget isInWorld ] ].
+		self assert: undoVisibleAfterOpen description: 'Undo popover should be visible in world after toggling open'.
+
+		liveToolbar toggleUndoPopover.
+		undoVisibleAfterClose := false.
+		liveToolbar undoPopover withAdapterDo: [ :adapter |
+			adapter widget ifNotNil: [ :widget | undoVisibleAfterClose := widget isInWorld ] ].
+		self deny: undoVisibleAfterClose description: 'Undo popover should be dismissed after second toggle'.
+
+		"Immediate toggle within 250ms debounce window keeps popover dismissed"
+		liveToolbar toggleUndoPopover.
+		liveToolbar undoPopover withAdapterDo: [ :adapter |
+			adapter widget ifNotNil: [ :widget | undoVisibleAfterClose := widget isInWorld ] ].
+		self deny: undoVisibleAfterClose description: 'Undo popover must stay dismissed within debounce window'.
+
+		liveToolbar redoArrowButton performAction.
+		redoVisibleAfterOpen := false.
+		liveToolbar redoPopover withAdapterDo: [ :adapter |
+			adapter widget ifNotNil: [ :widget | redoVisibleAfterOpen := widget isInWorld ] ].
+		self assert: redoVisibleAfterOpen description: 'Redo popover should be visible in world after toggling open'.
+
+		liveToolbar toggleRedoPopover.
+		redoVisibleAfterClose := false.
+		liveToolbar redoPopover withAdapterDo: [ :adapter |
+			adapter widget ifNotNil: [ :widget | redoVisibleAfterClose := widget isInWorld ] ].
+		self deny: redoVisibleAfterClose description: 'Redo popover should be dismissed after second toggle'.
+
+		liveToolbar toggleRedoPopover.
+		liveToolbar redoPopover withAdapterDo: [ :adapter |
+			adapter widget ifNotNil: [ :widget | redoVisibleAfterClose := widget isInWorld ] ].
+		self deny: redoVisibleAfterClose description: 'Redo popover must stay dismissed within debounce window' ] ensure: [
+			workbench close.
+			OPPluginRegistry resetDefault ]
 ]
 
 { #category : 'tests' }

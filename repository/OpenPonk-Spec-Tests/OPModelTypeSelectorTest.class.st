@@ -27,6 +27,19 @@ OPModelTypeSelectorTest >> setUp [
 ]
 
 { #category : 'tests' }
+OPModelTypeSelectorTest >> testAddModelButtonActionTriggersAddModel [
+
+	| addModelButton called |
+	called := false.
+	selectorPresenter stub addModel will: [ called := true ].
+	addModelButton := selectorPresenter instVarNamed: #addModelButton.
+	[
+		addModelButton performAction.
+		self assert: called description: 'Clicking addModelButton must invoke addModel' ] ensure: [
+		selectorPresenter recoverFromGHMutation ]
+]
+
+{ #category : 'tests' }
 OPModelTypeSelectorTest >> testSelectingPluginUpdatesDefaultModelNameAndEnablesButton [
 
 	| nameInput addButton pluginsList |

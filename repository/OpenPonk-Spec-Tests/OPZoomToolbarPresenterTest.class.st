@@ -46,6 +46,31 @@ OPZoomToolbarPresenterTest >> testInitialValues [
 ]
 
 { #category : 'tests' }
+OPZoomToolbarPresenterTest >> testToolbarButtonsZoomFitAndCanvasRebinding [
+
+	| secondCanvas |
+	canvasPresenter zoom: 1.0.
+	toolbarPresenter zoomInButton performAction.
+	self assert: canvasPresenter zoom closeTo: 1.25 precision: 0.001.
+
+	toolbarPresenter zoomOutButton performAction.
+	self assert: canvasPresenter zoom closeTo: 1.0 precision: 0.001.
+
+	canvasPresenter zoom: 1.5.
+	toolbarPresenter zoomValueButton performAction.
+	self assert: canvasPresenter zoom closeTo: 1.0 precision: 0.001.
+
+	canvasPresenter zoom: 2.0.
+	toolbarPresenter zoomFitButton performAction.
+	self assert: canvasPresenter zoom closeTo: 1.0 precision: 0.001.
+
+	secondCanvas := OPCanvasPresenter newApplication: SpApplication defaultApplication.
+	toolbarPresenter canvasPresenter: secondCanvas.
+	secondCanvas zoom: 0.75.
+	self assert: toolbarPresenter zoomValueButton label equals: '75%'
+]
+
+{ #category : 'tests' }
 OPZoomToolbarPresenterTest >> testZoomInAction [
 	"Verifies zoom in scaling step."
 	canvasPresenter zoom: 1.0.

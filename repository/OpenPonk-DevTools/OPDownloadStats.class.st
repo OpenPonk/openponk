@@ -17,47 +17,35 @@ OPDownloadStats class >> downloadStats [
 
 	<script>
 	| repos year |
-	repos := #( plugins 'borm-editor' BPMN 'class-editor' ERD 'fsm-editor'
-	            'markov-chains' petrinets DEMO).
+	repos := #( plugins 'borm-editor' BPMN 'class-editor' ERD 'fsm-editor' 'markov-chains' petrinets DEMO ).
 	year := 2026.
 
 	'dls.csv' asFileReference
 		ensureDelete;
-		writeStreamDo: [ :s |
-			repos do: [ :each |
-					| dictionaries |
-					dictionaries := self downloadStatsOfRepo: each year: year.
-					s << '=''dls' << '-' << each << '.csv''!$A$'
-					<< (dictionaries size + 2) asString << ':$'
-					<< (Character value: $A charCode + self resultColumns) << '$'
-					<< (dictionaries size + 2) asString.
-					s lf ] ]
+		writeStreamDo: [ :stream |
+				repos do: [ :eachRepo |
+							| dictionaries |
+							dictionaries := self downloadStatsOfRepo: eachRepo year: year.
+							self writeSummaryFormulaForRepo: eachRepo entryCount: dictionaries size toStream: stream.
+							stream lf ] ]
 ]
 
 { #category : 'processing' }
 OPDownloadStats class >> downloadStatsOfRepo: repo year: year [
 
 	<script: 'self downloadStatsOfRepo: ''class-editor'' year: 2023'>
-	| listResponse dictResponse listDicts yearDicts |
+	| url fileName listResponse dictResponse yearDicts |
+	url := String streamContents: [ :stream | stream << 'https://api.github.com/repos/OpenPonk/' << repo << '/contents/?ref=dls' ].
 	listResponse := ZnClient new
-		                url:
-			                'https://api.github.com/repos/OpenPonk/' , repo
-			                , '/contents/?ref=dls';
+		                url: url;
 		                get.
 	dictResponse := STONJSON fromString: listResponse.
-	listDicts := dictResponse sortedAs: [ :each | each at: #name ].
-	yearDicts := (listDicts select: [ :each |
-		              (each at: #name) beginsWith: year asString ])
-		             asOrderedCollection.
+	yearDicts := self selectYearDictionaries: dictResponse forYear: year.
 
-	listDicts
-		detect: [ :any | (any at: #name) beginsWith: (year + 1) asString ]
-		ifFound: [ :newYearOne | yearDicts add: newYearOne ].
-
-	('dls-' , repo , '.csv') asFileReference
+	fileName := String streamContents: [ :stream | stream << 'dls-' << repo << '.csv' ].
+	fileName asFileReference
 		ensureDelete;
-		writeStreamDo: [ :s |
-			self writeFromDictionaries: yearDicts repo: repo toStream: s ].
+		writeStreamDo: [ :stream | self writeFromDictionaries: yearDicts repo: repo toStream: stream ].
 
 	^ yearDicts
 ]
@@ -111,10 +99,34 @@ OPDownloadStats class >> resultPlatformColumnLetters [
 				                                 $A charCode + each ] ]
 ]
 
+{ #category : 'processing' }
+OPDownloadStats class >> selectYearDictionaries: dictionaries forYear: year [
+
+	| sortedDictionaries yearDictionaries |
+	sortedDictionaries := dictionaries sortedAs: [ :each | each at: #name ].
+	yearDictionaries := (sortedDictionaries select: [ :each | (each at: #name) beginsWith: year asString ]) asOrderedCollection.
+	sortedDictionaries
+		detect: [ :any | (any at: #name) beginsWith: (year + 1) asString ]
+		ifFound: [ :nextYearEntry | yearDictionaries add: nextYearEntry ].
+	^ yearDictionaries
+]
+
 { #category : 'constants' }
 OPDownloadStats class >> separator [
 
 	^ ';'
+]
+
+{ #category : 'processing' }
+OPDownloadStats class >> timestampStringFromFileName: fileName [
+
+	^ String streamContents: [ :timestampStream |
+			  timestampStream << (fileName first: 10) << ' '.
+			  (fileName includes: $:)
+				  ifTrue: [ timestampStream << (fileName copyFrom: 12 to: 19) ]
+				  ifFalse: [
+						  timestampStream << (fileName copyFrom: 12 to: 13) << ':' << (fileName copyFrom: 14 to: 15) << ':'
+						  << (fileName copyFrom: 16 to: 17) ] ]
 ]
 
 { #category : 'processing' }
@@ -138,50 +150,62 @@ OPDownloadStats class >> writeCSV: csv toTime: to index: i toStream: s [
 ]
 
 { #category : 'processing' }
-OPDownloadStats class >> writeFromDictionaries: dictionaries repo: repo toStream: s [
+OPDownloadStats class >> writeFromDictionaries: dictionaries repo: repo csvProvider: csvBlock toStream: stream [
 
 	| lastRow sumRow |
-	s << 'from' << self separator << 'to' << self separator.
-	self platforms asStringOn: s delimiter: self separator.
-	s lf.
+	stream << 'from' << self separator << 'to' << self separator.
+	self platforms do: [ :eachPlatform | stream << eachPlatform ] separatedBy: [ stream << self separator ].
+	stream lf.
 
 	dictionaries withIndexDo: [ :each :index |
-		self writeFromDictionary: each index: index toStream: s.
-		s lf ].
+			self
+				writeFromDictionary: each
+				csv: (csvBlock value: (each at: #download_url))
+				index: index
+				toStream: stream.
+			stream lf ].
 
 	lastRow := dictionaries size + 1.
 	sumRow := lastRow + 1.
 
-	s << repo << self separator << self separator.
-	self resultPlatformColumnLetters do: [ :col |
-		s << '=SUMA(' << col << '2:' << col << '' << lastRow asString << ')'
-		<< self separator ].
-	self printRowSumOf: sumRow to: s
+	stream << repo << self separator << self separator.
+	self resultPlatformColumnLetters do: [ :columnLetter |
+		stream << '=SUMA(' << columnLetter << '2:' << columnLetter << lastRow asString << ')' << self separator ].
+	self printRowSumOf: sumRow to: stream
 ]
 
 { #category : 'processing' }
-OPDownloadStats class >> writeFromDictionary: dictionary index: i toStream: s [
-
-	| link fileName to csv |
-	link := dictionary at: #download_url.
-	fileName := dictionary at: #name.
-	to := String streamContents: [ :toTimestampStream |
-		      toTimestampStream << (fileName first: 10) << ' '.
-		      (fileName includes: $:)
-			      ifTrue: [
-			      toTimestampStream << (fileName copyFrom: 12 to: 19) ]
-			      ifFalse: [
-				      toTimestampStream << (fileName copyFrom: 12 to: 13) << ':'
-				      << (fileName copyFrom: 14 to: 15) << ':'
-				      << (fileName copyFrom: 16 to: 17) ] ].
-
-	csv := self getContentsOfLink: link.
+OPDownloadStats class >> writeFromDictionaries: dictionaries repo: repo toStream: stream [
 
 	self
+		writeFromDictionaries: dictionaries
+		repo: repo
+		csvProvider: [ :link | self getContentsOfLink: link ]
+		toStream: stream
+]
+
+{ #category : 'processing' }
+OPDownloadStats class >> writeFromDictionary: dictionary csv: csv index: index toStream: stream [
+
+	| toTimestamp |
+	toTimestamp := self timestampStringFromFileName: (dictionary at: #name).
+	self
 		writeCSV: csv
-		toTime: to
-		index: i
-		toStream: s
+		toTime: toTimestamp
+		index: index
+		toStream: stream
+]
+
+{ #category : 'processing' }
+OPDownloadStats class >> writeFromDictionary: dictionary index: index toStream: stream [
+
+	| csv |
+	csv := self getContentsOfLink: (dictionary at: #download_url).
+	self
+		writeFromDictionary: dictionary
+		csv: csv
+		index: index
+		toStream: stream
 ]
 
 { #category : 'processing' }
@@ -193,4 +217,13 @@ OPDownloadStats class >> writeItemsByLines: itemsByLines platform: platform toSt
 			       ifTrue: [ items third asInteger ]
 			       ifFalse: [ 0 ] ].
 	s << sum asString
+]
+
+{ #category : 'processing' }
+OPDownloadStats class >> writeSummaryFormulaForRepo: repo entryCount: entryCount toStream: stream [
+
+	| rowNumber |
+	rowNumber := (entryCount + 2) asString.
+	stream << '=''dls-' << repo << '.csv''!$A$' << rowNumber << ':$' << (Character value: $A charCode + self resultColumns) << '$'
+	<< rowNumber
 ]

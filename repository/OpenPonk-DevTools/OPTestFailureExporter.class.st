@@ -1,13 +1,13 @@
 "
-I am a utility that executes a specified test and gathers its execution context, including the stack trace, relevant class hierarchies, and associated MVC triads (Model-ViewModel-Controller). I export this gathered context as a formatted text report intended to be used as a prompt payload for Large Language Models (LLMs) to aid in debugging and code generation.
+A utility that executes a specified test and gathers its execution context, including the stack trace, relevant class hierarchies, and associated MVC triads (Model-ViewModel-Controller), formatted as a text report for debugging.
 
 Example:
 [[[
 | report |
-report := TestFailureExporter new 
-    runTest: OPMyFailingControllerTest 
-    selector: #testLayoutConfiguration.
-    
+report := OPTestFailureExporter new
+	runTest: OPMyFailingControllerTest
+	selector: #testLayoutConfiguration.
+
 Clipboard clipboardText: report.
 report inspect.
 ]]]
@@ -35,86 +35,95 @@ OPTestFailureExporter class >> resetCache [
     ExportedCache := Dictionary new.
 ]
 
-{ #category : 'adding' }
+{ #category : 'collecting' }
 OPTestFailureExporter >> addHierarchyOf: aClass [
-    | current |
-    current := aClass.
-    [ current notNil and: [ current name beginsWith: 'OP' ] ] whileTrue: [
-        (relevantClasses includes: current) ifFalse: [
-            relevantClasses add: current.
-            (current name includesSubstring: 'Controller') ifTrue: [ 
-                self tryAddMvcTriadFor: current ] ].
-        current := current superclass ].
+
+	| current |
+	current := aClass.
+	[ current isNotNil and: [ current name beginsWith: 'OP' ] ] whileTrue: [
+			(relevantClasses includes: current) ifFalse: [
+					relevantClasses add: current.
+					(current name includesSubstring: 'Controller') ifTrue: [ self tryAddMvcTriadFor: current ] ].
+			current := current superclass ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'collecting' }
 OPTestFailureExporter >> collectClassesFrom: aContext [
-    self addHierarchyOf: aContext receiver class.
-    self addHierarchyOf: aContext methodClass.
-    
-    (aContext receiver class name includesSubstring: 'Test') ifTrue: [ 
-        self tryAddMvcTriadForTargetOfTest ].
+
+	self addHierarchyOf: aContext receiver class.
+	self addHierarchyOf: aContext methodClass.
+	(aContext receiver class name includesSubstring: 'Test') ifTrue: [ self tryAddMvcTriadForTargetOfTest ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'exporting' }
 OPTestFailureExporter >> exportClassSide: aClass [
-    | classOutput hasChanges classDef |
-    (aClass isClassSide and: [ aClass methods isEmpty ]) ifTrue: [ ^ self ].
-    
-    classOutput := WriteStream on: String new.
-    hasChanges := false.
-    
-    classDef := aClass definitionString.
-    (self isChanged: classDef key: aClass name asString , '_def') ifTrue: [
-        classOutput nextPutAll: classDef; cr.
-        hasChanges := true ].
-        
-    aClass selectors do: [ :sel |
-        | source key |
-        source := (aClass sourceCodeAt: sel) asString.
-        (source includesSubstring: 'sharedGeneralizations at:') ifFalse: [
-            key := aClass name asString , '>>' , sel asString.
-            (self isChanged: source key: key) ifTrue: [
-                classOutput cr; nextPutAll: source; cr.
-                hasChanges := true ] ] ].
-                
-    hasChanges ifTrue: [
-        outputStream 
-            nextPutAll: classOutput contents; 
-            cr; nextPutAll: '---'; cr; cr ].
+
+	| classOutput hasChanges classDef |
+	(aClass isClassSide and: [ aClass methods isEmpty ]) ifTrue: [ ^ self ].
+
+	classOutput := WriteStream on: String new.
+	hasChanges := false.
+
+	classDef := aClass definitionString.
+	(self isChanged: classDef key: aClass name asString , '_def') ifTrue: [
+			classOutput nextPutAll: classDef.
+			classOutput cr.
+			hasChanges := true ].
+
+	aClass selectors do: [ :selector |
+			| source key |
+			source := (aClass sourceCodeAt: selector) asString.
+			(source includesSubstring: 'sharedGeneralizations at:') ifFalse: [
+					key := String streamContents: [ :stream | stream << aClass name asString << '>>' << selector asString ].
+					(self isChanged: source key: key) ifTrue: [
+							classOutput cr.
+							classOutput nextPutAll: source.
+							classOutput cr.
+							hasChanges := true ] ] ].
+
+	hasChanges ifFalse: [ ^ self ].
+	outputStream nextPutAll: classOutput contents.
+	outputStream cr.
+	outputStream nextPutAll: '---'.
+	outputStream cr.
+	outputStream cr
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'exporting' }
 OPTestFailureExporter >> exportClasses [
-    outputStream cr; nextPutAll: '=== CODE SELECTION (PARTS NOT UPLOADED BEFORE) ==='; cr; cr.
-    relevantClasses asArray do: [ :cls |
-        self exportClassSide: cls.
-        self exportClassSide: cls classSide ].
+
+	outputStream cr.
+	outputStream nextPutAll: '=== CODE SELECTION (PARTS NOT UPLOADED BEFORE) ==='.
+	outputStream cr.
+	outputStream cr.
+	relevantClasses asArray do: [ :eachClass |
+			self exportClassSide: eachClass.
+			self exportClassSide: eachClass classSide ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'exporting' }
 OPTestFailureExporter >> extractStackTrace [
-    | ctx stop |
-    ctx := exception signalerContext.
-    stop := false.
-    [ ctx isNil or: [ stop ] ] whileFalse: [
-        stop := self isStopContext: ctx.
-        self printContext: ctx.
-        self collectClassesFrom: ctx.
-        ctx := ctx sender ].
+
+	| context stop |
+	context := exception signalerContext.
+	stop := false.
+	[ context isNil or: [ stop ] ] whileFalse: [
+			stop := self isStopContext: context.
+			self printContext: context.
+			self collectClassesFrom: context.
+			context := context sender ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'exporting' }
 OPTestFailureExporter >> generateReport [
 
-	outputStream
-		nextPutAll: '=== EXCEPTION ===';
-		cr;
-		nextPutAll: exception description;
-		cr;
-		cr;
-		nextPutAll: '=== STACK TRACE & VARIABLES ===';
-		cr.
+	outputStream nextPutAll: '=== EXCEPTION ==='.
+	outputStream cr.
+	outputStream nextPutAll: exception description.
+	outputStream cr.
+	outputStream cr.
+	outputStream nextPutAll: '=== STACK TRACE & VARIABLES ==='.
+	outputStream cr.
 
 	self extractStackTrace.
 	self exportClasses
@@ -147,37 +156,35 @@ OPTestFailureExporter >> isStopContext: aContext [
 	^ sel = testCase selector or: [ sel = #setUp ]
 ]
 
-{ #category : 'private' }
+{ #category : 'exporting' }
 OPTestFailureExporter >> printContext: aContext [
-	outputStream
-		nextPutAll: '>> ';
-		nextPutAll: aContext printString;
-		cr;
-		nextPutAll: '   Receiver: ';
-		nextPutAll: aContext receiver class name;
-		cr.
-	aContext tempNames do: [ :tempName |
-		| val valString |
-		val := aContext tempNamed: tempName.
-		valString := [ val printString ]
-			on: Error
-			do: [ '<error printing object>' ].
-		outputStream
-			nextPutAll: '   ';
-			nextPutAll: tempName asString;
-			nextPutAll: ' = ';
-			nextPutAll: valString;
-			cr ].
+
+	outputStream nextPutAll: '>> '.
+	outputStream print: aContext.
+	outputStream cr.
+	outputStream nextPutAll: '   Receiver: '.
+	outputStream nextPutAll: aContext receiver class name.
+	outputStream cr.
+	aContext temporaryVariableNames do: [ :tempName |
+			| value valueString |
+			value := aContext tempNamed: tempName.
+			valueString := [ value printString ]
+				               on: Error
+				               do: [ '<error printing object>' ].
+			outputStream nextPutAll: '   '.
+			outputStream nextPutAll: tempName asString.
+			outputStream nextPutAll: ' = '.
+			outputStream nextPutAll: valueString.
+			outputStream cr ].
 	outputStream cr
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'running' }
 OPTestFailureExporter >> runTest: aTestClass selector: aSelector [
 
 	testCase := aTestClass selector: aSelector.
 	relevantClasses := Set new.
 	outputStream := WriteStream on: (String new: 2000).
-	self initialize.
 
 	[
 		[
@@ -192,7 +199,7 @@ OPTestFailureExporter >> runTest: aTestClass selector: aSelector [
 	^ outputStream contents
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'collecting' }
 OPTestFailureExporter >> tryAddMvcTriadFor: aControllerClass [
 
 	| viewModelClass modelClass |
@@ -208,11 +215,11 @@ OPTestFailureExporter >> tryAddMvcTriadFor: aControllerClass [
 	self addHierarchyOf: modelClass
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'collecting' }
 OPTestFailureExporter >> tryAddMvcTriadForTargetOfTest [
 
-	| ctrlClass |
-	(testCase respondsTo: #controllerClass) ifFalse: [ ^ self ].
-	ctrlClass := testCase controllerClass.
-	ctrlClass ifNotNil: [ self addHierarchyOf: ctrlClass ]
+	| controllerClass |
+	(testCase class canUnderstand: #controllerClass) ifFalse: [ ^ self ].
+	controllerClass := testCase controllerClass.
+	controllerClass ifNotNil: [ self addHierarchyOf: controllerClass ]
 ]

@@ -18,6 +18,12 @@ OPSycFileOutPackageTagCommand class >> fullBrowserMenuActivation [
 	^ CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClyTaggedClassGroup asCalypsoItemContext
 ]
 
+{ #category : 'execution' }
+OPSycFileOutPackageTagCommand >> configureFileouter: aFileouter [
+
+	tags do: [ :eachTag | eachTag classes do: [ :eachClass | aFileouter addFullClass: eachClass ] ]
+]
+
 { #category : 'accessing' }
 OPSycFileOutPackageTagCommand >> defaultMenuIconName [
 	^ #save
@@ -31,14 +37,15 @@ OPSycFileOutPackageTagCommand >> defaultMenuItemName [
 { #category : 'execution' }
 OPSycFileOutPackageTagCommand >> execute [
 
-	| filename |
-	filename := tags size = 1
-		            ifTrue: [ tags first name ]
-		            ifFalse: [ 'packagefileout' ].
+	^ Fileouter fileoutNamed: self fileoutFilename configureWith: [ :fileouter | self configureFileouter: fileouter ]
+]
 
-	^ Fileouter
-		  fileoutNamed: filename
-		  configureWith: [ :fileouter | tags do: [ :eachTag | eachTag classes do: [ :eachClass | fileouter addFullClass: eachClass ] ] ]
+{ #category : 'execution' }
+OPSycFileOutPackageTagCommand >> fileoutFilename [
+
+	^ tags size = 1
+		  ifTrue: [ tags first name ]
+		  ifFalse: [ 'packagefileout' ]
 ]
 
 { #category : 'execution' }

@@ -1,3 +1,6 @@
+"
+A lightweight test fixture object with writable slots used to verify slot mutation capture by OPMutationWatchdog.
+"
 Class {
 	#name : 'OPMutationWatchdogTestEntity',
 	#superclass : 'Object',
@@ -5,8 +8,8 @@ Class {
 		'name',
 		'isWeak'
 	],
-	#category : 'OpenPonk-DevTools-Watchdog',
-	#package : 'OpenPonk-DevTools',
+	#category : 'OpenPonk-DevTools-Tests-Watchdog',
+	#package : 'OpenPonk-DevTools-Tests',
 	#tag : 'Watchdog'
 }
 

@@ -113,8 +113,8 @@ OPMutationRecord >> stackTrace: aValue [
 OPMutationRecord >> summaryString [
 	"Answer a compact textual summary of this mutation record."
 
-	^ String streamContents: [ :s153 |
-			  s153 << '[' << timestamp asTime print24 << '] ' << (self isSuspicious
+	^ String streamContents: [ :stream |
+			  stream << '[' << timestamp asTime print24 << '] ' << (self isSuspicious
 				   ifTrue: [ '[SUSPICIOUS NAKED MUTATION] ' ]
 				   ifFalse: [ '[OK] ' ]) << targetClass << ' >> #' << slotName << ' (' << oldValue asString << ' -> ' << newValue asString
 			  << ')' << ' UI: ' << (uiPresenterClass ifNotNil: [ :theClass | theClass asString ] ifNil: [ 'none' ]) ]

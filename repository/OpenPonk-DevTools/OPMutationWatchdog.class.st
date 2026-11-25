@@ -8,7 +8,8 @@ Class {
 		'metaLink',
 		'records',
 		'isWatching',
-		'instrumentedMethods'
+		'instrumentedMethods',
+		'targetClasses'
 	],
 	#classVars : [
 		'Default'
@@ -23,7 +24,7 @@ OPMutationWatchdog class >> default [
 	^ Default ifNil: [ Default := self new ]
 ]
 
-{ #category : 'initialization' }
+{ #category : 'class initialization' }
 OPMutationWatchdog class >> reset [
 <script>
 	Default ifNotNil: [ Default stopWatching. Default := nil ]
@@ -56,10 +57,33 @@ OPMutationWatchdog >> captureWriteOn: anObject node: anAssignmentNode context: a
 		context: aContext)
 ]
 
-{ #category : 'reporting' }
-OPMutationWatchdog >> copyReportToClipboard [
-	"Backward compatible alias for exportSuspiciousReport."
-	^ self exportSuspiciousReport
+{ #category : 'accessing' }
+OPMutationWatchdog >> defaultTargetClasses [
+	"Answer model and diagram element classes to be monitored, excluding test packages, traits, and temporary feedback shapes."
+
+	| resultClasses monitoredPackages |
+	resultClasses := Set new.
+	monitoredPackages := Set new.
+	OPPluginRegistry default plugins do: [ :eachPlugin |
+			[
+				eachPlugin modelClass ifNotNil: [ :eachModelClass |
+					eachModelClass package ifNotNil: [ :eachPluginModelPackage | monitoredPackages add: eachPluginModelPackage ] ] ]
+				on: Error
+				do: [ :ignoredError | ignoredError return: nil ] ].
+
+	monitoredPackages do: [ :eachPackage |
+			resultClasses addAll: (eachPackage definedClasses select: [ :eachClass |
+					 eachClass isTrait not and: [ eachClass isTestCase not and: [ (eachClass inheritsFrom: OPDiagramElement) not ] ] ]) ].
+
+	self packageOrganizer packages
+		select: [ :eachPackage | (eachPackage name beginsWith: 'OpenPonk') and: [ (eachPackage name endsWith: '-Tests') not ] ]
+		thenDo: [ :eachPackage |
+				resultClasses addAll:
+					(eachPackage definedClasses select: [ :eachClass |
+						 eachClass isTrait not and: [ eachClass includesBehavior: OPDiagramElement ] ]) ].
+
+	resultClasses remove: OPInvisibleOnMouseShape ifAbsent: [ ].
+	^ (resultClasses reject: [ :eachClass | eachClass isObsolete ]) asOrderedCollection
 ]
 
 { #category : 'reporting' }
@@ -94,11 +118,12 @@ OPMutationWatchdog >> instrumentedMethods [ ^ instrumentedMethods
 { #category : 'testing' }
 OPMutationWatchdog >> isExternalTestContext: aContext [
 	"Answer whether the execution context belongs to an SUnit test case other than watchdog tests."
+
 	^ (aContext findContextSuchThat: [ :eachContext |
-		| receiver |
-		receiver := eachContext receiver.
-		(receiver class includesBehavior: TestCase)
-			and: [ (receiver class includesBehavior: OPMutationWatchdogTest) not ] ]) notNil
+			   | receiver |
+			   receiver := eachContext receiver.
+			   (receiver class includesBehavior: TestCase) and: [ (receiver class includesBehavior: OPMutationWatchdogTest) not ] ])
+		  isNotNil
 ]
 
 { #category : 'testing' }
@@ -139,31 +164,31 @@ OPMutationWatchdog >> isSimulationMethod: aCompiledMethod [
 
 { #category : 'testing' }
 OPMutationWatchdog >> isTransactedMethod: aCompiledMethod [
+
 	| methodClass selector |
 	methodClass := aCompiledMethod methodClass.
 	selector := aCompiledMethod selector.
-	^ (methodClass includesBehavior: OPCommand)
-		or: [ #( #inTransaction: #execute: ) includes: selector ]
+	(methodClass includesBehavior: OPCommand) ifTrue: [ ^ true ].
+	^ (methodClass includesBehavior: OPUndoManager) and: [
+		  #( #inTransaction: #inTransactionLabeled:do: #execute: #undo #redo ) includes: selector ]
 ]
 
 { #category : 'testing' }
 OPMutationWatchdog >> isTransientSlot: aSlotName onClass: aClass [
 	"Answer whether aSlotName represents a non-persisted or non-domain instance variable for aClass."
-	| slotSymbol diagramClass invisibleShapeClass |
+
+	| slotSymbol |
 	slotSymbol := aSlotName asSymbol.
-	(#( #announcer #announcers #events #changeSupport #subelements #parent #roassalShape #canvas #eventHandler #cache #cachedBounds #cachedEncompassingRectangle ) includes: slotSymbol)
-		ifTrue: [ ^ true ].
-	invisibleShapeClass := OPInvisibleOnMouseShape.
-	(aClass includesBehavior: invisibleShapeClass) ifTrue: [ ^ true ].
-	diagramClass := OPDiagram.
-	(aClass includesBehavior: diagramClass) ifTrue: [
+	(#( #announcer #announcers #events #changeSupport #subelements #parent #roassalShape #canvas #eventHandler #cache #cachedBounds
+	    #cachedEncompassingRectangle ) includes: slotSymbol) ifTrue: [ ^ true ].
+	(aClass includesBehavior: OPInvisibleOnMouseShape) ifTrue: [ ^ true ].
+	(aClass includesBehavior: OPDiagram) ifTrue: [
 		(#( #isOpen #isSelected #camera #bounds ) includes: slotSymbol) ifTrue: [ ^ true ] ].
-	(aClass includesBehavior: OPDiagramElement)
-		ifTrue: [
+	(aClass includesBehavior: OPDiagramElement) ifTrue: [
 			| persistentNames |
-			persistentNames := [ (aClass stonAllInstVarNames collect: [ :eachSlot | eachSlot asSymbol ]) asSet ]
-				on: Error
-				do: [ :error | Set new ].
+			persistentNames := [ aClass stonAllInstVarNames collect: #asSymbol as: Set ]
+				                   on: Error
+				                   do: [ :error | Set new ].
 			persistentNames ifNotEmpty: [ (persistentNames includes: slotSymbol) ifFalse: [ ^ true ] ] ].
 	^ false
 ]
@@ -187,43 +212,55 @@ OPMutationWatchdog >> newRecordFor: anObject slot: aSlotName variable: aVariable
 
 { #category : 'capturing' }
 OPMutationWatchdog >> populateContextInfoFrom: aContext into: aRecord [
-	| currentCtx stackTrace isTransacted isSim isInit |
+
+	| currentContext stackTrace isTransacted isSimulation isInitialization |
 	stackTrace := OrderedCollection new.
 	isTransacted := false.
-	isSim := false.
-	isInit := false.
+	isSimulation := false.
+	isInitialization := false.
 
-	currentCtx := aContext.
-	[ currentCtx notNil ] whileTrue: [
-		currentCtx method ifNotNil: [ :method |
-			stackTrace size < 100 ifTrue: [
-				stackTrace add: method methodClass name , ' >> #' , method selector ].
-			(isTransacted not and: [ self isTransactedMethod: method ]) ifTrue: [ isTransacted := true ].
-			(isSim not and: [ self isSimulationMethod: method ]) ifTrue: [ isSim := true ].
-			(isInit not and: [ self isInitializationMethod: method ]) ifTrue: [ isInit := true ] ].
-		currentCtx := currentCtx sender ].
+	currentContext := aContext.
+	[ currentContext isNotNil ] whileTrue: [
+			currentContext method ifNotNil: [ :method |
+					stackTrace size < 100 ifTrue: [
+						stackTrace add: (String streamContents: [ :stream | stream << method methodClass name << ' >> #' << method selector ]) ].
+					currentContext isBlockContext ifFalse: [
+							(isTransacted not and: [ self isTransactedMethod: method ]) ifTrue: [ isTransacted := true ].
+							(isSimulation not and: [ self isSimulationMethod: method ]) ifTrue: [ isSimulation := true ].
+							(isInitialization not and: [ self isInitializationMethod: method ]) ifTrue: [ isInitialization := true ] ] ].
+			currentContext := currentContext sender ].
 
 	aRecord
 		stackTrace: stackTrace asArray;
 		isTransacted: isTransacted;
-		isSimulation: isSim;
-		isInitialization: isInit
+		isSimulation: isSimulation;
+		isInitialization: isInitialization
 ]
 
 { #category : 'printing' }
 OPMutationWatchdog >> printReportOn: aStream [
 	"Format captured suspicious mutations into aStream."
+
 	| suspicious |
 	suspicious := self suspiciousRecords.
-	aStream << '=== OPMutationWatchdog Report ==='; cr.
-	aStream << 'Total records captured: ' << records size asString; cr.
-	aStream << 'Suspicious (naked UI) mutations: ' << suspicious size asString; cr; cr.
-	suspicious do: [ :rec |
-		aStream << rec summaryString; cr.
-		aStream << '  Call Stack (top 5):'; cr.
-		(rec stackTrace copyFrom: 1 to: (5 min: rec stackTrace size)) do: [ :frame |
-			aStream << '    - ' << frame; cr ].
-		aStream cr ]
+	aStream << '=== OPMutationWatchdog Report ==='.
+	aStream cr.
+	aStream << 'Total records captured: '.
+	aStream print: records size.
+	aStream cr.
+	aStream << 'Suspicious (naked UI) mutations: '.
+	aStream print: suspicious size.
+	aStream cr.
+	aStream cr.
+	suspicious do: [ :record |
+			aStream << record summaryString.
+			aStream cr.
+			aStream << '  Call Stack (top 5):'.
+			aStream cr.
+			(record stackTrace copyFrom: 1 to: (5 min: record stackTrace size)) do: [ :frame |
+					aStream << '    - ' << frame.
+					aStream cr ].
+			aStream cr ]
 ]
 
 { #category : 'capturing' }
@@ -246,34 +283,55 @@ OPMutationWatchdog >> report [
 { #category : 'printing' }
 OPMutationWatchdog >> reportForLlm [
 	"Answer a structured markdown report of suspicious uncommanded mutations formatted for LLM analysis with up to 100 stack frames."
+
 	| suspicious grouped |
 	suspicious := self suspiciousRecords.
-	suspicious ifEmpty: [ ^ '# OpenPonk Uncommanded Mutation Report
+	suspicious ifEmpty: [
+			^ '# OpenPonk Uncommanded Mutation Report
 No suspicious uncommanded mutations recorded.' ].
-	grouped := suspicious groupedBy: [ :rec | rec targetClass , ' >> #' , rec slotName asString ].
+	grouped := suspicious groupedBy: [ :record |
+		           String streamContents: [ :stream | stream << record targetClass << ' >> #' << record slotName asString ] ].
 	^ String streamContents: [ :stream |
-		stream nextPutAll: '# OpenPonk Uncommanded Mutation Report'; cr.
-		stream nextPutAll: 'Total suspicious mutations: '; nextPutAll: suspicious size asString; cr.
-		stream nextPutAll: 'Unique mutation sites: '; nextPutAll: grouped size asString; cr; cr.
-		grouped keysAndValuesDo: [ :targetKey :recordsList |
-			| sample filtered |
-			sample := recordsList first.
-			stream nextPutAll: '## '; nextPutAll: targetKey; cr.
-			stream nextPutAll: '- Occurrences: '; nextPutAll: recordsList size asString; cr.
-			stream nextPutAll: '- Sample value: '; nextPutAll: sample newValue asString; cr.
-			stream nextPutAll: '- UI origin: '; nextPutAll: (sample uiPresenterClass ifNil: [ 'none' ]); cr.
-			stream nextPutAll: '- Target identity: '; nextPutAll: sample targetIdentity asString; cr.
-			stream nextPutAll: '- Stack Trace (full up to 100 frames):'; cr.
-			filtered := sample stackTrace reject: [ :frame |
-				(frame includesSubstring: 'MetaLink')
-					or: [ (frame includesSubstring: 'OPMutationWatchdog')
-					or: [ (frame includesSubstring: 'ReflectiveMethod')
-					or: [ (frame includesSubstring: 'WorldState')
-					or: [ (frame includesSubstring: 'MorphicEvent')
-					or: [ frame includesSubstring: 'OSWindow' ] ] ] ] ] ].
-			filtered do: [ :frame |
-				stream nextPutAll: '    - '; nextPutAll: frame; cr ].
-			stream cr ] ]
+			  stream nextPutAll: '# OpenPonk Uncommanded Mutation Report'.
+			  stream cr.
+			  stream nextPutAll: 'Total suspicious mutations: '.
+			  stream print: suspicious size.
+			  stream cr.
+			  stream nextPutAll: 'Unique mutation sites: '.
+			  stream print: grouped size.
+			  stream cr.
+			  stream cr.
+			  grouped keysAndValuesDo: [ :targetKey :recordsList |
+					  | sample filtered |
+					  sample := recordsList first.
+					  stream nextPutAll: '## '.
+					  stream nextPutAll: targetKey.
+					  stream cr.
+					  stream nextPutAll: '- Occurrences: '.
+					  stream print: recordsList size.
+					  stream cr.
+					  stream nextPutAll: '- Sample value: '.
+					  stream nextPutAll: sample newValue asString.
+					  stream cr.
+					  stream nextPutAll: '- UI origin: '.
+					  stream nextPutAll: (sample uiPresenterClass ifNil: [ 'none' ]).
+					  stream cr.
+					  stream nextPutAll: '- Target identity: '.
+					  stream nextPutAll: sample targetIdentity asString.
+					  stream cr.
+					  stream nextPutAll: '- Stack Trace (full up to 100 frames):'.
+					  stream cr.
+					  filtered := sample stackTrace reject: [ :frame |
+							              (frame includesSubstring: 'MetaLink') or: [
+									              (frame includesSubstring: 'OPMutationWatchdog') or: [
+											              (frame includesSubstring: 'ReflectiveMethod') or: [
+													              (frame includesSubstring: 'WorldState') or: [
+														              (frame includesSubstring: 'MorphicEvent') or: [ frame includesSubstring: 'OSWindow' ] ] ] ] ] ].
+					  filtered do: [ :frame |
+							  stream nextPutAll: '    - '.
+							  stream nextPutAll: frame.
+							  stream cr ].
+					  stream cr ] ]
 ]
 
 { #category : 'actions' }
@@ -289,76 +347,63 @@ OPMutationWatchdog >> shouldIgnoreWriteOn: anObject slot: aSlotName context: aCo
 { #category : 'controlling' }
 OPMutationWatchdog >> startWatching [
 	"Install metalink on assignment nodes of non-transient slots for each target class."
-	| targetClasses |
+
 	self stopWatching.
 	self reset.
 	metaLink := self buildMetaLink.
-	targetClasses := self targetClasses.
-	targetClasses do: [ :cls |
-		cls methods do: [ :method |
-			method ast assignmentNodes do: [ :assignNode |
-				(assignNode variable isInstanceVariable and: [
-					(self isTransientSlot: assignNode variable name onClass: cls) not ]) ifTrue: [
-					assignNode link: metaLink.
-					instrumentedMethods add: (cls -> method selector) ] ] ] ].
+	self targetClasses do: [ :eachClass |
+			eachClass methods do: [ :eachMethod |
+					(self writesAnyInstanceVariable: eachMethod in: eachClass) ifTrue: [
+							eachMethod ast assignmentNodes do: [ :assignNode |
+									(assignNode variable isInstanceVariable and: [ (self isTransientSlot: assignNode variable name onClass: eachClass) not ])
+										ifTrue: [
+												assignNode link: metaLink.
+												instrumentedMethods add: eachClass -> eachMethod selector ] ] ] ] ].
 	isWatching := true
 ]
 
 { #category : 'controlling' }
 OPMutationWatchdog >> stopWatching [
-	"Uninstall metalink and force clean recompilation of all instrumented methods."
+	"Uninstall metalink, recompile methods that may retain reflective or trait-dict remnants, and rebuild pragma cache."
+
+	| hadInstrumented |
 	isWatching := false.
+	hadInstrumented := instrumentedMethods isNotEmpty.
 	metaLink ifNotNil: [
-		metaLink uninstall.
-		metaLink := nil ].
+			metaLink uninstall.
+			metaLink := nil ].
 	instrumentedMethods do: [ :assoc |
-		| cls sel |
-		cls := assoc key.
-		sel := assoc value.
-		(cls includesSelector: sel) ifTrue: [
-			(cls >> sel) recompile ] ].
+			| targetClass selector |
+			targetClass := assoc key.
+			selector := assoc value.
+			(targetClass includesSelector: selector) ifTrue: [
+					| compiledMethod |
+					compiledMethod := targetClass >> selector.
+					((compiledMethod isKindOf: ReflectiveMethod) or: [
+						 compiledMethod reflectiveMethod isNotNil or: [ targetClass hasTraitComposition ] ]) ifTrue: [ compiledMethod recompile ] ] ].
 	instrumentedMethods removeAll.
+	hadInstrumented ifTrue: [ Pragma buildCache ]
 ]
 
 { #category : 'accessing' }
 OPMutationWatchdog >> suspiciousRecords [
 	"Return all mutations that occurred outside a transaction and are not whitelisted."
-	^ records select: [ :each |
-		each isTransacted not
-			and: [ each isSimulation not
-			and: [ each isInitialization not ] ] ]
+
+	^ records select: #isSuspicious
 ]
 
 { #category : 'accessing' }
 OPMutationWatchdog >> targetClasses [
-	"Answer model and diagram element classes to be monitored, excluding temporary feedback shapes."
+	"Answer the classes monitored by this watchdog, defaulting to all discovered OpenPonk models and diagram elements."
 
-	| resultClasses monitoredPackages invisibleShapeClass |
-	resultClasses := OrderedCollection new.
-	monitoredPackages := Set new.
-	monitoredPackages addAll: ((self packageOrganizer packages select: [ :eachPackage |
-			  (eachPackage name beginsWith: 'OpenPonk') and: [ eachPackage name includesSubstring: '-Models' ] ]) collect: [
-			 :eachModelPackage | eachModelPackage ]).
+	^ targetClasses ifNil: [ self defaultTargetClasses ]
+]
 
-	OPPluginRegistry default plugins do: [ :eachPlugin |
-			[
-				eachPlugin modelClass ifNotNil: [ :eachModelClass |
-					eachModelClass package ifNotNil: [ :eachPluginModelPackage | monitoredPackages add: eachPluginModelPackage ] ] ]
-				on: Error
-				do: [ :ignoredError |  ] ].
+{ #category : 'accessing' }
+OPMutationWatchdog >> targetClasses: aCollection [
+	"Configure an explicit collection of classes to monitor, or nil to restore automatic discovery."
 
-	monitoredPackages do: [ :eachPackage |
-			resultClasses addAll: (eachPackage definedClasses select: [ :eachClass |
-					 eachClass isTestCase not and: [ (eachClass inheritsFrom: OPDiagramElement) not ] ]) ].
-
-	(self packageOrganizer packages select: [ :eachPackage | eachPackage name beginsWith: 'OpenPonk' ]) do: [ :eachPackage |
-		resultClasses addAll: (eachPackage definedClasses select: [ :eachClass | eachClass includesBehavior: OPDiagramElement ]) ].
-
-	resultClasses add: OPMutationWatchdogTestEntity.
-
-	invisibleShapeClass := OPInvisibleOnMouseShape.
-	resultClasses removeAllFoundIn: { invisibleShapeClass }.
-	^ (resultClasses reject: [ :eachClass | eachClass isObsolete ]) asSet asOrderedCollection
+	targetClasses := aCollection
 ]
 
 { #category : 'capturing' }
@@ -366,4 +411,13 @@ OPMutationWatchdog >> targetIdentityFor: anObject [
 	^ [ anObject uuid asString ]
 		on: Error
 		do: [ anObject identityHash asString ]
+]
+
+{ #category : 'testing' }
+OPMutationWatchdog >> writesAnyInstanceVariable: aCompiledMethod in: aClass [
+
+	| instanceSize |
+	instanceSize := aClass instSize.
+	instanceSize = 0 ifTrue: [ ^ false ].
+	^ (1 to: instanceSize) anySatisfy: [ :slotIndex | aCompiledMethod writesField: slotIndex ]
 ]

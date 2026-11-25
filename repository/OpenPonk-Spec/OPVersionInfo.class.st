@@ -130,8 +130,8 @@ OPVersionInfo >> refreshInfo [
 	version needsDownloadInfo ifTrue: [ ^ self ].
 	releaseName
 		label: version releaseName;
-		url: 'https://github.com/OpenPonk/' , version repositoryName
-			, '/releases/tag/' , version releaseName.
+		url: (String streamContents: [ :stream |
+					 stream << 'https://github.com/OpenPonk/' << version repositoryName << '/releases/tag/' << version releaseName ]).
 	buildDate label: version buildDate asLocal asStringYMDHM
 ]
 

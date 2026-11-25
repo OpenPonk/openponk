@@ -116,27 +116,29 @@ OPNotationStylePresenter >> items [
 
 { #category : 'loading' }
 OPNotationStylePresenter >> loadItems [
+
 	| defaultSheet effectiveSheet userRules defaultRules effectiveRules defaultFill effectiveFill isOverridden allTypeNames |
 	plugin ifNil: [
-		items := OrderedCollection new.
-		^ self ].
+			items := OrderedCollection new.
+			treeTable ifNotNil: [ treeTable roots: items ].
+			^ self ].
 	defaultSheet := plugin defaultStyleSheet.
 	effectiveSheet := plugin styleSheet.
 	userRules := OPNotationStyleRegistry default rulesForPlugin: plugin.
 	allTypeNames := (defaultSheet rules keys asSet union: userRules keys asSet) asArray sorted.
 	items := allTypeNames collect: [ :eachTypeName |
-		defaultRules := defaultSheet ruleForType: eachTypeName.
-		effectiveRules := effectiveSheet ruleForType: eachTypeName.
-		defaultFill := defaultRules at: #fillColor ifAbsent: [ Color white ].
-		effectiveFill := effectiveRules at: #fillColor ifAbsent: [ defaultFill ].
-		isOverridden := (userRules at: eachTypeName ifAbsent: [ Dictionary new ]) includesKey: #fillColor.
-		OPNotationStyleItem new
-			typeName: eachTypeName;
-			property: #fillColor;
-			defaultColor: defaultFill;
-			color: effectiveFill;
-			isOverridden: isOverridden;
-			yourself ].
+			         defaultRules := defaultSheet ruleForType: eachTypeName.
+			         effectiveRules := effectiveSheet ruleForType: eachTypeName.
+			         defaultFill := defaultRules at: #fillColor ifAbsent: [ Color white ].
+			         effectiveFill := effectiveRules at: #fillColor ifAbsent: [ defaultFill ].
+			         isOverridden := (userRules at: eachTypeName ifAbsent: [ Dictionary new ]) includesKey: #fillColor.
+			         OPNotationStyleItem new
+				         typeName: eachTypeName;
+				         property: #fillColor;
+				         defaultColor: defaultFill;
+				         color: effectiveFill;
+				         isOverridden: isOverridden;
+				         yourself ].
 	treeTable ifNotNil: [ treeTable roots: items ]
 ]
 

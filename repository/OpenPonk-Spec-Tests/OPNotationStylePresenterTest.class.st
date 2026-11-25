@@ -55,6 +55,44 @@ OPNotationStylePresenterTest >> testColorIconForReturnsValidForm [
 ]
 
 { #category : 'tests' }
+OPNotationStylePresenterTest >> testDefaultsFallbackRulesAndButtonsWithoutSelection [
+
+	| freshItem nilWindow borderOnlyItem kindItem |
+	freshItem := OPNotationStyleItem new.
+	self deny: freshItem isOverridden description: 'Fresh style item must default isOverridden to false'.
+	self assert: presenter plugin identicalTo: nil.
+	self assert: (presenter itemForType: 'Missing') identicalTo: nil.
+
+	nilWindow := SpWindowPresenter new.
+	presenter initializeWindow: nilWindow.
+	self assert: nilWindow title equals: 'Notation Style Settings'.
+
+	presenter plugin: plugin.
+	self assert: presenter plugin identicalTo: plugin.
+
+	OPNotationStyleRegistry default
+		atPlugin: plugin
+		type: 'CustomBorderOnly'
+		set: #borderColor
+		to: Color black.
+	presenter loadItems.
+	borderOnlyItem := presenter itemForType: 'CustomBorderOnly'.
+	self assert: borderOnlyItem defaultColor equals: Color white.
+	self assert: borderOnlyItem color equals: Color white.
+	self deny: borderOnlyItem isOverridden description: 'Rule without fillColor must not mark fillColor as overridden'.
+
+	kindItem := presenter itemForType: 'Kind'.
+	presenter changeColorForType: 'Kind' to: Color red.
+	presenter treeTable selectItem: kindItem.
+	(presenter instVarNamed: #resetButton) click.
+	self assert: (presenter colorForType: 'Kind') equals: Color paleGreen.
+
+	presenter treeTable unselectAll.
+	(presenter instVarNamed: #changeColorButton) click.
+	self assert: (presenter colorForType: 'Kind') equals: Color paleGreen
+]
+
+{ #category : 'tests' }
 OPNotationStylePresenterTest >> testItemsLoadedFromPlugin [
 
 	presenter plugin: plugin.
@@ -74,6 +112,18 @@ OPNotationStylePresenterTest >> testResetTypeRestoresDefaultColor [
 	presenter changeColorForType: 'Kind' to: Color red.
 	presenter resetType: 'Kind'.
 	self assert: (presenter colorForType: 'Kind') equals: Color paleGreen
+]
+
+{ #category : 'tests' }
+OPNotationStylePresenterTest >> testSettingNilPluginClearsItemsAndTreeTable [
+
+	presenter plugin: plugin.
+	self denyEmpty: presenter items.
+	self denyEmpty: presenter treeTable roots.
+
+	presenter plugin: nil.
+	self assertEmpty: presenter items.
+	self assertEmpty: presenter treeTable roots
 ]
 
 { #category : 'tests' }

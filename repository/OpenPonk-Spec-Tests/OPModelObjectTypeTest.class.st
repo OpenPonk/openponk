@@ -41,6 +41,35 @@ OPModelObjectTypeTest >> testModelObjectTypeComparisonAndPrinting [
 ]
 
 { #category : 'tests' }
+OPModelObjectTypeTest >> testTypeTreeNodesComparisonAndRootOrdering [
+
+	| subKind subRole classWithKind classWithRole simpleNote rootNode anotherRoot classNode noteNode kindLeaf |
+	subKind := OPModelObjectType named: 'Kind'.
+	subRole := OPModelObjectType named: 'Role'.
+	classWithKind := OPModelObjectType named: 'Class' withSubtype: subKind.
+	classWithRole := OPModelObjectType named: 'Class' withSubtype: subRole.
+	simpleNote := OPModelObjectType named: 'Note'.
+	rootNode := OPModelObjectTypeRootNode withChildrenFromTypes: {
+			            classWithKind.
+			            classWithRole.
+			            simpleNote }.
+	anotherRoot := OPModelObjectTypeRootNode new.
+	classNode := rootNode children detect: [ :each | each name = 'Class' ].
+	noteNode := rootNode children detect: [ :each | each name = 'Note' ].
+	kindLeaf := classNode children detect: [ :each | each name = 'Kind' ].
+
+	self assert: rootNode < classNode description: 'Root node must sort before its child'.
+	self deny: classNode < rootNode description: 'Non-root node must not sort before root node'.
+	self deny: rootNode < rootNode description: 'Root node comparison must be irreflexive'.
+	self deny: rootNode < anotherRoot description: 'Root node must not sort before another root node'.
+	self assert: rootNode <= rootNode description: 'Root node must be <= itself'.
+	self assert: rootNode >= rootNode description: 'Root node must be >= itself'.
+	self assert: classNode < noteNode description: 'Sibling Class must sort before Note'.
+	self assert: noteNode < kindLeaf description: 'Shallower Note must sort before deeper Kind leaf'.
+	self deny: kindLeaf < noteNode description: 'Deeper Kind leaf must not sort before shallower Note'
+]
+
+{ #category : 'tests' }
 OPModelObjectTypeTest >> testTypeTreeNodesHierarchyAndMatching [
 	| subKind subRole classWithKind classWithRole simpleNote rootNode classNode |
 	subKind := OPModelObjectType named: 'Kind'.

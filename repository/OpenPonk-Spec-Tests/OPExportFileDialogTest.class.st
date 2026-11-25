@@ -11,8 +11,11 @@ Class {
 
 { #category : 'tests' }
 OPExportFileDialogTest >> testExportBlockExecutedWhenFileSelected [
-	| mockPresenter executed tempFile storedAction |
+
+	| mockPresenter executed tempFile storedAction capturedNotification expectedNotification |
 	executed := false.
+	storedAction := nil.
+	capturedNotification := nil.
 	tempFile := FileSystem memory root / 'test.txt'.
 
 	mockPresenter := Mock new.
@@ -20,29 +23,33 @@ OPExportFileDialogTest >> testExportBlockExecutedWhenFileSelected [
 	mockPresenter stub title: Any.
 	mockPresenter stub extensions: Any named: Any.
 	mockPresenter stub nameText: Any.
-	(mockPresenter stub okAction: Any) will: [ :action |
-		storedAction := action isBlock
-			ifTrue: [ action ]
-			ifFalse: [
-				(action respondsTo: #arguments)
-					ifTrue: [ action arguments first ]
-					ifFalse: [ action ] ] ].
+	(mockPresenter stub okAction: Any) will: [ :action | storedAction := action ].
 	mockPresenter stub openModal will: [ storedAction value: tempFile ].
 
 	[
 		[
 			OPExportFileDialog
-				exportBlock: [ executed := true. 'sample content' ]
+				exportBlock: [
+						executed := true.
+						'sample content' ]
 				defaultFileName: 'test.txt'
 				extensions: #( txt )
 				named: 'Text files'
-				title: 'Export Text'
-		] on: ProvideAnswerNotification do: [ :notification | notification resume: true ].
+				title: 'Export Text' ]
+			on: ProvideAnswerNotification
+			do: [ :notification |
+					capturedNotification := notification messageText.
+					notification resume: true ].
 
+		expectedNotification := String streamContents: [ :stream |
+				                        stream << 'Exported to ' << tempFile pathString.
+				                        stream cr.
+				                        stream cr.
+				                        stream << 'Click to open location' ].
 		self assert: executed description: 'Export block must be executed when file is chosen'.
 		self assert: tempFile exists description: 'Export file must be created'.
-		self assert: tempFile contents equals: 'sample content'
-	] ensure: [ tempFile ensureDelete ]
+		self assert: tempFile contents equals: 'sample content'.
+		self assert: capturedNotification equals: expectedNotification ] ensure: [ tempFile ensureDelete ]
 ]
 
 { #category : 'tests' }
@@ -68,6 +75,34 @@ OPExportFileDialogTest >> testExportBlockNotExecutedWhenDialogCanceled [
 	] on: ProvideAnswerNotification do: [ :notification | notification resume: true ].
 
 	self deny: executed description: 'Export block must not be executed when dialog is dismissed without confirmation'
+]
+
+{ #category : 'tests' }
+OPExportFileDialogTest >> testExportImageDialogLayoutAndInvalidZoomFallback [
+
+	| dialog window capturedFile capturedZoom tempFile |
+	dialog := OPExportImageDialog new.
+	self assert: dialog defaultLayout class identicalTo: SpBoxLayout.
+
+	window := dialog open.
+	[
+		self assert: dialog zoomText adapter isNotNil description: 'Open export image dialog must build zoomText in its layout'.
+		dialog zoomText text: '12a345'.
+		self assert: dialog zoomText text equals: '1234'.
+		self assert: dialog zoomText adapter widget getText asString equals: '1234' ] ensure: [ window close ].
+
+	capturedFile := nil.
+	capturedZoom := nil.
+	tempFile := FileSystem memory root / 'diagram.png'.
+	dialog okAction: [ :file :zoom |
+			capturedFile := file.
+			capturedZoom := zoom ].
+	dialog stub selectedEntry willReturn: tempFile.
+	dialog zoomText text: 'abc'.
+	self assert: dialog zoomText text equals: ''.
+	dialog confirmed.
+	self assert: capturedFile equals: tempFile.
+	self assert: capturedZoom equals: RSCamera new scale
 ]
 
 { #category : 'tests' }

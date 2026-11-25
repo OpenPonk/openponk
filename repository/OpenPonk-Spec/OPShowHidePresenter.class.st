@@ -56,9 +56,8 @@ OPShowHidePresenter >> initializePresenters [
 OPShowHidePresenter >> initializeWindow: aWindow [
 
 	super initializeWindow: aWindow.
-	aWindow title:
-		'Show / Hide Elements in ' , diagramController diagramElement name
-		, ' - OpenPonk'.
+	aWindow title: (String streamContents: [ :stream |
+			 stream << 'Show / Hide Elements in ' << diagramController diagramElement name << ' - OpenPonk' ]).
 	aWindow whenFocusReceivedDo: [ self refreshCurrentPage ].
 	aWindow windowIcon: OPCoreIcons openponkIcon
 ]

@@ -5,7 +5,6 @@ Class {
 	#name : 'OPDiagramExplorerTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'activeProject',
 		'containerModel',
 		'nodeModel1',
 		'nodeModel2',
@@ -26,7 +25,8 @@ OPDiagramExplorerTest >> explorer [ ^ explorer
 
 { #category : 'running' }
 OPDiagramExplorerTest >> setUp [
-	| diagramElement testCanvas |
+
+	| activeProject diagramElement testCanvas |
 	super setUp.
 	activeProject := OPProject new.
 	containerModel := OPTestContainerModel new.
@@ -57,7 +57,9 @@ OPDiagramExplorerTest >> setUp [
 	projectController addDiagramController: diagramController.
 	diagramController model: containerModel.
 	diagramController diagramElement: diagramElement.
-	diagramController canvasPresenter: (OPCanvasPresenter new canvas: testCanvas; yourself).
+	diagramController canvasPresenter: (OPCanvasPresenter new
+			 canvas: testCanvas;
+			 yourself).
 
 	diagramController showInDiagramModel: nodeModel1.
 	diagramController showInDiagramModel: nodeModel2.
@@ -88,6 +90,23 @@ OPDiagramExplorerTest >> testHideAllElementsExecutesInUndoTransaction [
 	initialCommandsCount := diagramController undoManager undoStack size.
 	explorer hideAllElements.
 	self assert: diagramController undoManager undoStack size equals: initialCommandsCount + 1
+]
+
+{ #category : 'tests' }
+OPDiagramExplorerTest >> testHideAndShowElementsNoOpOnEmptyOrHiddenCollections [
+
+	| initialUndoCount hiddenNode |
+	initialUndoCount := undoManager undoStack size.
+	hiddenNode := OPTestEntityModel new.
+	hiddenNode instVarNamed: #uuid put: UUID new.
+	containerModel add: hiddenNode.
+
+	explorer hideElements: #(  ).
+	explorer hideElements: { hiddenNode }.
+	explorer showElements: #(  ).
+
+	self assert: undoManager undoStack size equals: initialUndoCount.
+	self assert: diagramController controllers size equals: 3
 ]
 
 { #category : 'tests' }

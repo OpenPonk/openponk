@@ -21,7 +21,7 @@ OPModelObjectTypeRootNode class >> withChildrenFromTypes: aCollectionOfTypes [
 OPModelObjectTypeRootNode >> < aComparable [
 	"Answer whether the receiver is less than the argument."
 
-	^ true
+	^ aComparable parent isNotNil
 ]
 
 { #category : 'accessing' }

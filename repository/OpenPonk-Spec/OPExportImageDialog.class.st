@@ -14,25 +14,6 @@ Class {
 	#tag : 'Dialogs'
 }
 
-{ #category : 'layout' }
-OPExportImageDialog class >> defaultLayout [
-
-	^ SpBoxLayout newTopToBottom
-		  add: (SpPanedLayout newLeftToRight
-				   positionOfSlider: 200;
-				   add: #bookmarksTreeTable;
-				   add: #fileNavigationSystem;
-				   yourself);
-		  add: (SpBoxLayout newLeftToRight
-				   add: SpNullPresenter new;
-				   add: #zoomLabel expand: false;
-				   add: #zoomText width: 30;
-				   add: #zoomPercentageLabel expand: false;
-				   yourself)
-		  expand: false;
-		  yourself
-]
-
 { #category : 'actions' }
 OPExportImageDialog >> confirmed [
 
@@ -54,6 +35,21 @@ OPExportImageDialog >> connectPresenters [
 	self initializeZoom
 ]
 
+{ #category : 'layout' }
+OPExportImageDialog >> defaultLayout [
+
+	^ SpBoxLayout newTopToBottom
+		  add: super defaultLayout;
+		  add: (SpBoxLayout newLeftToRight
+				   add: SpNullPresenter new;
+				   add: zoomLabel expand: false;
+				   add: zoomText width: 30;
+				   add: zoomPercentageLabel expand: false;
+				   yourself)
+		  expand: false;
+		  yourself
+]
+
 { #category : 'initialization' }
 OPExportImageDialog >> initializePresenters [
 
@@ -68,10 +64,13 @@ OPExportImageDialog >> initializeZoom [
 
 	zoomText
 		text: '100';
-		whenTextChangedDo: [ :text | 
-			| digits |
-			digits := text select: #isDigit.
-			zoomText text: (digits first: (4 min: digits size)) ]
+		whenTextChangedDo: [ :text |
+				| digits sanitized |
+				digits := text select: #isDigit.
+				sanitized := digits first: (4 min: digits size).
+				sanitized = text ifFalse: [
+							zoomText property: #text rawValue: sanitized.
+							zoomText withAdapterDo: [ :zoomAdapter | zoomAdapter widget setText: sanitized ] ] ]
 ]
 
 { #category : 'accessing' }

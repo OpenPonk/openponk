@@ -20,6 +20,12 @@ OPShowHideSelectionChanged class >> elements: aCollection [
 ]
 
 { #category : 'accessing' }
+OPShowHideSelectionChanged >> elements [
+
+	^ elements
+]
+
+{ #category : 'accessing' }
 OPShowHideSelectionChanged >> elements: aCollection [ 
 	elements := aCollection
 ]

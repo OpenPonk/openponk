@@ -125,12 +125,13 @@ OPShowHidePresenterTest >> testShowHidePresenterPagesInitialization [
 { #category : 'tests' }
 OPShowHidePresenterTest >> testShowHidePresenterWindowAndTabSwitching [
 
-	| presenter notebook cherryPick typesPresenter |
+	| presenter notebook cherryPick typesPresenter expectedTitle |
 	presenter := OPShowHidePresenter on: diagramController.
 	self assert: presenter defaultKeyboardFocus identicalTo: presenter.
 
 	window := presenter open.
-	self assert: window title equals: 'Show / Hide Elements in ' , diagram name , ' - OpenPonk'.
+	expectedTitle := String streamContents: [ :stream | stream << 'Show / Hide Elements in ' << diagram name << ' - OpenPonk' ].
+	self assert: window title equals: expectedTitle.
 	notebook := presenter instVarNamed: #notebook.
 	self assert: notebook pages size equals: 2.
 	cherryPick := notebook selectedPage activePresenter.
@@ -143,4 +144,50 @@ OPShowHidePresenterTest >> testShowHidePresenterWindowAndTabSwitching [
 	typesPresenter := notebook selectedPage activePresenter.
 	self assert: typesPresenter class identicalTo: OPTypesShowHidePresenter.
 	self denyEmpty: typesPresenter selectedItems
+]
+
+{ #category : 'tests' }
+OPShowHidePresenterTest >> testShowHideSelectionChangedExposesElements [
+
+	| selectedAnnouncement unselectedAnnouncement |
+	selectedAnnouncement := OPShowHideElementsSelected elements: { entityA }.
+	unselectedAnnouncement := OPShowHideElementsUnselected elements: { entityB }.
+
+	self assert: selectedAnnouncement elements equals: { entityA }.
+	self assert: unselectedAnnouncement elements equals: { entityB }
+]
+
+{ #category : 'tests' }
+OPShowHidePresenterTest >> testTabContentPresenterColumnCallbacksSearchAndCleanBlockSubscription [
+
+	| cherryPick typesPresenter viewModelA viewModelB rootTypeNode subscription tree checkBoxColumn searchBlock |
+	viewModelA := projectController viewModelRegistry viewModelFor: entityA.
+	viewModelB := projectController viewModelRegistry viewModelFor: entityB.
+	cherryPick := OPCherryPickShowHidePresenter on: diagramController.
+	typesPresenter := OPTypesShowHidePresenter on: diagramController.
+	rootTypeNode := typesPresenter initialRoots first.
+
+	self assert: (typesPresenter iconFor: rootTypeNode) identicalTo: nil.
+
+	subscription := cherryPick whenSelectionChangedDo: [ :announcement | announcement elements ].
+	[ self assert: subscription subscriber identicalTo: cherryPick ] ensure: [ cherryPick announcer removeSubscription: subscription ].
+
+	tree := cherryPick instVarNamed: #tree.
+	checkBoxColumn := tree columns first columns first.
+	checkBoxColumn onActivation value: viewModelB.
+	self
+		assert: (diagramController hasControllerForModel: entityB)
+		description: 'Activating checkbox column must show entityB in diagram'.
+	checkBoxColumn onDeactivation value: viewModelA.
+	self
+		deny: (diagramController hasControllerForModel: entityA)
+		description: 'Deactivating checkbox column must hide entityA from diagram'.
+
+	searchBlock := tree instVarNamed: #searchBlock.
+	self
+		assert: (searchBlock value: viewModelA value: (cherryPick nameFor: viewModelA) asString trimBoth asLowercase)
+		description: 'Search matching block must match element name case-insensitively'.
+	self
+		deny: (searchBlock value: viewModelA value: 'nonexistent-search-pattern-xyz')
+		description: 'Search matching block must reject unrelated patterns'
 ]

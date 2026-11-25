@@ -14,26 +14,13 @@ Class {
 	#tag : 'Dialogs'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 OPVersionComparisonInfoTest class >> urlFromLink: aLinkPresenter [
-	| act closure |
-	act := aLinkPresenter action.
-	act ifNil: [ ^ nil ].
-	closure := act isClosure
-		ifTrue: [ act ]
-		ifFalse: [
-			(act respondsTo: #value)
-				ifTrue: [ act value ]
-				ifFalse: [ act ] ].
-	(closure respondsTo: #basicSize) ifTrue: [
-		1 to: closure basicSize do: [ :i |
-			| val |
-			val := closure basicAt: i.
-			val isString ifTrue: [ ^ val ] ] ].
-	(closure respondsTo: #outerContext) ifTrue: [
-		closure outerContext ifNotNil: [ :ctx |
-			(ctx hasTemporaryVariableNamed: #aString)
-				ifTrue: [ ^ ctx tempNamed: #aString ] ] ].
+
+	| action |
+	action := aLinkPresenter action.
+	action ifNil: [ ^ nil ].
+	(action isClosure and: [ action numCopiedValues >= 1 ]) ifTrue: [ ^ action copiedValueAt: 1 ].
 	^ nil
 ]
 
@@ -186,6 +173,76 @@ OPVersionComparisonInfoTest >> testFetchVersionInfoAbortsWhenClosedOrSupersededW
 		self assert: failureCount equals: 1 ] ensure: [
 			presenter cancelLoading.
 			window ifNotNil: [ window close ] ]
+]
+
+{ #category : 'tests' }
+OPVersionComparisonInfoTest >> testGuardBranchesForClosedStaleGenerationAndNightlyCancellation [
+
+	| unknownVersion presenter window releaseVer nightlyVer lastReleasePresenter lastNightlyPresenter mockVersion releaseCalled successCount failureCount generationBefore |
+	unknownVersion := OPVersion new
+		                  repositoryName: OPVersion unknownRepositoryName;
+		                  yourself.
+	OPVersion instVarNamed: #current put: unknownVersion.
+
+	presenter := OPVersionComparisonInfo newApplication: SpApplication defaultApplication.
+	window := presenter asWindow.
+	[
+		window buildWithSpecLayout: presenter layout.
+		releaseVer := OPVersion new
+			              repositoryName: 'openponk';
+			              releaseName: 'v2.0.0';
+			              buildDate: DateAndTime now;
+			              yourself.
+		nightlyVer := OPVersion new
+			              repositoryName: 'openponk';
+			              releaseName: 'nightly-12345';
+			              githubWorkflowRunId: 12345;
+			              buildDate: DateAndTime now;
+			              yourself.
+		presenter applyLoadedRelease: releaseVer nightly: nightlyVer generation: (presenter instVarNamed: #loadingGeneration).
+		lastReleasePresenter := presenter instVarNamed: #lastVersionInfo.
+		lastNightlyPresenter := presenter instVarNamed: #lastNightlyVersionInfo.
+
+		presenter applyFailedDownloadInfoForGeneration: 999.
+		self assert: (presenter instVarNamed: #lastVersionInfo) identicalTo: lastReleasePresenter.
+		self assert: (presenter instVarNamed: #lastNightlyVersionInfo) identicalTo: lastNightlyPresenter.
+
+		releaseCalled := false.
+		successCount := 0.
+		failureCount := 0.
+		mockVersion := Mock new.
+		mockVersion stub getOfLatestRelease will: [
+				releaseCalled := true.
+				releaseVer ].
+		mockVersion stub getOfLatestNightlyBuild will: [
+				presenter cancelLoading.
+				nightlyVer ].
+		presenter instVarNamed: #version put: mockVersion.
+
+		presenter
+			fetchVersionInfoForGeneration: 999
+			onSuccess: [ :rel :nig | successCount := successCount + 1 ]
+			onFailure: [ failureCount := failureCount + 1 ].
+		self deny: releaseCalled description: 'Stale generation must abort before fetching latest release'.
+
+		presenter
+			fetchVersionInfoForGeneration: (presenter instVarNamed: #loadingGeneration)
+			onSuccess: [ :rel :nig | successCount := successCount + 1 ]
+			onFailure: [ failureCount := failureCount + 1 ].
+		self assert: releaseCalled description: 'Matching generation must proceed to fetch latest release'.
+		self assert: successCount equals: 0.
+		self assert: failureCount equals: 0.
+		self assert: (lastReleasePresenter instVarNamed: #isClosed) description: 'Cancelling parent must cancel child lastVersionInfo'.
+		self
+			assert: (lastNightlyPresenter instVarNamed: #isClosed)
+			description: 'Cancelling parent must cancel child lastNightlyVersionInfo'.
+
+		generationBefore := presenter instVarNamed: #loadingGeneration.
+		presenter thisVersionInfoLoaded.
+		self assert: (presenter instVarNamed: #loadingGeneration) equals: generationBefore.
+		self assert: (presenter instVarNamed: #loadingProcess) identicalTo: nil ] ensure: [
+			presenter cancelLoading.
+			window close ]
 ]
 
 { #category : 'tests' }

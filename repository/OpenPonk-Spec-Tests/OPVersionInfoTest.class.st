@@ -174,6 +174,54 @@ OPVersionInfoTest >> testDownloadInfoForGenerationWorksWithRealOPVersion [
 ]
 
 { #category : 'tests' }
+OPVersionInfoTest >> testGuardBranchesAndBackgroundStartLoadingInfo [
+
+	| expectedDate mockVersion downloadCalled presenter process attempts generationBefore |
+	expectedDate := DateAndTime fromString: '2026-09-01T10:05:00Z'.
+	downloadCalled := false.
+	mockVersion := Mock new.
+	mockVersion stub needsDownloadInfo willReturn: true.
+	mockVersion stub canDownloadInfo willReturn: true.
+	mockVersion stub repositoryName willReturn: 'openponk'.
+	mockVersion stub downloadInfo will: [
+			downloadCalled := true.
+			mockVersion stub needsDownloadInfo willReturn: false.
+			mockVersion stub releaseName willReturn: 'v3.0.0'.
+			mockVersion stub buildDate willReturn: expectedDate.
+			mockVersion ].
+
+	presenter := OPVersionInfo newApplication: SpApplication defaultApplication model: mockVersion.
+	[
+		presenter refreshInfo.
+		self assert: (presenter instVarNamed: #releaseName) label equals: 'Loading...'.
+
+		presenter
+			downloadInfoForGeneration: 999
+			onSuccess: [ self fail: 'Stale generation must not invoke success callback' ]
+			onFailure: [ self fail: 'Stale generation must not invoke failure callback' ].
+		self deny: downloadCalled description: 'Stale generation must abort before downloadInfo'.
+
+		presenter startLoadingInfo.
+		process := presenter instVarNamed: #loadingProcess.
+		attempts := 0.
+		[ process isNotNil and: [ process isTerminated not and: [ attempts < 200 ] ] ] whileTrue: [
+				(Delay forMilliseconds: 10) wait.
+				attempts := attempts + 1 ].
+		self assert: (process isNil or: [ process isTerminated ]) description: 'Background loading process should finish within timeout'.
+		self currentWorld doOneCycleNow.
+		self assert: downloadCalled description: 'startLoadingInfo must execute downloadInfo in background process'.
+		self assert: (presenter instVarNamed: #loadingProcess) identicalTo: nil.
+		self assert: (presenter instVarNamed: #releaseName) label equals: 'v3.0.0'.
+		self assert: (presenter instVarNamed: #buildDate) label equals: expectedDate asLocal asStringYMDHM.
+
+		presenter cancelLoading.
+		generationBefore := presenter instVarNamed: #loadingGeneration.
+		presenter startLoadingInfo.
+		self assert: (presenter instVarNamed: #loadingGeneration) equals: generationBefore.
+		self assert: (presenter instVarNamed: #loadingProcess) identicalTo: nil ] ensure: [ presenter cancelLoading ]
+]
+
+{ #category : 'tests' }
 OPVersionInfoTest >> testInitializeWhenDownloadImpossible [
 
 	| version presenter |

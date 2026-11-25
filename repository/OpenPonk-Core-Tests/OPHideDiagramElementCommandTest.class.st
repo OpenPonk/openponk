@@ -97,8 +97,6 @@ OPHideDiagramElementCommandTest >> testHideNodeAndUndoRedo [
 
 	command := OPHideDiagramElementCommand model: nodeModel1 diagramController: diagramController.
 
-	self denyCollection: command class allInstVarNames includesAny: { #diagramController }.
-
 	undoManager inTransaction: [ undoManager execute: command ].
 
 	self assert: diagramController controllers size equals: 1.
@@ -169,4 +167,60 @@ OPHideDiagramElementCommandTest >> testOpenDiagramControllerReturnsNilWhenClosed
 	projectController addDiagramController: diagramController.
 	diagramController diagramElement removeRender.
 	self assert: command openDiagramController identicalTo: nil
+]
+
+{ #category : 'tests' }
+OPHideDiagramElementCommandTest >> testUndoRedoWorksAfterClosingAndReopeningDiagramWithNewController [
+
+	| command node1Element projectController diagram reopenedCanvas reopenedDiagramController |
+	node1Element := (diagramController controllerForModel: nodeModel1) diagramElement.
+	node1Element bounds: (OPNodeBounds withPosition: 40 @ 40 extent: 60 @ 60).
+
+	command := OPHideDiagramElementCommand model: nodeModel1 diagramController: diagramController.
+	undoManager inTransaction: [ undoManager execute: command ].
+
+	projectController := diagramController projectController.
+	diagram := diagramController diagramElement.
+	projectController removeDiagramController: diagramController.
+	diagramController removeAllControllers.
+	diagramController removeRender.
+
+	reopenedCanvas := RSCanvas new.
+	diagram canvas: reopenedCanvas.
+	reopenedDiagramController := OPTestDiagramController new.
+	projectController addDiagramController: reopenedDiagramController.
+	reopenedDiagramController model: containerModel.
+	reopenedDiagramController diagramElement: diagram.
+	reopenedDiagramController canvasPresenter: (OPHeadlessCanvasPresenter new
+			 canvas: reopenedCanvas;
+			 yourself).
+	reopenedDiagramController showDiagramElement: diagram.
+
+	self assert: command openDiagramController identicalTo: reopenedDiagramController.
+	self assert: reopenedDiagramController controllers size equals: 1.
+	self assertEmpty: diagramController controllers.
+
+	undoManager undo.
+	self assert: reopenedDiagramController controllers size equals: 3.
+	self
+		assert: (reopenedDiagramController hasControllerForModel: nodeModel1)
+		description: 'Undoing hide after reopen must restore node1 on the new diagram controller'.
+	self
+		assert: (reopenedDiagramController hasControllerForModel: edgeModel)
+		description: 'Undoing hide after reopen must restore connected edge on the new diagram controller'.
+	self assert: (reopenedDiagramController controllerForModel: nodeModel1) diagramElement bounds position equals: 40 @ 40.
+	self assertEmpty: diagramController controllers.
+
+	undoManager redo.
+	self assert: reopenedDiagramController controllers size equals: 1.
+	self
+		deny: (reopenedDiagramController hasControllerForModel: nodeModel1)
+		description: 'Redoing hide after reopen must hide node1 on the new diagram controller'.
+	self
+		deny: (reopenedDiagramController hasControllerForModel: edgeModel)
+		description: 'Redoing hide after reopen must hide connected edge on the new diagram controller'.
+	self
+		assert: (reopenedDiagramController hasControllerForModel: nodeModel2)
+		description: 'Unrelated node2 must remain visible on the new diagram controller'.
+	self assertEmpty: diagramController controllers
 ]

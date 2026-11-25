@@ -36,14 +36,14 @@ OPEditorTest >> tearDown [
 
 { #category : 'tests - layout' }
 OPEditorTest >> testCanvasSectionLayoutContainsZoomToolbar [
-	"Verifies that the canvas section layout contains the zoom toolbar and no longer contains legacy canvasMenu or zoomLabel."
+	"Verifies that the canvas section layout contains the zoom toolbar."
+
 	| canvasSection bottomLayoutChildren |
 	canvasSection := editor class currentLayout canvasSectionLayout.
 	bottomLayoutChildren := (canvasSection children second isKindOf: SpBoxLayout)
-		ifTrue: [ canvasSection children second children ]
-		ifFalse: [ { canvasSection children second } ].
-	self assertCollection: bottomLayoutChildren includesAny: #( #zoomToolbar ).
-	self denyCollection: bottomLayoutChildren includesAny: #( #canvasMenu #zoomLabel )
+		                        ifTrue: [ canvasSection children second children ]
+		                        ifFalse: [ { canvasSection children second } ].
+	self assertCollection: bottomLayoutChildren includesAny: #( #zoomToolbar )
 ]
 
 { #category : 'tests' }

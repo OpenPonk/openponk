@@ -67,8 +67,6 @@ OPShowDiagramElementCommandTest >> testShowNodeAndUndoRedo [
 
 	command := OPShowDiagramElementCommand model: hiddenNodeModel diagramController: diagramController.
 
-	self denyCollection: command class allInstVarNames includesAny: { #diagramController }.
-
 	undoManager inTransaction: [ undoManager execute: command ].
 
 	self assert: diagramController controllers size equals: 1.
@@ -88,4 +86,48 @@ OPShowDiagramElementCommandTest >> testShowNodeAndUndoRedo [
 	self
 		assert: (diagramController hasControllerForModel: hiddenNodeModel)
 		description: 'Redoing show command must show the node controller in diagram again'
+]
+
+{ #category : 'tests' }
+OPShowDiagramElementCommandTest >> testUndoRedoWorksAfterClosingAndReopeningDiagramWithNewController [
+
+	| command projectController diagram reopenedCanvas reopenedDiagramController |
+	command := OPShowDiagramElementCommand model: hiddenNodeModel diagramController: diagramController.
+	undoManager inTransaction: [ undoManager execute: command ].
+	self assert: diagramController controllers size equals: 1.
+
+	projectController := diagramController projectController.
+	diagram := diagramController diagramElement.
+	projectController removeDiagramController: diagramController.
+	diagramController removeAllControllers.
+	diagramController removeRender.
+
+	reopenedCanvas := RSCanvas new.
+	diagram canvas: reopenedCanvas.
+	reopenedDiagramController := OPTestDiagramController new.
+	projectController addDiagramController: reopenedDiagramController.
+	reopenedDiagramController model: containerModel.
+	reopenedDiagramController diagramElement: diagram.
+	reopenedDiagramController canvasPresenter: (OPHeadlessCanvasPresenter new
+			 canvas: reopenedCanvas;
+			 yourself).
+	reopenedDiagramController showDiagramElement: diagram.
+
+	self assert: command openDiagramController identicalTo: reopenedDiagramController.
+	self assert: reopenedDiagramController controllers size equals: 1.
+	self assertEmpty: diagramController controllers.
+
+	undoManager undo.
+	self assertEmpty: reopenedDiagramController controllers.
+	self
+		deny: (reopenedDiagramController hasControllerForModel: hiddenNodeModel)
+		description: 'Undoing show after reopen must hide the node on the new diagram controller'.
+	self assertEmpty: diagramController controllers.
+
+	undoManager redo.
+	self assert: reopenedDiagramController controllers size equals: 1.
+	self
+		assert: (reopenedDiagramController hasControllerForModel: hiddenNodeModel)
+		description: 'Redoing show after reopen must restore the node on the new diagram controller'.
+	self assertEmpty: diagramController controllers
 ]

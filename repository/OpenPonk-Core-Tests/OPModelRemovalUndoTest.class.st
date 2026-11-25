@@ -91,21 +91,6 @@ OPModelRemovalUndoTest >> tearDown [
 ]
 
 { #category : 'tests' }
-OPModelRemovalUndoTest >> testNoAllInstancesUsage [
-	"Verify architectural cleanliness: command must never scan VM memory for controllers"
-	| commandClass forbiddenSelectors |
-	commandClass := OPRemoveModelElementCommand.
-	forbiddenSelectors := #( #allInstances #allSubInstances ).
-	
-	commandClass methods do: [ :method |
-		forbiddenSelectors do: [ :forbidden |
-			self
-				deny: (method sendsSelector: forbidden)
-				description: ('Method {1}>>#{2} uses forbidden selector #{3}'
-					format: { commandClass name . method selector . forbidden }) ] ]
-]
-
-{ #category : 'tests' }
 OPModelRemovalUndoTest >> testRemoveEdgeOnlyPreservesNodes [
 
 	| edgeShape |

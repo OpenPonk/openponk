@@ -1,25 +1,28 @@
-# The OpenPonk Modeling Platform
-[![Nightly](https://github.com/OpenPonk/openponk/actions/workflows/nightly.yml/badge.svg)](https://github.com/OpenPonk/openponk/actions/workflows/nightly.yml)  [![Coverage Status](https://coveralls.io/repos/github/OpenPonk/openponk/badge.svg?branch=master)](https://coveralls.io/github/OpenPonk/openponk?branch=master)
+# OpenPonk Modeling Platform
 
-OpenPonk is a metamodeling platform and a modeling workbench implemented in the dynamic environment [Pharo](https://pharo.org) aimed at supporting activities surrounding software and business engineering such as modeling, execution, simulation, source code generation, etc.
+[![Nightly](https://github.com/OpenPonk/openponk/actions/workflows/nightly.yml/badge.svg)](https://github.com/OpenPonk/openponk/actions/workflows/nightly.yml) [![Coverage Status](https://coveralls.io/repos/github/OpenPonk/openponk/badge.svg?branch=master)](https://coveralls.io/github/OpenPonk/openponk?branch=master)
 
-For more information visit https://openponk.org
+Core of the [OpenPonk](https://openponk.org) metamodeling platform and diagram workbench built in [Pharo](https://pharo.org) (Spec2 workbench GUI, Roassal3 diagram rendering, ViewModel/Controller/DiagramElement layers, persistence, and Undo/Redo).
 
-Showcase video:
+## Download
 
-[![OpenPonk](http://img.youtube.com/vi/_gQgXdJyr-0/0.jpg)](https://www.youtube.com/watch?v=_gQgXdJyr-0)
-
+Pre-built portable desktop archives (all plugins or individual notations for Windows, Linux, and macOS) are available at [openponk.org/#download](https://openponk.org/#download).
 
 ## Installation
 
-Installation instructions for both usage and development can be found [on the official website](https://openponk.org/#download).
+See [openponk.org/#direct-installation](https://openponk.org/#direct-installation) for the supported Pharo version and all-in-one installation (`OpenPonkPlugins`).
 
-## Contribution
+To load only the core platform into Pharo:
 
-1. Make your own fork of the affected repository.
-2. Load the fork into the Pharo according to general installation instructions, with your username instead of OpenPonk organization in the URL
-3. Make the changes
-4. Browse - Git Repositories Browser
-5. Right-click the repository, Commit
-6. Follow the instructions for the commit+push process
-7. Create pull request from your fork's GitHub page
+```smalltalk
+Metacello new
+	baseline: 'OpenPonk';
+	repository: 'github://OpenPonk/openponk';
+	load.
+```
+
+## Developer Documentation & Contributing
+
+- **Architecture & repository catalog:** [`OpenPonk/.github`](https://github.com/OpenPonk/.github/blob/main/profile/README.md)
+- **Contributing guide:** [`CONTRIBUTING.md`](https://github.com/OpenPonk/.github/blob/main/CONTRIBUTING.md)
+- **Website & contact:** [openponk.org](https://openponk.org)

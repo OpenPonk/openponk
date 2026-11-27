@@ -31,6 +31,12 @@ OPViewModel >> showHideSelectIn: aTypesPresenter [
 ]
 
 { #category : '*OpenPonk-Spec' }
+OPViewModel >> showHideSelectionStateIn: aTypesPresenter [
+
+	^ aTypesPresenter selectionStateForViewModel: self
+]
+
+{ #category : '*OpenPonk-Spec' }
 OPViewModel >> showHideUnselectIn: aTypesPresenter [
 
 	^ aTypesPresenter unselectViewModel: self

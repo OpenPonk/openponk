@@ -67,7 +67,7 @@ OPShowHideTabContentPresenter >> initializePresenters [
 	| mainColumn |
 	tree := self newTreeTable.
 	mainColumn := SpCompositeTableColumn new.
-	mainColumn addColumn: ((SpCheckBoxTableColumn evaluated: [ :modelObject | self isSelected: modelObject ])
+	mainColumn addColumn: ((OPTriStateCheckBoxTableColumn evaluated: [ :modelObject | self selectionStateFor: modelObject ])
 			 width: 20;
 			 onActivation: [ :modelObject | self processAndUpdateSelected: modelObject ];
 			 onDeactivation: [ :modelObject | self processAndUpdateUnselected: modelObject ];
@@ -88,7 +88,8 @@ OPShowHideTabContentPresenter >> initializePresenters [
 
 { #category : 'testing' }
 OPShowHideTabContentPresenter >> isSelected: anItem [
-	^ self selectedItems includes: anItem
+
+	^ (self selectionStateFor: anItem) = #checked
 ]
 
 { #category : 'hooks' }
@@ -120,6 +121,31 @@ OPShowHideTabContentPresenter >> selected: anAddedItem [
 { #category : 'accessing' }
 OPShowHideTabContentPresenter >> selectedItems [
 	^ selectedItems ifNil: [ self updateSelectedItems ]
+]
+
+{ #category : 'testing' }
+OPShowHideTabContentPresenter >> selectionStateFor: anItem [
+
+	^ self selectionStateForItem: anItem
+]
+
+{ #category : 'testing' }
+OPShowHideTabContentPresenter >> selectionStateForElements: aCollection [
+
+	| shownCount |
+	aCollection ifEmpty: [ ^ #unchecked ].
+	shownCount := aCollection count: [ :eachElement | self selectedItems includes: (viewModelRegistry viewModelFor: eachElement) ].
+	shownCount = 0 ifTrue: [ ^ #unchecked ].
+	shownCount = aCollection size ifTrue: [ ^ #checked ].
+	^ #partial
+]
+
+{ #category : 'testing' }
+OPShowHideTabContentPresenter >> selectionStateForItem: anItem [
+
+	^ (self selectedItems includes: anItem)
+		  ifTrue: [ #checked ]
+		  ifFalse: [ #unchecked ]
 ]
 
 { #category : 'accessing - model' }

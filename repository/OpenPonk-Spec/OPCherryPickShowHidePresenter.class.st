@@ -22,7 +22,7 @@ OPCherryPickShowHidePresenter >> childrenFor: aViewModel [
 { #category : 'updating' }
 OPCherryPickShowHidePresenter >> findSelectedItems [
 
-	^ (diagramController controllers collect: [ :each | each viewModel ]) copyWith: diagramController viewModel
+	^ diagramController controllers collect: [ :each | each viewModel ] as: Set
 ]
 
 { #category : 'hooks' }
@@ -50,6 +50,15 @@ OPCherryPickShowHidePresenter >> selected: anAddedViewModel [
 	executor := OPDiagramExplorer on: diagramController.
 	executor showElement: anAddedViewModel model.
 	^ { anAddedViewModel }
+]
+
+{ #category : 'testing' }
+OPCherryPickShowHidePresenter >> selectionStateFor: aViewModel [
+
+	aViewModel = diagramController viewModel ifTrue: [
+		^ self selectionStateForElements:
+			  (diagramController allModelElementsWithPossibleController copyWithout: diagramController model) ].
+	^ super selectionStateFor: aViewModel
 ]
 
 { #category : 'hooks' }

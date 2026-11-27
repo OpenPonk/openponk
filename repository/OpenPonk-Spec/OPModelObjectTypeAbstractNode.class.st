@@ -150,6 +150,12 @@ OPModelObjectTypeAbstractNode >> showHideSelectIn: aTypesPresenter [
 ]
 
 { #category : 'show-hide' }
+OPModelObjectTypeAbstractNode >> showHideSelectionStateIn: aTypesPresenter [
+
+	^ aTypesPresenter selectionStateForTypeNode: self
+]
+
+{ #category : 'show-hide' }
 OPModelObjectTypeAbstractNode >> showHideUnselectIn: aTypesPresenter [
 
 	^ aTypesPresenter unselectTypeNode: self

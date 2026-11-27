@@ -62,11 +62,7 @@ OPTypesShowHidePresenter >> expandTypeTreeItem: aTreeItem [
 { #category : 'updating' }
 OPTypesShowHidePresenter >> findSelectedItems [
 
-	| controllers selectedTypeNodes |
-	controllers := diagramController controllers.
-	selectedTypeNodes := tree roots anyOne withAllChildren select: [ :typeNode |
-		                     controllers anySatisfy: [ :controller | typeNode matchesType: controller viewModel modelType ] ].
-	^ selectedTypeNodes , (controllers collect: [ :controller | controller viewModel ] as: Array)
+	^ diagramController controllers collect: [ :controller | controller viewModel ] as: Set
 ]
 
 { #category : 'hooks' }
@@ -134,6 +130,24 @@ OPTypesShowHidePresenter >> selectViewModel: aViewModel [
 OPTypesShowHidePresenter >> selected: aSelectedItem [
 
 	^ aSelectedItem showHideSelectIn: self
+]
+
+{ #category : 'testing' }
+OPTypesShowHidePresenter >> selectionStateFor: anItem [
+
+	^ anItem showHideSelectionStateIn: self
+]
+
+{ #category : 'testing' }
+OPTypesShowHidePresenter >> selectionStateForTypeNode: aTypeNode [
+
+	^ self selectionStateForElements: (self elementsWithTypesInNode: aTypeNode)
+]
+
+{ #category : 'testing' }
+OPTypesShowHidePresenter >> selectionStateForViewModel: aViewModel [
+
+	^ self selectionStateForItem: aViewModel
 ]
 
 { #category : 'accessing' }

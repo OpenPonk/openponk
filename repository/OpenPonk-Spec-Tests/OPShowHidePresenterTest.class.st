@@ -108,6 +108,63 @@ OPShowHidePresenterTest >> testCherryPickAndTypesPresentersToggleVisibility [
 ]
 
 { #category : 'tests' }
+OPShowHidePresenterTest >> testCherryPickPresenterRootTriStateAndNonRootTwoState [
+
+	| rootViewModel viewModelA viewModelB cherryPick tree rootCell rootButtonMorph |
+	rootViewModel := diagramController viewModel.
+	viewModelA := projectController viewModelRegistry viewModelFor: entityA.
+	viewModelB := projectController viewModelRegistry viewModelFor: entityB.
+	cherryPick := OPCherryPickShowHidePresenter on: diagramController.
+
+	self assert: (cherryPick selectionStateFor: rootViewModel) equals: #partial.
+	self assert: (cherryPick selectionStateFor: viewModelA) equals: #checked.
+	self assert: (cherryPick selectionStateFor: viewModelB) equals: #unchecked.
+
+	window := cherryPick open.
+	tree := cherryPick instVarNamed: #tree.
+	rootCell := tree adapter widget dataSource cellColumn: tree adapter widget columns first row: 1.
+	rootButtonMorph := rootCell allMorphs detect: [ :each | each isKindOf: ThreePhaseButtonMorph ].
+	self assert: rootButtonMorph formSet equals: (Smalltalk ui icons iconFormSetNamed: #partialCheckedBox).
+
+	rootButtonMorph doButtonAction: nil.
+	self
+		assert: (diagramController hasControllerForModel: entityB)
+		description: 'Clicking partial diagram root must show all remaining elements'.
+	self assert: (cherryPick selectionStateFor: rootViewModel) equals: #checked.
+
+	cherryPick processAndUpdateUnselected: rootViewModel.
+	self deny: (diagramController hasControllerForModel: entityA) description: 'Unselecting diagram root must hide entityA'.
+	self deny: (diagramController hasControllerForModel: entityB) description: 'Unselecting diagram root must hide entityB'.
+	self assert: (cherryPick selectionStateFor: rootViewModel) equals: #unchecked.
+	self assertEmpty: cherryPick selectedItems
+]
+
+{ #category : 'tests' }
+OPShowHidePresenterTest >> testEmptyDiagramShowsUncheckedRootInBothPresenters [
+
+	| emptyContainer emptyDiagram emptyController emptyCherryPick emptyTypes rootTypeNode |
+	emptyContainer := OPTestContainerModel new.
+	emptyDiagram := OPOpenPonkDiagram forModelElement: emptyContainer.
+	emptyDiagram canvas: RSCanvas new.
+	emptyController := OPTestDiagramController new.
+	emptyController instVarNamed: #editor put: diagramController editor.
+	projectController addDiagramController: emptyController.
+	emptyController
+		model: emptyContainer;
+		diagramElement: emptyDiagram;
+		canvasPresenter: (OPCanvasPresenter new
+				 canvas: emptyDiagram canvas;
+				 yourself).
+
+	emptyCherryPick := OPCherryPickShowHidePresenter on: emptyController.
+	emptyTypes := OPTypesShowHidePresenter on: emptyController.
+	rootTypeNode := emptyTypes initialRoots first.
+
+	self assert: (emptyCherryPick selectionStateFor: emptyController viewModel) equals: #unchecked.
+	self assert: (emptyTypes selectionStateFor: rootTypeNode) equals: #unchecked
+]
+
+{ #category : 'tests' }
 OPShowHidePresenterTest >> testShowHidePresenterPagesInitialization [
 	| presenter |
 	presenter := OPShowHidePresenter on: diagramController.
@@ -319,26 +376,31 @@ OPShowHidePresenterTest >> testTypesPresenterMultiTypeElementSyncAcrossSubtypes 
 	self assert: (typesPresenter childrenFor: kindNode) asArray equals: {
 			viewModelB.
 			viewModelA }.
-	self assert: (typesPresenter isSelected: fooNode) description: 'Foo subtype must be selected while Person is shown'.
-	self assert: (typesPresenter isSelected: kindNode) description: 'Kind subtype must be selected while Person is shown'.
-	self assert: (typesPresenter isSelected: viewModelA) description: 'Multi-type Person must be selected'.
+	self assert: (typesPresenter selectionStateFor: fooNode) equals: #checked.
+	self assert: (typesPresenter selectionStateFor: kindNode) equals: #partial.
+	self assert: (typesPresenter selectionStateFor: classNode) equals: #partial.
+	self assert: (typesPresenter selectionStateFor: viewModelA) equals: #checked.
 
 	typesPresenter processAndUpdateSelected: viewModelB.
-	typesPresenter processAndUpdateUnselected: fooNode.
+	self assert: (typesPresenter selectionStateFor: kindNode) equals: #checked.
+	self assert: (typesPresenter selectionStateFor: classNode) equals: #checked.
 
+	typesPresenter processAndUpdateUnselected: fooNode.
 	self deny: (diagramController hasControllerForModel: entityA) description: 'Unchecking Foo must hide multi-type Person'.
 	self
 		assert: (diagramController hasControllerForModel: entityB)
 		description: 'Unchecking Foo must not hide Dog which only has Kind'.
-	self deny: (typesPresenter isSelected: viewModelA) description: 'Person must be unselected across all branches'.
-	self deny: (typesPresenter isSelected: fooNode) description: 'Foo subtype must become unselected'.
-	self assert: (typesPresenter isSelected: kindNode) description: 'Kind subtype must remain selected because Dog is still shown'.
+	self assert: (typesPresenter selectionStateFor: viewModelA) equals: #unchecked.
+	self assert: (typesPresenter selectionStateFor: fooNode) equals: #unchecked.
+	self assert: (typesPresenter selectionStateFor: kindNode) equals: #partial.
+	self assert: (typesPresenter selectionStateFor: classNode) equals: #partial.
 
 	typesPresenter processAndUpdateSelected: viewModelA.
 	self assert: (diagramController hasControllerForModel: entityA) description: 'Re-selecting Person must show it again'.
-	self assert: (typesPresenter isSelected: viewModelA) description: 'Person must be selected again'.
-	self assert: (typesPresenter isSelected: fooNode) description: 'Foo subtype must become selected again when Person is shown'.
-	self assert: (typesPresenter isSelected: kindNode) description: 'Kind subtype must remain selected'
+	self assert: (typesPresenter selectionStateFor: viewModelA) equals: #checked.
+	self assert: (typesPresenter selectionStateFor: fooNode) equals: #checked.
+	self assert: (typesPresenter selectionStateFor: kindNode) equals: #checked.
+	self assert: (typesPresenter selectionStateFor: classNode) equals: #checked
 ]
 
 { #category : 'tests' }
@@ -350,28 +412,69 @@ OPShowHidePresenterTest >> testTypesPresenterTogglesIndividualElementVisibility 
 	typesPresenter := OPTypesShowHidePresenter on: diagramController.
 	entityTypeNode := typesPresenter initialRoots first children first.
 
-	self assert: (typesPresenter isSelected: viewModelA) description: 'Shown entityA viewModel must be selected'.
-	self deny: (typesPresenter isSelected: viewModelB) description: 'Hidden entityB viewModel must not be selected'.
-	self
-		assert: (typesPresenter isSelected: entityTypeNode)
-		description: 'Entity type node must be selected while at least one entity is shown'.
+	self assert: (typesPresenter selectionStateFor: viewModelA) equals: #checked.
+	self assert: (typesPresenter selectionStateFor: viewModelB) equals: #unchecked.
+	self assert: (typesPresenter selectionStateFor: entityTypeNode) equals: #partial.
 
 	typesPresenter processAndUpdateSelected: viewModelB.
 	self assert: (diagramController hasControllerForModel: entityB) description: 'Selecting individual viewModelB must show entityB'.
-	self assert: (typesPresenter isSelected: viewModelB) description: 'viewModelB must be selected after showing entityB'.
+	self assert: (typesPresenter selectionStateFor: viewModelB) equals: #checked.
+	self assert: (typesPresenter selectionStateFor: entityTypeNode) equals: #checked.
 
 	typesPresenter processAndUpdateUnselected: viewModelA.
 	self deny: (diagramController hasControllerForModel: entityA) description: 'Unselecting individual viewModelA must hide entityA'.
 	self assert: (diagramController hasControllerForModel: entityB) description: 'Hiding entityA must keep sibling entityB shown'.
-	self deny: (typesPresenter isSelected: viewModelA) description: 'viewModelA must be unselected after hiding entityA'.
-	self assert: (typesPresenter isSelected: viewModelB) description: 'viewModelB must remain selected'.
-	self
-		assert: (typesPresenter isSelected: entityTypeNode)
-		description: 'Entity type node must stay selected while entityB is still shown'.
+	self assert: (typesPresenter selectionStateFor: viewModelA) equals: #unchecked.
+	self assert: (typesPresenter selectionStateFor: viewModelB) equals: #checked.
+	self assert: (typesPresenter selectionStateFor: entityTypeNode) equals: #partial.
 
 	typesPresenter processAndUpdateUnselected: viewModelB.
 	self deny: (diagramController hasControllerForModel: entityB) description: 'Unselecting viewModelB must hide entityB'.
+	self assert: (typesPresenter selectionStateFor: entityTypeNode) equals: #unchecked
+]
+
+{ #category : 'tests' }
+OPShowHidePresenterTest >> testTypesPresenterTriStateTransitionsAndPartialClickShowsRemaining [
+
+	| viewModelA viewModelB typesPresenter rootNode entityTypeNode tree cell buttonMorph |
+	viewModelA := projectController viewModelRegistry viewModelFor: entityA.
+	viewModelB := projectController viewModelRegistry viewModelFor: entityB.
+	typesPresenter := OPTypesShowHidePresenter on: diagramController.
+	rootNode := typesPresenter initialRoots first.
+	entityTypeNode := rootNode children first.
+
+	self assert: (typesPresenter selectionStateFor: viewModelA) equals: #checked.
+	self assert: (typesPresenter selectionStateFor: viewModelB) equals: #unchecked.
+	self assert: (typesPresenter selectionStateFor: entityTypeNode) equals: #partial.
+	self assert: (typesPresenter selectionStateFor: rootNode) equals: #partial.
+
+	window := typesPresenter open.
+	tree := typesPresenter instVarNamed: #tree.
+	cell := tree adapter widget dataSource cellColumn: tree adapter widget columns first row: 2.
+	buttonMorph := cell allMorphs detect: [ :each | each isKindOf: ThreePhaseButtonMorph ].
+	self assert: buttonMorph formSet equals: (Smalltalk ui icons iconFormSetNamed: #partialCheckedBox).
+
+	buttonMorph doButtonAction: nil.
 	self
-		deny: (typesPresenter isSelected: entityTypeNode)
-		description: 'Entity type node must become unselected when no matching elements remain shown'
+		assert: (diagramController hasControllerForModel: entityA)
+		description: 'Clicking a partial group must keep already-shown entityA visible'.
+	self
+		assert: (diagramController hasControllerForModel: entityB)
+		description: 'Clicking a partial group must show remaining hidden entityB'.
+	self assert: (typesPresenter selectionStateFor: entityTypeNode) equals: #checked.
+	self assert: (typesPresenter selectionStateFor: rootNode) equals: #checked.
+
+	cell := tree adapter widget dataSource cellColumn: tree adapter widget columns first row: 2.
+	buttonMorph := cell allMorphs detect: [ :each | each isKindOf: ThreePhaseButtonMorph ].
+	self assert: buttonMorph formSet equals: (Smalltalk ui icons iconFormSetNamed: #checkedBox).
+
+	buttonMorph doButtonAction: nil.
+	self deny: (diagramController hasControllerForModel: entityA) description: 'Clicking a checked group must hide entityA'.
+	self deny: (diagramController hasControllerForModel: entityB) description: 'Clicking a checked group must hide entityB'.
+	self assert: (typesPresenter selectionStateFor: entityTypeNode) equals: #unchecked.
+	self assert: (typesPresenter selectionStateFor: rootNode) equals: #unchecked.
+
+	cell := tree adapter widget dataSource cellColumn: tree adapter widget columns first row: 2.
+	buttonMorph := cell allMorphs detect: [ :each | each isKindOf: ThreePhaseButtonMorph ].
+	self assert: buttonMorph formSet equals: (Smalltalk ui icons iconFormSetNamed: #uncheckedBox)
 ]

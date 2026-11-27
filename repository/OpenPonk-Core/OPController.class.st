@@ -327,10 +327,11 @@ OPController >> showDenyFeedbackFor: aController [
 
 { #category : 'construction' }
 OPController >> showInDiagram: aDiagramController [
+
 	self showWithoutDependentInDiagram: aDiagramController.
-	self viewModel ifNotNil: [ :vm |
-		vm dependentElements do: [ :each |
-			aDiagramController showInDiagramModel: each ] ]
+	self viewModel ifNotNil: [ :activeViewModel |
+			activeViewModel dependentElements do: [ :each |
+				(aDiagramController hasSupportForModel: each) ifTrue: [ aDiagramController showInDiagramModel: each ] ] ]
 ]
 
 { #category : 'construction' }

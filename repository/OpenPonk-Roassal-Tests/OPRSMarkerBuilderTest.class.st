@@ -10,6 +10,30 @@ Class {
 }
 
 { #category : 'tests' }
+OPRSMarkerBuilderTest >> testArrowWithDotMarker [
+
+	| marker composite dotShape arrowShape |
+	marker := OPRSMarkerBuilder arrowWithDot.
+	self assert: marker class equals: RSMarker.
+	self assert: marker shape class equals: OPRSBorderColoringComposite.
+
+	composite := marker shape.
+	self assert: composite shapes size equals: 2.
+	dotShape := composite shapes first.
+	arrowShape := composite shapes second.
+	self assert: dotShape class equals: RSCircle.
+	self assert: arrowShape class equals: RSPolygon.
+	self
+		assert: dotShape encompassingRectangle top < arrowShape encompassingRectangle top
+		description: 'Ownership dot must sit ahead of the arrow at the classifier border'.
+	self assert: marker offset equals: composite height / 2.
+
+	composite color: Color blue.
+	self assert: dotShape color equals: Color blue.
+	self assert: arrowShape color equals: Color blue
+]
+
+{ #category : 'tests' }
 OPRSMarkerBuilderTest >> testBorderColoringCompositeNilColorAndPaintAndEmptyShapeProxy [
 
 	| composite box proxy underlyingShape |

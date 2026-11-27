@@ -153,10 +153,12 @@ OPLegacyDiagram >> asOPDiagram [
 
 		"Render the diagram first so that its roassalShape is assigned before adding elements"
 		diagram renderIn: canvas.
-		controllersByModels := (visibleElements copyWithout: model) collect: [ :each |
-				                       | controller |
-				                       controller := diagramController showWithoutDependentInDiagramModel: each.
-				                       each -> controller ].
+		controllersByModels := (visibleElements copyWithout: model)
+			                       select: [ :each | diagramController hasSupportForModel: each ]
+			                       thenCollect: [ :each |
+					                       | controller |
+					                       controller := diagramController showWithoutDependentInDiagramModel: each.
+					                       each -> controller ].
 		job progress: 0.8.
 		controllersByModels do: [ :eachModelAndController |
 				layoutsPerModel

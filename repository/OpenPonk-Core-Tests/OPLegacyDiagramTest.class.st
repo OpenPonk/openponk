@@ -74,6 +74,39 @@ OPLegacyDiagramTest >> testAsOPDiagramConvertsLegacyLayoutsAndCommonElements [
 ]
 
 { #category : 'tests' }
+OPLegacyDiagramTest >> testAsOPDiagramSkipsUnsupportedVisibleElements [
+
+	| container entity unsupported legacy opDiagram |
+	[
+		OPPluginRegistry setDefaultForTesting.
+		container := OPTestContainerModel new.
+		container instVarNamed: #uuid put: UUID new.
+		entity := OPTestEntityModel new.
+		entity instVarNamed: #uuid put: UUID new.
+		unsupported := OPTestContainerModel new.
+		unsupported instVarNamed: #uuid put: UUID new.
+		container
+			add: entity;
+			add: unsupported.
+
+		legacy := OPLegacyDiagram emptyOfModel: container.
+		legacy
+			name: 'Legacy Unsupported Visible Element';
+			camera: (OPLegacyDiagramCamera new
+					 offset: 0 @ 0;
+					 zoom: 1;
+					 yourself);
+			visibleElements: {
+					(OPModelObjectReference withUUID: entity uuid).
+					(OPModelObjectReference withUUID: unsupported uuid) };
+			layout: { (entity uuid -> (OPLegacyElementLayout withPosition: 100 @ 120 extent: 80 @ 60)) } asDictionary.
+
+		opDiagram := legacy asOPDiagram.
+		self assertCollection: (opDiagram ownedElements collect: #modelElement) hasSameElements: { entity } ] ensure: [
+		OPPluginRegistry resetDefault ]
+]
+
+{ #category : 'tests' }
 OPLegacyDiagramTest >> testFromJsonComplex [
 
 	| personUUID personUUIDstring person |

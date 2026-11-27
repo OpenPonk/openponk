@@ -790,6 +790,25 @@ OPDiagramControllerTest >> testSelfQueriesAndMouseInteractionsAndSelectionBranch
 ]
 
 { #category : 'tests' }
+OPDiagramControllerTest >> testShowInDiagramSkipsUnsupportedDependentElements [
+
+	| supportedEntity unsupportedDependent |
+	supportedEntity := OPTestEntityModel new.
+	unsupportedDependent := OPTestContainerModel new.
+	model add: supportedEntity.
+	model add: unsupportedDependent.
+
+	controller showInDiagram: controller.
+
+	self
+		assert: (controller hasControllerForModel: supportedEntity)
+		description: 'Supported dependent element must be shown on the diagram'.
+	self
+		deny: (controller hasControllerForModel: unsupportedDependent)
+		description: 'Unsupported dependent element must be skipped instead of raising an error'
+]
+
+{ #category : 'tests' }
 OPDiagramControllerTest >> testShowModelInDiagram [
 	| entity shownController |
 	controller model: model.

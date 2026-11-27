@@ -131,7 +131,9 @@ OPRemoveModelElementCommand >> initialize [
 { #category : 'testing' }
 OPRemoveModelElementCommand >> isModelPresent: aModelObject [
 
-	^ self viewModelRegistry hasViewModelFor: aModelObject
+	(self viewModelRegistry hasViewModelFor: aModelObject) ifTrue: [ ^ true ].
+	^ self project models anySatisfy: [ :eachRootModel |
+		  eachRootModel = aModelObject or: [ (self viewModelRegistry allChildrenFor: eachRootModel) includes: aModelObject ] ]
 ]
 
 { #category : 'accessing' }

@@ -26,6 +26,30 @@ OPRSMarkerBuilder class >> arrowShape [
 ]
 
 { #category : 'shapes' }
+OPRSMarkerBuilder class >> arrowWithDot [
+
+	^ self fromShape: self arrowWithDotShape
+]
+
+{ #category : 'shapes' }
+OPRSMarkerBuilder class >> arrowWithDotShape [
+
+	| dot arrow |
+	dot := RSCircle new
+		       size: 6;
+		       translateTo: 0 @ 3;
+		       yourself.
+	arrow := self arrowShape
+		         translateBy: 0 @ 6;
+		         yourself.
+	^ OPRSBorderColoringComposite new
+		  shapes: {
+				  dot.
+				  arrow };
+		  yourself
+]
+
+{ #category : 'shapes' }
 OPRSMarkerBuilder class >> circle [
 
 	^ self fromShape: self circleShape

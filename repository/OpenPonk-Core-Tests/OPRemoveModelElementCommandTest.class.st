@@ -265,6 +265,33 @@ OPRemoveModelElementCommandTest >> testExecuteRunsAuxiliaryRemovalCommandsInTran
 ]
 
 { #category : 'tests' }
+OPRemoveModelElementCommandTest >> testIsModelPresentFindsUncachedProjectModelsAndRejectsRemovedOrDetachedModels [
+
+	| uncachedEntity detachedEntity removeCommand |
+	uncachedEntity := OPTestEntityModel new.
+	uncachedEntity instVarNamed: #uuid put: UUID new.
+	containerModel add: uncachedEntity.
+	detachedEntity := OPTestEntityModel new.
+
+	removeCommand := OPRemoveModelElementCommand model: nodeModel1 diagramController: diagramController.
+
+	self
+		deny: (diagramController projectController viewModelRegistry hasViewModelFor: uncachedEntity)
+		description: 'Uncached entity must not be in ViewModel cache before check'.
+	self
+		assert: (removeCommand isModelPresent: uncachedEntity)
+		description: 'Uncached entity present in project model tree must be reported as present'.
+	self
+		deny: (removeCommand isModelPresent: detachedEntity)
+		description: 'Detached entity absent from project model tree must not be reported as present'.
+
+	undoManager inTransaction: [
+		undoManager execute: (OPRemoveModelElementCommand model: uncachedEntity diagramController: diagramController) ].
+
+	self deny: (removeCommand isModelPresent: uncachedEntity) description: 'Removed entity must no longer be reported as present'
+]
+
+{ #category : 'tests' }
 OPRemoveModelElementCommandTest >> testRemoveRootModelWithoutOwnerSucceedsAndRestoresOnUndo [
 
 	| rootModel project projectController removeCommand |

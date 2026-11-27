@@ -2,6 +2,7 @@
 	"include" : [
 		{ "repository" : "OpenPonk/class-editor", "branch" : "master", "build-dependent" : true },
 		{ "repository" : "OpenPonk/openponk-model", "branch" : "master", "build-dependent" : true },
-		{ "repository" : "OpenPonk/openponk-git", "branch" : "master", "build-dependent" : false }
+		{ "repository" : "OpenPonk/openponk-git", "branch" : "master", "build-dependent" : false },
+		{ "repository" : "OpenPonk/validation", "branch" : "main", "build-dependent" : true }
 	]
 }

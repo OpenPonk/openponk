@@ -1,0 +1,22 @@
+# Normalize all text files to LF in both index and working tree
+* text=auto eol=lf
+
+# Pharo / Tonel / STON files
+*.st text diff eol=lf linguist-language=Smalltalk
+*.ston text eol=lf
+.project text eol=lf
+.properties text eol=lf
+
+# Shell scripts must never get CRLF
+*.sh text eol=lf
+
+# Explicit binary safeguards
+*.png binary
+*.jpg binary
+*.ico binary
+*.opp binary
+*.zip binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary

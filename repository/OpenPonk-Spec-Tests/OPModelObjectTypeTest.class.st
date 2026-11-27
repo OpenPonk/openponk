@@ -41,6 +41,24 @@ OPModelObjectTypeTest >> testModelObjectTypeComparisonAndPrinting [
 ]
 
 { #category : 'tests' }
+OPModelObjectTypeTest >> testTypeTreeNodeEqualityWithNonNodeObjects [
+
+	| subKind classWithKind rootNode classNode kindLeaf nilValue |
+	subKind := OPModelObjectType named: 'Kind'.
+	classWithKind := OPModelObjectType named: 'Class' withSubtype: subKind.
+	rootNode := OPModelObjectTypeRootNode withChildrenFromTypes: { classWithKind }.
+	classNode := rootNode children first.
+	kindLeaf := classNode children first.
+	nilValue := nil.
+
+	self deny: rootNode = nilValue description: 'Root type node must not equal nil'.
+	self deny: rootNode = 'All' description: 'Root type node must not equal a String'.
+	self deny: classNode = Object new description: 'Parent type node must not equal an unrelated object'.
+	self deny: kindLeaf = 'Kind' description: 'Leaf type node must not equal a String'.
+	self assert: classNode equals: classNode
+]
+
+{ #category : 'tests' }
 OPModelObjectTypeTest >> testTypeTreeNodesComparisonAndRootOrdering [
 
 	| subKind subRole classWithKind classWithRole simpleNote rootNode anotherRoot classNode noteNode kindLeaf |

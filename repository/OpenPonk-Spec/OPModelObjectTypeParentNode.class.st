@@ -33,6 +33,12 @@ OPModelObjectTypeParentNode >> childrenFromTypes: aTypesCollection [
 	children := childrenSet asSortedCollection
 ]
 
+{ #category : 'show-hide' }
+OPModelObjectTypeParentNode >> shouldExpandInitiallyInTypesTree [
+
+	^ true
+]
+
 { #category : 'accessing' }
 OPModelObjectTypeParentNode >> types [
 

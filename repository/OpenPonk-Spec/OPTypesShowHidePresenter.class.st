@@ -4,6 +4,9 @@ Concrete Spec presenter used within OPShowHidePresenter. Provides a tree view th
 Class {
 	#name : 'OPTypesShowHidePresenter',
 	#superclass : 'OPShowHideTabContentPresenter',
+	#instVars : [
+		'iconsByTypeNode'
+	],
 	#category : 'OpenPonk-Spec-Dialogs',
 	#package : 'OpenPonk-Spec',
 	#tag : 'Dialogs'
@@ -16,9 +19,24 @@ OPTypesShowHidePresenter >> allElements [
 ]
 
 { #category : 'hooks' }
-OPTypesShowHidePresenter >> childrenFor: aNode [
+OPTypesShowHidePresenter >> childrenFor: anItem [
 
-	^ aNode children
+	^ anItem showHideChildrenIn: self
+]
+
+{ #category : 'private' }
+OPTypesShowHidePresenter >> childrenForTypeNode: aTypeNode [
+
+	| childNodes directElements |
+	childNodes := aTypeNode children.
+	directElements := (self elementsWithTypesInNode: aTypeNode)
+		                  select: [ :eachElement |
+				                  | elementType |
+				                  elementType := viewModelRegistry modelTypeFor: eachElement.
+				                  childNodes noneSatisfy: [ :eachChild | eachChild matchesType: elementType ] ]
+		                  thenCollect: [ :eachElement | viewModelRegistry viewModelFor: eachElement ].
+	^ childNodes asArray , (directElements sorted: [ :firstViewModel :secondViewModel |
+		   firstViewModel modelDisplayString < secondViewModel modelDisplayString ])
 ]
 
 { #category : 'utilities' }
@@ -27,13 +45,47 @@ OPTypesShowHidePresenter >> elementsWithTypesInNode: aNode [
 	^ self allElements select: [ :eachElement | aNode matchesType: (viewModelRegistry modelTypeFor: eachElement) ]
 ]
 
+{ #category : 'initialization' }
+OPTypesShowHidePresenter >> expandInitialItemsIn: aRootItem [
+
+	aRootItem children do: [ :eachItem | self expandTypeTreeItem: eachItem ]
+]
+
+{ #category : 'initialization' }
+OPTypesShowHidePresenter >> expandTypeTreeItem: aTreeItem [
+
+	aTreeItem data shouldExpandInitiallyInTypesTree ifFalse: [ ^ self ].
+	aTreeItem expand.
+	aTreeItem children do: [ :eachChild | self expandTypeTreeItem: eachChild ]
+]
+
 { #category : 'updating' }
 OPTypesShowHidePresenter >> findSelectedItems [
 
-	| controllers |
+	| controllers selectedTypeNodes |
 	controllers := diagramController controllers.
-	^ tree roots anyOne withAllChildren select: [ :typeNode |
-		  controllers anySatisfy: [ :controller | typeNode matchesType: controller viewModel modelType ] ]
+	selectedTypeNodes := tree roots anyOne withAllChildren select: [ :typeNode |
+		                     controllers anySatisfy: [ :controller | typeNode matchesType: controller viewModel modelType ] ].
+	^ selectedTypeNodes , (controllers collect: [ :controller | controller viewModel ] as: Array)
+]
+
+{ #category : 'hooks' }
+OPTypesShowHidePresenter >> iconFor: anItem [
+
+	^ anItem showHideIconIn: self
+]
+
+{ #category : 'private' }
+OPTypesShowHidePresenter >> iconForTypeNode: aTypeNode [
+
+	aTypeNode parent ifNil: [ ^ diagramController viewModel icon ].
+	^ self iconsByTypeNode at: aTypeNode ifAbsentPut: [ self sharedIconForTypeNode: aTypeNode ]
+]
+
+{ #category : 'accessing' }
+OPTypesShowHidePresenter >> iconsByTypeNode [
+
+	^ iconsByTypeNode ifNil: [ iconsByTypeNode := Dictionary new ]
 ]
 
 { #category : 'hooks' }
@@ -43,27 +95,81 @@ OPTypesShowHidePresenter >> initialRoots [
 		   (self allElements collect: [ :each | viewModelRegistry modelTypeFor: each ])) }
 ]
 
-{ #category : 'hooks' }
-OPTypesShowHidePresenter >> nameFor: aNode [
-	^ aNode name
+{ #category : 'testing' }
+OPTypesShowHidePresenter >> isIcon: firstIcon visuallyEqualTo: secondIcon [
+
+	firstIcon == secondIcon ifTrue: [ ^ true ].
+	(firstIcon class == secondIcon class and: [
+		 firstIcon extent = secondIcon extent and: [ firstIcon depth = secondIcon depth and: [ firstIcon bits = secondIcon bits ] ] ])
+		ifFalse: [ ^ false ].
+	^ firstIcon isColorForm not or: [ firstIcon colors = secondIcon colors ]
 ]
 
 { #category : 'hooks' }
-OPTypesShowHidePresenter >> selected: aSelectedTypeNode [
+OPTypesShowHidePresenter >> nameFor: anItem [
+
+	^ anItem showHideName
+]
+
+{ #category : 'private' }
+OPTypesShowHidePresenter >> selectTypeNode: aTypeNode [
 
 	| elementsToShow executor |
-	elementsToShow := self elementsWithTypesInNode: aSelectedTypeNode.
+	elementsToShow := self elementsWithTypesInNode: aTypeNode.
 	executor := OPDiagramExplorer on: diagramController.
 	executor showElements: elementsToShow.
 	^ elementsToShow
 ]
 
+{ #category : 'private' }
+OPTypesShowHidePresenter >> selectViewModel: aViewModel [
+
+	| executor |
+	executor := OPDiagramExplorer on: diagramController.
+	executor showElement: aViewModel model.
+	^ { aViewModel model }
+]
+
 { #category : 'hooks' }
-OPTypesShowHidePresenter >> unselected: aRemovedTypeNode [
+OPTypesShowHidePresenter >> selected: aSelectedItem [
+
+	^ aSelectedItem showHideSelectIn: self
+]
+
+{ #category : 'accessing' }
+OPTypesShowHidePresenter >> sharedIconForTypeNode: aTypeNode [
+
+	| matchingIcons firstIcon |
+	matchingIcons := (self elementsWithTypesInNode: aTypeNode) collect: [ :eachElement |
+		                 (viewModelRegistry viewModelFor: eachElement) icon ].
+	matchingIcons ifEmpty: [ ^ Smalltalk ui icons iconNamed: #empty ].
+	firstIcon := matchingIcons first.
+	^ (matchingIcons allSatisfy: [ :eachIcon | self isIcon: eachIcon visuallyEqualTo: firstIcon ])
+		  ifTrue: [ firstIcon ]
+		  ifFalse: [ Smalltalk ui icons iconNamed: #empty ]
+]
+
+{ #category : 'private' }
+OPTypesShowHidePresenter >> unselectTypeNode: aTypeNode [
 
 	| elementsToHide executor |
-	elementsToHide := self elementsWithTypesInNode: aRemovedTypeNode.
+	elementsToHide := self elementsWithTypesInNode: aTypeNode.
 	executor := OPDiagramExplorer on: diagramController.
 	executor hideElements: elementsToHide.
 	^ elementsToHide
+]
+
+{ #category : 'private' }
+OPTypesShowHidePresenter >> unselectViewModel: aViewModel [
+
+	| executor |
+	executor := OPDiagramExplorer on: diagramController.
+	executor hideElement: aViewModel model.
+	^ { aViewModel model }
+]
+
+{ #category : 'hooks' }
+OPTypesShowHidePresenter >> unselected: aRemovedItem [
+
+	^ aRemovedItem showHideUnselectIn: self
 ]

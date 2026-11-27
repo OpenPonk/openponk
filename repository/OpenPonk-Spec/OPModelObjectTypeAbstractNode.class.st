@@ -48,6 +48,8 @@ OPModelObjectTypeAbstractNode >> = aComparable [
 	"Compare the receiver with the argument and answer with true if the
 	receiver is equal to the argument. Otherwise answer false."
 
+	self == aComparable ifTrue: [ ^ true ].
+	self class = aComparable class ifFalse: [ ^ false ].
 	^ self name = aComparable name and: [ self parent = aComparable parent ]
 ]
 
@@ -115,6 +117,42 @@ OPModelObjectTypeAbstractNode >> printOn: aStream [
 		nextPutAll: ' (';
 		nextPutAll: self name asString;
 		nextPut: $)
+]
+
+{ #category : 'show-hide' }
+OPModelObjectTypeAbstractNode >> shouldExpandInitiallyInTypesTree [
+
+	^ false
+]
+
+{ #category : 'show-hide' }
+OPModelObjectTypeAbstractNode >> showHideChildrenIn: aTypesPresenter [
+
+	^ aTypesPresenter childrenForTypeNode: self
+]
+
+{ #category : 'show-hide' }
+OPModelObjectTypeAbstractNode >> showHideIconIn: aTypesPresenter [
+
+	^ aTypesPresenter iconForTypeNode: self
+]
+
+{ #category : 'show-hide' }
+OPModelObjectTypeAbstractNode >> showHideName [
+
+	^ self name
+]
+
+{ #category : 'show-hide' }
+OPModelObjectTypeAbstractNode >> showHideSelectIn: aTypesPresenter [
+
+	^ aTypesPresenter selectTypeNode: self
+]
+
+{ #category : 'show-hide' }
+OPModelObjectTypeAbstractNode >> showHideUnselectIn: aTypesPresenter [
+
+	^ aTypesPresenter unselectTypeNode: self
 ]
 
 { #category : 'accessing' }

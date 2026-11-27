@@ -35,6 +35,12 @@ OPShowHideTabContentPresenter >> connectPresenters [
 	self whenSelectionChangedDo: [ self updateSelectedItems ]
 ]
 
+{ #category : 'initialization' }
+OPShowHideTabContentPresenter >> expandInitialItemsIn: aRootItem [
+
+	aRootItem expandAll
+]
+
 { #category : 'updating' }
 OPShowHideTabContentPresenter >> findSelectedItems [
 	^ self subclassResponsibility
@@ -61,34 +67,23 @@ OPShowHideTabContentPresenter >> initializePresenters [
 	| mainColumn |
 	tree := self newTreeTable.
 	mainColumn := SpCompositeTableColumn new.
-	mainColumn addColumn:
-		((SpCheckBoxTableColumn evaluated: [ :modelObject |
-				  self isSelected: modelObject ])
+	mainColumn addColumn: ((SpCheckBoxTableColumn evaluated: [ :modelObject | self isSelected: modelObject ])
 			 width: 20;
-			 onActivation: [ :modelObject |
-				 self processAndUpdateSelected: modelObject ];
-			 onDeactivation: [ :modelObject |
-				 self processAndUpdateUnselected: modelObject ];
+			 onActivation: [ :modelObject | self processAndUpdateSelected: modelObject ];
+			 onDeactivation: [ :modelObject | self processAndUpdateUnselected: modelObject ];
 			 yourself).
 	self hasIcon ifTrue: [
-		mainColumn addColumn:
-			((SpImageTableColumn evaluated: [ :modelObject |
-					  self iconFor: modelObject ])
-				 width: 20;
-				 yourself) ].
-	mainColumn addColumn:
-		(SpStringTableColumn evaluated: [ :modelObject |
-			 self nameFor: modelObject ]).
+			mainColumn addColumn: ((SpImageTableColumn evaluated: [ :modelObject | self iconFor: modelObject ])
+					 width: 20;
+					 yourself) ].
+	mainColumn addColumn: (SpStringTableColumn evaluated: [ :modelObject | self nameFor: modelObject ]).
 	tree
 		addColumn: mainColumn;
 		roots: self initialRoots;
 		hideColumnHeaders;
 		children: [ :item | self childrenFor: item ];
-		whenBuiltDo: [ :buildWidget |
-			buildWidget widget dataSource rootItem expandAll ];
-		searchMatching: [ :item :pattern |
-			(self nameFor: item) asString trimBoth asLowercase includesSubstring:
-					pattern asLowercase ]
+		whenBuiltDo: [ :buildWidget | self expandInitialItemsIn: buildWidget widget dataSource rootItem ];
+		searchMatching: [ :item :pattern | (self nameFor: item) asString trimBoth asLowercase includesSubstring: pattern asLowercase ]
 ]
 
 { #category : 'testing' }

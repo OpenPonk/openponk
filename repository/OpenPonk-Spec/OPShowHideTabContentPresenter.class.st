@@ -53,7 +53,8 @@ OPShowHideTabContentPresenter >> hasIcon [
 
 { #category : 'hooks' }
 OPShowHideTabContentPresenter >> iconFor: anItem [
-	^ nil
+
+	^ self subclassResponsibility
 ]
 
 { #category : 'hooks' }

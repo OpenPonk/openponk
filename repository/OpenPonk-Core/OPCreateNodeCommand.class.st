@@ -38,7 +38,7 @@ OPCreateNodeCommand >> completeFirstExecution [
 
 	| extent |
 	position ifNil: [ ^ self ].
-	extent := (diagramElement bounds ifNil: [ diagramElement roassalShape ] ifNotNil: [ :bounds | bounds ]) extent.
+	extent := (diagramElement bounds ifNil: [ diagramElement roassalShape ]) extent.
 	diagramElement bounds: (OPNodeBounds withPosition: position extent: extent).
 	diagramElement updateRenderFromSelf
 ]

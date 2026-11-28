@@ -146,6 +146,73 @@ OPDiagramHighlighterTest >> testFlashFillCancelsPreviousTimerIgnoresStaleRestore
 ]
 
 { #category : 'tests' }
+OPDiagramHighlighterTest >> testGuardPathsForNilUnrenderedUnknownAndBorderlessShapes [
+
+	| detachedHighlighter firstController secondController unattachedController |
+	detachedHighlighter := OPDiagramHighlighter new.
+	detachedHighlighter
+		highlightFillOfModel: firstElement color: Color green;
+		restoreModel: firstElement;
+		restoreFillOfModel: firstElement;
+		restoreStrokeOfModel: firstElement.
+	self assertEmpty: (detachedHighlighter instVarNamed: #originalFillColors).
+	self assertEmpty: (detachedHighlighter instVarNamed: #originalBorderStates).
+
+	highlighter
+		restoreModel: secondElement;
+		restoreFillOfModel: secondElement;
+		restoreStrokeOfModel: secondElement;
+		highlightFillOfController: nil color: Color green;
+		highlightStrokeOfController: nil color: Color red width: 2;
+		flashFillOfController: nil color: Color yellow duration: 1 second;
+		restoreController: nil;
+		restoreFillOfController: nil;
+		restoreStrokeOfController: nil.
+	self assertEmpty: (highlighter instVarNamed: #originalFillColors).
+	self assertEmpty: (highlighter instVarNamed: #originalBorderStates).
+
+	unattachedController := OPTestEntityController new
+		                        diagramController: diagramController;
+		                        model: secondElement;
+		                        yourself.
+	highlighter
+		highlightFillOfController: unattachedController color: Color green;
+		highlightStrokeOfController: unattachedController color: Color red width: 2;
+		flashFillOfController: unattachedController color: Color yellow duration: 1 second.
+	diagramController controllers add: unattachedController.
+	[
+		highlighter highlightFillOfModel: secondElement color: Color green.
+		self assertEmpty: (highlighter instVarNamed: #originalFillColors).
+		self assertEmpty: (highlighter instVarNamed: #originalBorderStates) ] ensure: [
+		diagramController controllers remove: unattachedController ifAbsent: [ ] ].
+
+	firstController := diagramController showInDiagramModel: firstElement.
+	highlighter highlightFillOfController: firstController color: Color yellow.
+	firstController removeRender.
+	highlighter restoreController: firstController.
+	self assertEmpty: (highlighter instVarNamed: #originalFillColors).
+	self assertEmpty: (highlighter instVarNamed: #originalBorderStates).
+
+	firstController := diagramController showInDiagramModel: firstElement.
+	highlighter highlightStrokeOfController: firstController color: Color red width: 2.
+	firstController removeRender.
+	highlighter
+		restoreFillOfController: firstController;
+		restoreStrokeOfController: firstController.
+	highlighter restoreStrokeOfController: firstController.
+	self assertEmpty: (highlighter instVarNamed: #originalBorderStates).
+
+	secondController := diagramController showInDiagramModel: secondElement.
+	secondController roassalShape noBorder.
+	highlighter highlightStrokeOfController: secondController color: Color orange width: 2.
+	secondController roassalShape noBorder.
+	highlighter restoreStrokeOfController: secondController.
+	self
+		deny: secondController roassalShape hasBorder
+		description: 'Restoring externally cleared borderless shape must leave it borderless'
+]
+
+{ #category : 'tests' }
 OPDiagramHighlighterTest >> testHighlightStrokeWithWidthPreservesAndRestoresNodeAndLineWidths [
 
 	| firstController secondController relationController firstShape secondShape relationShape originalNodeWidth originalLineWidth |
@@ -292,4 +359,54 @@ OPDiagramHighlighterTest >> testRestoreModelValidFlashCompletionAndUnchangedShap
 	firstController removeRender.
 	highlighter restoreController: firstController.
 	self assertEmpty: (highlighter instVarNamed: #originalBorderStates)
+]
+
+{ #category : 'tests' }
+OPDiagramHighlighterTest >> testScheduleFlashRestoreCompletesViaUiDispatcher [
+
+	| firstController firstShape originalColor completed signaled |
+	firstController := diagramController showInDiagramModel: firstElement.
+	firstShape := firstController roassalShape.
+	originalColor := firstShape color.
+	completed := Semaphore new.
+	highlighter uiDispatcher: [ :aBlock |
+			aBlock value.
+			completed signal ].
+
+	highlighter flashFillOfController: firstController color: Color yellow duration: Duration zero.
+	signaled := (completed waitTimeoutSeconds: 2) not.
+	self assert: signaled description: 'Flash timer should invoke uiDispatcher and complete restore'.
+	self assert: firstShape color equals: originalColor.
+	self assertEmpty: (highlighter instVarNamed: #originalFillColors).
+	self assertEmpty: (highlighter instVarNamed: #flashProcesses)
+]
+
+{ #category : 'tests' }
+OPDiagramHighlighterTest >> testSteadyHighlightAndRestoreFillCancelActiveFlashTimer [
+
+	| firstController firstShape originalColor firstFlashProcess secondFlashProcess |
+	firstController := diagramController showInDiagramModel: firstElement.
+	firstShape := firstController roassalShape.
+	originalColor := firstShape color.
+
+	highlighter flashFillOfController: firstController color: Color yellow duration: 5 seconds.
+	firstFlashProcess := (highlighter instVarNamed: #flashProcesses) at: firstController.
+	self deny: firstFlashProcess isTerminated description: 'Flash timer process must be active'.
+
+	highlighter highlightFillOfController: firstController color: Color green.
+	self assert: firstFlashProcess isTerminated description: 'Steady fill highlight must terminate an active flash timer'.
+	self assert: firstShape color equals: Color green.
+	self assertEmpty: (highlighter instVarNamed: #flashProcesses).
+
+	highlighter flashFillOfController: firstController color: Color orange duration: 5 seconds.
+	secondFlashProcess := (highlighter instVarNamed: #flashProcesses) at: firstController.
+	self deny: secondFlashProcess isTerminated description: 'Second flash timer process must be active'.
+
+	highlighter restoreFillOfController: firstController.
+	self assert: secondFlashProcess isTerminated description: 'Restoring fill must terminate an active flash timer'.
+	self assert: firstShape color equals: originalColor.
+	self assertEmpty: (highlighter instVarNamed: #flashProcesses).
+
+	highlighter finishFlashRestoreFor: firstController process: secondFlashProcess.
+	self assert: firstShape color equals: originalColor
 ]

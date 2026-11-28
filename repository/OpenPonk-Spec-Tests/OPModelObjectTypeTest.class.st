@@ -41,6 +41,30 @@ OPModelObjectTypeTest >> testModelObjectTypeComparisonAndPrinting [
 ]
 
 { #category : 'tests' }
+OPModelObjectTypeTest >> testTypeTreeNodeEqualityByParentAndPrintOn [
+
+	| kindType classWithKind associationWithKind firstRoot secondRoot firstClassNode secondClassNode kindUnderClass kindUnderAssociation |
+	kindType := OPModelObjectType named: 'Kind'.
+	classWithKind := OPModelObjectType named: 'Class' withSubtype: kindType.
+	associationWithKind := OPModelObjectType named: 'Association' withSubtype: kindType.
+	firstRoot := OPModelObjectTypeRootNode withChildrenFromTypes: {
+			             classWithKind.
+			             associationWithKind }.
+	secondRoot := OPModelObjectTypeRootNode withChildrenFromTypes: { classWithKind }.
+	firstClassNode := firstRoot children detect: [ :each | each name = 'Class' ].
+	secondClassNode := secondRoot children detect: [ :each | each name = 'Class' ].
+	kindUnderClass := firstClassNode children first.
+	kindUnderAssociation := (firstRoot children detect: [ :each | each name = 'Association' ]) children first.
+
+	self assert: firstClassNode equals: secondClassNode.
+	self assert: firstClassNode hash equals: secondClassNode hash.
+	self deny: kindUnderClass equals: kindUnderAssociation.
+	self assert: firstRoot printString equals: 'an OPModelObjectTypeRootNode (All)'.
+	self assert: firstClassNode printString equals: 'an OPModelObjectTypeNode (Class)'.
+	self assert: kindUnderClass printString equals: 'an OPModelObjectTypeLeafNode (Kind)'
+]
+
+{ #category : 'tests' }
 OPModelObjectTypeTest >> testTypeTreeNodeEqualityWithNonNodeObjects [
 
 	| subKind classWithKind rootNode classNode kindLeaf nilValue |

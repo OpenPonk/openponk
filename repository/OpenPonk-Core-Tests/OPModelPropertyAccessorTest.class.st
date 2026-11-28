@@ -129,11 +129,22 @@ OPModelPropertyAccessorTest >> testNamePrintOnAndMutatorSelector [
 { #category : 'tests' }
 OPModelPropertyAccessorTest >> testReadAndWriteFallbackOnRawModel [
 
-	| accessor |
+	| accessor rawModel colonAccessor |
 	accessor := OPModelPropertyAccessor on: #name.
 	self assert: (accessor read: model) equals: 'InitialName'.
 	accessor write: 'RawUpdated' to: model.
-	self assert: model name equals: 'RawUpdated'
+	self assert: model name equals: 'RawUpdated'.
+
+	rawModel := OPTestEntityModel new
+		            name: 'RawEntity';
+		            yourself.
+	self assert: (accessor read: rawModel) equals: 'RawEntity'.
+	accessor write: 'UpdatedEntity' to: rawModel.
+	self assert: rawModel name equals: 'UpdatedEntity'.
+
+	colonAccessor := OPModelPropertyAccessor on: #name:.
+	colonAccessor write: 'ColonEntity' to: rawModel.
+	self assert: rawModel name equals: 'ColonEntity'
 ]
 
 { #category : 'tests' }

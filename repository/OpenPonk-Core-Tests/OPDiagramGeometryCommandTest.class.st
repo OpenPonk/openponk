@@ -200,17 +200,28 @@ OPDiagramGeometryCommandTest >> testModifyEdgeWaypointsCommandOnRenderedEdgeWith
 		             (300 @ 100) }.
 	edge waypoints: oldPoints copy.
 	edge renderIn: canvas.
+	edge roassalShape properties removeKey: OPRSDraggableControlPoints ifAbsent: [ ].
+	self
+		deny: (edge roassalShape hasProperty: OPRSDraggableControlPoints)
+		description: 'Test edge must not have OPRSDraggableControlPoints interaction attached'.
 
 	command := OPModifyEdgeWaypointsCommand edge: edge oldWaypoints: oldPoints newWaypoints: newPoints.
 
 	undoManager execute: command.
 	self assert: edge waypoints equals: newPoints.
+	self assert: edge roassalShape innerControlPoints asArray equals: {
+			(150 @ 180).
+			(250 @ 180) }.
 
 	undoManager undo.
 	self assert: edge waypoints equals: oldPoints.
+	self assert: edge roassalShape innerControlPoints asArray equals: { (150 @ 100) }.
 
 	undoManager redo.
-	self assert: edge waypoints equals: newPoints
+	self assert: edge waypoints equals: newPoints.
+	self assert: edge roassalShape innerControlPoints asArray equals: {
+			(150 @ 180).
+			(250 @ 180) }
 ]
 
 { #category : 'tests' }

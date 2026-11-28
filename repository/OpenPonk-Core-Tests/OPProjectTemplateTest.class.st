@@ -93,6 +93,7 @@ OPProjectTemplateTest >> testEqualityWithDifferentClassAndUnnamedPrintOn [
 	| unnamedTemplate |
 	unnamedTemplate := OPProjectTemplate new.
 	self deny: unnamedTemplate equals: 'not a template'.
+	self deny: 'not a template' equals: unnamedTemplate.
 	self
 		assert: (unnamedTemplate printString includesSubstring: 'unnamed')
 		description: 'Unnamed template printOn: should include unnamed fallback'

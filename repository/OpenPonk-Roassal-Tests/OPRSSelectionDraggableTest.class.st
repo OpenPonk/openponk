@@ -144,6 +144,32 @@ OPRSSelectionDraggableTest >> testDraggingSelectedContainerDragsInnerShapesOfAll
 ]
 
 { #category : 'tests' }
+OPRSSelectionDraggableTest >> testDraggingUnselectedShapeWhileAnotherShapeIsSelectedDragsOnlyUnselectedShape [
+
+	| dragInteraction draggedNodes |
+	canvas propertyAt: #selectedShapes put: { containerShape2 }.
+
+	containerShape1 announce: (RSMouseDragStart new
+			 shape: containerShape1;
+			 canvas: canvas;
+			 position: containerShape1 position;
+			 yourself).
+
+	dragInteraction := containerShape1 propertyAt: OPRSSelectionDraggable.
+	draggedNodes := dragInteraction instVarNamed: #draggedNodes.
+
+	self assertCollection: draggedNodes hasSameElements: {
+			containerShape1.
+			innerShape1 }.
+
+	containerShape1 announce: (RSMouseDragEnd new
+			 shape: containerShape1;
+			 canvas: canvas;
+			 position: containerShape1 position;
+			 yourself)
+]
+
+{ #category : 'tests' }
 OPRSSelectionDraggableTest >> testEndDragDetectsLineOnlyControlPointChangeAndSkipsUnchangedDrag [
 
 	| line announcedEvents |

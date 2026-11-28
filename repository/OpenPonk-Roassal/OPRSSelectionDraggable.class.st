@@ -164,16 +164,15 @@ OPRSSelectionDraggable >> endDrag: anEvent [
 
 	self replaceAlignmentLinesWith: #(  ).
 
-	hasChanged := (draggedNodes anySatisfy: [ :eachNode |
-		               (initialPositions at: eachNode ifAbsent: [ eachNode position ]) ~= eachNode position ]) or: [
-			              movedLinesWithControlPoints anySatisfy: [ :eachLine |
-				              (initialLineControlPoints at: eachLine ifAbsent: [ eachLine innerControlPoints ]) ~= eachLine innerControlPoints ] ].
+	hasChanged := (draggedNodes anySatisfy: [ :eachNode | (initialPositions at: eachNode) ~= eachNode position ]) or: [
+		              movedLinesWithControlPoints anySatisfy: [ :eachLine |
+			              (initialLineControlPoints at: eachLine) ~= eachLine innerControlPoints ] ].
 
 	hasChanged ifTrue: [
 			anEvent canvas announce: (OPRSElementsDraggedEvent new
 					 shapes: draggedNodes copy;
 					 initialPositions: initialPositions copy;
-					 initialAnchors: (initialAnchors ifNotNil: [ :theAnchors | theAnchors copy ] ifNil: [ Dictionary new ]);
+					 initialAnchors: initialAnchors copy;
 					 lines: movedLinesWithControlPoints copy;
 					 initialLineControlPoints: initialLineControlPoints copy;
 					 yourself) ].

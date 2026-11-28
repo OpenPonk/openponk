@@ -57,7 +57,7 @@ OPEditorTest >> testCloseWindowWithoutDiagramControllerDoesNotError [
 { #category : 'tests' }
 OPEditorTest >> testCreateCommandContextAndTabHeaderPresenter [
 
-	| mockDiagramController commandContext headerPresenter headerMorph exampleWindow |
+	| mockDiagramController commandContext headerPresenter headerMorph nilLabelPresenter nilLabelMorph exampleWindow |
 	mockDiagramController := Mock new.
 	mockDiagramController stub selectedElements willReturn: #(  ).
 	editor canvasPresenter diagramController: mockDiagramController.
@@ -68,6 +68,11 @@ OPEditorTest >> testCreateCommandContextAndTabHeaderPresenter [
 	headerPresenter := OPTabHeaderPresenter newApplication: SpApplication defaultApplication.
 	headerMorph := headerPresenter build.
 	self assert: headerMorph class identicalTo: OPTabLabelMorph.
+
+	nilLabelPresenter := OPTabHeaderPresenter newApplication: SpApplication defaultApplication.
+	nilLabelPresenter label: nil.
+	nilLabelMorph := nilLabelPresenter build.
+	self assert: nilLabelMorph label contents equals: ''.
 
 	exampleWindow := OPTabHeaderPresenter example.
 	[

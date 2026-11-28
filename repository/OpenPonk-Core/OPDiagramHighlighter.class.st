@@ -204,7 +204,8 @@ OPDiagramHighlighter >> restoreBorderOf: aShape for: aController [
 OPDiagramHighlighter >> restoreController: aController [
 
 	| shape fillChanged borderChanged |
-	(flashProcesses removeKey: aController ifAbsent: [ nil ]) ifNotNil: [ :existingProcess | existingProcess terminate ].
+	(flashProcesses removeKey: aController ifAbsent: [ nil ]) ifNotNil: [ :existingProcess |
+		existingProcess ~~ Processor activeProcess ifTrue: [ existingProcess terminate ] ].
 	shape := self renderedShapeForController: aController ifAbsent: [
 			         originalFillColors removeKey: aController ifAbsent: [ ].
 			         originalBorderStates removeKey: aController ifAbsent: [ ].
@@ -313,9 +314,7 @@ OPDiagramHighlighter >> snapshotBorderStateOf: aShape [
 	aShape isLine ifTrue: [
 			^ {
 				  aShape color.
-				  (aShape hasBorder
-					   ifTrue: [ aShape border width ]
-					   ifFalse: [ 1 ]) } ].
+				  aShape border width } ].
 	^ aShape hasBorder
 		  ifTrue: [
 				  {

@@ -139,10 +139,7 @@ OPViewModelRegistry >> inspectTreeIn: specBuilder [
 
 	<inspectorPresentationOrder: 10 title: 'Tree'>
 	^ specBuilder newTree
-		  roots:
-			  (self projectViewModel
-				   ifNil: [ #(  ) ]
-				   ifNotNil: [ :pvm | { pvm } ]);
+		  roots: { self projectViewModel };
 		  display: [ :aNode | aNode modelDisplayString ];
 		  displayIcon: [ :aNode | aNode icon ];
 		  children: [ :aNode | aNode children ];

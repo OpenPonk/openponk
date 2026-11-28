@@ -208,7 +208,8 @@ OPDiagramsTree >> expandToDepth: maxDepthInteger [
 
 { #category : 'accessing' }
 OPDiagramsTree >> expandedViewModels [
-	^ expandedViewModels ifNil: [ expandedViewModels := IdentitySet new ]
+
+	^ expandedViewModels
 ]
 
 { #category : 'event handling' }

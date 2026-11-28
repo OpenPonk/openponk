@@ -108,7 +108,8 @@ OPProjectTree >> expandViewModel: aViewModel atPath: aPath currentDepth: current
 { #category : 'accessing' }
 OPProjectTree >> expandedViewModels [
 	"Answer the set of currently expanded view models."
-	^ expandedViewModels ifNil: [ expandedViewModels := IdentitySet new ]
+
+	^ expandedViewModels
 ]
 
 { #category : 'event handling' }

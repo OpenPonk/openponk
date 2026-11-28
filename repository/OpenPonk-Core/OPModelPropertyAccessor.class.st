@@ -62,16 +62,12 @@ OPModelPropertyAccessor >> defaultReadBlock [
 { #category : 'processing' }
 OPModelPropertyAccessor >> defaultWriteBlock [
 	"Default write block mutating target via property gateway if supported."
+
 	^ [ :target :value |
-		target ifNotNil: [
-			(target respondsTo: #propertyNamed:put:)
-				ifTrue: [ target propertyNamed: selector put: value ]
-				ifFalse: [
-					| mutator |
-					mutator := (selector endsWith: ':')
-						ifTrue: [ selector asSymbol ]
-						ifFalse: [ (selector , ':') asSymbol ].
-					target perform: mutator with: value ] ] ]
+		  target ifNotNil: [
+				  (target respondsTo: #propertyNamed:put:)
+					  ifTrue: [ target propertyNamed: selector put: value ]
+					  ifFalse: [ target perform: (self mutatorSelectorFor: selector) with: value ] ] ]
 ]
 
 { #category : 'comparing' }

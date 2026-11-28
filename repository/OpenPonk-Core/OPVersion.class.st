@@ -138,17 +138,14 @@ OPVersion class >> ofLastestReleaseOf: aRepositoryName [
 	releases := self getReleasesOf: aRepositoryName.
 	stable := releases select: [ :each |
 			          (each at: #prerelease ifAbsent: [ false ]) not and: [
-					          (each at: #draft ifAbsent: [ false ]) not and: [
-							          (each at: #tag_name ifAbsent: [ '' ]) matchesRegex:
-								          self semanticVersionRegex ] ] ].
+				          (each at: #draft ifAbsent: [ false ]) not and: [
+					          (each at: #tag_name ifAbsent: [ '' ]) matchesRegex: self semanticVersionRegex ] ] ].
 	stable ifEmpty: [ ^ nil ].
 	^ self
 		  fromReleaseJson: (stable detectMax: [ :each |
 					   | parts |
 					   parts := ((each at: #tag_name) copyWithout: $v) splitOn: '.'.
-					   parts
-						   inject: 0
-						   into: [ :acc :n | acc * 1000 + (n asInteger ifNil: [ 0 ]) ] ])
+					   parts inject: 0 into: [ :acc :n | acc * 1000 + n asInteger ] ])
 		  repositoryName: aRepositoryName
 ]
 

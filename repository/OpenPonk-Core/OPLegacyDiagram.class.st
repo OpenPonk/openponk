@@ -42,62 +42,44 @@ OPLegacyDiagram class >> isDeprecated [
 OPLegacyDiagram class >> neoJsonMapping: mapper [
 
 	mapper
-		for: self do: [ :mapping | 
-			mapping mapInstVars: mapping identifier instVarNames \ #( model ).
-			(mapping mapInstVar: #layout) valueSchema: #UUIDsWithPoints.
-			(mapping mapInstVar: #camera) valueSchema: OPLegacyDiagramCamera.
-			(mapping mapInstVar: #commonElements) valueSchema: #CommonElements.
-			(mapping mapInstVar: #visibleElements) valueSchema:
-					#ObjectsWithUUIDs ];
-		for: #CommonElements
-		customDo: [ :mapping | mapping listOfElementSchema: #CommonElement ];
-		for: #CommonElement customDo: [ :mapping | 
-			mapping reader: [ :jsonReader | 
-					| map element |
-					map := jsonReader parseMap.
-					element := (self class environment at:
-							            (map at: #className) asSymbol) new.
-					NeoJSONReader
-						fromString: (OPJsonWriter toString: map)
-						as: element class ] ];
-		for: #ObjectsWithUUIDs
-		customDo: [ :mapping | mapping listOfElementSchema: #ObjectWithUUID ];
-		for: #ObjectWithUUID customDo: [ :mapping | 
+		for: self do: [ :mapping |
+				mapping mapInstVars: mapping identifier instVarNames \ #( model ).
+				(mapping mapInstVar: #layout) valueSchema: #UUIDsWithPoints.
+				(mapping mapInstVar: #camera) valueSchema: OPLegacyDiagramCamera.
+				(mapping mapInstVar: #commonElements) valueSchema: #CommonElements.
+				(mapping mapInstVar: #visibleElements) valueSchema: #ObjectsWithUUIDs ];
+		for: #CommonElements customDo: [ :mapping | mapping listOfElementSchema: #CommonElement ];
+		for: #CommonElement customDo: [ :mapping |
+				mapping reader: [ :jsonReader |
+							| map element |
+							map := jsonReader parseMap.
+							element := (self class environment at: (map at: #className) asSymbol) new.
+							NeoJSONReader fromString: (OPJsonWriter toString: map) as: element class ] ];
+		for: #ObjectsWithUUIDs customDo: [ :mapping | mapping listOfElementSchema: #ObjectWithUUID ];
+		for: #ObjectWithUUID customDo: [ :mapping |
+				mapping
+					encoder: [ :object | object uuid asString ];
+					decoder: [ :string |
+							OPModelObjectReference withUUID: ([ UUID fromString: string ]
+										 on: Error
+										 do: [ string ]) ] ];
+		for: #UUIDsWithPoints customDo: [ :mapping |
 			mapping
-				encoder: [ :object | object uuid asString ];
-				decoder: [ :string | 
-					OPModelObjectReference withUUID: ([ UUID fromString: string ]
-								 on: Error
-								 do: [ string ]) ] ];
-		for: UUID customDo: [ :mapping | 
-		mapping
-			encoder: [ :uuid | uuid asString ];
-			decoder: [ :string | 
-				[ UUID fromString: string ]
-					on: Error
-					do: [ string ] ] ];
-		for: #UUIDsWithPoints customDo: [ :mapping | 
-		mapping
-			reader: [ :jsonReader | 
-				| map |
-				map := jsonReader mapClass new.
-				jsonReader parseMapKeysDo: [ :key | 
-						| value |
-						value := jsonReader nextAs: OPLegacyElementLayout.
-						map
-							at: ([ UUID fromString: key ]
-									 on: Error
-									 do: [ key ])
-							put: value ].
-				(map associations sorted: [ :a :b | a value < b value ])
-					asOrderedDictionary ];
-			writer: [ :jsonWriter :map | 
-				jsonWriter writeMapStreamingDo: [ :mapWriter | 
-						map keysAndValuesDo: [ :key :value | 
-								mapWriter
-									writeKey: key asString
-									value: value
-									as: OPLegacyElementLayout ] ] ] ]
+				reader: [ :jsonReader |
+						| map |
+						map := jsonReader mapClass new.
+						jsonReader parseMapKeysDo: [ :key |
+									| value |
+									value := jsonReader nextAs: OPLegacyElementLayout.
+									map
+										at: ([ UUID fromString: key ]
+												 on: Error
+												 do: [ key ])
+										put: value ].
+						(map associations sorted: [ :a :b | a value < b value ]) asOrderedDictionary ];
+				writer: [ :jsonWriter :map |
+						jsonWriter writeMapStreamingDo: [ :mapWriter |
+								map keysAndValuesDo: [ :key :value | mapWriter writeKey: key asString value: value as: OPLegacyElementLayout ] ] ] ]
 ]
 
 { #category : 'instance creation' }

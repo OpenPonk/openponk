@@ -121,6 +121,7 @@ OPLegacyElementLayoutTest >> testContentFromJSON [
 OPLegacyElementLayoutTest >> testEqualityEdgeCases [
 
 	self deny: elementLayout equals: 'not a layout'.
+	self deny: 'not a layout' equals: elementLayout.
 	self deny: OPLegacyElementLayout none equals: relationshipLayout.
 	self deny: relationshipLayout equals: OPLegacyElementLayout none
 ]

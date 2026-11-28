@@ -46,6 +46,8 @@ OPCreateElementCommand >> basicRedo [
 { #category : 'executing' }
 OPCreateElementCommand >> completeFirstExecution [
 	"Hook for subclasses to complete spatial setup after first creation."
+
+	^ self subclassResponsibility
 ]
 
 { #category : 'accessing' }
@@ -152,7 +154,6 @@ OPCreateElementCommand >> viewModel [
 
 { #category : 'accessing' }
 OPCreateElementCommand >> viewModelRegistry [
-	^ viewModelRegistry ifNil: [
-		projectController ifNotNil: [ :activeProjectController |
-			activeProjectController viewModelRegistry ] ]
+
+	^ viewModelRegistry
 ]

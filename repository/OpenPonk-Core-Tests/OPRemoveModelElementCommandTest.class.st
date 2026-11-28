@@ -265,30 +265,41 @@ OPRemoveModelElementCommandTest >> testExecuteRunsAuxiliaryRemovalCommandsInTran
 ]
 
 { #category : 'tests' }
-OPRemoveModelElementCommandTest >> testIsModelPresentFindsUncachedProjectModelsAndRejectsRemovedOrDetachedModels [
+OPRemoveModelElementCommandTest >> testRemoveElementCascadesToUncachedDependentAndUndoRestoresIt [
 
-	| uncachedEntity detachedEntity removeCommand |
-	uncachedEntity := OPTestEntityModel new.
-	uncachedEntity instVarNamed: #uuid put: UUID new.
-	containerModel add: uncachedEntity.
-	detachedEntity := OPTestEntityModel new.
-
-	removeCommand := OPRemoveModelElementCommand model: nodeModel1 diagramController: diagramController.
+	| uncachedRelation viewModelRegistry |
+	uncachedRelation := OPTestRelationModel new
+		                    source: nodeModel1;
+		                    target: nodeModel2;
+		                    yourself.
+	uncachedRelation instVarNamed: #uuid put: UUID new.
+	containerModel add: uncachedRelation.
+	viewModelRegistry := diagramController projectController viewModelRegistry.
 
 	self
-		deny: (diagramController projectController viewModelRegistry hasViewModelFor: uncachedEntity)
-		description: 'Uncached entity must not be in ViewModel cache before check'.
-	self
-		assert: (removeCommand isModelPresent: uncachedEntity)
-		description: 'Uncached entity present in project model tree must be reported as present'.
-	self
-		deny: (removeCommand isModelPresent: detachedEntity)
-		description: 'Detached entity absent from project model tree must not be reported as present'.
+		deny: (viewModelRegistry hasViewModelFor: uncachedRelation)
+		description: 'Dependent relation must not be in ViewModel cache before removal'.
 
 	undoManager inTransaction: [
-		undoManager execute: (OPRemoveModelElementCommand model: uncachedEntity diagramController: diagramController) ].
+		undoManager execute: (OPRemoveModelElementCommand model: nodeModel1 diagramController: diagramController) ].
 
-	self deny: (removeCommand isModelPresent: uncachedEntity) description: 'Removed entity must no longer be reported as present'
+	self denyCollection: containerModel entities includesAny: {
+			nodeModel1.
+			uncachedRelation }.
+
+	undoManager undo.
+
+	self assertCollection: containerModel entities includesAll: {
+			nodeModel1.
+			uncachedRelation }.
+	self assert: uncachedRelation source identicalTo: nodeModel1.
+	self assert: uncachedRelation target identicalTo: nodeModel2.
+
+	undoManager redo.
+
+	self denyCollection: containerModel entities includesAny: {
+			nodeModel1.
+			uncachedRelation }
 ]
 
 { #category : 'tests' }

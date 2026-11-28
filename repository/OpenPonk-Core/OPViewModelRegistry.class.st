@@ -114,6 +114,13 @@ OPViewModelRegistry >> iconFor: aModel [
     ^ (self viewModelFor: aModel) icon
 ]
 
+{ #category : 'testing' }
+OPViewModelRegistry >> includesModel: aModelObject [
+	"Answer whether aModelObject is reachable in the project's ownership hierarchy."
+
+	^ self projectViewModel includesModelInHierarchy: aModelObject
+]
+
 { #category : 'initialization' }
 OPViewModelRegistry >> initialize [
 	super initialize.

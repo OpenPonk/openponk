@@ -90,50 +90,40 @@ OPRemoveModelElementCommand >> diagramElementDescriptors [
 
 { #category : 'executing' }
 OPRemoveModelElementCommand >> execute [
+
 	viewModel ifNil: [ ^ self ].
 
 	"1. Cascade auxiliary pre-removal commands within transaction."
-	(viewModel auxiliaryRemovalCommandsIn: projectController) do: [ :auxCommand |
-		self undoManager execute: auxCommand ].
+	(viewModel auxiliaryRemovalCommandsIn: projectController) do: [ :auxCommand | self undoManager execute: auxCommand ].
 
 	"2. Cascade remove dependent elements within transaction."
 	viewModel dependentElements asSet do: [ :dependentModel |
-		(self isModelPresent: dependentModel) ifTrue: [
-			| dependentCommand |
-			dependentCommand := self class model: dependentModel projectController: projectController.
-			self undoManager execute: dependentCommand ] ].
+			(self viewModelRegistry includesModel: dependentModel) ifTrue: [
+					| dependentCommand |
+					dependentCommand := self class model: dependentModel projectController: projectController.
+					self undoManager execute: dependentCommand ] ].
 
 	"3. Detach visual elements from closed diagrams."
-	diagramElementDescriptors do: [ :descriptor |
-		descriptor diagram isRendered ifFalse: [ descriptor diagramElement remove ] ].
+	diagramElementDescriptors do: [ :descriptor | descriptor diagram isRendered ifFalse: [ descriptor diagramElement remove ] ].
 
 	"4. Remove all associated diagrams of the model from the project."
 	self project ifNotNil: [ :currentProject |
-		associatedDiagrams do: [ :diagram |
-			currentProject removeDiagram: diagram.
-			currentProject announcer announce: (OPDiagramRemoved diagram: diagram) ] ].
+			associatedDiagrams do: [ :diagram |
+					currentProject removeDiagram: diagram.
+					currentProject announcer announce: (OPDiagramRemoved diagram: diagram) ] ].
 
 	"5. Perform domain removal and announce."
 	viewModel basicRemoveModel.
 	viewModel unsubscribeFromModel.
 	viewModel unregisterFromRegistry.
 	viewModel announceRemoval.
-	self project ifNotNil: [ :currentProject |
-		currentProject announcer announce: (OPModelRemoved model: model) ]
+	self project ifNotNil: [ :currentProject | currentProject announcer announce: (OPModelRemoved model: model) ]
 ]
 
 { #category : 'initialization' }
 OPRemoveModelElementCommand >> initialize [
 	super initialize.
 	diagramElementDescriptors := OrderedCollection new
-]
-
-{ #category : 'testing' }
-OPRemoveModelElementCommand >> isModelPresent: aModelObject [
-
-	(self viewModelRegistry hasViewModelFor: aModelObject) ifTrue: [ ^ true ].
-	^ self project models anySatisfy: [ :eachRootModel |
-		  eachRootModel = aModelObject or: [ (self viewModelRegistry allChildrenFor: eachRootModel) includes: aModelObject ] ]
 ]
 
 { #category : 'accessing' }

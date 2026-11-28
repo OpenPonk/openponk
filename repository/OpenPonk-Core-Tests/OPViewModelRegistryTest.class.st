@@ -74,6 +74,40 @@ OPViewModelRegistryTest >> testDiagramOnlyNoteAndBoundaryViewModels [
 ]
 
 { #category : 'tests' }
+OPViewModelRegistryTest >> testIncludesModelFindsUncachedNestedAndSharedModelsAndStopsEarly [
+
+	| secondContainer sharedContainer detachedEntity |
+	self assert: (registry includesModel: container) description: 'Root project model must be found in hierarchy'.
+	self deny: (registry hasViewModelFor: container) description: 'Matching a direct child must stop without creating its view model'.
+
+	self assert: (registry includesModel: entityA) description: 'Uncached nested model must be found in hierarchy'.
+	self
+		deny: (registry hasViewModelFor: entityA)
+		description: 'Matching a nested direct child must stop without creating its view model'.
+
+	detachedEntity := OPTestEntityModel new
+		                  name: 'Detached';
+		                  yourself.
+	self deny: (registry includesModel: detachedEntity) description: 'Detached model must not be reported as included'.
+
+	container entities remove: entityB.
+	self deny: (registry includesModel: entityB) description: 'Removed model must no longer be reported as included'.
+
+	sharedContainer := OPTestContainerModel new
+		                   name: 'Shared';
+		                   yourself.
+	secondContainer := OPTestContainerModel new
+		                   name: 'SecondPackage';
+		                   yourself.
+	container add: sharedContainer.
+	secondContainer add: sharedContainer.
+	project addModel: secondContainer.
+	self
+		deny: (registry includesModel: detachedEntity)
+		description: 'Traversal over shared containers must terminate without revisiting shared models'
+]
+
+{ #category : 'tests' }
 OPViewModelRegistryTest >> testModelObjectTypeSubtypeComparisonEdgeCases [
 
 	| subA subB typeWithOne typeWithTwo typeWithB |

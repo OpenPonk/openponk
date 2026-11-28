@@ -227,6 +227,27 @@ OPViewModel >> icon [
 ]
 
 { #category : 'testing' }
+OPViewModel >> includesModelInHierarchy: aModelObject [
+	"Answer whether aModelObject is owned, directly or transitively, by own model. Stops at the first match."
+
+	^ self includesModelInHierarchy: aModelObject visitedModels: (IdentitySet with: self model)
+]
+
+{ #category : 'private' }
+OPViewModel >> includesModelInHierarchy: aModelObject visitedModels: visitedModels [
+
+	| childModels |
+	childModels := self childrenModels.
+	(childModels identityIncludes: aModelObject) ifTrue: [ ^ true ].
+	childModels do: [ :eachChildModel |
+			(visitedModels includes: eachChildModel) ifFalse: [
+					visitedModels add: eachChildModel.
+					((self registry viewModelFor: eachChildModel) includesModelInHierarchy: aModelObject visitedModels: visitedModels) ifTrue: [
+						^ true ] ] ].
+	^ false
+]
+
+{ #category : 'testing' }
 OPViewModel >> isForRootModel [
 
 	^ self = self modelRootViewModel
